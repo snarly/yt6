@@ -219,7 +219,7 @@ document.body.appendChild(js);
 
 var jqs = function()
  {
-$.getScript("https://raw.github.com/johndyer/mediaelement/master/build/mediaelement-and-player1.js", function(){
+$.getScript("https://raw.github.com/johndyer/mediaelement/master/build/mediaelement-and-player.js", function(){
 
 
 var jqs1 = function()
