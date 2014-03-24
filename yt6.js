@@ -226,8 +226,8 @@ var jqs1 = function()
  {
 
     var js = document.createElement('style');
-    js.type = 'text/css';
-    js.media = 'screen';
+    //js.type = 'text/css';
+    js.media = "screen";
 
     var code = "#stage{background:#eee;width:84%;height:360px;\
          position:relative;margin:2em 0;\
