@@ -327,7 +327,16 @@ loadScript("https://raw.github.com/johndyer/mediaelement/master/build/jquery.js"
 
     var js = document.createElement('style');
     js.type = 'text/css';
-    var code = '.mejs-container\
+    var code = '#stage{background:#eee;width:84%;height:360px;\
+         position:relative;margin:2em 0;\
+         margin-left:auto;\
+         margin-right:auto;}\
+  video{width:640px;height:360px;position:absolute;top:0;left:0;}\
+  #controls{position:relative;width:-100px;}\
+  #change{position:absolute;right:-100px;top:-300px;width:100px;}\
+  button{font-size:150%;text-align:center;display:block;}\
+  #change button{width:60px;border:none;background:#fff;}"\
+  .mejs-container\
 {	position: relative;\
 	background: #000;\
 	font-family: Helvetica, Arial;\
