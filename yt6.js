@@ -255,12 +255,16 @@ var dw = document.querySelector('#stage');
 if (!dw) {
     var js = document.createElement('div');
     js.id = 'stage';
+    js.style = 'background:#eee;width:84%;height:360px;\
+         position:relative;margin:2em 0;\
+         margin-left:auto;\
+         margin-right:auto;'
     document.body.insertBefore(js, document.body.firstChild);
     var js = document.createElement('video');
     js.id = 'player1';
     js.width = '640';
     js.height = '360';
-//    js.style = 'width: 100%; height: 100%;';
+    js.style = 'width:640px;height:360px;position:absolute;top:0;left:0;';
     js.controls = 'controls';
     js.preload = "none";
     document.getElementById('stage').appendChild(js);
@@ -300,6 +304,7 @@ if (!dw) {
     delete js;
     var js = document.createElement('div');
     js.id = 'controls';
+    js.style = 'position:relative;width:-100px;'
     document.getElementById('stage').appendChild(js);
 }
 
