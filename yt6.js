@@ -193,6 +193,11 @@ if (!dw) {
 dw.innerHTML = html.join('<br>');
 
 
+function deldiv()
+{
+    var myNode = document.getElementById("bm");
+while (myNode.firstChild) {myNode.removeChild(myNode.firstChild);}
+}
 
 function loadScript(url, callback)
  {
@@ -209,7 +214,6 @@ function loadCSS(url, callback)
  {
 var js = document.createElement("link");
 js.type = "text/css";
-//"https://raw.github.com/johndyer/mediaelement/master/build/mediaelementplayer.css"
 js.href = url;
 js.rel = "Stylesheet";
 js.onreadystatechange = callback;
@@ -226,7 +230,7 @@ var jqs1 = function()
  {
 
     var js = document.createElement('style');
-    //js.type = 'text/css';
+    js.type = 'text/css';
     js.media = "screen";
 
     var code = "#stage{background:#eee;width:84%;height:360px;\
@@ -248,23 +252,30 @@ var jqs1 = function()
 
     delete js;
 }
-//js.href = "https://raw.github.com/johndyer/mediaelement/master/build/mediaelementplayer.css";
 loadCSS("https://raw.github.com/johndyer/mediaelement/master/build/mediaelementplayer.css",jqs1);
 });
+
 var dw = document.querySelector('#stage');
 if (!dw) {
     var js = document.createElement('div');
     js.id = 'stage';
-    js.style = 'background:#eee;width:84%;height:480px;\
+    js.style = 'background:#eee;width:84%;height:360px;\
          position:relative;margin:2em 0;\
          margin-left:auto;\
          margin-right:auto;'
-    document.body.insertBefore(js, document.body.firstChild);
+    document.getElementById('bm').insertBefore(js, document.getElementById('bm').firstChild);
+    delete js;
+    var js = document.createElement('br');
+    document.getElementById('bm').insertBefore(js, document.getElementById('bm').firstChild);
+    delete js;
+    var js = document.createElement('br');
+    document.getElementById('bm').insertBefore(js, document.getElementById('bm').firstChild);
+    delete js;
     var js = document.createElement('video');
     js.id = 'player1';
     js.width = '640';
     js.height = '360';
-    js.style = 'width:640px;height:360px;position:absolute;top:0;left:50%;';
+    js.style = 'width:640px;height:360px;position:absolute;top:0;left:0;';
     js.controls = 'controls';
     js.preload = "none";
     document.getElementById('stage').appendChild(js);
@@ -278,7 +289,7 @@ if (!dw) {
     delete js;
     var js = document.createElement('track');
     js.srclang = lang_code;
-    js.src = '0.srt';
+    js.src = uriContent;
     js.kind = 'subtitles';
     document.getElementById('player1').appendChild(js);
     delete js;
@@ -306,18 +317,19 @@ if (!dw) {
     js.id = 'controls';
     js.style = 'position:relative;width:-100px;'
     document.getElementById('stage').appendChild(js);
+    delete js;
+    var js = document.createElement('div');
+    js.id = 'remove';
+    document.getElementById('stage').appendChild(js);
+    delete js;
 }
-
-//var js = document.createElement("script");
-//js.type = "text/javascript";
-//js.src = "http://isithackday.com/hacks/videozoomandrotate/transformvideo.js";
-//js.src = "https://raw.github.com/codepo8/rotatezoomHTML5video/master/transformvideo.js";
-//document.body.appendChild(js);
-//$.getScript("https://gist.github.com/codepo8/784635.js", function(){});
 
 $.getScript("https://raw.github.com/codepo8/rotatezoomHTML5video/master/transformvideo.js", function(){});
 
-
+  if(remove){
+    remove.innerHTML =  '<button onclick="deldiv()">remove</button>'
+  }
+  
  };
 loadScript("https://raw.github.com/johndyer/mediaelement/master/build/jquery.js", jqs);
 
