@@ -171,9 +171,6 @@ var txt = text[i].textContent.split("&#39;").join("'");
 srt += j + nl + start + ' --> ' + dur + nl + txt + nl + nl;
 }
 uriContent = "data:application/octet-stream," + encodeURIComponent(srt);
-// newWindow=window.open(uriContent, 'neuesDokument');
-// location.sref = uriContent;
-//'<a sref="data:application/octet-stream;charset=utf-8;base64,uriContent==">text file</a>'
     html.push(
       '<a href="' + sref +'">CC</a><br>' + 
       '<a href="' + uriContent +'">SRT</a><br>'
@@ -203,7 +200,6 @@ function loadScript(url, callback)
  {
 var js = document.createElement("script");
 js.type = "text/javascript";
-//js.src = "https://raw.github.com/johndyer/mediaelement/master/build/jquery.js";
 js.src = url;
 js.onreadystatechange = callback;
 js.onload = callback;
@@ -230,7 +226,7 @@ var jqs1 = function()
  {
 
     var js = document.createElement('style');
-    //js.type = 'text/css';
+    js.type = 'text/css';
     js.media = "screen";
 
     var code = "#stage{background:#eee;width:84%;height:360px;\
@@ -1226,17 +1222,4 @@ loadScript("https://raw.github.com/johndyer/mediaelement/master/build/jquery.js"
   }
 eval(window.onload());
 alert(args.title);
-//var el = document.getElementById( 'stage' );
-//el.parentNode.removeChild( el );
-//$('#stage').remove();
-//document.getElementById("image").src="landscape.jpg";
-
-//remove1:
-//var myNode = document.getElementById("foo");
-//while (myNode.firstChild) {
-//    myNode.removeChild(myNode.firstChild);
-//}
-
-//remove2:
-//$('#foo').empty();
 
