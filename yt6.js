@@ -230,7 +230,7 @@ var jqs1 = function()
  {
 
     var js = document.createElement('style');
-    js.type = 'text/css';
+    //js.type = 'text/css';
     js.media = "screen";
 
     var code = "#stage{background:#eee;width:84%;height:360px;\
@@ -264,13 +264,10 @@ if (!dw) {
          margin-left:auto;\
          margin-right:auto;'
     document.getElementById('bm').insertBefore(js, document.getElementById('bm').firstChild);
-    delete js;
     var js = document.createElement('br');
     document.getElementById('bm').insertBefore(js, document.getElementById('bm').firstChild);
-    delete js;
     var js = document.createElement('br');
     document.getElementById('bm').insertBefore(js, document.getElementById('bm').firstChild);
-    delete js;
     var js = document.createElement('video');
     js.id = 'player1';
     js.width = '640';
@@ -289,7 +286,7 @@ if (!dw) {
     delete js;
     var js = document.createElement('track');
     js.srclang = lang_code;
-    js.src = uriContent;
+    js.src = '0.srt';
     js.kind = 'subtitles';
     document.getElementById('player1').appendChild(js);
     delete js;
