@@ -254,12 +254,19 @@ loadCSS("https://raw.github.com/johndyer/mediaelement/master/build/mediaelementp
 var dw = document.querySelector('#stage');
 if (!dw) {
     var js = document.createElement('div');
+    js.id = 'band';
+    js.style = 'background:#000000;width:100% !important;height:100% !important;\
+         position:relative;\
+         margin-left:auto;\
+         margin-right:auto;'
+    document.getElementById('bm').insertBefore(js, document.getElementById('bm').firstChild);
+    var js = document.createElement('div');
     js.id = 'stage';
     js.style = 'background:#eee;width:84%;height:360px;\
          position:relative;margin:2em 0;\
          margin-left:auto;\
          margin-right:auto;'
-    document.getElementById('bm').insertBefore(js, document.getElementById('bm').firstChild);
+    document.getElementById('band').insertBefore(js, document.getElementById('band').firstChild);
     var js = document.createElement('br');
     document.getElementById('bm').insertBefore(js, document.getElementById('bm').firstChild);
     var js = document.createElement('br');
@@ -313,6 +320,7 @@ if (!dw) {
     delete js;
     var js = document.createElement('div');
     js.id = 'remove';
+    js.style = 'position:absolute'
     document.getElementById('stage').appendChild(js);
     delete js;
 }
