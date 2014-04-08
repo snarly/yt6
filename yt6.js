@@ -9,21 +9,21 @@ function qr(sr) {
 
 function get_quality(url) {
   var qual = {
-    5: '240p FLV H.263',
-    17: '144p 3GP MPEG-4',
-    18: '360p MP4 H.264',
-    22: '720p MP4 H.264',
+    5: '240p FLV H.263 + 64k MP3',
+    17: '144p 3GP MPEG-4 + 24k AAC',
+    18: '360p MP4 H.264 + 96k AAC',
+    22: '720p MP4 H.264 + 192k AAC',
     34: '360p FLV H.264',
     35: '480p FLV H.264',
-    36: '240p 3GP MPEG-4',
+    36: '240p 3GP MPEG-4 + 36k AAC',
     37: '1080p MP4 H.264',
-    43: '360p WebM VP8',
+    43: '360p WebM VP8 + 128k Vorbis',
     44: '480p WebM VP8',
     45: '720p WebM VP8',
     46: '1080p WebM VP8',
-    82: '360p MP4 3D',
-    84: '720p MP4 3D',
-    100: '360p WebM 3D',
+    82: '360p MP4 3D + 96k AAC',
+    84: '720p MP4 3D + 192k AAC',
+    100: '360p WebM 3D + 128k Vorbis',
     102: '720p WebM 3D',
     133: '240p DASH H.264',
     134: '360p DASH H.264',
@@ -35,7 +35,14 @@ function get_quality(url) {
     141: '256k DASH AAC',
     160: '192p DASH H.264',
     171: '128k DASH Vorbis',
-    172: '192k DASH Vorbis'
+    172: '192k DASH Vorbis',
+    242: '240p WebM VP9',
+    243: '360p WebM VP9',
+    244: '480p WebM VP9',
+    245: '480p WebM VP9',
+    246: '480p WebM VP9',
+    247: '720p WebM VP9',
+    248: '1080p WebM VP9'
   };
   var qs = qr(url);
   return qual[qs.itag] || qs.itag
@@ -46,6 +53,15 @@ function rp(tx) {
 }
 
 function dc(sg) {
+  var xhr = new XMLHttpRequest();
+  /* cors-anywhere.herokuapp.com */
+  px = 'allow-any-origin.appspot.com/https:';
+  xhr.open('get', 'https://' + px + ytplayer.config.assets.js, false);
+  xhr.send();
+  var rpt = xhr.responseText;
+  var fcnm = rpt.match(/signature=([^(]+)/)[1];
+  var fs = new RegExp('function ' + fcnm + '[^}]+}[^}]+}');
+  eval(rpt.match(fs)[0]);
   return eval(fcnm + '("' + sg + '")');
 }
 
@@ -55,19 +71,6 @@ var html = ['<br>' + '<br>' + '<br>' + '<br>' +
   'Click to copy the filename, then right click to download'
 ];
 
-var xhr = new XMLHttpRequest();
-/* YouTube Video and Audio Downloader Firefox Add-on uses this US-based IP address => 199.116.175.50 to download when connecting through (US) proxy 24.38.63.26:80 */
-/* cors-anywhere.herokuapp.com */
-/* In----- about:config */
-/* To---- noscript.inclusionTypeChecking.exceptions */
-/* Add-- https://raw.github.com/svnpenn/bm/gh-pages/yt.js */
-px = 'allow-any-origin.appspot.com/https:';
-xhr.open('get', 'https://' + px + ytplayer.config.assets.js, false);
-xhr.send();
-var rpt = xhr.responseText;
-var fcnm = rpt.match(/signature=([^(]+)/)[1];
-var fs = new RegExp('function ' + fcnm + '[^}]+}[^}]+}');
-eval(rpt.match(fs)[0]);
 
 for (var ft of [args.url_encoded_fmt_stream_map, args.adaptive_fmts]) {
   for (var z of ft ? ft.split(',') : '') {
@@ -80,7 +83,7 @@ for (var ft of [args.url_encoded_fmt_stream_map, args.adaptive_fmts]) {
     if (qs.s)
       href += '&signature=' + dc(qs.s);
 if (qq.indexOf("360p WebM VP8") != -1) { var webm = href };
-    if ((qq.indexOf("MP4") == -1) && (qq.indexOf("WebM") == -1)) {
+    if ((qq.indexOf("MP4") == -1) && (qq.indexOf("VP8") == -1)) {
       href += '&ratebypass=yes';}
     var fn = (args.title + '-' + qq).toLowerCase()
              .replace(/["&().|]/g,'')
@@ -289,7 +292,7 @@ if (!dw) {
     delete js;
     var js = document.createElement('track');
     js.srclang = lang_code;
-    js.src = '0.srt';
+    js.src = uriContent;
     js.kind = 'subtitles';
     document.getElementById('player1').appendChild(js);
     delete js;
@@ -328,7 +331,7 @@ if (!dw) {
 $.getScript("https://raw.github.com/codepo8/rotatezoomHTML5video/master/transformvideo.js", function(){});
 
   if(remove){
-    remove.innerHTML =  '<button onclick="deldiv()">remove</button>'
+    remove.innerHTML =  '<button onclick="deldiv()">remove</button> ' + args.title
   }
   
  };
