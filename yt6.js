@@ -292,7 +292,7 @@ if (!dw) {
     delete js;
     var js = document.createElement('track');
     js.srclang = lang_code;
-    js.src = uriContent;
+    js.src = '0.srt';
     js.kind = 'subtitles';
     document.getElementById('player1').appendChild(js);
     delete js;
@@ -331,7 +331,7 @@ if (!dw) {
 $.getScript("https://raw.github.com/codepo8/rotatezoomHTML5video/master/transformvideo.js", function(){});
 
   if(remove){
-    remove.innerHTML =  '<button onclick="deldiv()">remove</button> ' + args.title
+    remove.innerHTML =  '<button onclick="deldiv()">remove</button>'
   }
   
  };
