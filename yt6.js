@@ -331,7 +331,7 @@ if (!dw) {
 $.getScript("https://raw.github.com/codepo8/rotatezoomHTML5video/master/transformvideo.js", function(){});
 
   if(remove){
-    remove.innerHTML =  '<button>' + args.title + '</button><button onclick="deldiv()">remove</button>'
+    remove.innerHTML =  '"' + args.title + '"<button onclick="deldiv()">remove</button>'
   }
   
  };
