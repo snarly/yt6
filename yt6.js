@@ -38,9 +38,9 @@ function get_quality(url) {
     172: '192k DASH Vorbis',
     242: '240p WebM VP9',
     243: '360p WebM VP9',
-    244: '480p WebM VP9',
-    245: '480p WebM VP9',
-    246: '480p WebM VP9',
+    244: '480p WebM 500k VP9',
+    245: '480p WebM 900k VP9',
+    246: '480p WebM 1400k VP9',
     247: '720p WebM VP9',
     248: '1080p WebM VP9'
   };
@@ -53,7 +53,6 @@ function rp(tx) {
 }
 
 function dc(sg) {
-  var xhr = new XMLHttpRequest();
   /* cors-anywhere.herokuapp.com */
   px = 'allow-any-origin.appspot.com/https:';
   xhr.open('get', 'https://' + px + ytplayer.config.assets.js, false);
@@ -64,6 +63,8 @@ function dc(sg) {
   eval(rpt.match(fs)[0]);
   return eval(fcnm + '("' + sg + '")');
 }
+
+var xhr = new XMLHttpRequest();
 
 var args = ytplayer.config.args;
 var html = ['<br>' + '<br>' + '<br>' + '<br>' +
