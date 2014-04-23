@@ -293,7 +293,7 @@ if (!dw) {
     delete js;
     var js = document.createElement('track');
     js.srclang = lang_code;
-    js.src = '0.srt';
+    js.src = 'https://raw.github.com/snarly/yt6/master/snarl.srt';
     js.kind = 'subtitles';
     document.getElementById('player1').appendChild(js);
     delete js;
