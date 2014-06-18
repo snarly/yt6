@@ -15,7 +15,7 @@
                     .appendTo(controls);
 
             var faster =
-                    $('<div class="mejs-button mejsmejs-faster-button hidden" align="center" valign="center" style="padding:0px 0px 0px 10px">' +
+                    $('<div class="mejs-button mejs-faster-button hidden" align="center" valign="center" style="padding:0px 0px 0px 10px">' +
                         '<button type="button" aria-controls="' + t.id + '" title="' + t.options.fasterText + '" aria-label="' + t.options.fasterText + '" style="background-position: -96px -6px;margin:12px 5px;"></button>+' +
                     '</div>')
                     .appendTo(controls)
