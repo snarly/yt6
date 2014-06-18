@@ -94,7 +94,7 @@
 	width: 100px;
 	height: 100px;
 	margin: -50px 0 0 -50px;
-	background: url(https://raw.githubusercontent.com/snarly/yt6/master/bigplay.svg) no-repeat;
+	background: url('https://raw.githubusercontent.com/snarly/yt6/master/bigplay.svg') no-repeat;
 }
 
 .no-svg .mejs-overlay-button { 
@@ -127,7 +127,7 @@
 	display: block;
 	width: 80px;
 	height: 80px;
-	background: transparent url(https://raw.githubusercontent.com/snarly/yt6/master/loading.gif) 50% 50% no-repeat;
+	background: transparent url('https://raw.githubusercontent.com/snarly/yt6/master/loading.gif') 50% 50% no-repeat;
 }
 
 /* End: LAYERS */
@@ -178,7 +178,7 @@
 	height: 16px;
 	width: 16px;
 	border: 0;
-	background: transparent url(https://raw.githubusercontent.com/snarly/yt6/master/controls.svg) no-repeat;
+	background: transparent url('https://raw.githubusercontent.com/snarly/yt6/master/controls.svg') no-repeat;
 }
 
 .no-svg .mejs-controls .mejs-button button { 
