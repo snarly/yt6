@@ -886,6 +886,8 @@ var dw = document.getElementById('mejs-clear')
 //window.location.href = loc + '?n=' + new Date().getTime(); // random number
 if ((typeof (MediaElementPlayer) !== 'undefined') && ((dw !== null)  || ((typeof player.getPlayerState == 'function') && (player.getPlayerState !== -1))) ) { location.href = window.location.href };//.split('&')[0] + ''}
 
+}
+
 /*
   Zooming and rotating HTML5 video player
   Homepage: http://github.com/codepo8/rotatezoomHTML5video
