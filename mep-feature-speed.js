@@ -1,88 +1,67 @@
-// Source Chooser Plugin
 (function($) {
+    $.extend(mejs.MepDefaults, {
+        fasterText: 'Speed Up',
+        slowerText: 'Slow Down'
+    });
+	MediaElementPlayer.prototype.buildspeed = function(player, controls, layers, media) {
+		if (!player.isVideo)
+			return;
 
-	$.extend(mejs.MepDefaults, {
-		sourcechooserText: 'Source Chooser'
-	});
+		// add speed controls
+            var t = this;
 
-	$.extend(MediaElementPlayer.prototype, {
-		buildsourcechooser: function(player, controls, layers, media) {
+            var displaySpeed =
+                $('<div class="display-playback-speed hidden">Speed: 100%</div> ')
+                    .appendTo(controls);
 
-			var t = this;
+            var faster =
+                    $('<div class="mejs-button mejsmejs-faster-button hidden" align="center" valign="center" style="padding:0px 0px 0px 10px">' +
+                        '<button type="button" aria-controls="' + t.id + '" title="' + t.options.fasterText + '" aria-label="' + t.options.fasterText + '" style="background-position: -96px -6px;margin:12px 5px;"></button>+' +
+                    '</div>')
+                    .appendTo(controls)
+                    .click(function(e) {
+                        e.preventDefault();
+                        media.pause();
+                        if(media.playbackRate < 2.0) media.playbackRate = (media.playbackRate + 0.01).toFixed(2);
+                        media.play();
+                        displaySpeed.html("Speed: " + Math.round(media.playbackRate * 100) + "%");
+                        return false;
+                    });
 
-			player.sourcechooserButton =
-				$('<div class="mejs-button mejs-sourcechooser-button">'+
-					'<button type="button" aria-controls="' + t.id + '" title="' + t.options.sourcechooserText + '" aria-label="' + t.options.sourcechooserText + '"></button>'+
-					'<div class="mejs-sourcechooser-selector">'+
-						'<ul>'+
-						'</ul>'+
-					'</div>'+
-				'</div>')
-					.appendTo(controls)
+            var slower =
+                    $('<div class="mejs-button mejs-slower-button hidden" align="center" valign="center">' +
+                        '<button type="button" aria-controls="' + t.id + '" title="' + t.options.slowerText + '" aria-label="' + t.options.slowerText + '" style="background-position: -96px 6px;margin:4px 5px"></button>-' +
+                        '</div>')
+                        .appendTo(controls)
+                        .click(function(e) {
+                            e.preventDefault();
+                            media.pause();
+                            if(media.playbackRate > 0.5) media.playbackRate = (media.playbackRate - 0.01).toFixed(2);
+                            media.play();
+                            displaySpeed.html("Speed: " + Math.round(media.playbackRate * 100) + "%");
+                            return false;
+                        });
 
-					// hover
-					.hover(function() {
-						$(this).find('.mejs-sourcechooser-selector').css('visibility','visible');
-					}, function() {
-						$(this).find('.mejs-sourcechooser-selector').css('visibility','hidden');
-					})
+            media.addEventListener('play',function() {
+                if (media.pluginType === "native"){
+                    faster.removeClass('hidden');
+                    slower.removeClass('hidden');
+                    displaySpeed.removeClass('hidden');
+                }
+            }, false);
 
-					// handle clicks to the language radio buttons
-					.delegate('input[type=radio]', 'click', function() {
-						var src = this.value;
+            media.addEventListener('pause',function() {
+                if(!faster.hasClass("hidden")){
+                    faster.addClass('hidden');
+                }
+                if(!slower.hasClass("hidden")){
+                    slower.addClass('hidden');
+                }
+                if(!displaySpeed.hasClass("hidden")){
+                    displaySpeed.addClass('hidden');
+                }
+            }, false);
+	}
 
-						if (media.currentSrc != src) {
-							currentTime = media.currentTime;
-							paused = media.paused;
-//media.pause();
-							media.setSrc(src);
-							media.load();
-							media.addEventListener('loadedmetadata', function(e){
-				                this.currentTime = currentTime;
-				            }, true);
-				            media.addEventListener('canplay', function(e){
-				            	if (paused) {
-					            	//this.play();
-					            }
-				            }, true);
-						}
-					});
-
-			// add to list
-			for (var i in media.children) {
-				var src = media.children[i];
-				if (src.nodeName === 'SOURCE' && (media.canPlayType(src.type) == 'probably' || media.canPlayType(src.type) == 'maybe')) {
-					player.addSourceButton(src.src, src.title, src.type, media.src == src.src);
-				}
-			}
-
-		},
-
-		addSourceButton: function(src, label, type, isCurrent) {
-			var t = this;
-			if (label === '' || label == undefined) {
-				label = src;
-			}
-			type = type.split('/')[1];
-
-			t.sourcechooserButton.find('ul').append(
-				$('<li>'+
-					'<input type="radio" name="' + t.id + '_sourcechooser" id="' + t.id + '_sourcechooser_' + label + type + '" value="' + src + '" ' + (isCurrent ? 'checked="checked"' : '') + ' />'+
-					'<label for="' + t.id + '_sourcechooser_' + label + type + '">' + label + ' (' + type + ')</label>'+
-				'</li>')
-			);
-
-			t.adjustSourcechooserBox();
-
-		},
-
-		adjustSourcechooserBox: function() {
-			var t = this;
-			// adjust the size of the outer box
-			t.sourcechooserButton.find('.mejs-sourcechooser-selector').height(
-				t.sourcechooserButton.find('.mejs-sourcechooser-selector ul').outerHeight(true)
-			);
-		}
-	});
 
 })(mejs.$);
