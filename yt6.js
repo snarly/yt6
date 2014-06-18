@@ -504,7 +504,9 @@ var jq0 = function()
     var js = document.createElement('style');
     js.type = 'text/css';
     js.media = 'screen';
-    var code = ".html5-video-container{background:#000 no-repeat scroll center center;z-index:900}.html5-main-video,.html5-video-content{position:absolute;width:100%;height:360px;outline:0}.ytp-keyboard-focus";
+    xhr.open('get', "https://cors-anywhere.herokuapp.com/https://raw.githubusercontent.com/snarly/yt6/master/mediaelementplayer.css", false);
+    xhr.send();
+    var code = xhr.responseText + ".html5-video-container{background:#000 no-repeat scroll center center;z-index:900}.html5-main-video,.html5-video-content{position:absolute;width:100%;height:360px;outline:0}.ytp-keyboard-focus";
     try {
       js.appendChild(document.createTextNode(code));
       document.getElementById('video-hide').appendChild(js);
@@ -513,7 +515,7 @@ var jq0 = function()
       document.getElementById('video-hide').appendChild(js);
     }
     delete js;
-loadCSS("https://raw.githubusercontent.com/snarly/yt6/master/mediaelementplayer.css",function(){
+//loadCSS("https://raw.githubusercontent.com/snarly/yt6/master/mediaelementplayer.css",function(){
 
 var jq1 = function() {
 var jq2 = function() {
@@ -615,7 +617,7 @@ if (srcto != undefined) {  }  \
 };loadScript("https://raw.githubusercontent.com/snarly/yt6/master/mep-feature-loop.js",jq3);
 };loadScript("https://raw.githubusercontent.com/snarly/yt6/master/mep-feature-sourcechooser.js", jq2)
 };loadScript("https://raw.githubusercontent.com/snarly/yt6/master/mediaelement-and-player.js", jq1)
-});
+//});
  }
 loadScript("https://raw.githubusercontent.com/snarly/yt6/master/jquery.js", jq0);
 
