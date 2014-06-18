@@ -539,7 +539,7 @@ var jq5 = function() {
                 translationSelector: true,\
                 translations:['en','de','es'],\
                 success: function(me) {  $('#audio-type').html( me.pluginType);\
-                                                        me.addEventListener('loadeddata', function() { document.getElementsByClassName('mejs-clear')[0].innerHTML = 'OK' });\
+                                        me.addEventListener('loadeddata', function() { document.getElementsByClassName('mejs-clear')[0].setAttribute('id','mejs-clear') });\
 					me.addEventListener('play', function() { aspect();aspect();player1_src = me.src; document.getElementsByClassName('play')[0].innerHTML = 'pause';if (( (me.src.slice(-2) !== '&2') && (me.src.replace('&ratebypass=yes','') != player2.src)) || ((srcto != undefined) && (srcto == audio)) ) { player2.play() } else { if ((me.src.slice(-2) == '&2') && (Seek != 4)) { Seek = 4; player2.pause() } }; if (Seek == 3 ) {Seek = null} });\
 					me.addEventListener('pause', function() { document.getElementsByClassName('play')[0].innerHTML = 'play'; if (me.src != player2.src) { if (Seek == 3) { player2.pause() }; if (Seek === 0) { Seek = 1 }; player2.pause(); player2.currentTime = me.currentTime }});\
 					me.addEventListener('volumechange', function() { if (me.src != player2.src) { player2.setVolume( me.volume ); if (me.muted) { player2.setMuted(true) } else player2.setMuted(false) }});\
@@ -876,7 +876,7 @@ document.getElementById('remove').parentNode.removeChild(document.getElementById
 document.getElementById('controls').parentNode.removeChild(document.getElementById('controls'))
 document.getElementById("snarl's_player").parentNode.removeChild(document.getElementById("snarl's_player"))
 document.getElementById("watch7-notification-area").remove()
-var dw = document.getElementsByClassName('mejs-clear')[0]
+var dw = document.getElementById('mejs-clear')
     var myNode = document.getElementById("bm1");
     if (myNode !== null) { while (myNode.firstChild) {myNode.removeChild(myNode.firstChild);};myNode.remove()}
     var myNode = document.getElementById("bm");
@@ -884,8 +884,7 @@ var dw = document.getElementsByClassName('mejs-clear')[0]
 //window.location.reload(true);
 //var loc = window.location.href; // or a new URL
 //window.location.href = loc + '?n=' + new Date().getTime(); // random number
-if ((typeof (MediaElementPlayer) !== 'undefined') && (dw !== null) &&  ((dw.innerHTML == 'OK') || ((typeof player.getPlayerState == 'function') && (player.getPlayerState !== -1))) ) { location.href = window.location.href };//.split('&')[0] + ''
-}
+if ((typeof (MediaElementPlayer) !== 'undefined') && ((dw !== null)  || ((typeof player.getPlayerState == 'function') && (player.getPlayerState !== -1))) ) { location.href = window.location.href };//.split('&')[0] + ''}
 
 /*
   Zooming and rotating HTML5 video player
