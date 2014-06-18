@@ -883,7 +883,7 @@ document.getElementById("watch7-notification-area").remove()
 //var loc = window.location.href; // or a new URL
 //window.location.href = loc + '?n=' + new Date().getTime(); // random number
 var dw = document.getElementsByClassName('mejs-clear')[1]
-//if ((typeof (MediaElementPlayer) !== 'undefined') && (dw !== null)) { location.href = window.location.href };//.split('&')[0] + ''
+if ((typeof (MediaElementPlayer) !== 'undefined') && (dw !== null)) { location.href = window.location.href };//.split('&')[0] + ''
 }
 
 /*
