@@ -130,7 +130,7 @@ function rp(tx) {
     }
 
   var fcnm = rpt.match(/signature=([^(]+)/)[1];
-  var fs = new RegExp('function ' + fcnm + '[^}]+}[^}]+}');
+  var fs = new RegExp('function ' + fcnm.replace('\$','\\$') + '[^}]+}[^}]+}');
   eval(rpt.match(fs)[0]);
 
 function dc(sg) {
