@@ -236,9 +236,9 @@ var aac = unescape(args.dashmpd)
 var z = aac.split('/'),sig = null;
 for (i in z) {
   if (sig == 1) { var sig = dc(z[i]); var aac2 = aac.replace(z[i],sig);}
-  if (sig == 2) { var aac2 = aac; sig == null;
+  if (sig == 2) { var aac2 = aac.replace('http://','https://'); sig == null;
    if (aac2 != null) {
-    xhr.open('get', aac, false);
+    xhr.open('get', aac2, false);
     xhr.send();
     var aac2 = parseXml(xhr.responseText);
     var regexp = new RegExp('<BaseURL.+>(http[^<]+itag=141[^<]+)<\\/BaseURL>','i');
