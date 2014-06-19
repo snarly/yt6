@@ -40,6 +40,6 @@ Note: Users of FF-addon NoScript
 
       security.mixed_content.block_active_content - consider setting it to false (temporarily).
 
-         Sometimes YouTube itself mixes its own content (resources via http
-         and https present at the same time), a circumstance browsers are not happy about.
-         Also, http://www.corsproxy.com, as a last resort, only supports non-secure http connections.
+         Sometimes YouTube itself mixes its own content (resources via http and https present at the same time), a
+         circumstance browsers are not happy about. Also, http://www.corsproxy.com, as a last resort, only supports
+         non-secure http connections.
