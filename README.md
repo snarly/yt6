@@ -4,7 +4,7 @@ javascript:%20if(document.getElementById("snarl's_player")==undefined){%20var%20
 
 __
 
-On any YouTube video page this bookmarklet you just created will call an external media player and load some extra functions which can be used with YouTube's native player as well. Use the HTML5 emblem to switch between the native and external player. The script should at least work with newer versions of Firefox (24+). It's still buggy though.
+On any YouTube video page this bookmarklet you just created will call an external player and load some extra functions which can be used with YouTube's native player as well. Use the HTML5 emblem to switch between the native and external player. The script should at least work with newer versions of Firefox (24+). It's still buggy though.
 
 
 Credit should go to the authors of their respective open source code:
