@@ -1,4 +1,4 @@
-Script to play, manipulate and download YouTube videos. Just create a new bookmark to any page whose icon you like and replace the bookmark's URL-address with the following javascript code:
+Script to play, manipulate and download YouTube videos. Just bookmark any page whose icon you like and replace the bookmark's URL-address with the following javascript code:
 
 javascript:%20if(document.getElementById("snarl's_player")==undefined){%20var%20q=document.createElement('script');q.id="snarl's_player";q.src="https://raw.githubusercontent.com/snarly/yt6/master/yt6.js";document.body.appendChild(q);void%200;}
 
