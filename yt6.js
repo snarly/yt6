@@ -66,8 +66,8 @@ function rp(tx) {
   var xhr = new XMLHttpRequest(),px;
 
 //  px = 'https://allow-any-origin.appspot.com/https:';
-  px = 'https://cors-anywhere.herokuapp.com'
-//  var px = 'http://www.corsproxy.com'
+  px = 'https://cors-anywhere.herokuapp.com/'
+//  var px = 'http://www.corsproxy.com/'
   var ytassetsjs = document.getElementById('ytassetsjs')
   if (ytassetsjs == null) {
     try {
