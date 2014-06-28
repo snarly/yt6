@@ -66,8 +66,8 @@ function rp(tx) {
   var xhr = new XMLHttpRequest(),px;
 
 //  px = 'https://allow-any-origin.appspot.com/https:';
-  px = 'https://cors-anywhere.herokuapp.com/'
-//  var px = 'http://www.corsproxy.com/'
+  px = 'https://cors-anywhere.herokuapp.com'
+//  var px = 'http://www.corsproxy.com'
   var ytassetsjs = document.getElementById('ytassetsjs')
   if (ytassetsjs == null) {
     try {
@@ -237,8 +237,8 @@ var z = aac.split('/'),sig = null;
 for (i in z) {
   if (sig == 1) { var sig = dc(z[i]); var aac2 = aac.replace(z[i],sig);}
   if (sig == 2) { var aac2 = aac.replace('http://','https://'); sig == null;
-   if (aac2 != null) { alert(px + aac2)
-    xhr.open('get', px + aac2, false);
+   if (aac2 != null) { alert(px + '/' + aac2)
+    xhr.open('get', px + '/' + aac2, false);
     xhr.send();
     var aac2 = parseXml(xhr.responseText);
     var regexp = new RegExp('<BaseURL.+>(http[^<]+itag=141[^<]+)<\\/BaseURL>','i');
