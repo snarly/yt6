@@ -237,7 +237,7 @@ var z = aac.split('/'),sig = null;
 for (i in z) {
   if (sig == 1) { var sig = dc(z[i]); var aac2 = aac.replace(z[i],sig);}
   if (sig == 2) { var aac2 = aac.replace('http://','https://'); sig == null;
-   if (aac2 != null) {
+   if (aac2 != null) { alert(px + aac2)
     xhr.open('get', px + aac2, false);
     xhr.send();
     var aac2 = parseXml(xhr.responseText);
