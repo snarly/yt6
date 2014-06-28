@@ -345,7 +345,7 @@ if (h.replace('px','') < 390) {var h = '390px'}
 
   cw = document.createElement('div');
   cw.id = 'bm';
-  cw.style = 'background:#111;width: '+w+'; height: '+h+';overflow: hidden;visibility:hidden;display:none;';
+  cw.style = 'background:#111;width: '+w+'; height: '+h+';overflow: hidden;visibility:hidden;';
   document.getElementById('movie_player').parentNode.insertBefore(cw, document.getElementById('movie_player').nextSibling);
   document.getElementById('bm').setAttribute('class','html5-video-content');
   var player = document.getElementById("movie_player");
@@ -740,7 +740,7 @@ if (current.className !== 'mejs-overlay mejs-layer mejs-overlay-play')
 }
 
 function switchflashhtml5() {
-  if ( document.getElementById('bm').style.display === 'none') {
+  if ( document.getElementById('bm').style.visibility === 'hidden') {
     document.getElementById('movie_player').style.display = 'none';
     document.getElementById('bm').style.display = 'block';
     document.getElementById('bm').style.visibility = 'visible';
