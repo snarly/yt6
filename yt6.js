@@ -283,9 +283,9 @@ if (sref.replace('&type=list&asrs=1','') != 'undefined') {
 
     }
   if (!lang_default) { var a=0; do { if ((!track) && (tracks[a] != "undefined")) { var track = tracks[a]}; a++; } while (a<100)};
-    html.push(
-      '<a href="' + sref +'">CC</a>'
-    );
+//    html.push(
+//      '<a href="' + sref +'">CC</a>'
+//    );
 }
 
 var cw = document.querySelector('#bm');
