@@ -740,8 +740,9 @@ if (current.className !== 'mejs-overlay mejs-layer mejs-overlay-play')
 }
 
 function switchflashhtml5() {
-  if ( document.getElementById('bm').style.visibility === 'hidden') {
+  if ( document.getElementById('bm').style.display === 'none') {
     document.getElementById('movie_player').style.display = 'none';
+    document.getElementById('bm').style.display = 'block';
     document.getElementById('bm').style.visibility = 'visible';
     var stage = document.getElementsByClassName('html5-video-content')[1];
     if (stage == undefined) { 
@@ -760,6 +761,7 @@ function switchflashhtml5() {
 //    }
   } else {
       document.getElementById('bm').style.visibility = 'hidden';
+      document.getElementById('bm').style.display = 'none';
       document.getElementById('movie_player').style.display = 'block';
       flashvars = document.getElementById('movie_player').getAttribute('flashvars')
       if (flashvars != null) {
