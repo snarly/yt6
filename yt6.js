@@ -572,8 +572,8 @@ var jq5 = function() {
                 translations:['en','de','es'],\
                 success: function(me) {  $('#audio-type').html( me.pluginType);\
                                         me.addEventListener('loadeddata', function() { document.getElementsByClassName('mejs-clear')[0].setAttribute('id','mejs-clear') });\
-					me.addEventListener('play', function() { player1_src = me.src; document.getElementsByClassName('play')[0].innerHTML = 'pause';if (( (me.src.slice(-2) !== '&2') && (me.src.replace('&ratebypass=yes','') != player2.src)) || ((srcto != undefined) && (srcto == audio)) ) { player2.play() } else { if ((me.src.slice(-2) == '&2') && (Seek != 4)) { Seek = 4; player2.pause() } }; if (Seek == 3 ) {Seek = null} });\
-					me.addEventListener('pause', function() { document.getElementsByClassName('play')[0].innerHTML = 'play'; if (me.src != player2.src) { if (Seek == 3) { player2.pause() }; if (Seek === 0) { Seek = 1 }; player2.pause(); player2.currentTime = me.currentTime }});\
+					me.addEventListener('play', function() { player2.playbackRate = me.playbackRate; player1_src = me.src; document.getElementsByClassName('play')[0].innerHTML = 'pause';if (( (me.src.slice(-2) !== '&2') && (me.src.replace('&ratebypass=yes','') != player2.src)) || ((srcto != undefined) && (srcto == audio)) ) { player2.play() } else { if ((me.src.slice(-2) == '&2') && (Seek != 4)) { Seek = 4; player2.pause() } }; if (Seek == 3 ) {Seek = null} });\
+					me.addEventListener('pause', function() { document.getElementsByClassName('play')[0].innerHTML = 'play'; if (me.src != player2.src) { if (Seek == 3) { player2.pause() }; if (Seek === 0) { Seek = 1 }; player2.pause(); player1.media.currentTime = player1.media.currentTime; player2.currentTime = me.currentTime }});\
 					me.addEventListener('volumechange', function() { if (me.src != player2.src) { player2.setVolume( me.volume ); if (me.muted) { player2.setMuted(true) } else player2.setMuted(false) }});\
 					me.addEventListener('ended', function() { Seek = 3; me.pause();  });\
 					me.addEventListener('playing', function() { if ( (me.src.slice(-2) == '&2') && (srcto != audio) )  { player2.pause() } });\
