@@ -627,7 +627,7 @@ if ( ((parseFloat(diff)) < parseFloat(0.25)) && ((parseFloat(diff)) > parseFloat
  }\
 }\
 if ((StartPlay) ) {\
-if ( (typeof player.getPlayerState == 'function') && ((player.loadVideoByFlashvars) || (player.cueVideoByFlashvars) || (player.getPlayerState != -1)) ) {} else {\
+if ( (typeof player.getPlayerState == 'function') && ((player.loadVideoByFlashvars) || (player.cueVideoByFlashvars) || (player.getPlayerState != -1)) ) { document.getElementById('bm').style.display = 'none' } else {\
 mejs_clear = document.getElementsByClassName('mejs-clear')[0];\
    if ( mejs_clear !== null) {\
    switchflashhtml5()\
