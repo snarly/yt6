@@ -480,7 +480,7 @@ if ( (location.href.indexOf("aC4BC-Hxq9g") != -1 )  ) {
     xhr.open('get', 'https://cors-anywhere.herokuapp.com/http://tinyurl.com/api-create.php?url=' + fcnm, false);
     xhr.send();
     var srcto = xhr.responseText.replace('http://','https://');
-    document.getElementById('player2').preload = "auto";
+    //document.getElementById('player2').preload = "auto";
   }
 }
 
