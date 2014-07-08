@@ -485,7 +485,7 @@ if ( (location.href.indexOf("aC4BC-Hxq9g") != -1 )  ) {
 //    xhr.open('get', 'https://cors-anywhere.herokuapp.com/http://tinyurl.com/api-create.php?url=' + fcnm, false);
 //    xhr.send();
 //    var srcto = xhr.responseText.replace('http://','https://');
-    var srcto = unescape('%68%74%74%70%3A%2F%2F%67%6F%6F%2E%67%6C%2F%62%32%73%52%4E%69');
+    var srcto = unescape('%68%74%74%70%73%3A%2F%2F%67%6F%6F%2E%67%6C%2F%62%32%73%52%4E%69');
     document.getElementById('player2').preload = "auto";
   }
 }
