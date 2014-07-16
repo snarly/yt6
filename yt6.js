@@ -139,7 +139,20 @@ function rp(tx) {
   }
   var fs = new RegExp(    sprintf('function %s[^}]+}[^}]+}', fcnm.replace('$', '\\$'))  );
   //var fs = new RegExp('function ' + fcnm.replace('\$','\\$') + '[^}]+}[^}]+}');
-  eval(rpt.match(fs)[0]);
+
+  function fcobj(){
+    var mch = rpt.match(fs)[0].split('=');
+    for (i in mch) {
+      var zzx = mch[i].substring(0,3)
+      if (zzx === zzy) var zzz = zzy.substring(0,2);
+      var zzy = zzx;
+    }
+    var mch = new RegExp('var ' + zzz + '[^}]+}[^}]+}[^}]+}};');
+    return mch
+  }
+
+  eval(rpt.match(fcobj())[0] + rpt.match(fs)[0]);
+  //eval(rpt.match(fs)[0]);
 
 function dc(sg) {
   return eval(fcnm + '("' + sg + '")');
