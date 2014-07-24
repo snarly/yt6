@@ -66,7 +66,7 @@ function rp(tx) {
   var xhr = new XMLHttpRequest(),px;
 
 //  px = 'https://allow-any-origin.appspot.com/https:';
-  px = 'https://cors-anywhere.herokuapp.com'
+  px = 'https://cors-anywhere.herokuapp.com/https:'
 //  var px = 'http://www.corsproxy.com'
   var ytassetsjs = document.getElementById('ytassetsjs')
   if (ytassetsjs == null) {
@@ -141,10 +141,10 @@ function rp(tx) {
   //var fs = new RegExp('function ' + fcnm.replace('\$','\\$') + '[^}]+}[^}]+}');
 
   function fcobj(){
-    var mch = rpt.match(fs)[0].split('=');
+    var mch = rpt.match(fs)[0].split('\;');
     for (i in mch) {
       var zzx = mch[i].substring(0,3)
-      if (zzx === zzy) var zzz = zzy.substring(0,2);
+      if ((zzx === zzy) && (zzx.charAt(2)==='.')) { var zzz = zzy.substring(0,2) };
       var zzy = zzx;
     }
     var mch = new RegExp('var ' + zzz + '[^}]+}[^}]+}[^}]+}};');
