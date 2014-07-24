@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset='utf-8' />
+    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
+    <meta name="description" content="Yt6 : Script to play, manipulate and download YouTube videos" />
+
+    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
+
+    <title>Yt6</title>
+  </head>
+
+  <body>
+
+    <!-- HEADER -->
+    <div id="header_wrap" class="outer">
+        <header class="inner">
+          <a id="forkme_banner" href="https://github.com/snarly/yt6">View on GitHub</a>
+
+          <h1 id="project_title">Yt6</h1>
+          <h2 id="project_tagline">Script to play, manipulate and download YouTube videos</h2>
+
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        <p>Just bookmark any page whose icon you like and edit the bookmark's Preferences / Location. Right click on the link below, "Copy link address" and paste over the bookmark's URL-address. Finally, save the bookmark (now bookmarklet). If you do not care about the icon, simply bookmark the link below:</p>
+
+<a href="javascript:%20if(document.getElementById('snarls_player')==undefined){%20var%20q=document.createElement('script');q.id='snarls_player';q.src='https://raw.githubusercontent.com/snarly/yt6/master/yt6.js';document.body.appendChild(q);void%200;}">Bookmarklet to Snarl's YouTube Video Player</a>
+<p>__</p>
+
+<p>On any YouTube video page, this bookmarklet will call an external player and load some extra functions which can be used with YouTube's native player as well. Use the HTML5 emblem to switch between the native and external player. The script should at least work with newer versions of Firefox (24+). It's still buggy though.</p>
+
+<p>Credit should go to the authors of their respective open source code:<br>
+<h3>
+   John Dyer - Mediaelementplayer - <a href="http://mediaelementjs.com/">http://mediaelementjs.com/</a><br>
+   Christian Heilmann - Transformvideo - <a href="http://github.com/codepo8/rotatezoomHTML5video">http://github.com/codepo8/rotatezoomHTML5video</a><br>
+   Steven Penny - Youtube download bookmarklet - <a href="http://svnpenn.github.io/bm/">http://svnpenn.github.io/bm/</a><br>
+</h3>
+I just wrapped up to make their programs work together:</p>
+
+<p>__</p>
+
+<p>Note: Users of FF-addon NoScript</p>
+
+<ol>
+<li>
+<p>Take a look at the Settings of NoScript and allow (i.e. uncheck) Embedded Objects:</p>
+
+<p>&lt;AUDIO&gt; / &lt;VIDEO&gt;,
+  &lt;IFRAME&gt;,
+  &lt;FRAME&gt;,
+  other plugins</p>
+</li>
+<li>
+<p>Add to NoScript Settings / Whitelist</p>
+
+<p>
+  githubusercontent.com<br>
+  <a href="https://cors-anywhere.herokuapp.com">https://cors-anywhere.herokuapp.com</a><br>
+  <a href="https://allow-any-origin.appspot.com">https://allow-any-origin.appspot.com</a><br>
+  <a href="http://www.corsproxy.com">http://www.corsproxy.com</a><br></p>
+</li>
+<li>
+<p>Look at Firefox's internal page "about:config" (type it on the address bar) and set the following key(s)</p>
+
+<p>noscript.inclusionTypeChecking.exceptions<br>
+     - add:  https://raw.githubusercontent.com/snarly/yt6/master/yt6.js</p>
+
+<pre><code> If the player still won't show up, check the browser's "Webdeveloper's Console" to see which files NoScript has
+ trouble with during type checking and add their full URL-address here.
+</code></pre>
+
+<p>security.mixed_content.block_active_content<br>
+     - consider setting it to false (temporarily).</p>
+
+<pre><code> Sometimes YouTube itself mixes its own content (resources via http and https present at the same time), a
+ circumstance browsers are not happy about. Also, http://www.corsproxy.com, as a last resort, only supports
+ non-secure http connections.
+</code></pre>
+</li>
+</ol>
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <div id="footer_wrap" class="outer">
+      <footer class="inner">
+<!--        <p class="copyright">Yt6 maintained by <a href="https://github.com/snarly">snarly</a></p>
+        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>-->
+      </footer>
+    </div>
+
+    
+
+  </body>
+</html>
