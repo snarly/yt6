@@ -74,7 +74,7 @@ function rp(tx) {
       xhr.open('get', px + ytplayer.config.assets.js, false);
       xhr.send();
     } catch (e) {
-        document.getElementById("snarl's_player").parentNode.removeChild(document.getElementById("snarl's_player"))
+        document.getElementById("snarls_player").parentNode.removeChild(document.getElementById("snarls_player"))
         function exit( status ) {
           // http://kevin.vanzonneveld.net
           // +   original by: Brett Zamir (http://brettz9.blogspot.com)
@@ -939,7 +939,7 @@ document.getElementById('masthead-positioner-height-offset').style = '';
 document.getElementById('remove').style.display = 'none';
 document.getElementById('remove').parentNode.removeChild(document.getElementById('remove'))
 document.getElementById('controls').parentNode.removeChild(document.getElementById('controls'))
-document.getElementById("snarl's_player").parentNode.removeChild(document.getElementById("snarl's_player"))
+document.getElementById("snarls_player").parentNode.removeChild(document.getElementById("snarls_player"))
 document.getElementById("watch7-notification-area").remove()
 var dw = document.getElementById('mejs-clear')
     var myNode = document.getElementById("bm1");
