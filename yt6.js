@@ -259,7 +259,7 @@ var aac = unescape(args.dashmpd)
 var z = aac.split('/'),sig = null;
 for (i in z) {
   if (sig == 1) { var sig = dc(z[i]); var aac2 = aac.replace(z[i],sig);}
-  if (sig == 2) { var aac2 = aac.replace('http://','//'); sig == null;
+  if (sig == 2) { var aac2 = aac.replace('http://','//').replace('https://','//'); sig == null;
    if ((aac2 != null) && (px != 'http://www.corsproxy.com')) {
     xhr.open('get', px + aac2, false);
     xhr.send();
