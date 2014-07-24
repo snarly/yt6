@@ -368,6 +368,10 @@ if (typeof ytcenter !== 'undefined') {
 if (w.replace('px','') < 640) {var w = '640px'}
 if (h.replace('px','') < 390) {var h = '390px'}
 
+var poster = getElementsByAttribute(document,"link","itemprop","thumbnailURL")[0].href
+if (poster != undefined) { var poster = "poster: '" + poster + "'" }
+  else { var poster = "poster: 'https://i1.ytimg.com/vi/' + args.video_id + '/0.jpg'" }
+
 
   cw = document.createElement('div');
   cw.id = 'bm';
@@ -590,7 +594,7 @@ var jq5 = function() {
     var code = "jQuery(document).ready(function($) {\
                 $('#version').html( mejs.version);\
                 var player1 = new MediaElementPlayer('#player1',{\
-		poster: 'https://i1.ytimg.com/vi/' + args.video_id + '/0.jpg',\
+		" + poster + ",\
 		enableAutosize: false,\
 		videoWidth: "+w.replace('px','')+", videoHeight: "+h.replace('px','')+",\
 		features: ['playpause','loop','current','progress','duration','tracks','playlist','speed','sourcechooser','volume','fullscreen'],\
