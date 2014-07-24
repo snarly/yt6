@@ -261,7 +261,7 @@ for (i in z) {
   if (sig == 1) { var sig = dc(z[i]); var aac2 = aac.replace(z[i],sig);}
   if (sig == 2) { var aac2 = aac.replace('http://','//'); sig == null;
    if ((aac2 != null) && (px != 'http://www.corsproxy.com')) {
-    xhr.open('get', px + '/' + aac2, false);
+    xhr.open('get', px + aac2, false);
     xhr.send();
     var aac2 = parseXml(xhr.responseText);
     var regexp = new RegExp('<BaseURL.+>(http[^<]+itag=141[^<]+)<\\/BaseURL>','i');
