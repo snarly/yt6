@@ -158,12 +158,6 @@ function dc(sg) {
   return eval(fcnm + '("' + sg + '")');
 }
 
-/* In----- about:config */
-/* To---- noscript.inclusionTypeChecking.exceptions */
-/* Add-- https://raw.github.com/svnpenn/bm/gh-pages/yt.js */
-/* YouTube Video and Audio Downloader Firefox Add-on uses this US-based IP address => 199.116.175.50 to download when connecting through (US) proxy 24.38.63.26:80 */
-/* cors-anywhere.herokuapp.com */
-
 var linx = [];
 var lang_def = lang_asr = null;
 
@@ -180,7 +174,6 @@ for (i in ft) {
     var qq = get_quality(z[j]);
     var qs = qr(z[j]);
     var href = unescape(qs.url)
-//.replace("https://","http://");
     if (qs.sig)
       href += '&signature=' + qs.sig;
     if (qs.s)
@@ -258,20 +251,33 @@ if (typeof window.DOMParser != "undefined") {
 var aac = unescape(args.dashmpd)
 var z = aac.split('/'),sig = null;
 for (i in z) {
-  if (sig == 1) { var sig = dc(z[i]); var aac2 = aac.replace(z[i],sig);}
-  if (sig == 2) { var aac2 = aac.replace('http://','//').replace('https://','//'); sig == null;
-   if ((aac2 != null) && (px != 'http://www.corsproxy.com')) {
-    xhr.open('get', px + aac2, false);
-    xhr.send();
+  if (sig == 1) { var sig = dc(z[i]); var aac2 = aac.replace(z[i],sig).replace('/s/','/signature/');}
+  if (sig == 2) { var aac2 = aac.replace('http://','//').replace('https://','//'); sig == null;}
+   if ((aac2 != null) {
+     try {
+       xhr.open('get', aac2, false);
+       xhr.send();
+       if (xhr.responseText.indexOf("Forbidden") != -1) {
+         try {
+           xhr.open('get', px + aac2, false);
+           xhr.send();
+           if (xhr.responseText.indexOf("Forbidden") != -1) break
+         } catch(e) {
+             break
+           }
+       }
+     } catch(e) {
+         break
+       }
     var aac2 = parseXml(xhr.responseText);
-    var regexp = new RegExp('<BaseURL.+>(http[^<]+itag=141[^<]+)<\\/BaseURL>','i');
+    //var regexp = new RegExp('<BaseURL.+>(http[^<]+itag=141[^<]+)<\\/BaseURL>','i');
     aac2 = getElementsByAttribute(aac2,"Representation","id","141")[0].innerHTML;
     href = aac2.split("\>")[2].split("\<")[0]
     html.push(
       '<a href="' + href + '" onclick="' + rp(onclic) + '">256k DASH AAC</a>'
     );break
    }
-  }
+
   if (z[i] == "s") var sig = 1;
   if (z[i] == "signature") var sig = 2;
 }
