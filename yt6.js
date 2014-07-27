@@ -253,7 +253,7 @@ var z = aac.split('/'),sig = null;
 for (i in z) {
   if (sig == 1) { var sig = dc(z[i]); var aac2 = aac.replace(z[i],sig).replace('/s/','/signature/');}
   if (sig == 2) { var aac2 = aac.replace('http://','//').replace('https://','//'); sig == null;}
-   if ((aac2 != null) {
+   if (aac2 != null) {
      try {
        xhr.open('get', aac2, false);
        xhr.send();
