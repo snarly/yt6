@@ -65,66 +65,94 @@ function rp(tx) {
 
   var xhr = new XMLHttpRequest(),px;
 
+//+ Jonas Raoni Soares Silva
+//@ http://jsfromhell.com/array/shuffle [v1.0]
+function shuffle(o){ //v1.0
+    for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+    return o;
+};
+
+var proxies = ['https://cors-anywhere.herokuapp.com/https:','https://allow-any-origin.appspot.com/https:']
+
 //  px = 'https://allow-any-origin.appspot.com/https:';
-  px = 'https://cors-anywhere.herokuapp.com/https:'
+//  px = 'https://cors-anywhere.herokuapp.com/https:'
 //  var px = 'http://www.corsproxy.com'
   var ytassetsjs = document.getElementById('ytassetsjs')
-  if (ytassetsjs == null) {
-    try {
-      xhr.open('get', px + ytplayer.config.assets.js, false);
-      xhr.send();
-    } catch (e) {
-        document.getElementById("snarls_player").parentNode.removeChild(document.getElementById("snarls_player"))
-        function exit( status ) {
-          // http://kevin.vanzonneveld.net
-          // +   original by: Brett Zamir (http://brettz9.blogspot.com)
-          // +      input by: Paul
-          // +   bugfixed by: Hyam Singer (http://www.impact-computing.com/)
-          // +   improved by: Philip Peterson
-          // +   bugfixed by: Brett Zamir (http://brettz9.blogspot.com)
-          // %        note 1: Should be considered expirimental. Please comment on this function.
-          // *     example 1: exit();
-          // *     returns 1: null
+  if ((ytassetsjs == null) || ytassetsjs.innerHTML.indexOf("function(){") == -1) {
+    if (ytassetsjs != null) ytassetsjs.parentNode.removeChild(ytassetsjs)
+    function setProxy(){
+      var proxiez = shuffle(proxies)
+      for (i in proxiez){
+        var px = proxiez[i]
+        try {
+          xhr.open('get', px + ytplayer.config.assets.js, false);
+          xhr.send();
+        } catch (e) {
+            function exit( status ) {
+              // http://kevin.vanzonneveld.net
+              // +   original by: Brett Zamir (http://brettz9.blogspot.com)
+              // +      input by: Paul
+              // +   bugfixed by: Hyam Singer (http://www.impact-computing.com/)
+              // +   improved by: Philip Peterson
+              // +   bugfixed by: Brett Zamir (http://brettz9.blogspot.com)
+              // %        note 1: Should be considered expirimental. Please comment on this function.
+              // *     example 1: exit();
+              // *     returns 1: null
 
-          var i;
+              var i;
 
-          if (typeof status === 'string') {
-            alert(status);
-          }
+              if (typeof status === 'string') {
+                alert(status);
+              }
 
-          window.addEventListener('error', function (e) {e.preventDefault();e.stopPropagation();}, false);
+              window.addEventListener('error', function (e) {e.preventDefault();e.stopPropagation();}, false);
 
-          var handlers = [
-            'copy', 'cut', 'paste',
-            'beforeunload', 'blur', 'change', 'click', 'contextmenu', 'dblclick', 'focus', 'keydown', 'keypress', 'keyup', 'mousedown', 'mousemove', 'mouseout', 'mouseover', 'mouseup', 'resize', 'scroll',
-            'DOMNodeInserted', 'DOMNodeRemoved', 'DOMNodeRemovedFromDocument', 'DOMNodeInsertedIntoDocument', 'DOMAttrModified', 'DOMCharacterDataModified', 'DOMElementNameChanged', 'DOMAttributeNameChanged', 'DOMActivate', 'DOMFocusIn', 'DOMFocusOut', 'online', 'offline', 'textInput',
-            'abort', 'close', 'dragdrop', 'load', 'paint', 'reset', 'select', 'submit', 'unload'
-          ];
+              var handlers = [
+                'copy', 'cut', 'paste',
+                'beforeunload', 'blur', 'change', 'click', 'contextmenu', 'dblclick', 'focus', 'keydown', 'keypress', 'keyup', 'mousedown', 'mousemove', 'mouseout', 'mouseover', 'mouseup', 'resize', 'scroll',
+                'DOMNodeInserted', 'DOMNodeRemoved', 'DOMNodeRemovedFromDocument', 'DOMNodeInsertedIntoDocument', 'DOMAttrModified', 'DOMCharacterDataModified', 'DOMElementNameChanged', 'DOMAttributeNameChanged', 'DOMActivate', 'DOMFocusIn', 'DOMFocusOut', 'online', 'offline', 'textInput',
+                'abort', 'close', 'dragdrop', 'load', 'paint', 'reset', 'select', 'submit', 'unload'
+              ];
 
-          function stopPropagation (e) {
-            e.stopPropagation();
-            // e.preventDefault(); // Stop for the form controls, etc., too?
-          }
-          for (i=0; i < handlers.length; i++) {
-//          window.addEventListener(handlers[i], function (e) {stopPropagation(e);}, true);
-          }
+              function stopPropagation (e) {
+                e.stopPropagation();
+                // e.preventDefault(); // Stop for the form controls, etc., too?
+              }
+              for (i=0; i < handlers.length; i++) {
+                // window.addEventListener(handlers[i], function (e) {stopPropagation(e);}, true);
+              }
 
-          if (window.stop) {
-            window.stop();
-          }
+              if (window.stop) {
+                window.stop();
+              }
 
-          throw '';
-        }
-      exit(px + ' error')
-      }
+              throw '';
+            }
 
-    var rpt = xhr.responseText,scpt;
+            if (proxiez[i] === proxiez[proxiez.length-1]) { 
+              document.getElementById("snarls_player").parentNode.removeChild(document.getElementById("snarls_player"))
+              exit(px + ' error') 
+            } else {
+                alert(px + ' error')
+              }
+          }//catch
 
+        var rpt = xhr.responseText,scpt;
         scpt = document.createElement("script");
         scpt.type = "text/javascript";
         scpt.id = "ytassetsjs";
         scpt.textContent = rpt;
         document.body.appendChild(scpt);
+        if (rpt.indexOf("function(){") != -1) { break }
+      }//for
+
+      if (rpt.indexOf("function(){") != -1) { return [px, rpt] }
+    }//setProxy
+
+    var spx = setProxy()
+    var px = spx[0]
+    var rpt = spx[1]
+
   } else {
     var rpt = ytassetsjs.innerHTML
     }
@@ -249,7 +277,7 @@ if (typeof window.DOMParser != "undefined") {
 }
 
 var aac = unescape(args.dashmpd)
-var z = aac.split('/'),sig = null;
+var z = aac.split('/'),sig = aac2 = null;
 for (i in z) {
   if (sig == 1) { var sig = dc(z[i]); var aac2 = aac.replace(z[i],sig).replace('/s/','/signature/');}
   if (sig == 2) { var aac2 = aac.replace('http://','//').replace('https://','//'); sig == null;}
