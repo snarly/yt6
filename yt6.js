@@ -49,9 +49,13 @@ function qr(sr) {
     246: '480p WebM 1400k VP9',
     247: '720p WebM VP9',
     248: '1080p WebM VP9',
+    249: '48k WebM Opus',
+    250: '96k WebM Opus',
+    251: '160k WebM Opus',
     264: '1440p DASH H.264',
     271: '1440p WebM VP9',
-    272: '2160p WebM VP9'
+    272: '2160p WebM VP9',
+    278: '144p WebM VP9'
   };
 function get_quality(url) {
 
@@ -299,11 +303,25 @@ for (i in z) {
        }
     var aac2 = parseXml(xhr.responseText);
     //var regexp = new RegExp('<BaseURL.+>(http[^<]+itag=141[^<]+)<\\/BaseURL>','i');
-    aac2 = getElementsByAttribute(aac2,"Representation","id","141")[0].innerHTML;
-    href = aac2.split("\>")[2].split("\<")[0]
-    html.push(
-      '<a href="' + href + '" onclick="' + rp(onclic) + '">256k DASH AAC</a>'
-    );break
+    if (xhr.responseText.indexOf('Representation id="278"') > -1) {
+      for (j=0;html.length-1;j++) {
+        if (html[j].indexOf("itag=160") > -1) {
+          href = getElementsByAttribute(parseXml(xhr.responseText),"Representation","id","278")[0].innerHTML.split("\>")[1].split("\<")[0]
+          html.splice(
+            j+1, 0, '<a href="' + href + '" onclick="' + rp(onclic) + '">144p WebM VP9</a>'
+          )
+          linx[278] = href
+          break
+        }
+      }
+    }
+    if (xhr.responseText.indexOf('Representation id="141"') > -1) {
+      href = getElementsByAttribute(parseXml(xhr.responseText),"Representation","id","141")[0].innerHTML.split("\>")[2].split("\<")[0];
+      html.push(
+        '<a href="' + href + '" onclick="' + rp(onclic) + '">256k DASH AAC</a>'
+      )
+      linx[141] = href
+    };break
    }
 
   if (z[i] == "s") var sig = 1;
@@ -461,8 +479,9 @@ if (poster != undefined) { var poster = "poster: '" + poster + "'" }
       if (qual[i].indexOf('WebM') != -1) { js.type = 'video/webm'; js.title = qual[i].replace("WebM","")} 
       if (qual[i].indexOf('MP4') != -1) { js.type = 'video/mp4'; js.title = qual[i].replace("MP4","")}
       if (qual[i].indexOf('DASH') != -1) { js.type = 'video/mp4'; js.title = qual[i]}
-      if (qual[i].indexOf('WebM Vorbis') != -1) { js.type = 'audio/webm'; js.title = qual[i].replace("WebM","")} 
-      if (qual[i].indexOf('DASH AAC') != -1) { js.type = 'audio/dash'; js.title = qual[i].replace("DASH","")} 
+      if (qual[i].indexOf('WebM Vorbis') != -1) { js.type = 'audio/webm'; js.title = qual[i].replace("WebM","")}
+      if (qual[i].indexOf('WebM Opus') != -1) { js.type = 'audio/webm'; js.title = qual[i].replace("WebM","")} 
+      if (qual[i].indexOf('DASH AAC') != -1) { js.type = 'audio/mp4'; js.title = qual[i].replace("DASH","")} 
       js.src = linx[i]
       document.getElementById('player1').appendChild(js)
       delete js
@@ -640,7 +659,7 @@ var jq5 = function() {
                 success: function(me) {  $('#audio-type').html( me.pluginType);\
                                         me.addEventListener('loadedmetadata', function() {aspect();aspect() });\
                                         me.addEventListener('loadeddata', function() { document.getElementsByClassName('mejs-clear')[0].setAttribute('id','mejs-clear') });\
-					me.addEventListener('play', function() { player2.playbackRate = me.playbackRate; player1_src = me.src; document.getElementsByClassName('play')[0].innerHTML = 'pause';if (Math.abs(parseFloat(parseFloat(player2.currentTime) - parseFloat(me.currentTime))) > parseFloat(0.3)) { player2.currentTime = me.currentTime };if (( (me.src.slice(-2) !== '&2') && (me.src.replace('&ratebypass=yes','') != player2.src)) || ((srcto != undefined) && (srcto == audio)) ) { player2.play() } else { if ((me.src.slice(-2) == '&2') && (Seek != 4)) { Seek = 4; player2.pause() } }; if (Seek == 3 ) {Seek = null} });\
+					me.addEventListener('play', function() { player2.playbackRate = me.playbackRate; player1_src = me.src; document.getElementsByClassName('play')[0].innerHTML = 'pause';if (Math.abs(parseFloat(parseFloat(player2.currentTime) - parseFloat(me.currentTime))) > parseFloat(0.3)) { player2.currentTime = me.currentTime };if (( (me.src.slice(-2) !== '&2') && (me.src.indexOf('itag=249') === -1) && (me.src.indexOf('itag=250') === -1) && (me.src.indexOf('itag=251') === -1) && (me.src.replace('&ratebypass=yes','') != player2.src)) || ((srcto != undefined) && (srcto == audio)) ) { player2.play() } else { if ((me.src.slice(-2) == '&2') && (Seek != 4)) { Seek = 4; player2.pause() } }; if (Seek == 3 ) {Seek = null} });\
 					me.addEventListener('pause', function() { document.getElementsByClassName('play')[0].innerHTML = 'play'; if (me.src != player2.src) { if (Seek == 3) { player2.pause() }; if (Seek === 0) { Seek = 1 }; player2.pause(); player1.media.currentTime = player1.media.currentTime; player2.currentTime = me.currentTime }});\
 					me.addEventListener('volumechange', function() { if (me.src != player2.src) { player2.setVolume( me.volume ); if (me.muted) { player2.setMuted(true) } else player2.setMuted(false) }});\
 					me.addEventListener('ended', function() { Seek = 3; me.pause();  });\
