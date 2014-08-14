@@ -50,7 +50,7 @@ function qr(sr) {
     247: '720p WebM VP9',
     248: '1080p WebM VP9',
     249: '48k WebM Opus',
-    250: '96k WebM Opus',
+    250: '64k WebM Opus',
     251: '160k WebM Opus',
     264: '1440p DASH H.264',
     271: '1440p WebM VP9',
@@ -478,10 +478,10 @@ if (poster != undefined) { var poster = "poster: '" + poster + "'" }
       var js = document.createElement('source')
       if (qual[i].indexOf('WebM') != -1) { js.type = 'video/webm'; js.title = qual[i].replace("WebM","")} 
       if (qual[i].indexOf('MP4') != -1) { js.type = 'video/mp4'; js.title = qual[i].replace("MP4","")}
-      if (qual[i].indexOf('DASH') != -1) { js.type = 'video/mp4'; js.title = qual[i]}
+      //if (qual[i].indexOf('DASH') != -1) { js.type = 'video/mp4'; js.title = qual[i]}
       if (qual[i].indexOf('WebM Vorbis') != -1) { js.type = 'audio/webm'; js.title = qual[i].replace("WebM","")}
       if (qual[i].indexOf('WebM Opus') != -1) { js.type = 'audio/webm'; js.title = qual[i].replace("WebM","")} 
-      if (qual[i].indexOf('DASH AAC') != -1) { js.type = 'audio/mp4'; js.title = qual[i].replace("DASH","")} 
+      //if (qual[i].indexOf('DASH AAC') != -1) { js.type = 'audio/mp4'; js.title = qual[i].replace("DASH","")} 
       js.src = linx[i]
       document.getElementById('player1').appendChild(js)
       delete js
