@@ -307,6 +307,7 @@ for (i in z) {
       for (j=0;html.length-1;j++) {
         if (html[j].indexOf("itag=160") > -1) {
           href = getElementsByAttribute(parseXml(xhr.responseText),"Representation","id","278")[0].innerHTML.split("\>")[1].split("\<")[0]
+          var onclic = 'document.getElementsByClassName("video-stream html5-main-video")[0].setAttribute("src","' + href + '");document.getElementById("player1").setAttribute("src","' + href + '");sauce = getElementsByAttribute(document,"input","name","mep_0_sourcechooser"); if ((sauce != undefined) && (sauce.length != 0)) { for (i=0;j=(sauce.length-1);i++) { sauce[i].removeAttribute("checked");if (("'+href+'" == sauce[i].getAttribute("value")) || ("'+href.replace("&ratebypass=yes","")+'" == sauce[i].getAttribute("value")) || ("'+href.substring(0, href.length-2)+'" == sauce[i].getAttribute("value")) || ("'+href.substring(0, href.length-2).replace("&ratebypass=yes","")+'" == sauce[i].getAttribute("value"))) {sauce[i].setAttribute("checked","checked");document.getElementById("player1").setAttribute("src","' + href + '");var p1load = 1;return false};if (i === j){return false;} }};return false';
           html.splice(
             j+1, 0, '<a href="' + href + '" onclick="' + rp(onclic) + '">144p WebM VP9</a>'
           )
