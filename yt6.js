@@ -55,7 +55,7 @@ function qr(sr) {
     264: '1440p DASH H.264',
     271: '1440p WebM VP9',
     272: '2160p WebM VP9',
-    278: '144p WebM VP9'
+    241: '144p WebM VP9'
   };
 function get_quality(url) {
 
@@ -311,7 +311,7 @@ for (i in z) {
           html.splice(
             j+1, 0, '<a href="' + href + '" onclick="' + rp(onclic) + '">144p WebM VP9</a>'
           )
-          linx[278] = href
+          linx[241] = href
           break
         }
       }
@@ -661,7 +661,7 @@ var jq5 = function() {
                                         me.addEventListener('loadedmetadata', function() {aspect();aspect() });\
                                         me.addEventListener('loadeddata', function() { document.getElementsByClassName('mejs-clear')[0].setAttribute('id','mejs-clear') });\
 					me.addEventListener('play', function() { player2.playbackRate = me.playbackRate; player1_src = me.src; document.getElementsByClassName('play')[0].innerHTML = 'pause';if (Math.abs(parseFloat(parseFloat(player2.currentTime) - parseFloat(me.currentTime))) > parseFloat(0.3)) { player2.currentTime = me.currentTime };if (( (me.src.slice(-2) !== '&2') && (me.src.indexOf('itag=249') === -1) && (me.src.indexOf('itag=250') === -1) && (me.src.indexOf('itag=251') === -1) && (me.src.replace('&ratebypass=yes','') != player2.src)) || ((srcto != undefined) && (srcto == audio)) ) { player2.play() } else { if ((me.src.slice(-2) == '&2') && (Seek != 4)) { Seek = 4; player2.pause() } }; if (Seek == 3 ) {Seek = null} });\
-					me.addEventListener('pause', function() { document.getElementsByClassName('play')[0].innerHTML = 'play'; if (me.src != player2.src) { if (Seek == 3) { player2.pause() }; if (Seek === 0) { Seek = 1 }; player2.pause(); player1.media.currentTime = player1.media.currentTime; player2.currentTime = me.currentTime }});\
+					me.addEventListener('pause', function() { document.getElementsByClassName('play')[0].innerHTML = 'play'; if (me.src != player2.src) { if (Seek == 3) { player2.pause() }; if (Seek === 0) { Seek = 1 }; player2.pause(); player2.currentTime = me.currentTime }});\
 					me.addEventListener('volumechange', function() { if (me.src != player2.src) { player2.setVolume( me.volume ); if (me.muted) { player2.setMuted(true) } else player2.setMuted(false) }});\
 					me.addEventListener('ended', function() { Seek = 3; me.pause();  });\
 					me.addEventListener('playing', function() { if ( (me.src.slice(-2) == '&2') && (srcto != audio) )  { player2.pause() } });\
