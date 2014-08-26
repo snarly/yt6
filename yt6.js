@@ -64,7 +64,7 @@ function get_quality(url) {
 }
 
 function rp(tx) {
-  return tx.replace('"', '&quot;', 'g');
+  return tx.split('"').join('&quot;');
 }
 
   var xhr = new XMLHttpRequest(),px,i,j,k,x,z;
