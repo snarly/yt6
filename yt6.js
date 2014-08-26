@@ -149,7 +149,7 @@ var proxies = ['https://allow-any-origin.appspot.com/https:','https://cors-anywh
         document.body.appendChild(scpt);
         var z = new Date().toLocaleString().toString()
         scpt.setAttribute("time",z)
-        if (rpt.indexOf("function(){") != -1) { alert(px); break } else {alert(px + ": " + rpt);scpt.parentNode.removeChild(scpt)}
+        if (rpt.indexOf("function(){") != -1) { break } else {alert(px + ": " + rpt);scpt.parentNode.removeChild(scpt)}
       }//for
 
       if (rpt.indexOf("function(){") != -1) { return [px, rpt] }
@@ -766,7 +766,7 @@ aspect();aspect();                });";
 };loadScript("https://raw.githubusercontent.com/snarly/yt6/master/mep-feature-loop.js",jq3);
 };loadScript("https://raw.githubusercontent.com/snarly/yt6/master/mep-feature-sourcechooser.js", jq2)
 };loadScript("https://raw.githubusercontent.com/snarly/yt6/master/mediaelement-and-player.js", jq1)
-//});
+});
  }
 loadScript("https://raw.githubusercontent.com/snarly/yt6/master/jquery.js", jq0);
 
