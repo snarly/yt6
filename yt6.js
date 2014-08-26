@@ -67,16 +67,16 @@ function rp(tx) {
   return tx.replace('"', '&quot;', 'g');
 }
 
-  var xhr = new XMLHttpRequest(),px;
+  var xhr = new XMLHttpRequest(),px,i,j,k,x,z;
 
 //+ Jonas Raoni Soares Silva
 //@ http://jsfromhell.com/array/shuffle [v1.0]
 function shuffle(o){ //v1.0
-    for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+    for(j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
     return o;
 };
 
-var proxies = ['https://cors-anywhere.herokuapp.com/https:','https://allow-any-origin.appspot.com/https:']
+var proxies = ['https://allow-any-origin.appspot.com/https:','https://cors-anywhere.herokuapp.com/https:']
 
 //  px = 'https://allow-any-origin.appspot.com/https:';
 //  px = 'https://cors-anywhere.herokuapp.com/https:'
@@ -147,7 +147,13 @@ var proxies = ['https://cors-anywhere.herokuapp.com/https:','https://allow-any-o
         scpt.id = "ytassetsjs";
         scpt.textContent = rpt;
         document.body.appendChild(scpt);
-        if (rpt.indexOf("function(){") != -1) { break }
+        var z = new Date().toLocaleString().toString()
+        scpt.setAttribute("time",z)
+        if (rpt.indexOf("function(){") != -1) { 
+          break
+        } else { 
+            alert(px + ": " + rpt);scpt.parentNode.removeChild(scpt)
+          }
       }//for
 
       if (rpt.indexOf("function(){") != -1) { return [px, rpt] }
@@ -184,7 +190,6 @@ var proxies = ['https://cors-anywhere.herokuapp.com/https:','https://allow-any-o
   }
 
   eval(rpt.match(fcobj())[0] + rpt.match(fs)[0]);
-  //eval(rpt.match(fs)[0]);
 
 function dc(sg) {
   return eval(fcnm + '("' + sg + '")');
@@ -250,8 +255,8 @@ function getElementsByAttribute(oElm, strTagName, strAttributeName, strAttribute
   var oAttributeValue = (typeof strAttributeValue != "undefined")? new RegExp("(^|\\s)" + strAttributeValue + "(\\s|$)", "i") : null;
   var oCurrent;
   var oAttribute;
-  for(var i=0; i<arrElements.length; i++){
-    oCurrent = arrElements[i];
+  for(var k=0; k<arrElements.length; k++){
+    oCurrent = arrElements[k];
     oAttribute = oCurrent.getAttribute && oCurrent.getAttribute(strAttributeName);
       if(typeof oAttribute == "string" && oAttribute.length > 0){
         if(typeof strAttributeValue == "undefined" || (oAttributeValue && oAttributeValue.test(oAttribute))){
@@ -280,6 +285,29 @@ if (typeof window.DOMParser != "undefined") {
     throw new Error("No XML parser found");
 }
 
+var expired = document.getElementById("ytassetsjs").getAttribute("time")
+expired = expired.split(":")
+expired = (parseInt(expired[0].slice(-2) * 60 * 60) + parseInt(expired[1] * 60) + parseInt(expired[2].substring(0,2)))
+if ((href.indexOf("&mt=") != -1) && (href.indexOf("&expire") != -1)) {
+var expires = parseInt( parseInt(href.split('&expire=')[1].substring(0,10)) - parseInt(href.split('&mt=')[1].substring(0,10)) )
+} else {
+    if ((href.indexOf("?mt=") != -1) && (href.indexOf("&expire") != -1)) {
+      var expires = parseInt( parseInt(href.split('&expire=')[1].substring(0,10)) - parseInt(href.split('?mt=')[1].substring(0,10)) )
+    } else {
+        if ((href.indexOf("&mt=") != -1) && (href.indexOf("?expire") != -1)) {
+        var expires = parseInt( parseInt(href.split('?expire=')[1].substring(0,10)) - parseInt(href.split('?mt=')[1].substring(0,10)) )
+        }
+      }
+   }
+if ((expires + expired) < (24 * 60 * 60)) {
+  var z = new Date().toLocaleString().split(":")[0]; z = z.substring(0,z.length-2)
+  expires = z + (expires + expired).toString().toHHMMSS().split(".")[0]
+} else {
+    var z = new Date(); z.setDate(z.getDate()+1); z = z.toLocaleString().split(":")[0]; z = z.substring(0,z.length-2);
+    expires = z + ((expires + expired) - (24*60*60)).toString().toHHMMSS().split(".")[0];
+    }
+
+
 var aac = unescape(args.dashmpd)
 var z = aac.split('/'),sig = aac2 = null;
 for (i in z) {
@@ -301,12 +329,12 @@ for (i in z) {
      } catch(e) {
          break
        }
-    var aac2 = parseXml(xhr.responseText);
+    //var aac2 = parseXml(xhr.responseText);
     //var regexp = new RegExp('<BaseURL.+>(http[^<]+itag=141[^<]+)<\\/BaseURL>','i');
     if (xhr.responseText.indexOf('Representation id="278"') > -1) {
       for (j=0;html.length-1;j++) {
         if (html[j].indexOf("itag=160") > -1) {
-          href = getElementsByAttribute(parseXml(xhr.responseText),"Representation","id","278")[0].innerHTML.split("\>")[1].split("\<")[0]
+          href = getElementsByAttribute(parseXml(xhr.responseText),"Representation","id","278")[0].textContent
           var onclic = 'document.getElementsByClassName("video-stream html5-main-video")[0].setAttribute("src","' + href + '");document.getElementById("player1").setAttribute("src","' + href + '");sauce = getElementsByAttribute(document,"input","name","mep_0_sourcechooser"); if ((sauce != undefined) && (sauce.length != 0)) { for (i=0;j=(sauce.length-1);i++) { sauce[i].removeAttribute("checked");if (("'+href+'" == sauce[i].getAttribute("value")) || ("'+href.replace("&ratebypass=yes","")+'" == sauce[i].getAttribute("value")) || ("'+href.substring(0, href.length-2)+'" == sauce[i].getAttribute("value")) || ("'+href.substring(0, href.length-2).replace("&ratebypass=yes","")+'" == sauce[i].getAttribute("value"))) {sauce[i].setAttribute("checked","checked");document.getElementById("player1").setAttribute("src","' + href + '");var p1load = 1;return false};if (i === j){return false;} }};return false';
           html.splice(
             j+1, 0, '<a href="' + href + '" onclick="' + rp(onclic) + '">144p WebM VP9</a>'
@@ -317,7 +345,7 @@ for (i in z) {
       }
     }
     if (xhr.responseText.indexOf('Representation id="141"') > -1) {
-      href = getElementsByAttribute(parseXml(xhr.responseText),"Representation","id","141")[0].innerHTML.split("\>")[2].split("\<")[0];
+      href = getElementsByAttribute(parseXml(xhr.responseText),"Representation","id","141")[0].textContent
       html.push(
         '<a href="' + href + '" onclick="' + rp(onclic) + '">256k DASH AAC</a>'
       )
@@ -433,8 +461,8 @@ if (poster != undefined) { var poster = "poster: '" + poster + "'" }
   document.getElementById('bm').setAttribute('class','html5-video-content');
   var player = document.getElementById("movie_player");
   var js = document.createElement('param');
-  js.name = "wmode";
-  js.value = "transparent";
+//  js.name = "wmode";
+//  js.value = "transparent";
   document.getElementById('bm').appendChild(js);
   document.getElementById('movie_player').setAttribute('wmode','transparent');
 
@@ -479,10 +507,10 @@ if (poster != undefined) { var poster = "poster: '" + poster + "'" }
       var js = document.createElement('source')
       if (qual[i].indexOf('WebM') != -1) { js.type = 'video/webm'; js.title = qual[i].replace("WebM","")} 
       if (qual[i].indexOf('MP4') != -1) { js.type = 'video/mp4'; js.title = qual[i].replace("MP4","")}
-      //if (qual[i].indexOf('DASH') != -1) { js.type = 'video/mp4'; js.title = qual[i]}
+      if (qual[i].indexOf('DASH') != -1) { js.type = 'video/mp4'; js.title = qual[i]}
       if (qual[i].indexOf('WebM Vorbis') != -1) { js.type = 'audio/webm'; js.title = qual[i].replace("WebM","")}
       if (qual[i].indexOf('WebM Opus') != -1) { js.type = 'audio/webm'; js.title = qual[i].replace("WebM","")} 
-      //if (qual[i].indexOf('DASH AAC') != -1) { js.type = 'audio/mp4'; js.title = qual[i].replace("DASH","")} 
+      if (qual[i].indexOf('DASH AAC') != -1) { js.type = 'audio/mp4'; js.title = qual[i].replace("DASH","")} 
       js.src = linx[i]
       document.getElementById('player1').appendChild(js)
       delete js
@@ -535,6 +563,7 @@ if (poster != undefined) { var poster = "poster: '" + poster + "'" }
     js.id = 'audio-hide';
     js.style = "display: none;visibility: hidden";
     document.getElementById('bm').appendChild(js);
+    js.setAttribute('style',"display: none;visibility: hidden");
     var js = document.createElement('audio');
     js.id = 'player2';
     js.preload = "none";
@@ -588,6 +617,7 @@ if ( (location.href.indexOf("aC4BC-Hxq9g") != -1 )  ) {
 
     js.type = "audio/webm";
     document.getElementById('player2').appendChild(js);
+    js.setAttribute('style',"display: none;visibility: hidden");
     delete js;
 
 var player0 = null;
@@ -623,9 +653,10 @@ var jq0 = function()
     var js = document.createElement('style');
     js.type = 'text/css';
     js.media = 'screen';
-    xhr.open('get', "https://cors-anywhere.herokuapp.com/https://raw.githubusercontent.com/snarly/yt6/master/mediaelementplayer.css", false);
-    xhr.send();
-    var code = xhr.responseText + ".html5-video-container{background:#000 no-repeat scroll center center;z-index:900}.html5-main-video,.html5-video-content{position:absolute;width:100%;height:360px;outline:0}.ytp-keyboard-focus";
+    //xhr.open('get', "https://cors-anywhere.herokuapp.com/https://raw.githubusercontent.com/snarly/yt6/master/mediaelementplayer.css", false);
+    //xhr.send();
+    var code = xhr.responseText + ".html5-video-container{background:#000 no-repeat scroll center center;z-index:900}.html5-main-video,.html5-video-content{position:absolute;width:100%;height:360px;outline:0}.ytp-keyboard-focus,\
+    #change button{padding:0px 2px 0px 2px}";
     try {
       js.appendChild(document.createTextNode(code));
       document.getElementById('video-hide').appendChild(js);
@@ -635,6 +666,7 @@ var jq0 = function()
     }
     delete js;
 //loadCSS("https://raw.githubusercontent.com/snarly/yt6/master/mediaelementplayer.css",function(){
+loadCSS("https://goo.gl/ivCwqv",function(){
 
 var jq1 = function() {
 var jq2 = function() {
@@ -644,7 +676,7 @@ var jq5 = function() {
 
     var js = document.createElement('script');
     js.id = "mep_init";
-    if (typeof ytcenter !== 'undefined') { js.kind = parseInt(parseInt(h.replace('px','')) + parseInt(30))} else {js.kind = h.replace('px','')}
+    //if (typeof ytcenter !== 'undefined') { js.kind = parseInt(parseInt(h.replace('px','')) + parseInt(30))} else {js.kind = h.replace('px','')}
     var code = "jQuery(document).ready(function($) {\
                 $('#version').html( mejs.version);\
                 var player1 = new MediaElementPlayer('#player1',{\
@@ -751,43 +783,48 @@ if (!dw) {
   dw = document.createElement('div');
   dw.id = 'bm1';
   document.getElementsByClassName('yt-masthead-logo-container ')[0].insertBefore(dw,document.getElementsByClassName('yt-masthead-logo-container ')[0].lastChild);
-  document.getElementById('bm1').setAttribute('style','display:inline-block;position:absolute;');
+  document.getElementById('bm1').setAttribute('style','display:inline-block;position:float;');
 
   dw = document.createElement('div');
   dw.id = 'bm2';
-  dw.style = 'display:block;visibility:hidden; position:fixed;left:0px;top:0px;width:100%;z-index:2000000000;'
   document.getElementById('bm1').appendChild(dw);
-document.getElementById('bm2').innerHTML = html.join('<br>')
- + '<br><br>Media streams unsupported by the browser may cause it to crash or the player to freeze on playback.'
-  var csspopupheight0 = parseInt(document.getElementById('bm2').offsetHeight) + 67 ;
+  document.getElementById('bm2').setAttribute('style','display:block;visibility:hidden; position:fixed;left:0px;top:0px;width:100%;z-index:2000000000;')
+  html.push(
+   '<br>Links expire on <br>' + expires +
+   '<br><br>Media streams unsupported by the browser may cause it to crash or the player to freeze on playback.'
+  )
+  document.getElementById('bm2').innerHTML = html.join('<br>')
+  var csspopupheight0 = parseInt(document.getElementById('bm2').offsetHeight) + 77 ;
   dw = document.createElement('div');
   dw.id = 'bm3';
-  dw.style = 'display:block;visibility:hidden; position:fixed;left:0%;top:50%;width:220px;height:' + csspopupheight0 + 'px;margin-top:21px;margin-right:0px;background:#FFFFFF;opacity:0.9;padding:2px 2px 2px 2px;border:1px solid #DDD;z-index:0;overlay-y:hidden'
   document.getElementById('bm1').appendChild(dw);
-document.getElementById('bm3').innerHTML = document.getElementById('bm2').innerHTML;document.getElementById('bm2').innerHTML = '';
+  document.getElementById('bm3').setAttribute('style','display:block;visibility:hidden; position:fixed;left:0%;top:50%;width:220px;height:' + csspopupheight0 + 'px;margin-top:21px;margin-right:0px;background:#FFFFFF;opacity:0.9;padding:2px 2px 2px 2px;border:1px solid #DDD;z-index:0;overlay-y:hidden')  document.getElementById('bm1').appendChild(dw);
+  
+  document.getElementById('bm3').innerHTML = document.getElementById('bm2').innerHTML;
+  document.getElementById('bm2').innerHTML = '';
 //var csspopupheight = parseInt(document.getElementById('bm3').offsetHeight) + 10 ;document.getElementById('bm3').setAttribute('style',document.getElementById('bm3').getAttribute('style') + ';height:' + csspopupheight + 'px;' + 'overflow-y: scroll')
 
   dw = document.createElement('button');
   dw.id = 'bm4';
-  dw.style = 'font-size:10px;padding:0px 3px';
   dw.innerHTML = '<img src="//i1.ytimg.com/i/gsZadWjuuN2dEhI0mZfVfQ/mq1.jpg?v=531525b4" style="height:27px"></img><br>Download';
-function onclic(){
-if (document.getElementById("bm2").style.visibility === "visible") { 
-  document.getElementById("bm2").style.visibility = "hidden";
-  document.getElementById("bm3").style.visibility = "hidden";
-} else { 
-  document.getElementById("bm2").style.visibility = "visible";
-  document.getElementById("bm3").style.visibility = "visible";
-  var csspopupheight = csspopupheight0;
-  var windowheight = parseInt(window.innerHeight || document.documentElement.clientHeight || document.getElementsByTagName('body')[0].clientHeight);
-    if (csspopupheight > windowheight) { 
-      document.getElementById('bm3').style.height = windowheight - 66 + 'px';document.getElementById('bm3').style.overflowY = 'scroll'
+  var onclic = function(){
+    if (document.getElementById("bm2").style.visibility === "visible") { 
+      document.getElementById("bm2").style.visibility = "hidden";
+      document.getElementById("bm3").style.visibility = "hidden";
     } else { 
-      document.getElementById('bm3').style.height = csspopupheight0 + 'px';document.getElementById('bm3').style.overflowY = 'initial' 
+        document.getElementById("bm2").style.visibility = "visible";
+        document.getElementById("bm3").style.visibility = "visible";
+        var csspopupheight = csspopupheight0;
+        var windowheight = parseInt(window.innerHeight || document.documentElement.clientHeight || document.getElementsByTagName('body')[0].clientHeight);
+          if (csspopupheight > windowheight) { 
+            document.getElementById('bm3').style.height = windowheight - 66 + 'px';document.getElementById('bm3').style.overflowY = 'scroll'
+          } else { 
+              document.getElementById('bm3').style.height = csspopupheight0 + 'px';document.getElementById('bm3').style.overflowY = 'initial' 
+            }
       }
   }
-}
   document.getElementById('bm1').appendChild(dw);
+  document.getElementById('bm4').setAttribute('style','font-size:10px;padding:0px 3px');
   document.getElementById('bm4').setAttribute('class','yt-uix-button yt-uix-button-size-default yt-uix-button-text yt-uix-button-empty yt-uix-button-has-icon appbar-guide-toggle appbar-guide-clickable-ancestor');
   document.getElementById('bm4').onclick = onclic;
 
@@ -797,9 +834,9 @@ if (document.getElementById("bm2").style.visibility === "visible") {
   dw.id = "bm5";
   dw.style = "color:#EE0000";
   dw.innerHTML = 'https://www.youtube.com/html5';
-function onclic(){
-if ((lang_def == null) && (lang_asr == null)) { window.open("https://www.youtube.com/html5", "_blank").focus() }
-}
+  function onclic(){
+    if ((lang_def === null) && (lang_asr === null)) { window.open("https://www.youtube.com/html5", "_blank").focus() }
+  }
   document.getElementById('bm3').appendChild(dw);
   document.getElementById('bm5').onclick = onclic;
 }
@@ -816,9 +853,11 @@ function gclass(className, tag, elm){
 		current = elements[i];
 		if(testClass.test(current.className)){
 current.style.width = document.getElementById('bm').style.width;
-if (current.className !== 'mejs-overlay mejs-layer mejs-overlay-play') 
-   { current.style.height = document.getElementById('bm').style.height }
- else { current.style.height = parseInt(document.getElementById('bm').style.height.replace('px','') - 30) + 'px' }
+if (current.className !== 'mejs-overlay mejs-layer mejs-overlay-play') { 
+  current.style.height = document.getElementById('bm').style.height 
+} else { 
+    current.style.height = parseInt(document.getElementById('bm').style.height.replace('px','') - 30) + 'px'
+  }
 
 //			returnElements.push(current);
 
@@ -867,12 +906,12 @@ function switchflashhtml5() {
         });
         var v = player;
       } else {
-        var v = document.getElementsByClassName('video-stream html5-main-video')[0];
+          var v = document.getElementsByClassName('video-stream html5-main-video')[0];
         }
       var stage = document.getElementsByClassName('html5-video-content')[0];
 
       player1.pause();document.getElementsByClassName('play')[0].innerHTML = 'play';
-      if (typeof player.getPlayerState == 'function') { window.postMessage("unMute", "*"); if (flashvars != null) { player2.currentTime = player.getCurrentTime();}}
+      if (typeof player.getPlayerState === 'function') { window.postMessage("unMute", "*"); if (flashvars != null) { player2.currentTime = player.getCurrentTime();}}
 
     }
 CtrlS(stage,v);
@@ -908,8 +947,8 @@ var w = parseInt(parseInt(fix_Width().replace('px','')) + 400) + 'px';
 var h = Math.round((w.replace('px','') / aspect_ratio)) + 'px';
 
 dw = document.getElementById('aspect')
-if (dw != null) { dw.remove() }
-  dw = document.createElement('div');
+if (dw != null) { dw.parentNode.removeChild(dw)}
+dw = document.createElement('div');
   dw.id = 'aspect';
   dw.innerHTML = '<input id="a_width" value="' + w.replace("px","") + '" style="display:inline-block;width:30px;height:13px;text-align:right" onkeyup="if (event.keyCode == 13) aspect2(value,document.getElementById(\'a_height\').value)" onfocus="value=value;document.getElementById(\'a_height\').value=document.getElementById(\'a_height\').value"></input>x<input id="a_height" value="' + h.replace("px","") + '" style="display:inline-block;width:30px;height:13px;text-align:right" onkeyup="if (event.keyCode == 13) aspect2(document.getElementById(\'a_width\').value,value)" onfocus="value=value;document.getElementById(\'a_width\').value=document.getElementById(\'a_width\').value"></input>px';
 document.getElementById('controls').insertBefore(dw,document.getElementById('controls').lastChild);
@@ -945,7 +984,7 @@ document.getElementById('player').setAttribute('class',class_0.replace('small_a'
 var w = fix_Width();
 var h = fix_Height();
 dw = document.getElementById('aspect')
-if (dw != null) { dw.remove() }
+if (dw != null) { dw.parentNode.removeChild(dw)}
    document.getElementById('watch7-sidebar').style.marginTop = '-390px';
    document.getElementById('player-api').style.height = h;
    document.getElementById('player-api').style.width = w;
@@ -976,7 +1015,7 @@ function deldiv()
 if (typeof ($) !== 'undefined') { $.removeData([webm, audio]); }
 if ( (location.href.indexOf("aC4BC-Hxq9g") != -1 ) ) { clearInterval(watchit);}
 if (typeof window.watchit != 'undefined')  { clearInterval(watchit);}
-if (typeof ytcenter !== 'undefined') { js.kind = parseInt(parseInt(h.replace('px',''))+parseInt(30))} else {js.kind = h.replace('px','')}
+//if (typeof ytcenter !== 'undefined') { js.kind = parseInt(parseInt(h.replace('px',''))+parseInt(30))} else {js.kind = h.replace('px','')}
 document.getElementById('watch7-sidebar').style.marginTop = '-390px';
 document.getElementById('player-api').style.height = h_init;
 document.getElementById('player-api').style.width = w_init;
@@ -998,12 +1037,12 @@ document.getElementById('remove').style.display = 'none';
 document.getElementById('remove').parentNode.removeChild(document.getElementById('remove'))
 document.getElementById('controls').parentNode.removeChild(document.getElementById('controls'))
 document.getElementById("snarls_player").parentNode.removeChild(document.getElementById("snarls_player"))
-document.getElementById("watch7-notification-area").remove()
+//document.getElementById("watch7-notification-area").parentNode.removeChild(document.getElementById("watch7-notification-area"))
 var dw = document.getElementById('mejs-clear')
     var myNode = document.getElementById("bm1");
-    if (myNode !== null) { while (myNode.firstChild) {myNode.removeChild(myNode.firstChild);};myNode.remove()}
+    if (myNode !== null) { while (myNode.firstChild) {myNode.removeChild(myNode.firstChild);};myNode.parentNode.removeChild(myNode)}
     var myNode = document.getElementById("bm");
-    if (myNode !== null) { while (myNode.firstChild) {myNode.removeChild(myNode.firstChild);};myNode.remove()}
+    if (myNode !== null) { while (myNode.firstChild) {myNode.removeChild(myNode.firstChild);};myNode.parentNode.removeChild(myNode)}
 //window.location.reload(true);
 //var loc = window.location.href; // or a new URL
 //window.location.href = loc + '?n=' + new Date().getTime(); // random number
@@ -1042,10 +1081,10 @@ var ctrl = document.getElementById('controls');
 if (typeof ctrl == 'object') { if ( ctrl != null ) { document.getElementById('controls').parentNode.removeChild(document.getElementById('controls')) } else {} }
     var js = document.createElement('div');
     js.id = 'controls';
-    js.style = 'display:inline-block;';
 //    document.getElementById('masthead-search').setAttribute('style','display:inline-block;width:650px;max-width:650px;overflow:hidden;margin-top:3px;padding:0px;position:relative;')
 //    document.getElementById('masthead-search').parentNode.insertBefore(js, document.getElementById('masthead-search').nextSibling);
 document.getElementById('remove').parentNode.insertBefore(js, document.getElementById('remove').nextSibling);
+document.getElementById('controls').setAttribute('style','display:inline-block;');
 
 /* predefine zoom and rotate */
   var zoom = 1,
@@ -1087,7 +1126,7 @@ document.getElementsByClassName('html5-video-content')[0].style.top = (((documen
 /* If there is a controls element, add the player buttons */
 /* TODO: why does Opera not display the rotation buttons? */
   if(controls){
-    controls.innerHTML =  '<button class="play">play</button>'+
+    controls.innerHTML =  '<button class="play" style="padding:0px 3px 0px 3px">play</button>'+
                           '<div id="change">' +
                             '<button class="reset">reset</button>' +
                             '<button class="zoomin">+</button>' +
