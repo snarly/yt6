@@ -745,7 +745,7 @@ if ( ((parseFloat(diff)) < parseFloat(parseFloat(cpu_latency) + parseFloat(0.04)
 if ((StartPlay) ) {\
 if ( (typeof player.getPlayerState == 'function') && ((player.loadVideoByFlashvars) || (player.cueVideoByFlashvars) || (player.getPlayerState != -1)) ) { document.getElementById('bm').style.display = 'none' } else {\
 var z = document.getElementsByClassName('mejs-clear')[0];\
-   if ( z !== null) {alert();\
+   if ( z !== null) {\
    switchflashhtml5()\
    }\
 if (srcto != undefined) {  }  \
