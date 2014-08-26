@@ -452,8 +452,8 @@ if (poster != undefined) { var poster = "poster: '" + poster + "'" }
 
   cw = document.createElement('div');
   cw.id = 'bm';
-  cw.style = 'background:#111;width: '+w+'; height: '+h+';overflow: hidden;visibility:hidden;';
   document.getElementById('movie_player').parentNode.insertBefore(cw, document.getElementById('movie_player').nextSibling);
+  document.getElementById('bm').setAttribute('style','background:#111;width: '+w+'; height: '+h+';overflow: hidden;visibility:hidden;');
   document.getElementById('bm').setAttribute('class','html5-video-content');
   var player = document.getElementById("movie_player");
   var js = document.createElement('param');
