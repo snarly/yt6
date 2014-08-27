@@ -142,14 +142,22 @@ var proxies = ['https://allow-any-origin.appspot.com/https:','https://cors-anywh
           }//catch
 
         var rpt = xhr.responseText,scpt;
-        scpt = document.createElement("script");
-        scpt.type = "text/javascript";
-        scpt.id = "ytassetsjs";
-        scpt.textContent = rpt;
-        document.body.appendChild(scpt);
-        var z = new Date().toLocaleString().toString()
-        scpt.setAttribute("time",z)
-        if (rpt.indexOf("function(){") != -1) { break } else {alert(px + ": " + rpt);scpt.parentNode.removeChild(scpt)}
+        if (rpt.indexOf("function(){") != -1) {
+          scpt = document.createElement("script");
+          scpt.type = "text/javascript";
+          scpt.id = "ytassetsjs";;
+          scpt.textContent = rpt;
+          document.body.appendChild(scpt);
+          var z = new Date().toLocaleString().toString()
+          scpt.setAttribute("time",z)
+          break
+        } else {
+            scpt = document.createElement("div");
+            scpt.id = px + " error";
+            scpt.textContent = rpt;
+            document.body.appendChild(scpt);
+            scpt.setAttribute("style","display:none")
+          }
       }//for
 
       if (rpt.indexOf("function(){") != -1) { return [px, rpt] }
@@ -291,7 +299,7 @@ var expires = parseInt( parseInt(href.split('&expire=')[1].substring(0,10)) - pa
       var expires = parseInt( parseInt(href.split('&expire=')[1].substring(0,10)) - parseInt(href.split('?mt=')[1].substring(0,10)) )
     } else {
         if ((href.indexOf("&mt=") != -1) && (href.indexOf("?expire") != -1)) {
-        var expires = parseInt( parseInt(href.split('?expire=')[1].substring(0,10)) - parseInt(href.split('?mt=')[1].substring(0,10)) )
+        var expires = parseInt( parseInt(href.split('?expire=')[1].substring(0,10)) - parseInt(href.split('&mt=')[1].substring(0,10)) )
         }
       }
    }
@@ -662,7 +670,8 @@ var jq0 = function()
     }
     delete js;
 //loadCSS("https://raw.githubusercontent.com/snarly/yt6/master/mediaelementplayer.css",function(){
-loadCSS("https://goo.gl/ivCwqv",function(){
+//loadCSS("https://goo.gl/ivCwqv",function(){
+loadCSS("https://cdn.rawgit.com/snarly/yt6/ee5b34c3dd41fcea3f8e961389d1a715d93a9d2c/mediaelementplayer.css", function(){
 
 var jq1 = function() {
 var jq2 = function() {
@@ -707,7 +716,7 @@ if (srcto == undefined) {\
 					me.addEventListener('seeked', function() { if (Seek == 1) { Seek = null ;  player1.play() } else { if (!me.paused) { player1.setCurrentTime( me.currentTime ) }} });\
 					me.addEventListener('ended', function() { Seek = 3; me.pause() });\
 					me.addEventListener('pause', function() { if ( (typeof player.getPlayerState != 'function') || (document.getElementById('bm').style.visibility != 'hidden') ) { if (Seek == 4) { Seek = null; player1.play() }; if (Seek == 2) { Seek = null }; if (!player1.paused) { player1.pause() } } });\
-					me.addEventListener('play', function() { Seek = 2 ;var player1_src = document.getElementById('player1').getAttribute('src').replace('&ratebypass=yes',''); if ( (player1_src.slice(-2) == '&2')  ) {Seek = 4; me.pause() }; if ( (!player1.playing) && (me.src != player1_src) && (document.getElementById('bm').style.visibility != 'hidden')) { player1.play() } else { Seek = 4; me.pause()} } );\
+					me.addEventListener('play', function() { Seek = 2 ;var player1_src = document.getElementById('player1').getAttribute('src').replace('&ratebypass=yes',''); if ( (player1_src.slice(-2) == '&2')  ) {Seek = 4; me.pause() }; if ( (!player1.playing) && (me.src != player1_src) && (document.getElementById('bm').style.visibility != 'hidden')) { player1.play() } else { if (me.src == player1_src) me.pause()} } );\
 					me.addEventListener('loadeddata', function() { if (Seek !== 2) { Seek = 0; player1.pause() } else { } });\
 }});\
 } else {\
@@ -761,14 +770,25 @@ aspect();aspect();                });";
     }
     delete js;
 
-};loadScript("https://raw.githubusercontent.com/snarly/yt6/master/mep-feature-speed.js",jq5);
-};loadScript("https://raw.githubusercontent.com/snarly/yt6/master/mep-feature-playlist.js",jq4);
-};loadScript("https://raw.githubusercontent.com/snarly/yt6/master/mep-feature-loop.js",jq3);
-};loadScript("https://raw.githubusercontent.com/snarly/yt6/master/mep-feature-sourcechooser.js", jq2)
-};loadScript("https://raw.githubusercontent.com/snarly/yt6/master/mediaelement-and-player.js", jq1)
+};
+//loadScript("https://raw.githubusercontent.com/snarly/yt6/master/mep-feature-speed.js",jq5);
+loadScript("https://cdn.rawgit.com/snarly/yt6/1b62307b4c3e64515bedbaaf0f5dda5c2d271d9f/mep-feature-speed.js",jq5)
+};
+//loadScript("https://raw.githubusercontent.com/snarly/yt6/master/mep-feature-playlist.js",jq4);
+loadScript("https://cdn.rawgit.com/snarly/yt6/f684d6c92fc170be45129a7f2c12069689fcc0b0/mep-feature-playlist.js",jq4)
+};
+//loadScript("https://raw.githubusercontent.com/snarly/yt6/master/mep-feature-loop.js",jq3);
+loadScript("https://cdn.rawgit.com/snarly/yt6/6d86a0d56ac48384b35bc1f9072495f1e3dce842/mep-feature-loop.js",jq3)
+};
+//loadScript("https://raw.githubusercontent.com/snarly/yt6/master/mep-feature-sourcechooser.js", jq2)
+loadScript("https://cdn.rawgit.com/snarly/yt6/1b69efe5d367952c307eaf7ca70ca1074ddd1c1a/mep-feature-sourcechooser.js",jq2)
+};
+//loadScript("https://raw.githubusercontent.com/snarly/yt6/master/mediaelement-and-player.js", jq1)
+loadScript("https://cdn.rawgit.com/snarly/yt6/420ce361110fac238345befe87510645e475c8df/mediaelement-and-player.js",jq1)
 });
  }
-loadScript("https://raw.githubusercontent.com/snarly/yt6/master/jquery.js", jq0);
+//loadScript("https://raw.githubusercontent.com/snarly/yt6/master/jquery.js", jq0);
+loadScript("https://cdn.rawgit.com/snarly/yt6/747fd7ad7b481ee96ea874a8f0126df995f32006/jquery.js", jq0);
 
 }//cw
 
