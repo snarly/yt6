@@ -27,19 +27,18 @@ Note: Users of FF-addon NoScript
 2. Add to NoScript Settings / Whitelist
 
       githubusercontent.com
-      https://cors-anywhere.herokuapp.com
+      githack.com
+      https://rawgit.com
       https://allow-any-origin.appspot.com
-      http://www.corsproxy.com
+      https://cors-anywhere.herokuapp.com (From 26 Aug 2014, this proxy shows (possibly deliberate) errors in function.)
 
-3. Look at Firefox's internal page "about:config" (type it on the address bar) and set the following key(s)
+3. Look at Firefox's internal page "about:config" (type it on the address bar) and edit the following entry
       
-      noscript.inclusionTypeChecking.exceptions - add:  https://raw.githubusercontent.com/snarly/yt6/master/yt6.js
+         noscript.inclusionTypeChecking.exceptions
+   - add:
+   
+         https://raw.githubusercontent.com/snarly/yt6/master/yt6.js
 
-         If the player still won't show up, check the browser's "Webdeveloper's Console" to see which files NoScript has
-         trouble with during type checking and add their full URL-address here.
+      If the player still won't show up, check the browser's "Webdeveloper's Console" to see which files
+      NoScript shows having trouble with on a repeated try and add their full URL-address to this entry.
 
-      security.mixed_content.block_active_content - consider setting it to false (temporarily).
-
-         Sometimes YouTube itself mixes its own content (resources via http and https present at the same time), a
-         circumstance browsers are not happy about. Also, http://www.corsproxy.com, as a last resort, only supports
-         non-secure http connections.
