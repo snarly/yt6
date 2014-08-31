@@ -28,9 +28,9 @@ Note: Users of FF-addon NoScript
 
       githubusercontent.com
       githack.com
-      https://rawgit.com
-      https://allow-any-origin.appspot.com
-      https://cors-anywhere.herokuapp.com (From 26 Aug 2014, this proxy shows (possibly deliberate) errors in function.)
+      rawgit.com
+      allow-any-origin.appspot.com
+      cors-anywhere.herokuapp.com
 
 3. Look at Firefox's internal page "about:config" (type it on the address bar) and edit the following entry
       
