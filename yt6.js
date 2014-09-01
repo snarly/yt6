@@ -684,7 +684,7 @@ var jq0 = function()
     js.media = 'screen';
     //xhr.open('get', "https://cors-anywhere.herokuapp.com/https://raw.githubusercontent.com/snarly/yt6/master/mediaelementplayer.css", false);
     //xhr.send();
-    var code = xhr.responseText + ".html5-video-container{background:#000 no-repeat scroll center center;z-index:900}.html5-main-video,.html5-video-content{position:absolute;width:100%;height:360px;outline:0}.ytp-keyboard-focus,.annotation.annotation-type-custom {display: none;}\
+    var code = ".html5-video-container{background:#000 no-repeat scroll center center;z-index:900}.html5-main-video,.html5-video-content{position:absolute;width:100%;height:360px;outline:0}.ytp-keyboard-focus,.annotation.annotation-type-custom {display: none;}\
     #change button{padding:0px 2px 0px 2px}";
     try {
       js.appendChild(document.createTextNode(code));
@@ -896,19 +896,20 @@ function gclass(className, tag, elm){
 	var elements = (tag == "*" && elm.all)? elm.all : elm.getElementsByTagName(tag);
 	var returnElements = [];
 	var current;
-	var length = elements.length; var i = 0;
+	var length = elements.length;
+	var i = 0;
 	for(i=0; i<length; i++){
 		current = elements[i];
 		if(testClass.test(current.className)){
 			returnElements.push(current);
-
 		}
 	}
 	return returnElements;
 }
 
 function resize_layers(){
-  var z = gclass("mejs-layer"); var i = 0;
+  var z = gclass("mejs-layer");
+  var i = 0;
   for(i=0;i<z.length-1;i++){
     if ( z[i] ) {
       z[i].style.width = document.getElementById('bm').style.width;
