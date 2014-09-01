@@ -909,11 +909,11 @@ function gclass(className, tag, elm){
 function resize_layers(){
   var z = gclass("mejs-layer")
   for(i=0;i<z.length-1;i++){
-    if ( z[i] ) {
+    if ( z[i] ) { alert(z[i].className);
       z[i].style.width = document.getElementById('bm').style.width;
       if (z[i].className !== 'mejs-overlay mejs-layer mejs-overlay-play') {
         z[i].style.height = document.getElementById('bm').style.height
-      } else {
+      } else { alert(z[i].style.height);
           z[i].style.height = (document.getElementById('bm').style.height.replace('px','') - 30) + 'px'
         }
     }
