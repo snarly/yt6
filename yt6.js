@@ -884,7 +884,8 @@ if (!dw) {
   document.getElementById('bm3').appendChild(dw);
   document.getElementById('bm5').style.color = "#EE0000";
   document.getElementById('bm5').onclick = function onclic(){
-    if ((lang_def == null) && (lang_asr == null)) { window.open("https://www.youtube.com/html5", "_blank").focus() }
+    //if ((lang_def == null) && (lang_asr == null)) { }
+    window.open("https://www.youtube.com/html5", "_blank").focus()
   };
 }
 
@@ -913,7 +914,7 @@ function resize_layers(){
       if (z[i].className !== 'mejs-overlay mejs-layer mejs-overlay-play') {
         z[i].style.height = document.getElementById('bm').style.height
       } else {
-          z[i].style.height = parseInt(document.getElementById('bm').style.height.replace('px','') - 30) + 'px'
+          z[i].style.height = (document.getElementById('bm').style.height.replace('px','') - 30) + 'px'
         }
     }
   }
