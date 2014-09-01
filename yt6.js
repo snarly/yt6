@@ -896,25 +896,26 @@ function gclass(className, tag, elm){
 	var elements = (tag == "*" && elm.all)? elm.all : elm.getElementsByTagName(tag);
 	var returnElements = [];
 	var current;
-	var length = elements.length;
-	for(var i=0; i<length; i++){
+	var length = elements.length; var i = 0;
+	for(i=0; i<length; i++){
 		current = elements[i];
 		if(testClass.test(current.className)){
 			returnElements.push(current);
-		}	
+
+		}
 	}
 	return returnElements;
 }
 
 function resize_layers(){
-  var z = gclass("mejs-layer")
+  var z = gclass("mejs-layer"); var i = 0;
   for(i=0;i<z.length-1;i++){
-    if ( z[i] ) { alert(z[i].className);
+    if ( z[i] ) {
       z[i].style.width = document.getElementById('bm').style.width;
       if (z[i].className !== 'mejs-overlay mejs-layer mejs-overlay-play') {
         z[i].style.height = document.getElementById('bm').style.height
-      } else { alert(z[i].style.height);
-          z[i].style.height = (document.getElementById('bm').style.height.replace('px','') - 30) + 'px'
+      } else {
+          z[i].style.height = parseInt(document.getElementById('bm').style.height.replace('px','') - 30) + 'px'
         }
     }
   }
