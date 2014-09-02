@@ -378,7 +378,7 @@ for (i in z) {
       html.push(
         '<a href="' + href + '" onclick="' + rp(onclic) + '">192k WebM Vorbis</a>'
       )
-      linx[172] = href
+      linx[172] = href; var audio = href
     }
     if (xhr.responseText.indexOf('Representation id="141"') > -1) {
       href = getElementsByAttribute(parseXml(xhr.responseText),"Representation","id","141")[0].textContent
@@ -652,7 +652,7 @@ if ( (location.href.indexOf("aC4BC-Hxq9g") != -1 )  ) {
           var Sync = function(newState) {
             switch (newState) {
               case 0: player2.pause(); break;
-              case 1: if ( ( (typeof AV[v.src.split('itag=')[1].split('&')[0]] !== 'string')  && ( ((typeof V[v.src.split('itag=')[1].split('&')[0]] === 'string') && (v.src.replace('&ratebypass=yes','') != player2.src)) || ( (typeof A[v.src.split('itag=')[1].split('&')[0]] !== 'string') && (v.src.replace('&ratebypass=yes','') != player2.src) )) ) || ((srcto != undefined) && (srcto == audio)) ) { player2.play() };break;
+              case 1: if ( ( (typeof AV[v.src.split('itag=')[1].split('&')[0]] !== 'string')  && (typeof A[v.src.split('itag=')[1].split('&')[0]] !== 'string') && ( ((typeof V[v.src.split('itag=')[1].split('&')[0]] === 'string') && (v.src.replace('&ratebypass=yes','') != player2.src)) || ( (typeof A[v.src.split('itag=')[1].split('&')[0]] !== 'string') && (v.src.replace('&ratebypass=yes','') != player2.src) )) ) || ((srcto != undefined) && (srcto == audio)) ) { player2.play() };break;
               case 2: player2.pause(); break;
               case 3: player2.pause();break;
               case 5: player2.pause(); break;
@@ -744,7 +744,7 @@ var jq5 = function() {
                                         me.addEventListener('loadedmetadata', function() {aspect();aspect() });\
                                         me.addEventListener('loadeddata', function() { document.getElementsByClassName('mejs-clear')[0].setAttribute('id','mejs-clear') });\
 					me.addEventListener('play', function() { player2.playbackRate = me.playbackRate; player1_src = me.src; document.getElementsByClassName('play')[0].innerHTML = 'pause';if (Math.abs(parseFloat(parseFloat(player2.currentTime) - parseFloat(me.currentTime))) > parseFloat(0.3)) { player2.currentTime = me.currentTime };\
-                                          if ( ( (typeof AV[me.src.split('itag=')[1].split('&')[0]] !== 'string')  && \
+                                          if ( ( (typeof AV[me.src.split('itag=')[1].split('&')[0]] !== 'string')  && (typeof A[me.src.split('itag=')[1].split('&')[0]] !== 'string') && \
                                                 ( ((typeof V[me.src.split('itag=')[1].split('&')[0]] === 'string') && \
                                                    (me.src.replace('&ratebypass=yes','') != player2.src)) || \
                                                  ( (typeof A[me.src.split('itag=')[1].split('&')[0]] !== 'string') && \
