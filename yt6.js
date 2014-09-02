@@ -539,7 +539,7 @@ if (poster != undefined) { var poster = "poster: '" + poster + "'" }
   document.getElementById('player1').appendChild(js);
 
   if (typeof linx[160] === 'string') { linx.splice(132, 1, linx[160])}
-  for (i=0;i<linx.length-1;i++) {
+  for (i=0;i<linx.length;i++) {
     if ((linx[i]) && (linx[i] != webm) && (i != 160)) {
       var js = document.createElement('source')
       if (qual[i].indexOf('WebM') != -1) { js.type = 'video/webm'; js.title = qual[i].replace("WebM","")} 
@@ -941,6 +941,13 @@ function resize_layers(){
           z[i].style.height = parseInt(document.getElementById('bm').style.height.replace('px','') - 30) + 'px'
         }
     }
+  }
+  var z = document.getElementsByClassName("mejs-captions-text")[0]
+  if ( typeof z === 'object') { 
+    z.setAttribute("style","100%");
+    z.style.fontSize = parseFloat(parseFloat(0.9 + parseFloat(document.getElementById('bm').style.height.replace("px","")) / parseFloat(32.5)) + parseFloat(parseFloat(407 / parseInt(document.getElementById('bm').style.height.replace("px",""))))) + "px";
+    if (z.style.fontSize.replace("px","") < parseFloat(9.5)) z.style.fontSize = "9.5px"
+    if (z.style.fontSize.replace("px","") > parseFloat(23.5)) z.style.fontSize = "23.5px"
   }
 }
 
