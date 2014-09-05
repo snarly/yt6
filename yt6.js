@@ -559,12 +559,11 @@ if (typeof linx[160] === 'string') { linx.splice(132, 1, linx[160])}
       };
       if ((i > 102) && (qual[i].indexOf("WebM") > -1)) {
         js.title = qual[i].replace("WebM","")
-        if (qual[i].indexOf("Vorbis") === -1) {
+        if ((qual[i].indexOf("Vorbis") === -1) && (qual[i].indexOf("Opus") === -1)) {
           js.type = 'video/webm'; V[i] = "itag=" + i
         } else {
             js.type = 'audio/webm'; A[i] = "itag=" + i
           }
-        if (qual[i].indexOf("Opus") === -1) { js.type = 'audio/webm'; A[i] = "itag=" + i }
       }
       if ((linx[i] != webm) && (i != 160)) {
         js.src = linx[i]
