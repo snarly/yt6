@@ -2,6 +2,7 @@
 	// loop toggle
 	$.extend(MediaElementPlayer.prototype, {
 		buildloop: function(player, controls, layers, media) {
+			player.options.loop1 = player.options.loop;
 			var 
 				t = this,
 				// create the loop button
@@ -13,8 +14,8 @@
 				.appendTo(controls)
 				// add a click toggle event
 				.click(function() {
-					player.options.loop = !player.options.loop;
-					if (player.options.loop) {
+					player.options.loop1 = !player.options.loop1;
+					if (player.options.loop1) {
 						loop.removeClass('mejs-loop-off').addClass('mejs-loop-on');
 					} else {
 						loop.removeClass('mejs-loop-on').addClass('mejs-loop-off');
