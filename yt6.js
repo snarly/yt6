@@ -757,7 +757,7 @@ var jq5 = function() {
                                                  (typeof A[me.src.split('itag=')[1].split('&')[0]] !== 'string') && \
                                                  (typeof V[me.src.split('itag=')[1].split('&')[0]] === 'string') \
                                                ) || ((srcto != undefined) && (srcto == audio)) \
-                                             ) { player2.play() } else { if ((me.src.slice(-2) == '&2') && (Seek != 4)) { Seek = 4; player2.pause() }; if ((me.src.replace('&ratebypass=yes','') === player2.src)) { Seek = 0; player2.pause() } }; if (Seek == 3 ) {Seek = null} });\
+                                             ) { player2.play() } else { if ((me.src.slice(-2) == '&2') && (Seek != 4)) { Seek = 4; player2.pause() }; if ((me.src.replace('&ratebypass=yes','') === player2.src.replace('&ratebypass=yes',''))) { Seek = 0; player2.pause() } }; if (Seek == 3 ) {Seek = null} });\
 					me.addEventListener('pause', function() { document.getElementsByClassName('play')[0].innerHTML = 'play'; if (me.src != player2.src) { if (Seek == 3) { player2.pause() }; if (Seek === 0) { Seek = 1 }; player2.pause(); player2.currentTime = me.currentTime }});\
 					me.addEventListener('volumechange', function() { if (me.src != player2.src) { player2.setVolume( me.volume ); if (me.muted) { player2.setMuted(true) } else player2.setMuted(false) }});\
 					me.addEventListener('ended', function() { if (player1.options.loop1) { Seek = 1; me.currentTime = 0; if (typeof AV[me.src.split('itag=')[1].split('&')[0]] === 'string') { me.play() } } else { Seek = 3 } });\
