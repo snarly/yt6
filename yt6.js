@@ -804,7 +804,7 @@ if (srcto != undefined) { var audio = srcto; document.getElementById('player2').
 var Seek = null;var p2muted = false; var cvol = player2.volume;var cpu_latency = parseFloat(0.25);var slipcount = 0;\
    var watchit = setInterval(function(){ \
 if (typeof player2 === 'undefined') { clearInterval(watchit) } else { \
-  if ((typeof player.getCurrentTime == 'function') && (document.getElementById('bm').style.display === 'none')) {\
+  if ((typeof player.getCurrentTime == 'function') && (document.getElementById('bm').style.visibility === 'hidden')) {\
 var diff = parseFloat(parseFloat( player.getCurrentTime() - player2.currentTime) );\
 if ( ((parseFloat(diff)) > parseFloat(0.7)) || ((parseFloat(diff)) < parseFloat(-0.7)) ) { slipcount++; if (slipcount === 20) {slipcount = 0; Seek = 1 } };\
 if ( ((parseFloat(diff)) > parseFloat(0.08)) || ((parseFloat(diff)) < parseFloat(-0.08)) ) { if (Seek === 1) { if (!player2.muted) { p2muted = false; player2.muted = true}; player2.currentTime = parseFloat(parseFloat(player.getCurrentTime()) - parseFloat(cpu_latency));}};\
@@ -816,7 +816,7 @@ if ( ((parseFloat(diff)) < parseFloat(parseFloat(cpu_latency) + parseFloat(0.04)
  }\
 }\
 if ((StartPlay) ) {\
-if ( (typeof player.getPlayerState == 'function') && ((player.loadVideoByFlashvars) || (player.cueVideoByFlashvars) || (player.getPlayerState != -1)) ) { document.getElementById('bm').style.display = 'none' } else {\
+if ( (typeof player.getPlayerState == 'function') && ((player.loadVideoByFlashvars) || (player.cueVideoByFlashvars) || (player.getPlayerState != -1)) ) { document.getElementById('bm').style.visibility === 'hidden' } else {\
 var z = document.getElementsByClassName('mejs-clear')[0];\
    if ( z !== null) {\
    switchflashhtml5()\
@@ -973,6 +973,24 @@ function resize_layers(){
     if (z.style.fontSize.replace("px","") < parseFloat(9.5)) z.style.fontSize = "9.5px"
     if (z.style.fontSize.replace("px","") > parseFloat(23.5)) z.style.fontSize = "23.5px"
   }
+
+  var x = ['mejs-sourcechooser-selector','mejs-captions-selector']
+  for(i=0;i<x.length;i++){
+    var z = document.getElementsByClassName(x[i])[0]
+    if ((document.getElementsByClassName('mejs-clear')[0]) && (typeof z != 'undefined')){
+      function src_chooser(){ return [z.firstChild.offsetHeight, z.firstChild.offsetWidth] }
+      var src_chooser_size = src_chooser(z);
+      if (parseInt(parseInt(document.getElementById('bm').style.height.replace('px','')) - 30) < src_chooser_size[0]) {
+        z.style.height = parseInt(parseInt(document.getElementById('bm').style.height.replace('px','')) - 51) + 'px';
+        z.style.width = parseInt(parseInt(src_chooser_size[1]) + 12) + 'px'
+        z.style.overflowY = "scroll"
+      } else {
+          z.style.height = src_chooser_size[0] + 'px'
+          z.style.width = src_chooser_size[1] + 'px'
+          z.style.overflowY = "hidden"
+        }
+    }
+  }
 }
 
 
@@ -997,7 +1015,7 @@ function switchflashhtml5() {
     player2.pause();
   } else {
       document.getElementById('bm').style.visibility = 'hidden';
-      document.getElementById('bm').style.display = 'none';
+      //document.getElementById('bm').style.display = 'none';
       document.getElementById('movie_player').style.display = 'block';
       var flashvars = document.getElementById('movie_player').getAttribute('flashvars')
       if (flashvars != null) {
