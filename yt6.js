@@ -219,7 +219,7 @@ for (i in ft) {
   for (j in z) {
     var qq = get_quality(z[j]);
     var qs = qr(z[j]);
-    var href = unescape(qs.url).replace('http:','').replace('https:','');
+    var href = unescape(qs.url).replace(protocol, '');
     if (qs.sig)
       href += '&signature=' + qs.sig;
     if (qs.s)
@@ -227,7 +227,7 @@ for (i in ft) {
     if (href.indexOf("&ratebypass=yes") == -1) { href += '&ratebypass=yes'}
     if (qq.indexOf("+") != -1) { href += '&2' }
     if ((qq.indexOf("MP4") != -1) || (qq.indexOf("WebM") != -1) || (qq.indexOf("DASH") != -1)) { linx[qs.itag] = href };
-    if (qq.indexOf('360p WebM VP8') != -1) { var webm = href };
+    if (qq.indexOf('360p WebM VP8') != -1) { var webm = 'https:' + href };
     if (qq.indexOf('WebM Vorbis') != -1) { var audio = 'https:' + href };//.replace('&ratebypass=yes','') };
 
     var fn = (args.title + '-' + qq).toLowerCase()
@@ -563,7 +563,7 @@ if (typeof linx[160] === 'string') { linx.splice(132, 1, linx[160])}
             js.type = 'audio/webm'; A[i] = "itag=" + i
           }
       }
-      if ((linx[i] != webm) && (i != 160)) {
+      if ((linx[i].split('//')[1] != webm.split('//')[1]) && (i != 160)) {
         js.src = 'https:' + linx[i]
         document.getElementById('player1').appendChild(js)
       }
@@ -656,7 +656,7 @@ if ( (location.href.indexOf("aC4BC-Hxq9g") != -1 )  ) {
           if (typeof player.getPlayerState == 'function') { window.postMessage("unMute", "*") }
           //    window.postMessage("pauseVideo", "*");
           var Sync = function(newState) {
-            if (srcto != undefined) { var audio = srcto }
+            if (srcto != undefined) { var audio = 'https:' + srcto.replace(protocol, '') }
             switch (newState) {
               case 0: player2.pause(); break;
               case 1: if ( ( (typeof AV[v.src.split('itag=')[1].split('&')[0]] !== 'string')  && (typeof A[v.src.split('itag=')[1].split('&')[0]] !== 'string') && ( ((typeof V[v.src.split('itag=')[1].split('&')[0]] === 'string') && (v.src.replace('&ratebypass=yes','') != player2.src)) || ( (typeof A[v.src.split('itag=')[1].split('&')[0]] !== 'string') && (v.src.replace('&ratebypass=yes','') != player2.src) )) ) || ((srcto != undefined) && (srcto == audio)) ) { player2.play() };break;
