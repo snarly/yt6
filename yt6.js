@@ -874,7 +874,7 @@ if (!dw) {
    '<br><br>Media streams unsupported by the browser may cause it to crash or the player to freeze on playback.'
   )
   document.getElementById('bm2').innerHTML = html.join('<br>')
-  var csspopupheight0 = parseInt(document.getElementById('bm2').offsetHeight) + 77 ;
+  var csspopupheight0 = parseInt(document.getElementById('bm2').offsetHeight) + 78 ;
   dw = document.createElement('div');
   dw.id = 'bm3';
   document.getElementById('bm1').appendChild(dw);
@@ -896,8 +896,8 @@ if (!dw) {
         document.getElementById("bm3").style.visibility = "visible";
         var csspopupheight = csspopupheight0;
         var windowheight = parseInt(window.innerHeight || document.documentElement.clientHeight || document.getElementsByTagName('body')[0].clientHeight);
-        if (csspopupheight > windowheight) { 
-          document.getElementById('bm3').style.height = windowheight - 76 + 'px';document.getElementById('bm3').style.overflowY = 'scroll'
+        if (csspopupheight > windowheight - 78) { 
+          document.getElementById('bm3').style.height = windowheight - 78 + 'px';document.getElementById('bm3').style.overflowY = 'scroll'
         } else { 
             document.getElementById('bm3').style.height = csspopupheight0 + 'px';document.getElementById('bm3').style.overflowY = 'initial' 
           }
@@ -982,7 +982,7 @@ function resize_layers(){
       var src_chooser_size = src_chooser(z);
       if (parseInt(parseInt(document.getElementById('bm').style.height.replace('px','')) - 30) < src_chooser_size[0]) {
         z.style.height = parseInt(parseInt(document.getElementById('bm').style.height.replace('px','')) - 51) + 'px';
-        z.style.width = parseInt(parseInt(src_chooser_size[1]) + 12) + 'px'
+        z.style.width = parseInt(parseInt(src_chooser_size[1]) + 13) + 'px'
         z.style.overflowY = "scroll"
       } else {
           z.style.height = src_chooser_size[0] + 'px'
