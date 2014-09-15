@@ -1140,6 +1140,7 @@ function switchflashhtml5() {
             }
             document.getElementById('player2').currentTime = player.getCurrentTime();
           });
+      	}
         var v = player;
       } else {
           var v = document.getElementsByClassName('video-stream html5-main-video')[0];
