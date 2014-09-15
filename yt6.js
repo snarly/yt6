@@ -284,7 +284,7 @@ for (i in ft) {
           }
       }
     return fn
-    );//HTMLPush
+    };//HTMLPush
     var fn = HTMLPush()
   }
  }
