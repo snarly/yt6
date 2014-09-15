@@ -1348,7 +1348,7 @@ if ( (typeof player.getPlayerState == 'function') && (flashvars == null) && (doc
   if(controls){
     controls.innerHTML =  '<button class="play yt-uix-button-text">play</button>'+
                           '<div id="change">' +
-                            '<button class="reset yt-uix-button-text">reset</button>' +
+                            '<button class="reset yt-uix-button-text" style="width:37px;text-align:left">reset</button>' +
                             '<button class="zoomin yt-uix-button-text">+</button>' +
                             '<button class="zoomout yt-uix-button-text">-</button>' +
                             '<button class="left yt-uix-button-text">⇠</button>' +
