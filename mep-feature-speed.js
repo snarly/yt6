@@ -22,7 +22,7 @@
                     .click(function(e) {
                         e.preventDefault();
                         media.pause();
-                        if(media.playbackRate < 2.0) media.playbackRate = (media.playbackRate + 0.01).toFixed(2); media.currentTime = media.currentTime - 0.0001;
+                        if(media.playbackRate < 2.0) media.playbackRate = (media.playbackRate + 0.01).toFixed(2); //media.currentTime = media.currentTime - 0.0001;
                         //media.play();
                         displaySpeed.html("Speed: " + Math.round(media.playbackRate * 100) + "%");
                         return false;
@@ -36,7 +36,7 @@
                         .click(function(e) {
                             e.preventDefault();
                             media.pause();
-                            if(media.playbackRate > 0.5) media.playbackRate = (media.playbackRate - 0.01).toFixed(2); media.currentTime = media.currentTime - 0.0001;
+                            if(media.playbackRate > 0.5) media.playbackRate = (media.playbackRate - 0.01).toFixed(2); //media.currentTime = media.currentTime - 0.0001;
                             //media.play();
                             displaySpeed.html("Speed: " + Math.round(media.playbackRate * 100) + "%");
                             return false;
