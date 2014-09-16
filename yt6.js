@@ -704,7 +704,7 @@ if ( (location.href.indexOf("aC4BC-Hxq9g") != -1 )  ) {
             if (typeof srcto != 'undefined') { var audio = 'https:' + srcto.replace(protocol, '') }
             switch (newState) {
               case 0: player2.pause(); break;
-              case 1: if (typeof v.src.split('itag=')[1] != 'undefined') { if ( ( (typeof AV[v.src.split('itag=')[1].split('&')[0]] !== 'string')  && (typeof A[v.src.split('itag=')[1].split('&')[0]] !== 'string') && ( ((typeof V[v.src.split('itag=')[1].split('&')[0]] === 'string') && (v.src.replace('&ratebypass=yes','') != player2.src)) || ( (typeof A[v.src.split('itag=')[1].split('&')[0]] !== 'string') && (v.src.replace('&ratebypass=yes','') != player2.src) )) ) || ((typeof srcto != 'undefined') && (srcto == audio)) ) { player2.play() }};break;
+              case 1: if ((typeof srcto != 'undefined') && (srcto == audio)) { player2.play();break }; if (typeof v.src.split('itag=')[1] != 'undefined') { if ( (typeof AV[v.src.split('itag=')[1].split('&')[0]] !== 'string')  && (typeof A[v.src.split('itag=')[1].split('&')[0]] !== 'string') && ((typeof V[v.src.split('itag=')[1].split('&')[0]] === 'string') || (v.src.indexOf('itag=278') > -1)) || ((typeof srcto != 'undefined') && (srcto == audio)) ) { player2.play() }};break;
               case 2: player2.pause(); break;
               case 3: player2.pause();break;
               case 5: player2.pause(); break;
@@ -878,27 +878,23 @@ if (typeof srcto == 'undefined') {\
 		features: ['',],\
 		audioWidth: 1, audioHeight: 1,\
 		success: function(me) {  $('#audio-type').html( me.pluginType);\
-					me.addEventListener('seeked', function() { if (Seek == 1) { Seek = null ; if ((me.src !== player1.src) || (audio != srcto)) {me.play()}; if ( ((typeof player.getPlayerState != 'function') && (flashvars != null)) || ((document.getElementById('bm').style.visibility != 'hidden') && (flashvars != null)) ) { player1.play() } } else { if (!me.paused) { player1.currentTime = me.currentTime }} });\
-					me.addEventListener('ended', function() { Seek = 3; me.pause() });\
+					me.addEventListener('seeked', function() { if (Seek == 1) { Seek = null ;  player1.play() } else { if (!me.paused) { player1.setCurrentTime( me.currentTime ) }} });\
+					me.addEventListener('ended', function() { if (player1.options.loop1) { Seek = 1; me.currentTime = player2.currentTime = 0; } else { Seek = 3; me.currentTime = player2.currentTime = 0;\
+                                          var autoplay = document.getElementsByClassName('yt-uix-button yt-uix-button-size-default yt-uix-button-player-controls yt-uix-button-empty yt-uix-button-has-icon toggle-autoplay yt-uix-button-opacity yt-uix-tooltip yt-uix-tooltip yt-uix-button-toggled')[0];\
+                                          if (autoplay) { var autoplay = document.getElementsByClassName('yt-uix-button  next-playlist-list-item yt-uix-button-opacity yt-uix-tooltip spf-link  yt-uix-button-player-controls yt-uix-button-size-default yt-uix-button-empty')[0]; if (autoplay) autoplay.click()\
+                                          } } });\
 					me.addEventListener('pause', function() { if (Seek == 2) { Seek = null }; if (!player1.paused) {player1.pause()} });\
 					me.addEventListener('play', function() { Seek = 2 ; if ( (!player1.playing) && ( ((typeof player.getPlayerState != 'function') && (flashvars == null)) || ((document.getElementById('bm').style.visibility != 'hidden') && (flashvars != null)) ) ) { player1.play() } } );\
 					me.addEventListener('loadeddata', function() { if (Seek !== 2) { Seek = 0; player1.pause() } else { } });\
 }});\
 }\
+var Seek = null;\
 if (typeof srcto != 'undefined') { var audio = srcto; document.getElementById('player2').setAttribute('src',audio);\
  if ((typeof player.getCurrentTime == 'function') && (flashvars != null)) {\
-var Seek = null;var p2muted = false; var cvol = player2.volume;var cpu_latency = parseFloat(0.25);var slipcount = 0;\
+\
    var watchit = setInterval(function(){ \
-if (typeof player2 === 'undefined') { clearInterval(watchit) } else { \
-  if ((typeof player.getCurrentTime == 'function') && (document.getElementById('bm').style.visibility === 'hidden')) {\
-var diff = parseFloat(parseFloat( player.getCurrentTime() - player2.currentTime) );\
-if ( ((parseFloat(diff)) > parseFloat(0.7)) || ((parseFloat(diff)) < parseFloat(-0.7)) ) { slipcount++; if (slipcount === 20) {slipcount = 0; Seek = 1 } };\
-if ( ((parseFloat(diff)) > parseFloat(0.08)) || ((parseFloat(diff)) < parseFloat(-0.08)) ) { if (Seek === 1) { if (!player2.muted) { p2muted = false; player2.muted = true}; player2.currentTime = parseFloat(parseFloat(player.getCurrentTime()) - parseFloat(cpu_latency));}};\
-;\
-if ( ((parseFloat(diff)) < parseFloat(parseFloat(cpu_latency) + parseFloat(0.04))) && ((parseFloat(diff)) > parseFloat(parseFloat(cpu_latency) - parseFloat(0.04))) && (player.getPlayerState() != 2))  { Seek = null; if (!p2muted) { player2.muted = false;} } else { if (player.getPlayerState() === 2) player2.pause() };\
-  } else { player2.muted = false }\
-}\
-   },100);\
+if (typeof player2 === 'undefined') { clearInterval(watchit) } \
+   },1000);\
  }\
 }\
 if ((StartPlay) ) {\
@@ -1133,12 +1129,12 @@ function switchflashhtml5() {
           player.addEventListener("onStateChange", function Sync(newState) {
             switch (newState) {
               case 0: player2.pause(); break;
-              case 1: player2.play();break;
+              case 1: if ((typeof srcto != 'undefined') && (srcto == audio)) { player2.play();break }; if (typeof v.src.split('itag=')[1] != 'undefined') { if ( (typeof AV[v.src.split('itag=')[1].split('&')[0]] !== 'string')  && (typeof A[v.src.split('itag=')[1].split('&')[0]] !== 'string') && ((typeof V[v.src.split('itag=')[1].split('&')[0]] === 'string') || (v.src.indexOf('itag=278') > -1)) || ((typeof srcto != 'undefined') && (srcto == audio)) ) { player2.play() }};break;
               case 2: player2.pause(); break;
               case 3: player2.pause();break;
               case 5: player2.pause(); break;
             }
-            document.getElementById('player2').currentTime = player.getCurrentTime();
+            document.getElementById('player2').currentTime = player.getCurrentTime() ;
           });
       	}
         var v = player;
@@ -1291,7 +1287,7 @@ if (!document.getElementById("remove")) {
 
 } else { document.getElementById('remove').style.display = "inline-block"};
   if (remove){
-    remove.innerHTML =  '<button onclick="switchflashhtml5() class="yt-uix-button-text"><img src="//s.ytimg.com/yts/img/HTML5_1Color_Black-vfl902gVJ.png" style="vertical-align:middle;height:12px;padding:0px""></img></button><button onclick="aspect()" class=class="yt-uix-button-text">«&#8703;»</button><br><button onclick="deldiv()" class=class="yt-uix-button-text">remove</button>'
+    remove.innerHTML =  '<button onclick="switchflashhtml5()" class="yt-uix-button-text"><img src="//s.ytimg.com/yts/img/HTML5_1Color_Black-vfl902gVJ.png" style="vertical-align:middle;height:12px;padding:0px""></img></button><button onclick="aspect()" class=class="yt-uix-button-text">«&#8703;»</button><br><button onclick="deldiv()" class=class="yt-uix-button-text">remove</button>'
     //&#9724;
     //&#8633;
     //&#8703;
