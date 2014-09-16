@@ -218,7 +218,7 @@ for (i in ft) {
  if (typeof ft[i] !== 'undefined') {
   var z = ft ? ft[i].split(',') : '';
   for (j in z) {
-    var qq = get_quality(z[j]);
+    var qqq = get_quality(z[j]);
     var qs = qr(z[j]);
     var href = unescape(qs.url).replace(protocol, '');
     if (qs.sig)
@@ -226,11 +226,10 @@ for (i in ft) {
     if (qs.s)
       href += '&signature=' + dc(qs.s);
     if (href.indexOf("&ratebypass=yes") == -1) { href += '&ratebypass=yes'}
-    if (qq.indexOf("+") != -1) { href += '&2' }
-    //if ((qq.indexOf("MP4") != -1) || (qq.indexOf("WebM") != -1) || (qq.indexOf("DASH") != -1) || (qq.indexOf("FLV") != -1)|| (qq.indexOf("3GP") != -1)) { linx[qs.itag] = href };
+    if (qqq.indexOf("+") != -1) { href += '&2' }
     if (qs.itag !== '278') { linx[qs.itag] = href } else { linx[241] = href }
-    if (qq.indexOf('360p WebM VP8') != -1) { var webm = 'https:' + href };
-    if (qq.indexOf('WebM Vorbis') != -1) { var audio = 'https:' + href };//.replace('&ratebypass=yes','') };
+    if (qqq.indexOf('360p WebM VP8') != -1) { var webm = 'https:' + href };
+    if (qqq.indexOf('WebM Vorbis') != -1) { var audio = 'https:' + href };//.replace('&ratebypass=yes','') };
 
     //var fn = (args.title + '-' + qq).toLowerCase()
     //         .replace(/[!"&'().:[\]|]/g,'')
@@ -245,7 +244,7 @@ for (i in ft) {
     var onclic = setLink(href)
 
     function HTMLPush(j){
-    if (typeof qq.split(" ")[1] != 'undefined') { var x = '" - " + qq.split(" ")[0] + " " + qq.split(" ")[2]' } else var x = '';
+    if (typeof qqq.split(" ")[1] != 'undefined') { var x = '" - " + qqq.split(" ")[0] + " " + qqq.split(" ")[2]' } else var x = '';
       if (navigator.oscpu) {
         if (navigator.oscpu.indexOf("Windows") > -1) {
           var fn = (args.title + x)
@@ -259,18 +258,18 @@ for (i in ft) {
           var fn = (args.title + x).replace(/&/g,'%26').replace(/\+/g,'%26')
         }
 
-    if (typeof qq.split(" ")[1] != 'undefined') { 
+    if (typeof qqq.split(" ")[1] != 'undefined') { 
       if (typeof j != 'number') {
         html.push(
-          '<a href="' + protocol + href + '&title=' + fn +'" onclick="' + rp(onclic) + '" download="' + fn + '.' + qq.split(" ")[1].toLowerCase() + '">' + qq + '</a>'
+          '<a href="' + protocol + href + '&title=' + fn +'" onclick="' + rp(onclic) + '" download="' + fn + '.' + qqq.split(" ")[1].toLowerCase() + '">' + qqq + '</a>'
         );
       } else {
           html.splice(
-            j+1, 0, '<a href="' + protocol + href + '&title=' + fn +'" onclick="' + rp(onclic) + '" download="' + fn + '.' + qq.split(" ")[1].toLowerCase() + '">' + qq + '</a>'
+            j+1, 0, '<a href="' + protocol + href + '&title=' + fn +'" onclick="' + rp(onclic) + '" download="' + fn + '.' + qqq.split(" ")[1].toLowerCase() + '">' + qqq + '</a>'
           );
         }
     
-      var fn = fn.split(" - " + qq.split(" ")[0] + " " + qq.split(" ")[2])[0]
+      var fn = fn.split(" - " + qqq.split(" ")[0] + " " + qqq.split(" ")[2])[0]
 
     } else {
         if (typeof j != 'number'){
@@ -408,7 +407,7 @@ for (i in z) {
           href = getElementsByAttribute(parseXml(xhr.responseText),"Representation","id","278")[0].textContent.replace(protocol,'');
           //var onclic = 'document.getElementsByClassName("video-stream html5-main-video")[0].setAttribute("src","https:' + href + '");document.getElementById("player1").setAttribute("src","https:' + href + '");sauce = getElementsByAttribute(document,"input","name","mep_0_sourcechooser"); if ((sauce != undefined) && (sauce.length != 0)) { for (i=0;j=(sauce.length-1);i++) { sauce[i].removeAttribute("checked");if (("'+href+'" == sauce[i].getAttribute("value").replace("https:","")) || ("'+href.replace("&ratebypass=yes","")+'" == sauce[i].getAttribute("value").replace("https:","")) || ("'+href.substring(0, href.length-2)+'" == sauce[i].getAttribute("value").replace("https:","")) || ("'+href.substring(0, href.length-2).replace("&ratebypass=yes","")+'" == sauce[i].getAttribute("value").replace("https:",""))) {if (typeof A['+href.split("itag=")[1].split("&")[0]+'] === "string") { }; sauce[i].setAttribute("checked","checked");document.getElementById("player1").setAttribute("src","https:' + href + '");var p1load = 1;return false};if (i === j){return true;} }};return false';
           var onclic = setLink(href)
-          var qq = get_quality(href)
+          var qqq = get_quality(href)
           HTMLPush(j)
           linx[241] = href
           break
@@ -422,7 +421,7 @@ for (i in z) {
         if (x[b] == '172') { var audio = 'https:' + href }
         if (x[b] == '141') { if (typeof audio == 'undefined') { var audio = 'https:' + href }}
         onclic = setLink(href)
-        qq = get_quality(href)
+        qqq = get_quality(href)
         HTMLPush()
         linx[x[b]] = href
 
