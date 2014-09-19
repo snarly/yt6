@@ -239,20 +239,6 @@ for (i in ft) {
     
     var p1load = null;
     
-    var size = href.match(/[&\?]clen=([0-9]+)&/i)
-    if ((typeof size != 'undefined') && (size != null)) {
-      size = parseInt(size[1],10);
-        if (size>=1073741824) {
-          size=parseFloat((size/1073741824).toFixed(1))+' GB';
-        } else {
-            if (size>=1048576) {
-              size=parseFloat((size/1048576).toFixed(1))+' MB';
-            } else {
-                size=parseFloat((size/1024).toFixed(1))+' KB';
-              }
-          }
-      size = ' -- ' + size } else { size = '' }
-    
     function setLink(href){
       var onclic = 'sauce = getElementsByAttribute(document,"input","name","mep_0_sourcechooser"); if ((sauce != undefined) && (sauce.length != 0)) { for (i=0;j=(sauce.length-1);i++) { sauce[i].removeAttribute("checked");if (("'+href+'" == sauce[i].getAttribute("value").replace("https:","")) || ("'+href.replace("&ratebypass=yes","")+'" == sauce[i].getAttribute("value").replace("https:","")) || ("'+href.substring(0, href.length-2)+'" == sauce[i].getAttribute("value").replace("https:","")) || ("'+href.substring(0, href.length-2).replace("&ratebypass=yes","")+'" == sauce[i].getAttribute("value").replace("https:",""))) { if (document.getElementById("bm").style.visibility == "visible") { if ((!player1.paused) || (!player2.paused)) { var p1load = 1; player2.pause();  } else { var p1load = null }; } else { if ((typeof player.getPlayerState == "function") && (flashvars == null)) { if (player.getPlayerState() == "1") { var p1load = 1; v.pause() } else { var p1load = null }}; }; if (("https:'+href+'" == audio) && (navigator.userAgent.indexOf("Chrome") < -1)) { alert("Warning: Google Chrome will stop buffering if the AUDIO and VIDEO sources share the same location.\\nThis happens when you switch from a DASH/VP9 playback over to the designated audio track to play on its own.\\nIt\'s a bug to be fixed.") };  document.getElementsByClassName("video-stream html5-main-video")[0].setAttribute("src","https:' + href + '");document.getElementById("player1").setAttribute("src","https:' + href + '"); sauce[i].setAttribute("checked","checked");document.getElementById("player1").setAttribute("src","https:' + href + '"); if (p1load == 1) { if ((typeof player.getPlayerState == "function") && (flashvars == null)) { v.play();v.pause();v.play() } else { if (document.getElementById("bm").style.visibility == "visible") { player1.load(); player2.load(); }} } ;return false};if (i === j){return true;} }};return false';
       return onclic
@@ -273,6 +259,24 @@ for (i in ft) {
       } else {
           var fn = (args.title + x).replace(/&/g,'%26').replace(/\+/g,'%26')
         }
+
+    var size = href.match(/[&\?]clen=([0-9]+)&/i)
+    if ((typeof size != 'undefined') && (size !== null)) {
+      size = parseInt(size[1],10);
+        if (size>=1073741824) {
+          size=parseFloat((size/1073741824).toFixed(1))+' GB';
+        } else {
+            if (size>=1048576) {
+              size=parseFloat((size/1048576).toFixed(1))+' MB';
+            } else {
+                size=parseFloat((size/1024).toFixed(1))+' KB';
+              }
+          }
+      var y = 26;
+      //if (qq.indexOf(" ") > 4) y = y - 1;
+      size = Array(y - qq.length - 3*((qq.length/18)>>0)).join(".") + size
+    } else { size = '' }
+
 
     if (typeof qq.split(" ")[1] != 'undefined') { 
       if (typeof j != 'number') {
@@ -424,21 +428,6 @@ for (i in z) {
           //var onclic = 'document.getElementsByClassName("video-stream html5-main-video")[0].setAttribute("src","https:' + href + '");document.getElementById("player1").setAttribute("src","https:' + href + '");sauce = getElementsByAttribute(document,"input","name","mep_0_sourcechooser"); if ((sauce != undefined) && (sauce.length != 0)) { for (i=0;j=(sauce.length-1);i++) { sauce[i].removeAttribute("checked");if (("'+href+'" == sauce[i].getAttribute("value").replace("https:","")) || ("'+href.replace("&ratebypass=yes","")+'" == sauce[i].getAttribute("value").replace("https:","")) || ("'+href.substring(0, href.length-2)+'" == sauce[i].getAttribute("value").replace("https:","")) || ("'+href.substring(0, href.length-2).replace("&ratebypass=yes","")+'" == sauce[i].getAttribute("value").replace("https:",""))) {if (typeof A['+href.split("itag=")[1].split("&")[0]+'] === "string") { }; sauce[i].setAttribute("checked","checked");document.getElementById("player1").setAttribute("src","https:' + href + '");var p1load = 1;return false};if (i === j){return true;} }};return false';
           var onclic = setLink(href)
           var qq = get_quality(href)
-          
-          var size = href.match(/[&\?]clen=([0-9]+)&/i)
-          if ((typeof size != 'undefined') && (size !== null)) {
-            size = parseInt(size[1],10);
-              if (size>=1073741824) {
-                size=parseFloat((size/1073741824).toFixed(1))+' GB';
-              } else {
-                  if (size>=1048576) {
-                    size=parseFloat((size/1048576).toFixed(1))+' MB';
-                  } else {
-                      size=parseFloat((size/1024).toFixed(1))+' KB';
-                    }
-                }
-            size = ' -- ' + size } else { size = '' }
-          
           HTMLPush(j)
           linx[241] = href
           break
@@ -451,23 +440,8 @@ for (i in z) {
         href = getElementsByAttribute(parseXml(xhr.responseText),"Representation","id",x[b])[0].textContent.replace(protocol,'');
         if (x[b] == '172') { var audio = 'https:' + href }
         if (x[b] == '141') { if (typeof audio == 'undefined') { var audio = 'https:' + href }}
-        onclic = setLink(href)
-        qq = get_quality(href)
-        
-        var size = href.match(/[&\?]clen=([0-9]+)&/i)
-        if ((typeof size != 'undefined') && (size !== null)) {
-          size = parseInt(size[1],10);
-            if (size>=1073741824) {
-              size=parseFloat((size/1073741824).toFixed(1))+' GB';
-            } else {
-                if (size>=1048576) {
-                  size=parseFloat((size/1048576).toFixed(1))+' MB';
-                } else {
-                    size=parseFloat((size/1024).toFixed(1))+' KB';
-                  }
-              }
-          size = ' -- ' + size } else { size = '' }
-        
+        var onclic = setLink(href)
+        var qq = get_quality(href)
         HTMLPush()
         linx[x[b]] = href
 
