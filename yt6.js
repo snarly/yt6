@@ -12,7 +12,7 @@ function qr(sr) {
   var qual = {
     5: '240p FLV H.263 + 64k MP3',
     6: '270p FLV H.263 + 64k MP3',
-    13: '?p 3GP MPEG-4 + ?k AAC',
+    13: '???p 3GP MPEG-4 + ??k AAC',
     17: '144p 3GP MPEG-4 + 24k AAC',
     18: '360p MP4 H.264 + 96k AAC',
     22: '720p MP4 H.264 + 192k AAC',
@@ -72,7 +72,7 @@ function rp(tx) {
   return tx.split('"').join('&quot;');
 }
 
-  var xhr = new XMLHttpRequest(),px,i,j,k,x,z;
+  var xhr = new XMLHttpRequest(),px,i,j,k,x,y,z;
 
 //+ Jonas Raoni Soares Silva
 //@ http://jsfromhell.com/array/shuffle [v1.0]
@@ -248,7 +248,7 @@ for (i in ft) {
       }
       var onclic = setLink(href)
     
-      if (typeof qq.split(" ")[1] != 'undefined') { var x = " - " + qq.split(" ")[0] + " " + qq.split(" ")[2]; if (typeof qq.split("+")[1] != 'undefined') { var x = x + ' ' + qq.split("+")[1] } else { if (typeof qq.split(" ")[3] != 'undefined') { var x = x + ' ' + qq.split(" ")[3] }} } else var x = '';
+      if (typeof qq.split(" ")[1] != 'undefined') { var x = " - " + qq.split(" ")[0] + " " + qq.split(" ")[2]; if (typeof qq.split("+")[1] != 'undefined') { var x = x + ' +' + qq.split("+")[1] } else { if (typeof qq.split(" ")[3] != 'undefined') { var x = x + ' ' + qq.split(" ")[3] }} } else var x = '';
         if (navigator.oscpu) {
           if (navigator.oscpu.indexOf("Windows") > -1) {
             var fn = (args.title + x)
@@ -256,10 +256,10 @@ for (i in ft) {
           } else {
               if (navigator.oscpu.indexOf("Linux") > -1) {
                 var fn = (args.title + x).replace(/&/g,'%26').replace(/\+/g,'%2B').replace(/[\/]/g,'_')
-              } else var fn = (args.title + x).replace(/&/g,'%26').replace(/\+/g,'%26')
+              } else var fn = (args.title + x).replace(/&/g,'%26').replace(/\+/g,'%2B')
             }
         } else {
-            var fn = (args.title + x).replace(/&/g,'%26').replace(/\+/g,'%26')
+            var fn = (args.title + x).replace(/&/g,'%26').replace(/\+/g,'%2B')
           }
 
       var size = href.match(/[&\?]clen=([0-9]+)&/i)
@@ -275,7 +275,7 @@ for (i in ft) {
                 }
             }
         var y = 25;
-        //if (qq.indexOf(" ") > 4) y = y - 1;
+        if ((qq.indexOf(" ") > 4) || (qq.indexOf("256k") > -1)) y = y - 1;
         size = Array(y - qq.length - 3*((qq.length/18)>>0)).join(".") + size
       } else { size = '' }
 
@@ -1150,6 +1150,7 @@ function resize_layers(w,h){
 
 function switchflashhtml5() {
   if ( document.getElementById('bm').style.visibility === 'hidden') {
+    if (document.getElementById('iaextractor-menu')) { document.getElementById('iaextractor-menu').parentNode.removeChild(document.getElementById('iaextractor-menu')) }
     document.getElementById('movie_player').style.display = 'none';
     document.getElementById('bm').style.display = 'block';
     document.getElementById('bm').style.visibility = 'visible';
