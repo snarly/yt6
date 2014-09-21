@@ -275,7 +275,7 @@ for (i in ft) {
                 }
             }
         var y = 25;
-        if ((qq.indexOf(" ") > 4) || (qq.indexOf("256k") > -1)) y = y - 1;
+        if (qq.indexOf(" ") > 4) y = y - 1;
         size = Array(y - qq.length - 3*((qq.length/18)>>0)).join(".") + size
       } else { size = '' }
 
