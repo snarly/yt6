@@ -544,9 +544,13 @@ if ((typeof aspect_ratio == 'undefined') || (aspect_ratio == null)) {
     }
 
 } else {
-    var w_orig = aspect_ratio.split("x")[0] + "px"
-    var h_orig = aspect_ratio.split("x")[1] + "px"
-    var aspect_ratio = (w_orig.replace('px','') / h_orig.replace('px',''))
+    if (typeof aspect_ratio === 'string') {
+      var w_orig = aspect_ratio.split("x")[0] + "px"
+      var h_orig = aspect_ratio.split("x")[1] + "px"
+      var aspect_ratio = (w_orig.replace('px','') / h_orig.replace('px',''))
+    } else {
+        w_orig = '640px'; h_orig = '360px'; aspect_ratio = 16/9
+      }
   }
 
 if (typeof ytcenter !== 'undefined') { 
