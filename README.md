@@ -1,6 +1,8 @@
 Script to play, manipulate and download YouTube videos. Just bookmark any page whose icon you like and replace the bookmark's URL-address with the following javascript code:
 
 javascript:%20(function(){if(document.location.href.indexOf('youtube.com/watch?v=')>-1){if(document.getElementById('snarls_player')==undefined){var%20i,j,o,x;o%20=['.githack','git'];for(i=o.length;i;j=Math.floor(Math.random()*i),x=o[--i],o[i]=o[j],o[j]=x);%20var%20q=document.createElement('script');q.id='snarls_player';q.src=%22https%3A%2F%2Fraw%22%2Bo%5B1%5D%2B%22.com%2Fsnarly%2Fyt6%2Fmaster%2Fyt6.js%22;document.body.appendChild(q);void%200;}}else{void%200}})();
+
+
 __
 
 On any YouTube video page, this bookmarklet will call an external player and load some extra functions which can be used with YouTube's native player as well. Use the HTML5 emblem to switch between the native and external player. The script should at least work with newer versions of Firefox (24+). It's still buggy though.
