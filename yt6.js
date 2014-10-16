@@ -1,5 +1,10 @@
 //(function(){
 
+var noads = setInterval(function(){
+  var ads = document.getElementsByClassName('videoAdUiSkipButton')[0]; if (ads) { ads.click();ads.setAttribute("class","videoAdUiSkipButton") }
+  var ads = document.getElementById("google_ads_frame1"); if (ads) { ads.parentNode.removeChild(ads); clearInterval(noads) }
+            },2000)
+
 function qr(sr) {
   var qa = [];
   var prs = sr.split('&');
@@ -362,6 +367,7 @@ if (typeof window.DOMParser != "undefined") {
     throw new Error("No XML parser found");
 }
 
+function expire_date(){
 var expired = document.getElementById("ytassetsjs").getAttribute("time")
 var j = expired.split(" ")[4]
 if (typeof j !== 'undefined') {
@@ -397,7 +403,7 @@ if (typeof j !== 'undefined') {
       //}
     }
 var expires = new Date().toLocaleString().split(" ")[0] + " " + new Date().toLocaleString().split(" ")[1] + " " + new Date().toLocaleString().split(" ")[2] + "  " + expires;
-
+}
 
 
 var aac = unescape(args.dashmpd)
@@ -1006,8 +1012,8 @@ if (!dw) {
   document.getElementById('bm1').appendChild(dw);
   document.getElementById('bm2').setAttribute('style','display:block;visibility:hidden; position:fixed;left:0px;top:0px;width:100%;z-index:2000000000;')
   
+//   '<br>Links expire on <br>' + expires +
   html.push(
-   '<br>Links expire on <br>' + expires +
    '<br><br>Media streams unsupported by the browser may cause it to crash or the player to freeze on playback.'
   )
   document.getElementById('bm2').innerHTML = html.join('<br>')
@@ -1094,11 +1100,6 @@ function gclass(className, tag, elm){
 	return returnElements;
 }
 
-
-var noads = setInterval(function(){
-  var ads = document.getElementsByClassName('videoAdUiSkipButton')[0]; if (ads) { ads.click();ads.setAttribute("class","videoAdUiSkipButton") }
-  var ads = document.getElementById("google_ads_frame1"); if (ads) { ads.parentNode.removeChild(ads); clearInterval(noads) }
-            },100)
 
 
 function resize_layers(w,h){
