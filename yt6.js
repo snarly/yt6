@@ -367,44 +367,6 @@ if (typeof window.DOMParser != "undefined") {
     throw new Error("No XML parser found");
 }
 
-function expire_date(){
-var expired = document.getElementById("ytassetsjs").getAttribute("time")
-var j = expired.split(" ")[4]
-if (typeof j !== 'undefined') {
-  var j = j.toString(); var k = j.split(":"); var j = ":4"
-  if ( (typeof k[0] == 'string') && (typeof k[2] === 'undefined') ) { var k = k.toString(); var k = k.split("."); var j = ".4" } else {}
-} else {
-    var j = expired.split(" ")[3]
-    if (typeof j !== 'undefined') {
-      var j = j.toString(); var k = j.split(":"); var j = ":3"
-      if ( (typeof k[0] == 'string') && (typeof k[2] === 'undefined') ) { var k = k.toString(); var k = k.split("."); var j = ".3" }
-    }
-  }
-
-  expired = (parseInt(k[0] * 60 * 60) + parseInt(k[1] * 60) + parseInt(k[2]))
-  if ((href.indexOf("&mt=") != -1) && (href.indexOf("&expire") != -1)) {
-  var expires = ( (href.split('&expire=')[1].toString().substring(0,10)) - (href.split('&mt=')[1].toString().substring(0,10)) )
-  } else {
-      if ((href.indexOf("\?mt=") != -1) && (href.indexOf("&expire") != -1)) {
-        var expires = ( (href.split('&expire=')[1].toString().substring(0,10)) - (href.split('?mt=')[1].toString().substring(0,10)) )
-      } else {
-          if ((href.indexOf("&mt=") != -1) && (href.indexOf("?expire") != -1)) {
-          var expires = ( (href.split('?expire=')[1].toString().substring(0,10)) - parseInt(href.split('&mt=')[1].toString().substring(0,10)) )
-          }
-        }
-     }
-  if ((expires + expired) < (24 * 60 * 60)) {
-    expires = (expires + expired).toString().toHHMMSS().split(".")[0]
-    //if (j.substring(0,1) == ":") { var z = new Date().toLocaleString().split(":")[0]; z = z.substring(0,z.length-2); expires = z + " " + expires } else {
-       //}
-  } else {
-      expires = ((expires + expired) -  (24*60*60)).toString().toHHMMSS().split(".")[0]
-      //if (j.substring(0,1) == ":") { var z = new Date(); z.setDate(z.getDate()+1); z = z.toLocaleString().split(":")[0]; z = z.substring(0,z.length-2); expires = z + " " + expires } else {
-      //}
-    }
-var expires = new Date().toLocaleString().split(" ")[0] + " " + new Date().toLocaleString().split(" ")[1] + " " + new Date().toLocaleString().split(" ")[2] + "  " + expires;
-}
-
 
 var aac = unescape(args.dashmpd)
 var z = aac.split('/')
@@ -1012,12 +974,21 @@ if (!dw) {
   document.getElementById('bm1').appendChild(dw);
   document.getElementById('bm2').setAttribute('style','display:block;visibility:hidden; position:fixed;left:0px;top:0px;width:100%;z-index:2000000000;')
   
-//   '<br>Links expire on <br>' + expires +
+function expire_date(){
+  var ip = (href.indexOf("?ip=") == -1) ? "&ip=":"?ip="
+  var ip = href.split(ip)[1].split("&")[0]
+  var expire = (href.indexOf("?expire=") == -1) ? "&expire=":"?expire="
+  var expire = new Date(parseInt(href.split(expire)[1].toString().substring(0,10) * 1000)).toLocaleString()
+  var bh = (expire.length < 33) ? 78 : 91
+  return [ip,expire,bh]
+}
+//'<br>IP-address ' + expire_date()[0] +
   html.push(
+   '<br>Links expire on <br>' + expire_date()[1] + 
    '<br><br>Media streams unsupported by the browser may cause it to crash or the player to freeze on playback.'
   )
   document.getElementById('bm2').innerHTML = html.join('<br>')
-  var csspopupheight0 = parseInt(document.getElementById('bm2').offsetHeight) + 78 ;
+  var csspopupheight0 = parseInt(document.getElementById('bm2').offsetHeight) + expire_date()[2];
   dw = document.createElement('div');
   dw.id = 'bm3';
   document.getElementById('bm').appendChild(dw);
@@ -1044,8 +1015,8 @@ if (!dw) {
           }
         var csspopupheight = csspopupheight0;
         var windowheight = parseInt(window.innerHeight || document.documentElement.clientHeight || document.getElementsByTagName('body')[0].clientHeight);
-        if (csspopupheight > windowheight - 78) { 
-          document.getElementById('bm3').style.height = windowheight - 78 + 'px';document.getElementById('bm3').style.overflowY = 'scroll'
+        if (csspopupheight > windowheight - expire_date()[2]) { 
+          document.getElementById('bm3').style.height = windowheight - expire_date()[2] + 'px';document.getElementById('bm3').style.overflowY = 'scroll'
         } else { 
             document.getElementById('bm3').style.height = csspopupheight0 + 'px';document.getElementById('bm3').style.overflowY = 'hidden' 
           }
