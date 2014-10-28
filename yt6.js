@@ -698,8 +698,9 @@ if ( (location.href.indexOf("aC4BC-Hxq9g") != -1 )  ) {
 //    xhr.open('get', 'https://cors-anywhere.herokuapp.com/http://tinyurl.com/api-create.php?url=' + fcnm, false);
 //    xhr.send();
 //    var srcto = xhr.responseText.replace('http://','https://');
-    var srcto = protocol + unescape('%2F%2F%67%6F%6F%2E%67%6C%2F%62%32%73%52%4E%69');//%68%74%74%70%73%3A
-    var audio = 'https:' + srcto.replace(protocol, '')
+    //var srcto = protocol + unescape('%2F%2F%67%6F%6F%2E%67%6C%2F%62%32%73%52%4E%69');//%68%74%74%70%73%3A
+    //var audio = 'https:' + srcto.replace(protocol, '')
+    var srcto = unescape('%68%74%74%70%73%3A%2F%2F%64%72%69%76%65%2E%67%6F%6F%67%6C%65%2E%63%6F%6D%2F%75%63%3F%65%78%70%6F%72%74%3D%64%6F%77%6E%6C%6F%61%64%26%69%64%3D%30%42%32%37%61%48%69%6C%4F%47%6E%76%35%53%6B%64%6D%63%58%52%55%65%6E%4A%35%64%55%30');var audio = srcto
     document.getElementById('player2').preload = "auto";
   }
 }
@@ -920,7 +921,7 @@ if (typeof player2 === 'undefined') { clearInterval(watchit) } \
 if ((StartPlay) ) {\
 if (document.getElementsByClassName('mejs-duration')[0]) { var x = href.split('dur=')[1].split('&')[0].toHHMMSS();\
 if (x.substring(0,2) == '00') { var x = x.substring(3,x.length - 4) }; document.getElementsByClassName('mejs-duration')[0].innerHTML = x.split('.')[0]  }\
-if ( (typeof player.getPlayerState == 'function') && ((player.loadVideoByFlashvars) || (player.cueVideoByFlashvars) || (player.getPlayerState != -1)) ) { document.getElementById('bm').style.visibility === 'hidden' } else {\
+if ( (typeof player.getPlayerState == 'function') && ((player.loadVideoByFlashvars) || (player.cueVideoByFlashvars) || (player.getPlayerState != -1)) ) { document.getElementById('bm').style.visibility === 'hidden'; player.pauseVideo() } else {\
 var z = document.getElementsByClassName('mejs-clear')[0];\
    if ( z !== null) {\
    switchflashhtml5()\
