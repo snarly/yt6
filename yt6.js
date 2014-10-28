@@ -921,7 +921,7 @@ if (typeof player2 === 'undefined') { clearInterval(watchit) } \
 if ((StartPlay) ) {\
 if (document.getElementsByClassName('mejs-duration')[0]) { var x = href.split('dur=')[1].split('&')[0].toHHMMSS();\
 if (x.substring(0,2) == '00') { var x = x.substring(3,x.length - 4) }; document.getElementsByClassName('mejs-duration')[0].innerHTML = x.split('.')[0]  }\
-if ( (typeof player.getPlayerState == 'function') && ((player.loadVideoByFlashvars) || (player.cueVideoByFlashvars) || (player.getPlayerState != -1)) ) { document.getElementById('bm').style.visibility === 'hidden'; player.pauseVideo() } else {\
+if ( (typeof player.getPlayerState == 'function') && ((player.loadVideoByFlashvars) || (player.cueVideoByFlashvars) || (player.getPlayerState != -1)) ) { document.getElementById('bm').style.visibility === 'hidden'; if (typeof srcto != 'undefined') { player.pauseVideo() } } else {\
 var z = document.getElementsByClassName('mejs-clear')[0];\
    if ( z !== null) {\
    switchflashhtml5()\
