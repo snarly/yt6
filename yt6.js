@@ -955,6 +955,57 @@ loadScript( protocol + "//cdn.rawgit.com/snarly/yt6/1b69efe5d367952c307eaf7ca70c
 //loadScript("https://raw.githubusercontent.com/snarly/yt6/master/mediaelement-and-player.js", jq1)
 loadScript( protocol + "//cdn.rawgit.com/snarly/yt6/420ce361110fac238345befe87510645e475c8df/mediaelement-and-player.js",jq1)
 
+jQuery(document).ready(function( $ ){
+  // Default to the current location.
+  var strLocation = window.location.href;
+  var strHash = window.location.hash;
+  var strPrevLocation = "";
+  var strPrevHash = "";
+ 
+  // This is how often we will be checkint for
+  // changes on the location.
+  var intIntervalTime = 5000;
+ 
+  // This method removes the pound from the hash.
+  var fnCleanHash = function( strHash ){
+    return(
+    strHash.substring( 1, strHash.length )
+    );
+  }
+ 
+  // This will be the method that we use to check
+  // changes in the window location.
+  var fnCheckLocation = function(){
+    // Check to see if the location has changed.
+    if (strLocation != window.location.href){
+ 
+      // Store the new and previous locations.
+      strPrevLocation = strLocation;
+      strPrevHash = strHash;
+      strLocation = window.location.href;
+      strHash = window.location.hash;
+ 
+      // The location has changed. Trigger a
+      // change event on the location object,
+      // passing in the current and previous
+      // location values.
+      $( window.location ).trigger( "change",
+        {
+          currentHref: strLocation,
+          currentHash: fnCleanHash( strHash ),
+          previousHref: strPrevLocation,
+          previousHash: fnCleanHash( strPrevHash )
+        }
+        ,location.href = window.location.href
+      );
+ 
+    }
+  }//fnCheckLocation
+ 
+  // Set an interval to check the location changes.
+  setInterval( fnCheckLocation, intIntervalTime );
+})//( jQuery );
+
  }
 //loadScript("https://raw.githubusercontent.com/snarly/yt6/master/jquery.js", jq0);
 loadScript( protocol + "//cdn.rawgit.com/snarly/yt6/747fd7ad7b481ee96ea874a8f0126df995f32006/jquery.js", jq0);
