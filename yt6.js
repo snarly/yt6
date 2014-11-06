@@ -964,7 +964,7 @@ jQuery(document).ready(function( $ ){
  
   // This is how often we will be checkint for
   // changes on the location.
-  var intIntervalTime = 5000;
+  var intIntervalTime = 1000;
  
   // This method removes the pound from the hash.
   var fnCleanHash = function( strHash ){
