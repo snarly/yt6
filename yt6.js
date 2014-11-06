@@ -195,7 +195,7 @@ var proxies = ['https://allow-any-origin.appspot.com/https:','https://cors-anywh
 
   function fcobj(){
     var mch = rpt.match(fs)[0].split('\;');
-    for (i in mch) {
+    for (i=0;i<mch.length;i++) {
       var zzx = mch[i].substring(0,3)
       if ((zzx === zzy) && (zzx.charAt(2)==='.')) { var zzz = zzy.substring(0,2) };
       var zzy = zzx;
