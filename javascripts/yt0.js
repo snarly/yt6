@@ -175,7 +175,7 @@ var proxies = ['https://allow-any-origin.appspot.com/https:','https://cors-anywh
     var rpt = ytassetsjs.innerHTML
     }
 
-  var fcnm = rpt.match(/signature=([^(]+)/)[1];alert(fcnm)
+  var fcnm = rpt.match(/signature=([^(]+)/)[1]
   
   function sprintf(nw) {
     var i = 0;
@@ -196,7 +196,7 @@ var proxies = ['https://allow-any-origin.appspot.com/https:','https://cors-anywh
     var mch = new RegExp('var ' + zzz + '[^}]+}[^}]+}[^}]+}};');
     return [mch,zzz]
   }
-
+alert(fcobj()[0] + " " + rpt.match(fcobj()[0])[0])
   //eval(rpt.match(fcobj()[0])[0].replace(fcobj()[1],"dekrypt0") + rpt.match(fs)[0].split(fcobj()[1]).join("dekrypt0"));
 
 function dc(sg) {
