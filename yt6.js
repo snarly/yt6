@@ -426,33 +426,6 @@ for (i in z) {
     }
 
 
-var sref = unescape(args.ttsurl) + '&type=list&asrs=1';
-if (sref.replace('&type=list&asrs=1','') != 'undefined') {
-  //      sref += '&type=track&lang=en&name&kind&fmt=1';
-  //      sref += '&type=list&tlangs=1&fmts=0&asrs=1';
-  xhr.open('get', sref, false);
-  xhr.send();
-  var tts = parseXml(xhr.responseText);
-  //var array = [lang_code, name, kind, lang_default];
-  var text = tts.getElementsByTagName("track");
-  var tracks = [];
-  var lang_codeA = [];
-  for (b=0;b<text.length;b++)
-    {
-    var surl = "";
-    var lang_code = text[b].getAttribute('lang_code'); if (lang_code) { surl += '&lang=' + lang_code };
-    var name = text[b].getAttribute('name'); if (name) { surl += '&name=' + name } else { surl += '&name' };
-    var kind = text[b].getAttribute('kind'); if (kind) { surl += '&kind=' + kind ;;var lang_asr = lang_code } else { surl += '&kind' };
-    var id = text[b].getAttribute('id'); if (id) { tracks[id] = surl; lang_codeA[id] = lang_code };
-    var lang_default = text[b].getAttribute('lang_default'); if (lang_default) { surl += '&type=track&fmt=1'; var track = surl ;var lang_def = lang_code };
-
-    }
-  if (!lang_default) { var a=0; do { if ((!track) && (tracks[a] != "undefined")) { var track = tracks[a]}; a++; } while (a<100)};
-//    html.push(
-//      '<a href="' + sref +'">CC</a>'
-//    );
-}
-
 var cw = document.querySelector('#bm');
 
 if (!cw) {
@@ -629,6 +602,48 @@ if (typeof linx[160] === 'string') { linx.splice(132, 1, linx[160])}
     }
   }
 
+var sref = unescape(args.ttsurl) + '&type=list&tlangs=1&fmts=0&asrs=1';
+if (typeof sref.replace('&type=list&tlangs=1&fmts=0&asrs=1','') != 'undefined') {
+  //      sref += '&type=track&lang=en&name&kind&fmt=1';
+  //      sref += '&type=list&tlangs=1&fmts=0&asrs=1';
+  xhr.open('get', sref, false);
+  xhr.send();
+  var tts = parseXml(xhr.responseText);
+  //var array = [lang_code, name, kind, lang_default];
+  var tracks = [];
+  var tlang_codeA = ['hu','en'];
+  var lang_codeA = sref.split("&asr_langs=")[1]; if (lang_codeA) { lang_codeA = lang_codeA.split("&")[0].split(","); var tlang_codeA = tlang_codeA.concat( lang_codeA ) }
+  var lang_codeA = [];
+  var text = tts.getElementsByTagName("track");
+  for (b=0;b<text.length;b++)
+    {
+    var surl = "";
+    var lang_code = text[b].getAttribute('lang_code'); if ((lang_code) && (lang_code != 'null')) { surl += '&lang=' + lang_code; if (!tlang) { var tlang = lang_code } };
+    var name = text[b].getAttribute('name'); if ((name) && (name != 'null')) { surl += '&name=' + name } else { surl += '&name' };
+    var kind = text[b].getAttribute('kind'); if ((kind) && (kind != 'null')) { surl += '&kind=' + kind ;;var lang_asr = lang_code } else { surl += '&kind' };
+if (tlang === lang_code) { var tlangurl = surl };
+    var id = text[b].getAttribute('id'); if ((id) && (id != 'null')) { tracks[id] = surl; lang_codeA[id] = lang_code };
+    var lang_default = text[b].getAttribute('lang_default'); if ((lang_default) && (lang_default != 'null')) { surl += '&type=track&fmt=1'; var track = surl ;var lang_def = lang_code; var tlang = lang_code };
+    }
+  if (!lang_default) { var a=0; do { if ((!track) && (tracks[a] != "undefined")) { var track = tracks[a]}; a++; } while (a<100)};
+
+//function translate(){
+  var text = tts.getElementsByTagName("target");
+  for (b=0;b<text.length;b++)
+    {
+    var surl = "";
+    var lang_code = text[b].getAttribute('lang_code'); if ((tlang_codeA.indexOf(lang_code) === -1) || (lang_code === tlang)) continue; if ((lang_code) && (lang_code != 'null')) { surl += tlangurl + '&tlang=' + lang_code };
+    var name = text[b].getAttribute('name'); if ((name) && (name != 'null')) { surl += '&name=' + name } else { surl += '&name' };
+    var kind = text[b].getAttribute('kind'); if ((kind) && (kind != 'null')) { surl += '&kind=' + kind ;;var lang_asr = lang_code } else { surl += '&kind' };
+    var id = text[b].getAttribute('id'); if ((id) && (id != 'null')) { if (typeof lang_codeA[id] != 'undefined') { id = parseInt(id) + 1000 }; tracks[id] = surl; lang_codeA[id] = lang_code };
+    var lang_default = text[b].getAttribute('lang_default'); if ((lang_default) && (lang_default != 'null')) { surl += '&type=track&fmt=1'; var track = surl ;var lang_def = lang_code };
+    }
+//}//translate
+
+//    html.push(
+//      '<a href="' + sref +'">CC</a>'
+//    );
+}
 
   for (i in tracks) {
     if (tracks[i] != "") {
@@ -639,36 +654,9 @@ if (typeof linx[160] === 'string') { linx.splice(132, 1, linx[160])}
       delete js;
       if (sref != undefined) {
         document.getElementById(js.id).setAttribute("kind","subtitles");
-//      if (lang_codeA[i] !== "en" ){  } else { document.getElementById(js.id).setAttribute("srclang",'en-us');document.getElementById('eow-title').innerHTML = sref };
-//      if (lang_def !== lang_codeA[i]) { document.getElementById(js.id).setAttribute("srclang",lang_codeA[i]) } else { document.getElementById(js.id).setAttribute("srclang",'en-us') }
         document.getElementById(js.id).setAttribute("srclang",lang_codeA[i])
         document.getElementById(js.id).setAttribute("src",sref)
       }
-
-    xhr.open('get', sref, false);
-    xhr.send();
-    var tts = parseXml(xhr.responseText);
-    var text = tts.getElementsByTagName("text");
-    var srt = "";
-    var nl = String.fromCharCode(13) + String.fromCharCode(10);
-
-    for (x=0;x<text.length;x++) {
-      var start = text[x].getAttribute('start');
-      if (!start) var start = "99:00:00.000";
-      var dur = text[x].getAttribute('dur');
-      if (!dur) { var dur = "00:00:00.000" } else { var dur = parseFloat(start) + parseFloat(dur); var dur = dur.toString(); var dur = dur.toHHMMSS() };
-      if (start) { var start = start.toHHMMSS() };
-      var y = x + 1
-      //var txt = text[i].textContent.replace("&#39;", "'");
-      var txt = text[x].textContent.split("&#39;").join("'");
-      srt += y + nl + start + ' --> ' + dur + nl + txt + nl + nl;
-    }
-    var uriContent = "data:text/plain;charset=utf-8," + encodeURIComponent(srt);
-
-    html.push(
-      '<a href="' + uriContent +'" download="' + unescape(fn) + '_' + lang_codeA[i] + '.srt">SRT '+lang_codeA[i]+'</a>'
-    );
-
     }
   }
 
@@ -849,7 +837,7 @@ var jq5 = function() {
 		features: ['playpause','loop','current','progress','duration','tracks','playlist','speed','sourcechooser','volume','fullscreen'],\
 		autoRewind: false,\
 		pauseOtherPlayers: false,\
-                startLanguage:'en',\
+                startLanguage:'',\
                 translationSelector: true,\
                 translations:['en','de','es'],\
                 success: function(me) {  $('#audio-type').html( me.pluginType);\
@@ -952,7 +940,8 @@ loadScript( protocol + "//cdn.rawgit.com/snarly/yt6/49c8440ad31e83bf6d9f0951a830
 loadScript( protocol + "//cdn.rawgit.com/snarly/yt6/1b69efe5d367952c307eaf7ca70ca1074ddd1c1a/mep-feature-sourcechooser.js",jq2)
 };
 //loadScript("https://raw.githubusercontent.com/snarly/yt6/master/mediaelement-and-player.js", jq1)
-loadScript( protocol + "//cdn.rawgit.com/snarly/yt6/420ce361110fac238345befe87510645e475c8df/mediaelement-and-player.js",jq1)
+loadScript( protocol + "//cdn.rawgit.com/snarly/yt6/96caae2d5b49efe934ef93ac11cc4a5a37edd249/mediaelement-and-player.js",jq1)
+//loadScript( protocol + "//cdn.rawgit.com/snarly/yt6/420ce361110fac238345befe87510645e475c8df/mediaelement-and-player.js",jq1)
 
 jQuery(document).ready(function( $ ){
   // Default to the current location.
@@ -989,13 +978,14 @@ jQuery(document).ready(function( $ ){
       // passing in the current and previous
       // location values.
       $( window.location ).trigger( "change",
+        location.href = window.location.href,
         {
           currentHref: strLocation,
           currentHash: fnCleanHash( strHash ),
           previousHref: strPrevLocation,
           previousHash: fnCleanHash( strPrevHash )
         }
-        ,location.href = window.location.href
+        
       );
  
     }
@@ -1064,12 +1054,12 @@ function expire_date(){
         } else {
             document.getElementById("bm3").style.opacity = '0.9'
           }
-        var csspopupheight = csspopupheight0;
+        var csspopupheight = csspopupheight0; var csspopupheight = Math.max(csspopupheight0, document.getElementById('bm3').scrollHeight);
         var windowheight = parseInt(window.innerHeight || document.documentElement.clientHeight || document.getElementsByTagName('body')[0].clientHeight);
         if (csspopupheight > windowheight - expire_date()[2]) { 
           document.getElementById('bm3').style.height = windowheight - expire_date()[2] + 'px';document.getElementById('bm3').style.overflowY = 'scroll'
         } else { 
-            document.getElementById('bm3').style.height = csspopupheight0 + 'px';document.getElementById('bm3').style.overflowY = 'hidden' 
+            document.getElementById('bm3').style.height = csspopupheight + 'px';document.getElementById('bm3').style.overflowY = 'hidden' 
           }
       }
   }//onclic
