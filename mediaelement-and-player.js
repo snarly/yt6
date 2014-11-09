@@ -4332,7 +4332,7 @@ if (typeof jQuery != 'undefined') {
 			player.isLoadingTrack = false;
 
 			
-
+document.getElementById("bm3").innerHTML = document.getElementById("bm3").innerHTML + '<br><br>WebVTT subtitles:<br>'
 			// add to list
 			for (i=0; i<player.tracks.length; i++) {
 				if (player.tracks[i].kind == 'subtitles') {
@@ -4473,10 +4473,17 @@ if (!dur) { var dur = "00:00:00.000" } else { var dur = parseFloat(start) + pars
 if (start) { var start = start.toHHMMSS() };
 var j = i + 1
 //var txt = text[i].textContent.replace("&#39;", "'");
-var txt = text[i].textContent.split("&#39;").join("'");
+var txt = text[i].textContent
+//Trying to correct G@@gle code f*up
+var txt = txt.split("&#39;").join("'").split("& # 39;").join("'").split("& # 39").join("'").split("&quot;").join("\"").split("& quot;").join("\"").split("& Quot;").join("\"").split("& Quot").join("\"").split("& quot").join("\"").split("Quot;").join("\"").split("Quot ;").join("\"").split("Quot.;").join(". \"").split("Quot!;").join("! \"").split("Quot?;").join("? \"").split("# 39;").join("'").split("＆QUOT;").join("\"").split("＆QUOT").join("\"").split("QUOT＆ ;").join("\"").split("QUOT＆").join("\"").split("＆＃39;").join("'").split("& amp;").join("&");
 srat += j + nl + start + ' --> ' + dur + nl + txt + nl + nl;
 }
 d = srat;
+    var uriContent = "data:text/plain;charset=utf-8," + encodeURIComponent(srat);
+
+    document.getElementById("bm3").innerHTML = document.getElementById("bm3").innerHTML +
+      '<a href="' + uriContent +'" download="' + unescape(fn) + '_' + track.srclang + '.srt">SRT '+mejs.language.codes[track.srclang]+'</a><br>'
+    ;
 					// parse the loaded file
 					if (typeof d == "string" && (/<tt\s+xml/ig).exec(d)) {
 						track.entries = mejs.TrackFormatParser.dfxp.parse(d);					
@@ -4735,6 +4742,7 @@ d = srat;
 			ca:'Catalan',
 			zh:'Chinese',
 			'zh-cn':'Chinese (Simplified)',
+			'zh-hans':'Chinese (Simplified)',
 			'zh-hant':'Chinese (Traditional)',
 			'zh-tw':'Chinese (Taiwan)',
 			hr:'Croatian',
@@ -4786,7 +4794,38 @@ d = srat;
 			uk:'Ukrainian',
 			vi:'Vietnamese',
 			cy:'Welsh',
-			yi:'Yiddish'
+			yi:'Yiddish',
+			hy:'Armenian',
+			az:'Azerbaijani',
+			eu:'Basque',
+			be:'Belarussian',
+			bn:'Bengali',
+			bs:'Bosnian',
+			ceb:'Cebuano',
+			eo:'Esperanto',
+			fil:'Filipino',
+			ka:'Georgian',
+			gu:'Gujarati',
+			ha:'Hausa',
+			hmn:'Hmong',
+			ig:'Igbo',
+			jv:'Javanese',
+			kn:'Kannada',
+			km:'Khmer',
+			la:'Latin',
+			lo:'Lao',
+			hy:'Armeniah',
+			mi:'Maori',
+			mr:'Marathi',
+			mn:'Mongolian',
+			ne:'Nepali',
+			pa:'Punjabi',
+			so:'Somali',
+			ta:'Tamil',
+			te:'Telugu',
+			ur:'Urdu',
+			yo:'Yoruba',
+			zu:'Zulu'
 		}
 	};
 
