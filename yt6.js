@@ -1155,11 +1155,11 @@ function resize_layers(w,h){
       var src_chooser_size = src_chooser(z);
       if (((document.getElementById('bm').style.height.replace('px','')) - 30) < src_chooser_size[0]) {
         z.style.height = ((document.getElementById('bm').style.height.replace('px','')) - 51) + 'px';
-        z.style.width = ((src_chooser_size[1]) + 17) + 'px'
+        z.style.width = ((src_chooser_size[1]) + 15) + 'px'
         z.style.overflowY = "scroll"
       } else {
           z.style.height = (src_chooser_size[0] + 1) + 'px'
-          z.style.width = (src_chooser_size[1] + 1) + 'px'
+          z.style.width = (src_chooser_size[1] + 0) + 'px'
           z.style.overflowY = "hidden"
         }
     }
