@@ -1,5 +1,6 @@
 var noads = setInterval(function(){
   var ads = document.getElementsByClassName('videoAdUiSkipButton')[0]; if (ads) { ads.click();ads.setAttribute("class","videoAdUiSkipButton") }
+  var ads = document.getElementsByClassName("container autoalign")[0]; if (ads) { ads.parentNode.removeChild(ads) };
   var ads = document.getElementById("google_ads_frame1"); if (ads) { ads.parentNode.removeChild(ads); clearInterval(noads) }
             },2000)
 
@@ -548,6 +549,7 @@ if (typeof poster != 'undefined') { var poster = "poster: '" + poster + "'" }
     delete js;
   if (typeof document.getElementsByClassName('video-stream html5-main-video')[1] === 'undefined') {
     document.getElementById('player1').setAttribute('class','video-stream html5-main-video')
+    document.getElementById('player1').style.zIndex = "0";
   }
 
 if (typeof webm != 'undefined') {
