@@ -1,6 +1,6 @@
 var noads = setInterval(function(){
   var ads = document.getElementsByClassName('videoAdUiSkipButton')[0]; if (ads) { ads.click();ads.setAttribute("class","videoAdUiSkipButton") }
-  var ads = document.getElementsByClassName("container autoalign")[0]; if (ads) { ads.parentNode.removeChild(ads) };
+  var ads = document.getElementsByClassName("video-ads html5-stop-propagation")[0]; if (ads) { ads.parentNode.removeChild(ads) };
   var ads = document.getElementById("google_ads_frame1"); if (ads) { ads.parentNode.removeChild(ads); clearInterval(noads) }
             },2000)
 
@@ -1155,7 +1155,7 @@ function resize_layers(w,h){
       var src_chooser_size = src_chooser(z);
       if (((document.getElementById('bm').style.height.replace('px','')) - 30) < src_chooser_size[0]) {
         z.style.height = ((document.getElementById('bm').style.height.replace('px','')) - 51) + 'px';
-        z.style.width = ((src_chooser_size[1]) + 15) + 'px'
+        z.style.width = ((src_chooser_size[1]) + 17) + 'px'
         z.style.overflowY = "scroll"
       } else {
           z.style.height = (src_chooser_size[0] + 1) + 'px'
