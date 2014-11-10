@@ -60,10 +60,15 @@ function qr(sr) {
     250: '64k WebM Opus',
     251: '160k WebM Opus',
     264: '1440p DASH H.264',
+    266: '2160p DASH H.264',
     271: '1440p WebM VP9',
     272: '2160p WebM VP9',
     241: '144p WebM VP9',
-    278: '144p WebM VP9'
+    278: '144p WebM VP9',
+    298: '720p DASH H.264',
+    299: '1080p DASH H.264',
+    302: '720p WebM VP9',
+    303: '1080p WebM VP9'
   };
 
 function get_quality(url) {
@@ -566,29 +571,33 @@ if (typeof linx[160] === 'string') { linx.splice(132, 1, linx[160])}
   for (i=0;i<linx.length;i++) {
     if (linx[i]) {
       var js = document.createElement('source')
-      if (i < 103) {
-        AV[i] = "itag=" + i
-        if (qual[i].indexOf('WebM') != -1) { js.type = 'video/webm'; js.title = qual[i].replace("WebM","")} 
-        if (qual[i].indexOf('MP4') != -1) { js.type = 'video/mp4'; js.title = qual[i].replace("MP4","")}
-        if (qual[i].indexOf('FLV') != -1) { js.type = 'video/x-flv'; js.title = qual[i]}
-        if (qual[i].indexOf('3GP') != -1) { js.type = 'video/3gp'; js.title = qual[i]}
-      }
-      if (qual[i].indexOf("DASH") > -1) {
-        js.type = 'video/mp4'
-        if (qual[i].indexOf("AAC") === -1) {
-          js.title = qual[i].replace("H.264",""); V[i] = "itag=" + i
-        } else {
-            js.title = qual[i].replace("DASH",""); A[i] = "itag=" + i
-          }
-      };
-      if ((i > 102) && (qual[i].indexOf("WebM") > -1)) {
-        js.title = qual[i].replace("WebM","")
-        if ((qual[i].indexOf("Vorbis") === -1) && (qual[i].indexOf("Opus") === -1)) {
-          js.type = 'video/webm'; V[i] = "itag=" + i
-        } else {
-            js.type = 'audio/webm'; A[i] = "itag=" + i
-          }
-      }
+      if (typeof qual[i] != 'undefined') {
+        if (i < 103) {
+          AV[i] = "itag=" + i
+          if (qual[i].indexOf('WebM') != -1) { js.type = 'video/webm'; js.title = qual[i].replace("WebM","")} 
+          if (qual[i].indexOf('MP4') != -1) { js.type = 'video/mp4'; js.title = qual[i].replace("MP4","")}
+          if (qual[i].indexOf('FLV') != -1) { js.type = 'video/x-flv'; js.title = qual[i]}
+          if (qual[i].indexOf('3GP') != -1) { js.type = 'video/3gp'; js.title = qual[i]}
+        }
+        if (qual[i].indexOf("DASH") > -1) {
+          js.type = 'video/mp4'
+          if (qual[i].indexOf("AAC") === -1) {
+            js.title = qual[i].replace("H.264",""); V[i] = "itag=" + i
+          } else {
+              js.title = qual[i].replace("DASH",""); A[i] = "itag=" + i
+            }
+        };
+        if ((i > 102) && (qual[i].indexOf("WebM") > -1)) {
+          js.title = qual[i].replace("WebM","")
+          if ((qual[i].indexOf("Vorbis") === -1) && (qual[i].indexOf("Opus") === -1)) {
+            js.type = 'video/webm'; V[i] = "itag=" + i
+          } else {
+              js.type = 'audio/webm'; A[i] = "itag=" + i
+            }
+        }
+      } else {
+      	  js.type = 'video/mp4'; js.title = i
+      	}
       if (typeof webm != 'undefined') {
         if ((linx[i].split('//')[1] != webm.split('//')[1]) && (i != 160)) {
           js.src = 'https:' + linx[i]
@@ -614,6 +623,7 @@ if (typeof sref.replace('&type=list&tlangs=1&fmts=0&asrs=1','') != 'undefined') 
   //var array = [lang_code, name, kind, lang_default];
   var tracks = [];
   var tlang_codeA = ['hu','en'];
+  var lang_codeA = window.navigator.userLanguage || window.navigator.language; if (lang_codeA) { lang_codeA = lang_codeA.toLowerCase() + "," + document.getElementsByClassName("content-region")[0].textContent.toLowerCase(); if (lang_codeA) { lang_codeA = lang_codeA.split(","); var tlang_codeA = tlang_codeA.concat( lang_codeA ) } };
   var lang_codeA = sref.split("&asr_langs=")[1]; if (lang_codeA) { lang_codeA = lang_codeA.split("&")[0].split(","); var tlang_codeA = tlang_codeA.concat( lang_codeA ) }
   var lang_codeA = [];
   var text = tts.getElementsByTagName("track");
