@@ -186,7 +186,10 @@ var proxies = ['https://allow-any-origin.appspot.com/https:','https://cors-anywh
     var rpt = ytassetsjs.innerHTML
     }
 
-  var fcnm = rpt.match(/signature=([^(]+)/)[1];
+//  var fcnm = rpt.match(/signature=([^(]+)/)[1];
+  var fcnm = rpt.match(/&&\(.+signature\/".*\;/)[0]
+  var i = fcnm.split('\"/signature/\"+')[1].split(")")[0]
+  var fcnm = fcnm.split("&&("+i+"=")[1].substring(0,2)
   
   function sprintf(nw) {
     var i = 0;
