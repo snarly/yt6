@@ -1171,6 +1171,7 @@ function resize_layers(w,h){
   for(i=0;i<x.length;i++){
     var z = document.getElementsByClassName(x[i])[0]
     if ((document.getElementsByClassName('mejs-clear')[0]) && (typeof z != 'undefined')){
+      z.style.maxWidth = "147px"; z.style.minWidth = "130px"
       function src_chooser(){ return [z.firstChild.offsetHeight, z.firstChild.offsetWidth] }
       var src_chooser_size = src_chooser(z);
       if (((document.getElementById('bm').style.height.replace('px','')) - 30) < src_chooser_size[0]) {
