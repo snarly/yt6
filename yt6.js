@@ -413,15 +413,15 @@ for (i in z) {
     }
     var x = ['139','172','141']
     for (b=0;b<350;b++){
-     if ((qual[b]) && (b != 278)) {
-      if ((xhr.responseText.indexOf('Representation id="'+b+'"') > -1) && (typeof linx[b] == 'undefined')) {
-        href = getElementsByAttribute(parseXml(xhr.responseText),"Representation","id",b)[0].textContent.replace(protocol,'');
-        if (b == '172') { var audio = 'https:' + href }
-        if (b == '141') { if (typeof audio == 'undefined') { var audio = 'https:' + href }}
-        var qq = get_quality(href)
-        HTMLPush()
-        linx[b] = href
-
+      if ((qual[b]) && (b != 278)) {
+        if ((xhr.responseText.indexOf('Representation id="'+b+'"') > -1) && (typeof linx[b] == 'undefined')) {
+          href = getElementsByAttribute(parseXml(xhr.responseText),"Representation","id",b)[0].textContent.replace(protocol,'');
+          if (b == '172') { var audio = 'https:' + href }
+          if (b == '141') { if (typeof audio == 'undefined') { var audio = 'https:' + href }}
+          var qq = get_quality(href)
+          HTMLPush()
+          linx[b] = href
+        }
       }
     };break
   }
