@@ -240,7 +240,7 @@ for (i in ft) {
       href += '&signature=' + dc(qs.s);
     if (href.indexOf("&ratebypass=yes") == -1) { href += '&ratebypass=yes'}
     if (qq.indexOf("+") != -1) { href += '&2' }
-    if (qq.indexOf('DASH') != -1) { var aspect_ratio = ft.toString().split("size=")[1].split("&")[0] }
+    if (qq.indexOf('DASH') != -1) { if (!aspect_ratio > 0) { var aspect_ratio = ft.toString().split("size=")[1].split("&")[0].split(",")[0] } }
     if (qs.itag !== '278') { linx[qs.itag] = href } else { linx[241] = href }
     if (qq.indexOf('360p WebM VP8') != -1) { var webm = 'https:' + href };
     if (qq.indexOf('WebM Vorbis') != -1) { var audio = 'https:' + href };//.replace('&ratebypass=yes','') };
@@ -412,14 +412,15 @@ for (i in z) {
       }
     }
     var x = ['139','172','141']
-    for (b in x){
-      if ((xhr.responseText.indexOf('Representation id="'+x[b]+'"') > -1) && (typeof linx[x[b]] == 'undefined')) {
-        href = getElementsByAttribute(parseXml(xhr.responseText),"Representation","id",x[b])[0].textContent.replace(protocol,'');
-        if (x[b] == '172') { var audio = 'https:' + href }
-        if (x[b] == '141') { if (typeof audio == 'undefined') { var audio = 'https:' + href }}
+    for (b=0;b<350;b++){
+     if ((qual[b]) && (b != 278)) {
+      if ((xhr.responseText.indexOf('Representation id="'+b+'"') > -1) && (typeof linx[b] == 'undefined')) {
+        href = getElementsByAttribute(parseXml(xhr.responseText),"Representation","id",b)[0].textContent.replace(protocol,'');
+        if (b == '172') { var audio = 'https:' + href }
+        if (b == '141') { if (typeof audio == 'undefined') { var audio = 'https:' + href }}
         var qq = get_quality(href)
         HTMLPush()
-        linx[x[b]] = href
+        linx[b] = href
 
       }
     };break
@@ -443,10 +444,10 @@ function fix_Width() {
   var windowheight = parseInt(window.innerHeight || document.documentElement.clientHeight || document.getElementsByTagName('body')[0].clientHeight);
   var windowwidth = parseInt(window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth);
   //window.screen.availWidth
-  if ((windowwidth > 1934) && (windowheight > 941)){
+  if ((windowwidth > 1933) && (windowheight > 940)){
     var w_base = '1254px';
   } else {
-      if ((windowwidth > 1294) && (windowheight > 630)){
+      if ((windowwidth > 1293) && (windowheight > 629)){
         var w_base = '854px';
       } else {
           var w_base = '640px';
@@ -458,10 +459,10 @@ function fix_Width() {
 function fix_Height() {
   var windowheight = parseInt(window.innerHeight || document.documentElement.clientHeight || document.getElementsByTagName('body')[0].clientHeight);
   var windowwidth = parseInt(window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth);
-  if ((windowwidth > 1934) && (windowheight > 941)){
+  if ((windowwidth > 1933) && (windowheight > 940)){
     var h_base = '734px';
   } else {
-      if ((windowwidth > 1294) && (windowheight > 630)){
+      if ((windowwidth > 1293) && (windowheight > 629)){
         var h_base = '510px';
       } else {
           var h_base = '390px';
@@ -625,34 +626,42 @@ if (typeof sref.replace('&type=list&tlangs=1&fmts=0&asrs=1','') != 'undefined') 
   var tts = parseXml(xhr.responseText);
   //var array = [lang_code, name, kind, lang_default];
   var tracks = [];
-  var tlang_codeA = ['hu','en'];
-  var lang_codeA = window.navigator.userLanguage || window.navigator.language; if (lang_codeA) { lang_codeA = lang_codeA.toLowerCase() + "," + document.getElementsByClassName("content-region")[0].textContent.toLowerCase(); if (lang_codeA) { lang_codeA = lang_codeA.split(","); var tlang_codeA = tlang_codeA.concat( lang_codeA ) } };
-  var lang_codeA = sref.split("&asr_langs=")[1]; if (lang_codeA) { lang_codeA = lang_codeA.split("&")[0].split(","); var tlang_codeA = tlang_codeA.concat( lang_codeA ) }
+  
+  var lang_codeA = window.navigator.userLanguage || window.navigator.language
+  if (lang_codeA) { lang_codeA = lang_codeA.toLowerCase() }
+  var tlang_codeA = document.getElementsByClassName("content-region")[0].textContent || getElementsByAttribute(document,"span","class","content-region")[0].textContent
+  if (tlang_codeA) { tlang_codeA = tlang_codeA.toLowerCase() }
+  var tlang_codeA = lang_codeA + ',' + tlang_codeA + ',hu,en'; tlang_codeA = tlang_codeA.split(",")
+  var lang_codeA = sref.split("&asr_langs=")[1];
+  if (lang_codeA) { lang_codeA = lang_codeA.toLowerCase().split("&")[0].split(","); var tlang_codeA = tlang_codeA.concat( lang_codeA ) };//alert(tlang_codeA)
+
   var lang_codeA = [];
   var text = tts.getElementsByTagName("track");
   for (b=0;b<text.length;b++)
     {
     var surl = "";
-    var lang_code = text[b].getAttribute('lang_code'); if ((lang_code) && (lang_code != 'null')) { surl += '&lang=' + lang_code; if (!tlang) { var tlang = lang_code } };
+    var lang_code = text[b].getAttribute('lang_code'); if ((lang_code) && (lang_code != 'null')) { surl += '&lang=' + lang_code; };
     var name = text[b].getAttribute('name'); if ((name) && (name != 'null')) { surl += '&name=' + name } else { surl += '&name' };
-    var kind = text[b].getAttribute('kind'); if ((kind) && (kind != 'null')) { surl += '&kind=' + kind ;;var lang_asr = lang_code } else { surl += '&kind' };
-if (tlang === lang_code) { var tlangurl = surl };
+    var kind = text[b].getAttribute('kind'); if ((kind) && (kind != 'null')) { surl += '&kind=' + kind } else { surl += '&kind' };
+if ((!slang) && ((kind != 'asr') || (text.length == b+1)) ) { var slang = lang_code; var slangurl = surl }
     var id = text[b].getAttribute('id'); if ((id) && (id != 'null')) { tracks[id] = surl; lang_codeA[id] = lang_code };
-    var lang_default = text[b].getAttribute('lang_default'); if ((lang_default) && (lang_default != 'null')) { surl += '&type=track&fmt=1'; var track = surl ;var lang_def = lang_code; var tlang = lang_code };
+    var lang_default = text[b].getAttribute('lang_default'); if ((lang_default) && (lang_default != 'null')) { surl += '&type=track&fmt=1'; var track = surl ;var lang_def = lang_code; if (kind != 'asr') { var slang = lang_code; var slangurl = surl } };
     }
-  if (!lang_default) { var a=0; do { if ((!track) && (tracks[a] != "undefined")) { var track = tracks[a]}; a++; } while (a<100)};
+  if (!lang_def) { var a=0; do { if ((!track) && (typeof tracks[a] != "undefined")) { var track = tracks[a]}; a++; } while (a<100)};
 
 //function translate(){
   var text = tts.getElementsByTagName("target");
   for (b=0;b<text.length;b++)
     {
+    //if (slang === null) break
     var surl = "";
-    var lang_code = text[b].getAttribute('lang_code'); if ((tlang_codeA.indexOf(lang_code) === -1) || (lang_code === tlang)) continue; if ((lang_code) && (lang_code != 'null')) { surl += tlangurl + '&tlang=' + lang_code };
+    var lang_code = text[b].getAttribute('lang_code'); if ((tlang_codeA.indexOf(lang_code) === -1) || (lang_code === slang)) continue; if ((lang_code) && (lang_code != 'null')) { surl += slangurl + '&tlang=' + lang_code };
     var name = text[b].getAttribute('name'); if ((name) && (name != 'null')) { surl += '&name=' + name } else { surl += '&name' };
-    var kind = text[b].getAttribute('kind'); if ((kind) && (kind != 'null')) { surl += '&kind=' + kind ;;var lang_asr = lang_code } else { surl += '&kind' };
+    var kind = text[b].getAttribute('kind'); if ((kind) && (kind != 'null')) { surl += '&kind=' + kind } else { surl += '&kind' };
     var id = text[b].getAttribute('id'); if ((id) && (id != 'null')) { if (typeof lang_codeA[id] != 'undefined') { id = parseInt(id) + 1000 }; tracks[id] = surl; lang_codeA[id] = lang_code };
     var lang_default = text[b].getAttribute('lang_default'); if ((lang_default) && (lang_default != 'null')) { surl += '&type=track&fmt=1'; var track = surl ;var lang_def = lang_code };
     }
+  if (!lang_def) { var a=0; do { if ((!track) && (typeof tracks[a] != "undefined")) { var track = tracks[a]}; a++; } while (a<100)};
 //}//translate
 
 //    html.push(
@@ -955,7 +964,8 @@ loadScript( protocol + "//cdn.rawgit.com/snarly/yt6/49c8440ad31e83bf6d9f0951a830
 loadScript( protocol + "//cdn.rawgit.com/snarly/yt6/1b69efe5d367952c307eaf7ca70ca1074ddd1c1a/mep-feature-sourcechooser.js",jq2)
 };
 //loadScript("https://raw.githubusercontent.com/snarly/yt6/master/mediaelement-and-player.js", jq1)
-loadScript( protocol + "//cdn.rawgit.com/snarly/yt6/96caae2d5b49efe934ef93ac11cc4a5a37edd249/mediaelement-and-player.js",jq1)
+loadScript( protocol + "//cdn.rawgit.com/snarly/yt6/1a2653c6f02a907c52e6a9a9d6f071e05926d95b/mediaelement-and-player.js",jq1)
+//loadScript( protocol + "//cdn.rawgit.com/snarly/yt6/96caae2d5b49efe934ef93ac11cc4a5a37edd249/mediaelement-and-player.js",jq1)
 //loadScript( protocol + "//cdn.rawgit.com/snarly/yt6/420ce361110fac238345befe87510645e475c8df/mediaelement-and-player.js",jq1)
 
 jQuery(document).ready(function( $ ){
@@ -1091,10 +1101,7 @@ function expire_date(){
   dw.innerHTML = protocol + '//www.youtube.com/html5';
   document.getElementById('bm3').appendChild(dw);
   document.getElementById('bm5').style.color = "#EE0000";
-  document.getElementById('bm5').onclick = function onclic(){
-    //if ((lang_def == null) && (lang_asr == null)) { }
-    window.open( protocol + "//www.youtube.com/html5", "_blank").focus()
-  };
+  document.getElementById('bm5').setAttribute('onclick', 'window.open( protocol + "//www.youtube.com/html5", "_blank").focus() ')
 }
 
 
@@ -1271,7 +1278,7 @@ function aspect() {
   var class_1 = class_0.replace('small','small_a').replace('medium','medium_a').replace('large','large_a')
 
   if (document.getElementById('player-api').style.width != '100%') {
-    var w = parseInt(parseInt(fix_Width().replace('px','')) + 400) + 'px';
+    var w = document.getElementById("watch7-main").offsetWidth + 'px'
     var h = Math.round((w.replace('px','') / aspect_ratio)) + 'px';
 
     dw = document.getElementById('aspect')
