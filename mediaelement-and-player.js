@@ -4287,11 +4287,11 @@ if (typeof jQuery != 'undefined') {
 				// click
 				player.captionsButton.on('click',function() {
 					if (player.selectedTrack == null) {
-						var lang = player.tracks[0].srclang;
+						var lang = player.tracks[0].srclang; var id = player.tracks[0].id
 					} else {
 						var lang = 'none';
 					}
-					player.setTrack(lang);
+					player.setTrack(lang, id);
 				});
 			} else {
 				// hover
@@ -4303,8 +4303,8 @@ if (typeof jQuery != 'undefined') {
 
 				// handle clicks to the language radio buttons
 				.on('click','input[type=radio]',function() {
-					lang = this.value;
-					player.setTrack(lang);
+					lang = this.value; id = this.id
+					player.setTrack(lang, id);
 				});
 
 			}
@@ -4332,11 +4332,11 @@ if (typeof jQuery != 'undefined') {
 			player.isLoadingTrack = false;
 
 			
-document.getElementById("bm3").innerHTML = document.getElementById("bm3").innerHTML + '<br><br>WebVTT subtitles:<br>'
+document.getElementById("bm3").innerHTML = document.getElementById("bm3").innerHTML + '<br><br>SubRip/WebVTT subtitles:<br>'
 			// add to list
 			for (i=0; i<player.tracks.length; i++) {
 				if (player.tracks[i].kind == 'subtitles') {
-					player.addTrackButton(player.tracks[i].srclang, player.tracks[i].label);
+					player.addTrackButton(player.tracks[i].srclang, player.tracks[i].label, i);
 				}
 			}
 
@@ -4384,7 +4384,7 @@ document.getElementById("bm3").innerHTML = document.getElementById("bm3").innerH
 			}
 		},
 		
-		setTrack: function(lang){
+		setTrack: function(lang, id){
 		
 			var t = this,
 				i;
@@ -4394,7 +4394,7 @@ document.getElementById("bm3").innerHTML = document.getElementById("bm3").innerH
 				t.captionsButton.removeClass('mejs-captions-enabled');
 			} else {
 				for (i=0; i<t.tracks.length; i++) {
-					if (t.tracks[i].srclang == lang) {
+					if (i == id.split("_")[3]) {
 						if (t.selectedTrack == null)
 						    t.captionsButton.addClass('mejs-captions-enabled');
 						t.selectedTrack = t.tracks[i];
@@ -4461,7 +4461,7 @@ if (typeof window.DOMParser != "undefined") {
 }
 var tts = parseXml(d);
 var text = tts.getElementsByTagName("text");
-var srat = "";
+var srt = "";
 var nl = String.fromCharCode(13) + String.fromCharCode(10);
 
 for (i=0;i<text.length;i++)
@@ -4476,10 +4476,10 @@ var j = i + 1
 var txt = text[i].textContent
 //Trying to correct G@@gle code f*up
 var txt = txt.split("&#39;").join("'").split("& # 39;").join("'").split("& # 39").join("'").split("&quot;").join("\"").split("& quot;").join("\"").split("& Quot;").join("\"").split("& Quot").join("\"").split("& quot").join("\"").split("Quot;").join("\"").split("Quot ;").join("\"").split("Quot.;").join(". \"").split("Quot!;").join("! \"").split("Quot?;").join("? \"").split("# 39;").join("'").split("＆QUOT;").join("\"").split("＆QUOT").join("\"").split("QUOT＆ ;").join("\"").split("QUOT＆").join("\"").split("＆＃39;").join("'").split("& amp;").join("&");
-srat += j + nl + start + ' --> ' + dur + nl + txt + nl + nl;
+srt += j + nl + start + ' --> ' + dur + nl + txt + nl + nl;
 }
-d = srat;
-    var uriContent = "data:text/plain;charset=utf-8," + encodeURIComponent(srat);
+d = srt;
+    var uriContent = "data:text/plain;charset=utf-8," + encodeURIComponent(srt);
 
     document.getElementById("bm3").innerHTML = document.getElementById("bm3").innerHTML +
       '<a href="' + uriContent +'" download="' + unescape(fn) + '_' + track.srclang + '.srt">SRT '+mejs.language.codes[track.srclang]+'</a><br>'
@@ -4532,7 +4532,7 @@ d = srat;
 			t.adjustLanguageBox();
 		},
 
-		addTrackButton: function(lang, label) {
+		addTrackButton: function(lang, label, id) {
 			var t = this;
 			if (label === '') {
 				label = mejs.language.codes[lang] || lang;
@@ -4540,7 +4540,7 @@ d = srat;
 
 			t.captionsButton.find('ul').append(
 				$('<li>'+
-					'<input type="radio" name="' + t.id + '_captions" id="' + t.id + '_captions_' + lang + '" value="' + lang + '" disabled="disabled" />' +
+					'<input type="radio" name="' + t.id + '_captions" id="' + t.id + '_captions_' + id + '" value="' + lang + '" disabled="disabled" />' +
 					'<label for="' + t.id + '_captions_' + lang + '">' + label + ' (loading)' + '</label>'+
 				'</li>')
 			);
@@ -4750,7 +4750,9 @@ d = srat;
 			da:'Danish',
 			nl:'Dutch',
 			en:'English',
-			'en-us':'English',
+			'en-us':'English (United States)',
+			'en-gb':'English (United Kingdom)',
+			'en-ca':'English (Canada)',
 			et:'Estonian',
 			tl:'Filipino',
 			fi:'Finnish',
@@ -4778,7 +4780,7 @@ d = srat;
 			pl:'Polish',
 			pt:'Portuguese',
 			'pt-br':'Portuguese (Brazil)',
-			//'pt-pt':'Portuguese (Portugal)',
+			'pt-pt':'Portuguese (Portugal)',
 			ro:'Romanian',
 			ru:'Russian',
 			sr:'Serbian',
