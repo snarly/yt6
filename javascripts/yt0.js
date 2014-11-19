@@ -190,7 +190,7 @@ var proxies = ['https://allow-any-origin.appspot.com/https:','https://cors-anywh
   //var fs = new RegExp('function ' + fcnm.replace('\$','\\$') + '[^}]+}[^}]+}');
 
   function fcobj(){
-    var mch = rpt.match(fs)[0].split('\;');alert(mch);if (mch.indexOf("$") > -1 { mch = mch.split('$').join('\\$');alert(mch) }
+    var mch = rpt.match(fs)[0].split('\;');alert(mch);if (mch.indexOf("$") > -1) { mch = mch.split('$').join('\\$');alert(mch) }
     for (i=0;i<mch.length;i++) {
       var zzx = mch[i].substring(0,3)
       if ((zzx === zzy) && (zzx.charAt(2)==='.')) { var zzz = zzy.substring(0,2) };
