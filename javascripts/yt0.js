@@ -175,7 +175,10 @@ var proxies = ['https://allow-any-origin.appspot.com/https:','https://cors-anywh
     var rpt = ytassetsjs.innerHTML
     }
 
-  var fcnm = rpt.match(/signature=([^(]+)/)[1]
+//  var fcnm = rpt.match(/signature=([^(]+)/)[1]
+  var fcnm = rpt.match(/&&\(.+signature\/".*\;/)[0]
+  var i = fcnm.split('\"/signature/\"+')[1].split(")")[0]
+  var fcnm = fcnm.split("&&("+i+"=")[1].substring(0,2);alert('fcnm=' + fcnm)
   
   function sprintf(nw) {
     var i = 0;
@@ -196,7 +199,8 @@ var proxies = ['https://allow-any-origin.appspot.com/https:','https://cors-anywh
     var mch = new RegExp('var ' + zzz + '[^}]+}[^}]+}[^}]+}};');
     return [mch,zzz]
   }
-    eval(rpt.match(fcobj()[0])[0].split(" " + fcobj()[1] + "=").join(" dekrypt0=") + rpt.match(fs)[0].split(fcobj()[1]).join("dekrypt0"));
+  alert( fcobj()[0] + " " + rpt.match(fcobj()[0])[0] )
+      eval(rpt.match(fcobj()[0])[0].split(" " + fcobj()[1] + "=").join(" dekrypt0=") + rpt.match(fs)[0].split(fcobj()[1]).join("dekrypt0"));
   //eval(rpt.match(fcobj()[0])[0].replace(fcobj()[1],"dekrypt0") + rpt.match(fs)[0].split(fcobj()[1]).join("dekrypt0"));
 
 function dc(sg) {
