@@ -190,10 +190,11 @@ var proxies = ['https://allow-any-origin.appspot.com/https:','https://cors-anywh
   //var fs = new RegExp('function ' + fcnm.replace('\$','\\$') + '[^}]+}[^}]+}');
 
   function fcobj(){
-    var mch = rpt.match(fs)[0];  mch = mch.split('');for (j=0;j<mch.length;j++){if (mch[j] === "$") {mch[j]="\\$"}};  var mch = mch.join(''); var mch = mch.split('\,'); alert(mch)
+    var mch = rpt.match(fs)[0];  mch = mch.split('');for (j=0;j<mch.length;j++){if (mch[j] === "$") {mch[j]="\\$"}};  var mch = mch.join(''); var mch = mch.split('\,'); alert(mch[4])
     for (i=0;i<mch.length;i++) {
-      var zzx = mch[i].substring(0,3)
-      if ((zzx === zzy) && (zzx.charAt(2)==='.')) { var zzz = zzy.substring(0,2) };
+      var zzx = mch[i].substring(0,4)
+      if ((zzx === zzy) && (zzx.charAt(2)==='.')) { var zzz = zzy.substring(0,2); alert(zzz) };
+      if ((zzx === zzy) && (zzx.charAt(3)==='.')) { var zzz = zzy.substring(0,3); alert(zzz) };
       var zzy = zzx;
     }
     var mch = new RegExp('var ' + zzz + '[^}]+}[^}]+}[^}]+}};');
