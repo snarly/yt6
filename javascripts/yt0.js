@@ -199,10 +199,16 @@ var proxies = ['https://allow-any-origin.appspot.com/https:','https://cors-anywh
     var mch = mch.join('');
     var mch = mch.split('\;'); //alert(mch[4])
     for (i=0;i<mch.length;i++) {
-      var zzx = mch[i].substring(0,4)
+      var zzx = mch[i].substring(0,3);
       if ((zzx === zzy) && (zzx.charAt(2)==='.')) { var zzz = zzy.substring(0,2) };
-      if ((zzx === zzy) && (zzx.charAt(3)==='.')) { var zzz = zzy.substring(0,3) };
-      var zzy = zzx;
+      var zzy = zzx
+    }
+    if (typeof zzz === 'undefined') {
+      for (i=0;i<mch.length;i++) {
+        var zzx = mch[i].substring(0,4);
+        if ((zzx === zzy) && (zzx.charAt(3)==='.')) { var zzz = zzy.substring(0,3) };
+        var zzy = zzx
+      }
     }
     var mch = new RegExp('var ' + zzz + '[^}]+}[^}]+}[^}]+}};');
     return [mch,zzz]
@@ -1092,10 +1098,7 @@ function expire_date(){
   dw.innerHTML = protocol + '//www.youtube.com/html5';
   document.getElementById('bm3').appendChild(dw);
   document.getElementById('bm5').style.color = "#EE0000";
-  document.getElementById('bm5').onclick = function onclic(){
-    //if ((lang_def == null) && (lang_asr == null)) { }
-    window.open( protocol + "//www.youtube.com/html5", "_blank").focus()
-  };
+  document.getElementById('bm5').setAttribute('onclick', 'window.open( "' + protocol + '//www.youtube.com/html5", "_blank").focus() ')
 }
 
 
