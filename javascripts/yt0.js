@@ -463,16 +463,31 @@ if (sref.replace('&type=list&tlangs=1&fmts=0&asrs=','') != 'undefined') {
   var lang_codeA = [];
   for (b=0;b<text.length;b++)
     {
+ var surl = "";
+var lang_code = text[b].getAttribute('lang_code'); if ((lang_code) && (lang_code != 'null')) { surl += '&lang=' + lang_code; };
+var name = text[b].getAttribute('name'); if ((name) && (name != 'null')) { surl += '&name=' + name } else { surl += '&name' };
+var kind = text[b].getAttribute('kind'); if ((kind) && (kind != 'null')) { surl += '&kind=' + kind } else { surl += '&kind' };
+if ((!slang) && ((kind != 'asr') || (text.length == b+1)) ) { var slang = lang_code; var slangurl = surl }
+var id = text[b].getAttribute('id'); if ((id) && (id != 'null')) { tracks[id] = surl; lang_codeA[id] = lang_code };
+var lang_default = text[b].getAttribute('lang_default'); if ((lang_default) && (lang_default != 'null')) { surl += '&type=track&fmt=1'; var track = surl ;var lang_def = lang_code; if (kind != 'asr') { var slang = lang_code; var slangurl = surl } };
+}
+if (!lang_def) { var a=0; do { if ((!track) && (typeof tracks[a] != "undefined")) { var track = tracks[a]}; a++; } while (a<100)};
+//function translate(){
+var text = tts.getElementsByTagName("target");
+for (b=0;b<text.length;b++)
+  {
+    //if (slang === null) break
     var surl = "";
-    var lang_code = text[b].getAttribute('lang_code'); if (lang_code) { surl += '&lang=' + lang_code };
-    var name = text[b].getAttribute('name'); if (name) { surl += '&name=' + name } else { surl += '&name' };
-    var kind = text[b].getAttribute('kind'); if (kind) { surl += '&kind=' + kind ;;var lang_asr = lang_code } else { surl += '&kind' };
-    var id = text[b].getAttribute('id'); if (id) { tracks[id] = surl; lang_codeA[id] = lang_code };
-    var lang_default = text[b].getAttribute('lang_default'); if (lang_default) { surl += '&type=track&fmt=1'; var track = surl ;var lang_def = lang_code };
+    var lang_code = text[b].getAttribute('lang_code'); if ((tlang_codeA.indexOf(lang_code) === -1) || (lang_code === slang)) continue; if ((lang_code) && (lang_code != 'null')) { surl += slangurl + '&tlang=' + lang_code };
+    var name = text[b].getAttribute('name'); if ((name) && (name != 'null')) { surl += '&name=' + name } else { surl += '&name' };
+    var kind = text[b].getAttribute('kind'); if ((kind) && (kind != 'null')) { surl += '&kind=' + kind } else { surl += '&kind' };
+    var id = text[b].getAttribute('id'); if ((id) && (id != 'null')) { if (typeof lang_codeA[id] != 'undefined') { id = parseInt(id) + 1000 }; tracks[id] = surl; lang_codeA[id] = lang_code };
+    var lang_default = text[b].getAttribute('lang_default'); if ((lang_default) && (lang_default != 'null')) { surl += '&type=track&fmt=1'; var track = surl ;var lang_def = lang_code };
+  }
+if (!lang_def) { var a=0; do { if ((!track) && (typeof tracks[a] != "undefined")) { var track = tracks[a]}; a++; } while (a<100)};
+//}//translate
 
-    }
-  if (!lang_default) { var a=0; do { if ((!track) && (tracks[a] != "undefined")) { var track = tracks[a]}; a++; } while (a<100)};
-    html.push(
+     html.push(
       '<a href="' + sref +'">CC</a>'
     );
 }
