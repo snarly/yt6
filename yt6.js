@@ -646,12 +646,11 @@ if (typeof sref.replace('&type=list&tlangs=1&fmts=0&asrs=1','') != 'undefined') 
     if (typeof document.getElementsByClassName("content-region")[0] != 'undefined') {
       var tlang_codeA = document.getElementsByClassName("content-region")[0].textContent || getElementsByAttribute(document,"span","class","content-region")[0].textContent
       if (tlang_codeA) { tlang_codeA = tlang_codeA.toLowerCase() }
-      var tlang_codeA = lang_codeA + ',' + tlang_codeA + ',hu,en'; tlang_codeA = tlang_codeA.split(",")
-      var lang_codeA = sref.split("&asr_langs=")[1];
-      if (lang_codeA) { lang_codeA = lang_codeA.toLowerCase().split("&")[0].split(","); var tlang_codeA = tlang_codeA.concat( lang_codeA ) };//alert(tlang_codeA)
-    } else {
-        var tlang_codeA = ['hu','en']
-      }
+    }
+    var tlang_codeA = lang_codeA + ',' + tlang_codeA + ',hu,en'; tlang_codeA = tlang_codeA.split(",")
+    var lang_codeA = sref.split("&asr_langs=")[1];
+    if (lang_codeA) { lang_codeA = lang_codeA.toLowerCase().split("&")[0].split(","); var tlang_codeA = tlang_codeA.concat( lang_codeA ) };//alert(tlang_codeA)
+
   var lang_codeA = [];
   var text = tts.getElementsByTagName("track");
   for (b=0;b<text.length;b++)
