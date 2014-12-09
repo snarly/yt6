@@ -451,7 +451,7 @@ if (sref.replace('&type=list&tlangs=1&fmts=0&asrs=','') != 'undefined') {
   
   var lang_codeA = window.navigator.userLanguage || window.navigator.language
   if (lang_codeA) { lang_codeA = lang_codeA.toLowerCase() }
-  if (typeof document.getElementsByClassName("content-region") != 'undefined') {
+  if (typeof document.getElementsByClassName("content-region")[0] != 'undefined') {
     var tlang_codeA = document.getElementsByClassName("content-region")[0].textContent || getElementsByAttribute(document,"span","class","content-region")[0].textContent
     if (tlang_codeA) { tlang_codeA = tlang_codeA.toLowerCase() }
     var tlang_codeA = lang_codeA + ',' + tlang_codeA + ',hu,en'; tlang_codeA = tlang_codeA.split(",")
