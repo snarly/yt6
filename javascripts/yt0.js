@@ -438,8 +438,8 @@ for (i in z) {
     }
 
 
-var sref = unescape(args.ttsurl) + '&type=list&asrs=1';
-if (sref.replace('&type=list&asrs=1','') != 'undefined') {
+var sref = unescape(args.ttsurl) + '&type=list&tlangs=1&fmts=0&asrs=1';
+if (sref.replace('&type=list&tlangs=1&fmts=0&asrs=','') != 'undefined') {
   //      sref += '&type=track&lang=en&name&kind&fmt=1';
   //      sref += '&type=list&tlangs=1&fmts=0&asrs=1';
   xhr.open('get', sref, false);
@@ -448,6 +448,18 @@ if (sref.replace('&type=list&asrs=1','') != 'undefined') {
   //var array = [lang_code, name, kind, lang_default];
   var text = tts.getElementsByTagName("track");
   var tracks = [];
+  
+  var lang_codeA = window.navigator.userLanguage || window.navigator.language
+  if (lang_codeA) { lang_codeA = lang_codeA.toLowerCase() }
+  if (typeof document.getElementsByClassName("content-region") != 'undefined') {
+    var tlang_codeA = document.getElementsByClassName("content-region")[0].textContent || getElementsByAttribute(document,"span","class","content-region")[0].textContent
+    if (tlang_codeA) { tlang_codeA = tlang_codeA.toLowerCase() }
+    var tlang_codeA = lang_codeA + ',' + tlang_codeA + ',hu,en'; tlang_codeA = tlang_codeA.split(",")
+    var lang_codeA = sref.split("&asr_langs=")[1];
+    if (lang_codeA) { lang_codeA = lang_codeA.toLowerCase().split("&")[0].split(","); var tlang_codeA = tlang_codeA.concat( lang_codeA ) };
+  } else {
+      var tlang_codeA = ['hu','en']; alert(tlang_codeA)
+    }
   var lang_codeA = [];
   for (b=0;b<text.length;b++)
     {
