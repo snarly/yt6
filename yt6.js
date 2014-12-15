@@ -1186,6 +1186,8 @@ function resize_layers(w,h){
   document.getElementById('bm').style.height = h;
   document.getElementById('mep_0').style.width = w;
   document.getElementById('mep_0').style.height = h;
+  document.getElementsByClassName('mejs-clear')[0].style.width = w
+  document.getElementsByClassName('mejs-clear')[0].style.height = h
 
   var z = gclass("mejs-layer");
   var i = 0;
