@@ -18,7 +18,7 @@ function qr(sr) {
     6: '270p FLV H.263 + 64k MP3',
     13: '???p 3GP MPEG-4 + ??k AAC',
     17: '144p 3GP MPEG-4 + 24k AAC',
-    18: '360p MP4 H.264 + 96k AAC',
+    18: '360p MP4 H.264 /LQ/ + 96k AAC',
     22: '720p MP4 H.264 + 192k AAC',
     34: '360p FLV H.264 + 128k AAC',
     35: '480p FLV H.264 + 128k AAC',
@@ -29,6 +29,8 @@ function qr(sr) {
     44: '480p WebM VP8 + 128k Vorbis',
     45: '720p WebM VP8 + 192k Vorbis',
     46: '1080p WebM VP8 + 192k Vorbis',
+    59: '360p MP4 H.264 /HQ/ + 128k AAC',
+    78: '360p MP4 H.264 /HQ/ + 128k AAC',
     82: '360p MP4 3D + 96k AAC',
     83: '240p MP4 3D + 96k AAC',
     84: '720p MP4 3D + 192k AAC',
@@ -956,7 +958,8 @@ var z = document.getElementsByClassName('mejs-clear')[0];\
 if (typeof srcto != 'undefined') {  }  \
 }\
 }\
-aspect();aspect(); document.getElementById('bm4').style.display = 'inline-block'                });";
+aspect();aspect(); document.getElementById('bm4').style.display = 'inline-block';\
+if ( getElementsByAttribute(document,'div','class','yt-masthead-logo-container')[0].getAttribute('class').indexOf('doodle') ) { document.getElementById('logo-container').style.width = '88px'; document.getElementById('bm3').style.top = document.getElementById('masthead-positioner').offsetHeight - 2 + 'px' }                 });";
     try {
       js.appendChild(document.createTextNode(code));
       document.getElementById('video-hide').appendChild(js);
@@ -1005,6 +1008,19 @@ jQuery(document).ready(function( $ ){
   // This will be the method that we use to check
   // changes in the window location.
   var fnCheckLocation = function(){
+  	
+    var z = document.getElementsByClassName('mejs-clear')[0]
+      if (z) {
+        if ( ((z.style.width != fix_Width()) || (z.style.height != fix_Height() )) && (!document.getElementById('aspect')) ) {
+          aspect();aspect()
+        } else {
+            if (document.getElementById('aspect')) {
+              var h = parseInt(parseInt(fix_Height().replace('px','')) - 390) + 'px'
+              var h1 = Math.abs(document.getElementById("watch7-sidebar").style.marginTop.replace('px','')) + "px";
+              if ( ( h != h1 ) && (h1 != "0px") ) aspect();aspect() }
+            }
+          }
+      }
     // Check to see if the location has changed.
     if (strLocation != window.location.href){
  
@@ -1120,7 +1136,7 @@ function expire_date(){
   document.getElementById('bm5').setAttribute('onclick', 'window.open( "' + protocol + '//www.youtube.com/html5", "_blank").focus() ')
 }
 
-
+document.getElementById("bm3").style.top = document.getElementById("masthead-positioner").offsetHeight - 2 + "px"
 
 var z = getElementsByAttribute(document,"a","onclick")
 for(i = 0;i<z.length-1;i++){
@@ -1154,10 +1170,18 @@ function gclass(className, tag, elm){
 
 function resize_layers(w,h){
 
-  if (w.replace('px','') > document.getElementById('watch7-container').offsetWidth) {
-    document.getElementById('bm').style.left = v.style.left = document.getElementById('player-api').style.marginLeft = '-' + ((w.replace('px','') - document.getElementById('watch7-container').offsetWidth) / 2) + 'px';
-  } else { document.getElementById('bm').style.left = v.style.left = document.getElementById('player-api').style.marginLeft = '0px' }
+  var w7c = document.getElementById('watch7-container').offsetWidth
+  var pmc = document.getElementById('player-mole-container').offsetWidth
+  dw = document.getElementById('aspect')
+  
+  //if (w.replace('px','') > document.getElementById('watch7-container').offsetWidth) {
+  if (dw != null) {
+    document.getElementById('bm').style.left = v.style.left = document.getElementById('player-api').style.marginLeft = ((document.getElementById('watch7-container').offsetWidth - w.replace('px','')) / 2) - ((w7c - pmc) / 2) + 'px';
+  } else {
+      document.getElementById('bm').style.left = v.style.left = document.getElementById('player-api').style.marginLeft = '0px'
+  }
 
+  document.getElementById('theater-background').style.height = h
   document.getElementById('bm').style.width = w;
   document.getElementById('bm').style.height = h;
   document.getElementById('mep_0').style.width = w;
@@ -1187,16 +1211,16 @@ function resize_layers(w,h){
   for(i=0;i<x.length;i++){
     var z = document.getElementsByClassName(x[i])[0]
     if ((document.getElementsByClassName('mejs-clear')[0]) && (typeof z != 'undefined')){
-      z.style.maxWidth = "147px"; z.style.minWidth = "130px"
+      //z.style.maxWidth = "147px"; z.style.minWidth = "130px"
       function src_chooser(){ return [z.firstChild.offsetHeight, z.firstChild.offsetWidth] }
       var src_chooser_size = src_chooser(z);
       if (((document.getElementById('bm').style.height.replace('px','')) - 30) < src_chooser_size[0]) {
         z.style.height = ((document.getElementById('bm').style.height.replace('px','')) - 51) + 'px';
-        z.style.width = ((src_chooser_size[1]) + 15) + 'px'
+        z.style.width = "145px";//((src_chooser_size[1]) + 15) + 'px'
         z.style.overflowY = "scroll"
       } else {
           z.style.height = (src_chooser_size[0] + 1) + 'px'
-          z.style.width = (src_chooser_size[1] + 0) + 'px'
+          z.style.width = "130px";//(src_chooser_size[1] + 0) + 'px'
           z.style.overflowY = "hidden"
         }
     }
@@ -1300,6 +1324,7 @@ function aspect() {
 
     dw = document.getElementById('aspect')
     if (dw != null) { dw.parentNode.removeChild(dw)}
+    document.getElementById('theater-background').style.backgroundColor = "#1B1B1B"
     dw = document.createElement('div');
     dw.id = 'aspect';
     dw.innerHTML = '<input id="a_width" value="' + w.replace("px","") + '" style="display:inline-block;width:30px;height:13px;text-align:right" onkeyup="if (event.keyCode == 13) aspect2(value,document.getElementById(\'a_height\').value)" onfocus="value=value;document.getElementById(\'a_height\').value=document.getElementById(\'a_height\').value"></input>x<input id="a_height" value="' + h.replace("px","") + '" style="display:inline-block;width:30px;height:13px;text-align:right" onkeyup="if (event.keyCode == 13) aspect2(document.getElementById(\'a_width\').value,value)" onfocus="value=value;document.getElementById(\'a_width\').value=document.getElementById(\'a_width\').value"></input>px';
@@ -1319,12 +1344,13 @@ function aspect() {
     document.getElementById('player1').style.height = (h.replace('px','') - 30) + 'px';
     document.getElementById('player1').style.width = '100%'
     document.getElementById('player').setAttribute('class',class_1)
-    document.getElementById('player').setAttribute('class',class_0.replace('small_a','small'))
+    document.getElementById('player').setAttribute('class',class_0.replace('small_a','small').replace('medium_a','medium').replace('large_A','large'))
   } else {
       var w = fix_Width();
       var h = fix_Height();
       dw = document.getElementById('aspect')
       if (dw != null) { dw.parentNode.removeChild(dw)}
+      document.getElementById('theater-background').style.backgroundColor = "transparent"
       document.getElementById('watch7-sidebar').style.marginTop = '-390px';
       document.getElementById('player-api').style.height = h;
       document.getElementById('player-api').style.width = w;
@@ -1334,7 +1360,7 @@ function aspect() {
       
       document.getElementById('player1').style.height = (h.replace('px','') - 30) + 'px';
       document.getElementById('player1').style.width = '100%'
-      document.getElementById('player').setAttribute('class',class_0.replace('small_a','small'))
+      document.getElementById('player').setAttribute('class',class_0.replace('small_a','small').replace('medium_a','medium').replace('large_A','large'))
    }
 }
 
@@ -1372,6 +1398,7 @@ function deldiv(){
   //window.location.reload(true);
   //var loc = window.location.href; // or a new URL
   //window.location.href = loc + '?n=' + new Date().getTime(); // random number
+  document.getElementById('theater-background').removeAttribute('style')
   if ((typeof (MediaElementPlayer) !== 'undefined') && ((dw !== null)  || ((typeof player.getPlayerState == 'function') && (player.getPlayerState !== -1))) ) { location.href = window.location.href }
 }
 
