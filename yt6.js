@@ -1017,7 +1017,7 @@ jQuery(document).ready(function( $ ){
             if (document.getElementById('aspect')) {
               var h = parseInt(parseInt(fix_Height().replace('px','')) - 390) + 'px'
               var h1 = Math.abs(document.getElementById("watch7-sidebar").style.marginTop.replace('px','')) + "px";
-              if ( ( h != h1 ) && (h1 != "0px") ) aspect();aspect() }
+              if ( ( h != h1 ) && (h1 != "0px") ) { aspect();aspect() }
             }
           }
       }
