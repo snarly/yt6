@@ -1084,7 +1084,7 @@ function expire_date(){
   var bh = (expire.length < 33) ? 78 : 91
   return [ip,expire,bh]
 }
-  html.splice(1,0,'Direct links to YouTube media<br>for IP address: '+ expire_date()[0] + '<br>')
+  html.splice(1,0,'Direct links to YouTube media<br>for IP address: '+ expire_date()[0])
   html.push(
    '<br>Links will expire on <br>' + expire_date()[1] + 
    '<br><br>Media streams unsupported by the browser may cause it to crash or the player to freeze on playback.'
