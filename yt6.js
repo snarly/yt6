@@ -1008,9 +1008,13 @@ jQuery(document).ready(function( $ ){
   // This will be the method that we use to check
   // changes in the window location.
   var fnCheckLocation = function(){
-  	
-    var z = document.getElementsByClassName('mejs-clear')[0]
+
+    var z = document.getElementsByClassName('mejs-clear')
+    if (z) z = z[0]
       if (z) {
+        var x = document.getElementById("bm3")
+        if (x) x.style.top = document.getElementById("masthead-positioner").offsetHeight - 2 + "px" 
+
         if ( ((z.style.width != fix_Width()) || (z.style.height != fix_Height() )) && (!document.getElementById('aspect')) ) {
           aspect();aspect()
         } else {
@@ -1080,9 +1084,9 @@ function expire_date(){
   var bh = (expire.length < 33) ? 78 : 91
   return [ip,expire,bh]
 }
-//'<br>IP-address ' + expire_date()[0] +
+  html.splice(1,0,'Direct links to YouTube media<br>for IP address: '+ expire_date()[0] + '<br>')
   html.push(
-   '<br>Links expire on <br>' + expire_date()[1] + 
+   '<br>Links will expire on <br>' + expire_date()[1] + 
    '<br><br>Media streams unsupported by the browser may cause it to crash or the player to freeze on playback.'
   )
   document.getElementById('bm2').innerHTML = html.join('<br>')
@@ -1176,9 +1180,11 @@ function resize_layers(w,h){
   
   //if (w.replace('px','') > document.getElementById('watch7-container').offsetWidth) {
   if (dw != null) {
-    document.getElementById('bm').style.left = v.style.left = document.getElementById('player-api').style.marginLeft = ((document.getElementById('watch7-container').offsetWidth - w.replace('px','')) / 2) - ((w7c - pmc) / 2) + 'px';
+    document.getElementById('bm').style.left = "auto";
+    v.style.left = document.getElementById('player-api').style.marginLeft = ((document.getElementById('watch7-container').offsetWidth - w.replace('px','')) / 2) - ((w7c - pmc) / 2) + 'px';
   } else {
-      document.getElementById('bm').style.left = v.style.left = document.getElementById('player-api').style.marginLeft = '0px'
+      document.getElementById('bm').style.left = "auto";
+      v.style.left = document.getElementById('player-api').style.marginLeft = '0px'
   }
 
   document.getElementById('theater-background').style.height = h
