@@ -222,8 +222,8 @@ var fcnm = 'function("' + rpt.match(fs)[0].split("(")[1].split(")")[0] + '","{' 
 alert("dekrypt0="+dekrypt0 + " ; fcnm="+fcnm)
 eval(dekrypt1)
 
-function dc(sg) {alert(fcnm + '("' + sg + '")')
-  return eval(fcnm + '("' + sg + '")');
+function dc(sg) {
+  return fcnm(sg);
 }
 
 var linx = [];
