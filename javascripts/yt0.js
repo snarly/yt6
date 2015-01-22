@@ -213,11 +213,12 @@ var proxies = ['https://allow-any-origin.appspot.com/https:','https://cors-anywh
     var mch = new RegExp('var ' + zzz + '[^}]+}[^}]+}[^}]+}};');
     return [mch,zzz]
   }
-alert(rpt.match(fs)[0].split(fcobj()[1]+".").join("dekrypt0.") )
+
   eval(rpt.match(fcobj()[0])[0].split(" " + fcobj()[1] + "=").join(" dekrypt0=") + rpt.match(fs)[0].split(fcobj()[1]+".").join("dekrypt0."));
   //eval(rpt.match(fcobj()[0])[0].replace(fcobj()[1],"dekrypt0") + rpt.match(fs)[0].split(fcobj()[1]).join("dekrypt0"));
-
-function dc(sg) {
+eval(rpt.match(fcobj()[0])[0].split(" " + fcobj()[1] + "=").join(" dekrypt0=") )
+eval(rpt.match(fs)[0].split(fcobj()[1]+".").join("dekrypt0."));
+function dc(sg) {alert(fcnm + '("' + sg + '")')
   return eval(fcnm + '("' + sg + '")');
 }
 
