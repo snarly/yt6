@@ -227,11 +227,14 @@ var proxies = ['https://allow-any-origin.appspot.com/https:','https://cors-anywh
     return [mch,zzz]
   }
 
-  eval(rpt.match(fcobj()[0])[0].split(" " + fcobj()[1] + "=").join(" dekrypt0=") + rpt.match(fs)[0].split(fcobj()[1]).join("dekrypt0"));
+  eval(rpt.match(fcobj()[0])[0].split(" " + fcobj()[1] + "=").join(" dekrypt0="));// + rpt.match(fs)[0].split(fcobj()[1]).join("dekrypt0");
 //eval(rpt.match(fcobj()[0])[0].replace(fcobj()[1],"dekrypt0") + rpt.match(fs)[0].split(fcobj()[1]).join("dekrypt0"));
+  var fcnm = 'function fcnm(' + rpt.match(fs)[0].split("(")[1].split(")")[0] + '){' + rpt.match(fs)[0].split(fcobj()[1]+".").join("dekrypt0.").split("\"").join("'").split("){")[1]
+  eval(fcnm)
 
 function dc(sg) {
-  return eval(fcnm + '("' + sg + '")');
+  //return eval(fcnm + '("' + sg + '")');
+  return fcnm(sg);
 }
 
 var linx = [];
