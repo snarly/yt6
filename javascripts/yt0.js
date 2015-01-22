@@ -213,8 +213,7 @@ var proxies = ['https://allow-any-origin.appspot.com/https:','https://cors-anywh
     var mch = new RegExp('var ' + zzz + '[^}]+}[^}]+}[^}]+}};');
     return [mch,zzz]
   }
-  alert(fs)
-  alert('rpt.match(fs)[0] = '+rpt.match(fs)[0] )
+alert(rpt.match(fs)[0].split(fcobj()[1]).join("dekrypt0") )
   eval(rpt.match(fcobj()[0])[0].split(" " + fcobj()[1] + "=").join(" dekrypt0=") + rpt.match(fs)[0].split(fcobj()[1]).join("dekrypt0"));
   //eval(rpt.match(fcobj()[0])[0].replace(fcobj()[1],"dekrypt0") + rpt.match(fs)[0].split(fcobj()[1]).join("dekrypt0"));
 
