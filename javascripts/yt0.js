@@ -216,10 +216,10 @@ var proxies = ['https://allow-any-origin.appspot.com/https:','https://cors-anywh
 
   eval(rpt.match(fcobj()[0])[0].split(" " + fcobj()[1] + "=").join(" dekrypt0=") + rpt.match(fs)[0].split(fcobj()[1]+".").join("dekrypt0."));
   //eval(rpt.match(fcobj()[0])[0].replace(fcobj()[1],"dekrypt0") + rpt.match(fs)[0].split(fcobj()[1]).join("dekrypt0"));
-alert("dekrypt0="+dekrypt0 + " ; dekrypt1="+rpt.match(fs)[0].split(fcobj()[1]+".").join("dekrypt0."))
+
 var dekrypt0 = rpt.match(fcobj()[0])[0].split(" " + fcobj()[1] + "=")[1]
-var dekrypt1 = "'" + rpt.match(fs)[0].split(fcobj()[1]+".").join("dekrypt0.") + "'"
-alert("dekrypt0="+dekrypt0 + " ; dekrypt1="+dekrypt1)
+var fcnm = 'function("' + rpt.match(fs)[0].split("(")[1].split(")")[0] + '","{' + rpt.match(fs)[0].split(fcobj()[1]+".").join("dekrypt0.").split("{")[1] + '")'
+alert("dekrypt0="+dekrypt0 + " ; fcnm="+fcnm)
 eval(dekrypt1)
 
 function dc(sg) {alert(fcnm + '("' + sg + '")')
