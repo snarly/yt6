@@ -944,7 +944,7 @@ if (typeof srcto == 'undefined') {\
 		features: ['',],\
 		audioWidth: 1, audioHeight: 1,\
 		success: function(me) {  $('#audio-type').html( me.pluginType);\
-					me.addEventListener('seeked', function() { if (Seek == 1) { Seek = null ;  player1.play() } else { if (!me.paused) { alert();player1.setCurrentTime( me.currentTime ) }} });\
+					me.addEventListener('seeked', function() { if (Seek == 1) { Seek = null ;  player1.play() } else { if (me.paused) { alert();player1.setCurrentTime( me.currentTime ) }} });\
 					me.addEventListener('ended', function() { if (player1.options.loop1) { Seek = 1; me.currentTime = player2.currentTime = 0; } else { Seek = 3; me.currentTime = player2.currentTime = 0;\
                                           var autoplay = document.getElementsByClassName('yt-uix-button yt-uix-button-size-default yt-uix-button-player-controls yt-uix-button-empty yt-uix-button-has-icon toggle-autoplay yt-uix-button-opacity yt-uix-tooltip yt-uix-tooltip yt-uix-button-toggled')[0];\
                                           if (autoplay) { var autoplay = document.getElementsByClassName('yt-uix-button  next-playlist-list-item yt-uix-button-opacity yt-uix-tooltip spf-link  yt-uix-button-player-controls yt-uix-button-size-default yt-uix-button-empty')[0]; if (autoplay) autoplay.click()\
