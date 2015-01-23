@@ -932,7 +932,7 @@ if (typeof srcto == 'undefined') {\
                                           if (autoplay) { var autoplay = document.getElementsByClassName('yt-uix-button  next-playlist-list-item yt-uix-button-opacity yt-uix-tooltip spf-link  yt-uix-button-player-controls yt-uix-button-size-default yt-uix-button-empty')[0]; if (autoplay) autoplay.click()\
                                           } } });\
 					me.addEventListener('pause', function() { if ( (typeof player.getPlayerState != 'function') || (document.getElementById('bm').style.visibility != 'hidden') ) { if (Seek == 4) { Seek = null; player1.play() }; if (Seek == 2) { Seek = null }; if (!player1.paused) { player1.pause() } } });\
-					me.addEventListener('play', function() { Seek = 2 ;var player1_src = document.getElementById('player1').getAttribute('src').replace('&ratebypass=yes',''); if ( (player1_src.slice(-2) == '&2') && (document.getElementById('bm').style.visibility != 'hidden') ) {Seek = 4; me.pause() }; if ( (!player1.playing) && (me.src.replace('&ratebypass=yes','') != player1_src) && (document.getElementById('bm').style.visibility != 'hidden')) { alert();player1.play() } else { if (me.src.replace('&ratebypass=yes','') == player1_src) me.pause()} } );\
+					me.addEventListener('play', function() { Seek = 2 ;var player1_src = document.getElementById('player1').getAttribute('src').replace('&ratebypass=yes',''); if ( (player1_src.slice(-2) == '&2') && (document.getElementById('bm').style.visibility != 'hidden') ) {Seek = 4; me.pause() }; if ( (!player1.playing) && (me.src.replace('&ratebypass=yes','') != player1_src) && (document.getElementById('bm').style.visibility != 'hidden')) { player1.play() } else { if (me.src.replace('&ratebypass=yes','') == player1_src) me.pause()} } );\
 					me.addEventListener('loadeddata', function() { if (Seek !== 2) { Seek = 0; player1.pause() } else { } });\
 }});\
 } else {\
@@ -950,7 +950,7 @@ if (typeof srcto == 'undefined') {\
                                           if (autoplay) { var autoplay = document.getElementsByClassName('yt-uix-button  next-playlist-list-item yt-uix-button-opacity yt-uix-tooltip spf-link  yt-uix-button-player-controls yt-uix-button-size-default yt-uix-button-empty')[0]; if (autoplay) autoplay.click()\
                                           } } });\
 					me.addEventListener('pause', function() { if (Seek == 2) { Seek = null }; if (!player1.paused) {player1.pause()} });\
-					me.addEventListener('play', function() { Seek = 2 ; if ( (!player1.playing) && ( ((typeof player.getPlayerState != 'function') && (flashvars == null)) || ((document.getElementById('bm').style.visibility != 'hidden') && (flashvars != null)) ) ) { player1.play() } } );\
+					me.addEventListener('play', function() { Seek = 2 ; if ( (!player1.playing) && ( ((typeof player.getPlayerState != 'function') && (flashvars == null)) || ((document.getElementById('bm').style.visibility != 'hidden') && (flashvars != null)) ) ) { alert();player1.play() } } );\
 					me.addEventListener('loadeddata', function() { if (Seek !== 2) { Seek = 0; player1.pause() } else { } });\
 }});\
 }\
