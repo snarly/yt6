@@ -1400,25 +1400,11 @@ function deldiv(){
   }
   document.getElementById('movie_player').style.display = 'block';
   document.getElementById('masthead-positioner-height-offset').style = '';
-  var myNode = document.getElementById('remove')
-  if (myNode) { 
-    myNode.style.display = 'none';
-    myNode.parentNode.removeChild(myNode)
-  }
-  var myNode = document.getElementById('controls')
-  if (myNode) myNode.parentNode.removeChild(myNode)
-  document.getElementById("snarls_player").parentNode.removeChild(document.getElementById("snarls_player"))
-  //document.getElementById("watch7-notification-area").parentNode.removeChild(document.getElementById("watch7-notification-area"))
   var dw = document.getElementById('mejs-clear')
-    var myNode = document.getElementById("aspect");
-  if (myNode !== null) { while (myNode.firstChild) {myNode.removeChild(myNode.firstChild);};myNode.parentNode.removeChild(myNode)}
-  var myNode = document.getElementById("bm1");
-  if (myNode !== null) { while (myNode.firstChild) {myNode.removeChild(myNode.firstChild);};myNode.parentNode.removeChild(myNode)}
-  var myNode = document.getElementById("bm0");
-  if (myNode !== null) { while (myNode.firstChild) {myNode.removeChild(myNode.firstChild);};myNode.parentNode.removeChild(myNode)}
-  //window.location.reload(true);
-  //var loc = window.location.href; // or a new URL
-  //window.location.href = loc + '?n=' + new Date().getTime(); // random number
+  var myNode = [ document.getElementById('remove'), document.getElementById('controls'), document.getElementById('aspect'), document.getElementById('bm1'), document.getElementById('bm0'), document.getElementById("snarl's_player"),  ]
+  for(i=0;i<myNode.length;i++){
+    if (myNode[i]) myNode[i].parentNode.removeChild(myNode[i])
+  }
   document.getElementById('theater-background').removeAttribute('style')
   //if ((typeof (MediaElementPlayer) !== 'undefined') && ((dw !== null)  || ((typeof player.getPlayerState == 'function') && (player.getPlayerState !== -1))) ) { location.href = window.location.href }
 }
