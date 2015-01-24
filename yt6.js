@@ -1401,7 +1401,7 @@ function deldiv(){
   document.getElementById('movie_player').style.display = 'block';
   document.getElementById('masthead-positioner-height-offset').style = '';
   var dw = document.getElementById('mejs-clear')
-  var myNode = [ document.getElementById('remove'), document.getElementById('controls'), document.getElementById('aspect'), document.getElementById('bm1'), document.getElementById('bm0'), document.getElementById("snarl's_player"),  ]
+  var myNode = [ document.getElementById('remove'), document.getElementById('controls'), document.getElementById('aspect'), document.getElementById('bm1'), document.getElementById('bm0'), document.getElementById("snarls_player"),  ]
   for(i=0;i<myNode.length;i++){
     if (myNode[i]) myNode[i].parentNode.removeChild(myNode[i])
   }
