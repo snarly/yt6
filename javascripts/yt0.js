@@ -168,17 +168,17 @@ var proxies = ['https://allow-any-origin.appspot.com/https:','https://cors-anywh
     }//setProxy
 
     var spx = setProxy()
-    var px = spx[0];alert(px)
-    var rpt = spx[1];alert(rpt)
+    var px = spx[0]
+    var rpt = spx[1]
 
   } else {
     var rpt = ytassetsjs.innerHTML
     }
 
 //  var fcnm = rpt.match(/signature=([^(]+)/)[1]
-  var fcnm = rpt.match(/&&\(.+signature\/".*\;/)[0]
-  var i = fcnm.split('\"/signature/\"+')[1].split(")")[0]
-  var fcnm = fcnm.split("&&("+i+"=")[1].substring(0,2);//alert('fcnm=' + fcnm)
+  var fcnm = rpt.match(/&&\(.+signature\/".*\;/)[0];alert(fcnm)
+  var i = fcnm.split('\"/signature/\"+')[1].split(")")[0];alert(i)
+  var fcnm = fcnm.split("&&("+i+"=")[1].substring(0,2);alert('fcnm=' + fcnm)
   
   function sprintf(nw) {
     var i = 0;
