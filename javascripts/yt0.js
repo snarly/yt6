@@ -93,8 +93,8 @@ var proxies = ['https://allow-any-origin.appspot.com/https:','https://cors-anywh
       for (i in proxiez){
         var px = proxiez[i]
         try {
-          xhr.open('get', px + ytplayer.config.assets.js, false);alert("1")
-          xhr.send();alert("2")
+          xhr.open('get', px + ytplayer.config.assets.js, false);
+          xhr.send();
         } catch (e) {
             function exit( status ) {
               // http://kevin.vanzonneveld.net
@@ -168,8 +168,8 @@ var proxies = ['https://allow-any-origin.appspot.com/https:','https://cors-anywh
     }//setProxy
 
     var spx = setProxy()
-    var px = spx[0]
-    var rpt = spx[1]
+    var px = spx[0];alert(px)
+    var rpt = spx[1];alert(rpt)
 
   } else {
     var rpt = ytassetsjs.innerHTML
