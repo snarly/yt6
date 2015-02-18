@@ -91,8 +91,8 @@ var proxies = ['https://allow-any-origin.appspot.com/https:','https://cors-anywh
     function setProxy(){
       var proxiez = shuffle(proxies)
       for (i in proxiez){
-        var px = proxiez[i]
-        try {
+        var px = proxiez[i];alert(px)
+        try {alert("2" + px)
           xhr.open('get', px + ytplayer.config.assets.js, false);
           xhr.send();
         } catch (e) {
@@ -178,7 +178,7 @@ var proxies = ['https://allow-any-origin.appspot.com/https:','https://cors-anywh
 //  var fcnm = rpt.match(/signature=([^(]+)/)[1]
   var fcnm = rpt.match(/&&\(.+signature\/".*\;/)[0]
   var i = fcnm.split('\"/signature/\"+')[1].split(")")[0]
-  var fcnm = fcnm.split("&&("+i+"=")[1].substring(0,2);alert('fcnm=' + fcnm)
+  var fcnm = fcnm.split("&&("+i+"=")[1].substring(0,2);//alert('fcnm=' + fcnm)
   
   function sprintf(nw) {
     var i = 0;
