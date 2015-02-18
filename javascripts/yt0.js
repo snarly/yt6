@@ -91,10 +91,10 @@ var proxies = ['https://allow-any-origin.appspot.com/https:','https://cors-anywh
     function setProxy(){
       var proxiez = shuffle(proxies)
       for (i in proxiez){
-        var px = proxiez[i];alert(px)
-        try {alert("2" + px)
-          xhr.open('get', px + ytplayer.config.assets.js, false);
-          xhr.send();
+        var px = proxiez[i]
+        try {
+          xhr.open('get', px + ytplayer.config.assets.js, false);alert("1")
+          xhr.send();alert("2")
         } catch (e) {
             function exit( status ) {
               // http://kevin.vanzonneveld.net
