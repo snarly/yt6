@@ -176,9 +176,9 @@ var proxies = ['https://allow-any-origin.appspot.com/https:','https://cors-anywh
     }
 
 //  var fcnm = rpt.match(/signature=([^(]+)/)[1]
-  var fcnm = rpt.match(/&&\(.+signature\/".*\;/)[0];alert(fcnm)
-  var i = fcnm.split('\"/signature/\"+')[1].split(")")[0];alert(i)
-  var fcnm = fcnm.split("&&("+i+"=")[1].substring(0,2);alert('fcnm=' + fcnm)
+  var fcnm = rpt.match(/&&\(.+signature\/".*\;/)[0];
+  var i = fcnm.split('\"/signature/\"+')[1].split(")")[0];
+  var fcnm = fcnm.split("&&("+i+"=")[1].substring(0,2);//alert('fcnm=' + fcnm)
   
   function sprintf(nw) {
     var i = 0;
@@ -186,18 +186,18 @@ var proxies = ['https://allow-any-origin.appspot.com/https:','https://cors-anywh
       nw = nw.replace('%s', arguments[++i])
     return nw;
   }
-  var fs = new RegExp(    sprintf('function %s[^}]+}[^}]+}', fcnm.replace('$', '\\$'))  );alert("fs="+fs)
+  var fs = new RegExp(    sprintf('function %s[^}]+}[^}]+}', fcnm.replace('$', '\\$'))  );//alert("fs="+fs)
   //var fs = new RegExp('function ' + fcnm.replace('\$','\\$') + '[^}]+}[^}]+}');
 
   function fcobj(){
-    var mch = rpt.match(fs)[0];;alert(typeof mch); mch = mch.split('')
+    var mch = rpt.match(fs)[0]; mch = mch.split('')
     for (j=0;j<mch.length;j++) {
       if (mch[j] === "$") {
         mch[j]="\\$"
       }
     };
     var mch = mch.join('');alert(mch)
-    var mch = mch.split('\;'); alert(mch[4])
+    var mch = mch.split('\;');// alert(mch[4])
     for (i=0;i<mch.length;i++) {
       var zzx = mch[i].substring(0,3);
       if ((zzx === zzy) && (zzx.charAt(2)==='.')) { var zzz = zzy.substring(0,2) };
@@ -210,10 +210,10 @@ var proxies = ['https://allow-any-origin.appspot.com/https:','https://cors-anywh
         var zzy = zzx
       }
     }
-    var mch = new RegExp('var ' + zzz + '[^}]+}[^}]+}[^}]+}};');
+    var mch = new RegExp('var ' + zzz + '[^}]+}[^}]+}[^}]+}};');alert(mch)
     return [mch,zzz]
   }
-
+alert(rpt.match(fcobj()[0])[0])
   eval(rpt.match(fcobj()[0])[0].split(" " + fcobj()[1] + "=").join(" dekrypt0=") + rpt.match(fs)[0].split(fcobj()[1]+".").join("dekrypt0."));
   //eval(rpt.match(fcobj()[0])[0].replace(fcobj()[1],"dekrypt0") + rpt.match(fs)[0].split(fcobj()[1]).join("dekrypt0"));
 
