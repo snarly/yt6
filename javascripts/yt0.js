@@ -89,7 +89,7 @@ var proxies = ['https://allow-any-origin.appspot.com/https:','https://cors-anywh
   if ((ytassetsjs == null) || ytassetsjs.innerHTML.indexOf("function(){") == -1) {
     if (ytassetsjs != null) ytassetsjs.parentNode.removeChild(ytassetsjs)
     function setProxy(){
-      var proxiez = shuffle(proxies);alert(proxiez[0] + proxiez[1])
+      var proxiez = shuffle(proxies)
       for (i in proxiez){
         var px = proxiez[i]
         try {
@@ -178,7 +178,7 @@ var proxies = ['https://allow-any-origin.appspot.com/https:','https://cors-anywh
 //  var fcnm = rpt.match(/signature=([^(]+)/)[1]
   var fcnm = rpt.match(/&&\(.+signature\/".*\;/)[0]
   var i = fcnm.split('\"/signature/\"+')[1].split(")")[0]
-  var fcnm = fcnm.split("&&("+i+"=")[1].substring(0,2);//alert('fcnm=' + fcnm)
+  var fcnm = fcnm.split("&&("+i+"=")[1].substring(0,2);alert('fcnm=' + fcnm)
   
   function sprintf(nw) {
     var i = 0;
