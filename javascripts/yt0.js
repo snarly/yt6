@@ -89,7 +89,7 @@ var proxies = ['https://allow-any-origin.appspot.com/https:','https://cors-anywh
   if ((ytassetsjs == null) || ytassetsjs.innerHTML.indexOf("function(){") == -1) {
     if (ytassetsjs != null) ytassetsjs.parentNode.removeChild(ytassetsjs)
     function setProxy(){
-      var proxiez = shuffle(proxies)
+      var proxiez = shuffle(proxies);alert(proxiez[0] + proxiez[1])
       for (i in proxiez){
         var px = proxiez[i]
         try {
