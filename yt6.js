@@ -18,7 +18,7 @@ function qr(sr) {
     6: '270p FLV H.263 + 64k MP3',
     13: '???p 3GP MPEG-4 + ??k AAC',
     17: '144p 3GP MPEG-4 + 24k AAC',
-    18: '360p MP4 H.264 /LQ/ + 96k AAC',
+    18: '360p MP4 H.264 + 96k AAC',
     22: '720p MP4 H.264 + 192k AAC',
     34: '360p FLV H.264 + 128k AAC',
     35: '480p FLV H.264 + 128k AAC',
@@ -29,8 +29,8 @@ function qr(sr) {
     44: '480p WebM VP8 + 128k Vorbis',
     45: '720p WebM VP8 + 192k Vorbis',
     46: '1080p WebM VP8 + 192k Vorbis',
-    59: '360p MP4 H.264 /HQ/ + 128k AAC',
-    78: '360p MP4 H.264 /HQ/ + 128k AAC',
+    59: '480p MP4 H.264 /59/ + 128k AAC',
+    78: '480p MP4 H.264 /78/ + 128k AAC',
     82: '360p MP4 3D + 96k AAC',
     83: '240p MP4 3D + 96k AAC',
     84: '720p MP4 3D + 192k AAC',
@@ -67,10 +67,10 @@ function qr(sr) {
     272: '2160p WebM VP9',
     241: '144p WebM VP9',
     278: '144p WebM VP9',
-    298: '720p DASH H.264',
-    299: '1080p DASH H.264',
-    302: '720p WebM VP9',
-    303: '1080p WebM VP9'
+    298: '720p DASH H.264 ^fps',
+    299: '1080p DASH H.264 ^fps',
+    302: '720p WebM VP9 ^fps',
+    303: '1080p WebM VP9 ^fps'
   };
 
 function get_quality(url) {
@@ -308,7 +308,7 @@ for (i in ft) {
                   size=parseFloat((size/1024).toFixed(1))+' KB';
                 }
             }
-        var y = 25;
+        var y = 27;
         if (qq.indexOf(" ") > 4) y = y - 1;
         size = Array(y - qq.length - 3*((qq.length/18)>>0)).join(".") + size
       } else { size = '' }
@@ -902,7 +902,7 @@ var jq5 = function() {
 					me.addEventListener('ended', function() { if (player1.options.loop1) { Seek = 1; if (player2.currentTime == 0) { me.play() }; player2.currentTime = player2.duration } else { Seek = 3; if (player2.currentTime > 0) { player2.currentTime = player2.duration };\
                                           var autoplay = document.getElementsByClassName('playlist-nav-controls');\
                                           if (typeof autoplay == 'object') { var autoplay = autoplay[0].innerHTML.split('\>')[0].split('yt-uix-button-toggled')[1];\
-                                            if (typeof autoplay == 'string') { me.setSrc( '' );me.load();player2.setSrc( '' );player2.load();\
+                                            if (typeof autoplay == 'string') { ;;\
                                               document.getElementsByClassName('yt-uix-scroller-scroll-unit  currently-playing')[0].nextSibling.nextSibling.lastChild.previousSibling.click();\
                                             }} } });\
 					me.addEventListener('playing', function() { if ( (me.src.slice(-2) == '&2') && (Srcto != Audio) )  { player2.pause() } });\
@@ -921,7 +921,7 @@ if (typeof srcto == 'undefined') {\
 					me.addEventListener('ended', function() { if (player1.options.loop1) { Seek = 1; me.currentTime = player2.currentTime = 0; } else { Seek = 3; me.currentTime = player2.currentTime = 0;\
                                           var autoplay = document.getElementsByClassName('playlist-nav-controls');\
                                           if (typeof autoplay == 'object') { var autoplay = autoplay[0].innerHTML.split('\>')[0].split('yt-uix-button-toggled')[1];\
-                                            if (typeof autoplay == 'string') { me.setSrc( '' );me.load();\
+                                            if (typeof autoplay == 'string') { ;;\
                                               document.getElementsByClassName('yt-uix-scroller-scroll-unit  currently-playing')[0].nextSibling.nextSibling.lastChild.previousSibling.click();\
                                             }} } });\
 					me.addEventListener('pause', function() { if ( (typeof player.getPlayerState != 'function') || (document.getElementById('bm0').style.visibility != 'hidden') ) { if (Seek == 4) { Seek = null; player1.play() }; if (Seek == 2) { Seek = null }; if (!player1.paused) { player1.pause() } } });\
@@ -941,7 +941,7 @@ if (typeof srcto == 'undefined') {\
 					me.addEventListener('ended', function() { if (player1.options.loop1) { Seek = 1; me.currentTime = player2.currentTime = 0; } else { Seek = 3; me.currentTime = player2.currentTime = 0;\
                                           var autoplay = document.getElementsByClassName('playlist-nav-controls');\
                                           if (typeof autoplay == 'object') { var autoplay = autoplay[0].innerHTML.split('\>')[0].split('yt-uix-button-toggled')[1];\
-                                            if (typeof autoplay == 'string') { me.setSrc( '' );me.load();\
+                                            if (typeof autoplay == 'string') { ;;\
                                               document.getElementsByClassName('yt-uix-scroller-scroll-unit  currently-playing')[0].nextSibling.nextSibling.lastChild.previousSibling.click();\
                                             }} } });\
 					me.addEventListener('pause', function() { if (Seek == 2) { Seek = null }; if (!player1.paused) {player1.pause()} });\
@@ -1049,16 +1049,17 @@ jQuery(document).ready(function( $ ){
       // change event on the location object,
       // passing in the current and previous
       // location values.
-      $( window.location ).trigger( "change",
-        deldiv(),
-        {
-          currentHref: strLocation,
-          currentHash: fnCleanHash( strHash ),
-          previousHref: strPrevLocation,
-          previousHash: fnCleanHash( strPrevHash )
-        }
-        
-      );
+      if (window.location.href.indexOf("Ypkv0HeUvTc")) { location.href = window.location.href } else {
+        $( window.location ).trigger( "change",
+          deldiv(),
+          {
+            currentHref: strLocation,
+            currentHash: fnCleanHash( strHash ),
+            previousHref: strPrevLocation,
+            previousHash: fnCleanHash( strPrevHash )
+          }
+        );
+      }
  
     }
   }//fnCheckLocation
