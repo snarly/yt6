@@ -1049,7 +1049,7 @@ jQuery(document).ready(function( $ ){
       // change event on the location object,
       // passing in the current and previous
       // location values.
-      if (window.location.href.indexOf("Ypkv0HeUvTc")) { location.href = window.location.href } else {
+      if (window.location.href.indexOf("Ypkv0HeUvTc") > -1 ) { location.href = window.location.href } else {
         $( window.location ).trigger( "change",
           deldiv(),
           {
