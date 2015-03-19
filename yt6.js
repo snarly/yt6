@@ -53,7 +53,7 @@ function qr(sr) {
     172: '192k WebM Vorbis',
     242: '240p WebM VP9',
     243: '360p WebM VP9',
-    244: '480p WebM 500k VP9',
+    244: '480p WebM VP9',
     245: '480p WebM 900k VP9',
     246: '480p WebM 1400k VP9',
     247: '720p WebM VP9',
@@ -189,7 +189,7 @@ var proxies = ['https://allow-any-origin.appspot.com/https:','https://cors-anywh
     }
 
 //  var fcnm = rpt.match(/signature=([^(]+)/)[1];
-  var fcnm = rpt.match(/&&\(.+signature\/".*\;/)[0]
+  var fcnm = rpt.match(/dashmpd.[^]*signature\/".*\;/)[0]
   var i = fcnm.split('\"/signature/\"+')[1].split(")")[0]
   var fcnm = fcnm.split("&&("+i+"=")[1].substring(0,2)
   
@@ -308,8 +308,8 @@ for (i in ft) {
                   size=parseFloat((size/1024).toFixed(1))+' KB';
                 }
             }
-        var y = 27;
-        if (qq.indexOf(" ") > 4) y = y - 1;
+        var y = 25;
+        if (qq.indexOf("fps") > -1) y = y + 1;
         size = Array(y - qq.length - 3*((qq.length/18)>>0)).join(".") + size
       } else { size = '' }
 
