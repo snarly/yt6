@@ -70,7 +70,10 @@ function qr(sr) {
     298: '720p DASH H.264 ^fps',
     299: '1080p DASH H.264 ^fps',
     302: '720p WebM VP9 ^fps',
-    303: '1080p WebM VP9 ^fps'
+    303: '1080p WebM VP9 ^fps',
+    308: '1440p WebM VP9 ^fps',
+    313: '2160p WebM VP9',
+    315: '2160p WebM VP9 ^fps'
   };
 
 function get_quality(url) {
@@ -654,9 +657,9 @@ if (typeof sref.replace('&type=list&tlangs=1&fmts=0&asrs=1','') != 'undefined') 
       var tlang_codeA = document.getElementsByClassName("content-region")[0].textContent || getElementsByAttribute(document,"span","class","content-region")[0].textContent
       if (tlang_codeA) { tlang_codeA = tlang_codeA.toLowerCase() }
     }
-    var tlang_codeA = lang_codeA + ',' + tlang_codeA + ',hu,en'; tlang_codeA = tlang_codeA.split(",")
-    var lang_codeA = sref.split("&asr_langs=")[1];
-    if (lang_codeA) { lang_codeA = lang_codeA.toLowerCase().split("&")[0].split(","); var tlang_codeA = tlang_codeA.concat( lang_codeA ) };//alert(tlang_codeA)
+    var tlang_codeA = lang_codeA + ',' + tlang_codeA + ',hu,en,nl,fr,de,it,ja,ko,pt,ru,es'; tlang_codeA = tlang_codeA.split(",")
+    //var lang_codeA = sref.split("&asr_langs=")[1];
+    //if (lang_codeA) { lang_codeA = lang_codeA.toLowerCase().split("&")[0].split(","); var tlang_codeA = tlang_codeA.concat( lang_codeA ) };//alert(tlang_codeA)
 
   var lang_codeA = [];
   var text = tts.getElementsByTagName("track");
@@ -679,8 +682,8 @@ if ((!slang) && ((kind != 'asr') || (text.length == b+1)) ) { var slang = lang_c
     //if (slang === null) break
     var surl = "";
     var lang_code = text[b].getAttribute('lang_code'); if ((tlang_codeA.indexOf(lang_code) === -1) || (lang_code === slang)) continue; if ((lang_code) && (lang_code != 'null')) { surl += slangurl + '&tlang=' + lang_code };
-    var name = text[b].getAttribute('name'); if ((name) && (name != 'null')) { surl += '&name=' + name } else { surl += '&name' };
-    var kind = text[b].getAttribute('kind'); if ((kind) && (kind != 'null')) { surl += '&kind=' + kind } else { surl += '&kind' };
+    //var name = text[b].getAttribute('name'); if ((name) && (name != 'null')) { surl += '&name=' + name } else { surl += '&name' };
+    //var kind = text[b].getAttribute('kind'); if ((kind) && (kind != 'null')) { surl += '&kind=' + kind } else { surl += '&kind' };
     var id = text[b].getAttribute('id'); if ((id) && (id != 'null')) { if (typeof lang_codeA[id] != 'undefined') { id = parseInt(id) + 1000 }; tracks[id] = surl; lang_codeA[id] = lang_code };
     var lang_default = text[b].getAttribute('lang_default'); if ((lang_default) && (lang_default != 'null')) { surl += '&type=track&fmt=1'; var track = surl ;var lang_def = lang_code };
     }
