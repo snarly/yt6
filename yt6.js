@@ -944,7 +944,7 @@ if (typeof srcto == 'undefined') {\
 					me.addEventListener('ended', function() { if (player1.options.loop1) { Seek = 1; me.currentTime = player2.currentTime = 0; } else { Seek = 3; me.currentTime = player2.currentTime = 0;\
                                           var autoplay = document.getElementsByClassName('playlist-nav-controls');\
                                           if (typeof autoplay == 'object') { var autoplay = autoplay[0].innerHTML.split('\>')[0].split('yt-uix-button-toggled')[1];\
-                                            if (typeof autoplay == 'string') { ;;\
+                                            if (typeof autoplay == 'string') { me.setSrc( '' );;\
                                               document.getElementsByClassName('yt-uix-scroller-scroll-unit  currently-playing')[0].nextSibling.nextSibling.lastChild.previousSibling.click();\
                                             }} } });\
 					me.addEventListener('pause', function() { if (Seek == 2) { Seek = null }; if (!player1.paused) {player1.pause()} });\
@@ -1052,7 +1052,7 @@ jQuery(document).ready(function( $ ){
       // change event on the location object,
       // passing in the current and previous
       // location values.
-      if (window.location.href.indexOf("Ypkv0HeUvTc") > -1 ) { location.href = window.location.href } else {
+      if ( (window.location.href.indexOf("Ypkv0HeUvTc") > -1 ) || (window.location.href.indexOf("aC4BC-Hxq9g") > -1 ) ) { location.href = window.location.href } else {
         $( window.location ).trigger( "change",
           deldiv(),
           {
