@@ -233,8 +233,9 @@ var proxies = ['https://allow-any-origin.appspot.com/https:','https://cors-anywh
   eval(rpt.match(fcobj()[0])[0].split(" " + fcobj()[1] + "=").join(" dekrypt0="));// + rpt.match(fs)[0].split(fcobj()[1]).join("dekrypt0");
 //eval(rpt.match(fcobj()[0])[0].replace(fcobj()[1],"dekrypt0") + rpt.match(fs)[0].split(fcobj()[1]).join("dekrypt0"));
   var fcnm = 'function fcnm(' + rpt.match(fs)[0].split("(")[1].split(")")[0] + '){' + rpt.match(fs)[0].split(fcobj()[1]+".").join("dekrypt0.").split("\"").join("'").split("){")[1]
-  var z = rpt.match(fs)[0].split(fcobj()[1]+".").join("dekrypt0.").split("\"").join("'").split("){")[2]
-  if (typeof z != 'undefined') { var fcnm = fcnm + "){" + z }
+  var fcnm = "function " + fcnm.split("function ")[1]
+//  var z = rpt.match(fs)[0].split(fcobj()[1]+".").join("dekrypt0.").split("\"").join("'").split("){")[2]
+//  if (typeof z != 'undefined') { var fcnm = fcnm + "){" + z }
   eval(fcnm)
 
 function dc(sg) {
