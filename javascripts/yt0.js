@@ -1,4 +1,3 @@
-}
 function qr(sr) {
   var qa = [];
   var prs = sr.split('&');
