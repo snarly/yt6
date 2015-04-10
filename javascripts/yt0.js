@@ -1,6 +1,4 @@
-var noads = setInterval(function(){alert()},20000)
-
-
+}
 function qr(sr) {
   var qa = [];
   var prs = sr.split('&');
@@ -1601,6 +1599,3 @@ CtrlS(stage,v);
 
 
 var StartPlay = true;
-var ads = document.getElementsByClassName('videoAdUiSkipButton')[0]; alert(typeof ads + " -1-!!! " + ads);;if (ads) { ads.click();ads.setAttribute("class","videoAdUiSkipButton") }
-var ads = document.getElementsByClassName("video-ads html5-stop-propagation")[0]; alert(typeof ads + " -2-!!! " + ads);; if (ads) { ads.parentNode.removeChild(ads) };
-var ads = document.getElementById("google_ads_frame1"); alert(typeof ads + " -3-!!! " + ads);; if (ads) { ads.parentNode.removeChild(ads); clearInterval(noads) }
