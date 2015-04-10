@@ -222,7 +222,7 @@ var proxies = ['https://allow-any-origin.appspot.com/https:','https://cors-anywh
 //eval(rpt.match(fcobj()[0])[0].replace(fcobj()[1],"dekrypt0") + rpt.match(fs)[0].split(fcobj()[1]).join("dekrypt0"));
 var fcnm = 'function fcnm(' + rpt.match(fs)[0].split("(")[1].split(")")[0] + '){' + rpt.match(fs)[0].split(fcobj()[1]+".").join("dekrypt0.").split("\"").join("'").split("){")[1];var fcnm = fcnm.split("function ")[0] + fcnm.split("function ")[1] ;alert(fcnm)
 var z = rpt.match(fs)[0].split(fcobj()[1]+".").join("dekrypt0.").split("\"").join("'").split("){")[2] ;alert(typeof z + " " + z)
-if (typeof z != 'undefined') { var fcnm = fcnm + "){" + z } ;alert(typeof z + " " + z)
+if (typeof z != 'undefined') { if (z.indexOf("dekrypt0") > -1) { var fcnm = fcnm + "){" + z } ;alert(typeof z + " " + z) }
 eval(fcnm)
 alert(typeof fcnm)
 
