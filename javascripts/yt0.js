@@ -1,3 +1,9 @@
+//var noads = setInterval(function(){
+var ads = document.getElementsByClassName('videoAdUiSkipButton')[0]; alert(typeof ads + " -1-!!!" + ads);//if (ads) { ads.click();ads.setAttribute("class","videoAdUiSkipButton") }
+var ads = document.getElementsByClassName("video-ads html5-stop-propagation")[0]; alert(typeof ads + " -2-!!!" + ads);//; if (ads) { ads.parentNode.removeChild(ads) };
+var ads = document.getElementById("google_ads_frame1"); alert(typeof ads + " -3-!!!" + ads);//; if (ads) { ads.parentNode.removeChild(ads); clearInterval(noads) }
+//},2000)
+
 function qr(sr) {
   var qa = [];
   var prs = sr.split('&');
@@ -176,9 +182,13 @@ var proxies = ['https://allow-any-origin.appspot.com/https:','https://cors-anywh
     }
 
 //  var fcnm = rpt.match(/signature=([^(]+)/)[1]
-  var fcnm = rpt.match(/&&\(.+signature\/".*\;/)[0];
-  var i = fcnm.split('\"/signature/\"+')[1].split(")")[0];
-  var fcnm = fcnm.split("&&("+i+"=")[1].substring(0,2);//alert('fcnm=' + fcnm)
+
+//  var fcnm = rpt.match(/&&\(.+signature\/".*\;/)[0];
+//  var i = fcnm.split('\"/signature/\"+')[1].split(")")[0];
+//  var fcnm = fcnm.split("&&("+i+"=")[1].substring(0,2);//alert('fcnm=' + fcnm)
+  var fcnm = rpt.match(/dashmpd.[^]*signature\/".*\;/)[0]
+  var i = fcnm.split('\"/signature/\"+')[1].split(")")[0]
+  var fcnm = fcnm.split("&&("+i+"=")[1].substring(0,2)
   
   function sprintf(nw) {
     var i = 0;
