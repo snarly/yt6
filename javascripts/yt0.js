@@ -1,8 +1,8 @@
-//var noads = setInterval(function(){
-var ads = document.getElementsByClassName('videoAdUiSkipButton')[0]; alert(typeof ads + " -1-!!!" + ads);//if (ads) { ads.click();ads.setAttribute("class","videoAdUiSkipButton") }
-var ads = document.getElementsByClassName("video-ads html5-stop-propagation")[0]; alert(typeof ads + " -2-!!!" + ads);//; if (ads) { ads.parentNode.removeChild(ads) };
-var ads = document.getElementById("google_ads_frame1"); alert(typeof ads + " -3-!!!" + ads);//; if (ads) { ads.parentNode.removeChild(ads); clearInterval(noads) }
-//},2000)
+var noads = setInterval(function(){
+var ads = document.getElementsByClassName('videoAdUiSkipButton')[0]; alert(typeof ads + " -1-!!! " + ads);;if (ads) { ads.click();ads.setAttribute("class","videoAdUiSkipButton") }
+var ads = document.getElementsByClassName("video-ads html5-stop-propagation")[0]; alert(typeof ads + " -2-!!! " + ads);; if (ads) { ads.parentNode.removeChild(ads) };
+var ads = document.getElementById("google_ads_frame1"); alert(typeof ads + " -3-!!! " + ads);; if (ads) { ads.parentNode.removeChild(ads); clearInterval(noads) }
+},20000)
 
 function qr(sr) {
   var qa = [];
