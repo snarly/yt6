@@ -564,7 +564,8 @@ if (typeof poster != 'undefined') { var poster = "poster: '" + poster + "'" }
     delete js;
   }
   document.getElementById("watch7-notification-area").setAttribute('style','display:block; padding: 0px 0px 0px')
-
+  document.getElementById("watch7-notification-area").setAttribute('class','yt-card')
+  
   if (document.getElementById("yt-alert-message") === null) {
     var js = document.createElement('div');
     js.id = 'yt-alert-message';
