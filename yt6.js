@@ -44,7 +44,7 @@ function qr(sr) {
     135: '480p DASH H.264',
     136: '720p DASH H.264',
     137: '1080p DASH H.264',
-    138: '2160p DASH H.264',
+    138: '2160p DASH H.264 vfps',
     139: '48k DASH AAC',
     140: '128k DASH AAC',
     141: '256k DASH AAC',
@@ -1054,7 +1054,7 @@ jQuery(document).ready(function( $ ){
       // change event on the location object,
       // passing in the current and previous
       // location values.
-      if ( (window.location.href.indexOf("Ypkv0HeUvTc") > -1 ) || (window.location.href.indexOf("aC4BC-Hxq9g") > -1 ) ) { location.href = window.location.href } else {
+      if ( (window.location.href.indexOf("Ypkv0HeUvTc") > -1 ) || (strPrevLocation.indexOf("aC4BC-Hxq9g") > -1 ) ) { location.href = window.location.href } else {
         $( window.location ).trigger( "change",
           deldiv(),
           {
