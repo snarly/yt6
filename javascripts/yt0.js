@@ -1244,7 +1244,7 @@ function resize_layers(w,h){
     var e = document.getElementById('theater-background').style
     e.width = parseInt(window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth) - getScrollbarWidth() + 'px';
     e.height = h
-    if ((document.getElementById("placeholder-player").offsetWidth > w.replace('px','')) { alert(a0.width + " " + a0.height);
+    if (document.getElementById("placeholder-player").offsetWidth > w.replace('px','')) { alert(a0.width + " " + a0.height);
       e.width = document.getElementById("placeholder-player").offsetWidth + 'px'; e.left = '0px';  
       var x = e.width.replace('px','') / 2 + 'px' 
     } else {
