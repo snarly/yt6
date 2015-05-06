@@ -1065,9 +1065,9 @@ document.getElementById("theater-background").width = document.getElementById("t
 
     var autoscale = document.getElementById("placeholder-player")
     if (autoscale.offsetWidth != autoscale.width) { //alert('1 width:' + autoscale.width +" offsetWidth:"+ autoscale.offsetWidth +" thb:"+ document.getElementById("theater-background").offsetWidth ); 
-autoscale.width = autoscale.offsetWidth; resize_layers(autoscale.width + 'px', autoscale.height + 'px')}
+autoscale.width = autoscale.offsetWidth; resize_layers(autoscale.width + 'px', autoscale.height + 'px'); ythtml5_size()}
     if (autoscale.offsetHeight != autoscale.height) { //alert('2 ' + autoscale.height +" "+ autoscale.offsetHeight); 
-autoscale.height = autoscale.offsetHeight; resize_layers(autoscale.width + 'px', autoscale.height + 'px') }
+autoscale.height = autoscale.offsetHeight; resize_layers(autoscale.width + 'px', autoscale.height + 'px'); ythtml5_size() }
 if (document.getElementById("theater-background").offsetWidth != document.getElementById("theater-background").width) { //alert("3 " + document.getElementById("theater-background").width +" "+ document.getElementById("theater-background").offsetWidth); 
 document.getElementById("theater-background").width = document.getElementById("theater-background").offsetWidth }
 
@@ -1250,10 +1250,10 @@ function resize_layers(w,h){
     e.width = parseInt(window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth) - getScrollbarWidth() + 'px';
     e.height = h
     if (document.getElementById("placeholder-player").offsetWidth < e.width.replace('px','')) { //alert(a0.width + " " + a0.height);
-      e.width = parseInt(window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth) - getScrollbarWidth() + 'px';
-      var x = w.replace('px','')
+      //e.width = parseInt(window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth) - getScrollbarWidth() + 'px';
+      var x = document.getElementById("placeholder-player").offsetWidth
     } else {
-        e.width = document.getElementById("placeholder-player").offsetWidth + 'px'; e.left = '0px';  
+        //e.width = document.getElementById("placeholder-player").offsetWidth + 'px'; e.left = '0px';  
         var x = e.width.replace('px','')
       } 
     if (c) {
@@ -1263,7 +1263,7 @@ function resize_layers(w,h){
 a.style.left = document.getElementById('player-api').style.left = '-' + e.width.replace('px','') / 2 + 'px' 
       } else {
           e.left = (document.getElementById('placeholder-player').offsetWidth - e.width.replace('px','')) / 2 + 'px';
-          if (d.indexOf("small") > -1) { a.style.left = document.getElementById('player-api').style.left = (document.getElementById("placeholder-player").offsetWidth - x) / 2 + 'px'; }
+          if (d.indexOf("small") > -1) { a.style.left = document.getElementById('player-api').style.left = ((x / 2) - (w.replace('px','')) / 2) + 'px'; }
           if (!tiny.marginLeft) { 
             a.style.left = document.getElementById('player-api').style.left = '-' + (w.replace('px','') / 2) + 'px'
             var z = document.getElementById('watch-appbar-playlist')
