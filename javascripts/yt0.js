@@ -1065,9 +1065,9 @@ document.getElementById("theater-background").width = document.getElementById("t
 
     var autoscale = document.getElementById("placeholder-player")
     if (autoscale.offsetWidth != autoscale.width) { //alert('1 width:' + autoscale.width +" offsetWidth:"+ autoscale.offsetWidth +" thb:"+ document.getElementById("theater-background").offsetWidth ); 
-autoscale.width = autoscale.offsetWidth}
+autoscale.width = autoscale.offsetWidth; resize_layers(autoscale.width + 'px', autoscale.height + 'px')}
     if (autoscale.offsetHeight != autoscale.height) { //alert('2 ' + autoscale.height +" "+ autoscale.offsetHeight); 
-autoscale.height = autoscale.offsetHeight }
+autoscale.height = autoscale.offsetHeight; resize_layers(autoscale.width + 'px', autoscale.height + 'px') }
 if (document.getElementById("theater-background").offsetWidth != document.getElementById("theater-background").width) { //alert("3 " + document.getElementById("theater-background").width +" "+ document.getElementById("theater-background").offsetWidth); 
 document.getElementById("theater-background").width = document.getElementById("theater-background").offsetWidth }
 
@@ -1219,7 +1219,8 @@ function gclass(className, tag, elm){
 
 
 function wide_view() {
-  var z = getElementsByAttribute(document,"div","class","watch.wide")[0];//alert(typeof z + z.outerHTML)
+  var z = getElementsByAttribute(document,"div","class","watch-wide")[0]
+  var z = getElementsByAttribute(document,"div","class","watch-stage-mode")[0];//alert(typeof z + z.outerHTML)
   if ( typeof z != "undefined" ) { 
     return true
   } else {
@@ -1243,7 +1244,7 @@ function resize_layers(w,h){
     a.style.left = document.getElementById("player-api").style.left
     a.style.backgroundColor = 'transparent'
     var c = document.getElementById("aspect")
-    var d = document.getElementById('placeholder-player').getAttribute("class");
+    var d = document.getElementById('player').getAttribute("class")
     var e = document.getElementById('theater-background').style
     e.width = parseInt(window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth) - getScrollbarWidth() + 'px';
     e.height = h
