@@ -1291,6 +1291,14 @@ a.style.left = document.getElementById('player-api').style.left = '-' + e.width.
             }
           }
       }
+    
+    if (wide_vies()) {
+      if (c) {
+        a.style.left = document.getElementById('player-api').style.left = '-' + w.replace('px','') / 2 + 'px'
+      } else {
+      	  a.style.left = document.getElementById('player-api').style.left = '-' + parseInt(window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth) - getScrollbarWidth() + 'px';
+        }
+    }
   }
 
 if (document.getElementById('player').getAttribute("class").indexOf("tiny") == -1) {
