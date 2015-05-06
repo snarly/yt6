@@ -1429,9 +1429,12 @@ function aspect2(w,h) {
   document.getElementById('player-api').style.width = w;
   if (document.getElementById('aspect')) {
     document.getElementById('watch7-sidebar').style.marginTop = fix_Height().replace('px','') - 390 + 'px';
-    document.getElementById('watch-appbar-playlist').style.top = h.replace('px','') + 'px'
-    document.getElementById('watch-appbar-playlist').style.marginTop = '10px'
-    document.getElementById('watch-appbar-playlist').style.marginLeft = '5px'
+    var z = document.getElementById('watch-appbar-playlist')
+    if (z) {
+      z.style.top = h.replace('px','') + 'px'
+      z.style.marginTop = '10px'
+      z.style.marginLeft = '5px'
+    }
   }
   
   resize_layers(w,h)
