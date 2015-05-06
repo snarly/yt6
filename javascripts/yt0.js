@@ -1295,8 +1295,12 @@ a.style.left = document.getElementById('player-api').style.left = '-' + e.width.
     if (wide_view()) { 
       if (c) {
         a.style.left = document.getElementById('player-api').style.left = '-' + w.replace('px','') / 2 + 'px'
+        var z = document.getElementById('watch-appbar-playlist')
+        if (z) { z.style.top = parseInt(h.replace('px','')) - 390 + 'px' }
       } else {
-      	  a.style.left = document.getElementById('player-api').style.left = '-' + parseInt(window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth) - getScrollbarWidth() + 'px';
+      	  a.style.left = document.getElementById('player-api').style.left = '-' + (document.getElementById("placeholder-player").offsetWidth / 2) + 'px'
+      	  var z = document.getElementById('watch-appbar-playlist')
+          if (z) { z.style.top = '-400px' }
         }
     }
   }
