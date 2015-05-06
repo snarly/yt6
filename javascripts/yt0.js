@@ -1064,9 +1064,12 @@ document.getElementById("theater-background").width = document.getElementById("t
   var fnCheckLocation = function(){
 
     var autoscale = document.getElementById("placeholder-player")
-    if (autoscale.offsetWidth != autoscale.width) { alert('1 width:' + autoscale.width +" offsetWidth:"+ autoscale.offsetWidth +" thb:"+ document.getElementById("theater-background").offsetWidth ); autoscale.width = autoscale.offsetWidth}
-    if (autoscale.offsetHeight != autoscale.height) { alert('2 ' + autoscale.height +" "+ autoscale.offsetHeight); autoscale.height = autoscale.offsetHeight }
-if (document.getElementById("theater-background").offsetWidth != document.getElementById("theater-background").width) { alert("3 " + document.getElementById("theater-background").width +" "+ document.getElementById("theater-background").offsetWidth); document.getElementById("theater-background").width = document.getElementById("theater-background").offsetWidth }
+    if (autoscale.offsetWidth != autoscale.width) { //alert('1 width:' + autoscale.width +" offsetWidth:"+ autoscale.offsetWidth +" thb:"+ document.getElementById("theater-background").offsetWidth ); 
+autoscale.width = autoscale.offsetWidth}
+    if (autoscale.offsetHeight != autoscale.height) { //alert('2 ' + autoscale.height +" "+ autoscale.offsetHeight); 
+autoscale.height = autoscale.offsetHeight }
+if (document.getElementById("theater-background").offsetWidth != document.getElementById("theater-background").width) { //alert("3 " + document.getElementById("theater-background").width +" "+ document.getElementById("theater-background").offsetWidth); 
+document.getElementById("theater-background").width = document.getElementById("theater-background").offsetWidth }
 
     // Check to see if the location has changed.
     if (strLocation != window.location.href){
@@ -1244,7 +1247,7 @@ function resize_layers(w,h){
     var e = document.getElementById('theater-background').style
     e.width = parseInt(window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth) - getScrollbarWidth() + 'px';
     e.height = h
-    if (document.getElementById("placeholder-player").offsetWidth > w.replace('px','')) { alert(a0.width + " " + a0.height);
+    if (document.getElementById("placeholder-player").offsetWidth > w.replace('px','')) { //alert(a0.width + " " + a0.height);
       e.width = document.getElementById("placeholder-player").offsetWidth + 'px'; e.left = '0px';  
       var x = e.width.replace('px','') / 2 + 'px' 
     } else {
@@ -1259,7 +1262,12 @@ a.style.left = document.getElementById('player-api').style.left = '-' + e.width.
       } else {
           e.left = (document.getElementById('placeholder-player').offsetWidth - e.width.replace('px','')) / 2 + 'px';
           if (d.indexOf("small") > -1) { a.style.left = document.getElementById('player-api').style.left = (document.getElementById("placeholder-player").offsetWidth - w.replace('px','')) / 2 + 'px'; }
-          if (d.indexOf("tiny") > -1) { a.style.left = document.getElementById('player-api').style.left = '-' + (w.replace('px','') / 2) + 'px' }
+          if (d.indexOf("tiny") > -1) { 
+            a.style.left = document.getElementById('player-api').style.left = '-' + (w.replace('px','') / 2) + 'px'
+            document.getElementById('watch-appbar-playlist').style.top = parseInt(h.replace('px','')) + 60 + 'px'
+var y = parseInt(document.getElementById('watch-appbar-playlist').offsetHeight) + 5
+            document.getElementById('watch7-notification-area').style.top = '-' + y + 'px'
+          }
         }
     } else {
         e.left = (document.getElementById('placeholder-player').offsetWidth - e.width.replace('px','')) / 2 + 'px';
@@ -1267,11 +1275,20 @@ a.style.left = document.getElementById('player-api').style.left = '-' + e.width.
           a.style.left = document.getElementById('player-api').style.left = '-' + (document.getElementById("placeholder-player").offsetWidth / 2) + 'px'
         } else {
             if (d.indexOf("small") > -1) { a.style.left = document.getElementById('player-api').style.left = '0px' }
-            if (d.indexOf("tiny") > -1) { a.style.left = document.getElementById('player-api').style.left = '-' + (w.replace('px','') / 2) + 'px' }
+            if (d.indexOf("tiny") > -1) { 
+              a.style.left = document.getElementById('player-api').style.left = '-' + (w.replace('px','') / 2) + 'px'
+              document.getElementById('watch-appbar-playlist').style.top = parseInt(h.replace('px','')) + 60 + 'px'
+var y = parseInt(document.getElementById('watch-appbar-playlist').offsetHeight) + 5
+              document.getElementById('watch7-notification-area').style.top = '-' + y + 'px'
+            }
           }
       }
   }
 
+if (document.getElementById('placeholder-player').getAttribute("class").indexOf("tiny") == -1) {
+  document.getElementById('watch7-notification-area').removeAttribute('style')
+  document.getElementById('watch7-notification-area').removeAttribute('style')
+}
 
   document.getElementById('bm0').style.width = w;
   document.getElementById('bm0').style.height = h;
@@ -1353,8 +1370,9 @@ function switchflashhtml5() {
   } else {
       document.getElementById('bm0').style.visibility = 'hidden';
       player().style.display = 'block';
+      player1.pause();document.getElementsByClassName('play')[0].innerHTML = 'play';
       if (flashvars != null) {
-      	player.style.opacity = '1.1'
+      	player().style.opacity = '1.1'
       	//if (typeof player.getPlayerState == 'function') {
 document.getElementById("snarl's_player").innerHTML = document.getElementById('movie_player').outerHTML; var z = document.createElement("embed"); z.id = "movie_player_"; document.getElementById("player-api").insertBefore(z, document.getElementById("bm0")); document.getElementById("bm0").parentNode.removeChild(document.getElementById('movie_player')); document.getElementById("movie_player_").outerHTML = document.getElementById("snarl's_player").innerHTML; 
           window.ytplayercmd = function(e) {
@@ -1375,7 +1393,6 @@ document.getElementById("snarl's_player").innerHTML = document.getElementById('m
         }
       var stage = document.getElementsByClassName('html5-video-content')[0];
 
-      player1.pause();document.getElementsByClassName('play')[0].innerHTML = 'play';
       if (typeof player().getPlayerState == 'function') { 
         window.postMessage("unMute", "*"); 
         player().setPlaybackRate( document.getElementById('player2').playbackRate )        
@@ -1403,7 +1420,12 @@ function aspect2(w,h) {
   var h = h + 'px'
   document.getElementById('player-api').style.height = h;
   document.getElementById('player-api').style.width = w;
-  if (document.getElementById('aspect')) document.getElementById('watch7-sidebar').style.marginTop = parseInt(parseInt(fix_Height().replace('px','')) - 390) + 'px';
+  if (document.getElementById('aspect')) {
+    document.getElementById('watch7-sidebar').style.marginTop = fix_Height().replace('px','') - 390 + 'px';
+    document.getElementById('watch-appbar-playlist').style.top = h.replace('px','') + 'px'
+    document.getElementById('watch-appbar-playlist').style.marginTop = '10px'
+    document.getElementById('watch-appbar-playlist').style.marginLeft = '5px'
+  }
   
   resize_layers(w,h)
   ythtml5_size()
@@ -1435,6 +1457,9 @@ function aspect() {
     document.getElementById('player-api').style.height = h;
     document.getElementById('player-api').style.width = w;
     document.getElementById('watch7-sidebar').style.marginTop = parseInt(parseInt(fix_Height().replace('px','')) - 390) + 'px';
+    document.getElementById('watch-appbar-playlist').style.top = Math.round((w.replace('px','') / aspect_ratio)) + 'px';
+    document.getElementById('watch-appbar-playlist').style.marginTop = '10px'
+    document.getElementById('watch-appbar-playlist').style.marginLeft = '5px'
 
     resize_layers(w,h)
     ythtml5_size()
@@ -1450,6 +1475,7 @@ function aspect() {
       if (dw != null) { dw.parentNode.removeChild(dw)}
       document.getElementById('theater-background').style.backgroundColor = "transparent"
       document.getElementById('watch7-sidebar').style.marginTop = '-400px';
+      document.getElementById('watch-appbar-playlist').removeAttribute('style')
       document.getElementById('player-api').style.width = w;
       document.getElementById('player-api').style.height = h;
 
@@ -1473,7 +1499,7 @@ function deldiv(){
   if (typeof window.watchit != 'undefined')  { clearInterval(watchit);}
 
   document.getElementById('watch7-sidebar').style.marginTop = '-400px';
-
+  document.getElementById('watch-appbar-playlist').removeAttribute('style')
   var z = [ document.getElementById('bm0'),document.getElementById('player-api') ]
   for(i=0;i<z.length;i++){
    if (z[i]) { z[i].style.width = w_init; z[i].style.height = h_init; }
