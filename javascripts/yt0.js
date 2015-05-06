@@ -497,7 +497,7 @@ if ((windowwidth > 1933) && (windowheight > 940)){
   var w_base = '1254px';
 } else {
     if ((windowwidth > 1293) && (windowheight > 629)){
-      if (document.getElementById('placeholder-player').getAttribute("class").indexOf("small") > -1) {
+      if (document.getElementById('player').getAttribute("class").indexOf("small") > -1) {
         var w_base = '854px';
       } else { var w_base = '640px' }
     } else {
@@ -518,7 +518,7 @@ if ((windowwidth > 1933) && (windowheight > 940)){
   var h_base = '734px';
 } else {
     if ((windowwidth > 1293) && (windowheight > 629)){
-      if (document.getElementById('placeholder-player').getAttribute("class").indexOf("small") > -1) { var h_base = '510px'; } else { var h_base = '390px' }
+      if (document.getElementById('player').getAttribute("class").indexOf("small") > -1) { var h_base = '510px'; } else { var h_base = '390px' }
     } else {
         if (windowwidth > 625){
           var h_base = '390px';
