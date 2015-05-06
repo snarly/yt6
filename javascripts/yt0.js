@@ -1251,10 +1251,10 @@ function resize_layers(w,h){
     e.height = h
     if (document.getElementById("placeholder-player").offsetWidth > w.replace('px','')) { //alert(a0.width + " " + a0.height);
       e.width = document.getElementById("placeholder-player").offsetWidth + 'px'; e.left = '0px';  
-      var x = e.width.replace('px','') / 2 + 'px' 
+      var x = e.width.replace('px','')
     } else {
         e.width = parseInt(window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth) - getScrollbarWidth() + 'px';
-        var x = w.replace('px','') / 2 + 'px';
+        var x = w.replace('px','')
       } 
     if (c) {
       e.left = '0px'
@@ -1263,7 +1263,7 @@ function resize_layers(w,h){
 a.style.left = document.getElementById('player-api').style.left = '-' + e.width.replace('px','') / 2 + 'px' 
       } else {
           e.left = (document.getElementById('placeholder-player').offsetWidth - e.width.replace('px','')) / 2 + 'px';
-          if (d.indexOf("small") > -1) { a.style.left = document.getElementById('player-api').style.left = '-' + ((document.getElementById("placeholder-player").offsetWidth / 2) - (w.replace('px','') / 2)) + 'px'; }
+          if (d.indexOf("small") > -1) { a.style.left = document.getElementById('player-api').style.left = '-' + ((document.getElementById("placeholder-player").offsetWidth / 2) - x / 2)) + 'px'; }
           if (!tiny.marginLeft) { 
             a.style.left = document.getElementById('player-api').style.left = '-' + (w.replace('px','') / 2) + 'px'
             var z = document.getElementById('watch-appbar-playlist')
