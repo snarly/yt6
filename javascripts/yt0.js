@@ -1292,7 +1292,7 @@ a.style.left = document.getElementById('player-api').style.left = '-' + e.width.
           }
       }
     
-    if (wide_vies()) {
+    if (wide_viev()) { 
       if (c) {
         a.style.left = document.getElementById('player-api').style.left = '-' + w.replace('px','') / 2 + 'px'
       } else {
