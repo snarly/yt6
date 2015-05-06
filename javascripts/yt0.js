@@ -1250,11 +1250,11 @@ function resize_layers(w,h){
     e.width = parseInt(window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth) - getScrollbarWidth() + 'px';
     e.height = h
     if (document.getElementById("placeholder-player").offsetWidth > w.replace('px','')) { //alert(a0.width + " " + a0.height);
-      e.width = document.getElementById("placeholder-player").offsetWidth + 'px'; e.left = '0px';  
-      var x = e.width.replace('px','')
+      e.width = parseInt(window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth) - getScrollbarWidth() + 'px';
+      var x = w.replace('px','')
     } else {
-        e.width = parseInt(window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth) - getScrollbarWidth() + 'px';
-        var x = w.replace('px','')
+        e.width = document.getElementById("placeholder-player").offsetWidth + 'px'; e.left = '0px';  
+        var x = e.width.replace('px','')
       } 
     if (c) {
       e.left = '0px'
