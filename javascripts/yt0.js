@@ -1065,9 +1065,9 @@ document.getElementById("theater-background").width = document.getElementById("t
 
     var autoscale = document.getElementById("placeholder-player")
     if (autoscale.offsetWidth != autoscale.width) { //alert('1 width:' + autoscale.width +" offsetWidth:"+ autoscale.offsetWidth +" thb:"+ document.getElementById("theater-background").offsetWidth ); 
-autoscale.width = autoscale.offsetWidth; resize_layers(autoscale.width + 'px', autoscale.height + 'px'); ythtml5_size()}
+autoscale.width = autoscale.offsetWidth; document.getElementById('placeholder-player').setAttribute('time','w:' + autoscale.width + '; h:' + autoscale.height)}
     if (autoscale.offsetHeight != autoscale.height) { //alert('2 ' + autoscale.height +" "+ autoscale.offsetHeight); 
-autoscale.height = autoscale.offsetHeight; resize_layers(autoscale.width + 'px', autoscale.height + 'px'); ythtml5_size() }
+autoscale.height = autoscale.offsetHeight; document.getElementById('placeholder-player').setAttribute('time','w:' + autoscale.width + '; h:' + autoscale.height)}
 if (document.getElementById("theater-background").offsetWidth != document.getElementById("theater-background").width) { //alert("3 " + document.getElementById("theater-background").width +" "+ document.getElementById("theater-background").offsetWidth); 
 document.getElementById("theater-background").width = document.getElementById("theater-background").offsetWidth }
 
