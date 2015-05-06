@@ -1246,6 +1246,7 @@ function resize_layers(w,h){
     var c = document.getElementById("aspect")
     var d = document.getElementById('player').getAttribute("class")
     var e = document.getElementById('theater-background').style
+    var tiny = document.getElementById('watch7-sidebar').currentStyle || window.getComputedStyle(document.getElementById('watch7-sidebar'));
     e.width = parseInt(window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth) - getScrollbarWidth() + 'px';
     e.height = h
     if (document.getElementById("placeholder-player").offsetWidth > w.replace('px','')) { //alert(a0.width + " " + a0.height);
@@ -1262,8 +1263,8 @@ function resize_layers(w,h){
 a.style.left = document.getElementById('player-api').style.left = '-' + e.width.replace('px','') / 2 + 'px' 
       } else {
           e.left = (document.getElementById('placeholder-player').offsetWidth - e.width.replace('px','')) / 2 + 'px';
-          if (d.indexOf("small") > -1) { a.style.left = document.getElementById('player-api').style.left = (document.getElementById("placeholder-player").offsetWidth - w.replace('px','')) / 2 + 'px'; }
-          if (d.indexOf("tiny") > -1) { 
+          if (d.indexOf("small") > -1) { a.style.left = document.getElementById('player-api').style.left = '-' + ((document.getElementById("placeholder-player").offsetWidth / 2) - (w.replace('px','') / 2)) + 'px'; }
+          if (!tiny.marginLeft) { 
             a.style.left = document.getElementById('player-api').style.left = '-' + (w.replace('px','') / 2) + 'px'
             var z = document.getElementById('watch-appbar-playlist')
             if (z) {
@@ -1279,7 +1280,7 @@ a.style.left = document.getElementById('player-api').style.left = '-' + e.width.
           a.style.left = document.getElementById('player-api').style.left = '-' + (document.getElementById("placeholder-player").offsetWidth / 2) + 'px'
         } else {
             if (d.indexOf("small") > -1) { a.style.left = document.getElementById('player-api').style.left = '0px' }
-            if (d.indexOf("tiny") > -1) { 
+            if (!tiny.marginLeft) { 
               a.style.left = document.getElementById('player-api').style.left = '-' + (w.replace('px','') / 2) + 'px'
               var z = document.getElementById('watch-appbar-playlist')
               if (z) {
