@@ -1265,9 +1265,12 @@ a.style.left = document.getElementById('player-api').style.left = '-' + e.width.
           if (d.indexOf("small") > -1) { a.style.left = document.getElementById('player-api').style.left = (document.getElementById("placeholder-player").offsetWidth - w.replace('px','')) / 2 + 'px'; }
           if (d.indexOf("tiny") > -1) { 
             a.style.left = document.getElementById('player-api').style.left = '-' + (w.replace('px','') / 2) + 'px'
-            document.getElementById('watch-appbar-playlist').style.top = parseInt(h.replace('px','')) + 60 + 'px'
-var y = parseInt(document.getElementById('watch-appbar-playlist').offsetHeight) + 5
-            document.getElementById('watch7-notification-area').style.top = '-' + y + 'px'
+            var z = document.getElementById('watch-appbar-playlist')
+            if (z) {
+              z.style.top = parseInt(h.replace('px','')) + 60 + 'px'
+              var y = parseInt(z.offsetHeight) + 5
+              z.style.top = '-' + y + 'px'
+            }
           }
         }
     } else {
@@ -1278,15 +1281,18 @@ var y = parseInt(document.getElementById('watch-appbar-playlist').offsetHeight) 
             if (d.indexOf("small") > -1) { a.style.left = document.getElementById('player-api').style.left = '0px' }
             if (d.indexOf("tiny") > -1) { 
               a.style.left = document.getElementById('player-api').style.left = '-' + (w.replace('px','') / 2) + 'px'
-              document.getElementById('watch-appbar-playlist').style.top = parseInt(h.replace('px','')) + 60 + 'px'
-var y = parseInt(document.getElementById('watch-appbar-playlist').offsetHeight) + 5
-              document.getElementById('watch7-notification-area').style.top = '-' + y + 'px'
+              var z = document.getElementById('watch-appbar-playlist')
+              if (z) {
+              	z.style.top = parseInt(h.replace('px','')) + 60 + 'px'
+                var y = parseInt(z.offsetHeight) + 5
+                z.style.top = '-' + y + 'px'
+              }
             }
           }
       }
   }
 
-if (document.getElementById('placeholder-player').getAttribute("class").indexOf("tiny") == -1) {
+if (document.getElementById('player').getAttribute("class").indexOf("tiny") == -1) {
   document.getElementById('watch7-notification-area').removeAttribute('style')
   document.getElementById('watch7-notification-area').removeAttribute('style')
 }
