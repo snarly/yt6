@@ -989,14 +989,6 @@ if (typeof srcto == 'undefined') {\
 }});\
 }\
 var Seek = null;\
-if (typeof srcto != 'undefined') { var audio = srcto; document.getElementById('player2').setAttribute('src',audio);\
- if ((typeof player().getCurrentTime == 'function') && (flashvars != null)) {\
-\
-   var watchit = setInterval(function(){ \
-if (typeof player2 === 'undefined') { clearInterval(watchit) } \
-   },1000);\
- }\
-}\
 if ((StartPlay) ) {\
 if (document.getElementsByClassName('mejs-duration')[0]) { var x = href.split('dur=')[1].split('&')[0].toHHMMSS();\
 if (x.substring(0,2) == '00') { var x = x.substring(3,x.length - 4) }; document.getElementsByClassName('mejs-duration')[0].innerHTML = x.split('.')[0]  }\
@@ -1585,9 +1577,6 @@ function deldiv(){
   if (typeof ($) !== 'undefined') { $.removeData([webm, audio]); }
   var z = document.getElementById('placeholder-player').firstChild; if (typeof z == 'object') { var x = z.style; if (typeof x == 'object') z.removeAttribute("style") }
   var z = gclass("html5-progress-bar"); if (z[1]) { var x = z[1].style; if (x) z[1].removeAttribute("style") }
-
-  if ( (location.href.indexOf("aC4BC-Hxq9g") != -1 ) ) { clearInterval(watchit);}
-  if (typeof window.watchit != 'undefined')  { clearInterval(watchit);}
 
   document.getElementById('watch7-sidebar').style.marginTop = '-400px';
   var playlist = document.getElementById('watch-appbar-playlist')
