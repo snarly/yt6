@@ -989,14 +989,6 @@ if (typeof srcto == 'undefined') {\
 }});\
 }\
 var Seek = null;\
-if (typeof srcto != 'undefined') { var audio = srcto; document.getElementById('player2').setAttribute('src',audio);\
- if ((typeof player().getCurrentTime == 'function') && (flashvars != null)) {\
-\
-   var watchit = setInterval(function(){ \
-if (typeof player2 === 'undefined') { clearInterval(watchit) } \
-   },1000);\
- }\
-}\
 if ((StartPlay) ) {\
 if (document.getElementsByClassName('mejs-duration')[0]) { var x = href.split('dur=')[1].split('&')[0].toHHMMSS();\
 if (x.substring(0,2) == '00') { var x = x.substring(3,x.length - 4) }; document.getElementsByClassName('mejs-duration')[0].innerHTML = x.split('.')[0]  }\
