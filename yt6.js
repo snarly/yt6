@@ -1578,9 +1578,6 @@ function deldiv(){
   var z = document.getElementById('placeholder-player').firstChild; if (typeof z == 'object') { var x = z.style; if (typeof x == 'object') z.removeAttribute("style") }
   var z = gclass("html5-progress-bar"); if (z[1]) { var x = z[1].style; if (x) z[1].removeAttribute("style") }
 
-  if ( (location.href.indexOf("aC4BC-Hxq9g") != -1 ) ) { clearInterval(watchit);}
-  if (typeof window.watchit != 'undefined')  { clearInterval(watchit);}
-
   document.getElementById('watch7-sidebar').style.marginTop = '-400px';
   var playlist = document.getElementById('watch-appbar-playlist')
   if (playlist) playlist.removeAttribute('style')
