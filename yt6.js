@@ -596,7 +596,7 @@ if (typeof poster != 'undefined') { var poster = "poster: '" + poster + "'" }
     document.getElementById('watch-header').parentNode.insertBefore(js,document.getElementById('watch-header'))
     delete js;
   }
-  document.getElementById("watch7-notification-area").setAttribute('style','display:block; padding: 0px 0px 0px')
+  document.getElementById("watch7-notification-area").setAttribute('style','display:block; padding: 0px 0px 0px; z-index: 5')
   document.getElementById("watch7-notification-area").setAttribute('class','yt-card')
   
   if (document.getElementById("yt-alert-message") === null) {
@@ -927,7 +927,7 @@ var jq5 = function() {
                 translationSelector: true,\
                 translations:['en','de','es'],\
                 success: function(me) {  $('#audio-type').html( me.pluginType);\
-                                        me.addEventListener('loadedmetadata', function() { var dw = document.getElementById('aspect'); if ( (dw) && (Math.round((w.replace('px','') / aspect_ratio)) != Math.round(aspect_ratio)) ) { aspect2(document.getElementById('bm0').style.width.replace('px',''),document.getElementById('bm0').style.height.replace('px','')); } else { aspect();aspect() } });\
+                                        me.addEventListener('loadedmetadata', function() { var dw = document.getElementById('aspect'); if ( (dw) && (Math.round((w.replace('px','') / aspect_ratio)) != Math.round(aspect_ratio)) ) { aspect2(document.getElementById('bm0').style.width.replace('px',''),document.getElementById('bm0').style.height.replace('px','')); } else { aspect();aspect() }; document.getElementById('player1').width = this.videoWidth;  document.getElementById('player1').height = this.videoHeight; });\
                                         me.addEventListener('loadeddata', function() { document.getElementsByClassName('mejs-clear')[0].setAttribute('id','mejs-clear') });\
 					me.addEventListener('play', function() { player2.playbackRate = me.playbackRate; document.getElementsByClassName('play')[0].innerHTML = 'pause';\
 					  if ((Math.abs(parseFloat(parseFloat(player2.currentTime) - parseFloat(me.currentTime))) > parseFloat(0.3)) && (me.currentTime > 3)) { player2.currentTime = me.currentTime };\
@@ -1061,17 +1061,21 @@ document.getElementById("theater-background").width = document.getElementById("t
       autoscale.width = autoscale.offsetWidth;
       autoscale.height = autoscale.offsetHeight;
       //aspect();aspect()
-ythtml5_size()
+      if (document.getElementById('bm0')) ythtml5_size()
       document.getElementsByClassName('reset yt-uix-button-text')[0].click()
     } else {
         if (autoscale.offsetHeight != autoscale.height) { //alert('2 ' + autoscale.height +" "+ autoscale.offsetHeight); 
           autoscale.height = autoscale.offsetHeight;
           //aspect();aspect()
+        if (document.getElementById('bm0')) ythtml5_size()
+        if ( (!document.getElementById("aspect")) && (document.getElementById('watch7-sidebar').currentStyle || window.getComputedStyle(document.getElementById('watch7-sidebar'))).marginLeft == '0px' ) {
+          document.getElementsByClassName('reset yt-uix-button-text')[0].click();ythtml5_size()
+}
         } else {
             if (autoscale.offsetWidth != autoscale.width) { //alert('1 width:' + autoscale.width +" offsetWidth:"+ autoscale.offsetWidth +" thb:"+ document.getElementById("theater-background").offsetWidth ); 
               autoscale.width = autoscale.offsetWidth;
               //aspect();aspect()
-ythtml5_size()
+              if (document.getElementById('bm0')) ythtml5_size()
               document.getElementsByClassName('reset yt-uix-button-text')[0].click()
             }
           }
@@ -1239,6 +1243,14 @@ function wide_view() {
 
 function resize_layers(w,h){
 
+  document.getElementById('bm0').style.width = w;
+  document.getElementById('bm0').style.height = h;
+  document.getElementById('bm0').style.left = "auto"
+  document.getElementById('mep_0').style.width = w;
+  document.getElementById('mep_0').style.height = h;
+  document.getElementsByClassName('mejs-clear')[0].style.width = w
+  document.getElementsByClassName('mejs-clear')[0].style.height = h
+
   var tiny = document.getElementById('watch7-sidebar').currentStyle || window.getComputedStyle(document.getElementById('watch7-sidebar'));
   var z = document.getElementById('placeholder-player').firstChild.style;
   if (typeof z !== 'object') { document.getElementById('placeholder-player').innerHTML = '<div class="player-api player-width player-height"></div>'; }
@@ -1327,48 +1339,115 @@ function resize_layers(w,h){
             }
           }
       }
-    
+
+document.getElementById('watch7-sidebar').removeAttribute('style')
     if (wide_view()) { 
       if (c) {
         e.left = '0px'
         e.width = parseInt(window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth) - getScrollbarWidth() + 'px'
-        a.style.left = document.getElementById('player-api').style.left = '-' + w.replace('px','') / 2 + 'px'
+        if (document.getElementById("placeholder-player").offsetWidth < e.width.replace('px','')) {
+          a.style.left = document.getElementById('player-api').style.left = '-' + w.replace('px','') / 2 + 'px'
+          if ((d.indexOf("medium") > -1) || (d.indexOf("large") > -1)) { 
+            if (w.replace('px','') < parseInt(window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth) - getScrollbarWidth() ) { 
+                a.style.left = document.getElementById('player-api').style.left = '-' + w.replace('px','') / 2 + 'px'
+              } else {
+                  a.style.left = document.getElementById('player-api').style.left = '-' + e.width.replace('px','') / 2 + 'px'
+                }
+          } else {
+              if (w.replace('px','') < parseInt(window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth) - getScrollbarWidth() ) { 
+                a.style.left = document.getElementById('player-api').style.left = '-' + w.replace('px','') / 2 + 'px'
+              } else {
+                  a.style.left = document.getElementById('player-api').style.left = '-' + (parseInt(x) + parseInt(e.width.replace('px','')) - parseInt(document.getElementById("placeholder-player").offsetWidth)) / 2 + 'px'
+                }
+            }
+        } else {
+            if ((d.indexOf("medium") > -1) || (d.indexOf("large") > -1)) { 
+              if (w.replace('px','') < parseInt(window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth) - getScrollbarWidth() ) { 
+                a.style.left = document.getElementById('player-api').style.left = '-' + (parseInt(w.replace('px','')) + document.getElementById("placeholder-player").offsetWidth - e.width.replace('px','')) / 2 + 'px'
+              } else {
+                  a.style.left = document.getElementById('player-api').style.left = '-' + document.getElementById("placeholder-player").offsetWidth / 2 + 'px'
+                }
+            } else {
+                a.style.left = document.getElementById('player-api').style.left = '-' + w.replace('px','') / 2 + 'px'
+            a.style.left = document.getElementById('player-api').style.left = (e.width.replace('px','') - w.replace('px','') - document.getElementById("placeholder-player").offsetWidth) / 2 + 'px'
+
+              }
+            if (parseInt(a.style.left.replace('px','')) < parseInt('-' + (document.getElementById('placeholder-player').offsetWidth / 2))) {
+              a.style.left = document.getElementById('player-api').style.left = '-' + (document.getElementById('placeholder-player').offsetWidth / 2) + 'px'
+            }
+            e.width = document.getElementById("placeholder-player").offsetWidth + 'px'
+          }
         if (playlist) { playlist.style.top = parseInt(h.replace('px','')) - 390 + 'px' }
       } else {
-      	  a.style.left = document.getElementById('player-api').style.left = '-' + (x / 2) + 'px'
-          if (tiny.marginLeft != '0px') { if (playlist) { playlist.style.top = '-400px' }}
+      	  a.style.left = document.getElementById('player-api').style.left = '-' + (document.getElementById('placeholder-player').offsetWidth / 2) + 'px'
+//
+          if (tiny.marginLeft != '0px') {
+            document.getElementById('watch7-sidebar').style.top = '-400px';
+            if (playlist) { playlist.style.top = '-400px' }
+          }
         }
     } else {
-        if ( (typeof player().getPlayerState == 'function') && (flashvars == null) ) { //!!
-          if ((c) && (tiny.marginLeft != '0px')) { if (playlist) { playlist.style.top = parseInt(h.replace('px','')) + 10 + 'px' }}
-        }
+        //if ( (typeof player().getPlayerState == 'function') && (flashvars == null) ) { //!!
+          if (c) {
+            if (tiny.marginLeft != '0px') { if (playlist) { playlist.style.top = parseInt(h.replace('px','')) + 10 + 'px' }}
+            if ((d.indexOf("medium") > -1) || (d.indexOf("large") > -1)) { 
+              a.style.left = document.getElementById('player-api').style.left = ((x / 2) - (w.replace('px','')) / 2) + 'px'
+              e.left = '-' + (e.width.replace('px','') - document.getElementById("placeholder-player").offsetWidth) / 2 + 'px'
+              document.getElementById('watch7-sidebar').style.top = '400px';
+            } else {
+                e.left = (document.getElementById('placeholder-player').offsetWidth - e.width.replace('px','')) / 2 + 'px';
+                a.style.left = document.getElementById('player-api').style.left = ((x / 2) - (w.replace('px','')) / 2) + 'px';
+                document.getElementById('watch7-sidebar').style.top = '400px';
+                if (playlist) { 
+                  //playlist.style.marginLeft = '0px' 
+                }
+              }
+            if (w.replace('px','') > e.width.replace('px','')) {
+                  a.style.left = document.getElementById('player-api').style.left = '-' + (e.width.replace('px','') - document.getElementById("placeholder-player").offsetWidth) / 2 + 'px'
+              } else {
+                  if (parseInt(a.style.left.replace('px','')) < 0) {
+                    a.style.left = document.getElementById('player-api').style.left = '-' + (w.replace('px','') - document.getElementById("placeholder-player").offsetWidth) / 2  + 'px'
+                  }
+                }
+          } else {
+              if ((d.indexOf("medium") > -1) || (d.indexOf("large") > -1)) {
+                a.style.left = document.getElementById('player-api').style.left = '0px';//'-' + w.replace('px','') / 2 + 'px';
+              } else {
+                  a.style.left = document.getElementById('player-api').style.left = '0px'
+                }
+            }
+        //}
         if ( (document.getElementById('placeholder-player').offsetWidth > parseInt(window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth) - getScrollbarWidth() ) && (tiny.marginLeft !== '0px') ) { 
           e.left = '0px'
           e.width = document.getElementById('placeholder-player').offsetWidth + 'px'
         }
-      }
+      }//wide else
+            if (tiny.marginLeft == '0px') { 
+              a.style.left = document.getElementById('player-api').style.left = '-' + (w.replace('px','') / 2) + 'px'
+              if (playlist) {
+              	playlist.style.top = parseInt(h.replace('px','')) + 50 + 'px'
+                var y = parseInt(playlist.offsetHeight) + 5
+                document.getElementById('watch7-notification-area').style.top = '-' + y + 'px'
+              }
+              if (parseInt(a.style.left.replace('px','')) < parseInt('-' + (document.getElementById('placeholder-player').offsetWidth / 2))) {
+                a.style.left = document.getElementById('player-api').style.left = '-' + (document.getElementById('placeholder-player').offsetWidth / 2) + 'px'
+              }
+            }
   }
 
 
 if (tiny.marginLeft !== '0px') {
-  document.getElementById('watch7-notification-area').removeAttribute('style')
-  document.getElementById('watch7-notification-area').removeAttribute('style')
+  document.getElementById('watch7-notification-area').style.top = "0px"
 } else {
     document.getElementById('watch7-sidebar').removeAttribute('style')
 //style.top = parseInt(h.replace('px','')) + '60' + 'px'
 
   }
 
-  document.getElementById('bm0').style.width = w;
-  document.getElementById('bm0').style.height = h;
-  document.getElementById('bm0').style.left = "auto"
-  document.getElementById('mep_0').style.width = w;
-  document.getElementById('mep_0').style.height = h;
-  document.getElementsByClassName('mejs-clear')[0].style.width = w
-  document.getElementsByClassName('mejs-clear')[0].style.height = h
+
 
   var z = gclass("html5-progress-bar")
-  if (z[1]) z[1].style.maxWidth = w
+  if (z[0]) z[0].style.maxWidth = w
   var z = gclass("mejs-layer");
   var i = 0;
   for(i=0;i<z.length-1;i++){
@@ -1410,6 +1489,7 @@ if (tiny.marginLeft !== '0px') {
   var z = document.getElementById("bm3")
   if (z) z.style.top = document.getElementById("masthead-positioner").offsetHeight - 2 + "px" 
 
+  ythtml5_size()
 }
 
 
@@ -1473,12 +1553,14 @@ CtrlS(stage,v);
 
 function ythtml5_size() {
   if ( (typeof player().getPlayerState == 'function') && (flashvars == null) ) {
+    var x = 0
+    var y = 15
     var bm = document.getElementById('bm0').style
     var yt = document.getElementsByClassName('html5-video-content')[0].style
-    v.style.width = yt.width = (bm.height.replace('px','') - 30) * parseFloat(aspect_ratio) + 'px'
-    v.style.height = yt.height = (bm.height.replace('px','') - 30) + 'px'
-    v.style.left = yt.left = ((bm.width.replace('px','') - (bm.height.replace('px','') - 30) * parseFloat(aspect_ratio)) / 2 >>0) + 'px';
-    v.style.top = yt.top = (((bm.height.replace('px','') - (bm.height.replace('px','') - 30)) / 2 >>0) - 15) + 'px';
+    v.style.width = yt.width = (bm.height.replace('px','') - x) * parseFloat(aspect_ratio) + 'px'
+    v.style.height = yt.height = (bm.height.replace('px','') - x) + 'px'
+    v.style.left = yt.left = ((bm.width.replace('px','') - (bm.height.replace('px','') - x) * parseFloat(aspect_ratio)) / 2 >>0) + 'px';
+    v.style.top = yt.top = (((bm.height.replace('px','') - (bm.height.replace('px','') - x)) / 2 >>0) - y) + 'px';
   }
 }
 
@@ -1490,10 +1572,12 @@ function aspect2(w,h) {
   document.getElementById('player-api').style.height = h;
   document.getElementById('player-api').style.width = w;
   if (document.getElementById('aspect')) {
-    document.getElementById('watch7-sidebar').style.marginTop = fix_Height().replace('px','') - 390 + 'px';
-  var playlist = document.getElementById('watch-appbar-playlist')
-    if (playlist) {
+    document.getElementById('watch7-sidebar').style.top = '10px'
+//marginTop = fix_Height().replace('px','') - 390 + 'px';
+    var playlist = document.getElementById('watch-appbar-playlist')
+    if (playlist != null) {
       playlist.style.top = parseInt(h.replace('px','')) + 'px'
+      document.getElementById('watch7-sidebar').style.top = fix_Height().replace('px','') - 390 + 'px';
 //    document.getElementById('watch-appbar-playlist').style.top = h.replace('px','') + 'px'
 //    document.getElementById('watch-appbar-playlist').style.marginTop = '10px'
 //    document.getElementById('watch-appbar-playlist').style.marginLeft = '5px'
@@ -1502,7 +1586,6 @@ function aspect2(w,h) {
   }
   
   resize_layers(w,h)
-  ythtml5_size()
   
   document.getElementById('player1').style.height = h;
   document.getElementById('player1').style.width = w;
@@ -1512,7 +1595,7 @@ function aspect() {
   var class_0 = document.getElementById('player').getAttribute('class')
   var class_1 = class_0.replace('small','small_a').replace('medium','medium_a').replace('large','large_a')
 
-  if (((document.getElementById('bm0').style.width != document.getElementById("watch7-main").offsetWidth + 'px') && (document.getElementById('player-api').style.width != '100%')) || (document.getElementById('bm0').style.height.replace('px','') - 30 != document.getElementById('player1').style.height.replace('px','') )) {
+  if (((document.getElementById('bm0').style.width != document.getElementById("placeholder-player").offsetWidth + 'px') ) ) {
     var w = document.getElementById('placeholder-player').offsetWidth  + 'px'
     var h = Math.round((w.replace('px','') / aspect_ratio)) + 'px';
 
@@ -1521,7 +1604,7 @@ function aspect() {
     document.getElementById('theater-background').style.backgroundColor = "#1B1B1B"
     dw = document.createElement('div');
     dw.id = 'aspect';
-    dw.innerHTML = '<input id="a_width" value="' + w.replace("px","") + '" style="display:inline-block;width:30px;height:13px;text-align:right" onkeyup="if (event.keyCode == 13) aspect2(value,document.getElementById(\'a_height\').value)" onfocus="value=value;document.getElementById(\'a_height\').value=document.getElementById(\'a_height\').value"></input>x<input id="a_height" value="' + h.replace("px","") + '" style="display:inline-block;width:30px;height:13px;text-align:right" onkeyup="if (event.keyCode == 13) aspect2(document.getElementById(\'a_width\').value,value)" onfocus="value=value;document.getElementById(\'a_width\').value=document.getElementById(\'a_width\').value"></input>px';
+    dw.innerHTML = '<input id="a_width" value="' + w.replace("px","") + '" style="display:inline-block;width:30px;height:13px;text-align:right" onkeyup="if (event.keyCode == 13) aspect2(document.getElementById(\'a_width\').value,document.getElementById(\'a_height\').value)" onfocus="document.getElementById(\'a_width\').value=document.getElementById(\'a_width\').value;document.getElementById(\'a_height\').value=document.getElementById(\'a_height\').value"></input>x<input id="a_height" value="' + h.replace("px","") + '" style="display:inline-block;width:30px;height:13px;text-align:right" onkeyup="if (event.keyCode == 13) aspect2(document.getElementById(\'a_width\').value,document.getElementById(\'a_height\').value)" onfocus="document.getElementById(\'a_height\').value=document.getElementById(\'a_height\').value;document.getElementById(\'a_width\').value=document.getElementById(\'a_width\').value"></input>px';
     document.getElementById('watch7-notification-area').insertBefore(dw,document.getElementById('yt-alert-message'))
     document.getElementById('aspect').setAttribute('style','display:inline-block;right:0%;position:absolute;color:#333');
 
@@ -1544,7 +1627,6 @@ function aspect() {
    // document.getElementById('watch-appbar-playlist').style.marginLeft = '5px'
 
     resize_layers(w,h)
-    ythtml5_size()
     
     document.getElementById('player1').style.height = (h.replace('px','') - 30) + 'px';
     document.getElementById('player1').style.width = w
@@ -1563,7 +1645,6 @@ function aspect() {
       document.getElementById('player-api').style.height = h;
 
       resize_layers(w,h)
-      ythtml5_size()
       
       document.getElementById('player1').style.height = (h.replace('px','') - 30) + 'px';
       document.getElementById('player1').style.width = w
@@ -1576,17 +1657,18 @@ function aspect() {
 function deldiv(){
   if (typeof ($) !== 'undefined') { $.removeData([webm, audio]); }
   var z = document.getElementById('placeholder-player').firstChild; if (typeof z == 'object') { var x = z.style; if (typeof x == 'object') z.removeAttribute("style") }
-  var z = gclass("html5-progress-bar"); if (z[1]) { var x = z[1].style; if (x) z[1].removeAttribute("style") }
+  var z = gclass("html5-progress-bar"); if (z[0]) { var x = z[0].style; if (x) z[0].removeAttribute("style") }
 
   document.getElementById('watch7-sidebar').style.marginTop = '-400px';
   var playlist = document.getElementById('watch-appbar-playlist')
   if (playlist) playlist.removeAttribute('style')
-  var z = [ document.getElementById('bm0'),document.getElementById('player-api') ]
+  var z = [ document.getElementById('bm0'),document.getElementById('player-api'),v ]
+  //w_init h_init
   for(i=0;i<z.length;i++){
-   if (z[i]) { z[i].style.width = w_init; z[i].style.height = h_init; }
+   if (z[i]) { z[i].style.width = document.getElementById('placeholder-player').firstChild.offsetWidth; z[i].style.height = document.getElementById('placeholder-player').firstChild.offsetHeight; }
   }
 
-  ythtml5_size()
+  //ythtml5_size()
 
   document.getElementById('player-api').style.display = 'block';
   player().style.display = 'block';
@@ -1595,11 +1677,11 @@ function deldiv(){
   for(i=0;i<z.length;i++){
     if (document.getElementById(z[i])) document.getElementById(z[i]).parentNode.removeChild(document.getElementById(z[i]))
   }
-  var z = ['masthead-positioner-height-offset','player-api','watch7-sidebar','theater-background']
-  for(i=0;i<z.length;i++){
-    if (document.getElementById(z[i])) document.getElementById(z[i]).removeAttribute("style")
-  }
 
+  var z = [document.getElementById('masthead-positioner-height-offset'),document.getElementById('player-api'),document.getElementById('watch7-sidebar'),document.getElementById('theater-background'),document.getElementsByClassName('video-stream html5-main-video')[0] ]
+  for(i=0;i<z.length;i++){
+    if (typeof z[i] != 'undefined') z[i].removeAttribute('style')
+  }
 }
 
 /*
@@ -1768,17 +1850,21 @@ if (v != player()) {
             if ((document.getElementById('a_width').value / aspect_ratio) < fix_Width().replace('px','')) {
               aspect2(document.getElementById('a_width').value,Math.round(document.getElementById('a_width').value / aspect_ratio));
               document.getElementById('a_height').value = Math.round(document.getElementById('a_width').value / aspect_ratio)
+              document.getElementById('a_width').value = document.getElementById('a_width').value
             } else {
                 aspect2(fix_Width().replace('px',''),Math.round(fix_Width().replace('px','') / aspect_ratio));
                 document.getElementById('a_height').value = Math.round(fix_Width().replace('px','') / aspect_ratio)
+                document.getElementById('a_width').value = fix_Width().replace('px','')
               }
           } else {
               if ((document.getElementById('a_height').value * aspect_ratio) < fix_Height().replace('px','')) {
                 aspect2(Math.round(document.getElementById('a_height').value * aspect_ratio), document.getElementById('a_height').value);
                 document.getElementById('a_width').value = Math.round(document.getElementById('a_height').value * aspect_ratio)
+                document.getElementById('a_height').value = document.getElementById('a_height').value
               } else {
                   aspect2(Math.round(fix_Height().replace('px','') * aspect_ratio), fix_Height().replace('px',''));
                   document.getElementById('a_width').value = Math.round(fix_Height().replace('px','') * aspect_ratio)
+                  document.getElementById('a_height').value = fix_Height().replace('px','')
                 }
             }
         } else {
