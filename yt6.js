@@ -1081,8 +1081,9 @@ document.getElementById("theater-background").width = document.getElementById("t
           }
       }
 
-if (document.getElementById("theater-background").offsetWidth != document.getElementById("theater-background").width) { //alert("3 " + document.getElementById("theater-background").width +" "+ document.getElementById("theater-background").offsetWidth); 
-document.getElementById("theater-background").width = document.getElementById("theater-background").offsetWidth }
+if (document.getElementById("theater-background").offsetWidth != document.getElementById("theater-background").width) {
+  document.getElementById("theater-background").width = document.getElementById("theater-background").offsetWidth
+}
 
     // Check to see if the location has changed.
     if (strLocation != window.location.href){
@@ -1380,14 +1381,16 @@ document.getElementById('watch7-sidebar').removeAttribute('style')
         if (playlist) { playlist.style.top = parseInt(h.replace('px','')) - 390 + 'px' }
       } else {
       	  a.style.left = document.getElementById('player-api').style.left = '-' + (document.getElementById('placeholder-player').offsetWidth / 2) + 'px'
-//
           if (tiny.marginLeft != '0px') {
             document.getElementById('watch7-sidebar').style.top = '-400px';
             if (playlist) { playlist.style.top = '-400px' }
           }
         }
     } else {
-        //if ( (typeof player().getPlayerState == 'function') && (flashvars == null) ) { //!!
+        if ( (document.getElementById('placeholder-player').offsetWidth > parseInt(window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth) - getScrollbarWidth() ) && (tiny.marginLeft !== '0px') ) { 
+          e.left = '0px'
+          e.width = document.getElementById('placeholder-player').offsetWidth + 'px'
+        }
           if (c) {
             if (tiny.marginLeft != '0px') { if (playlist) { playlist.style.top = parseInt(h.replace('px','')) + 10 + 'px' }}
             if ((d.indexOf("medium") > -1) || (d.indexOf("large") > -1)) { 
@@ -1402,12 +1405,10 @@ document.getElementById('watch7-sidebar').removeAttribute('style')
                   //playlist.style.marginLeft = '0px' 
                 }
               }
-            if (w.replace('px','') > e.width.replace('px','')) {
-                  a.style.left = document.getElementById('player-api').style.left = '-' + (e.width.replace('px','') - document.getElementById("placeholder-player").offsetWidth) / 2 + 'px'
+            if ( parseInt(w.replace('px','')) > parseInt(window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth) - getScrollbarWidth() ) {//alert(a.style.left +" "+ e.left)
+                  a.style.left = document.getElementById('player-api').style.left = e.left; //'-' + (e.width.replace('px','') - document.getElementById("placeholder-player").offsetWidth) / 2 + 'px'
               } else {
-                  if (parseInt(a.style.left.replace('px','')) < 0) {
                     a.style.left = document.getElementById('player-api').style.left = '-' + (w.replace('px','') - document.getElementById("placeholder-player").offsetWidth) / 2  + 'px'
-                  }
                 }
           } else {
               if ((d.indexOf("medium") > -1) || (d.indexOf("large") > -1)) {
@@ -1416,11 +1417,6 @@ document.getElementById('watch7-sidebar').removeAttribute('style')
                   a.style.left = document.getElementById('player-api').style.left = '0px'
                 }
             }
-        //}
-        if ( (document.getElementById('placeholder-player').offsetWidth > parseInt(window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth) - getScrollbarWidth() ) && (tiny.marginLeft !== '0px') ) { 
-          e.left = '0px'
-          e.width = document.getElementById('placeholder-player').offsetWidth + 'px'
-        }
       }//wide else
             if (tiny.marginLeft == '0px') { 
               a.style.left = document.getElementById('player-api').style.left = '-' + (w.replace('px','') / 2) + 'px'
