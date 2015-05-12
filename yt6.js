@@ -780,8 +780,8 @@ if ( (location.href.indexOf("aC4BC-Hxq9g") != -1 )  ) {
 
       var ytplayercmd = function(e) {
         var cmd = e.data;
-        var player = document.getElementById("movie_player");
-        if (typeof player[cmd] == 'function') { player[cmd]() }
+        //var player = document.getElementById("movie_player");
+        if (typeof player()[cmd] == 'function') { player()[cmd]() }
         return false;
       }
       window.addEventListener("message", ytplayercmd);
@@ -1284,63 +1284,6 @@ function resize_layers(w,h){
     a.style.left = document.getElementById("player-api").style.left
     a.style.backgroundColor = 'transparent'
 
-    if (c) {
-      e.left = '0px'
-      if ((d.indexOf("medium") > -1) || (d.indexOf("large") > -1)) { 
-        if ( (typeof player().getPlayerState == 'function') && (flashvars == null) ) { //!!
-          a.style.left = document.getElementById('player-api').style.left = '0px'
-          e.left = (e.width.replace('px','') - x) / 2 + 'px'
-        } else {
-            a.style.left = document.getElementById('player-api').style.left = '-' + (x / 2) + 'px';
-          }
-      } else {
-          e.left = (document.getElementById('placeholder-player').offsetWidth - e.width.replace('px','')) / 2 + 'px';
-          if (d.indexOf("small") > -1) { 
-            a.style.left = document.getElementById('player-api').style.left = ((x / 2) - (w.replace('px','')) / 2) + 'px';
-            if (playlist) {
-              playlist.style.top = parseInt(h.replace('px','')) + 10 + 'px'
-            }
-          }
-          if (parseInt(tiny.marginLeft.replace('px','')) < 100) { 
-            a.style.left = document.getElementById('player-api').style.left = '-' + (w.replace('px','') / 2) + 'px'
-            if (playlist) {
-              playlist.style.top = parseInt(h.replace('px','')) + 50 + 'px'
-              var y = parseInt(playlist.offsetHeight) + 5
-              document.getElementById('watch7-notification-area').style.top = '-' + y + 'px'
-            }
-          }
-        }
-      if ( (w.replace('px','') > parseInt(window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth) - getScrollbarWidth() ) && (parseInt(tiny.marginLeft.replace('px','')) > 100) ) { 
-        a.left = document.getElementById('player-api').style.left = '0px'
-      }
-    } else {
-        e.left = (document.getElementById('placeholder-player').offsetWidth - e.width.replace('px','')) / 2 + 'px';
-        if ((d.indexOf("medium") > -1) || (d.indexOf("large") > -1)) { //alert("c" + x)
-          if (parseInt(tiny.marginLeft.replace('px','')) < 100) { 
-            a.style.left = document.getElementById('player-api').style.left = '-' + (w.replace('px','') / 2) + 'px'
-            if (playlist) {
-              playlist.style.top = parseInt(h.replace('px','')) + 50 + 'px'
-              var y = parseInt(playlist.offsetHeight) + 5
-              document.getElementById('watch7-notification-area').style.top = '-' + y + 'px'
-            }
-          } else {
-              if ( (typeof player().getPlayerState == 'function') && (flashvars == null) ) { //!!
-                a.style.left = document.getElementById('player-api').style.left = '0px'
-              } else {
-                  a.style.left = document.getElementById('player-api').style.left = '-' + (x / 2) + 'px' }
-                }
-        } else {
-            if (d.indexOf("small") > -1) { a.style.left = document.getElementById('player-api').style.left = '0px' }
-            if (parseInt(tiny.marginLeft.replace('px','')) < 100) { 
-              a.style.left = document.getElementById('player-api').style.left = '-' + (w.replace('px','') / 2) + 'px'
-              if (playlist) {
-              	playlist.style.top = parseInt(h.replace('px','')) + 50 + 'px'
-                var y = parseInt(playlist.offsetHeight) + 5
-                document.getElementById('watch7-notification-area').style.top = '-' + y + 'px'
-              }
-            }
-          }
-      }
 
 document.getElementById('watch7-sidebar').removeAttribute('style')
     if (wide_view()) { 
@@ -1493,6 +1436,8 @@ function switchflashhtml5() {
   var flashvars = player().getAttribute('flashvars')
   if ( document.getElementById('bm0').style.visibility === 'hidden') {
     if (document.getElementById('iaextractor-menu')) { document.getElementById('iaextractor-menu').parentNode.removeChild(document.getElementById('iaextractor-menu')) }
+    if (typeof player().getPlayerState === 'function') { window.postMessage("pauseVideo", "*") }
+    player2.pause()
     document.getElementById('movie_player').style.display = 'none';
     document.getElementById('bm0').style.display = 'block';
     document.getElementById('bm0').style.visibility = 'visible';
@@ -1507,8 +1452,6 @@ function switchflashhtml5() {
         var v = document.getElementsByClassName('video-stream html5-main-video')[0];
       }
     }
-    if (typeof player().getPlayerState === 'function') { window.postMessage("pauseVideo", "*") };
-    player2.pause()
     document.getElementsByClassName('play')[0].innerHTML = 'play';
     document.getElementById('player2').playbackRate = player1.playbackRate
     if (flashvars != null) { player().removeEventListener("onStateChange", Sync); window.removeEventListener("message", window.ytplayercmd); delete window.ytplayercmd}
@@ -1520,12 +1463,12 @@ function switchflashhtml5() {
       	player().style.opacity = '1.1'
       	//if (typeof player.getPlayerState == 'function') {
 document.getElementById("snarls_player").innerHTML = document.getElementById('movie_player').outerHTML; var z = document.createElement("embed"); z.id = "movie_player_"; document.getElementById("player-api").insertBefore(z, document.getElementById("bm0")); document.getElementById("bm0").parentNode.removeChild(document.getElementById('movie_player')); document.getElementById("movie_player_").outerHTML = document.getElementById("snarls_player").innerHTML; 
-          window.ytplayercmd = function(e) {
-            var cmd = e.data;
-            var player = document.getElementById("movie_player");
-            if (typeof player[cmd] == 'function') { player[cmd]() }
-            return false;
-          }
+          //window.ytplayercmd = function(e) {
+          //  var cmd = e.data;
+          //  var player = document.getElementById("movie_player");
+          //  if (typeof player[cmd] == 'function') { player[cmd]() }
+          //  return false;
+          //}
           window.addEventListener("message", window.ytplayercmd);
           document.getElementById('movie_player').addEventListener("onStateChange", Sync);
 
