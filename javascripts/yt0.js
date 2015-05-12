@@ -1493,6 +1493,8 @@ function switchflashhtml5() {
   var flashvars = player().getAttribute('flashvars')
   if ( document.getElementById('bm0').style.visibility === 'hidden') {
     if (document.getElementById('iaextractor-menu')) { document.getElementById('iaextractor-menu').parentNode.removeChild(document.getElementById('iaextractor-menu')) }
+    if (typeof player().getPlayerState === 'function') { window.postMessage("pauseVideo", "*") };
+    player2.pause()
     document.getElementById('movie_player').style.display = 'none';
     document.getElementById('bm0').style.display = 'block';
     document.getElementById('bm0').style.visibility = 'visible';
@@ -1507,8 +1509,6 @@ function switchflashhtml5() {
         var v = document.getElementsByClassName('video-stream html5-main-video')[0];
       }
     }
-    if (typeof player().getPlayerState === 'function') { window.postMessage("pauseVideo", "*") };
-    player2.pause()
     document.getElementsByClassName('play')[0].innerHTML = 'play';
     document.getElementById('player2').playbackRate = player1.playbackRate
     if (flashvars != null) { player().removeEventListener("onStateChange", Sync); window.removeEventListener("message", window.ytplayercmd); delete window.ytplayercmd}
