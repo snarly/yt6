@@ -1788,6 +1788,9 @@ if (v != player()) {
             v.pause();
             t.innerHTML = 'play';
           }
+          v.style[prop] = document.getElementById('placeholder-player').firstChild.style[prop]
+          v.style.width = document.getElementById('placeholder-player').firstChild.style.width
+          v.style.height = document.getElementById('placeholder-player').firstChild.style.height
 } else {
 	if (document.getElementById("movie_player").getPlayerState() != 1){
             window.postMessage("playVideo", "*");
@@ -1803,7 +1806,7 @@ if (v != player()) {
         case 'zoomin yt-uix-button-text':
           zoom = zoom + 0.1;
           v.style[prop]='scale('+zoom+') rotate('+rotate+'deg)';
-        break;
+          break;
 
 /* Decrease zoom and set the transformation */
         case 'zoomout yt-uix-button-text':
@@ -1884,7 +1887,7 @@ if (v != player()) {
     document.getElementById('player1').style.height = (v.style.height.replace('px','') - 30) + 'px';
         break;
       }        
-
+      document.getElementById('placeholder-player').firstChild.style[prop] = v.style[prop]
       e.preventDefault();
     }
   },false);
