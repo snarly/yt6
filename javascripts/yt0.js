@@ -1253,7 +1253,8 @@ function resize_layers(w,h){
   document.getElementsByClassName('mejs-clear')[0].style.height = h
 
   var tiny = document.getElementById('watch7-sidebar').currentStyle || window.getComputedStyle(document.getElementById('watch7-sidebar'))
-  //var tiny0 = document.getElementById('watch7-sidebar-contents').currentStyle || window.getComputedStyle(document.getElementById('watch7-sidebar-contents'));alert("w7s:" + tiny.marginLeft + " w7sc" + tiny0.marginLeft)
+  //var tiny0 = document.getElementById('watch7-sidebar-contents').currentStyle || window.getComputedStyle(document.getElementById('watch7-sidebar-contents'));
+  alert("w7s:" + tiny.marginLeft + typeof tiny0.marginLeft.replace('px',''))
   var z = document.getElementById('placeholder-player').firstChild.style;
   if (typeof z !== 'object') { document.getElementById('placeholder-player').innerHTML = '<div class="player-api player-width player-height"></div>'; }
 
