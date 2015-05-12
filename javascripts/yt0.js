@@ -1284,63 +1284,6 @@ function resize_layers(w,h){
     a.style.left = document.getElementById("player-api").style.left
     a.style.backgroundColor = 'transparent'
 
-    if (c) {
-      e.left = '0px'
-      if ((d.indexOf("medium") > -1) || (d.indexOf("large") > -1)) { 
-        if ( (typeof player().getPlayerState == 'function') && (flashvars == null) ) { //!!
-          a.style.left = document.getElementById('player-api').style.left = '0px'
-          e.left = (e.width.replace('px','') - x) / 2 + 'px'
-        } else {
-            a.style.left = document.getElementById('player-api').style.left = '-' + (x / 2) + 'px';
-          }
-      } else {
-          e.left = (document.getElementById('placeholder-player').offsetWidth - e.width.replace('px','')) / 2 + 'px';
-          if (d.indexOf("small") > -1) { 
-            a.style.left = document.getElementById('player-api').style.left = ((x / 2) - (w.replace('px','')) / 2) + 'px';
-            if (playlist) {
-              playlist.style.top = parseInt(h.replace('px','')) + 10 + 'px'
-            }
-          }
-          if (parseInt(tiny.marginLeft.replace('px','')) < 100) { 
-            a.style.left = document.getElementById('player-api').style.left = '-' + (w.replace('px','') / 2) + 'px'
-            if (playlist) {
-              playlist.style.top = parseInt(h.replace('px','')) + 50 + 'px'
-              var y = parseInt(playlist.offsetHeight) + 5
-              document.getElementById('watch7-notification-area').style.top = '-' + y + 'px'
-            }
-          }
-        }
-      if ( (w.replace('px','') > parseInt(window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth) - getScrollbarWidth() ) && (parseInt(tiny.marginLeft.replace('px','')) > 100) ) { 
-        a.left = document.getElementById('player-api').style.left = '0px'
-      }
-    } else {
-        e.left = (document.getElementById('placeholder-player').offsetWidth - e.width.replace('px','')) / 2 + 'px';
-        if ((d.indexOf("medium") > -1) || (d.indexOf("large") > -1)) { //alert("c" + x)
-          if (parseInt(tiny.marginLeft.replace('px','')) < 100) { 
-            a.style.left = document.getElementById('player-api').style.left = '-' + (w.replace('px','') / 2) + 'px'
-            if (playlist) {
-              playlist.style.top = parseInt(h.replace('px','')) + 50 + 'px'
-              var y = parseInt(playlist.offsetHeight) + 5
-              document.getElementById('watch7-notification-area').style.top = '-' + y + 'px'
-            }
-          } else {
-              if ( (typeof player().getPlayerState == 'function') && (flashvars == null) ) { //!!
-                a.style.left = document.getElementById('player-api').style.left = '0px'
-              } else {
-                  a.style.left = document.getElementById('player-api').style.left = '-' + (x / 2) + 'px' }
-                }
-        } else {
-            if (d.indexOf("small") > -1) { a.style.left = document.getElementById('player-api').style.left = '0px' }
-            if (parseInt(tiny.marginLeft.replace('px','')) < 100) { 
-              a.style.left = document.getElementById('player-api').style.left = '-' + (w.replace('px','') / 2) + 'px'
-              if (playlist) {
-              	playlist.style.top = parseInt(h.replace('px','')) + 50 + 'px'
-                var y = parseInt(playlist.offsetHeight) + 5
-                document.getElementById('watch7-notification-area').style.top = '-' + y + 'px'
-              }
-            }
-          }
-      }
 
 document.getElementById('watch7-sidebar').removeAttribute('style')
     if (wide_view()) { 
