@@ -1301,7 +1301,7 @@ function resize_layers(w,h){
               playlist.style.top = parseInt(h.replace('px','')) + 10 + 'px'
             }
           }
-          if (tiny.marginLeft.replace('px','') < 100) { 
+          if (parseInt(tiny.marginLeft.replace('px','')) < 100) { 
             a.style.left = document.getElementById('player-api').style.left = '-' + (w.replace('px','') / 2) + 'px'
             if (playlist) {
               playlist.style.top = parseInt(h.replace('px','')) + 50 + 'px'
@@ -1310,13 +1310,13 @@ function resize_layers(w,h){
             }
           }
         }
-      if ( (w.replace('px','') > parseInt(window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth) - getScrollbarWidth() ) && (!tiny.marginLeft.replace('px','') < 100) ) { 
+      if ( (w.replace('px','') > parseInt(window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth) - getScrollbarWidth() ) && (parseInt(tiny.marginLeft.replace('px','')) > 100) ) { 
         a.left = document.getElementById('player-api').style.left = '0px'
       }
     } else {
         e.left = (document.getElementById('placeholder-player').offsetWidth - e.width.replace('px','')) / 2 + 'px';
         if ((d.indexOf("medium") > -1) || (d.indexOf("large") > -1)) { //alert("c" + x)
-          if (tiny.marginLeft.replace('px','') < 100) { 
+          if (parseInt(tiny.marginLeft.replace('px','')) < 100) { 
             a.style.left = document.getElementById('player-api').style.left = '-' + (w.replace('px','') / 2) + 'px'
             if (playlist) {
               playlist.style.top = parseInt(h.replace('px','')) + 50 + 'px'
@@ -1331,7 +1331,7 @@ function resize_layers(w,h){
                 }
         } else {
             if (d.indexOf("small") > -1) { a.style.left = document.getElementById('player-api').style.left = '0px' }
-            if (tiny.marginLeft.replace('px','') < 100) { 
+            if (parseInt(tiny.marginLeft.replace('px','')) < 100) { 
               a.style.left = document.getElementById('player-api').style.left = '-' + (w.replace('px','') / 2) + 'px'
               if (playlist) {
               	playlist.style.top = parseInt(h.replace('px','')) + 50 + 'px'
@@ -1382,18 +1382,18 @@ document.getElementById('watch7-sidebar').removeAttribute('style')
         if (playlist) { playlist.style.top = parseInt(h.replace('px','')) - 390 + 'px' }
       } else {
       	  a.style.left = document.getElementById('player-api').style.left = '-' + (document.getElementById('placeholder-player').offsetWidth / 2) + 'px'
-          if (!tiny.marginLeft.replace('px','') < 100) {
+          if (parseInt(tiny.marginLeft.replace('px','')) > 100) {
             document.getElementById('watch7-sidebar').style.top = '-400px';
             if (playlist) { playlist.style.top = '-400px' }
           }
         }
     } else {
-        if ( (document.getElementById('placeholder-player').offsetWidth > parseInt(window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth) - getScrollbarWidth() ) && (!tiny.marginLeft.replace('px','') < 100) ) { 
+        if ( (document.getElementById('placeholder-player').offsetWidth > parseInt(window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth) - getScrollbarWidth() ) && (parseInt(tiny.marginLeft.replace('px','')) > 100) ) { 
           e.left = '0px'
           e.width = document.getElementById('placeholder-player').offsetWidth + 'px'
         }
           if (c) {
-            if (!tiny.marginLeft.replace('px','') < 100) { if (playlist) { playlist.style.top = parseInt(h.replace('px','')) + 10 + 'px' }}
+            if (parseInt(tiny.marginLeft.replace('px','')) > 100) { if (playlist) { playlist.style.top = parseInt(h.replace('px','')) + 10 + 'px' }}
             if ((d.indexOf("medium") > -1) || (d.indexOf("large") > -1)) { 
               a.style.left = document.getElementById('player-api').style.left = ((x / 2) - (w.replace('px','')) / 2) + 'px'
               e.left = '-' + (e.width.replace('px','') - document.getElementById("placeholder-player").offsetWidth) / 2 + 'px'
@@ -1419,7 +1419,7 @@ document.getElementById('watch7-sidebar').removeAttribute('style')
                 }
             }
       }//wide else
-            if (tiny.marginLeft.replace('px','') < 100) { 
+            if (parseInt(tiny.marginLeft.replace('px','')) < 100) { 
               a.style.left = document.getElementById('player-api').style.left = '-' + (w.replace('px','') / 2) + 'px'
               if (playlist) {
               	playlist.style.top = parseInt(h.replace('px','')) + 50 + 'px'
@@ -1433,7 +1433,7 @@ document.getElementById('watch7-sidebar').removeAttribute('style')
   }
 
 
-if (!tiny.marginLeft.replace('px','') < 100) {
+if (parseInt(tiny.marginLeft.replace('px','')) > 100) {
   document.getElementById('watch7-notification-area').style.top = "0px"
 } else {
     document.getElementById('watch7-sidebar').removeAttribute('style')
@@ -1803,7 +1803,7 @@ if (v != player()) {
         case 'zoomin yt-uix-button-text':
           zoom = zoom + 0.1;
           v.style[prop]='scale('+zoom+') rotate('+rotate+'deg)';
-        break;
+          break;
 
 /* Decrease zoom and set the transformation */
         case 'zoomout yt-uix-button-text':
@@ -1884,7 +1884,7 @@ if (v != player()) {
     document.getElementById('player1').style.height = (v.style.height.replace('px','') - 30) + 'px';
         break;
       }        
-
+      document.getElementById('placeholder-player').firstChild.style[prop] = v.style[prop]
       e.preventDefault();
     }
   },false);
