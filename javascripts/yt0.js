@@ -1421,7 +1421,6 @@ document.getElementById('watch7-sidebar').removeAttribute('style')
       }//wide else
             if (parseInt(tiny.marginLeft.replace('px','')) < 100) {
               a.style.left = document.getElementById('player-api').style.left = '-' + (w.replace('px','') / 2) + 'px'
-              alert(a.style.left + " " + '-' + w.replace('px','') / 2 + " " + typeof w.replace('px',''))
               if (playlist) {
               	playlist.style.top = parseInt(h.replace('px','')) + 50 + 'px'
                 var y = parseInt(playlist.offsetHeight) + 5
@@ -1432,7 +1431,7 @@ document.getElementById('watch7-sidebar').removeAttribute('style')
               }
             }
   }
-
+alert(a.style.left + " " + '-' + w.replace('px','') / 2 + " " + tiny.marginLeft.replace('px',''))
 
 if (parseInt(tiny.marginLeft.replace('px','')) > 100) {
   document.getElementById('watch7-notification-area').style.top = "0px"
