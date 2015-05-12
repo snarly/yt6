@@ -1493,7 +1493,8 @@ function switchflashhtml5() {
   var flashvars = player().getAttribute('flashvars')
   if ( document.getElementById('bm0').style.visibility === 'hidden') {
     if (document.getElementById('iaextractor-menu')) { document.getElementById('iaextractor-menu').parentNode.removeChild(document.getElementById('iaextractor-menu')) }
-    if (typeof player().getPlayerState === 'function') { window.postMessage("pauseVideo", "*") };
+    if (typeof player().getPlayerState === 'function') {  } else { alert(flashvars) };
+    window.postMessage("pauseVideo", "*")
     player2.pause()
     document.getElementById('movie_player').style.display = 'none';
     document.getElementById('bm0').style.display = 'block';
