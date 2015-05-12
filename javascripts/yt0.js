@@ -1253,8 +1253,7 @@ function resize_layers(w,h){
   document.getElementsByClassName('mejs-clear')[0].style.height = h
 
   var tiny = document.getElementById('watch7-sidebar').currentStyle || window.getComputedStyle(document.getElementById('watch7-sidebar'))
-  //var tiny0 = document.getElementById('watch7-sidebar-contents').currentStyle || window.getComputedStyle(document.getElementById('watch7-sidebar-contents'));
-  alert("w7s:" + tiny.marginLeft + typeof tiny.marginLeft.replace('px',''))
+  //var tiny0 = document.getElementById('watch7-sidebar-contents').currentStyle || window.getComputedStyle(document.getElementById('watch7-sidebar-contents'));alert("w7s:" + tiny.marginLeft + " w7sc" + tiny0.marginLeft)
   var z = document.getElementById('placeholder-player').firstChild.style;
   if (typeof z !== 'object') { document.getElementById('placeholder-player').innerHTML = '<div class="player-api player-width player-height"></div>'; }
 
@@ -1302,7 +1301,7 @@ function resize_layers(w,h){
               playlist.style.top = parseInt(h.replace('px','')) + 10 + 'px'
             }
           }
-          if (tiny.marginLeft.replace('px','') < 100) { 
+          if (parseInt(tiny.marginLeft.replace('px','')) < 100) { 
             a.style.left = document.getElementById('player-api').style.left = '-' + (w.replace('px','') / 2) + 'px'
             if (playlist) {
               playlist.style.top = parseInt(h.replace('px','')) + 50 + 'px'
@@ -1311,13 +1310,13 @@ function resize_layers(w,h){
             }
           }
         }
-      if ( (w.replace('px','') > parseInt(window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth) - getScrollbarWidth() ) && (!tiny.marginLeft.replace('px','') < 100) ) { 
+      if ( (w.replace('px','') > parseInt(window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth) - getScrollbarWidth() ) && (!parseInt(tiny.marginLeft.replace('px','')) < 100) ) { 
         a.left = document.getElementById('player-api').style.left = '0px'
       }
     } else {
         e.left = (document.getElementById('placeholder-player').offsetWidth - e.width.replace('px','')) / 2 + 'px';
         if ((d.indexOf("medium") > -1) || (d.indexOf("large") > -1)) { //alert("c" + x)
-          if (tiny.marginLeft.replace('px','') < 100) { 
+          if (parseInt(tiny.marginLeft.replace('px','')) < 100) { 
             a.style.left = document.getElementById('player-api').style.left = '-' + (w.replace('px','') / 2) + 'px'
             if (playlist) {
               playlist.style.top = parseInt(h.replace('px','')) + 50 + 'px'
@@ -1332,7 +1331,7 @@ function resize_layers(w,h){
                 }
         } else {
             if (d.indexOf("small") > -1) { a.style.left = document.getElementById('player-api').style.left = '0px' }
-            if (tiny.marginLeft.replace('px','') < 100) { 
+            if (parseInt(tiny.marginLeft.replace('px','')) < 100) { 
               a.style.left = document.getElementById('player-api').style.left = '-' + (w.replace('px','') / 2) + 'px'
               if (playlist) {
               	playlist.style.top = parseInt(h.replace('px','')) + 50 + 'px'
@@ -1383,18 +1382,18 @@ document.getElementById('watch7-sidebar').removeAttribute('style')
         if (playlist) { playlist.style.top = parseInt(h.replace('px','')) - 390 + 'px' }
       } else {
       	  a.style.left = document.getElementById('player-api').style.left = '-' + (document.getElementById('placeholder-player').offsetWidth / 2) + 'px'
-          if (!tiny.marginLeft.replace('px','') < 100) {
+          if (!parseInt(tiny.marginLeft.replace('px','')) < 100) {
             document.getElementById('watch7-sidebar').style.top = '-400px';
             if (playlist) { playlist.style.top = '-400px' }
           }
         }
     } else {
-        if ( (document.getElementById('placeholder-player').offsetWidth > parseInt(window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth) - getScrollbarWidth() ) && (!tiny.marginLeft.replace('px','') < 100) ) { 
+        if ( (document.getElementById('placeholder-player').offsetWidth > parseInt(window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth) - getScrollbarWidth() ) && (!parseInt(tiny.marginLeft.replace('px','')) < 100) ) { 
           e.left = '0px'
           e.width = document.getElementById('placeholder-player').offsetWidth + 'px'
         }
           if (c) {
-            if (!tiny.marginLeft.replace('px','') < 100) { if (playlist) { playlist.style.top = parseInt(h.replace('px','')) + 10 + 'px' }}
+            if (!parseInt(tiny.marginLeft.replace('px','')) < 100) { if (playlist) { playlist.style.top = parseInt(h.replace('px','')) + 10 + 'px' }}
             if ((d.indexOf("medium") > -1) || (d.indexOf("large") > -1)) { 
               a.style.left = document.getElementById('player-api').style.left = ((x / 2) - (w.replace('px','')) / 2) + 'px'
               e.left = '-' + (e.width.replace('px','') - document.getElementById("placeholder-player").offsetWidth) / 2 + 'px'
@@ -1420,7 +1419,7 @@ document.getElementById('watch7-sidebar').removeAttribute('style')
                 }
             }
       }//wide else
-            if (tiny.marginLeft.replace('px','') < 100) { 
+            if (parseInt(tiny.marginLeft.replace('px','')) < 100) { 
               a.style.left = document.getElementById('player-api').style.left = '-' + (w.replace('px','') / 2) + 'px'
               if (playlist) {
               	playlist.style.top = parseInt(h.replace('px','')) + 50 + 'px'
@@ -1434,7 +1433,7 @@ document.getElementById('watch7-sidebar').removeAttribute('style')
   }
 
 
-if (!tiny.marginLeft.replace('px','') < 100) {
+if (!parseInt(tiny.marginLeft.replace('px','')) < 100) {
   document.getElementById('watch7-notification-area').style.top = "0px"
 } else {
     document.getElementById('watch7-sidebar').removeAttribute('style')
