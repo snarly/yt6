@@ -780,8 +780,8 @@ if ( (location.href.indexOf("aC4BC-Hxq9g") != -1 )  ) {
 
       var ytplayercmd = function(e) {
         var cmd = e.data;
-        var player = document.getElementById("movie_player");
-        if (typeof player[cmd] == 'function') { player[cmd]() }
+        //var player = document.getElementById("movie_player");
+        if (typeof player()[cmd] == 'function') { player()[cmd]() }
         return false;
       }
       window.addEventListener("message", ytplayercmd);
@@ -1436,8 +1436,7 @@ function switchflashhtml5() {
   var flashvars = player().getAttribute('flashvars')
   if ( document.getElementById('bm0').style.visibility === 'hidden') {
     if (document.getElementById('iaextractor-menu')) { document.getElementById('iaextractor-menu').parentNode.removeChild(document.getElementById('iaextractor-menu')) }
-    if (typeof player().getPlayerState === 'function') {  } else { alert(flashvars) };
-    window.postMessage("pauseVideo", "*")
+    if (typeof player().getPlayerState === 'function') { window.postMessage("pauseVideo", "*") }
     player2.pause()
     document.getElementById('movie_player').style.display = 'none';
     document.getElementById('bm0').style.display = 'block';
@@ -1464,12 +1463,12 @@ function switchflashhtml5() {
       	player().style.opacity = '1.1'
       	//if (typeof player.getPlayerState == 'function') {
 document.getElementById("snarls_player").innerHTML = document.getElementById('movie_player').outerHTML; var z = document.createElement("embed"); z.id = "movie_player_"; document.getElementById("player-api").insertBefore(z, document.getElementById("bm0")); document.getElementById("bm0").parentNode.removeChild(document.getElementById('movie_player')); document.getElementById("movie_player_").outerHTML = document.getElementById("snarls_player").innerHTML; 
-          window.ytplayercmd = function(e) {
-            var cmd = e.data;
-            var player = document.getElementById("movie_player");
-            if (typeof player[cmd] == 'function') { player[cmd]() }
-            return false;
-          }
+          //window.ytplayercmd = function(e) {
+          //  var cmd = e.data;
+          //  var player = document.getElementById("movie_player");
+          //  if (typeof player[cmd] == 'function') { player[cmd]() }
+          //  return false;
+          //}
           window.addEventListener("message", window.ytplayercmd);
           document.getElementById('movie_player').addEventListener("onStateChange", Sync);
 
