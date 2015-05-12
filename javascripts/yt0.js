@@ -1788,9 +1788,6 @@ if (v != player()) {
             v.pause();
             t.innerHTML = 'play';
           }
-          v.style[prop] = document.getElementById('placeholder-player').firstChild.style[prop]
-          v.style.width = document.getElementById('placeholder-player').firstChild.style.width
-          v.style.height = document.getElementById('placeholder-player').firstChild.style.height
 } else {
 	if (document.getElementById("movie_player").getPlayerState() != 1){
             window.postMessage("playVideo", "*");
