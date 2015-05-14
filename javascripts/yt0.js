@@ -1745,7 +1745,7 @@ var controls = document.getElementById('controls');
   for(i=0,j=properties.length;i<j;i++){
     if(typeof stage.style[properties[i]] !== 'undefined'){
       prop = properties[i];
-      ctrl.prop = prop;
+      document.getElementById('controls').prop = prop;
       break;
     }
   }
