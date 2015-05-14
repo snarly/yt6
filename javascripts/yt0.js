@@ -1736,7 +1736,7 @@ var controls = document.getElementById('controls');
 /* Array of possible browser specific settings for transformation */
   var properties = ['transform', 'WebkitTransform', 'MozTransform',
                     'msTransform', 'OTransform'],
-      prop = properties[0] = ctrl.prop;
+      prop = properties[0];
 
 /* Iterators and stuff */    
   var i,j,t;
@@ -1744,7 +1744,7 @@ var controls = document.getElementById('controls');
 /* Find out which CSS transform the browser supports */
   for(i=0,j=properties.length;i<j;i++){
     if(typeof stage.style[properties[i]] !== 'undefined'){
-      prop = properties[i];
+      prop = ctrl.prop = properties[i];
       break;
     }
   }
