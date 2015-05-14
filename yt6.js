@@ -1055,38 +1055,41 @@ document.getElementById("theater-background").width = document.getElementById("t
   // changes in the window location.
   var fnCheckLocation = function(){
 
-
+    var watch = document.getElementById("page");if (watch) var watch = watch.getAttribute("class"); if ((typeof watch == 'string') && (watch.indexOf('watch') == -1)) var watch = null
     var autoscale = document.getElementById("placeholder-player")
-    if ((autoscale.offsetWidth != autoscale.width) && (autoscale.offsetHeight != autoscale.height)) { //alert('0 ' + autoscale.height +" "+ autoscale.offsetHeight); 
-      autoscale.width = autoscale.offsetWidth;
-      autoscale.height = autoscale.offsetHeight;
-      //aspect();aspect()
-      if (document.getElementById('bm0')) ythtml5_size()
-      document.getElementsByClassName('reset yt-uix-button-text')[0].click()
-    } else {
-        if (autoscale.offsetHeight != autoscale.height) { //alert('2 ' + autoscale.height +" "+ autoscale.offsetHeight); 
-          autoscale.height = autoscale.offsetHeight;
-          //aspect();aspect()
+    var reset = document.getElementsByClassName('reset yt-uix-button-text')[0]
+    if ((autoscale) && (typeof reset != 'undefined')) {
+      if ((autoscale.offsetWidth != autoscale.width) && (autoscale.offsetHeight != autoscale.height)) { //alert('0 ' + autoscale.height +" "+ autoscale.offsetHeight); 
+        autoscale.width = autoscale.offsetWidth;
+        autoscale.height = autoscale.offsetHeight;
+        //aspect();aspect()
         if (document.getElementById('bm0')) ythtml5_size()
-        if ( (!document.getElementById("aspect")) && (document.getElementById('watch7-sidebar').currentStyle || window.getComputedStyle(document.getElementById('watch7-sidebar'))).marginLeft == '0px' ) {
-          document.getElementsByClassName('reset yt-uix-button-text')[0].click();ythtml5_size()
-}
-        } else {
-            if (autoscale.offsetWidth != autoscale.width) { //alert('1 width:' + autoscale.width +" offsetWidth:"+ autoscale.offsetWidth +" thb:"+ document.getElementById("theater-background").offsetWidth ); 
+        document.getElementsByClassName('reset yt-uix-button-text')[0].click()
+      } else {
+          if (autoscale.offsetHeight != autoscale.height) { //alert('2 ' + autoscale.height +" "+ autoscale.offsetHeight); 
+            autoscale.height = autoscale.offsetHeight;
+            //aspect();aspect()
+            if (document.getElementById('bm0')) ythtml5_size()
+            if ( (!document.getElementById("aspect")) && (document.getElementById('watch7-sidebar').currentStyle || window.getComputedStyle(document.getElementById('watch7-sidebar'))).marginLeft == '0px' ) {
+              document.getElementsByClassName('reset yt-uix-button-text')[0].click();ythtml5_size()
+            }
+          } else {
+              if (autoscale.offsetWidth != autoscale.width) { //alert('1 width:' + autoscale.width +" offsetWidth:"+ autoscale.offsetWidth +" thb:"+ document.getElementById("theater-background").offsetWidth ); 
               autoscale.width = autoscale.offsetWidth;
               //aspect();aspect()
               if (document.getElementById('bm0')) ythtml5_size()
-              document.getElementsByClassName('reset yt-uix-button-text')[0].click()
+                document.getElementsByClassName('reset yt-uix-button-text')[0].click()
+              }
             }
-          }
-      }
+        }
+    }
 
 if (document.getElementById("theater-background").offsetWidth != document.getElementById("theater-background").width) {
   document.getElementById("theater-background").width = document.getElementById("theater-background").offsetWidth
 }
 
     // Check to see if the location has changed.
-    if (strLocation != window.location.href){
+    if ((strLocation != window.location.href) || (!watch)) {
  
       // Store the new and previous locations.
       strPrevLocation = strLocation;
@@ -1098,18 +1101,20 @@ if (document.getElementById("theater-background").offsetWidth != document.getEle
       // change event on the location object,
       // passing in the current and previous
       // location values.
-      if ( (window.location.href.indexOf("Ypkv0HeUvTc") > -1 ) || (strPrevLocation.indexOf("aC4BC-Hxq9g") > -1 ) ) { location.href = window.location.href } else {
-        $( window.location ).trigger( "change",
-          deldiv(),
-          {
-            currentHref: strLocation,
-            currentHash: fnCleanHash( strHash ),
-            previousHref: strPrevLocation,
-            previousHash: fnCleanHash( strPrevHash )
-          }
-        );
-      }
- 
+      if ( (window.location.href.indexOf("Ypkv0HeUvTc") > -1 ) || (strPrevLocation.indexOf("aC4BC-Hxq9g") > -1 ) ) {
+        location.href = window.location.href
+      } else {
+          $( window.location ).trigger( "change",
+            {
+              currentHref: strLocation,
+              currentHash: fnCleanHash( strHash ),
+              previousHref: strPrevLocation,
+              previousHash: fnCleanHash( strPrevHash )
+            }
+          );
+         if (document.getElementById('snarls_player')) deldiv();
+        }
+
     }
   }//fnCheckLocation
  
@@ -1386,7 +1391,9 @@ if (parseInt(tiny.marginLeft.replace('px','')) > 100) {
 
 
   var z = gclass("html5-progress-bar")
-  if (z[0]) z[0].style.maxWidth = w
+  if ((z != null) && (z[0])) z[0].style.maxWidth = w
+  var z = document.getElementById('ytp-chrome-bottom')
+  if ((z != null) && (z[0])) { z[0].style.width = w; z[0].style.zIndex = '900px' }
   var z = gclass("mejs-layer");
   var i = 0;
   for(i=0;i<z.length-1;i++){
@@ -1492,7 +1499,7 @@ CtrlS(stage,v);
 
 function ythtml5_size() {
   if ( (typeof player().getPlayerState == 'function') && (flashvars == null) ) {
-    var x = 0
+    var x = 30
     var y = 15
     var bm = document.getElementById('bm0').style
     var yt = document.getElementsByClassName('html5-video-content')[0].style
@@ -1534,8 +1541,14 @@ function aspect() {
   var class_0 = document.getElementById('player').getAttribute('class')
   var class_1 = class_0.replace('small','small_a').replace('medium','medium_a').replace('large','large_a')
 
-  if (((document.getElementById('bm0').style.width != document.getElementById("placeholder-player").offsetWidth + 'px') ) ) {
-    var w = document.getElementById('placeholder-player').offsetWidth  + 'px'
+  if ( document.getElementById('placeholder-player').offsetWidth > parseInt(window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth) - getScrollbarWidth() ) {
+    var playerwidth = parseInt(window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth) - getScrollbarWidth() + 'px'
+  } else {
+      var playerwidth = document.getElementById('placeholder-player').offsetWidth + 'px'
+    }
+      
+  if (document.getElementById('bm0').style.width != playerwidth ) {
+    var w = playerwidth
     var h = Math.round((w.replace('px','') / aspect_ratio)) + 'px';
 
     var dw = document.getElementById('aspect')
@@ -1595,21 +1608,21 @@ function aspect() {
 
 function deldiv(){
   if (typeof ($) !== 'undefined') { $.removeData([webm, audio]); }
-  var z = document.getElementById('placeholder-player').firstChild; if (typeof z == 'object') { var x = z.style; if (typeof x == 'object') z.removeAttribute("style") }
+  var p = document.getElementById('placeholder-player'); if (p) { var p1 = p.firstChild; if (typeof p1 == 'object') { var x = p1.style; if (typeof x == 'object') p1.removeAttribute("style") } }
   var z = gclass("html5-progress-bar"); if (z[0]) { var x = z[0].style; if (x) z[0].removeAttribute("style") }
 
-  document.getElementById('watch7-sidebar').style.marginTop = '-400px';
+  var z = document.getElementById('watch7-sidebar'); if (z) z.style.marginTop = '-400px';
   var playlist = document.getElementById('watch-appbar-playlist')
   if (playlist) playlist.removeAttribute('style')
   var z = [ document.getElementById('bm0'),document.getElementById('player-api'),v ]
   //w_init h_init
   for(i=0;i<z.length;i++){
-   if (z[i]) { z[i].style.width = document.getElementById('placeholder-player').firstChild.offsetWidth; z[i].style.height = document.getElementById('placeholder-player').firstChild.offsetHeight; }
+   if ((z[i]) && (p) && (typeof p1 == 'object')) { z[i].style.width = p1.offsetWidth; z[i].style.height = p1.offsetHeight; }
   }
 
   //ythtml5_size()
 
-  document.getElementById('player-api').style.display = 'block';
+  var z = document.getElementById('player-api'); if (z) z.style.display = 'block';
   player().style.display = 'block';
 
   var z = [ 'remove','controls','aspect','bm1','bm3','bm0',"snarls_player" ]
@@ -1617,9 +1630,13 @@ function deldiv(){
     if (document.getElementById(z[i])) document.getElementById(z[i]).parentNode.removeChild(document.getElementById(z[i]))
   }
 
-  var z = [document.getElementById('masthead-positioner-height-offset'),document.getElementById('player-api'),document.getElementById('watch7-sidebar'),document.getElementById('theater-background'),document.getElementsByClassName('video-stream html5-main-video')[0] ]
+  var z = [document.getElementById('masthead-positioner-height-offset'),document.getElementById('player-api'),document.getElementById('watch7-sidebar'),document.getElementById('theater-background') ]
   for(i=0;i<z.length;i++){
-    if (typeof z[i] != 'undefined') z[i].removeAttribute('style')
+    if (z[i]) z[i].removeAttribute('style')
+  }
+  var z = document.getElementById('ytp-chrome-bottom');
+  if ((!z) && (typeof document.getElementsByClassName('video-stream html5-main-video')[0] != 'undefined')) {
+    document.getElementsByClassName('video-stream html5-main-video')[0].removeAttribute('style')
   }
 }
 
