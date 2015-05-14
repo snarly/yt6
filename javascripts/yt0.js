@@ -1744,7 +1744,8 @@ var controls = document.getElementById('controls');
 /* Find out which CSS transform the browser supports */
   for(i=0,j=properties.length;i<j;i++){
     if(typeof stage.style[properties[i]] !== 'undefined'){
-      prop = ctrl.prop = properties[i];
+      prop = properties[i];
+      ctrl.prop = prop;
       break;
     }
   }
