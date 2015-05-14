@@ -1854,32 +1854,7 @@ if (v != player()) {
 
 /* Reset all to default */
         case 'reset yt-uix-button-text':
-        //bestfit()
-                if (document.getElementById('a_width')) {
-          if ((document.getElementById('a_width').value / aspect_ratio) < (document.getElementById('a_height').value * aspect_ratio)) {
-            if ((document.getElementById('a_width').value / aspect_ratio) < fix_Width().replace('px','')) {
-              aspect2(document.getElementById('a_width').value,Math.round(document.getElementById('a_width').value / aspect_ratio));
-              document.getElementById('a_height').value = Math.round(document.getElementById('a_width').value / aspect_ratio)
-              document.getElementById('a_width').value = document.getElementById('a_width').value
-            } else {
-                aspect2(fix_Width().replace('px',''),Math.round(fix_Width().replace('px','') / aspect_ratio));
-                document.getElementById('a_height').value = Math.round(fix_Width().replace('px','') / aspect_ratio)
-                document.getElementById('a_width').value = fix_Width().replace('px','')
-              }
-          } else {
-              if ((document.getElementById('a_height').value * aspect_ratio) < fix_Height().replace('px','')) {
-                aspect2(Math.round(document.getElementById('a_height').value * aspect_ratio), document.getElementById('a_height').value);
-                document.getElementById('a_width').value = Math.round(document.getElementById('a_height').value * aspect_ratio)
-                document.getElementById('a_height').value = document.getElementById('a_height').value
-              } else {
-                  aspect2(Math.round(fix_Height().replace('px','') * aspect_ratio), fix_Height().replace('px',''));
-                  document.getElementById('a_width').value = Math.round(fix_Height().replace('px','') * aspect_ratio)
-                  document.getElementById('a_height').value = fix_Height().replace('px','')
-                }
-            }
-        } else {
-              aspect2(fix_Width().replace('px',''),fix_Height().replace('px',''));
-          }
+        bestfit()
         if (v != player()) {
           zoom = 1;
           rotate = 0;
@@ -1892,8 +1867,11 @@ if (v != player()) {
               v.style.left = 0 + 'px';
             }
           v.style[prop]='rotate('+rotate+'deg) scale('+zoom+')';
-        } else { var opacity = v.style.opacity; v.setAttribute("style","top:0px; left:0px; opacity:"+opacity); zoom = 1; rotate = 0; }
-    document.getElementById('player1').style.height = (v.style.height.replace('px','') - 30) + 'px';
+        } else {
+            var opacity = player().style.opacity;
+            player().setAttribute("style","top:0px; left:0px; opacity:"+opacity); zoom = 1; rotate = 0;
+          }
+        document.getElementById('player1').style.height = (v.style.height.replace('px','') - 30) + 'px';
         break;
       }        
       document.getElementById('placeholder-player').firstChild.style[prop] = v.style[prop]
