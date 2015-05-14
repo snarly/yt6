@@ -1088,20 +1088,14 @@ document.getElementById("theater-background").width = document.getElementById("t
               }
             }
         }
-        var z = document.getElementsByClassName('video-stream html5-main-video')[2];
-        if (z == undefined) { 
-          var z = document.getElementsByClassName('video-stream html5-main-video')[1];
-          if (z == undefined) { 
-            var z = document.getElementsByClassName('video-stream html5-main-video')[0];
-          }
-        }
-        if (z) {
-          if ((typeof player().getPlayerState == 'function') && (player().getAttribute('flashvars') == null)) {
-            var x = document.getElementById('controls').prop; alert(typeof x); if (x) x = x.toString(); alert(typeof x + x + z.style[x])
-            if (z.style[x] == 'none') {
-              z.style[x] = z.prop; 
+        if ((typeof player().getPlayerState == 'function') && (player().getAttribute('flashvars') == null)) {
+          var z = document.getElementsByClassName('video-stream html5-main-video');
+          if (typeof z[0] != 'undefined') {
+            var x = document.getElementById('controls').prop;
+            if (z[0].style[x] == 'none') {
+              z[0].style[x] = z[0].prop; alert(typeof z[0].prop + z[0].prop)
             } else {
-            	z.prop = z.style[x]; alert(typeof z.prop + z.prop)
+            	z[0].prop = z[0].style[x]; 
               }
           }
         } 
