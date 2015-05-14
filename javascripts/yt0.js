@@ -1093,8 +1093,8 @@ document.getElementById("theater-background").width = document.getElementById("t
           var z = document.getElementsByClassName('video-stream html5-main-video')[1];
           }
         if (z) {
-          alert(typeof document.getElementsByClassName('video-stream html5-main-video')[2] + z.style[ctrl.prop]); 
-          if (v == player()) { if (v.style[ctrl.prop] == 'none') { v.style[ctrl.prop] = z.style[ctrl.prop] }}
+          alert(typeof document.getElementsByClassName('video-stream html5-main-video')[2] + z.style[document.getElementById('controls').prop]); 
+          if (v == player()) { if (v.style[document.getElementById('controls').prop] == 'none') { v.style[document.getElementById('controls').prop] = z.style[document.getElementById('controls').prop] }}
         }   
     }
 
