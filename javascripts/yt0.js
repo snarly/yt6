@@ -1066,21 +1066,25 @@ document.getElementById("theater-background").width = document.getElementById("t
         autoscale.height = autoscale.offsetHeight;
         //aspect();aspect()
         if (document.getElementById('bm0')) ythtml5_size()
-        document.getElementsByClassName('reset yt-uix-button-text')[0].click()
+        //document.getElementsByClassName('reset yt-uix-button-text')[0].click()
+        bestfit()
       } else {
           if (autoscale.offsetHeight != autoscale.height) { //alert('2 ' + autoscale.height +" "+ autoscale.offsetHeight); 
             autoscale.height = autoscale.offsetHeight;
             //aspect();aspect()
             if (document.getElementById('bm0')) ythtml5_size()
             if ( (!document.getElementById("aspect")) && (document.getElementById('watch7-sidebar').currentStyle || window.getComputedStyle(document.getElementById('watch7-sidebar'))).marginLeft == '0px' ) {
-              document.getElementsByClassName('reset yt-uix-button-text')[0].click();ythtml5_size()
+              //document.getElementsByClassName('reset yt-uix-button-text')[0].click();
+              bestfit()
+              ythtml5_size()
             }
           } else {
               if (autoscale.offsetWidth != autoscale.width) { //alert('1 width:' + autoscale.width +" offsetWidth:"+ autoscale.offsetWidth +" thb:"+ document.getElementById("theater-background").offsetWidth ); 
-              autoscale.width = autoscale.offsetWidth;
-              //aspect();aspect()
-              if (document.getElementById('bm0')) ythtml5_size()
-                document.getElementsByClassName('reset yt-uix-button-text')[0].click()
+                autoscale.width = autoscale.offsetWidth;
+                //aspect();aspect()
+                if (document.getElementById('bm0')) ythtml5_size()
+                //document.getElementsByClassName('reset yt-uix-button-text')[0].click()
+                bestfit()
               }
             }
         }
@@ -1247,6 +1251,34 @@ function wide_view() {
   } else {
       return false
     }
+}
+
+function bestfit(){
+        if (document.getElementById('a_width')) {
+          if ((document.getElementById('a_width').value / aspect_ratio) < (document.getElementById('a_height').value * aspect_ratio)) {
+            if ((document.getElementById('a_width').value / aspect_ratio) < fix_Width().replace('px','')) {
+              aspect2(document.getElementById('a_width').value,Math.round(document.getElementById('a_width').value / aspect_ratio));
+              document.getElementById('a_height').value = Math.round(document.getElementById('a_width').value / aspect_ratio)
+              document.getElementById('a_width').value = document.getElementById('a_width').value
+            } else {
+                aspect2(fix_Width().replace('px',''),Math.round(fix_Width().replace('px','') / aspect_ratio));
+                document.getElementById('a_height').value = Math.round(fix_Width().replace('px','') / aspect_ratio)
+                document.getElementById('a_width').value = fix_Width().replace('px','')
+              }
+          } else {
+              if ((document.getElementById('a_height').value * aspect_ratio) < fix_Height().replace('px','')) {
+                aspect2(Math.round(document.getElementById('a_height').value * aspect_ratio), document.getElementById('a_height').value);
+                document.getElementById('a_width').value = Math.round(document.getElementById('a_height').value * aspect_ratio)
+                document.getElementById('a_height').value = document.getElementById('a_height').value
+              } else {
+                  aspect2(Math.round(fix_Height().replace('px','') * aspect_ratio), fix_Height().replace('px',''));
+                  document.getElementById('a_width').value = Math.round(fix_Height().replace('px','') * aspect_ratio)
+                  document.getElementById('a_height').value = fix_Height().replace('px','')
+                }
+            }
+        } else {
+              aspect2(fix_Width().replace('px',''),fix_Height().replace('px',''));
+          }
 }
 
 function resize_layers(w,h){
@@ -1808,33 +1840,7 @@ if (v != player()) {
 
 /* Reset all to default */
         case 'reset yt-uix-button-text':
-//function nop(){
-        if (document.getElementById('a_width')) {
-          if ((document.getElementById('a_width').value / aspect_ratio) < (document.getElementById('a_height').value * aspect_ratio)) {
-            if ((document.getElementById('a_width').value / aspect_ratio) < fix_Width().replace('px','')) {
-              aspect2(document.getElementById('a_width').value,Math.round(document.getElementById('a_width').value / aspect_ratio));
-              document.getElementById('a_height').value = Math.round(document.getElementById('a_width').value / aspect_ratio)
-              document.getElementById('a_width').value = document.getElementById('a_width').value
-            } else {
-                aspect2(fix_Width().replace('px',''),Math.round(fix_Width().replace('px','') / aspect_ratio));
-                document.getElementById('a_height').value = Math.round(fix_Width().replace('px','') / aspect_ratio)
-                document.getElementById('a_width').value = fix_Width().replace('px','')
-              }
-          } else {
-              if ((document.getElementById('a_height').value * aspect_ratio) < fix_Height().replace('px','')) {
-                aspect2(Math.round(document.getElementById('a_height').value * aspect_ratio), document.getElementById('a_height').value);
-                document.getElementById('a_width').value = Math.round(document.getElementById('a_height').value * aspect_ratio)
-                document.getElementById('a_height').value = document.getElementById('a_height').value
-              } else {
-                  aspect2(Math.round(fix_Height().replace('px','') * aspect_ratio), fix_Height().replace('px',''));
-                  document.getElementById('a_width').value = Math.round(fix_Height().replace('px','') * aspect_ratio)
-                  document.getElementById('a_height').value = fix_Height().replace('px','')
-                }
-            }
-        } else {
-              aspect2(fix_Width().replace('px',''),fix_Height().replace('px',''));
-          }
-//}//nop
+        bestfit()
         if (v != player()) {
           zoom = 1;
           rotate = 0;
