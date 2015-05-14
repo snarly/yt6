@@ -1098,10 +1098,10 @@ document.getElementById("theater-background").width = document.getElementById("t
         if (z) {
           if ((typeof player().getPlayerState == 'function') && (player().getAttribute('flashvars') == null)) {
             var x = document.getElementById('controls').prop
-            if (z.style[x] != 'none') {
-              z.prop = z.style[x]
+            if (z.style[x] == 'none') {
+              z.style[x] = z.prop; alert(z.prop)
             } else {
-            	z.style[x] = z.prop; alert(z.prop)
+            	z.prop = z.style[x]
               }
           }
         } 
@@ -1443,7 +1443,7 @@ if (parseInt(tiny.marginLeft.replace('px','')) > 100) {
 
   var z = gclass("html5-progress-bar")
   if ((z != null) && (z[0])) z[0].style.maxWidth = w
-  var z = document.getElementsByClassName('ytp-chrome-bottom')[0]
+  var z = document.getElementsByClassName('ytp-chrome-bottom')
   if ((z != null) && (z[0])) { z[0].style.width = w; z[0].style.zIndex = '900px' }
   var z = gclass("mejs-layer");
   var i = 0;
