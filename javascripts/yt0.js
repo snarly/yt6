@@ -1088,8 +1088,14 @@ document.getElementById("theater-background").width = document.getElementById("t
               }
             }
         }
-        alert(v.style[prop] + " rotate:" + rotate); 
-      if (v == player()) { if (v.style[prop]=='none') { v.style[prop]='rotate('+rotate+'deg) scale('+zoom+')' }}
+        var z = document.getElementsByClassName('video-stream html5-main-video')[2];
+        if (z == undefined) { 
+          var z = document.getElementsByClassName('video-stream html5-main-video')[1];
+          }
+        if (z) {
+          alert(typeof document.getElementsByClassName('video-stream html5-main-video')[2] + z.style[ctrl.prop]); 
+          if (v == player()) { if (v.style[ctrl.prop] == 'none') { v.style[ctrl.prop] = z.style[ctrl.prop] }}
+        }   
     }
 
 if (document.getElementById("theater-background").offsetWidth != document.getElementById("theater-background").width) {
@@ -1730,7 +1736,7 @@ var controls = document.getElementById('controls');
 /* Array of possible browser specific settings for transformation */
   var properties = ['transform', 'WebkitTransform', 'MozTransform',
                     'msTransform', 'OTransform'],
-      prop = properties[0];
+      prop = properties[0] = ctrl.prop;
 
 /* Iterators and stuff */    
   var i,j,t;
