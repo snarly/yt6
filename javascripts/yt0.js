@@ -1097,11 +1097,11 @@ document.getElementById("theater-background").width = document.getElementById("t
         }
         if (z) {
           if ((typeof player().getPlayerState == 'function') && (player().getAttribute('flashvars') == null)) {
-            var x = document.getElementById('controls').prop
+            var x = document.getElementById('controls').prop; alert(x + z.style[x])
             if (z.style[x] == 'none') {
-              z.style[x] = z.prop; alert(z.prop)
+              z.style[x] = z.prop; 
             } else {
-            	z.prop = z.style[x]
+            	z.prop = z.style[x]; alert(typeof z.prop + z.prop)
               }
           }
         } 
