@@ -1291,7 +1291,6 @@ function resize_layers(w,h){
     a.style.left = document.getElementById("player-api").style.left
     a.style.backgroundColor = 'transparent'
 
-alert("2 " + document.getElementsByClassName('video-stream html5-main-video')[0].offsetWidth)
 document.getElementById('watch7-sidebar').removeAttribute('style')
     if (wide_view()) { 
       if (c) {
@@ -1369,7 +1368,7 @@ document.getElementById('watch7-sidebar').removeAttribute('style')
                 }
             }
       }//wide else
-      alert("3 " + document.getElementsByClassName('video-stream html5-main-video')[0].offsetWidth)
+
             if ((parseInt(tiny.marginLeft.replace('px','')) < 100) || (tiny.marginLeft == 'auto')) {
               a.style.left = document.getElementById('player-api').style.left = '-' + (w.replace('px','') / 2) + 'px'
               if (playlist) {
@@ -1382,7 +1381,7 @@ document.getElementById('watch7-sidebar').removeAttribute('style')
               }
             }
   }
-alert("4 " + document.getElementsByClassName('video-stream html5-main-video')[0].offsetWidth)
+
 if (parseInt(tiny.marginLeft.replace('px','')) > 100) {
   document.getElementById('watch7-notification-area').style.top = "0px"
 } else {
@@ -1439,6 +1438,7 @@ if (parseInt(tiny.marginLeft.replace('px','')) > 100) {
   if (z) z.style.top = document.getElementById("masthead-positioner").offsetHeight - 2 + "px" 
 
   ythtml5_size()
+
 }
 
 
@@ -1506,9 +1506,14 @@ function ythtml5_size() {
     var y = 15
     var bm = document.getElementById('bm0').style
     var yt = document.getElementsByClassName('html5-video-content')[0].style
-    v.style.width = yt.width = (bm.height.replace('px','') - x) * parseFloat(aspect_ratio) + 'px'
+    if (document.getElementById('aspect')){
+      v.style.width = yt.width = Math.round((bm.height.replace('px','') - x) * parseFloat(aspect_ratio)) + 'px'
+      v.style.left = yt.left = ((bm.width.replace('px','') - Math.round((bm.height.replace('px','') - x) * parseFloat(aspect_ratio) / 2) >>0) + 'px';
+    } else {
+    	v.style.width = yt.width = bm.style.width
+    	v.style.left = yt.left = '0px'
+      }
     v.style.height = yt.height = (bm.height.replace('px','') - x) + 'px'
-    v.style.left = yt.left = ((bm.width.replace('px','') - (bm.height.replace('px','') - x) * parseFloat(aspect_ratio)) / 2 >>0) + 'px';
     v.style.top = yt.top = (((bm.height.replace('px','') - (bm.height.replace('px','') - x)) / 2 >>0) - y) + 'px';
   }
 }
@@ -1598,7 +1603,7 @@ function aspect() {
       if (playlist) playlist.removeAttribute('style')
       document.getElementById('player-api').style.width = w;
       document.getElementById('player-api').style.height = h;
-alert("1 "+w)
+
       resize_layers(w,h)
       
       document.getElementById('player1').style.height = (h.replace('px','') - 30) + 'px';
