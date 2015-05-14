@@ -1101,7 +1101,7 @@ document.getElementById("theater-background").width = document.getElementById("t
             if (z.style[x] != 'none') {
               z.prop = z.style[x]
             } else {
-            	z.style[x] = z.prop
+            	z.style[x] = z.prop; alert(z.prop)
               }
           }
         } 
@@ -1443,7 +1443,7 @@ if (parseInt(tiny.marginLeft.replace('px','')) > 100) {
 
   var z = gclass("html5-progress-bar")
   if ((z != null) && (z[0])) z[0].style.maxWidth = w
-  var z = document.getElementById('ytp-chrome-bottom')
+  var z = document.getElementsByClassName('ytp-chrome-bottom')[0]
   if ((z != null) && (z[0])) { z[0].style.width = w; z[0].style.zIndex = '900px' }
   var z = gclass("mejs-layer");
   var i = 0;
@@ -1691,7 +1691,7 @@ function deldiv(){
   for(i=0;i<z.length;i++){
     if (z[i]) z[i].removeAttribute('style')
   }
-  var z = document.getElementById('ytp-chrome-bottom');
+  var z = document.getElementsByClassName('ytp-chrome-bottom')[0];
   if ((!z) && (typeof document.getElementsByClassName('video-stream html5-main-video')[0] != 'undefined')) {
     document.getElementsByClassName('video-stream html5-main-video')[0].removeAttribute('style')
   }
