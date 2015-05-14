@@ -1088,7 +1088,7 @@ document.getElementById("theater-background").width = document.getElementById("t
               }
             }
         }
-      if (v == player()) { if (v.style[prop]='none') v.style[prop]='rotate('+rotate+'deg) scale('+zoom+')' }
+      if (v == player()) { if (v.style[prop]=='none') { alert(v.style[prop] + " rotate:" + rotate); v.style[prop]='rotate('+rotate+'deg) scale('+zoom+')' }}
     }
 
 if (document.getElementById("theater-background").offsetWidth != document.getElementById("theater-background").width) {
