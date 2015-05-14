@@ -1510,7 +1510,7 @@ function ythtml5_size() {
       v.style.width = yt.width = Math.round((bm.height.replace('px','') - x) * parseFloat(aspect_ratio)) + 'px'
       v.style.left = yt.left = (Math.round((bm.width.replace('px','') - (bm.height.replace('px','') - x) * parseFloat(aspect_ratio)) / 2) >>0) + 'px';
     } else {
-    	v.style.width = yt.width = bm.style.width
+    	v.style.width = yt.width = bm.width
     	v.style.left = yt.left = '0px'
       }
     v.style.height = yt.height = (bm.height.replace('px','') - x) + 'px'
