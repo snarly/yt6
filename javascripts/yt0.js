@@ -1092,13 +1092,16 @@ document.getElementById("theater-background").width = document.getElementById("t
           var z = document.getElementsByClassName('video-stream html5-main-video');
           if (typeof z[0] != 'undefined') {
             var x = document.getElementById('controls').prop;
-            if (z[0].style[x] == 'none') {
-              z[0].style[x] = z[0].prop; alert(typeof z[0].prop + z[0].prop)
+            if (z[0].style[x] != 'none') {
+              z[0].prop = z[0].style[x]; 
             } else {
-            	z[0].prop = z[0].style[x]; 
+            	if (typeof z[0].prop != 'undefined') { 
+            	  z[0].style[x] = z[0].prop;
+            	  //alert(typeof z[0].prop + z[0].prop)
+                }
               }
-          }
-        } 
+          } 
+        }
     }
 
 if (document.getElementById("theater-background").offsetWidth != document.getElementById("theater-background").width) {
