@@ -1854,7 +1854,32 @@ if (v != player()) {
 
 /* Reset all to default */
         case 'reset yt-uix-button-text':
-        bestfit()
+        //bestfit()
+                if (document.getElementById('a_width')) {
+          if ((document.getElementById('a_width').value / aspect_ratio) < (document.getElementById('a_height').value * aspect_ratio)) {
+            if ((document.getElementById('a_width').value / aspect_ratio) < fix_Width().replace('px','')) {
+              aspect2(document.getElementById('a_width').value,Math.round(document.getElementById('a_width').value / aspect_ratio));
+              document.getElementById('a_height').value = Math.round(document.getElementById('a_width').value / aspect_ratio)
+              document.getElementById('a_width').value = document.getElementById('a_width').value
+            } else {
+                aspect2(fix_Width().replace('px',''),Math.round(fix_Width().replace('px','') / aspect_ratio));
+                document.getElementById('a_height').value = Math.round(fix_Width().replace('px','') / aspect_ratio)
+                document.getElementById('a_width').value = fix_Width().replace('px','')
+              }
+          } else {
+              if ((document.getElementById('a_height').value * aspect_ratio) < fix_Height().replace('px','')) {
+                aspect2(Math.round(document.getElementById('a_height').value * aspect_ratio), document.getElementById('a_height').value);
+                document.getElementById('a_width').value = Math.round(document.getElementById('a_height').value * aspect_ratio)
+                document.getElementById('a_height').value = document.getElementById('a_height').value
+              } else {
+                  aspect2(Math.round(fix_Height().replace('px','') * aspect_ratio), fix_Height().replace('px',''));
+                  document.getElementById('a_width').value = Math.round(fix_Height().replace('px','') * aspect_ratio)
+                  document.getElementById('a_height').value = fix_Height().replace('px','')
+                }
+            }
+        } else {
+              aspect2(fix_Width().replace('px',''),fix_Height().replace('px',''));
+          }
         if (v != player()) {
           zoom = 1;
           rotate = 0;
