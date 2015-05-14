@@ -1095,8 +1095,7 @@ document.getElementById("theater-background").width = document.getElementById("t
         if (z) {
           if ((typeof player().getPlayerState == 'function') && (player().getAttribute('flashvars') == null)) {
             var x = document.getElementById('controls').prop
-            alert(typeof x + " " + x);
-            if (document.getElementsByClassName('video-stream html5-main-video')[0].style[x] == 'none') {
+            if (document.getElementsByClassName('video-stream html5-main-video')[0].style[x] == 'none') {alert()
               document.getElementsByClassName('video-stream html5-main-video')[0].style[x] = z.style[x]
             }
           }
