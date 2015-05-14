@@ -1093,9 +1093,14 @@ document.getElementById("theater-background").width = document.getElementById("t
           var z = document.getElementsByClassName('video-stream html5-main-video')[1];
           }
         if (z) {
-          if (v == player()) { var x = document.getElementById('controls').prop
-          alert(typeof x + " " + x); if (v.style[x] == 'none') { v.style[x] = z.style[x] }}
-        }   
+          if ((typeof player().getPlayerState == 'function') && (player().getAttribute('flashvars') == null)) {
+            var x = document.getElementById('controls').prop
+            alert(typeof x + " " + x);
+            if (document.getElementsByClassName('video-stream html5-main-video')[0].style[x] == 'none') {
+              document.getElementsByClassName('video-stream html5-main-video')[0].style[x] = z.style[x]
+            }
+          }
+        } 
     }
 
 if (document.getElementById("theater-background").offsetWidth != document.getElementById("theater-background").width) {
