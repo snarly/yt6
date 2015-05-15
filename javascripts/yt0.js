@@ -426,6 +426,35 @@ if (typeof window.DOMParser != "undefined") {
 }
 
 
+function ytsubtitle2srt(d,track_srclang,mejs_language_code){
+  var tts = parseXml(d);
+  var text = tts.getElementsByTagName("text");
+  var srt = "";
+  var nl = String.fromCharCode(13) + String.fromCharCode(10);
+
+  for (i=0;i<text.length;i++) {
+    var start = text[i].getAttribute('start');
+    if (!start) var start = "99:00:00.000";
+    var dur = text[i].getAttribute('dur');
+    if (!dur) { var dur = "00:00:00.000" } else { var dur = parseFloat(start) + parseFloat(dur); var dur = dur.toString(); var dur = dur.toHHMMSS() };
+    if (start) { var start = start.toHHMMSS() };
+    var j = i + 1
+    //var txt = text[i].textContent.replace("&#39;", "'");
+    var txt = text[i].textContent
+    var txt = txt.split("&#39;").join("'").split("& # 39;").join("'").split("& # 39").join("'").split("&quot;").join("\"").split("& quot;").join("\"").split("& Quot;").join("\"").split("& Quot").join("\"").split("& quot").join("\"").split("Quot;").join("\"").split("Quot ;").join("\"").split("Quot.;").join(". \"").split("Quot!;").join("! \"").split("Quot?;").join("? \"").split("# 39;").join("'").split("＆QUOT;").join("\"").split("＆QUOT").join("\"").split("QUOT＆ ;").join("\"").split("QUOT＆").join("\"").split("＆＃39;").join("'").split("& amp;").join("&");
+    srt += j + nl + start + ' --> ' + dur + nl + txt + nl + nl;
+  }
+  d = srt;
+  var uriContent = "data:text/plain;charset=utf-8," + encodeURIComponent(srt);
+
+  document.getElementById("bm3").innerHTML = document.getElementById("bm3").innerHTML +
+      '<a href="' + uriContent +'" download="' + unescape(fn) + '_' + track_srclang + '.srt">SRT '+mejs_language_code+'</a><br>'
+  ;
+return d
+}
+
+
+
 var aac = unescape(args.dashmpd)
 var z = aac.split('/')
 var sig = null;
@@ -994,6 +1023,8 @@ var Seek = null;\
 if ((StartPlay) ) {\
 if (document.getElementsByClassName('mejs-duration')[0]) { var x = href.split('dur=')[1].split('&')[0].toHHMMSS();\
 if (x.substring(0,2) == '00') { var x = x.substring(3,x.length - 4) }; document.getElementsByClassName('mejs-duration')[0].innerHTML = x.split('.')[0]  }\
+if (document.getElementsByClassName('mejs-offscreen')[0]) document.getElementsByClassName('mejs-offscreen')[0].style.display = 'none';\
+if (document.getElementsByClassName('mejs-time-buffering')[0]) document.getElementsByClassName('mejs-time-buffering')[0].setAttribute('class','mejs-time-bufferin');\
 if ( (typeof player().getPlayerState == 'function') && ((player.loadVideoByFlashvars) || (player.cueVideoByFlashvars) || (player.getPlayerState != -1)) ) { document.getElementById('bm0').style.visibility = 'hidden'; if (typeof srcto != 'undefined') { player().pauseVideo() } } else {\
 var z = document.getElementsByClassName('mejs-clear')[0];\
    if ( z !== null) {\
@@ -1027,7 +1058,12 @@ loadScript( protocol + "//cdn.rawgit.com/snarly/yt6/49c8440ad31e83bf6d9f0951a830
 loadScript( protocol + "//cdn.rawgit.com/snarly/yt6/1b69efe5d367952c307eaf7ca70ca1074ddd1c1a/mep-feature-sourcechooser.js",jq2)
 };
 //loadScript("https://raw.githubusercontent.com/snarly/yt6/master/mediaelement-and-player.js", jq1)
-loadScript( protocol + "//cdn.rawgit.com/snarly/yt6/1a2653c6f02a907c52e6a9a9d6f071e05926d95b/mediaelement-and-player.js",jq1)
+
+//
+//loadScript( protocol + "//cdn.rawgit.com/snarly/yt6/1a2653c6f02a907c52e6a9a9d6f071e05926d95b/mediaelement-and-player.js",jq1)
+//
+loadScript( protocol + "//localhost/svn/mep-ceeb1a7.js", jq1)
+
 //loadScript( protocol + "//cdn.rawgit.com/snarly/yt6/96caae2d5b49efe934ef93ac11cc4a5a37edd249/mediaelement-and-player.js",jq1)
 //loadScript( protocol + "//cdn.rawgit.com/snarly/yt6/420ce361110fac238345befe87510645e475c8df/mediaelement-and-player.js",jq1)
 
