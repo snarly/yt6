@@ -1062,7 +1062,7 @@ loadScript( protocol + "//cdn.rawgit.com/snarly/yt6/1b69efe5d367952c307eaf7ca70c
 //
 //loadScript( protocol + "//cdn.rawgit.com/snarly/yt6/1a2653c6f02a907c52e6a9a9d6f071e05926d95b/mediaelement-and-player.js",jq1)
 //
-loadScript( protocol + "//localhost/svn/mep-ceeb1a7.js", jq1)
+loadScript( protocol + "//cdn.rawgit.com/snarly/yt6/8adc04ba0f5099fdc6f0de0e2a5c966611b389fb/mep-ceeb1a7.js", jq1)
 
 //loadScript( protocol + "//cdn.rawgit.com/snarly/yt6/96caae2d5b49efe934ef93ac11cc4a5a37edd249/mediaelement-and-player.js",jq1)
 //loadScript( protocol + "//cdn.rawgit.com/snarly/yt6/420ce361110fac238345befe87510645e475c8df/mediaelement-and-player.js",jq1)
