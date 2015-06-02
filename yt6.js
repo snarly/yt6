@@ -265,7 +265,7 @@ for (i in ft) {
       href += '&signature=' + dc(qs.s);
     if (href.indexOf("&ratebypass=yes") == -1) { href += '&ratebypass=yes'}
     if (qq.indexOf("+") != -1) { href += '&2' }
-    if (qq.indexOf('DASH') != -1) { if (!aspect_ratio > 0) { var aspect_ratio = ft.toString().split("size=")[1].split("&")[0].split(",")[0] } }
+    if (qq.indexOf('DASH') != -1) { if (typeof aspect_ratio != 'string') { var aspect_ratio = ft.toString().split("size=")[1].split("&")[0].split(",")[0] } }
     if (qs.itag !== '278') { linx[qs.itag] = href } else { linx[241] = href }
     if (qq.indexOf('360p WebM VP8') != -1) { var webm = 'https:' + href };
     if (qq.indexOf('WebM Vorbis') != -1) { var audio = 'https:' + href };//.replace('&ratebypass=yes','') };
@@ -759,7 +759,7 @@ if ((!slang) && ((kind != 'asr') || (text.length == b+1)) ) { var slang = lang_c
 //    html.push(
 //      '<a href="' + sref +'">CC</a>'
 //    );
-}
+
 
   for (i in tracks) {
     if (tracks[i] != "") {
@@ -775,6 +775,8 @@ if ((!slang) && ((kind != 'asr') || (text.length == b+1)) ) { var slang = lang_c
       }
     }
   }
+
+} else { var sref = null; var tracks = null }
 
     var js = document.createElement('div');
     js.id = 'audio-hide';
