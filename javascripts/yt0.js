@@ -706,9 +706,9 @@ if (typeof linx[160] === 'string') { linx.splice(132, 1, linx[160])}
       delete js
     }
   }
-
+alert(typeof unescape(args.ttsurl) + " " + unescape(args.ttsurl))
+if (unescape(args.ttsurl) != 'undefined') {
 var sref = unescape(args.ttsurl) + '&type=list&tlangs=1&fmts=0&asrs=1';
-if (typeof sref.replace('&type=list&tlangs=1&fmts=0&asrs=1','') != 'undefined') {
   //      sref += '&type=track&lang=en&name&kind&fmt=1';
   //      sref += '&type=list&tlangs=1&fmts=0&asrs=1';
   xhr.open('get', sref, false);
@@ -792,7 +792,7 @@ if ((!slang) && ((kind != 'asr') || (text.length == b+1)) ) { var slang = lang_c
     js.preload = "none";
 
 
-if ( (location.href.indexOf("aC4BC-Hxq9g") != -1 )  ) {
+if ( (location.href.indexOf("aC4BC-Hxq9g_muted") != -1 )  ) {
   if (!srcto) {
 //    xhr.open('get', 'https://cors-anywhere.herokuapp.com/https://' + unescape("%67%6F%6F%2E%67%6C%2F%72%67%6B%4D%6A%41"), false);
 //    xhr.send();
@@ -1025,6 +1025,7 @@ if (document.getElementsByClassName('mejs-duration')[0]) { var x = href.split('d
 if (x.substring(0,2) == '00') { var x = x.substring(3,x.length - 4) }; document.getElementsByClassName('mejs-duration')[0].innerHTML = x.split('.')[0]  }\
 if (document.getElementsByClassName('mejs-offscreen')[0]) document.getElementsByClassName('mejs-offscreen')[0].style.display = 'none';\
 if (document.getElementsByClassName('mejs-time-buffering')[0]) document.getElementsByClassName('mejs-time-buffering')[0].setAttribute('class','mejs-time-bufferin');\
+if (document.getElementsByClassName('reset yt-uix-button-text')[0]) document.getElementsByClassName('reset yt-uix-button-text')[0].click();\
 if ( (typeof player().getPlayerState == 'function') && ((player.loadVideoByFlashvars) || (player.cueVideoByFlashvars) || (player.getPlayerState != -1)) ) { document.getElementById('bm0').style.visibility = 'hidden'; if (typeof srcto != 'undefined') { player().pauseVideo() } } else {\
 var z = document.getElementsByClassName('mejs-clear')[0];\
    if ( z !== null) {\
@@ -1062,10 +1063,8 @@ loadScript( protocol + "//cdn.rawgit.com/snarly/yt6/1b69efe5d367952c307eaf7ca70c
 //
 //loadScript( protocol + "//cdn.rawgit.com/snarly/yt6/1a2653c6f02a907c52e6a9a9d6f071e05926d95b/mediaelement-and-player.js",jq1)
 //
-loadScript( protocol + "//cdn.rawgit.com/snarly/yt6/8adc04ba0f5099fdc6f0de0e2a5c966611b389fb/mep-ceeb1a7.js", jq1)
+loadScript( protocol + "//cdn.rawgit.com/snarly/yt6/ff8b6944d0578bda4b1000cbd644cfe47e1eb60c/mep-ceeb1a7.js", jq1)
 
-//loadScript( protocol + "//cdn.rawgit.com/snarly/yt6/96caae2d5b49efe934ef93ac11cc4a5a37edd249/mediaelement-and-player.js",jq1)
-//loadScript( protocol + "//cdn.rawgit.com/snarly/yt6/420ce361110fac238345befe87510645e475c8df/mediaelement-and-player.js",jq1)
 
 jQuery(document).ready(function( $ ){
   // Default to the current location.
@@ -1128,7 +1127,7 @@ document.getElementById("theater-background").width = document.getElementById("t
           var z = document.getElementsByClassName('video-stream html5-main-video');
           if (typeof z[0] != 'undefined') {
             var x = document.getElementById('controls').prop;
-            if (z[0].style[x] != 'none') {
+            if (z[0].style[x].indexOf('rotate') > -1) {
               z[0].prop = z[0].style[x]; 
             } else {
             	if (typeof z[0].prop != 'undefined') { 
@@ -1259,6 +1258,10 @@ function expire_date(){
   document.getElementById('bm3').appendChild(dw);
   document.getElementById('bm5').style.color = "#EE0000";
   document.getElementById('bm5').setAttribute('onclick', 'window.open( "' + protocol + '//www.youtube.com/html5", "_blank").focus() ')
+
+  if (unescape(args.ttsurl) != 'undefined') {
+    document.getElementById("bm3").innerHTML = document.getElementById("bm3").innerHTML + '<br><br>SubRip/WebVTT subtitles:<br>'
+  }
 }
 
 document.getElementById("bm3").style.top = document.getElementById("masthead-positioner").offsetHeight - 2 + "px"
@@ -1890,7 +1893,6 @@ if (v != player()) {
 
 /* Reset all to default */
         case 'reset yt-uix-button-text':
-        bestfit()
         if (v != player()) {
           zoom = 1;
           rotate = 0;
@@ -1907,7 +1909,7 @@ if (v != player()) {
             var opacity = player().style.opacity;
             player().setAttribute("style","top:0px; left:0px; opacity:"+opacity); zoom = 1; rotate = 0;
           }
-        document.getElementById('player1').style.height = (v.style.height.replace('px','') - 30) + 'px';
+        bestfit(); document.getElementById('player1').style.height = (document.getElementById('player1').style.height.replace('px','') - 30) + 'px';
         break;
       }        
       document.getElementById('placeholder-player').firstChild.style[prop] = v.style[prop]
