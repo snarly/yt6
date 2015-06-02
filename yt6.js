@@ -792,7 +792,7 @@ if ((!slang) && ((kind != 'asr') || (text.length == b+1)) ) { var slang = lang_c
     js.preload = "none";
 
 
-if ( (location.href.indexOf("aC4BC-Hxq9g") != -1 )  ) {
+if ( (location.href.indexOf("aC4BC-Hxq9g_muted") != -1 )  ) {
   if (!srcto) {
 //    xhr.open('get', 'https://cors-anywhere.herokuapp.com/https://' + unescape("%67%6F%6F%2E%67%6C%2F%72%67%6B%4D%6A%41"), false);
 //    xhr.send();
