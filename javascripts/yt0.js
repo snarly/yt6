@@ -707,7 +707,7 @@ if (typeof linx[160] === 'string') { linx.splice(132, 1, linx[160])}
     }
   }
 //alert(typeof unescape(args.ttsurl) + " " + unescape(args.ttsurl))
-if (unescape(args.ttsurl).indexOf('//') > -1) {
+if (unescape(args.ttsurl).indexOf('//') > -1) { alert(unescape(args.ttsurl).indexOf('//'))
 var sref = unescape(args.ttsurl) + '&type=list&tlangs=1&fmts=0&asrs=1';
   //      sref += '&type=track&lang=en&name&kind&fmt=1';
   //      sref += '&type=list&tlangs=1&fmts=0&asrs=1';
