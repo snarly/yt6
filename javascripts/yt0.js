@@ -1673,7 +1673,7 @@ function aspect() {
 
     resize_layers(w,h)
     
-    document.getElementById('player1').style.height = (h.replace('px','') - 30) + 'px';
+    //document.getElementById('player1').style.height = (h.replace('px','') - 30) + 'px';
     document.getElementById('player1').style.width = w
     document.getElementById('player').setAttribute('class',class_1)
     document.getElementById('player').setAttribute('class',class_0.replace('small_a','small').replace('medium_a','medium').replace('large_A','large'))
