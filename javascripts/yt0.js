@@ -1477,11 +1477,10 @@ if (parseInt(tiny.marginLeft.replace('px','')) > 100) {
   }
 
 
-
   var z = gclass("html5-progress-bar")
   if ((z != null) && (z[0])) z[0].style.maxWidth = w
   var z = document.getElementsByClassName('ytp-chrome-bottom')[0]
-  if (z) { alert(z.style); z.style.width = w; z.style.left='0px'; z.style.zIndex = '900px' }
+  if (z) { z.style.width = w; z.style.left = '0px'; z.style.zIndex = '900' }
   var z = gclass("mejs-layer");
   var i = 0;
   for(i=0;i<z.length-1;i++){
