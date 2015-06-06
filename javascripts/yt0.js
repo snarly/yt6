@@ -1587,8 +1587,8 @@ CtrlS(stage,v);
 
 function ythtml5_size() {
   if ( (typeof player().getPlayerState == 'function') && (flashvars == null) ) {
-    var x = 30
-    var y = 15
+    var x = 0
+    var y = 0
     var bm = document.getElementById('bm0').style
     var yt = document.getElementsByClassName('html5-video-content')[0].style
     if (document.getElementById('aspect')){
@@ -1691,7 +1691,7 @@ function aspect() {
 
       resize_layers(w,h)
       
-      document.getElementById('player1').style.height = (h.replace('px','') - 30) + 'px';
+      //document.getElementById('player1').style.height = (h.replace('px','') - 30) + 'px';
       document.getElementById('player1').style.width = w
       document.getElementById('player').setAttribute('class',class_0.replace('small_a','small').replace('medium_a','medium').replace('large_A','large'))
     }
@@ -1910,7 +1910,7 @@ if (v != player()) {
             var opacity = player().style.opacity;
             player().setAttribute("style","top:0px; left:0px; opacity:"+opacity); zoom = 1; rotate = 0;
           }
-        bestfit(); document.getElementById('player1').style.height = (document.getElementById('player1').style.height.replace('px','') - 30) + 'px';
+        bestfit(); //document.getElementById('player1').style.height = (document.getElementById('player1').style.height.replace('px','') - 30) + 'px';
         break;
       }        
       document.getElementById('placeholder-player').firstChild.style[prop] = v.style[prop]
