@@ -546,10 +546,10 @@ var windowheight = parseInt(window.innerHeight || document.documentElement.clien
 var windowwidth = parseInt(window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth);
 var x = document.getElementById('placeholder-player').offsetWidth + getScrollbarWidth()
 if ((windowwidth > 1933) && (windowheight > 940)){
-  var h_base = '734px';
+  var h_base = '704px';
 } else {
     if ((windowwidth > 1293) && (windowheight > 629)){
-      if (document.getElementById('player').getAttribute("class").indexOf("small") > -1) { var h_base = '510px'; } else { var h_base = '360px' }
+      if (document.getElementById('player').getAttribute("class").indexOf("small") > -1) { var h_base = '480px'; } else { var h_base = '360px' }
     } else {
         if (x > 640){
           var h_base = '360px';
