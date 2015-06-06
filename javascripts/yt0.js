@@ -265,7 +265,7 @@ for (i in ft) {
       href += '&signature=' + dc(qs.s);
     if (href.indexOf("&ratebypass=yes") == -1) { href += '&ratebypass=yes'}
     if (qq.indexOf("+") != -1) { href += '&2' }
-    if (qq.indexOf('DASH') != -1) { if (!aspect_ratio > 0) { var aspect_ratio = ft.toString().split("size=")[1].split("&")[0].split(",")[0] } }
+    if (qq.indexOf('DASH') != -1) { if (typeof aspect_ratio != 'string') { var aspect_ratio = ft.toString().split("size=")[1].split("&")[0].split(",")[0] } }
     if (qs.itag !== '278') { linx[qs.itag] = href } else { linx[241] = href }
     if (qq.indexOf('360p WebM VP8') != -1) { var webm = 'https:' + href };
     if (qq.indexOf('WebM Vorbis') != -1) { var audio = 'https:' + href };//.replace('&ratebypass=yes','') };
@@ -706,8 +706,8 @@ if (typeof linx[160] === 'string') { linx.splice(132, 1, linx[160])}
       delete js
     }
   }
-//alert(typeof unescape(args.ttsurl) + " " + unescape(args.ttsurl))
-if (unescape(args.ttsurl).indexOf('//') > -1) { alert(unescape(args.ttsurl).indexOf('//'))
+
+if (unescape(args.ttsurl) != 'undefined') {
 var sref = unescape(args.ttsurl) + '&type=list&tlangs=1&fmts=0&asrs=1';
   //      sref += '&type=track&lang=en&name&kind&fmt=1';
   //      sref += '&type=list&tlangs=1&fmts=0&asrs=1';
@@ -759,7 +759,7 @@ if ((!slang) && ((kind != 'asr') || (text.length == b+1)) ) { var slang = lang_c
 //    html.push(
 //      '<a href="' + sref +'">CC</a>'
 //    );
-}
+
 
   for (i in tracks) {
     if (tracks[i] != "") {
@@ -775,6 +775,8 @@ if ((!slang) && ((kind != 'asr') || (text.length == b+1)) ) { var slang = lang_c
       }
     }
   }
+
+} else { var sref = null; var tracks = null }
 
     var js = document.createElement('div');
     js.id = 'audio-hide';
@@ -1479,7 +1481,7 @@ if (parseInt(tiny.marginLeft.replace('px','')) > 100) {
   var z = gclass("html5-progress-bar")
   if ((z != null) && (z[0])) z[0].style.maxWidth = w
   var z = document.getElementsByClassName('ytp-chrome-bottom')[0]
-  if (z) { z.style.width = w; z.style.left='0px'; z.style.zIndex = '900px' }
+  if (z) { alert(z.style); z.style.width = w; z.style.left='0px'; z.style.zIndex = '900px' }
   var z = gclass("mejs-layer");
   var i = 0;
   for(i=0;i<z.length-1;i++){
