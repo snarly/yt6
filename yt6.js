@@ -783,13 +783,13 @@ function mep_run(){
   if (typeof poster == 'undefined') {
       var poster = protocol + '//i1.ytimg.com/vi/' + args.video_id + '/0.jpg'
     }
-
+                var Srcto;
                 var href = document.getElementById('snarls_player').href;
                 var Audio = document.getElementById("snarls_player").audio;
                 var A = document.getElementById('snarls_player').A;
                 var V = document.getElementById('snarls_player').V;
                 var AV = document.getElementById('snarls_player').AV;
-                var Seek = document.getElementById('snarls_player').Seek = null; var Srcto
+                var Seek = document.getElementById('snarls_player').Seek = null;
                 var player1 = new MediaElementPlayer('#player1',{
 		enableAutosize: false,
 poster,
