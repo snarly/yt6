@@ -792,7 +792,6 @@ function mep_run(){
                 var Seek = document.getElementById('snarls_player').Seek = null;
                 var player1 = new MediaElementPlayer('#player1',{
 		enableAutosize: false,
-poster,
 		videoWidth: document.getElementById('snarls_player').w.replace('px',''), videoHeight: document.getElementById('snarls_player').h.replace('px',''),
 		features: ['playpause','loop','current','progress','duration','tracks','playlist','speed','sourcechooser','volume','fullscreen'],
 		autoRewind: false,
