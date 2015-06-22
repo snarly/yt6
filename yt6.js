@@ -178,15 +178,14 @@ function player() { return document.getElementById("movie_player") };
 
           var Sync = function(newState) {
             if (typeof player().getPlayerState == 'function') {
-              if (player().getAttribute('flashvars') != null) {
-                var stage = player(); var v = player();
-              } else {
-                  var stage = document.getElementsByClassName('html5-video-content')[0];
-                }
-            } else {
+              if (player().getAttribute('flashvars') == null) {
                 var stage = document.getElementsByClassName('html5-video-content')[0];
                 var v = document.getElementsByClassName('video-stream html5-main-video')[0];
-              }
+              } else {
+                  var stage = player();
+                  var v = player();  
+                }
+            }
             var AV = document.getElementById("snarls_player").AV
             var A = document.getElementById("snarls_player").A
             var V = document.getElementById("snarls_player").V
