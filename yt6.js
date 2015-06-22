@@ -1412,7 +1412,7 @@ if (typeof fnCheckLocation != 'number') {
 //alert(); 
 
 //          var z = document.getElementById('movie_player1')
-          if ((document.getElementById('video-hide')) && (player() != null)) {
+          if ((document.getElementById('video-hide')) && (player() != null) && (player() == null)) {
             var z = document.createElement("div")
             z.id = "movie_player1"
             document.getElementById('video-hide').appendChild(z)
