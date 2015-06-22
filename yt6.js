@@ -779,8 +779,10 @@ return false
 
 function mep_run(){
 
-  var poster = getElementsByAttribute(document,"link","itemprop","thumbnailURL")[0].href
-  if (typeof poster == 'undefined') {
+  var poster = getElementsByAttribute(document,"link","itemprop","thumbnailURL")[0]
+  if (typeof poster != 'undefined') {
+    var poster = poster.href
+  } else {
       var poster = protocol + '//i1.ytimg.com/vi/' + args.video_id + '/0.jpg'
     }
                 var Srcto;
@@ -929,9 +931,9 @@ if (cw) {
   var h = document.getElementById("snarls_player").h
 
 
-  var poster = getElementsByAttribute(document,"link","itemprop","thumbnailURL")[0].href
+  var poster = getElementsByAttribute(document,"link","itemprop","thumbnailURL")[0]
   if (typeof poster != 'undefined') {
-    var poster = "poster: '" + poster + "'"
+    var poster = "poster: '" + poster.href + "'"
   } else {
       var poster = "poster: " + protocol + "'//i1.ytimg.com/vi/' + args.video_id + '/0.jpg'"
     }
@@ -1146,7 +1148,7 @@ if (!document.getElementById('mep_init')) {
                 var A = document.getElementById('snarls_player').A;\
                 var V = document.getElementById('snarls_player').V;\
                 var AV = document.getElementById('snarls_player').AV;\
-                var player1 = new MediaElementPlayer('#player1',{\
+                var player1 = document.getElementById('snarls_player').player1 = new MediaElementPlayer('#player1',{\
 		" + poster + ",\
 		enableAutosize: false,\
 		videoWidth: " + document.getElementById('snarls_player').w.replace('px','') + ", videoHeight: " + document.getElementById('snarls_player').h.replace('px','') + ",\
