@@ -44,7 +44,7 @@ function qr(sr) {
     135: '480p DASH H.264',
     136: '720p DASH H.264',
     137: '1080p DASH H.264',
-    138: '2160p DASH H.264 vfps',
+    138: '4k/8k DASH H.264 vfps',
     139: '48k DASH AAC',
     140: '128k DASH AAC',
     141: '256k DASH AAC',
@@ -2128,10 +2128,10 @@ var CtrlS = function (stage,v){
     js.id = 'remove';
     document.getElementById('yt-alert-message').appendChild(js);
     document.getElementById("remove").setAttribute('style','display:inline-block');
-    document.getElementById("remove").innerHTML =  '<button onclick="switchflashhtml5()" class="yt-uix-button-text"><img src="//s.ytimg.com/yts/img/HTML5_1Color_Black-vfl902gVJ.png" style="vertical-align:middle;height:12px;padding:0px""></img></button><button onclick="aspect()" class="yt-uix-button-text">«&#8703;»</button><br><button onclick="deldiv()" class="yt-uix-button-text">remove</button>'
+    document.getElementById("remove").innerHTML =  '<button onclick="switchflashhtml5()" class="yt-uix-button-text"><img src="//s.ytimg.com/yts/img/HTML5_1Color_Black-vfl902gVJ.png" style="vertical-align:middle;height:12px;padding:0px""></img></button><button onclick="aspect()" class="yt-uix-button-text">«\<\>»</button><br><button onclick="deldiv()" class="yt-uix-button-text">remove</button>'
     //&#9724;
     //&#8633;
-    //&#8703;
+    //&#8703;//
   }; //else {    document.getElementById('remove').style.display = "inline-block"  }
 
   var js = document.createElement('div');
