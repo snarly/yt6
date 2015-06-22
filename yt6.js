@@ -783,7 +783,12 @@ function mep_run(){
   if (typeof poster != 'undefined') {
     var poster = poster.href
   } else {
-      var poster = protocol + '//i1.ytimg.com/vi/' + args.video_id + '/0.jpg'
+      var poster = getElementsByAttribute(document,"link","itemprop","thumbnailUrl")[0]
+      if (typeof poster != 'undefined') {
+        var poster = poster.href
+      } else {
+          var poster = protocol + '//i1.ytimg.com/vi/' + window.ytplayer.config.args.video_id + '/0.jpg'
+        }
     }
                 var Srcto;
                 var href = document.getElementById('snarls_player').href;
@@ -794,6 +799,7 @@ function mep_run(){
                 var Seek = document.getElementById('snarls_player').Seek = null;
                 var player1 = new MediaElementPlayer('#player1',{
 		enableAutosize: false,
+		poster: poster,
 		videoWidth: document.getElementById('snarls_player').w.replace('px',''), videoHeight: document.getElementById('snarls_player').h.replace('px',''),
 		features: ['playpause','loop','current','progress','duration','tracks','playlist','speed','sourcechooser','volume','fullscreen'],
 		autoRewind: false,
