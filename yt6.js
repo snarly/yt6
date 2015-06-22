@@ -184,17 +184,8 @@ function player() { return document.getElementById("movie_player") };
                   var stage = document.getElementsByClassName('html5-video-content')[0];
                 }
             } else {
-                var stage = document.getElementsByClassName('html5-video-content')[1];
-                if (stage == undefined) {
-                  var stage = document.getElementsByClassName('html5-video-content')[0];
-                }
-                var v = document.getElementsByClassName('video-stream html5-main-video')[2];
-                if (v == undefined) {
-                  var v = document.getElementsByClassName('video-stream html5-main-video')[1];
-                  if (v == undefined) {
-                    var v = document.getElementsByClassName('video-stream html5-main-video')[0];
-                  }
-                }
+                var stage = document.getElementsByClassName('html5-video-content')[0];
+                var v = document.getElementsByClassName('video-stream html5-main-video')[0];
               }
             var AV = document.getElementById("snarls_player").AV
             var A = document.getElementById("snarls_player").A
