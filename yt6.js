@@ -1413,7 +1413,7 @@ if (typeof fnCheckLocation != 'number') {
 //alert(); 
 
 //          var z = document.getElementById('movie_player1')
-//          if ((!z) && (document.getElementById('video-hide')) && (player() != null)) {
+          if ((document.getElementById('video-hide')) && (player() != null) && (player() == null)) {
             var z = document.createElement("div")
             z.id = "movie_player1"
             document.getElementById('video-hide').appendChild(z)
@@ -1424,7 +1424,7 @@ if (typeof fnCheckLocation != 'number') {
 //                  //try { var bup = player().cloneNode(true) } catch(e) {alert(e)}; player().parentNode.removeChild(player());z.appendChild(bup)
 //                } //else { if (z.fistChild != null) z.innerHTML = '' }
 //              } //else { if (z.fistChild != null) z.innerHTML = '' }
-//            }
+            }
 
 
         }//alert
