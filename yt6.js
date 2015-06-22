@@ -939,11 +939,16 @@ if (cw) {
 
   var poster = getElementsByAttribute(document,"link","itemprop","thumbnailURL")[0]
   if (typeof poster != 'undefined') {
-    var poster = "poster: '" + poster.href + "'"
+    var poster = poster.href
   } else {
-      var poster = "poster: " + protocol + "'//i1.ytimg.com/vi/' + args.video_id + '/0.jpg'"
+      var poster = getElementsByAttribute(document,"link","itemprop","thumbnailUrl")[0]
+      if (typeof poster != 'undefined') {
+        var poster = poster.href
+      } else {
+          var poster = protocol + '//i1.ytimg.com/vi/' + window.ytplayer.config.args.video_id + '/0.jpg'
+        }
     }
-
+    
   if (document.getElementById('bm0') != null) { document.getElementById('bm0').parentNode.removeChild(document.getElementById('bm0')) }
   cw = document.createElement('div');
   cw.id = 'bm0';
@@ -1155,7 +1160,7 @@ if (!document.getElementById('mep_init')) {
                 var V = document.getElementById('snarls_player').V;\
                 var AV = document.getElementById('snarls_player').AV;\
                 var player1 = document.getElementById('snarls_player').player1 = new MediaElementPlayer('#player1',{\
-		" + poster + ",\
+		poster: " + poster + ",\
 		enableAutosize: false,\
 		videoWidth: " + document.getElementById('snarls_player').w.replace('px','') + ", videoHeight: " + document.getElementById('snarls_player').h.replace('px','') + ",\
 		features: ['playpause','loop','current','progress','duration','tracks','playlist','speed','sourcechooser','volume','fullscreen'],\
@@ -1985,21 +1990,22 @@ function aspect() {
   if (document.getElementById('bm0').style.width != playerwidth ) {
     var w = playerwidth
     var h = Math.round((w.replace('px','') / document.getElementById("snarls_player").aspect_ratio)) + 'px';
+    document.getElementById('player-api').style.width = w;
+    document.getElementById('player-api').style.height = h;
 
-    var dw = document.getElementById('aspect')
-    if (dw != null) { dw.parentNode.removeChild(dw)}
-    document.getElementById('theater-background').style.backgroundColor = "#1B1B1B"
-    dw = document.createElement('div');
-    dw.id = 'aspect';
-    dw.innerHTML = '<input id="a_width" value="' + w.replace("px","") + '" style="display:inline-block;width:30px;height:13px;text-align:right" onkeyup="if (event.keyCode == 13) aspect2(document.getElementById(\'a_width\').value,document.getElementById(\'a_height\').value)" onfocus="document.getElementById(\'a_width\').value=document.getElementById(\'a_width\').value;document.getElementById(\'a_height\').value=document.getElementById(\'a_height\').value"></input>x<input id="a_height" value="' + h.replace("px","") + '" style="display:inline-block;width:30px;height:13px;text-align:right" onkeyup="if (event.keyCode == 13) aspect2(document.getElementById(\'a_width\').value,document.getElementById(\'a_height\').value)" onfocus="document.getElementById(\'a_height\').value=document.getElementById(\'a_height\').value;document.getElementById(\'a_width\').value=document.getElementById(\'a_width\').value"></input>px';
-    document.getElementById('watch7-notification-area').insertBefore(dw,document.getElementById('yt-alert-message'))
-    document.getElementById('aspect').setAttribute('style','display:inline-block;right:0%;position:absolute;color:#333');
-
+    if (document.getElementById('watch7-notification-area') != null) {
+      var dw = document.getElementById('aspect')
+      if (dw != null) { dw.parentNode.removeChild(dw)}
+      document.getElementById('theater-background').style.backgroundColor = "#1B1B1B"
+      dw = document.createElement('div');
+      dw.id = 'aspect';
+      dw.innerHTML = '<input id="a_width" value="' + w.replace("px","") + '" style="display:inline-block;width:30px;height:13px;text-align:right" onkeyup="if (event.keyCode == 13) aspect2(document.getElementById(\'a_width\').value,document.getElementById(\'a_height\').value)" onfocus="document.getElementById(\'a_width\').value=document.getElementById(\'a_width\').value;document.getElementById(\'a_height\').value=document.getElementById(\'a_height\').value"></input>x<input id="a_height" value="' + h.replace("px","") + '" style="display:inline-block;width:30px;height:13px;text-align:right" onkeyup="if (event.keyCode == 13) aspect2(document.getElementById(\'a_width\').value,document.getElementById(\'a_height\').value)" onfocus="document.getElementById(\'a_height\').value=document.getElementById(\'a_height\').value;document.getElementById(\'a_width\').value=document.getElementById(\'a_width\').value"></input>px';
+      document.getElementById('watch7-notification-area').insertBefore(dw,document.getElementById('yt-alert-message'))
+      document.getElementById('aspect').setAttribute('style','display:inline-block;right:0%;position:absolute;color:#333');
+    }
     //player class="watch-playlist watch-playlist-collapsed watch-medium" "watch-playlist watch-small"
     //class="player-width player-height off-screen-target player-api"
     document.getElementById('watch7-sidebar-ads').style.display = 'none';
-    document.getElementById('player-api').style.height = h;
-    document.getElementById('player-api').style.width = w;
     document.getElementById('watch7-sidebar').style.marginTop = parseInt(parseInt(fix_Height().replace('px','')) - 390) + 'px';
     var playlist = document.getElementById('watch-appbar-playlist')
     if (playlist) {
@@ -2022,14 +2028,15 @@ function aspect() {
   } else {
       var w = fix_Width();
       var h = fix_Height();
+      document.getElementById('player-api').style.width = w;
+      document.getElementById('player-api').style.height = h
+      
       var dw = document.getElementById('aspect')
       if (dw != null) { dw.parentNode.removeChild(dw)}
       document.getElementById('theater-background').style.backgroundColor = "transparent"
       document.getElementById('watch7-sidebar').style.marginTop = '-400px';
       var playlist = document.getElementById('watch-appbar-playlist')
       if (playlist) playlist.removeAttribute('style')
-      document.getElementById('player-api').style.width = w;
-      document.getElementById('player-api').style.height = h;
 
       resize_layers(w,h)
       
