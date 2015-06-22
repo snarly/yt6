@@ -939,13 +939,13 @@ if (cw) {
 
   var poster = getElementsByAttribute(document,"link","itemprop","thumbnailURL")[0]
   if (typeof poster != 'undefined') {
-    var poster = poster.href
+    var poster = "poster: '" + poster.href + "'"
   } else {
       var poster = getElementsByAttribute(document,"link","itemprop","thumbnailUrl")[0]
       if (typeof poster != 'undefined') {
-        var poster = poster.href
+        var poster = "poster: '" + poster.href + "'"
       } else {
-          var poster = protocol + '//i1.ytimg.com/vi/' + window.ytplayer.config.args.video_id + '/0.jpg'
+          var poster = "poster: '" + protocol + "//i1.ytimg.com/vi/' + window.ytplayer.config.args.video_id + '/0.jpg'"
         }
     }
     
@@ -1160,7 +1160,7 @@ if (!document.getElementById('mep_init')) {
                 var V = document.getElementById('snarls_player').V;\
                 var AV = document.getElementById('snarls_player').AV;\
                 var player1 = document.getElementById('snarls_player').player1 = new MediaElementPlayer('#player1',{\
-		poster: " + poster + ",\
+		" + poster + ",\
 		enableAutosize: false,\
 		videoWidth: " + document.getElementById('snarls_player').w.replace('px','') + ", videoHeight: " + document.getElementById('snarls_player').h.replace('px','') + ",\
 		features: ['playpause','loop','current','progress','duration','tracks','playlist','speed','sourcechooser','volume','fullscreen'],\
