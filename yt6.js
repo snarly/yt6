@@ -790,7 +790,7 @@ function mep_run(){
                 var V = document.getElementById('snarls_player').V;
                 var AV = document.getElementById('snarls_player').AV;
                 var Seek = document.getElementById('snarls_player').Seek = null; var Srcto
-                var player1 = document.getElementById("snarls_player").player1 = new MediaElementPlayer('#player1',{
+                var player1 = new MediaElementPlayer('#player1',{
 		enableAutosize: false,
 poster,
 		videoWidth: document.getElementById('snarls_player').w.replace('px',''), videoHeight: document.getElementById('snarls_player').h.replace('px',''),
@@ -1147,7 +1147,7 @@ if (!document.getElementById('mep_init')) {
                 var A = document.getElementById('snarls_player').A;\
                 var V = document.getElementById('snarls_player').V;\
                 var AV = document.getElementById('snarls_player').AV;\
-                var player1 = document.getElementById('snarls_player').player1 = new MediaElementPlayer('#player1',{\
+                var player1 = new MediaElementPlayer('#player1',{\
 		" + poster + ",\
 		enableAutosize: false,\
 		videoWidth: " + document.getElementById('snarls_player').w.replace('px','') + ", videoHeight: " + document.getElementById('snarls_player').h.replace('px','') + ",\
@@ -1413,7 +1413,7 @@ if (typeof fnCheckLocation != 'number') {
 //alert(); 
 
 //          var z = document.getElementById('movie_player1')
-          if ((document.getElementById('video-hide')) && (player() != null) && (player() == null)) {
+          if ((document.getElementById('video-hide')) && (player() != null)) {
             var z = document.createElement("div")
             z.id = "movie_player1"
             document.getElementById('video-hide').appendChild(z)
@@ -1429,7 +1429,7 @@ if (typeof fnCheckLocation != 'number') {
 
         }//alert
 
-        if ( ((window.ytplayer != null) && (window.ytplayer.config != null) && (document.getElementById('snarls_player').args != window.ytplayer.config.args) ) || (!watch)) {
+        if ( ((window.ytplayer != null) && (window.ytplayer.config != null) && (document.getElementById('snarls_player').args != window.ytplayer.config.args) && (player() != null) ) || (!watch)) {
  
           // Store the new and previous locations.
           strPrevLocation = (document.getElementById('snarls_player').strLocation)?document.getElementById('snarls_player').strLocation:"";
