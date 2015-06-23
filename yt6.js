@@ -2148,7 +2148,7 @@ var CtrlS = function (stage,v){
 /* Grab the necessary DOM elements */
 
 var stage = stage;
-var v = v;
+var v = v; if (v == undefined) { var v = document.getElementsByClassName('video-stream html5-main-video')[0] }
 var controls = document.getElementById('controls');
   
 /* Array of possible browser specific settings for transformation */
@@ -2169,7 +2169,7 @@ var controls = document.getElementById('controls');
   }
 
 /* Position video */
-if ((v == undefined)) alert(typeof player().getPlayerState + typeof player().getAttribute('flashvars'));// { var v = document.getElementsByClassName('video-stream html5-main-video')[0] }
+//if ((v == undefined)) alert(typeof player().getPlayerState + typeof player().getAttribute('flashvars'));// { var v = document.getElementsByClassName('video-stream html5-main-video')[0] }
 if ( (typeof player().getPlayerState == 'function') && (typeof player().getAttribute('flashvars') == null) && (document.getElementById('bm0').style.visibility == 'hidden') ) {
 
   ythtml5_size()
@@ -2273,7 +2273,7 @@ if (v != player()) {
         if (v != player()) {
           zoom = 1;
           rotate = 0;
-          if ((v == undefined)) alert(typeof player().getPlayerState + typeof player().getAttribute('flashvars'));// { var v = document.getElementsByClassName('video-stream html5-main-video')[0] }
+          //if ((v == undefined)) alert(typeof player().getPlayerState + typeof player().getAttribute('flashvars'));// { var v = document.getElementsByClassName('video-stream html5-main-video')[0] }
           if ( (typeof player().getPlayerState == 'function') && (typeof player().getAttribute('flashvars') == null) && (document.getElementById('bm0').style.visibility == 'hidden') ) {
 
             ythtml5_size()
