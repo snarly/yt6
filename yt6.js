@@ -2272,7 +2272,7 @@ if (v != player()) {
         if (v != player()) {
           zoom = 1;
           rotate = 0;
-          if ((v == undefined)) alert((typeof player().getPlayerState + typeof player().getAttribute('flashvars'));// { var v = document.getElementsByClassName('video-stream html5-main-video')[0] }
+          if ((v == undefined)) alert(typeof player().getPlayerState + typeof player().getAttribute('flashvars'));// { var v = document.getElementsByClassName('video-stream html5-main-video')[0] }
           if ( (typeof player().getPlayerState == 'function') && (typeof player().getAttribute('flashvars') == null) && (document.getElementById('bm0').style.visibility == 'hidden') ) {
 
             ythtml5_size()
