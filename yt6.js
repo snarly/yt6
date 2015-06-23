@@ -196,7 +196,7 @@ function player() { return document.getElementById("movie_player") };
               case 3: player2.pause();break;
               case 5: player2.pause(); break;
             }
-            document.getElementById('player2').currentTime = player().getCurrentTime() ;
+            document.getElementById('player2').currentTime = v.getCurrentTime() ;
           }
 
 
@@ -610,20 +610,20 @@ if (document.getElementById("bm1") != null) document.getElementById("bm1").paren
 //Media streams unsupported by the browser may cause it to crash or the player to freeze on playback.'
   )
   document.getElementById('bm2').innerHTML = html.join('<br>')
-  var csspopupheight0 = parseInt(document.getElementById('bm2').offsetHeight) + expire_date()[2];
+  //var csspopupheight0 = parseInt(document.getElementById('bm2').offsetHeight) + expire_date()[2];
   if (!document.getElementById('bm3')) {
-    dw = document.createElement('div');
+    var dw = document.createElement('div');
     dw.id = 'bm3';
     document.getElementById('body-container').appendChild(dw);
   }
+  var csspopupheight0 = document.getElementById('bm3').scrollHeight
   document.getElementById('bm3').setAttribute('style','color:black;display:block; visibility:hidden; position:fixed; left:0%; top:48px; width:224px; height:' + csspopupheight0 + 'px; margin-top:0px; margin-right:0px; background:#FFFFFF; opacity:1; padding:2px 2px 2px 2px; border:1px solid #DDD; z-index:2147483648; overlay-y:hidden');
   document.getElementById('bm3').setAttribute('class','yt-uix-button-menu')
   document.getElementById('bm3').innerHTML = document.getElementById('bm2').innerHTML;
   document.getElementById('bm2').innerHTML = '';
 //var csspopupheight = parseInt(document.getElementById('bm3').offsetHeight) + 10 ;document.getElementById('bm3').setAttribute('style',document.getElementById('bm3').getAttribute('style') + ';height:' + csspopupheight + 'px;' + 'overflow-y: scroll')
-  var csspopupheight0 = document.getElementById('bm3').scrollHeight
-
-  dw = document.createElement('button');
+  
+  var dw = document.createElement('button');
   dw.id = 'bm4';
   dw.innerHTML = '<img src="//i1.ytimg.com/i/gsZadWjuuN2dEhI0mZfVfQ/mq1.jpg?v=531525b4" style="height:27px"></img><br>Download';
 
