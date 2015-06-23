@@ -606,7 +606,8 @@ if (document.getElementById("bm1") != null) document.getElementById("bm1").paren
   html.splice(1,0,'Direct links to YouTube media<br>for IP address: '+ expire_date()[0])
   html.push(
    '<br>Links will expire on <br>' + expire_date()[1] + 
-   '<br><br>Media streams unsupported by the browser may cause it to crash or the player to freeze on playback.'
+   '<br><br>V+A streams may refuse to serve. Still, you may get separate video- or audio-tracks for playback. Audio will be synced if possible. If those fail too, refresh the page and reload the script.'
+//Media streams unsupported by the browser may cause it to crash or the player to freeze on playback.'
   )
   document.getElementById('bm2').innerHTML = html.join('<br>')
   var csspopupheight0 = parseInt(document.getElementById('bm2').offsetHeight) + expire_date()[2];
@@ -627,7 +628,7 @@ if (document.getElementById("bm1") != null) document.getElementById("bm1").paren
 
   var onclic = function(){
 
-    if ((document.getElementById("watch7-notification-area") == null) || (document.getElementById("remove") == null) || (document.getElementById("controls") == null)) { control_panel1() }
+    if ((window.ytplayer != null) && (window.ytplayer.config != null) && ((document.getElementById("watch7-notification-area") == null) || (document.getElementById("remove") == null) || (document.getElementById("controls") == null)) ) { control_panel1() }
 
     if (document.getElementById("bm3").style.visibility === "visible") { 
       //document.getElementById("bm2").style.visibility = "hidden";
@@ -1444,7 +1445,8 @@ if (typeof fnCheckLocation != 'number') {
             }
           }
 
-          if ( ((window.ytplayer != null) && (window.ytplayer.config != null) && (document.getElementById('snarls_player').args != window.ytplayer.config.args) && (player() != null) ) || (!watch)) {
+        if (window.ytplayer.config != null) {
+          if ( ((window.ytplayer != null) && (document.getElementById('snarls_player').args != window.ytplayer.config.args) && (player() != null) ) || (!watch)) {
  
           // Store the new and previous locations.
           strPrevLocation = (document.getElementById('snarls_player').strLocation)?document.getElementById('snarls_player').strLocation:"";
@@ -1504,6 +1506,7 @@ else if("function"==b&&"undefined"==typeof a.call)return"object";return b}
               autoplay(true); 
 
             }
+        }//ytplayer check
 
          }
         }//flash
