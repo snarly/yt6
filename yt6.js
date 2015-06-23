@@ -1532,7 +1532,7 @@ else if("function"==b&&"undefined"==typeof a.call)return"object";return b}
               if ((document.getElementById('movie_player1')) && (document.getElementById('movie_player1').firstChild.getAttribute('id') == 'movie_player0')) { document.getElementById('movie_player1').parentNode.removeChild(document.getElementById('movie_player1')) }
 
               document.getElementById('bm4').style.display = 'inline-block';
-              document.getElementById('movie_player').setAttribute("flashvars",correct_flashvars(window.ytplayer.config.args))
+              if (flashvars != null) document.getElementById('movie_player').setAttribute("flashvars",correct_flashvars(window.ytplayer.config.args))
               autoplay(true); 
 
             }
