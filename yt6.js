@@ -621,6 +621,7 @@ if (document.getElementById("bm1") != null) document.getElementById("bm1").paren
   document.getElementById('bm3').innerHTML = document.getElementById('bm2').innerHTML;
   document.getElementById('bm2').innerHTML = '';
 //var csspopupheight = parseInt(document.getElementById('bm3').offsetHeight) + 10 ;document.getElementById('bm3').setAttribute('style',document.getElementById('bm3').getAttribute('style') + ';height:' + csspopupheight + 'px;' + 'overflow-y: scroll')
+  var csspopupheight0 = document.getElementById('bm3').scrollHeight
 
   dw = document.createElement('button');
   dw.id = 'bm4';
@@ -628,7 +629,35 @@ if (document.getElementById("bm1") != null) document.getElementById("bm1").paren
 
   var onclic = function(){
 
-    if ((window.ytplayer != null) && (window.ytplayer.config != null) && ((document.getElementById("watch7-notification-area") == null) || (document.getElementById("remove") == null) || (document.getElementById("controls") == null)) ) { control_panel1() }
+    if ((window.ytplayer != null) &&
+        (window.ytplayer.config != null) &&
+        ((document.getElementById("watch7-notification-area") == null) ||
+         (document.getElementById("remove") == null) ||
+         (document.getElementById("controls") == null)))
+      { 
+      if ((typeof player().getPlayerState == 'function') &&
+          (document.getElementById('bm0').style.visibility == 'hidden')) {
+        if (player().getAttribute('flashvars') != null) {
+          var stage = player(); var v = player();
+        } else {
+            var stage = document.getElementsByClassName('html5-video-content')[0];
+            var v = document.getElementsByClassName('video-stream html5-main-video')[0];
+         }
+      } else {
+          var stage = document.getElementsByClassName('html5-video-content')[1];
+          if (stage == undefined) {
+            var stage = document.getElementsByClassName('html5-video-content')[0];
+          }
+          var v = document.getElementsByClassName('video-stream html5-main-video')[2];
+          if (v == undefined) {
+            var v = document.getElementsByClassName('video-stream html5-main-video')[1];
+            if (v == undefined) {
+              var v = document.getElementsByClassName('video-stream html5-main-video')[0];
+            }
+          }
+        }
+      CtrlS(stage,v);
+    }
 
     if (document.getElementById("bm3").style.visibility === "visible") { 
       //document.getElementById("bm2").style.visibility = "hidden";
@@ -900,12 +929,13 @@ if ( (typeof player().getPlayerState == 'function') && ((player.loadVideoByFlash
     }
   }
 
-  if (typeof player().getPlayerState == 'function') {
-    if (player().getAttribute('flashvars') != null) {
-      var stage = player(); var v = player();
-    } else {
-        var stage = document.getElementsByClassName('html5-video-content')[0];
-     }
+  if ((typeof player().getPlayerState == 'function') && (document.getElementById('bm0').style.visibility == 'hidden')) {
+      if (player().getAttribute('flashvars') != null) {
+        var stage = player(); var v = player();
+      } else {
+          var stage = document.getElementsByClassName('html5-video-content')[0];
+          var v = document.getElementsByClassName('video-stream html5-main-video')[0];
+       }
   } else {
       var stage = document.getElementsByClassName('html5-video-content')[1];
       if (stage == undefined) {
@@ -1427,7 +1457,7 @@ if (typeof fnCheckLocation != 'number') {
         }
 
         // Check to see if the location has changed.
-        if ( (document.getElementById('snarls_player') && (document.getElementById('snarls_player').strLocation != window.location.href) ) || (!watch) ) {
+        if ( (document.getElementById('snarls_player') && (document.getElementById('snarls_player').strLocation != window.location.href) ) || (!watch) || (watch == null) ) {
          if ((typeof player().getPlayerState != 'function') && (flashvars != null) && (player().outerHTML != null)) { 
 
           //var z = document.getElementById('movie_player1')
@@ -1445,8 +1475,8 @@ if (typeof fnCheckLocation != 'number') {
             }
           }
 
-        if (window.ytplayer.config != null) {
-          if ( ((window.ytplayer != null) && (document.getElementById('snarls_player').args != window.ytplayer.config.args) && (player() != null) ) || (!watch)) {
+        if ((watch) && (watch != null)) {
+          if ( ((window.ytplayer != null) && (window.ytplayer.config.args != null) && (document.getElementById('snarls_player').args != window.ytplayer.config.args) && (player() != null) ) ) {
  
           // Store the new and previous locations.
           strPrevLocation = (document.getElementById('snarls_player').strLocation)?document.getElementById('snarls_player').strLocation:"";
@@ -1506,7 +1536,7 @@ else if("function"==b&&"undefined"==typeof a.call)return"object";return b}
               autoplay(true); 
 
             }
-        }//ytplayer check
+        }//watch
 
          }
         }//flash
