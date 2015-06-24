@@ -921,12 +921,16 @@ if (document.getElementsByClassName('reset yt-uix-button-text')[0]) document.get
 //    }
 //}
 
-if ( (typeof player().getPlayerState == 'function') && ((player.loadVideoByFlashvars) || (player.cueVideoByFlashvars) || (player.getPlayerState != -1)) ) {
-  document.getElementById('bm0').style.visibility = 'hidden'; if (typeof srcto != 'undefined') { player().pauseVideo() }
+if ( (typeof player().getPlayerState == 'function') && (player.getPlayerState != -1)) {// ((player.loadVideoByFlashvars) || (player.cueVideoByFlashvars) ||  ) {
+  document.getElementById('bm0').style.visibility = 'hidden';
+  player().style.display = 'block';
+  if (typeof srcto != 'undefined') { player().pauseVideo() }
 } else {
-    player().style.display = 'block'; var z = document.getElementsByClassName('mejs-clear')[0];
+    player().style.display = 'none'; var z = document.getElementsByClassName('mejs-clear')[0];
     if ( z !== null) {
-       resize_layers( document.getElementById('snarls_player').w,document.getElementById('snarls_player').h ); switchflashhtml5()
+       resize_layers( document.getElementById('snarls_player').w,document.getElementById('snarls_player').h );
+       document.getElementById('bm0').style.visibility = 'visible';
+       //switchflashhtml5()
     }
   }
 
