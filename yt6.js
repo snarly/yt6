@@ -1,7 +1,16 @@
+var a,b,i,j,k,x,y,z;
+
+function mep_x(a){
+  for(i=0;i<10000;i++){
+    if (document.getElementById(a + i) != null) break
+  }
+  return a + i
+}
+
 var noads = setInterval(function(){
   var ads = document.getElementsByClassName('videoAdUiSkipButton')[0]; if (ads) { ads.click();ads.setAttribute("class","videoAdUiSkipButton") }
   var ads = document.getElementsByClassName("video-ads html5-stop-propagation")[0]; if (ads) { ads.parentNode.removeChild(ads) };
-  var ads = document.getElementById("google_ads_frame1"); if (ads) { ads.parentNode.removeChild(ads); clearInterval(noads) }
+  var ads = document.getElementById(mep_x("google_ads_frame")); if (ads) { ads.parentNode.removeChild(ads); clearInterval(noads) }
             },2000)
 
 function qr(sr) {
@@ -86,8 +95,6 @@ function rp(tx) {
   return tx.split('"').join('&quot;');
 }
 
-  var i,j,k,x,y,z;
-
 //+ Jonas Raoni Soares Silva
 //@ http://jsfromhell.com/array/shuffle [v1.0]
 
@@ -157,14 +164,6 @@ if (typeof window.DOMParser != "undefined") {
 
     return h_base
   }
-
-function mep_x(){
-  for(i=0;i<10000;i++){
-    if (document.getElementById('mep_' + i) != null) break
-  }
-  return "mep_" + i
-}
-
 
 function player() { return document.getElementById("movie_player") };
 
@@ -399,7 +398,7 @@ function crossXmlHttpReq(ytplayer){
         function HTMLPush(j){
     
           function setLink(href){
-            var onclic = 'if ((typeof player().getPlayerState == "function") && (player().getAttribute("flashvars") == null)) { var v = document.getElementsByClassName("video-stream html5-main-video")[2]; if (v == undefined) { var v = document.getElementsByClassName("video-stream html5-main-video")[1] }}; var sauce = getElementsByAttribute(document,"input","name",mep_x() + "_sourcechooser"); if ((sauce != undefined) && (sauce.length != 0)) { for (i=0;j=(sauce.length-1);i++) { sauce[i].removeAttribute("checked");if (("'+href+'" == sauce[i].getAttribute("value").replace("https:","")) || ("'+href.replace("&ratebypass=yes","")+'" == sauce[i].getAttribute("value").replace("https:","")) || ("'+href.substring(0, href.length-2)+'" == sauce[i].getAttribute("value").replace("https:","")) || ("'+href.substring(0, href.length-2).replace("&ratebypass=yes","")+'" == sauce[i].getAttribute("value").replace("https:",""))) { if (document.getElementById("bm0").style.visibility == "visible") { if ((!player1.paused) || (!player2.paused)) { var p1load = 1; player2.pause();  } else { var p1load = null }; } else { if ((typeof player().getPlayerState == "function") && (player().getAttribute("flashvars") == null)) { if ( player().getPlayerState() == "1") { var p1load = 1; v.pause() } else { var p1load = null }}; }; if (("https:'+href+'" == document.getElementById("snarls_player").audio) && (navigator.userAgent.indexOf("Chrome") < -1)) { alert("Warning: Google Chrome will stop buffering if the AUDIO and VIDEO sources share the same location.\\nThis happens when you switch from a DASH/VP9 playback over to the designated audio track to play on its own.\\nIt\'s a bug to be fixed.") };  document.getElementsByClassName("video-stream html5-main-video")[0].setAttribute("src","https:' + href + '");document.getElementById("player1").setAttribute("src","https:' + href + '"); sauce[i].setAttribute("checked","checked");document.getElementById("player1").setAttribute("src","https:' + href + '"); if (p1load == 1) { if ((typeof player().getPlayerState == "function") && (player().getAttribute("flashvars") == null)) { v.play();v.pause();v.play() } else { if (document.getElementById("bm0").style.visibility == "visible") { player1.load(); player2.load(); }} } ;return false};if (i === j){return true;} }};return false';
+            var onclic = 'if ((typeof player().getPlayerState == "function") && (player().getAttribute("flashvars") == null)) { var v = document.getElementsByClassName("video-stream html5-main-video")[2]; if (v == undefined) { var v = document.getElementsByClassName("video-stream html5-main-video")[1] }}; var sauce = getElementsByAttribute(document,"input","name",mep_x("mep_") + "_sourcechooser"); if ((sauce != undefined) && (sauce.length != 0)) { for (i=0;j=(sauce.length-1);i++) { sauce[i].removeAttribute("checked");if (("'+href+'" == sauce[i].getAttribute("value").replace("https:","")) || ("'+href.replace("&ratebypass=yes","")+'" == sauce[i].getAttribute("value").replace("https:","")) || ("'+href.substring(0, href.length-2)+'" == sauce[i].getAttribute("value").replace("https:","")) || ("'+href.substring(0, href.length-2).replace("&ratebypass=yes","")+'" == sauce[i].getAttribute("value").replace("https:",""))) { if (document.getElementById("bm0").style.visibility == "visible") { if ((!player1.paused) || (!player2.paused)) { var p1load = 1; player2.pause();  } else { var p1load = null }; } else { if ((typeof player().getPlayerState == "function") && (player().getAttribute("flashvars") == null)) { if ( player().getPlayerState() == "1") { var p1load = 1; v.pause() } else { var p1load = null }}; }; if (("https:'+href+'" == document.getElementById("snarls_player").audio) && (navigator.userAgent.indexOf("Chrome") < -1)) { alert("Warning: Google Chrome will stop buffering if the AUDIO and VIDEO sources share the same location.\\nThis happens when you switch from a DASH/VP9 playback over to the designated audio track to play on its own.\\nIt\'s a bug to be fixed.") };  document.getElementsByClassName("video-stream html5-main-video")[0].setAttribute("src","https:' + href + '");document.getElementById("player1").setAttribute("src","https:' + href + '"); sauce[i].setAttribute("checked","checked");document.getElementById("player1").setAttribute("src","https:' + href + '"); if (p1load == 1) { if ((typeof player().getPlayerState == "function") && (player().getAttribute("flashvars") == null)) { v.play();v.pause();v.play() } else { if (document.getElementById("bm0").style.visibility == "visible") { player1.load(); player2.load(); }} } ;return false};if (i === j){return true;} }};return false';
             return onclic
           }
           var onclic = setLink(href)
@@ -921,23 +920,24 @@ if (document.getElementsByClassName('reset yt-uix-button-text')[0]) document.get
 //    }
 //}
 
+ var z = document.getElementsByClassName('mejs-clear')[0];
+ if ( z !== null) {
+   resize_layers( document.getElementById('snarls_player').w, document.getElementById('snarls_player').h );
+ }
+
 if ( (typeof player().getPlayerState == 'function') && (player.getPlayerState != -1)) {// ((player.loadVideoByFlashvars) || (player.cueVideoByFlashvars) ||  ) {
   document.getElementById('bm0').style.visibility = 'hidden';
   player().style.display = 'block';
   if (typeof srcto != 'undefined') { player().pauseVideo() }
 } else {
-    player().style.display = 'none'; var z = document.getElementsByClassName('mejs-clear')[0];
-    if ( z !== null) {
-       resize_layers( document.getElementById('snarls_player').w,document.getElementById('snarls_player').h );
-       document.getElementById('bm0').style.visibility = 'visible';
-       //switchflashhtml5()
-    }
+    document.getElementById('bm0').style.visibility = 'visible';
+    player().style.display = 'none';
   }
 
   if ((typeof player().getPlayerState == 'function') && (document.getElementById('bm0').style.visibility == 'hidden')) {
       if (player().getAttribute('flashvars') != null) {
         var stage = player(); var v = player();
-      } else {
+2      } else {
           var stage = document.getElementsByClassName('html5-video-content')[0];
           var v = document.getElementsByClassName('video-stream html5-main-video')[0];
        }
@@ -1727,8 +1727,8 @@ function resize_layers(w,h){
   document.getElementById('bm0').style.width = w;
   document.getElementById('bm0').style.height = h;
   document.getElementById('bm0').style.left = "auto"
-  document.getElementById(mep_x()).style.width = w;
-  document.getElementById(mep_x()).style.height = h;
+  document.getElementById(mep_x('mep_')).style.width = w;
+  document.getElementById(mep_x('mep_')).style.height = h;
   document.getElementsByClassName('mejs-clear')[0].style.width = w
   document.getElementsByClassName('mejs-clear')[0].style.height = h
 
