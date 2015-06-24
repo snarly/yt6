@@ -610,13 +610,13 @@ if (document.getElementById("bm1") != null) document.getElementById("bm1").paren
 //Media streams unsupported by the browser may cause it to crash or the player to freeze on playback.'
   )
   document.getElementById('bm2').innerHTML = html.join('<br>')
-  //var csspopupheight0 = parseInt(document.getElementById('bm2').offsetHeight) + expire_date()[2];
+  var csspopupheight0 = parseInt(document.getElementById('bm2').offsetHeight) + expire_date()[2];
   if (!document.getElementById('bm3')) {
     var dw = document.createElement('div');
     dw.id = 'bm3';
     document.getElementById('body-container').appendChild(dw);
   }
-  var csspopupheight0 = document.getElementById('bm3').offsetHeight
+  
   document.getElementById('bm3').setAttribute('style','color:black;display:block; visibility:hidden; position:fixed; left:0%; top:48px; width:224px; height:' + csspopupheight0 + 'px; margin-top:0px; margin-right:0px; background:#FFFFFF; opacity:1; padding:2px 2px 2px 2px; border:1px solid #DDD; z-index:2147483648; overlay-y:hidden');
   document.getElementById('bm3').setAttribute('class','yt-uix-button-menu')
   document.getElementById('bm3').innerHTML = document.getElementById('bm2').innerHTML;
