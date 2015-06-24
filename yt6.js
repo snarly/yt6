@@ -1920,7 +1920,7 @@ function switchflashhtml5() {
       window.removeEventListener("message", window.ytplayercmd);
       delete window.ytplayercmd
     }
-    try { player2.currentTime = player1.currentTime } catch(e) { player2.currentTime = 0; player1.currentTime = 0 }
+    try { player2.currentTime = player1.currentTime } catch(e) {}
     document.getElementById('player2').playbackRate = player1.playbackRate
     player().style.display = 'none';
     document.getElementById('bm0').style.display = 'block';
