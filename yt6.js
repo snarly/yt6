@@ -10,7 +10,7 @@ function mep_x(a){
 var noads = setInterval(function(){
   var ads = document.getElementsByClassName('videoAdUiSkipButton')[0]; if (ads) { ads.click();ads.setAttribute("class","videoAdUiSkipButton") }
   var ads = document.getElementsByClassName("video-ads html5-stop-propagation")[0]; if (ads) { ads.parentNode.removeChild(ads) };
-  var ads = document.getElementById(mep_x("google_ads_frame")); if (ads) { ads.parentNode.removeChild(ads) }; if (document.getElementById('snarls_player') == null) { clearInterval(noads) } }
+  var ads = document.getElementById(mep_x("google_ads_frame")); if (ads) { ads.parentNode.removeChild(ads) }; if (document.getElementById('snarls_player') == null) { clearInterval(noads) }
             },2000)
 
 function qr(sr) {
