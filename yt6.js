@@ -917,7 +917,7 @@ if (document.getElementsByClassName('reset yt-uix-button-text')[0]) document.get
 
 if ( (typeof player().getPlayerState == 'function') && (player.getPlayerState != -1)) {// ((player.loadVideoByFlashvars) || (player.cueVideoByFlashvars) ||  ) {
   document.getElementById('bm0').style.visibility = 'hidden';
-  $('#movie_player').css('display', '');
+  player().style.display = '';
   if (typeof srcto != 'undefined') { player().pauseVideo() }
 } else {
     document.getElementById('bm0').style.visibility = 'visible';
@@ -1276,7 +1276,7 @@ if (document.getElementsByClassName('reset yt-uix-button-text')[0]) document.get
 \
 if ( (typeof player().getPlayerState == 'function') && (player.getPlayerState != -1)) {\
   document.getElementById('bm0').style.visibility = 'hidden';\
-  $('#movie_player').css('display', '');\
+  player().style.display = '';\
   if (typeof srcto != 'undefined') { player().pauseVideo() }\
 } else {\
     document.getElementById('bm0').style.visibility = 'visible';\
@@ -1938,6 +1938,7 @@ function switchflashhtml5() {
     }
   } else {
       document.getElementById('bm0').style.visibility = 'hidden';
+      player().style.display = '';
       if (flashvars != null) {
       	player().style.opacity = '1.1'
         var z = document.createElement("div")
@@ -1957,8 +1958,6 @@ function switchflashhtml5() {
         document.getElementById('movie_player').addEventListener("onStateChange", Sync);
         var v = player();
       } else {
-      	  //player().style.display = 'block';
-      	  $('#movie_player').css('display', '')
           var v = document.getElementsByClassName('video-stream html5-main-video')[0];
         }
       var stage = document.getElementsByClassName('html5-video-content')[0];
@@ -2107,7 +2106,7 @@ function deldiv(){
   //ythtml5_size()
 
   var z = document.getElementById('player-api'); if (z) z.style.display = 'block';
-  $('#movie_player').css('display', '');
+  player().style.display = '';
 
   var z = [ 'remove','controls','aspect','bm1','bm3','bm0',"ytassetsjs","snarls_player" ]
   for(i=0;i<z.length;i++){
