@@ -585,7 +585,7 @@ function redo_dl_button(args,html,href) {
 
 if (document.getElementById("bm1") != null) document.getElementById("bm1").parentNode.removeChild(document.getElementById("bm1"))
 
-  dw = document.createElement('div');
+  var dw = document.createElement('div');
   dw.id = 'bm1';
   document.getElementsByClassName('yt-masthead-logo-container ')[0].insertBefore(dw,document.getElementsByClassName('yt-masthead-logo-container ')[0].lastChild);
   document.getElementById('bm1').setAttribute('style','display:inline-block;position:float;');
@@ -616,7 +616,7 @@ if (document.getElementById("bm1") != null) document.getElementById("bm1").paren
     dw.id = 'bm3';
     document.getElementById('body-container').appendChild(dw);
   }
-  var csspopupheight0 = document.getElementById('bm3').scrollHeight
+  var csspopupheight0 = document.getElementById('bm3').offsetHeight
   document.getElementById('bm3').setAttribute('style','color:black;display:block; visibility:hidden; position:fixed; left:0%; top:48px; width:224px; height:' + csspopupheight0 + 'px; margin-top:0px; margin-right:0px; background:#FFFFFF; opacity:1; padding:2px 2px 2px 2px; border:1px solid #DDD; z-index:2147483648; overlay-y:hidden');
   document.getElementById('bm3').setAttribute('class','yt-uix-button-menu')
   document.getElementById('bm3').innerHTML = document.getElementById('bm2').innerHTML;
@@ -670,7 +670,7 @@ if (document.getElementById("bm1") != null) document.getElementById("bm1").paren
         } else {
             document.getElementById("bm3").style.opacity = '0.9'
           }
-        var csspopupheight = csspopupheight0; var csspopupheight = Math.max(csspopupheight0, document.getElementById('bm3').scrollHeight);
+        var csspopupheight = csspopupheight0; var csspopupheight = Math.min(csspopupheight0, document.getElementById('bm3').scrollHeight);
         var windowheight = parseInt(window.innerHeight || document.documentElement.clientHeight || document.getElementsByTagName('body')[0].clientHeight);
         if (csspopupheight > windowheight - expire_date()[2]) { 
           document.getElementById('bm3').style.height = windowheight - expire_date()[2] + 'px';document.getElementById('bm3').style.overflowY = 'scroll'
@@ -1530,7 +1530,7 @@ else if("function"==b&&"undefined"==typeof a.call)return"object";return b}
               mep_up();mep_run();
 
               if ((document.getElementById('movie_player1')) && (document.getElementById('movie_player1').firstChild.getAttribute('id') == 'movie_player0')) { document.getElementById('movie_player1').parentNode.removeChild(document.getElementById('movie_player1')) }
-
+              if (wide_view == false) document.getElementById('theater-background').style.backgroundColor = "transparent"
               document.getElementById('bm4').style.display = 'inline-block';
               if (flashvars != null) document.getElementById('movie_player').setAttribute("flashvars",correct_flashvars(window.ytplayer.config.args))
               autoplay(true); 
