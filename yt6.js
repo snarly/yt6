@@ -95,11 +95,6 @@ function rp(tx) {
   return tx.split('"').join('&quot;');
 }
 
-//+ Jonas Raoni Soares Silva
-//@ http://jsfromhell.com/array/shuffle [v1.0]
-
-var protocol = (document.location.protocol=='http:')?'http:':'https:';
-
 
 var parseXml;
 
@@ -165,6 +160,7 @@ if (typeof window.DOMParser != "undefined") {
     return h_base
   }
 
+function protocol() { var protocol = (document.location.protocol=='http:')?'http:':'https:'; return protocol }
 function player() { return document.getElementById("movie_player") };
 
       var ytplayercmd = function(e) {
@@ -195,7 +191,7 @@ function player() { return document.getElementById("movie_player") };
               case 3: player2.pause();break;
               case 5: player2.pause(); break;
             }
-            document.getElementById('player2').currentTime = v.getCurrentTime() ;
+            try { document.getElementById('player2').currentTime = player().getCurrentTime() ; } catch(e) {}
           }
 
 
@@ -208,8 +204,11 @@ function player() { return document.getElementById("movie_player") };
           }
 //      }
 
-  var xhr = new XMLHttpRequest(),px
+  var xhr = new XMLHttpRequest(), px
   var proxies = ['https://allow-any-origin.appspot.com/https:','https://cors-anywhere.herokuapp.com/https:']
+
+//+ Jonas Raoni Soares Silva
+//@ http://jsfromhell.com/array/shuffle [v1.0]
 
   function shuffle(o){ //v1.0
     for(j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
@@ -364,6 +363,7 @@ function crossXmlHttpReq(ytplayer){
     //return eval(fcnm + '("' + sg + '")');
     return fcnm(sg);
   }
+
   var linx = [];
   var lang_def = null; var lang_asr = null;
   var args = ytplayer.config.args;
@@ -377,7 +377,7 @@ function crossXmlHttpReq(ytplayer){
       for (j in z) {
         var qq = get_quality(z[j]);
         var qs = qr(z[j]);
-        var href = unescape(qs.url).replace(protocol, '');
+        var href = unescape(qs.url).replace(protocol(), '');
         if (qs.sig)
           href += '&signature=' + qs.sig;
         if (qs.s)
@@ -398,7 +398,7 @@ function crossXmlHttpReq(ytplayer){
         function HTMLPush(j){
     
           function setLink(href){
-            var onclic = 'if ((typeof player().getPlayerState == "function") && (player().getAttribute("flashvars") == null)) { var v = document.getElementsByClassName("video-stream html5-main-video")[2]; if (v == undefined) { var v = document.getElementsByClassName("video-stream html5-main-video")[1] }}; var sauce = getElementsByAttribute(document,"input","name",mep_x("mep_") + "_sourcechooser"); if ((sauce != undefined) && (sauce.length != 0)) { for (i=0;j=(sauce.length-1);i++) { sauce[i].removeAttribute("checked");if (("'+href+'" == sauce[i].getAttribute("value").replace("https:","")) || ("'+href.replace("&ratebypass=yes","")+'" == sauce[i].getAttribute("value").replace("https:","")) || ("'+href.substring(0, href.length-2)+'" == sauce[i].getAttribute("value").replace("https:","")) || ("'+href.substring(0, href.length-2).replace("&ratebypass=yes","")+'" == sauce[i].getAttribute("value").replace("https:",""))) { if (document.getElementById("bm0").style.visibility == "visible") { if ((!player1.paused) || (!player2.paused)) { var p1load = 1; player2.pause();  } else { var p1load = null }; } else { if ((typeof player().getPlayerState == "function") && (player().getAttribute("flashvars") == null)) { if ( player().getPlayerState() == "1") { var p1load = 1; v.pause() } else { var p1load = null }}; }; if (("https:'+href+'" == document.getElementById("snarls_player").audio) && (navigator.userAgent.indexOf("Chrome") < -1)) { alert("Warning: Google Chrome will stop buffering if the AUDIO and VIDEO sources share the same location.\\nThis happens when you switch from a DASH/VP9 playback over to the designated audio track to play on its own.\\nIt\'s a bug to be fixed.") };  document.getElementsByClassName("video-stream html5-main-video")[0].setAttribute("src","https:' + href + '");document.getElementById("player1").setAttribute("src","https:' + href + '"); sauce[i].setAttribute("checked","checked");document.getElementById("player1").setAttribute("src","https:' + href + '"); if (p1load == 1) { if ((typeof player().getPlayerState == "function") && (player().getAttribute("flashvars") == null)) { v.play();v.pause();v.play() } else { if (document.getElementById("bm0").style.visibility == "visible") { player1.load(); player2.load(); }} } ;return false};if (i === j){return true;} }};return false';
+            var onclic = 'if ((typeof player().getPlayerState == "function") && (player().getAttribute("flashvars") == null)) { var v = document.getElementsByClassName("video-stream html5-main-video")[0] }; var sauce = getElementsByAttribute(document,"input","name",mep_x("mep_") + "_sourcechooser"); if ((sauce != undefined) && (sauce.length != 0)) { for (i=0;j=(sauce.length-1);i++) { sauce[i].removeAttribute("checked");if (("'+href+'" == sauce[i].getAttribute("value").replace("https:","")) || ("'+href.replace("&ratebypass=yes","")+'" == sauce[i].getAttribute("value").replace("https:","")) || ("'+href.substring(0, href.length-2)+'" == sauce[i].getAttribute("value").replace("https:","")) || ("'+href.substring(0, href.length-2).replace("&ratebypass=yes","")+'" == sauce[i].getAttribute("value").replace("https:",""))) { if (document.getElementById("bm0").style.visibility == "visible") { if ((!player1.paused) || (!player2.paused)) { var p1load = 1; player2.pause();  } else { var p1load = null }; } else { if ((typeof player().getPlayerState == "function") && (player().getAttribute("flashvars") == null)) { if ( player().getPlayerState() == "1") { var p1load = 1; v.pause() } else { var p1load = null }}; }; if (("https:'+href+'" == document.getElementById("snarls_player").audio) && (navigator.userAgent.indexOf("Chrome") < -1)) { alert("Warning: Google Chrome will stop buffering if the AUDIO and VIDEO sources share the same location.\\nThis happens when you switch from a DASH/VP9 playback over to the designated audio track to play on its own.\\nIt\'s a bug to be fixed.") };  document.getElementsByClassName("video-stream html5-main-video")[0].setAttribute("src","https:' + href + '");document.getElementById("player1").setAttribute("src","https:' + href + '"); sauce[i].setAttribute("checked","checked");document.getElementById("player1").setAttribute("src","https:' + href + '"); if (p1load == 1) { if ((typeof player().getPlayerState == "function") && (player().getAttribute("flashvars") == null)) { v.play();v.pause();v.play() } else { if (document.getElementById("bm0").style.visibility == "visible") { player1.load(); player2.load(); }} } ;return false};if (i === j){return true;} }};return false';
             return onclic
           }
           var onclic = setLink(href)
@@ -437,11 +437,11 @@ function crossXmlHttpReq(ytplayer){
           if (typeof qq.split(" ")[1] != 'undefined') { 
             if (typeof j != 'number') {
               html.push(
-                '<a href="' + protocol + href + '&title=' + fn +'" onclick="' + rp(onclic) + '" download="' + fn + '.' + qq.split(" ")[1].toLowerCase() + '">' + qq + size + '</a>'
+                '<a href="' + protocol() + href + '&title=' + fn +'" onclick="' + rp(onclic) + '" download="' + fn + '.' + qq.split(" ")[1].toLowerCase() + '">' + qq + size + '</a>'
               );
             } else {
                 html.splice(
-                  j+1, 0, '<a href="' + protocol + href + '&title=' + fn +'" onclick="' + rp(onclic) + '" download="' + fn + '.' + qq.split(" ")[1].toLowerCase() + '">' + qq + size + '</a>'
+                  j+1, 0, '<a href="' + protocol() + href + '&title=' + fn +'" onclick="' + rp(onclic) + '" download="' + fn + '.' + qq.split(" ")[1].toLowerCase() + '">' + qq + size + '</a>'
                 );
               }
     
@@ -450,11 +450,11 @@ function crossXmlHttpReq(ytplayer){
           } else {
               if (typeof j != 'number'){
                 html.push(
-                  '<a href="' + protocol + href + '&title=' + fn +'" onclick="' + rp(onclic) + '" download="' + fn + '">' + qs.itag + size + '</a>'
+                  '<a href="' + protocol() + href + '&title=' + fn +'" onclick="' + rp(onclic) + '" download="' + fn + '">' + qs.itag + size + '</a>'
                 );
               } else {
                   html.splice(
-                      j+1, 0, '<a href="' + protocol + href + '&title=' + fn +'" onclick="' + rp(onclic) + '" download="' + fn + '">' + qs.itag + size + '</a>'
+                      j+1, 0, '<a href="' + protocol() + href + '&title=' + fn +'" onclick="' + rp(onclic) + '" download="' + fn + '">' + qs.itag + size + '</a>'
                   );
                 }
             }
@@ -471,7 +471,7 @@ function crossXmlHttpReq(ytplayer){
   var aac2 = null;
   for (i in z) {
     if (sig == 1) { var sig = dc(z[i]); var aac2 = aac.replace(z[i],sig).replace('/s/','/signature/');}
-    if (sig == 2) { var aac2 = aac.replace(protocol, ''); sig == null; }
+    if (sig == 2) { var aac2 = aac.replace(protocol(), ''); sig == null; }
     if (aac2 != null) {
       try {
         xhr.open('get', aac2, false);
@@ -491,7 +491,7 @@ function crossXmlHttpReq(ytplayer){
       if ((xhr.responseText.indexOf('Representation id="278"') > -1) && (typeof linx[241] == 'undefined')){
         for (j=0;html.length-1;j++) {
           if (html[j].indexOf("itag=160") > -1) {
-            href = getElementsByAttribute(parseXml(xhr.responseText),"Representation","id","278")[0].textContent.replace(protocol,'');
+            href = getElementsByAttribute(parseXml(xhr.responseText),"Representation","id","278")[0].textContent.replace(protocol(),'');
             var qq = get_quality(href)
             HTMLPush(j)
             linx[241] = href
@@ -503,7 +503,7 @@ function crossXmlHttpReq(ytplayer){
       for (b=0;b<350;b++){
         if ((qual[b]) && (b != 278)) {
           if ((xhr.responseText.indexOf('Representation id="'+b+'"') > -1) && (typeof linx[b] == 'undefined')) {
-            href = getElementsByAttribute(parseXml(xhr.responseText),"Representation","id",b)[0].textContent.replace(protocol,'');
+            href = getElementsByAttribute(parseXml(xhr.responseText),"Representation","id",b)[0].textContent.replace(protocol(),'');
             if (b == '172') { var audio = 'https:' + href }
             if (b == '141') { if (typeof audio == 'undefined') { var audio = 'https:' + href }}
             var qq = get_quality(href)
@@ -582,6 +582,7 @@ crossXmlHttpReq(window.ytplayer)
 function redo_dl_button(args,html,href) {
 //var dw = document.querySelector('#bm1');
 
+
 if (document.getElementById("bm1") != null) document.getElementById("bm1").parentNode.removeChild(document.getElementById("bm1"))
 
   var dw = document.createElement('div');
@@ -599,23 +600,23 @@ if (document.getElementById("bm1") != null) document.getElementById("bm1").paren
     var ip = href.split(ip)[1].split("&")[0]
     var expire = (href.indexOf("?expire=") == -1) ? "&expire=":"?expire="
     var expire = new Date(parseInt(href.split(expire)[1].toString().substring(0,10) * 1000)).toLocaleString()
-    var bh = (expire.length < 33) ? 78 : 91
+    var bh = (expire.length < 33) ? 91 : 104
     return [ip,expire,bh]
   }
   html.splice(1,0,'Direct links to YouTube media<br>for IP address: '+ expire_date()[0])
   html.push(
    '<br>Links will expire on <br>' + expire_date()[1] + 
-   '<br><br>V+A streams may refuse to serve. Still, you may get separate video- or audio-tracks for playback. Audio will be synced if possible. If those fail too, refresh the page and reload the script.'
+   '<br><br>V+A streams may refuse to serve while separate video and audio tracks synced may still do for playback. If those fail as well, try to remove and reload the script.'
 //Media streams unsupported by the browser may cause it to crash or the player to freeze on playback.'
   )
   document.getElementById('bm2').innerHTML = html.join('<br>')
 
   var dw = document.createElement('button');
   dw.id = "bm5";
-  dw.innerHTML = protocol + '//www.youtube.com/html5';
+  dw.innerHTML = protocol() + '//www.youtube.com/html5';
   document.getElementById('bm2').appendChild(dw);
   document.getElementById('bm5').style.color = "#EE0000";
-  document.getElementById('bm5').setAttribute('onclick', 'window.open( "' + protocol + '//www.youtube.com/html5", "_blank").focus() ')
+  document.getElementById('bm5').setAttribute('onclick', 'window.open( "' + protocol() + '//www.youtube.com/html5", "_blank").focus() ')
 
   var csspopupheight0 = parseInt(document.getElementById('bm2').offsetHeight) + expire_date()[2];
   
@@ -736,7 +737,7 @@ if (!document.getElementById('video-hide')) {
 }
 
 
-loadCSS( protocol + "//cdn.rawgit.com/snarly/yt6/ee5b34c3dd41fcea3f8e961389d1a715d93a9d2c/mediaelementplayer.css", function(){
+loadCSS( protocol() + "//cdn.rawgit.com/snarly/yt6/ee5b34c3dd41fcea3f8e961389d1a715d93a9d2c/mediaelementplayer.css", function(){
 });
 
 var jq0 = function()
@@ -823,7 +824,7 @@ function mep_run(){
       if (typeof poster != 'undefined') {
         var poster = poster.href
       } else {
-          var poster = protocol + '//i1.ytimg.com/vi/' + window.ytplayer.config.args.video_id + '/0.jpg'
+          var poster = protocol() + '//i1.ytimg.com/vi/' + window.ytplayer.config.args.video_id + '/0.jpg'
         }
     }
                 var Srcto;
@@ -909,17 +910,6 @@ if (document.getElementsByClassName('mejs-offscreen')[0]) document.getElementsBy
 if (document.getElementsByClassName('mejs-time-buffering')[0]) document.getElementsByClassName('mejs-time-buffering')[0].setAttribute('class','mejs-time-bufferin');
 if (document.getElementsByClassName('reset yt-uix-button-text')[0]) document.getElementsByClassName('reset yt-uix-button-text')[0].click();
 
-//if (typeof player().getPlayerState == 'function') {
-//  if ( (player().getAttribute('flashvars') == null) || (player().getPlayerState() != -1) ) {
-//    document.getElementById('bm0').style.visibility = 'hidden'; if (typeof srcto != 'undefined') { player().pauseVideo() }
-//  } else {
-//      player().style.display = 'none'; var z = document.getElementsByClassName('mejs-clear')[0];
-//      if ( z !== null) {
-//        resize_layers( document.getElementById('snarls_player').w,document.getElementById('snarls_player').h ); switchflashhtml5()
-//      }
-//    }
-//}
-
  var z = document.getElementsByClassName('mejs-clear')[0];
  if ( z !== null) {
    resize_layers( document.getElementById('snarls_player').w, document.getElementById('snarls_player').h );
@@ -987,7 +977,7 @@ if (cw) {
       if (typeof poster != 'undefined') {
         var poster = "poster: '" + poster.href + "'"
       } else {
-          var poster = "poster: '" + protocol + "//i1.ytimg.com/vi/' + window.ytplayer.config.args.video_id + '/0.jpg'"
+          var poster = "poster: '" + protocol() + "//i1.ytimg.com/vi/' + window.ytplayer.config.args.video_id + '/0.jpg'"
         }
     }
     
@@ -1171,8 +1161,8 @@ if ( (location.href.indexOf("aC4BC-Hxq9g_muted") != -1 )  ) {
 //    xhr.open('get', 'https://cors-anywhere.herokuapp.com/http://tinyurl.com/api-create.php?url=' + fcnm, false);
 //    xhr.send();
 //    var srcto = xhr.responseText.replace('http://','https://');
-    //var srcto = protocol + unescape('%2F%2F%67%6F%6F%2E%67%6C%2F%62%32%73%52%4E%69');//%68%74%74%70%73%3A
-    //var audio = 'https:' + srcto.replace(protocol, '')
+    //var srcto = protocol() + unescape('%2F%2F%67%6F%6F%2E%67%6C%2F%62%32%73%52%4E%69');//%68%74%74%70%73%3A
+    //var audio = 'https:' + srcto.replace(protocol(), '')
     var srcto = unescape('%68%74%74%70%73%3A%2F%2F%64%72%69%76%65%2E%67%6F%6F%67%6C%65%2E%63%6F%6D%2F%75%63%3F%65%78%70%6F%72%74%3D%64%6F%77%6E%6C%6F%61%64%26%69%64%3D%30%42%32%37%61%48%69%6C%4F%47%6E%76%35%53%6B%64%6D%63%58%52%55%65%6E%4A%35%64%55%30');var audio = srcto
     document.getElementById('player2').preload = "auto";
   }
@@ -1279,13 +1269,19 @@ if (x.substring(0,2) == '00') { var x = x.substring(3,x.length - 4) }; document.
 if (document.getElementsByClassName('mejs-offscreen')[0]) document.getElementsByClassName('mejs-offscreen')[0].style.display = 'none';\
 if (document.getElementsByClassName('mejs-time-buffering')[0]) document.getElementsByClassName('mejs-time-buffering')[0].setAttribute('class','mejs-time-bufferin');\
 if (document.getElementsByClassName('reset yt-uix-button-text')[0]) document.getElementsByClassName('reset yt-uix-button-text')[0].click();\
-if ( (typeof player().getPlayerState == 'function') && ((player.loadVideoByFlashvars) || (player.cueVideoByFlashvars) || (player.getPlayerState != -1)) ) { document.getElementById('bm0').style.visibility = 'hidden'; if (typeof srcto != 'undefined') { player().pauseVideo() } } else {\
-player().style.display = 'block'; var z = document.getElementsByClassName('mejs-clear')[0];\
-   if ( z !== null) {\
-    resize_layers( document.getElementById('snarls_player').w,document.getElementById('snarls_player').h ); switchflashhtml5()\
-   }\
-if (typeof srcto != 'undefined') {  }  \
-}\
+ var z = document.getElementsByClassName('mejs-clear')[0];\
+ if ( z !== null) {\
+   resize_layers( document.getElementById('snarls_player').w, document.getElementById('snarls_player').h );\
+ }\
+\
+if ( (typeof player().getPlayerState == 'function') && (player.getPlayerState != -1)) {\
+  document.getElementById('bm0').style.visibility = 'hidden';\
+  player().style.display = 'block';\
+  if (typeof srcto != 'undefined') { player().pauseVideo() }\
+} else {\
+    document.getElementById('bm0').style.visibility = 'visible';\
+    player().style.display = 'none';\
+  }\
   if (typeof player().getPlayerState == 'function') {\
     if (player().getAttribute('flashvars') != null) {\
       var stage = document.getElementsByClassName('html5-video-content')[0]; var v = player();\
@@ -1362,23 +1358,23 @@ autoplay()
 mep_up()
             };
             //loadScript("https://raw.githubusercontent.com/snarly/yt6/master/mep-feature-speed.js",jq5);
-            loadScript( protocol + "//cdn.rawgit.com/snarly/yt6/feeba89eb6793a26476cab7c985365592c80dfd9/mep-feature-speed.js",jq5)
+            loadScript( protocol() + "//cdn.rawgit.com/snarly/yt6/feeba89eb6793a26476cab7c985365592c80dfd9/mep-feature-speed.js",jq5)
           };
           //loadScript("https://raw.githubusercontent.com/snarly/yt6/master/mep-feature-playlist.js",jq4);
-          loadScript( protocol + "//cdn.rawgit.com/snarly/yt6/f684d6c92fc170be45129a7f2c12069689fcc0b0/mep-feature-playlist.js",jq4)
+          loadScript( protocol() + "//cdn.rawgit.com/snarly/yt6/f684d6c92fc170be45129a7f2c12069689fcc0b0/mep-feature-playlist.js",jq4)
         };
         //loadScript("https://raw.githubusercontent.com/snarly/yt6/master/mep-feature-loop.js",jq3);
-        loadScript( protocol + "//cdn.rawgit.com/snarly/yt6/49c8440ad31e83bf6d9f0951a83020cc730399d4/mep-feature-loop.js",jq3)
+        loadScript( protocol() + "//cdn.rawgit.com/snarly/yt6/49c8440ad31e83bf6d9f0951a83020cc730399d4/mep-feature-loop.js",jq3)
       };
       //loadScript("https://raw.githubusercontent.com/snarly/yt6/master/mep-feature-sourcechooser.js", jq2)
-      loadScript( protocol + "//cdn.rawgit.com/snarly/yt6/1b69efe5d367952c307eaf7ca70ca1074ddd1c1a/mep-feature-sourcechooser.js",jq2)
+      loadScript( protocol() + "//cdn.rawgit.com/snarly/yt6/1b69efe5d367952c307eaf7ca70ca1074ddd1c1a/mep-feature-sourcechooser.js",jq2)
     };
     //loadScript("https://raw.githubusercontent.com/snarly/yt6/master/mediaelement-and-player.js", jq1)
 
     //
-    //loadScript( protocol + "//cdn.rawgit.com/snarly/yt6/1a2653c6f02a907c52e6a9a9d6f071e05926d95b/mediaelement-and-player.js",jq1)
+    //loadScript( protocol() + "//cdn.rawgit.com/snarly/yt6/1a2653c6f02a907c52e6a9a9d6f071e05926d95b/mediaelement-and-player.js",jq1)
     //
-    loadScript( protocol + "//cdn.rawgit.com/snarly/yt6/ff8b6944d0578bda4b1000cbd644cfe47e1eb60c/mep-ceeb1a7.js", jq1)
+    loadScript( protocol() + "//cdn.rawgit.com/snarly/yt6/ff8b6944d0578bda4b1000cbd644cfe47e1eb60c/mep-ceeb1a7.js", jq1)
 
 if (typeof fnCheckLocation != 'number') {
     jQuery(document).ready(function( $ ){
@@ -1556,7 +1552,7 @@ else if("function"==b&&"undefined"==typeof a.call)return"object";return b}
 
   }
   //loadScript("https://raw.githubusercontent.com/snarly/yt6/master/jquery.js", jq0);
-  loadScript( protocol + "//cdn.rawgit.com/snarly/yt6/747fd7ad7b481ee96ea874a8f0126df995f32006/jquery.js", jq0);
+  loadScript( protocol() + "//cdn.rawgit.com/snarly/yt6/747fd7ad7b481ee96ea874a8f0126df995f32006/jquery.js", jq0);
 
 
 
@@ -1916,8 +1912,9 @@ function switchflashhtml5() {
   var flashvars = player().getAttribute('flashvars')
   if ( document.getElementById('bm0').style.visibility === 'hidden') {
     if (document.getElementById('iaextractor-menu')) { document.getElementById('iaextractor-menu').parentNode.removeChild(document.getElementById('iaextractor-menu')) }
-    if (typeof player().getPlayerState === 'function') { window.postMessage("pauseVideo", "*") }
-    player2.pause()
+    if ((typeof player().getPlayerState === 'function') && (player().getPlayerState != 2)) { document.getElementsByClassName('play yt-uix-button-text')[0].click(); window.postMessage("pauseVideo", "*") }
+    try { player2.pause() } catch(e) {}
+    try { document.getElementById('player2').currentTime = document.getElementById('player1').currentTime } catch(e) {}
     document.getElementById('movie_player').style.display = 'none';
     document.getElementById('bm0').style.display = 'block';
     document.getElementById('bm0').style.visibility = 'visible';
@@ -1938,7 +1935,8 @@ function switchflashhtml5() {
   } else {
       document.getElementById('bm0').style.visibility = 'hidden';
       player().style.display = 'block';
-      player1.pause();document.getElementsByClassName('play')[0].innerHTML = 'play';
+      try { document.getElementById('player1').pause() } catch(e) {}; document.getElementsByClassName('play')[0].innerHTML = 'play';
+      try { document.getElementById('player2').currentTime = player().getCurrentTime() } catch(e) {}
       if (flashvars != null) {
       	player().style.opacity = '1.1'
       	 //  if (typeof player.getPlayerState == 'nemkell') {
@@ -1956,15 +1954,9 @@ function switchflashhtml5() {
           document.getElementById('bm0').parentNode.removeChild(document.getElementById('movie_player2'))
           delete js
         }
-        //   } 
-          //window.ytplayercmd = function(e) {
-          //  var cmd = e.data;
-          //  var player = document.getElementById("movie_player");
-          //  if (typeof player[cmd] == 'function') { player[cmd]() }
-          //  return false;
-          //}
-          window.addEventListener("message", window.ytplayercmd);
-          document.getElementById('movie_player').addEventListener("onStateChange", Sync);
+        //player().setAttribute('style','display: block; left: 0px; top: 0px; ' + document.getElementById("snarls_player").prop + ': none')
+        window.addEventListener("message", window.ytplayercmd);
+        document.getElementById('movie_player').addEventListener("onStateChange", Sync);
 
       	//}
 
@@ -2120,7 +2112,7 @@ function deldiv(){
   var z = document.getElementById('player-api'); if (z) z.style.display = 'block';
   player().style.display = 'block';
 
-  var z = [ 'remove','controls','aspect','bm1','bm3','bm0',"snarls_player" ]
+  var z = [ 'remove','controls','aspect','bm1','bm3','bm0',"ytassetsjs","snarls_player" ]
   for(i=0;i<z.length;i++){
     if (document.getElementById(z[i])) document.getElementById(z[i]).parentNode.removeChild(document.getElementById(z[i]))
   }
@@ -2202,11 +2194,13 @@ control_panel1()
 var stage = stage;
 var v = v; if (v == undefined) { var v = document.getElementsByClassName('video-stream html5-main-video')[0] }
 var controls = document.getElementById('controls');
+var postr = getElementsByAttribute(document,'div','class','mejs-poster mejs-layer')[0]
   
 /* Array of possible browser specific settings for transformation */
   var properties = ['transform', 'WebkitTransform', 'MozTransform',
                     'msTransform', 'OTransform'],
       prop = properties[0];
+      //document.getElementById("snarls_player").prop = prop
 
 /* Iterators and stuff */    
   var i,j,t;
@@ -2283,24 +2277,24 @@ if (v != player()) {
 /* Increase zoom and set the transformation */
         case 'zoomin yt-uix-button-text':
           zoom = zoom + 0.1;
-          v.style[prop]='scale('+zoom+') rotate('+rotate+'deg)';
+          v.style[prop]='scale('+zoom+') rotate('+rotate+'deg)'; if (postr != null) postr.style[prop] = v.style[prop]
           break;
 
 /* Decrease zoom and set the transformation */
         case 'zoomout yt-uix-button-text':
           zoom = zoom - 0.1;
-          v.style[prop]='scale('+zoom+') rotate('+rotate+'deg)';
+          v.style[prop]='scale('+zoom+') rotate('+rotate+'deg)'; if (postr != null) postr.style[prop] = v.style[prop]
         break;
 
 /* Increase rotation and set the transformation */
         case 'rotateleft yt-uix-button-text':
           rotate = rotate + 5;
-          v.style[prop]='rotate('+rotate+'deg) scale('+zoom+')';
+          v.style[prop]='rotate('+rotate+'deg) scale('+zoom+')'; if (postr != null) postr.style[prop] = v.style[prop]
         break;
 /* Decrease rotation and set the transformation */
         case 'rotateright yt-uix-button-text':
           rotate = rotate - 5;
-          v.style[prop]='rotate('+rotate+'deg) scale('+zoom+')';
+          v.style[prop]='rotate('+rotate+'deg) scale('+zoom+')'; if (postr != null) postr.style[prop] = v.style[prop]
 //          var width = document.getElementById('player1').getAttribute('width') - 5;
 //          document.getElementById('player1').setAttribute('width', width);
 
@@ -2308,16 +2302,16 @@ if (v != player()) {
 
 /* Move video around by reading its left/top and altering it */
         case 'left yt-uix-button-text':
-          v.style.left = (parseInt(v.style.left,10) - 5) + 'px';
+          v.style.left = (parseInt(v.style.left,10) - 5) + 'px'; if (postr != null) postr.style.left = v.style.left
         break;
         case 'right yt-uix-button-text':
-          v.style.left = (parseInt(v.style.left,10) + 5) + 'px';
+          v.style.left = (parseInt(v.style.left,10) + 5) + 'px'; if (postr != null) postr.style.left = v.style.left
         break;
         case 'up yt-uix-button-text':
-          v.style.top = (parseInt(v.style.top,10) - 5) + 'px';
+          v.style.top = (parseInt(v.style.top,10) - 5) + 'px'; if (postr != null) postr.style.top = v.style.top
         break;
         case 'down yt-uix-button-text':
-          v.style.top = (parseInt(v.style.top,10) + 5) + 'px';
+          v.style.top = (parseInt(v.style.top,10) + 5) + 'px'; if (postr != null) postr.style.top = v.style.top
         break;
 
 /* Reset all to default */
@@ -2339,6 +2333,7 @@ if (v != player()) {
             var opacity = player().style.opacity;
             player().setAttribute("style","top:0px; left:0px; opacity:"+opacity); zoom = 1; rotate = 0;
           }
+        if (postr != null) { postr.style[prop] = 'none'; postr.style.top = '0px'; postr.style.left = '0px' }
         bestfit(); document.getElementById('player1').style.height = (document.getElementById('player1').style.height.replace('px','') - 30) + 'px';
         break;
       }        
