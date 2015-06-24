@@ -610,7 +610,16 @@ if (document.getElementById("bm1") != null) document.getElementById("bm1").paren
 //Media streams unsupported by the browser may cause it to crash or the player to freeze on playback.'
   )
   document.getElementById('bm2').innerHTML = html.join('<br>')
+
+  var dw = document.createElement('button');
+  dw.id = "bm5";
+  dw.innerHTML = protocol + '//www.youtube.com/html5';
+  document.getElementById('bm2').appendChild(dw);
+  document.getElementById('bm5').style.color = "#EE0000";
+  document.getElementById('bm5').setAttribute('onclick', 'window.open( "' + protocol + '//www.youtube.com/html5", "_blank").focus() ')
+
   var csspopupheight0 = parseInt(document.getElementById('bm2').offsetHeight) + expire_date()[2];
+  
   if (!document.getElementById('bm3')) {
     var dw = document.createElement('div');
     dw.id = 'bm3';
@@ -685,14 +694,6 @@ if (document.getElementById("bm1") != null) document.getElementById("bm1").paren
   document.getElementById('bm4').setAttribute('class','snarl-button yt-uix-button-text');
   document.getElementById('bm4').onclick = onclic;
 
-
-
-  dw = document.createElement('button');
-  dw.id = "bm5";
-  dw.innerHTML = protocol + '//www.youtube.com/html5';
-  document.getElementById('bm3').appendChild(dw);
-  document.getElementById('bm5').style.color = "#EE0000";
-  document.getElementById('bm5').setAttribute('onclick', 'window.open( "' + protocol + '//www.youtube.com/html5", "_blank").focus() ')
 
   if (unescape(args.ttsurl) != 'undefined') {
     document.getElementById("bm3").innerHTML = document.getElementById("bm3").innerHTML + '<br><br>SubRip/WebVTT subtitles:<br>'
