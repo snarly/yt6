@@ -1459,6 +1459,7 @@ if (typeof fnCheckLocation != 'number') {
 
         // Check to see if the location has changed.
         if ( (document.getElementById('snarls_player') && (document.getElementById('snarls_player').strLocation != window.location.href) ) || (!watch) || (watch == null) ) {
+
          if ((typeof player().getPlayerState != 'function') && (flashvars != null) && (player().outerHTML != null)) { 
 
           //var z = document.getElementById('movie_player1')
@@ -1501,7 +1502,7 @@ if (typeof fnCheckLocation != 'number') {
                 }
               );
               //if (document.getElementById('snarls_player')) deldiv();
-//if ( (player() != null) && (document.getElementById('movie_player1')) ) { document.getElementById('movie_player1').appendChild(bup) }
+
 
               crossXmlHttpReq(window.ytplayer);
               redo_dl_button(  document.getElementById("snarls_player").args,  document.getElementById("snarls_player").html,  document.getElementById("snarls_player").href);
@@ -1531,16 +1532,16 @@ else if("function"==b&&"undefined"==typeof a.call)return"object";return b}
               mep_up();mep_run();
 
               if ((document.getElementById('movie_player1')) && (document.getElementById('movie_player1').firstChild.getAttribute('id') == 'movie_player0')) { document.getElementById('movie_player1').parentNode.removeChild(document.getElementById('movie_player1')) }
-              if (wide_view == false) document.getElementById('theater-background').style.backgroundColor = "transparent"
+              if (wide_view() == false) document.getElementById('theater-background').style.backgroundColor = "transparent"
               document.getElementById('bm4').style.display = 'inline-block';
               if (flashvars != null) document.getElementById('movie_player').setAttribute("flashvars",correct_flashvars(window.ytplayer.config.args))
               autoplay(true); 
 
             }
-        }//watch
+         }//args
 
-         }
-        }//flash
+        }//watch
+        }//location change
       }//fnCheckLocation
 
  
