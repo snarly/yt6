@@ -1909,13 +1909,20 @@ if (parseInt(tiny.marginLeft.replace('px','')) > 100) {
 
 
 function switchflashhtml5() {
+  try { player1.pause() } catch(e) {}
+  try { player2.pause() } catch(e) {}
+  if ((typeof player().getPlayerState === 'function') && (player().getPlayerState != 2)) { window.postMessage("pauseVideo", "*") }
   var flashvars = player().getAttribute('flashvars')
   if ( document.getElementById('bm0').style.visibility === 'hidden') {
     if (document.getElementById('iaextractor-menu')) { document.getElementById('iaextractor-menu').parentNode.removeChild(document.getElementById('iaextractor-menu')) }
-    if ((typeof player().getPlayerState === 'function') && (player().getPlayerState != 2)) { document.getElementsByClassName('play yt-uix-button-text')[0].click(); window.postMessage("pauseVideo", "*") }
-    try { player2.pause() } catch(e) {}
-    try { document.getElementById('player2').currentTime = document.getElementById('player1').currentTime } catch(e) {}
-    document.getElementById('movie_player').style.display = 'none';
+    if (flashvars != null) {
+      player().removeEventListener("onStateChange", Sync);
+      window.removeEventListener("message", window.ytplayercmd);
+      delete window.ytplayercmd
+    }
+    try { player2.currentTime = player1.currentTime } catch(e) {}
+    document.getElementById('player2').playbackRate = player1.playbackRate
+    player().style.display = 'none';
     document.getElementById('bm0').style.display = 'block';
     document.getElementById('bm0').style.visibility = 'visible';
     var stage = document.getElementsByClassName('html5-video-content')[1];
@@ -1929,20 +1936,13 @@ function switchflashhtml5() {
         var v = document.getElementsByClassName('video-stream html5-main-video')[0];
       }
     }
-//    document.getElementsByClassName('play')[0].innerHTML = 'play';
-    document.getElementById('player2').playbackRate = player1.playbackRate
-    if (flashvars != null) { player().removeEventListener("onStateChange", Sync); window.removeEventListener("message", window.ytplayercmd); delete window.ytplayercmd}
   } else {
       document.getElementById('bm0').style.visibility = 'hidden';
-      player().style.display = 'block';
-      try { document.getElementById('player1').pause() } catch(e) {}; document.getElementsByClassName('play')[0].innerHTML = 'play';
-      try { document.getElementById('player2').currentTime = player().getCurrentTime() } catch(e) {}
       if (flashvars != null) {
       	player().style.opacity = '1.1'
-      	 //  if (typeof player.getPlayerState == 'nemkell') {
-        var js = document.createElement("div")
-        js.id = "movie_player2"
-        document.getElementById('video-hide').appendChild(js)
+        var z = document.createElement("div")
+        z.id = "movie_player2"
+        document.getElementById('video-hide').appendChild(z)
         document.getElementById("movie_player2").innerHTML = document.getElementById('movie_player').outerHTML;
         var z = document.createElement("embed");
         z.id = "movie_player_";
@@ -1952,25 +1952,21 @@ function switchflashhtml5() {
         if ((document.getElementById('movie_player').outerHTML === document.getElementById("movie_player2").innerHTML) && (document.getElementById('movie_player_'))) { 
           document.getElementById('bm0').parentNode.removeChild(document.getElementById('movie_player_'))
           document.getElementById('bm0').parentNode.removeChild(document.getElementById('movie_player2'))
-          delete js
         }
-        //player().setAttribute('style','display: block; left: 0px; top: 0px; ' + document.getElementById("snarls_player").prop + ': none')
         window.addEventListener("message", window.ytplayercmd);
         document.getElementById('movie_player').addEventListener("onStateChange", Sync);
-
-      	//}
-
         var v = player();
-        //document.getElementById('player2').currentTime = player().getCurrentTime()
       } else {
+      	  player().style.display = 'block';
           var v = document.getElementsByClassName('video-stream html5-main-video')[0];
         }
       var stage = document.getElementsByClassName('html5-video-content')[0];
 
-      if (typeof player().getPlayerState == 'function') { 
-        window.postMessage("unMute", "*"); 
+      if (typeof player().getPlayerState === 'function') {
+        try { player2.currentTime = player().getCurrentTime() } catch(e) {}
         player().setPlaybackRate( document.getElementById('player2').playbackRate )        
       }
+      //window.postMessage("unMute", "*"); 
     }
 CtrlS(stage,v);
 
