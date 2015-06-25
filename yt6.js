@@ -606,7 +606,7 @@ if (document.getElementById("bm1") != null) document.getElementById("bm1").paren
   html.splice(1,0,'Direct links to YouTube media<br>for IP address: '+ expire_date()[0])
   html.push(
    '<br>Links will expire on <br>' + expire_date()[1] + 
-   '<br><br>V+A streams may refuse to serve while separate video and audio tracks synced may still do for playback. If those fail as well, try to remove and reload the script.'
+   '<br><br>V+A streams may refuse to serve while separate video- and audio-only tracks synced may still do for playback. If those fail as well, try to remove and reload the script.'
 //Media streams unsupported by the browser may cause it to crash or the player to freeze on playback.'
   )
   document.getElementById('bm2').innerHTML = html.join('<br>')
@@ -1407,8 +1407,8 @@ if (typeof fnCheckLocation != 'number') {
         var flashvars = player().getAttribute('flashvars')
         var watch = document.getElementById("page");if (watch) var watch = watch.getAttribute("class"); if ((typeof watch == 'string') && (watch.indexOf('watch') == -1)) var watch = null
         var autoscale = document.getElementById("placeholder-player")
-        var reset = document.getElementsByClassName('reset yt-uix-button-text')[0]
-        if ((autoscale) && (typeof reset != 'undefined')) {
+        //var reset = document.getElementsByClassName('reset yt-uix-button-text')[0];//  && (typeof reset != 'undefined')
+        if ((autoscale) && ((typeof player1.load == function) && (player1.isFullScreen == false)) ) {
           if ((autoscale.offsetWidth != autoscale.width) && (autoscale.offsetHeight != autoscale.height)) { //alert('0 ' + autoscale.height +" "+ autoscale.offsetHeight); 
             autoscale.width = autoscale.offsetWidth;
             autoscale.height = autoscale.offsetHeight;
@@ -1450,7 +1450,6 @@ if (typeof fnCheckLocation != 'number') {
               } 
             }
         }
-
 
 
         if (document.getElementById("theater-background").offsetWidth != document.getElementById("theater-background").width) {
