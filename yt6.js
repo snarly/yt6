@@ -606,7 +606,7 @@ if (document.getElementById("bm1") != null) document.getElementById("bm1").paren
   html.splice(1,0,'Direct links to YouTube media<br>for IP address: '+ expire_date()[0])
   html.push(
    '<br>Links will expire on <br>' + expire_date()[1] + 
-   '<br><br>V+A streams may refuse to serve while separate video- and audio-only tracks synced may still do for playback. If those fail as well, try to remove and reload the script.'
+   '<br><br>V+A sources may refuse to stream while separate video- and audio-only tracks synced may still do for playback. If those fail as well, refresh page and reload the script.'
 //Media streams unsupported by the browser may cause it to crash or the player to freeze on playback.'
   )
   document.getElementById('bm2').innerHTML = html.join('<br>')
@@ -1213,7 +1213,7 @@ if (!document.getElementById('mep_init')) {
                                              ) { player2.play() } else { if ((me.src.slice(-2) == '&2') && (Seek != 4)) { Seek = 4; player2.pause() }; if ((me.src.replace('&ratebypass=yes','') === player2.src.replace('&ratebypass=yes',''))) { Seek = 0; player2.pause() } }; if (Seek == 3 ) {Seek = null} });\
 					me.addEventListener('pause', function() { document.getElementsByClassName('play yt-uix-button-text')[0].innerHTML = 'play'; if (me.src.replace('&ratebypass=yes','') != player2.src.replace('&ratebypass=yes','')) { if (Seek == 3) { player2.pause() }; if (Seek === 0) { Seek = 1 }; player2.pause(); player2.currentTime = me.currentTime }});\
 					me.addEventListener('volumechange', function() { if (me.src.replace('&ratebypass=yes','') != player2.src.replace('&ratebypass=yes','')) { try { player2.setVolume( me.volume ) } catch(e) {}; if (me.muted) { player2.setMuted(true) } else player2.setMuted(false) }});\
-					me.addEventListener('ended', function() { if (player1.options.loop1) { Seek = 1; if (player2.currentTime == 0) { me.play() }; player2.currentTime = player2.duration } else { Seek = 3; if (player2.currentTime > 0) { player2.currentTime = player2.duration };\
+					me.addEventListener('ended', function() { alert(typeof player2.duration + player2.duration); if (player1.options.loop1) { Seek = 1; if (player2.currentTime == 0) { me.play() }; player2.currentTime = player2.duration } else { Seek = 3; if (player2.currentTime > 0) { player2.currentTime = player2.duration };\
                                           var autoplay = document.getElementsByClassName('playlist-nav-controls');\
                                           if (typeof autoplay == 'object') { var autoplay = autoplay[0].innerHTML.split('\>')[0].split('yt-uix-button-toggled')[1];\
                                             if (typeof autoplay == 'string') { ;;\
@@ -1408,7 +1408,7 @@ if (typeof fnCheckLocation != 'number') {
         var watch = document.getElementById("page");if (watch) var watch = watch.getAttribute("class"); if ((typeof watch == 'string') && (watch.indexOf('watch') == -1)) var watch = null
         var autoscale = document.getElementById("placeholder-player")
         var reset = document.getElementsByClassName('reset yt-uix-button-text')[0];//  
-        if ((autoscale) && (typeof reset != 'undefined') && (document.getElementById('bm0')) && 
+        if ((autoscale != null) && (typeof reset != 'undefined') && (document.getElementById('bm0')) && 
             ( ((player().offsetWidth != screen.width) && (player().offsetHeight != screen.height)) && 
               ((document.getElementById(mep_x('mep_')).offsetWidth != screen.width) &&
                (document.getElementById(mep_x('mep_')).offsetHeight != screen.height))
@@ -1444,15 +1444,17 @@ if (typeof fnCheckLocation != 'number') {
             if ((typeof player().getPlayerState == 'function') && (flashvars == null)) {
               var z = document.getElementsByClassName('video-stream html5-main-video');
               if (typeof z[0] != 'undefined') {
-                var x = document.getElementById('controls').prop;
-                if (z[0].style[x].indexOf('rotate') > -1) {
-                  z[0].prop = z[0].style[x]; 
-                } else {
-                    if (typeof z[0].prop != 'undefined') { 
-                      z[0].style[x] = z[0].prop;
+                var x = document.getElementById('controls'); 
+                if (x != null) {
+                  x = x.prop;
+                  if (z[0].style[x].indexOf('rotate') > -1) {
+                    z[0].prop = z[0].style[x]; 
+                  } else {
+                      if (typeof z[0].prop != 'undefined') { 
+                        z[0].style[x] = z[0].prop;
+                      }
                     }
-                  }
-              } 
+                } 
             }
         }
 
@@ -1481,8 +1483,10 @@ if (typeof fnCheckLocation != 'number') {
             }
           }
 
-        if ((watch) && (watch != null)) {
-          if ( ((window.ytplayer != null) && (window.ytplayer.config.args != null) && (document.getElementById('snarls_player').args != window.ytplayer.config.args) && (player() != null) ) ) {
+        if (watch != null) {
+          if ( ((window.ytplayer != null) && (window.ytplayer.config != null) && 
+               (window.ytplayer.config.loaded) && (document.getElementById('snarls_player').args != window.ytplayer.config.args) && 
+               (player() != null) && (document.getElementById('watch-discussion') != null) ) ) {
  
           // Store the new and previous locations.
           strPrevLocation = (document.getElementById('snarls_player').strLocation)?document.getElementById('snarls_player').strLocation:"";
@@ -2115,7 +2119,7 @@ function deldiv(){
   var z = document.getElementById('player-api'); if (z) z.style.display = 'block';
   player().style.display = '';
 
-  var z = [ 'remove','controls','aspect','bm1','bm3','bm0',"ytassetsjs","snarls_player" ]
+  var z = [ 'remove','controls','aspect','bm1','bm3','bm0',"snarls_player" ]
   for(i=0;i<z.length;i++){
     if (document.getElementById(z[i])) document.getElementById(z[i]).parentNode.removeChild(document.getElementById(z[i]))
   }
