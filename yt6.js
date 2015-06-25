@@ -1413,7 +1413,9 @@ if (typeof fnCheckLocation != 'number') {
               ((document.getElementById('bm0').offsetWidth != screen.width) &&
                (document.getElementById('bm0').offsetHeight != screen.height))
             )
-          ) {
+          ) { alert("sw: "+ screen.width +", sh: "+screen.height+", pw: "+ player().offsetWidth +
+                    ", ph: "+ player().offsetHeight +", bw: "+ document.getElementById('bm0').offsetWidth +
+                    ", bh: "+ document.getElementById('bm0').offsetHeight);
           if ((autoscale.offsetWidth != autoscale.width) && (autoscale.offsetHeight != autoscale.height)) { //alert('0 ' + autoscale.height +" "+ autoscale.offsetHeight); 
             autoscale.width = autoscale.offsetWidth;
             autoscale.height = autoscale.offsetHeight;
