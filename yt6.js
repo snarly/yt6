@@ -881,7 +881,7 @@ if (typeof srcto == 'undefined') {
 		audioWidth: 1, audioHeight: 1,
 		success: function(me) {  $('#audio-type').html( me.pluginType);
 					me.addEventListener('seeked', function() { if (Seek == 1) { Seek = null ;  player1.play() } else { if ( (!me.paused) && (document.getElementById('bm0').style.visibility != 'hidden') ) { player1.setCurrentTime( me.currentTime ) }} });
-					me.addEventListener('ended', function() { if (player1.options.loop1) { Seek = 1; me.currentTime = 0; player2.currentTime = 0; player1.play() } else { Seek = 3; me.currentTime = player2.currentTime = 0;
+					me.addEventListener('ended', function() { if (player1.options.loop1) { Seek = 1; me.currentTime = player1.currentTime = 0; } else { Seek = 3; me.currentTime = player2.currentTime = 0;
                                           if (autoplay()) { ;;
                                               document.getElementsByClassName('yt-uix-scroller-scroll-unit  currently-playing')[0].nextSibling.nextSibling.lastChild.previousSibling.click();
                                             } } });
@@ -899,7 +899,7 @@ if (typeof srcto == 'undefined') {
 		audioWidth: 1, audioHeight: 1,
 		success: function(me) {  $('#audio-type').html( me.pluginType);
 					me.addEventListener('seeked', function() { if (Seek == 1) { Seek = null ;  player1.play() } else { if (!me.paused) { player1.setCurrentTime( me.currentTime ) }} });
-					me.addEventListener('ended', function() { if (player1.options.loop1) { Seek = 1; me.currentTime = 0; player2.currentTime = 0; player1.play() } else { Seek = 3; me.currentTime = player2.currentTime = 0;
+					me.addEventListener('ended', function() { if (player1.options.loop1) { Seek = 1; me.currentTime = player1.currentTime = 0; } else { Seek = 3; me.currentTime = player2.currentTime = 0;
                                           if (autoplay()) { me.setSrc( '' );;
                                               document.getElementsByClassName('yt-uix-scroller-scroll-unit  currently-playing')[0].nextSibling.nextSibling.lastChild.previousSibling.click();
                                             } } });
@@ -1240,7 +1240,7 @@ if (typeof srcto == 'undefined') {\
 		audioWidth: 1, audioHeight: 1,\
 		success: function(me) {  $('#audio-type').html( me.pluginType);\
 					me.addEventListener('seeked', function() { if (Seek == 1) { Seek = null ;  player1.play() } else { if ( (!me.paused) && (document.getElementById('bm0').style.visibility != 'hidden') ) { player1.setCurrentTime( me.currentTime ) }} });\
-					me.addEventListener('ended', function() { if (player1.options.loop1) { Seek = 1; me.currentTime = 0; player2.currentTime = 0; player1.play() } else { Seek = 3; me.currentTime = player2.currentTime = 0;\
+					me.addEventListener('ended', function() { if (player1.options.loop1) { Seek = 1; me.currentTime = player1.currentTime = 0; } else { Seek = 3; me.currentTime = player2.currentTime = 0;\
                                           var autoplay = document.getElementsByClassName('playlist-nav-controls');\
                                           if (typeof autoplay == 'object') { var autoplay = autoplay[0].innerHTML.split('\>')[0].split('yt-uix-button-toggled')[1];\
                                             if (typeof autoplay == 'string') { ;;\
@@ -1260,7 +1260,7 @@ if (typeof srcto == 'undefined') {\
 		audioWidth: 1, audioHeight: 1,\
 		success: function(me) {  $('#audio-type').html( me.pluginType);\
 					me.addEventListener('seeked', function() { if (Seek == 1) { Seek = null ;  player1.play() } else { if (!me.paused) { player1.setCurrentTime( me.currentTime ) }} });\
-					me.addEventListener('ended', function() { if (player1.options.loop1) { Seek = 1; me.currentTime = 0; player2.currentTime = 0; player1.play() } else { Seek = 3; me.currentTime = player2.currentTime = 0;\
+					me.addEventListener('ended', function() { if (player1.options.loop1) { Seek = 1; me.currentTime = player1.currentTime = 0; } else { Seek = 3; me.currentTime = player2.currentTime = 0;\
                                           var autoplay = document.getElementsByClassName('playlist-nav-controls');\
                                           if (typeof autoplay == 'object') { var autoplay = autoplay[0].innerHTML.split('\>')[0].split('yt-uix-button-toggled')[1];\
                                             if (typeof autoplay == 'string') { me.setSrc( '' );;\
