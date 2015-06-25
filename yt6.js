@@ -1409,13 +1409,11 @@ if (typeof fnCheckLocation != 'number') {
         var autoscale = document.getElementById("placeholder-player")
         //var reset = document.getElementsByClassName('reset yt-uix-button-text')[0];//  && (typeof reset != 'undefined')
         if ((autoscale) && (document.getElementById('bm0')) && 
-            ( ((player().offsetWidth != screen.width) && (player().offsetHeight != screen.height)) || 
-              ((document.getElementById('bm0').offsetWidth != screen.width) &&
-               (document.getElementById('bm0').offsetHeight != screen.height))
+            ( ((player().offsetWidth != screen.width) && (player().offsetHeight != screen.height)) && 
+              ((document.getElementById(mep_x('mep_')).offsetWidth != screen.width) &&
+               (document.getElementById(mep_x('mep_')).offsetHeight != screen.height))
             )
-          ) { alert("sw: "+ screen.width +", sh: "+screen.height+", pw: "+ player().offsetWidth +
-                    ", ph: "+ player().offsetHeight +", bw: "+ document.getElementById('bm0').offsetWidth +
-                    ", bh: "+ document.getElementById('bm0').offsetHeight);
+          ) { //alert("sw: "+ screen.width +", sh: "+screen.height+", pw: "+ player().offsetWidth +                    ", ph: "+ player().offsetHeight +", bw: "+ document.getElementById('bm0').offsetWidth +                    ", bh: "+ document.getElementById('bm0').offsetHeight);
           if ((autoscale.offsetWidth != autoscale.width) && (autoscale.offsetHeight != autoscale.height)) { //alert('0 ' + autoscale.height +" "+ autoscale.offsetHeight); 
             autoscale.width = autoscale.offsetWidth;
             autoscale.height = autoscale.offsetHeight;
