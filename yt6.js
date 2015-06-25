@@ -1454,7 +1454,8 @@ if (typeof fnCheckLocation != 'number') {
                         z[0].style[x] = z[0].prop;
                       }
                     }
-                } 
+                }
+              }
             }
         }
 
