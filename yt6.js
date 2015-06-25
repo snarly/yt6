@@ -1407,8 +1407,8 @@ if (typeof fnCheckLocation != 'number') {
         var flashvars = player().getAttribute('flashvars')
         var watch = document.getElementById("page");if (watch) var watch = watch.getAttribute("class"); if ((typeof watch == 'string') && (watch.indexOf('watch') == -1)) var watch = null
         var autoscale = document.getElementById("placeholder-player")
-        //var reset = document.getElementsByClassName('reset yt-uix-button-text')[0];//  && (typeof reset != 'undefined')
-        if ((autoscale) && (document.getElementById('bm0')) && 
+        var reset = document.getElementsByClassName('reset yt-uix-button-text')[0];//  
+        if ((autoscale) && (typeof reset != 'undefined') && (document.getElementById('bm0')) && 
             ( ((player().offsetWidth != screen.width) && (player().offsetHeight != screen.height)) && 
               ((document.getElementById(mep_x('mep_')).offsetWidth != screen.width) &&
                (document.getElementById(mep_x('mep_')).offsetHeight != screen.height))
