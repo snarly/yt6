@@ -1408,8 +1408,12 @@ if (typeof fnCheckLocation != 'number') {
         var watch = document.getElementById("page");if (watch) var watch = watch.getAttribute("class"); if ((typeof watch == 'string') && (watch.indexOf('watch') == -1)) var watch = null
         var autoscale = document.getElementById("placeholder-player")
         //var reset = document.getElementsByClassName('reset yt-uix-button-text')[0];//  && (typeof reset != 'undefined')
-        if ((autoscale) && (typeof document.getElementById('player1').load == 'function') &&
-          (!document.getElementById('player1').isFullScreen)) {
+        if ((autoscale) && (document.getElementById('bm0')) && 
+            ( ((player().offsetWidth != screen.width) && (player().offsetHeight != screen.height)) || 
+              ((document.getElementById('bm0').offsetWidth != screen.width) &&
+               (document.getElementById('bm0').offsetHeight != screen.height))
+            )
+          ) {
           if ((autoscale.offsetWidth != autoscale.width) && (autoscale.offsetHeight != autoscale.height)) { //alert('0 ' + autoscale.height +" "+ autoscale.offsetHeight); 
             autoscale.width = autoscale.offsetWidth;
             autoscale.height = autoscale.offsetHeight;
