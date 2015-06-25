@@ -1408,7 +1408,8 @@ if (typeof fnCheckLocation != 'number') {
         var watch = document.getElementById("page");if (watch) var watch = watch.getAttribute("class"); if ((typeof watch == 'string') && (watch.indexOf('watch') == -1)) var watch = null
         var autoscale = document.getElementById("placeholder-player")
         //var reset = document.getElementsByClassName('reset yt-uix-button-text')[0];//  && (typeof reset != 'undefined')
-        if ((autoscale) && ((typeof player1.load == function) && (player1.isFullScreen == false)) ) {
+        if ((autoscale) && (typeof document.getElementById('player1').load == 'function') &&
+          (!document.getElementById('player1').isFullScreen)) {
           if ((autoscale.offsetWidth != autoscale.width) && (autoscale.offsetHeight != autoscale.height)) { //alert('0 ' + autoscale.height +" "+ autoscale.offsetHeight); 
             autoscale.width = autoscale.offsetWidth;
             autoscale.height = autoscale.offsetHeight;
