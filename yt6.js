@@ -324,7 +324,9 @@ function crossXmlHttpReq(ytplayer){
       nw = nw.replace('%s', arguments[++i])
     return nw;
   }
-  var fs = new RegExp(    sprintf('function %s[^}]+}[^}]+}', fcnm.replace('$', '\\$'))  );
+  var fs = new RegExp(    sprintf('function %s[^}]+}[^}]+}', fcnm.replace('$', '\\$'))  ); if (rpt.match(fs) == null) {
+  var fs = new RegExp(    sprintf('var %s=function[^}]+};', fcnm.replace('$', '\\$'))  );
+  }
   //var fs = new RegExp('function ' + fcnm.replace('\$','\\$') + '[^}]+}[^}]+}');
 
   function fcobj(){
@@ -1492,6 +1494,9 @@ if (typeof fnCheckLocation != 'number') {
             }
           }
 
+         if (document.getElementById('bm0').style.width != fix_Width()) aspect(true)
+
+
         if (watch != null) {
           if ( ((window.ytplayer != null) && (window.ytplayer.config != null) && 
                (window.ytplayer.config.loaded) && (document.getElementById('snarls_player').args != window.ytplayer.config.args) && 
@@ -2038,7 +2043,7 @@ function aspect2(w,h) {
   document.getElementById('player1').style.width = w;
 }
 
-function aspect() { 
+function aspect(a) { 
   var class_0 = document.getElementById('player').getAttribute('class')
   var class_1 = class_0.replace('small','small_a').replace('medium','medium_a').replace('large','large_a')
 
@@ -2048,7 +2053,7 @@ function aspect() {
       var playerwidth = document.getElementById('placeholder-player').offsetWidth + 'px'
     }
       
-  if (document.getElementById('bm0').style.width != playerwidth ) {
+  if ((document.getElementById('bm0').style.width != playerwidth ) && (!a)) {
     var w = playerwidth
     var h = Math.round((w.replace('px','') / document.getElementById("snarls_player").aspect_ratio)) + 'px';
     document.getElementById('player-api').style.width = w;
