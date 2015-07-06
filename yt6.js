@@ -1148,8 +1148,8 @@ function mep_run(){
 					      //me.style.height = (document.getElementById('snarls_player').h.replace('px','') - 30) + 'px';
 					      //me.style.width = document.getElementById('snarls_player').w
 					    };
-					  if ((typeof me.videoWidth == 'number') || (typeof me.videoHeight == 'number')) {
-					    document.getElementById('player1').width = me.videoWidth.replace('px','');  document.getElementById('player1').height = me.videoHeight.replace('px','');
+					  if ((typeof this.videoWidth == 'number') || (typeof this.videoHeight == 'number')) {
+					    document.getElementById('player1').width = this.videoWidth;  document.getElementById('player1').height = this.videoHeight;
 					  }
 					});
 					me.addEventListener('loadeddata', function() {
