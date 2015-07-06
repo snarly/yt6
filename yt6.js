@@ -2225,7 +2225,7 @@ document.getElementById('watch7-sidebar').removeAttribute('style')
               if (playlist) {
               	playlist.style.top = parseInt(h.replace('px','')) + 50 + 'px'
                 var y = parseInt(playlist.offsetHeight) + 5
-                (document.getElementById('watch7-notification-area') != null) document.getElementById('watch7-notification-area').style.top = '-' + y + 'px'
+                if (document.getElementById('watch7-notification-area') != null) document.getElementById('watch7-notification-area').style.top = '-' + y + 'px'
               }
               if (parseInt(a.style.left.replace('px','')) < parseInt('-' + (document.getElementById('placeholder-player').offsetWidth / 2))) {
                 a.style.left = document.getElementById('player-api').style.left = '-' + (document.getElementById('placeholder-player').offsetWidth / 2) + 'px'
