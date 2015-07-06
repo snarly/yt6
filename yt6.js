@@ -1371,7 +1371,9 @@ if ((typeof player().getPlayerState == 'function') && (player.getPlayerState != 
 set_controls();
 
 var z = document.getElementById(mep_x('mep_') + '_sourcechooser_360p  VP8 + 128k Vorbiswebm');
-if ((z != null)) { z.setAttribute('checked','checked'); player1.setSrc(document.getElementById('snarls_player').linx[43]);player1.load() };
+if ((z != null)) { alert(typeof z + z)
+  //z.setAttribute('checked','checked'); player1.setSrc(document.getElementById('snarls_player').linx[43]);player1.load()
+}
 
 
 }//mep_run
