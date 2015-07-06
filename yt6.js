@@ -1200,7 +1200,7 @@ function mep_run(){
 					    try { player2.setVolume( me.volume ) } catch(e) {};
 					    if (me.muted) {
 					      player2.setMuted(true)
-					    } else player2.setMuted(false)
+					    } else try { player2.setMuted(false) } catch(e) {}
 					  }
 					});
 					me.addEventListener('ended', function() {
@@ -1423,7 +1423,7 @@ if (cw != null) {
   }
 
 
-if (player() != null){
+//if (player() != null){
   if (typeof webm != 'undefined') {
   var js = document.createElement('source');
   js.id = '43';
@@ -1555,7 +1555,7 @@ if ((!slang) && ((kind != 'asr') || (text.length == b+1)) ) { var slang = lang_c
   }
 
 } else { var sref = null; var tracks = null }
-}//player_null
+//}//player_null
 
     var js = document.createElement('object');
     js.id = 'me_flash';
