@@ -178,7 +178,7 @@ if (typeof ytplayer != 'object') {
   //alert(typeof ytplayer ) 
 }
 
-if (typeof ytplay0 != 'undefined') {
+if (typeof ytplay0 == 'undefined') {
   document.getElementById("player-api").innerHTML = '      <span tabindex="0"></span><embed style="" wmode="transparent" type="application/x-shockwave-flash" src="https://s.ytimg.com/yts/swfbin/player-vfl6ioL_0/watch_as3.swf" name="movie_player" id="movie_player" flashvars="" allowfullscreen="true" allowscriptaccess="always" bgcolor="#000000"><span tabindex="0"></span>\
   <noembed><div class="yt-alert yt-alert-default yt-alert-error  yt-alert-player">  <div class="yt-alert-icon">\
     <span class="icon master-sprite yt-sprite"></span>\
@@ -1148,8 +1148,8 @@ function mep_run(){
 					      //me.style.height = (document.getElementById('snarls_player').h.replace('px','') - 30) + 'px';
 					      //me.style.width = document.getElementById('snarls_player').w
 					    };
-					  if ((typeof this.videoWidth == 'number') || (typeof this.videoHeight == 'number')) {
-					    document.getElementById('player1').width = this.videoWidth.replace('px','');  document.getElementById('player1').height = this.videoHeight.replace('px','');
+					  if ((typeof me.videoWidth == 'number') || (typeof me.videoHeight == 'number')) {
+					    document.getElementById('player1').width = me.videoWidth.replace('px','');  document.getElementById('player1').height = me.videoHeight.replace('px','');
 					  }
 					});
 					me.addEventListener('loadeddata', function() {
@@ -2225,7 +2225,7 @@ document.getElementById('watch7-sidebar').removeAttribute('style')
               if (playlist) {
               	playlist.style.top = parseInt(h.replace('px','')) + 50 + 'px'
                 var y = parseInt(playlist.offsetHeight) + 5
-                document.getElementById('watch7-notification-area').style.top = '-' + y + 'px'
+                (document.getElementById('watch7-notification-area') != null) document.getElementById('watch7-notification-area').style.top = '-' + y + 'px'
               }
               if (parseInt(a.style.left.replace('px','')) < parseInt('-' + (document.getElementById('placeholder-player').offsetWidth / 2))) {
                 a.style.left = document.getElementById('player-api').style.left = '-' + (document.getElementById('placeholder-player').offsetWidth / 2) + 'px'
