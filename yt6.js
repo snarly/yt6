@@ -276,8 +276,23 @@ if (typeof window.DOMParser != "undefined") {
 
 
   function fix_Width() {
+
+    var z = document.getElementById('placeholder-player').firstChild.style;
+    if (typeof z !== 'object') {
+      document.getElementById('placeholder-player').innerHTML = '<div class="player-api player-width player-height"></div>';
+    } else {
+        var o = document.getElementById('placeholder-player').firstChild.getAttribute('style'); if (o != null) document.getElementById('placeholder-player').firstChild.removeAttribute('style')
+      }
+
+    var z = document.getElementById('placeholder-player').firstChild.currentStyle || window.getComputedStyle(document.getElementById('placeholder-player').firstChild, null)
+
     var windowheight = parseInt(window.innerHeight || document.documentElement.clientHeight || document.getElementsByTagName('body')[0].clientHeight);
     var windowwidth = parseInt(window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth);
+ 
+if (wide_view() == false) {
+  var w_base = z.width;     if (o != null) document.getElementById('placeholder-player').firstChild.setAttribute('style', o)
+  } else {
+    if (o != null) document.getElementById('placeholder-player').firstChild.setAttribute('style', o)
     var x = document.getElementById('placeholder-player').offsetWidth + getScrollbarWidth()
     //window.screen.availWidth
     if ((windowwidth > 1933) && (windowheight > 940)){
@@ -291,17 +306,32 @@ if (typeof window.DOMParser != "undefined") {
             if (x > 640){
               var w_base = '640px';
             } else {
-                var w_base = '426px'
+                var w_base = '426px';
               }
           }
       }
-
+}//wide_view
     return w_base
   }
 
   function fix_Height() {
+
+    var z = document.getElementById('placeholder-player').firstChild.style;
+    if (typeof z !== 'object') {
+      document.getElementById('placeholder-player').innerHTML = '<div class="player-api player-width player-height"></div>';
+    } else {
+        var o = document.getElementById('placeholder-player').firstChild.getAttribute('style'); if (o != null) document.getElementById('placeholder-player').firstChild.removeAttribute('style')
+      }
+
+    var z = document.getElementById('placeholder-player').firstChild.currentStyle || window.getComputedStyle(document.getElementById('placeholder-player').firstChild, null)
+
     var windowheight = parseInt(window.innerHeight || document.documentElement.clientHeight || document.getElementsByTagName('body')[0].clientHeight);
     var windowwidth = parseInt(window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth);
+
+if (wide_view() == false) {
+  var h_base = z.height;     if (o != null) document.getElementById('placeholder-player').firstChild.setAttribute('style', o)
+  } else {
+    if (o != null) document.getElementById('placeholder-player').firstChild.setAttribute('style', o)
     var x = document.getElementById('placeholder-player').offsetWidth + getScrollbarWidth()
     if ((windowwidth > 1933) && (windowheight > 940)){
       var h_base = '734px';
@@ -312,11 +342,11 @@ if (typeof window.DOMParser != "undefined") {
             if (x > 640){
               var h_base = '390px';
             } else {
-                var h_base = '240px'
+                var h_base = '240px';
               }
           }
       }
-
+}//wide_view
     return h_base
   }
 
@@ -1393,6 +1423,12 @@ if (cw != null) {
 
 
 //if (!cw) {
+  var z = document.getElementById('placeholder-player').firstChild.style;
+  if (typeof z !== 'object') { document.getElementById('placeholder-player').innerHTML = '<div class="player-api player-width player-height"></div>'; }
+
+  var z = document.getElementById('placeholder-player').firstChild.currentStyle || window.getComputedStyle(document.getElementById('placeholder-player').firstChild, null);
+  document.getElementById("snarls_player").w = z.width
+  document.getElementById("snarls_player").h = z.height
 
   var w = document.getElementById("snarls_player").w
   var h = document.getElementById("snarls_player").h
@@ -1776,9 +1812,9 @@ if (typeof fnCheckLocation != 'number') {
                   if (autoscale.offsetWidth != autoscale.width) { //alert('1 width:' + autoscale.width +" offsetWidth:"+ autoscale.offsetWidth +" thb:"+ document.getElementById("theater-background").offsetWidth ); 
                     autoscale.width = autoscale.offsetWidth;
                     //aspect();aspect()
+                    bestfit()
                     if (bm0) ythtml5_size()
                     //document.getElementsByClassName('reset yt-uix-button-text')[0].click()
-                    bestfit()
                   }
                 }
             }
@@ -2081,7 +2117,7 @@ function resize_layers(w,h){
 
   var z = document.getElementsByClassName('mejs-offscreen'); if ((z != null) && (z[0] != null)) z[0].style.display = 'none';
   var z = document.getElementsByClassName('mejs-time-buffering'); if ((z != null) && (z[0] != null)) z[0].setAttribute('class','mejs-time-bufferin');
-  var p1 = document.getElementById('player1')
+  var bm0 = document.getElementById('bm0')
   var me_flash = document.getElementById(mep_x('me_flash__ __container'))
 
   //var noads = document.getElementById('player').innerHTML;onDownload(noads)
@@ -2089,8 +2125,6 @@ function resize_layers(w,h){
   if ((tiny == undefined) && (typeof window.getComputedStyle != 'undefined')) var tiny = window.getComputedStyle(document.getElementById('watch7-sidebar'), null);
   if ((tiny == undefined) || (tiny == null)) { var tiny = {}; tiny.marginLeft = "640px"; }
   //var tiny = document.getElementById('watch7-sidebar').currentStyle || window.getComputedStyle(document.getElementById('watch7-sidebar'));alert(typeof tiny + tiny);//alert("w7s:" + tiny.marginLeft + " w7sc" + tiny0.marginLeft)
-  var z = document.getElementById('placeholder-player').firstChild.style;
-  if (typeof z !== 'object') { document.getElementById('placeholder-player').innerHTML = '<div class="player-api player-width player-height"></div>'; }
 
   document.getElementById('bm0').style.width = w;
   document.getElementById('bm0').style.height = h;
@@ -2105,18 +2139,37 @@ function resize_layers(w,h){
     me_flash.style.width = w;
     me_flash.style.height = h;
   }
+
+  var z = document.getElementById('placeholder-player').firstChild.style;
+  if (typeof z !== 'object') {
+    document.getElementById('placeholder-player').innerHTML = '<div class="player-api player-width player-height"></div>';
+  } else {
+      var o = document.getElementById('placeholder-player').firstChild.getAttribute('style'); if (o != null) document.getElementById('placeholder-player').firstChild.removeAttribute('style')
+    }
+  var z = document.getElementById('placeholder-player').firstChild.currentStyle || window.getComputedStyle(document.getElementById('placeholder-player').firstChild, null)
+  document.getElementById('snarls_player').hdiff = parseInt( z.height.replace('px','') - (Math.round(z.height.replace('px','') / 40) * 40) ); 
+  var x = document.getElementById('snarls_player').hdiff
+  var y = Math.round(x / 2)
+  if (o != null) document.getElementById('placeholder-player').firstChild.setAttribute('style', o)
+
+  var p1 = document.getElementById('player1')
+
   if (p1 != null) {
-    p1.style.width = Math.round(parseInt(h.replace('px','') - 30) * parseFloat(document.getElementById('snarls_player').aspect_ratio)) + 'px';
-    p1.style.height = (h.replace('px','') - 30) + 'px';
-    p1.style.left = Math.round( parseInt( parseInt(w.replace('px','')) - parseInt(p1.style.width.replace('px','')) ) / 2) + 'px';
-    p1.style.top = '0px';
-    if (parseInt(document.getElementById('bm0').style.width.replace('px','')) < parseInt(p1.style.width.replace('px',''))){
-      p1.style.width = w
-      p1.style.height = ((Math.round(parseInt(w.replace('px','')) / parseFloat(document.getElementById('snarls_player').aspect_ratio))) - 30) + 'px';
-      p1.style.left = '0px'
-      p1.style.top = Math.round( parseInt( parseInt(h.replace('px','')) - parseInt(p1.style.height.replace('px','')) ) / 2) + 'px';
+    var p1 = p1.style
+    p1.width = Math.round(parseInt(h.replace('px','') - x) * parseFloat(document.getElementById('snarls_player').aspect_ratio)) + 'px';
+    p1.height = (h.replace('px','') - x) + 'px';
+    p1.left = Math.round( parseInt( parseInt(w.replace('px','')) - parseInt(p1.width.replace('px','')) ) / 2) + 'px';
+    p1.top = '0px';
+    if (parseInt(document.getElementById('bm0').style.width.replace('px','')) < parseInt(p1.width.replace('px',''))){
+      p1.width = w
+      p1.height = ((Math.round(parseInt(w.replace('px','')) / parseFloat(document.getElementById('snarls_player').aspect_ratio))) - x) + 'px';
+      p1.left = '0px'
+      p1.top = (Math.round( parseInt( parseInt(h.replace('px','')) - parseInt(p1.height.replace('px','') - x) ) / 2) - y) + 'px';
     }
   }
+
+
+
   var flashvars = player().getAttribute('flashvars')
   var c = document.getElementById("aspect")
   var d = document.getElementById('player').getAttribute("class")
@@ -2257,7 +2310,7 @@ if (parseInt(tiny.marginLeft.replace('px','')) > 100) {
         if (z[i].className !== 'mejs-overlay mejs-layer mejs-overlay-play') {
           z[i].style.height = document.getElementById('bm0').style.height
         } else {
-            z[i].style.height = parseInt(document.getElementById('bm0').style.height.replace('px','') - 30) + 'px'
+            z[i].style.height = parseInt(document.getElementById('bm0').style.height.replace('px','') - document.getElementById('snarls_player').hdiff) + 'px'
           }
       }
     }
@@ -2387,31 +2440,41 @@ set_controls()
 
 function ythtml5_size() {
   if ( (typeof player().getPlayerState == 'function') && (player().getAttribute('flashvars') == null) ) {
-    var x = 30
-    var y = 15
+    var z = document.getElementById('placeholder-player').firstChild.style;
+    if (typeof z !== 'object') {
+      document.getElementById('placeholder-player').innerHTML = '<div class="player-api player-width player-height"></div>';
+    } else {
+        var o = document.getElementById('placeholder-player').firstChild.getAttribute('style'); if (o != null) document.getElementById('placeholder-player').firstChild.removeAttribute('style')
+      }
+    var z = document.getElementById('placeholder-player').firstChild.currentStyle || window.getComputedStyle(document.getElementById('placeholder-player').firstChild, null)
+    document.getElementById('snarls_player').hdiff = parseInt( z.height.replace('px','') - (Math.round(z.height.replace('px','') / 40) * 40) ); 
+    var x = document.getElementById('snarls_player').hdiff
+    var y = Math.round(x / 2)
+    if (o != null) document.getElementById('placeholder-player').firstChild.setAttribute('style', o)
+
     var bm0 = document.getElementById('bm0').style
     var yt = document.getElementsByClassName('html5-video-content')[0].style
     var v = document.getElementsByClassName('video-stream html5-main-video')[0]
 //    if (document.getElementById('aspect')){
-      v.style.width = yt.width = Math.round((bm0.height.replace('px','') - x) * parseFloat(document.getElementById("snarls_player").aspect_ratio)) + 'px'
-      v.style.left = yt.left = (Math.round((bm0.width.replace('px','') - (bm0.height.replace('px','') - x) * parseFloat(document.getElementById("snarls_player").aspect_ratio)) / 2) ) + 'px';
+//      v.style.width = yt.width = Math.round((bm0.height.replace('px','') - x) * parseFloat(document.getElementById("snarls_player").aspect_ratio)) + 'px'
+//      v.style.left = yt.left = (Math.round((bm0.width.replace('px','') - (bm0.height.replace('px','') - x) * parseFloat(document.getElementById("snarls_player").aspect_ratio)) / 2) ) + 'px';
 //    v.style.left = yt.left = (Math.round((bm0.width.replace('px','') - (bm0.height.replace('px','') - x) * parseFloat(document.getElementById("snarls_player").aspect_ratio)) / 2) >>0) + 'px';
     v.style.width = yt.width = Math.round(parseInt(bm0.height.replace('px','') - x) * parseFloat(document.getElementById('snarls_player').aspect_ratio)) + 'px';
-    v.style.height = yt.height = (bm0.height.replace('px','') - 30) + 'px';
+    v.style.height = yt.height = (bm0.height.replace('px','') - x) + 'px';
     v.style.left = yt.left = Math.round( parseInt( parseInt(bm0.width.replace('px','')) - parseInt(yt.width.replace('px','')) ) / 2) + 'px';
     v.style.top = yt.top = '0px';
     if (parseInt(bm0.width.replace('px','')) < parseInt(yt.width.replace('px',''))){
       v.style.width = yt.width = bm0.width
-      v.style.height = yt.height = ((Math.round(parseInt(bm0.width.replace('px','')) / parseFloat(document.getElementById('snarls_player').aspect_ratio))) - 30) + 'px';
+      v.style.height = yt.height = ((Math.round(parseInt(bm0.width.replace('px','')) / parseFloat(document.getElementById('snarls_player').aspect_ratio))) - x) + 'px';
       v.style.left = yt.left = '0px'
-      v.style.top = yt.top = Math.round( parseInt( parseInt(bm0.height.replace('px','')) - parseInt(yt.height.replace('px','')) ) / 2) + 'px';
+      v.style.top = yt.top = (Math.round( parseInt( parseInt(bm0.height.replace('px','')) - parseInt(yt.height.replace('px','') - x ) ) / 2) - y) + 'px';
     }
 //    } else {
 //    	v.style.width = yt.width = bm.width
 //    	v.style.left = yt.left = '0px'
 //      }
-    v.style.height = yt.height = (bm0.height.replace('px','') - x) + 'px'
-    v.style.top = yt.top = (((bm0.height.replace('px','') - (bm0.height.replace('px','') - x)) / 2 >>0) - y) + 'px';
+//    v.style.height = yt.height = (bm0.height.replace('px','') - x) + 'px'
+//    v.style.top = yt.top = (((bm0.height.replace('px','') - (bm0.height.replace('px','') - x)) / 2 >>0) - y) + 'px';
   }
 }
 
@@ -2438,19 +2501,19 @@ function aspect2(w,h) {
   
   resize_layers(w,h)
 
-  var p1 = document.getElementById('player1')
-  if (p1 != null) {
-    p1.style.width = Math.round(parseInt(h.replace('px','')) * parseFloat(document.getElementById('snarls_player').aspect_ratio)) + 'px';
-    p1.style.height = (h.replace('px','') - 30) + 'px';
-    p1.style.left = Math.round( parseInt( parseInt(w.replace('px','')) - parseInt(p1.style.width.replace('px','')) ) / 2) + 'px';
-    p1.style.top = '0px';
-    if (parseInt(document.getElementById('bm0').style.width.replace('px','')) < parseInt(p1.style.width.replace('px',''))){
-      p1.style.width = w
-      p1.style.height = (Math.round(parseInt(w.replace('px','')) / parseFloat(document.getElementById('snarls_player').aspect_ratio))) + 'px';
-      p1.style.left = '0px'
-      p1.style.top = Math.round( parseInt( parseInt(h.replace('px','')) - parseInt(p1.style.height.replace('px','')) ) / 2) + 'px';
-    }
-  }
+//  var p1 = document.getElementById('player1')
+//  if (p1 != null) {
+//    p1.style.width = Math.round(parseInt(h.replace('px','')) * parseFloat(document.getElementById('snarls_player').aspect_ratio)) + 'px';
+//    p1.style.height = (h.replace('px','') - 30) + 'px';
+//    p1.style.left = Math.round( parseInt( parseInt(w.replace('px','')) - parseInt(p1.style.width.replace('px','')) ) / 2) + 'px';
+//    p1.style.top = '0px';
+//    if (parseInt(document.getElementById('bm0').style.width.replace('px','')) < parseInt(p1.style.width.replace('px',''))){
+//      p1.style.width = w
+//      p1.style.height = (Math.round(parseInt(w.replace('px','')) / parseFloat(document.getElementById('snarls_player').aspect_ratio))) + 'px';
+//      p1.style.left = '0px'
+//      p1.style.top = Math.round( parseInt( parseInt(h.replace('px','')) - parseInt(p1.style.height.replace('px','')) ) / 2) + 'px';
+//    }
+//  }
 }
 
 function aspect(a) { 
@@ -2673,6 +2736,16 @@ if ( (typeof player().getPlayerState == 'function') && (typeof player().getAttri
     v.style.top = '0px';
 
   }
+
+var tiny = document.getElementById('watch7-sidebar').currentStyle || window.getComputedStyle(document.getElementById('watch7-sidebar'), null)
+var playlist = document.getElementById('watch-appbar-playlist')
+            if ((parseInt(tiny.marginLeft.replace('px','')) < 100) || (tiny.marginLeft == 'auto')) {
+              if (playlist) {
+              	playlist.style.top = parseInt(bm0.style.height.replace('px','')) + 50 + 'px'
+                var y = parseInt(playlist.offsetHeight) + 5
+                if (document.getElementById('watch7-notification-area') != null) document.getElementById('watch7-notification-area').style.top = '-' + y + 'px'
+              }
+            }
 
 /* If there is a controls element, add the player buttons */
 /* TODO: why does Opera not display the rotation buttons? */
