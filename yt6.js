@@ -1702,7 +1702,7 @@ var z = getElementsByAttribute(document,"a","onclick")
 for(i = 0;i<z.length-1;i++){
  if (z[i] != undefined) {
   var timecode = z[i].getAttribute('onclick')
-  if ( (timecode != null) && (timecode.indexOf('yt.www.watch.player.seekTo\(') > -1) ) { alert(timecode.split('player.seekTo\(')[1].split('\)')[0])
+  if ( (timecode != null) && (timecode.indexOf('yt.www.watch.player.seekTo\(') > -1) ) {
     z[i].setAttribute("onclick", "if ( (player1) && (player1.currentTime) && (document.getElementById('bm0').style.visibility === 'visible')) { player1.currentTime = " + timecode.split('player.seekTo\(')[1].split('\)')[0] + " } else { " + timecode.split('\;')[0] + " };" + timecode.split('\;')[1] + "\;")
   }
  }
