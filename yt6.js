@@ -1701,10 +1701,9 @@ if (!document.getElementById('mep_init')) {
 var z = getElementsByAttribute(document,"a","onclick")
 for(i = 0;i<z.length-1;i++){
  if (z[i] != undefined) {
-  var timecode = z[i].parentNode.innerHTML
-  if (timecode.indexOf('\<a href\=\"\#\" onclick\=\"yt.www.watch.player.seekTo\(') === 0) { 
-    var timecode = z[i].parentNode.innerHTML.split('\<a href\=\"\#\" onclick="')[1].split('\"')[0]
-    z[i].outerHTML = z[i].parentNode.innerHTML.replace(timecode,"if ((player1.currentTime) \&\& (document.getElementById('bm0').style.visibility === 'visible')) { player1.currentTime = " + timecode.split('player.seekTo\(')[1].split('\)')[0] + " } else { " + timecode.split('\;')[0] + " };" + timecode.split('\;')[1] + "\;")
+  var timecode = z[i].getAttribute('onclick')
+  if ( (timecode != null) && (timecode.indexOf('yt.www.watch.player.seekTo\(') > -1) ) { alert(timecode.split('player.seekTo\(')[1].split('\)')[0])
+    z[i].setAttribute("onclick", "if ( (player1) && (player1.currentTime) && (document.getElementById('bm0').style.visibility === 'visible')) { player1.currentTime = " + timecode.split('player.seekTo\(')[1].split('\)')[0] + " } else { " + timecode.split('\;')[0] + " };" + timecode.split('\;')[1] + "\;")
   }
  }
 }
