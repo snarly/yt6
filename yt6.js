@@ -2616,6 +2616,7 @@ function deldiv(){
 
   var z = document.getElementById('player-api'); if (z) z.style.display = 'block';
   player().style.display = '';
+  player().removeAttribute('wmode');
 
   var z = [ 'remove','controls','aspect','bm1','bm3','bm0',"snarls_player" ]
   for(i=0;i<z.length;i++){
@@ -2808,7 +2809,7 @@ if ((v != stage) || ((v.getAttribute('name') != null) && (v.getAttribute('name')
 
 /* Increase zoom and set the transformation */
         case 'zoomin yt-uix-button-text':
-          player().setAttribute('wmode','transparent')
+          if (player().getAttribute('wmode') != 'transparent') player().setAttribute('wmode','transparent')
           zoom = zoom + 0.1;
           v.style[prop] ='scale('+zoom+') rotate('+rotate+'deg)'; if (postr != null) postr.style[prop] = v.style[prop]
           if ((me_flash != null) && (bm0.style.visibility = 'visible')) {
@@ -2818,7 +2819,7 @@ if ((v != stage) || ((v.getAttribute('name') != null) && (v.getAttribute('name')
 
 /* Decrease zoom and set the transformation */
         case 'zoomout yt-uix-button-text':
-          player().setAttribute('wmode','transparent')
+          if (player().getAttribute('wmode') != 'transparent') player().setAttribute('wmode','transparent')
           zoom = zoom - 0.1;
           v.style[prop]='scale('+zoom+') rotate('+rotate+'deg)'; if (postr != null) postr.style[prop] = v.style[prop]
           if ((me_flash != null) && (bm0.style.visibility = 'visible')) {
@@ -2828,7 +2829,7 @@ if ((v != stage) || ((v.getAttribute('name') != null) && (v.getAttribute('name')
 
 /* Increase rotation and set the transformation */
         case 'rotateleft yt-uix-button-text':
-          player().setAttribute('wmode','transparent')
+          if (player().getAttribute('wmode') != 'transparent') player().setAttribute('wmode','transparent')
           rotate = rotate + 5;
           v.style[prop]='rotate('+rotate+'deg) scale('+zoom+')'; if (postr != null) postr.style[prop] = v.style[prop]
           if ((me_flash != null) && (bm0.style.visibility = 'visible')) {
@@ -2837,7 +2838,7 @@ if ((v != stage) || ((v.getAttribute('name') != null) && (v.getAttribute('name')
         break;
 /* Decrease rotation and set the transformation */
         case 'rotateright yt-uix-button-text':
-          player().setAttribute('wmode','transparent')
+          if (player().getAttribute('wmode') != 'transparent') player().setAttribute('wmode','transparent')
           rotate = rotate - 5;
           v.style[prop]='rotate('+rotate+'deg) scale('+zoom+')'; if (postr != null) postr.style[prop] = v.style[prop]
           if ((me_flash != null) && (bm0.style.visibility = 'visible')) {
@@ -2854,28 +2855,28 @@ if ((v != stage) || ((v.getAttribute('name') != null) && (v.getAttribute('name')
           if ((me_flash != null) && (bm0.style.visibility = 'visible')) {
             me_flash.style.left = v.style.left
           }
-player().setAttribute('wmode','window');
+player().removeAttribute('wmode');
         break;
         case 'right yt-uix-button-text':
           v.style.left = (parseInt(v.style.left,10) + 5) + 'px'; if (postr != null) postr.style.left = v.style.left
           if ((me_flash != null) && (bm0.style.visibility = 'visible')) {
             me_flash.style.left = v.style.left
           }
-player().setAttribute('wmode','window');
+player().removeAttribute('wmode');
         break;
         case 'up yt-uix-button-text':
           v.style.top = (parseInt(v.style.top,10) - 5) + 'px'; if (postr != null) postr.style.top = v.style.top
           if ((me_flash != null) && (bm0.style.visibility = 'visible')) {
             me_flash.style.top = v.style.top
           }
-player().setAttribute('wmode','window');
+player().removeAttribute('wmode');
         break;
         case 'down yt-uix-button-text':
           v.style.top = (parseInt(v.style.top,10) + 5) + 'px'; if (postr != null) postr.style.top = v.style.top
           if ((me_flash != null) && (bm0.style.visibility = 'visible')) {
             me_flash.style.top = v.style.top
           }
-player().setAttribute('wmode','window');
+player().removeAttribute('wmode');
         break;
 
 /* Reset all to default */
