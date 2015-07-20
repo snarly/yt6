@@ -1509,13 +1509,11 @@ if (typeof linx[160] === 'string') { linx.splice(132, 1, linx[160])}
         if ((linx[i].split('//')[1] != webm.split('//')[1]) && (i != 160)) {
           js.src = 'https:' + linx[i]
           document.getElementById('player1').appendChild(js)
-          js.setAttribute("src",'https:' + linx[i])
         }
       } else {
           if (i != 160) {
             js.src = 'https:' + linx[i]
             document.getElementById('player1').appendChild(js)
-            js.setAttribute("src",'https:' + linx[i])
           }
         }
       delete js
@@ -1769,9 +1767,11 @@ if (typeof fnCheckLocation != 'number') {
 
       // This method removes the pound from the hash.
       var fnCleanHash = function( strHash ){
-        return(
-        strHash.substring( 1, strHash.length )
-        );
+        if ((strHash != undefined) && (strHash != null)) {
+          return(
+            strHash.substring( 1, strHash.length )
+          );
+        } else return("")
       }
 
       document.getElementById("placeholder-player").width = document.getElementById("placeholder-player").offsetWidth
