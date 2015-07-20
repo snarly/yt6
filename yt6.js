@@ -436,7 +436,7 @@ function set_controls(){
 		  var x = gclass('mejs-shim');
 		  if ((x != undefined) && (x != null) && (x[0] != undefined) && (x[0] != null)) {
 		    if (typeof x[0].pauseMedia == 'function') {
-		      var stage = x[0]; var v = stage; //try { v.pauseMedia() && v.paused = true } catch(e) {}
+		      var stage = x[0]; var v = document.getElementById('player1') ? document.getElementById('player1') : stage; //try { v.pauseMedia() && v.paused = true } catch(e) {}
 		    }
 		  }
 		}
@@ -2812,7 +2812,7 @@ if ((v != stage) || ((v.getAttribute('name') != null) && (v.getAttribute('name')
           if (player().getAttribute('wmode') != 'transparent') player().setAttribute('wmode','transparent')
           zoom = zoom + 0.1;
           v.style[prop] ='scale('+zoom+') rotate('+rotate+'deg)'; if (postr != null) postr.style[prop] = v.style[prop]
-          if ((me_flash != null) && (bm0.style.visibility = 'visible')) {
+          if ((me_flash != null) && (bm0.style.visibility == 'visible')) {
             me_flash.style[prop] = v.style[prop]
           }
           break;
@@ -2822,7 +2822,7 @@ if ((v != stage) || ((v.getAttribute('name') != null) && (v.getAttribute('name')
           if (player().getAttribute('wmode') != 'transparent') player().setAttribute('wmode','transparent')
           zoom = zoom - 0.1;
           v.style[prop]='scale('+zoom+') rotate('+rotate+'deg)'; if (postr != null) postr.style[prop] = v.style[prop]
-          if ((me_flash != null) && (bm0.style.visibility = 'visible')) {
+          if ((me_flash != null) && (bm0.style.visibility == 'visible')) {
             me_flash.style[prop] = v.style[prop]
           }
         break;
@@ -2832,7 +2832,7 @@ if ((v != stage) || ((v.getAttribute('name') != null) && (v.getAttribute('name')
           if (player().getAttribute('wmode') != 'transparent') player().setAttribute('wmode','transparent')
           rotate = rotate + 5;
           v.style[prop]='rotate('+rotate+'deg) scale('+zoom+')'; if (postr != null) postr.style[prop] = v.style[prop]
-          if ((me_flash != null) && (bm0.style.visibility = 'visible')) {
+          if ((me_flash != null) && (bm0.style.visibility == 'visible')) {
             me_flash.style[prop] = v.style[prop]
           }
         break;
@@ -2841,7 +2841,7 @@ if ((v != stage) || ((v.getAttribute('name') != null) && (v.getAttribute('name')
           if (player().getAttribute('wmode') != 'transparent') player().setAttribute('wmode','transparent')
           rotate = rotate - 5;
           v.style[prop]='rotate('+rotate+'deg) scale('+zoom+')'; if (postr != null) postr.style[prop] = v.style[prop]
-          if ((me_flash != null) && (bm0.style.visibility = 'visible')) {
+          if ((me_flash != null) && (bm0.style.visibility === 'visible')) {
             me_flash.style[prop] = v.style[prop]
           }
 //          var width = document.getElementById('player1').getAttribute('width') - 5;
@@ -2852,28 +2852,28 @@ if ((v != stage) || ((v.getAttribute('name') != null) && (v.getAttribute('name')
 /* Move video around by reading its left/top and altering it */
         case 'left yt-uix-button-text':
           v.style.left = (parseInt(v.style.left,10) - 5) + 'px'; if (postr != null) postr.style.left = v.style.left
-          if ((me_flash != null) && (bm0.style.visibility = 'visible')) {
+          if ((me_flash != null) && (bm0.style.visibility === 'visible')) {
             me_flash.style.left = v.style.left
           }
 player().removeAttribute('wmode');
         break;
         case 'right yt-uix-button-text':
           v.style.left = (parseInt(v.style.left,10) + 5) + 'px'; if (postr != null) postr.style.left = v.style.left
-          if ((me_flash != null) && (bm0.style.visibility = 'visible')) {
+          if ((me_flash != null) && (bm0.style.visibility === 'visible')) {
             me_flash.style.left = v.style.left
           }
 player().removeAttribute('wmode');
         break;
         case 'up yt-uix-button-text':
           v.style.top = (parseInt(v.style.top,10) - 5) + 'px'; if (postr != null) postr.style.top = v.style.top
-          if ((me_flash != null) && (bm0.style.visibility = 'visible')) {
+          if ((me_flash != null) && (bm0.style.visibility === 'visible')) {
             me_flash.style.top = v.style.top
           }
 player().removeAttribute('wmode');
         break;
         case 'down yt-uix-button-text':
           v.style.top = (parseInt(v.style.top,10) + 5) + 'px'; if (postr != null) postr.style.top = v.style.top
-          if ((me_flash != null) && (bm0.style.visibility = 'visible')) {
+          if ((me_flash != null) && (bm0.style.visibility === 'visible')) {
             me_flash.style.top = v.style.top
           }
 player().removeAttribute('wmode');
