@@ -4,6 +4,7 @@ if (document.getElementById(mep_x("google_ads_frame")) != null) {
 var noads = setInterval(function(){
   var ads = document.getElementsByClassName('videoAdUiSkipButton')[0]; if (ads != null) { ads.click();ads.setAttribute("class","videoAdUiSkipButton") }
   var ads = document.getElementsByClassName("video-ads html5-stop-propagation")[0]; if (ads != null) { ads.parentNode.removeChild(ads) };
+  var ads = document.getElementById("google_companion_ad_div"); if (ads != null) { ads.parentNode.removeChild(ads) };
   var ads = document.getElementById(mep_x("google_ads_frame")); if (ads != null) { ads.parentNode.removeChild(ads) }; if (document.getElementById('snarls_player') == null) { clearInterval(noads) }
             },2000)
 }
