@@ -1477,7 +1477,7 @@ var A = [],V = [],AV = [];    var linx = []; linx = document.getElementById("sna
 if (typeof linx[160] === 'string') { linx.splice(132, 1, linx[160])}
   for (i=0;i<linx.length;i++) {
     if (linx[i]) {
-      var js = document.createElement('source');js.id = i
+      var js = document.createElement('source')
       if (typeof qual[i] != 'undefined') {
         if (i < 103) {
           AV[i] = "itag=" + i
