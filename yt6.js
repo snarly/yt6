@@ -2413,7 +2413,7 @@ else if("function"==b&&"undefined"==typeof a.call)return"object";return b}
 			  p.setAttribute("src", z); 
 			  document.getElementsByClassName("video-stream html5-main-video")[0].setAttribute("src", z);
 			  reload_flashplayer();
-			  waitUntilExists('movie_player1',function(){
+			  waitUntilExists('movie_player',function(){
 			    document.getElementById('movie_player').style.display = 'none'
 			    if (bm0.style.visibility == 'hidden'){
 			      bm0.style.visibility = 'visible'
