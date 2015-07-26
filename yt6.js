@@ -597,7 +597,7 @@ function me_flash_up(){
     js.setAttribute("allowfullscreen","true");
     js.setAttribute("type","application/x-shockwave-flash");
     js.setAttribute("pluginspage","//www.macromedia.com/go/getflashplayer");
-    js.setAttribute("src",file);
+    js.setAttribute("src",decodeURIComponent(file));
 //"//cdn.rawgit.com/snarly/yt6/8adc04ba0f5099fdc6f0de0e2a5c966611b389fb/flashmediaelement-cdn.swf");
     //js.setAttribute("flashvars","id=me_flash&amp;isvideo=true&amp;autoplay=false&amp;preload=none&amp;width="+document.getElementById('snarls_player').w.replace('px','')+"&amp;startvolume=0.8&amp;timerrate=250&amp;flashstreamer=&amp;height="+document.getElementById('snarls_player').h.replace('px','')+"&amp;pseudostreamstart=start&amp;file=" + encodeURIComponent(protocol() + document.getElementById('snarls_player').linx[18]) );
     js.setAttribute("width","640");
@@ -931,6 +931,9 @@ function set_controls(){
 
 
 if (player() != null) {
+
+	if (player().getAttribute('name') == 'me_flash') player().style.display = ''
+
       var ytplayercmd = function(e) {
         var cmd = e.data;
         //var player = document.getElementById("movie_player");
@@ -1002,7 +1005,7 @@ var autoplay2 = gclass('playlist-mix-icon yt-sprite');
 	if (((typeof autoplay == 'string') || (typeof autoplay2[0] != 'undefined')) && (start)) player1.play()
       }
   } else {
-	if (d.indexOf('%26true') > -1){
+	if ((d == undefined) || (d.indexOf('%26true') > -1)) {
 	  if ((typeof p.getPlayerState == 'function') && (typeof p.getAttribute('flashvars') == 'string')) {
 	    bm0.style.visibility = 'hidden'
 	    p.style.display = '';
@@ -2384,7 +2387,7 @@ if (typeof fnCheckLocation != 'number') {
 		      }
 		  
                 } else {//me_flash
-		    if ((z.indexOf('%26true') > -1) && (typeof p.getAttribute('flashvars') == 'object') && (p.getAttribute('name') == 'me_flash') && (document.getElementById('movie_player_bup')) && (document.getElementById('movie_player_'))){
+		    if ( ((z == undefined) || (z.indexOf('%26true') > -1)) && (typeof p.getAttribute('flashvars') == 'object') && (p.getAttribute('name') == 'me_flash') && (document.getElementById('movie_player_bup')) && (document.getElementById('movie_player_'))){
 			document.getElementById('movie_player_').style.display = 'none';
 			document.getElementById('movie_player_').setAttribute('id','movie_player1')
 		        var bup = document.getElementById('movie_player1').cloneNode(true);
@@ -2396,8 +2399,9 @@ if (typeof fnCheckLocation != 'number') {
 	  		  document.getElementById('movie_player1').style.display = '';
 			  document.getElementById('movie_player1').setAttribute('id','movie_player')
 			  waitUntilExists('playerState_-1',function(){
-			    bm0.style.visibility = 'visible'
-			    document.getElementById('movie_player').style.display = 'none'
+			    bm0.style.visibility = 'hidden';
+			    document.getElementById('movie_player').style.display = '';
+			    reload_flashplayer();
 			    autoplay(true);
 			 })
 			})
