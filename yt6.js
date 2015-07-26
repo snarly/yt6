@@ -354,6 +354,7 @@ alert("THIS VIDEO IS ENCRYPTED BUT YOUR BROWSER SEEMS TOO OLD TO PROCEED WITHOUT
 
 		  waitUntilExists( "ytassetsjs", function() {
 		    document.getElementById("snarls_player").parentNode.removeChild(document.getElementById("snarls_player"))
+		    player().style.display = ''
 		    if (document.getElementById('snarls_player')==undefined) {
 			var proxiez = shuffle(['https://raw.githack.com','https://rawgit.com'])
 			for (i=0;i<proxiez.length;i++){
@@ -612,6 +613,9 @@ function me_flash_up(){
 //    var me_flash_param = getElementsByAttribute(js,"param","name","flashvars");
 //    me_flash_param[0].setAttribute("value", me_flash_param[0].getAttribute("value").split("&file=")[0] + "&amp;file=" + def_link())
 //    document.getElementsByClassName("video-stream html5-main-video")[0].setAttribute("src", def_link()); reload_flashplayer(); set_controls(
+
+player().style.display = 'none'
+
    }
 
 
@@ -621,8 +625,6 @@ if (document.getElementById("movie_player") == null) {
 if (typeof ytplayer != 'object') {
   window.ytplayer = {}
   eval(document.getElementById('player').textContent.split('var ytplayer = ytplayer || {};')[1].split(';(function()')[0]);//.split('"args":{')[1].split('",')[0]
-  //var ytplayer = document.getElementById('player').textContent.split('"args":{')[1].split('}')[0].split('","').join('"","').split('","')
-  //alert(typeof ytplayer ) 
 }
 
   if (typeof ytplay0 !== 'undefined') {
@@ -644,9 +646,21 @@ if (typeof ytplayer != 'object') {
 }
 
 
-if ((window.ytplayer) && (ytplayer.config) && (ytplayer.config.loaded == true)) { ajax1() } else { if (def_link() == '') { ajax1() } }
+if ((player() != null) && (window.ytplayer) && (ytplayer.config) && (ytplayer.config.loaded == true)) {
 
-if (document.getElementById("movie_player") == null) {  me_flash_up()  }
+  ajax1()
+
+} else {
+
+    if (typeof ytplayer != 'object') {
+      window.ytplayer = {};
+      eval(document.getElementById('player').textContent.split('var ytplayer = ytplayer || {};')[1].split(';(function()')[0]);
+    }
+    if (player() == null) me_flash_up();
+    if (def_link() == '') ajax1();
+
+}
+
 
 
 
