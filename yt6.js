@@ -1026,6 +1026,7 @@ var autoplay2 = gclass('playlist-mix-icon yt-sprite');
 if ((typeof p.getPlayerState != 'function') && (typeof p.getAttribute('flashvars') == 'string') && (!start)) {
 	p.style.display = 'none';
 	bm0.style.visibility = 'visible'
+	if (((typeof autoplay == 'string') || (typeof autoplay2[0] != 'undefined')) && (start)) player1.play()
 }
 
 set_controls()
@@ -2167,8 +2168,8 @@ if ( getElementsByAttribute(document,'div','class','yt-masthead-logo-container')
 
 mep_up()
             };
-            loadScript( protocol() + "//cdn.rawgit.com/snarly/yt6/feeba89eb6793a26476cab7c985365592c80dfd9/mep-feature-speed.js",jq5)
-            //loadScript("https://raw.githubusercontent.com/snarly/yt6/master/mep-feature-speed.js",jq5);
+        //    loadScript( protocol() + "//cdn.rawgit.com/snarly/yt6/feeba89eb6793a26476cab7c985365592c80dfd9/mep-feature-speed.js",jq5)
+            loadScript("https://localhost/svn/mep-feature-speed.js",jq5);
 //          };
 //          loadScript( protocol() + "//cdn.rawgit.com/snarly/yt6/f684d6c92fc170be45129a7f2c12069689fcc0b0/mep-feature-playlist.js",jq4)
           //loadScript("https://raw.githubusercontent.com/snarly/yt6/master/mep-feature-playlist.js",jq4);
@@ -2220,6 +2221,12 @@ if (typeof fnCheckLocation != 'number') {
 	var ads = document.getElementById("google_companion_ad_div"); if (ads != null) { ads.parentNode.removeChild(ads) };
 	var ads = document.getElementById(mep_x("google_ads_frame")); if (ads != null) { ads.parentNode.removeChild(ads) };
 
+	if ((document.getElementById("player2")) && (typeof document.getElementById("player2").play == 'function')) {
+	  var z = document.getElementById("player1").getElementsByTagName('source');
+	  while (z.length > 0){
+		document.getElementById("player1").removeChild(z[0]);
+	  }
+	}
         var flashvars = player().getAttribute('flashvars')
 	var p = player();
 	var bm0 = document.getElementById('bm0')
@@ -2429,7 +2436,7 @@ if (typeof fnCheckLocation != 'number') {
 		      }
 
                   }
-              };// else { autoplay(true) }
+              } else { waitUntilExists("movie_player", function(){ autoplay(true) }) }
 
             }
          }//args
