@@ -1,18 +1,95 @@
 (function($) {
+
     $.extend(mejs.MepDefaults, {
+
         fasterText: 'Speed Up',
-        slowerText: 'Slow Down'
+
+        slowerText: 'Slow Down',
+
+	speeds: ['5x', '2x', '1.5x', 'NTSC2PAL', 'Normal', 'PAL2NTSC', '0.5x'],
+
+	defaultSpeed: 'Normal',
+		
+	speedChar: ''
+
     });
+
 	MediaElementPlayer.prototype.buildspeed = function(player, controls, layers, media) {
+
 		if (!player.isVideo)
 			return;
 
 		// add speed controls
             var t = this;
 
-            var displaySpeed =
-                $('<div class="display-playback-speed hidden">Speed: 100%</div> ')
-                    .appendTo(controls);
+	  if (t.media.pluginType == 'native') {
+
+	    var
+		speedButton = null,
+		speedSelector = null,
+		playbackSpeed = null,
+//
+		html = '<div class="display-playback-speed"><div id="displaySpeed" wmode="transparent" style="width: 34px; padding: 0px 0px 0px 2px;">Speed 100%</div>' + 
+								'<button class="mejs-speed mejs-speed-button" aria-label="Playback Speed" title="Playback Speed" type="button" style="position: relative; width: 34px; height: 26px; top:-26px;">' + t.options.defaultSpeed + t.options.speedChar + '</button>' + 
+								'<div class="mejs-speed-selector" style="position: absolute; width: 86px; background: rgba(50,50,50,0.7); visibility: hidden;">' + 
+								'<ul>';
+				
+		if ($.inArray(t.options.defaultSpeed, t.options.speeds) === -1) {
+			t.options.speeds.push(t.options.defaultSpeed);
+		}
+
+		t.options.speeds.sort(function(a, b) {
+			return parseFloat(b) - parseFloat(a);
+		});
+
+		for (var i = 0, il = t.options.speeds.length; i<il; i++) {
+			html += '<li>' + 
+						'<input type="radio" name="speed" ' + 
+									'value="' + t.options.speeds[i] + '" ' + 
+									'id="' + t.options.speeds[i] + '" ' +
+									(t.options.speeds[i] == t.options.defaultSpeed ? ' checked' : '') + 
+									' />' +
+						'<label for="' + t.options.speeds[i] + '" ' + 
+									(t.options.speeds[i] == t.options.defaultSpeed ? ' class="mejs-speed-selected"' : '') +
+									'>' + t.options.speeds[i] + t.options.speedChar + '</label>' + 
+					'</li>';
+		}
+		html += '</ul></div></div>';
+
+		speedButton = $(html).appendTo(controls)
+					// hover
+					.hover(function() {
+						$(this).find('.mejs-speed-selector').css('visibility','visible');
+					}, function() {
+						$(this).find('.mejs-speed-selector').css('visibility','hidden');
+					})
+		speedSelector = speedButton.find('.mejs-speed-selector');
+		playbackspeed = t.options.defaultSpeed;
+
+		speedSelector
+			.on('click', 'input[type="radio"]', function() {
+				var newSpeed = $(this).attr('value');
+				if (newSpeed == 'NTSC2PAL') newSpeed = parseFloat(parseFloat(25 - parseFloat(24000/1001)) / parseFloat(24000/1001) + 1).toFixed(11)
+				if (newSpeed == 'PAL2NTSC') newSpeed = parseFloat(parseFloat(parseFloat(24000/1001) - 25) / 25 + 1).toFixed(11) 
+				if (newSpeed == 'Normal') newSpeed = 1
+				playbackspeed = newSpeed;
+				if ((typeof player1 != 'undefined') && (typeof player1.src == 'string') && (parseInt(player1.src.split('itag=')[1].split('&')[0]) > 102)) media.pause();
+				media.playbackRate = parseFloat(newSpeed);
+				document.getElementById('displaySpeed').innerHTML = "Speed " + Math.round(media.playbackRate * 100) + "%";
+				//speedButton.find('button').html("Speed " + Math.round(media.playbackRate * 100) + "%");//newSpeed + t.options.speedChar);
+				speedButton.find('.mejs-speed-selected').removeClass('mejs-speed-selected');
+				speedButton.find('input[type="radio"]:checked').next().addClass('mejs-speed-selected');
+			});
+
+		speedSelector
+			.height(
+				speedButton.find('.mejs-speed-selector ul').outerHeight(true) + 
+				speedButton.find('.mejs-speed-translations').outerHeight(true))
+			.css('top', ( -1 * ( speedSelector.height() ) ) + 'px');
+
+//            var displaySpeed =
+//                $('<div class="display-playback-speed hidden">Speed 100%</div> ')
+//                    .appendTo(controls);
 
             var faster =
                     $('<div class="mejs-button mejs-faster-button hidden" align="center" valign="center" style="padding:0px 0px 0px 10px">' +
@@ -21,10 +98,11 @@
                     .appendTo(controls)
                     .click(function(e) {
                         e.preventDefault();
-                        media.pause();
-                        if(media.playbackRate < 2.0) media.playbackRate = (media.playbackRate + 0.01).toFixed(2); //media.currentTime = media.currentTime - 0.0001;
+                        if ((typeof player1 != 'undefined') && (typeof player1.src == 'string') && (parseInt(player1.src.split('itag=')[1].split('&')[0]) > 102)) media.pause();
+                        if(media.playbackRate < 5.0) media.playbackRate = (media.playbackRate + 0.01).toFixed(2);
                         //media.play();
-                        displaySpeed.html("Speed: " + Math.round(media.playbackRate * 100) + "%");
+			document.getElementById('displaySpeed').innerHTML = "Speed " + Math.round(media.playbackRate * 100) + "%";
+			//speedButton.find('button').html("Speed " + Math.round(media.playbackRate * 100) + "%");
                         return false;
                     });
 
@@ -35,10 +113,11 @@
                         .appendTo(controls)
                         .click(function(e) {
                             e.preventDefault();
-                            media.pause();
-                            if(media.playbackRate > 0.5) media.playbackRate = (media.playbackRate - 0.01).toFixed(2); //media.currentTime = media.currentTime - 0.0001;
+                            if ((typeof player1 != 'undefined') && (typeof player1.src == 'string') && (parseInt(player1.src.split('itag=')[1].split('&')[0]) > 102)) media.pause();
+                            if(media.playbackRate > 0.25) media.playbackRate = (media.playbackRate - 0.01).toFixed(2);
                             //media.play();
-                            displaySpeed.html("Speed: " + Math.round(media.playbackRate * 100) + "%");
+			    document.getElementById('displaySpeed').innerHTML = "Speed " + Math.round(media.playbackRate * 100) + "%";
+			    //speedButton.find('button').html("Speed " + Math.round(media.playbackRate * 100) + "%");
                             return false;
                         });
 
@@ -46,7 +125,7 @@
                 if (media.pluginType === "native"){
                     faster.removeClass('hidden');
                     slower.removeClass('hidden');
-                    displaySpeed.removeClass('hidden');
+                    speedButton.removeClass('hidden');
                 }
             }, false);
 
@@ -57,10 +136,13 @@
                 if(!slower.hasClass("hidden")){
                     slower.addClass('hidden');
                 }
-                if(!displaySpeed.hasClass("hidden")){
-                    displaySpeed.addClass('hidden');
+                if(!speedButton.hasClass("hidden")){
+                    speedButton.addClass('hidden');
                 }
             }, false);
+
+	  }//pluginType
+
 	}
 
 
