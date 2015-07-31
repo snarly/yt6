@@ -94,11 +94,11 @@
 	width: 100px;
 	height: 100px;
 	margin: -50px 0 0 -50px;
-	background: url('https://raw.githubusercontent.com/snarly/yt6/master/bigplay.png') no-repeat;
+	background: url('https://cdn.rawgit.com/snarly/yt6/5b5ffacc074c0332f668db10bd2e3c36aa0be38e/bigplay.png') no-repeat;
 }
 
 .no-svg .mejs-overlay-button { 
-	background-image: url(bigplay.png);
+	background-image: url('https://cdn.rawgit.com/snarly/yt6/5b5ffacc074c0332f668db10bd2e3c36aa0be38e/bigplay.png');
 }
 
 .mejs-overlay:hover .mejs-overlay-button {
@@ -113,7 +113,7 @@
 	height: 80px;
 	margin: -40px 0 0 -40px;
 	background: #333;
-	background: url(background.png);
+	background: url('https://cdn.rawgit.com/snarly/yt6/5b5ffacc074c0332f668db10bd2e3c36aa0be38e/bigplay.png');
 	background: rgba(0, 0, 0, 0.9);
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(50,50,50,0.9)), to(rgba(0,0,0,0.9)));
 	background: -webkit-linear-gradient(top, rgba(50,50,50,0.9), rgba(0,0,0,0.9));
@@ -127,7 +127,7 @@
 	display: block;
 	width: 80px;
 	height: 80px;
-	background: transparent url('https://raw.githubusercontent.com/snarly/yt6/master/loading.gif') 50% 50% no-repeat;
+	background: transparent url('https://cdn.rawgit.com/snarly/yt6/2111d0cf292b9e0f9bcb7ab79a8698b5826b5ba5/loading.gif') 50% 50% no-repeat;
 }
 
 /* End: LAYERS */
@@ -178,11 +178,11 @@
 	height: 16px;
 	width: 16px;
 	border: 0;
-	background: transparent url('https://raw.githubusercontent.com/snarly/yt6/master/controls.png') no-repeat;
+	background: transparent url('https://cdn.rawgit.com/snarly/yt6/e7e07cca212378b89ecdc11946d2a3fa97a63f23/controls.png') no-repeat;
 }
 
 .no-svg .mejs-controls .mejs-button button { 
-	background-image: url(controls.png);
+	background-image: url('https://cdn.rawgit.com/snarly/yt6/e7e07cca212378b89ecdc11946d2a3fa97a63f23/controls.png');
 }
 
 /* :focus for accessibility */
@@ -779,6 +779,37 @@
 .mejs-contextmenu .mejs-contextmenu-item:hover {
 	background: #2C7C91;
 	color: #fff;
+}
+
+.mejs-controls .display-playback-speed .mejs-speed-selector {
+	position: relative;
+	visibility: hidden;
+	width: 86px;
+	background: url(background.png);
+	background: rgba(50,50,50,0.7);
+	border: solid 1px transparent;
+	padding: 10px;
+	overflow: hidden;
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
+	border-radius: 0;
+}
+
+.mejs-controls .display-playback-speed .mejs-speed-selector ul {
+	margin: 0;
+	padding: 0;
+	display: block;
+	list-style-type: none !important;
+	overflow: hidden;
+}
+
+.mejs-controls .display-playback-speed .mejs-speed-selector ul li {
+	margin: 0 0 0 0;
+	padding: 0;
+	list-style-type: none !important;
+	display: block;
+	color: #fff;
+	overflow: hidden;
 }
 
 /* Start: Source Chooser */
