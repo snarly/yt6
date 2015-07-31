@@ -2430,21 +2430,21 @@ if (yt6){
 		    if ( ((z == undefined) || (z.indexOf('%26true') > -1)) && (typeof p.getAttribute('flashvars') == 'object') && (p.getAttribute('name') == 'me_flash') && (document.getElementById('movie_player_bup')) && (document.getElementById('movie_player_'))){//alert('8');
 			yt6.autoplay = true;
 			document.getElementById('movie_player_').style.display = 'none';
-			document.getElementById('movie_player_').setAttribute('id','movie_player1')
-		        var bup = document.getElementById('movie_player1').cloneNode(true);
-			document.getElementById('movie_player1').setAttribute('id','movie_player_')
+			//document.getElementById('movie_player_').setAttribute('id','movie_player1')
+		        var bup = document.getElementById('movie_player_').cloneNode(true);
 		        player().parentNode.removeChild(player())
+			bup.setAttribute('id','movie_player')
         		document.getElementById("player-api").insertBefore(bup, document.getElementById("bm0"));
-			waitUntilExists('movie_player1',function(){//alert('9');
-			  document.getElementById('movie_player1').setAttribute("flashvars",correct_flashvars(window.ytplayer.config.args));
-	  		  document.getElementById('movie_player1').style.display = '';
-			  document.getElementById('movie_player1').setAttribute('id','movie_player')
-			  waitUntilExists('playerState_-1',function(){//alert('10');
-			    bm0.style.visibility = 'hidden';
-			    document.getElementById('movie_player').style.display = '';
+			waitUntilExists('movie_player',function(){//alert('9');
+			  document.getElementById('movie_player').setAttribute("flashvars",correct_flashvars(window.ytplayer.config.args));
+	  		  document.getElementById('movie_player').style.display = '';
+			  //document.getElementById('movie_player').setAttribute('id','movie_player')
+			  //waitUntilExists('playerState_-1',function(){//alert('10');
+			  //  bm0.style.visibility = 'hidden';
+			  //  document.getElementById('movie_player').style.display = '';
 			    reload_flashplayer();
 			    autoplay(true);
-			 })
+			 //})
 			})
 		    } else {//alert('11');
 			if ((typeof p.getAttribute('flashvars') == 'object') && (p.getAttribute('name') == 'me_flash')) {
@@ -2473,10 +2473,10 @@ if (yt6){
 
                   }
               }
-	      if (yt6.autoplay == false) {//alert('15');
-		//waitUntilExists("displaySpeed", function(){//alert('16');
-		//  yt6.autoplay = true; autoplay(true)
-		//})
+	      if (yt6.autoplay == false) {alert('15');
+		waitUntilExists("displaySpeed", function(){//alert('16');
+		  if (typeof document.getElementById('player1').play == 'function') { yt6.autoplay = true; autoplay(true) } 
+		})
 	      }
             }
          }//args
