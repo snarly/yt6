@@ -470,7 +470,7 @@ mejs.HtmlMediaElement = {
 		var 
 			existingSources = this.getElementsByTagName('source');
 		while (existingSources.length > 0){
-			this.removeChild(existingSources[0]);
+			//this.removeChild(existingSources[0]);
 		}
 	
 		if (typeof url == 'string') {
@@ -1962,7 +1962,7 @@ if (typeof jQuery != 'undefined') {
 			return (media.duration * 0.05);
 		},
 
-		// set dimensions via JS instead of CSS
+		// set dimensions via JS instead of CSS //true
 		setDimensions: false,
 
 		// width of audio player
