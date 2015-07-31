@@ -2299,7 +2299,7 @@ if (document.getElementById('snarls_player')){
         }
 
         // Check to see if the location has changed.
-        if ( (document.getElementById('snarls_player').strLocation != window.location.href) ) || (!watch) || (watch == null) ) {
+        if ( (document.getElementById('snarls_player').strLocation != window.location.href) || (!watch) || (watch == null) ) {
 
          if ((typeof p.getPlayerState != 'function') && (flashvars != null) && (p.outerHTML != null)) { 
 
