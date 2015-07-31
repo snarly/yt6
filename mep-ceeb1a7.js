@@ -467,11 +467,11 @@ mejs.HtmlMediaElement = {
 	setSrc: function (url) {
 		
 		// Fix for IE9 which can't set .src when there are <source> elements. Awesome, right?
-		var 
-			existingSources = this.getElementsByTagName('source');
-		while (existingSources.length > 0){
-			//this.removeChild(existingSources[0]);
-		}
+		//var 
+		//	existingSources = this.getElementsByTagName('source');
+		//while (existingSources.length > 0){
+		//	this.removeChild(existingSources[0]);
+		//}
 	
 		if (typeof url == 'string') {
 			this.src = url;
