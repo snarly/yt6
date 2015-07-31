@@ -2474,9 +2474,9 @@ if (yt6){
                   }
               }
 	      if (yt6.autoplay == false) {//alert('15');
-		waitUntilExists("displaySpeed", function(){//alert('16');
-		  yt6.autoplay = true; autoplay(true)
-		})
+		//waitUntilExists("displaySpeed", function(){//alert('16');
+		//  yt6.autoplay = true; autoplay(true)
+		//})
 	      }
             }
          }//args
