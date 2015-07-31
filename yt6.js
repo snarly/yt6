@@ -2169,7 +2169,7 @@ if ( getElementsByAttribute(document,'div','class','yt-masthead-logo-container')
 
 mep_up()
             };
-            loadScript( protocol() + "//cdn.rawgit.com/snarly/yt6/926dde9f0fe48c2390048f42960f677a836d3a63/mep-feature-speed.js",jq5)
+            loadScript( protocol() + "//cdn.rawgit.com/snarly/yt6/328352693d71e6eb7fbdb04dd59b3f0c46915ef8/mep-feature-speed.js",jq5)
 //		    loadScript( protocol() + "//cdn.rawgit.com/snarly/yt6/feeba89eb6793a26476cab7c985365592c80dfd9/mep-feature-speed.js",jq5);
 //          };
 //          loadScript( protocol() + "//cdn.rawgit.com/snarly/yt6/f684d6c92fc170be45129a7f2c12069689fcc0b0/mep-feature-playlist.js",jq4)
