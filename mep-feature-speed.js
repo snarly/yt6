@@ -31,7 +31,7 @@
 //
 		html = '<div class="display-playback-speed"><div id="displaySpeed" wmode="transparent" style="width: 34px; padding: 0px 0px 0px 2px;">Speed 100%</div>' + 
 								'<button class="mejs-speed mejs-speed-button" aria-label="Playback Speed" title="Playback Speed" type="button" style="position: relative; width: 34px; height: 26px; top:-26px;">' + t.options.defaultSpeed + t.options.speedChar + '</button>' + 
-								'<div class="mejs-speed-selector" style="position: absolute; right: 70px; width: 86px; line-height: 15px; background: rgba(50,50,50,0.7); visibility: hidden;">' + 
+								'<div class="mejs-speed-selector" style="position: absolute; right: 70px; width: 90px; line-height: 15px; background: rgba(50,50,50,0.7); visibility: hidden;">' + 
 								'<ul>';
 				
 		if ($.inArray(t.options.defaultSpeed, t.options.speeds) === -1) {
