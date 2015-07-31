@@ -2185,7 +2185,7 @@ mep_up()
     //
     //loadScript( protocol() + "//cdn.rawgit.com/snarly/yt6/1a2653c6f02a907c52e6a9a9d6f071e05926d95b/mediaelement-and-player.js",jq1)
     //
-    loadScript( protocol() + "//cdn.rawgit.com/snarly/yt6/a1bd85772c7464321737b5246e9537f71fdec331/mep-ceeb1a7.js", jq1)
+    loadScript( protocol() + "//cdn.rawgit.com/snarly/yt6/c081d5f0139560dcd79b6ef4a027e586e4b576d8/mep-ceeb1a7.js", jq1)
 
 if (typeof fnCheckLocation != 'number') {
     jQuery(document).ready(function( $ ){
