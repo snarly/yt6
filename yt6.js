@@ -2474,7 +2474,7 @@ if (yt6){
                   }
               }
 	      if (yt6.autoplay == false) {//alert('15');
-		waitUntilExists("movie_player", function(){//alert('16');
+		waitUntilExists("displaySpeed", function(){//alert('16');
 		  autoplay(true)
 		})
 	      }
