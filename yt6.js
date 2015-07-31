@@ -2473,7 +2473,7 @@ if (yt6){
 
                   }
               }
-	      if (yt6.autoplay == false) {alert('15');
+	      if (yt6.autoplay == false) {//alert('15');
 		waitUntilExists("displaySpeed", function(){//alert('16');
 		  if (typeof document.getElementById('player1').play == 'function') { yt6.autoplay = true; autoplay(true) } 
 		})
