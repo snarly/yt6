@@ -1,11 +1,11 @@
 
 
-if (document.getElementById(mep_x("google_ads_frame")) != null) {
+if ((document.getElementById(mep_x("google_ads_frame")) != null) && (typeof fnCheckLocation != 'number')) {
 var noads = setInterval(function(){
-  var ads = document.getElementsByClassName('videoAdUiSkipButton')[0]; if (ads != null) { ads.click();ads.setAttribute("class","videoAdUiSkipButton") }
-  var ads = document.getElementsByClassName("video-ads html5-stop-propagation")[0]; if (ads != null) { ads.parentNode.removeChild(ads) };
-  var ads = document.getElementById("google_companion_ad_div"); if (ads != null) { ads.parentNode.removeChild(ads) };
-  var ads = document.getElementById(mep_x("google_ads_frame")); if (ads != null) { ads.parentNode.removeChild(ads) };
+  var ads = document.getElementsByClassName('videoAdUiSkipButton')[0]; if (ads) { ads.click();ads.setAttribute("class","videoAdUiSkipButton") }
+  var ads = document.getElementsByClassName("video-ads html5-stop-propagation")[0]; if (ads) { ads.parentNode.removeChild(ads) };
+  var ads = document.getElementById("google_companion_ad_div"); if (ads) { ads.parentNode.removeChild(ads) };
+  var ads = document.getElementById(mep_x("google_ads_frame")); if (ads) { ads.parentNode.removeChild(ads) };
   if ((document.getElementById('snarls_player') == undefined) || (typeof fnCheckLocation == 'number')) { clearInterval(noads) }
 
             },2000)
@@ -1473,7 +1473,8 @@ if (!document.getElementById('video-hide')) {
 }
 
 
-loadCSS( protocol() + "//cdn.rawgit.com/snarly/yt6/ee5b34c3dd41fcea3f8e961389d1a715d93a9d2c/mediaelementplayer.css", function(){
+loadCSS( protocol() + "//cdn.rawgit.com/snarly/yt6/0abde21874a5c2d27142646b577ce26d0a7a678c/mediaelementplayer.css", function(){
+//"//cdn.rawgit.com/snarly/yt6/ee5b34c3dd41fcea3f8e961389d1a715d93a9d2c/mediaelementplayer.css"
 });
 
 var jq0 = function()
@@ -2168,8 +2169,8 @@ if ( getElementsByAttribute(document,'div','class','yt-masthead-logo-container')
 
 mep_up()
             };
-            loadScript( protocol() + "//cdn.rawgit.com/snarly/yt6/feeba89eb6793a26476cab7c985365592c80dfd9/mep-feature-speed.js",jq5)
-            //loadScript("https://raw.githubusercontent.com/snarly/yt6/master/mep-feature-speed.js", jq1)
+            loadScript( protocol() + "//cdn.rawgit.com/snarly/yt6/926dde9f0fe48c2390048f42960f677a836d3a63/mep-feature-speed.js",jq5)
+//		    loadScript( protocol() + "//cdn.rawgit.com/snarly/yt6/feeba89eb6793a26476cab7c985365592c80dfd9/mep-feature-speed.js",jq5);
 //          };
 //          loadScript( protocol() + "//cdn.rawgit.com/snarly/yt6/f684d6c92fc170be45129a7f2c12069689fcc0b0/mep-feature-playlist.js",jq4)
           //loadScript("https://raw.githubusercontent.com/snarly/yt6/master/mep-feature-playlist.js",jq4);
@@ -2184,7 +2185,7 @@ mep_up()
     //
     //loadScript( protocol() + "//cdn.rawgit.com/snarly/yt6/1a2653c6f02a907c52e6a9a9d6f071e05926d95b/mediaelement-and-player.js",jq1)
     //
-    loadScript( protocol() + "//cdn.rawgit.com/snarly/yt6/ff8b6944d0578bda4b1000cbd644cfe47e1eb60c/mep-ceeb1a7.js", jq1)
+    loadScript( protocol() + "//cdn.rawgit.com/snarly/yt6/a1bd85772c7464321737b5246e9537f71fdec331/mep-ceeb1a7.js", jq1)
 
 if (typeof fnCheckLocation != 'number') {
     jQuery(document).ready(function( $ ){
@@ -2216,10 +2217,12 @@ if (typeof fnCheckLocation != 'number') {
       // changes in the window location.
       var fnCheckLocation = function(){
 
-	var ads = document.getElementsByClassName('videoAdUiSkipButton')[0]; if (ads != null) { ads.click();ads.setAttribute("class","videoAdUiSkipButton") }
-	var ads = document.getElementsByClassName("video-ads html5-stop-propagation")[0]; if (ads != null) { ads.parentNode.removeChild(ads) };
-	var ads = document.getElementById("google_companion_ad_div"); if (ads != null) { ads.parentNode.removeChild(ads) };
-	var ads = document.getElementById(mep_x("google_ads_frame")); if (ads != null) { ads.parentNode.removeChild(ads) };
+if (document.getElementById('snarls_player')){
+
+	var ads = document.getElementsByClassName('videoAdUiSkipButton')[0]; if (ads) { ads.click();ads.setAttribute("class","videoAdUiSkipButton") }
+	var ads = document.getElementsByClassName("video-ads html5-stop-propagation")[0]; if (ads) { ads.parentNode.removeChild(ads) };
+	var ads = document.getElementById("google_companion_ad_div"); if (ads) { ads.parentNode.removeChild(ads) };
+	var ads = document.getElementById(mep_x("google_ads_frame")); if (ads) { ads.parentNode.removeChild(ads) };
 
 	if ((document.getElementById("player2")) && (typeof document.getElementById("player2").play == 'function')) {
 	  var z = document.getElementById("player1").getElementsByTagName('source');
@@ -2235,10 +2238,8 @@ if (typeof fnCheckLocation != 'number') {
         var reset = document.getElementsByClassName('reset yt-uix-button-text')[0];//  
 
   if (typeof p.getPlayerState == 'function') {
-    document.getElementsByClassName('alerts-wrapper')[0].setAttribute('id','playerState_' + p.getPlayerState())
-  } else {
-      document.getElementsByClassName('alerts-wrapper')[0].setAttribute('id','playerState_null')
-    }
+  document.getElementsByClassName('alerts-wrapper')[0].setAttribute('id','playerState_' + p.getPlayerState())
+  } else { document.getElementsByClassName('alerts-wrapper')[0].setAttribute('id','playerState_null') }
 
 
         if ((autoscale != null) && (typeof reset != 'undefined') && (bm0) && 
@@ -2298,7 +2299,7 @@ if (typeof fnCheckLocation != 'number') {
         }
 
         // Check to see if the location has changed.
-        if ( (document.getElementById('snarls_player') && (document.getElementById('snarls_player').strLocation != window.location.href) ) || (!watch) || (watch == null) ) {
+        if ( (document.getElementById('snarls_player').strLocation != window.location.href) ) || (!watch) || (watch == null) ) {
 
          if ((typeof p.getPlayerState != 'function') && (flashvars != null) && (p.outerHTML != null)) { 
 
@@ -2367,9 +2368,22 @@ if (typeof fnCheckLocation != 'number') {
               document.getElementById('bm4').style.display = 'inline-block';
 
 	      if (flashvars == null) var flashvars = getFlashVars();
-              if ( (p != null) && (bm0 != null) && ((p.getAttribute('name') == 'movie_player') || (p.getAttribute('name') == 'me_flash')) ){
+	      var z = def_link();
+		var me_flash = getElementsByAttribute(document.getElementById("player-api"),"embed","name",mep_x("me_flash_"))
+		if (me_flash[0] != undefined){
+		    var x = gclass('mejs-shim');
+		    if ((x != undefined) && (x != null) && (x[0] != undefined) && (x[0] != null)) {
+			  if ((document.getElementById(mep_x('me_flash_')) != null) && (bm0.style.visibility == 'visible')) {
+				  var me_flash = document.getElementById(mep_x('me_flash_'))
+			  }
+		    }
+		}
+		if (me_flash != document.getElementById(mep_x('me_flash_'))) var me_flash = null
+              if ( (p != null) && (bm0 != null) && 
+		   ( (p.getAttribute('name') == 'movie_player') || (p.getAttribute('name') == 'me_flash') )
+//		&& ( (typeof p.getPlayerState == 'function') || (typeof p.playMedia == 'function') || (( me_flash != null) && (typeof me_flash.playMedia == 'function')) )
+		 ) {//alert(z)
                 if ((p.getAttribute("name") != "me_flash") && (typeof p.getAttribute('flashvars') == 'string')) {
-		  var z = def_link();
 		    if ((z.indexOf('%26false') > -1)) {
 		      p.style.display = 'none';
 		      me_flash_2load();
@@ -2392,7 +2406,7 @@ if (typeof fnCheckLocation != 'number') {
 		        p.style.display = 'none';
 			p.setAttribute("flashvars",correct_flashvars(window.ytplayer.config.args));
 		        //p.setAttribute('src',z);
-		        //p.style.display = ''
+		        p.style.display = ''
 			autoplay(true)
 		      }
 		  
@@ -2438,13 +2452,14 @@ if (typeof fnCheckLocation != 'number') {
 		      }
 
                   }
-              } else { waitUntilExists("movie_player", function(){ autoplay(true) }) }
-
+              }
+	      if ((z.indexOf('%26true') > -1) && (typeof p.getPlayerState == 'function')) waitUntilExists("movie_player", function(){ autoplay(true) })
             }
          }//args
 
         }//watch
         }//location change
+}//player script present
       }//fnCheckLocation
 
  
@@ -3472,3 +3487,4 @@ if ((v != stage) || ((v.getAttribute('name') != null) && (v.getAttribute('name')
     }
   },false);
 }
+
