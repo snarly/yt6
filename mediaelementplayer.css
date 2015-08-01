@@ -785,7 +785,7 @@
 	position: relative;
 }
 
-.mejs-controls .display-playback-speed .mejs-sourcechooser-selector {
+.mejs-controls .display-playback-speed .mejs-speed-selector {
 	visibility: hidden;
 	position: absolute;
 	bottom: 26px;
@@ -802,7 +802,7 @@
 	border-radius: 0;
 }
 
-.mejs-controls .display-playback-speed .mejs-sourcechooser-selector ul {
+.mejs-controls .display-playback-speed .mejs-speed-selector ul {
 	margin: 0;
 	padding: 0;
 	display: block;
@@ -810,7 +810,7 @@
 	overflow: hidden;
 }
 
-.mejs-controls .display-playback-speed .mejs-sourcechooser-selector ul li {
+.mejs-controls .display-playback-speed .mejs-speed-selector ul li {
 	margin: 0 0 6px 0;
 	padding: 0;
 	list-style-type: none !important;
@@ -819,13 +819,13 @@
 	overflow: hidden;
 }
 
-.mejs-controls .display-playback-speed .mejs-sourcechooser-selector ul li input {
+.mejs-controls .display-playback-speed .mejs-speed-selector ul li input {
 	clear: both;
 	float: left;
 	margin: 3px 3px 0 5px;
 }
 
-.mejs-controls .display-playback-speed .mejs-sourcechooser-selector ul li label {
+.mejs-controls .display-playback-speed .mejs-speed-selector ul li label {
 	width: 100px;
 	float: left;
 	padding: 4px 0 0 0;
