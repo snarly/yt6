@@ -81,12 +81,15 @@
 				speedButton.find('input[type="radio"]:checked').next().addClass('mejs-speed-selected');
 			});
 
-		speedSelector.csstop = ( -1 * ( speedSelector.height() + 81 ) ) + 'px'
+
 		
 		speedSelector
 			.height(
 				speedButton.find('.mejs-speed-selector ul').outerHeight(true) + 
-				speedButton.find('.mejs-speed-translations').outerHeight(true))
+				speedButton.find('.mejs-speed-translations').outerHeight(true));
+		speedSelector
+			.csstop = ( -1 * ( speedSelector.height() + 81 ) ) + 'px';
+		speedSelector
 			.css('top', speedSelector.csstop);
 
 //            var displaySpeed =
