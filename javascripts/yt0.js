@@ -2177,7 +2177,7 @@ if ( getElementsByAttribute(document,'div','class','yt-masthead-logo-container')
 
 mep_up()
             };
-            loadScript( protocol() + "//cdn.rawgit.com/snarly/yt6/b3425c6594a55ffdfbc31decce9299efeeebab81/mep-feature-speed.js",jq5)
+            loadScript( protocol() + "//cdn.rawgit.com/snarly/yt6/30804dd46a96f34e4c91ccfb031c4be76d8a16d1/mep-feature-speed.js",jq5)
 //		    loadScript( protocol() + "//cdn.rawgit.com/snarly/yt6/feeba89eb6793a26476cab7c985365592c80dfd9/mep-feature-speed.js",jq5);
 //          };
 //          loadScript( protocol() + "//cdn.rawgit.com/snarly/yt6/f684d6c92fc170be45129a7f2c12069689fcc0b0/mep-feature-playlist.js",jq4)
@@ -2885,10 +2885,12 @@ if (parseInt(tiny.marginLeft.replace('px','')) > 100) {
           z.style.height = ((document.getElementById('bm0').style.height.replace('px','')) - 51) + 'px';
           z.style.width = "145px";//((src_chooser_size[1]) + 15) + 'px'
           z.style.overflowY = "scroll"
+          if (z.csstop) z.style.top = ( -1 * ((document.getElementById('bm0').style.height.replace('px','')) + 30 ) ) + 'px'
         } else {
             z.style.height = (src_chooser_size[0] + 1) + 'px'
             z.style.width = "130px";//(src_chooser_size[1] + 0) + 'px'
             z.style.overflowY = "hidden"
+            if (z.csstop) z.style.top = z.csstop
           }
       }
     }
