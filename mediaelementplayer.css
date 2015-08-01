@@ -784,7 +784,7 @@
 .mejs-controls .display-playback-speed .mejs-speed-selector {
 	position: absolute;
 	visibility: hidden;
-	bottom: 26px;
+	bottom: 30px;
 	right: 20px;
 	width: 130px;
 	background: url(background.png);
@@ -806,7 +806,7 @@
 }
 
 .mejs-controls .display-playback-speed .mejs-speed-selector ul li {
-	margin: 0 0 6px 0;
+	margin: 0 0 0 0;
 	padding: 0;
 	list-style-type: none !important;
 	display: block;
