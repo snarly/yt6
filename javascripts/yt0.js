@@ -1627,7 +1627,7 @@ function mep_run(){
 					  AV = document.getElementById('snarls_player').AV;
 					  player2.playbackRate = me.playbackRate;
 					  if ((Math.abs(parseFloat(parseFloat(player2.currentTime) - parseFloat(me.currentTime))) > parseFloat(0.3)) && (me.currentTime > 3)) {
-					    player2.currentTime = me.currentTime
+					    try { player2.currentTime = me.currentTime } catch(e) {}
 					  };
 					  if (  ((typeof AV[me.src.split('itag=')[1].split('&')[0]] !== 'string') && 
 						 (typeof A[me.src.split('itag=')[1].split('&')[0]] !== 'string') && 
@@ -1675,7 +1675,7 @@ function mep_run(){
 					      if ((player2.currentTime > 0) && (!isNaN(player2.duration))) {
 					        player2.currentTime = player2.duration
 					      };
-					      if (autoplay()) { ;;
+					      if (autoplay()) { ;alert(autoplay() + document.getElementById('bm0').style.visibility);
 					        if (!((typeof V[me.src.split('itag=')[1].split('&')[0]] == 'string') && (player2.currentTime == 0)) ) {
 					          document.getElementsByClassName('yt-uix-scroller-scroll-unit  currently-playing')[0].nextSibling.nextSibling.lastChild.previousSibling.click()
 					        };
