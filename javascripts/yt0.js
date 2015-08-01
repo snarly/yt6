@@ -2177,7 +2177,7 @@ if ( getElementsByAttribute(document,'div','class','yt-masthead-logo-container')
 
 mep_up()
             };
-            loadScript( protocol() + "//cdn.rawgit.com/snarly/yt6/e401222720136edb98e709712462901d04239c97/mep-feature-speed.js",jq5)
+            loadScript( protocol() + "//cdn.rawgit.com/snarly/yt6/fe0948ee6436b6558ccaeb6d1187f364d402163c/mep-feature-speed.js",jq5)
 //		    loadScript( protocol() + "//cdn.rawgit.com/snarly/yt6/feeba89eb6793a26476cab7c985365592c80dfd9/mep-feature-speed.js",jq5);
 //          };
 //          loadScript( protocol() + "//cdn.rawgit.com/snarly/yt6/f684d6c92fc170be45129a7f2c12069689fcc0b0/mep-feature-playlist.js",jq4)
@@ -2892,7 +2892,6 @@ if (parseInt(tiny.marginLeft.replace('px','')) > 100) {
             z.style.overflowY = "hidden"
             if (z.csstop) { alert("3 " + z.csstop); z.style.top = z.csstop }
           }
-          alert(typeof z.csstop + z.csstop)
       }
     }
   }
