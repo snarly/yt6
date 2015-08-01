@@ -1482,7 +1482,7 @@ if (!document.getElementById('video-hide')) {
 }
 
 
-loadCSS( protocol() + "//cdn.rawgit.com/snarly/yt6/5fb475e84daf63d196f508b7e7489d7928f23449/mediaelementplayer.css", function(){
+loadCSS( protocol() + "//cdn.rawgit.com/snarly/yt6/e916358b4e97f067098384ba88a3d26f973c3fc8/mediaelementplayer.css", function(){
 //"//cdn.rawgit.com/snarly/yt6/ee5b34c3dd41fcea3f8e961389d1a715d93a9d2c/mediaelementplayer.css"
 });
 
@@ -2177,7 +2177,7 @@ if ( getElementsByAttribute(document,'div','class','yt-masthead-logo-container')
 
 mep_up()
             };
-            loadScript( protocol() + "//cdn.rawgit.com/snarly/yt6/ecd312ad0f40de3a2c88c4cea1424b2a5903ef6d/mep-feature-speed.js",jq5)
+            loadScript( protocol() + "//cdn.rawgit.com/snarly/yt6/827ef67a8770a129868b9d646379cf183c056e15/mep-feature-speed.js",jq5)
 //		    loadScript( protocol() + "//cdn.rawgit.com/snarly/yt6/feeba89eb6793a26476cab7c985365592c80dfd9/mep-feature-speed.js",jq5);
 //          };
 //          loadScript( protocol() + "//cdn.rawgit.com/snarly/yt6/f684d6c92fc170be45129a7f2c12069689fcc0b0/mep-feature-playlist.js",jq4)
