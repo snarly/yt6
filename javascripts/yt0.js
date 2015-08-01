@@ -1482,7 +1482,7 @@ if (!document.getElementById('video-hide')) {
 }
 
 
-loadCSS( protocol() + "//cdn.rawgit.com/snarly/yt6/08c79bec55e3b4a27dfa98777b94fe4c7d37f21d/mediaelementplayer.css", function(){
+loadCSS( protocol() + "//cdn.rawgit.com/snarly/yt6/5552e51de7dc00b37dc8e65e3bc2813aafdaf5f2/mediaelementplayer.css", function(){
 //"//cdn.rawgit.com/snarly/yt6/ee5b34c3dd41fcea3f8e961389d1a715d93a9d2c/mediaelementplayer.css"
 });
 
@@ -2177,7 +2177,7 @@ if ( getElementsByAttribute(document,'div','class','yt-masthead-logo-container')
 
 mep_up()
             };
-            loadScript( protocol() + "//cdn.rawgit.com/snarly/yt6/687c4839382bbbe6840b1c5f76c4b662952d0a79/mep-feature-speed.js",jq5)
+            loadScript( protocol() + "//cdn.rawgit.com/snarly/yt6/c6653ffd73c7d127d7269910be1332586c4739ca/mep-feature-speed.js",jq5)
 //		    loadScript( protocol() + "//cdn.rawgit.com/snarly/yt6/feeba89eb6793a26476cab7c985365592c80dfd9/mep-feature-speed.js",jq5);
 //          };
 //          loadScript( protocol() + "//cdn.rawgit.com/snarly/yt6/f684d6c92fc170be45129a7f2c12069689fcc0b0/mep-feature-playlist.js",jq4)
@@ -2885,12 +2885,12 @@ if (parseInt(tiny.marginLeft.replace('px','')) > 100) {
           z.style.height = ((document.getElementById('bm0').style.height.replace('px','')) - 51) + 'px';
           z.style.width = "145px";//((src_chooser_size[1]) + 15) + 'px'
           z.style.overflowY = "scroll"
-          if (z.csstop) z.style.top = ( -1 * ( 30 + parseInt(document.getElementById('bm0').style.height.replace('px','')) ) ) + 'px';
+          //if (z.csstop) z.style.top = ( -1 * ( 30 + parseInt(document.getElementById('bm0').style.height.replace('px','')) ) ) + 'px';
         } else {
             z.style.height = (src_chooser_size[0] + 1) + 'px'
             z.style.width = "130px";//(src_chooser_size[1] + 0) + 'px'
             z.style.overflowY = "hidden"
-            if (z.csstop) z.style.top = z.csstop
+            //if (z.csstop) z.style.top = z.csstop
           }
       }
     }
