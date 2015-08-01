@@ -2177,7 +2177,7 @@ if ( getElementsByAttribute(document,'div','class','yt-masthead-logo-container')
 
 mep_up()
             };
-            loadScript( protocol() + "//cdn.rawgit.com/snarly/yt6/fe0948ee6436b6558ccaeb6d1187f364d402163c/mep-feature-speed.js",jq5)
+            loadScript( protocol() + "//cdn.rawgit.com/snarly/yt6/687c4839382bbbe6840b1c5f76c4b662952d0a79/mep-feature-speed.js",jq5)
 //		    loadScript( protocol() + "//cdn.rawgit.com/snarly/yt6/feeba89eb6793a26476cab7c985365592c80dfd9/mep-feature-speed.js",jq5);
 //          };
 //          loadScript( protocol() + "//cdn.rawgit.com/snarly/yt6/f684d6c92fc170be45129a7f2c12069689fcc0b0/mep-feature-playlist.js",jq4)
