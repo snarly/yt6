@@ -784,7 +784,9 @@
 .mejs-controls .display-playback-speed .mejs-speed-selector {
 	position: relative;
 	visibility: hidden;
-	width: 86px;
+	bottom: 26px;
+	right: 10px;
+	width: 130px;
 	background: url(background.png);
 	background: rgba(50,50,50,0.7);
 	border: solid 1px transparent;
@@ -811,6 +813,22 @@
 	color: #fff;
 	overflow: hidden;
 }
+
+.mejs-controls .display-playback-speed .mejs-speed-selector ul li input {
+	clear: both;
+	float: left;
+	margin: 3px 3px 0 5px;
+}
+
+.mejs-controls .display-playback-speed .mejs-speed-selector ul li label {
+	width: 100px;
+	float: left;
+	padding: 4px 0 0 0;
+	line-height: 15px;
+	font-family: helvetica, arial;
+	font-size: 10px;
+}
+
 
 /* Start: Source Chooser */
 .mejs-controls .mejs-sourcechooser-button {
