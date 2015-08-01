@@ -1654,7 +1654,7 @@ function mep_run(){
 					  if ((bn != null) && (bn[0] != null)) {
 					    bn[0].innerHTML = 'play'
 					  };
-					  if (me.src.replace('&ratebypass=yes','') != player2.src.replace('&ratebypass=yes','')) {
+					  if ((player2) && me.src.replace('&ratebypass=yes','') != player2.src.replace('&ratebypass=yes','')) {
 					    if (Seek == 3) { player2.pause() };
 					    if (Seek === 0) { Seek = 1 };
 					    try { player2.pause(); player2.currentTime = me.currentTime } catch(e) {}
@@ -2873,7 +2873,7 @@ if (parseInt(tiny.marginLeft.replace('px','')) > 100) {
     }
   }
 
-  var x = [document.getElementsByClassName('mejs-sourcechooser-selector'),document.getElementsByClassName('mejs-captions-selector')]
+  var x = [document.getElementsByClassName('mejs-sourcechooser-selector'), document.getElementsByClassName('mejs-captions-selector'), document.getElementsByClassName('mejs-speed-selector')]
   for(i=0;i<x.length;i++){
     if ((x[i] != null) && (x[i][0] != null)) {
       var z = x[i][0];
