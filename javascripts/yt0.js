@@ -1258,6 +1258,14 @@ if (rpt != null) {//ajax2
     if (z[i] == "s") var sig = 1;
     if (z[i] == "signature") var sig = 2;
   }
+
+  if ((player()) && (typeof player().getPlayerState == 'function') && (typeof player().getAttribute('flashvars') != 'string')){
+    document.getElementById('snarls_player').mediasource = document.getElementsByClassName('video-stream html5-main-video')[0].getAttribute('src')
+    html.push(
+     '<a href="#" onclick="javascript:document.getElementsByClassName(\"video-stream html5-main-video\")[0].setAttribute(\"src\", document.getElementById(\"snarls_player\").mediasource ); return false">Original YouTube mediasource (could be preemptive video commercial)</a>'
+    )
+  }
+	
 }//ajax2
 
 
@@ -1654,7 +1662,7 @@ function mep_run(){
 					  if ((bn != null) && (bn[0] != null)) {
 					    bn[0].innerHTML = 'play'
 					  };
-					  if ((player2) && me.src.replace('&ratebypass=yes','') != player2.src.replace('&ratebypass=yes','')) {
+					  if ( (player2) && (me.src.replace('&ratebypass=yes','') != player2.src.replace('&ratebypass=yes','')) ) {
 					    if (Seek == 3) { player2.pause() };
 					    if (Seek === 0) { Seek = 1 };
 					    try { player2.pause(); player2.currentTime = me.currentTime } catch(e) {}
