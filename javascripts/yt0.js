@@ -1259,12 +1259,12 @@ if (rpt != null) {//ajax2
     if (z[i] == "signature") var sig = 2;
   }
 
-  if ((player()) && (typeof player().getPlayerState == 'function') && (typeof player().getAttribute('flashvars') != 'string')){
-    document.getElementById('snarls_player').mediasource = document.getElementsByClassName('video-stream html5-main-video')[0].getAttribute('src')
-    html.push(
-     '<a href="#" onclick="javascript:document.getElementsByClassName(&quot;video-stream html5-main-video&quot;)[0].setAttribute(&quot;src&quot;, document.getElementById(&quot;snarls_player&quot;).mediasource ); return false">Original YouTube mediasource \(or preemptive video ad\)</a>'
-    )
-  }
+//  if ((player()) && (typeof player().getPlayerState == 'function') && (typeof player().getAttribute('flashvars') != 'string')){
+//    document.getElementById('snarls_player').mediasource = document.getElementsByClassName('video-stream html5-main-video')[0].getAttribute('src')
+//    html.push(
+//     '<a href="#" onclick="javascript:document.getElementsByClassName(&quot;video-stream html5-main-video&quot;)[0].setAttribute(&quot;src&quot;, document.getElementById(&quot;snarls_player&quot;).mediasource ); return false">Original YouTube mediasource \(or preemptive video ad\)</a>'
+//    )
+//  }
 	
 }//ajax2
 
@@ -1662,10 +1662,12 @@ function mep_run(){
 					  if ((bn != null) && (bn[0] != null)) {
 					    bn[0].innerHTML = 'play'
 					  };
-					  if ( (player2 != undefined) && (me.src.replace('&ratebypass=yes','') != player2.src.replace('&ratebypass=yes','')) ) {
-					    if (Seek == 3) { player2.pause() };
-					    if (Seek === 0) { Seek = 1 };
-					    try { player2.pause(); player2.currentTime = me.currentTime } catch(e) {}
+					  if (typeof player2 != 'undefined') {
+					    if (me.src.replace('&ratebypass=yes','') != player2.src.replace('&ratebypass=yes','')) {
+					      if (Seek == 3) { player2.pause() };
+					      if (Seek === 0) { Seek = 1 };
+					      try { player2.pause(); player2.currentTime = me.currentTime } catch(e) {}
+					    }
 					  }
 					});
 					me.addEventListener('volumechange', function() {
