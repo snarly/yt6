@@ -87,10 +87,11 @@
 			.height(
 				speedButton.find('.mejs-speed-selector ul').outerHeight(true) + 
 				speedButton.find('.mejs-speed-translations').outerHeight(true));
-		speedSelector
+			.css('top', ( -1 * ( speedSelector.height() + 81 ) ) + 'px');
+
+		document.getElementsByClassName('mejs-speed-selector')[0]
 			.csstop = ( -1 * ( speedSelector.height() + 81 ) ) + 'px';
-		speedSelector
-			.css('top', speedSelector.csstop);
+
 
 //            var displaySpeed =
 //                $('<div class="display-playback-speed hidden">Speed 100%</div> ')
