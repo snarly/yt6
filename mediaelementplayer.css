@@ -781,17 +781,12 @@
 	color: #fff;
 }
 
-.mejs-controls .display-playback-speed {
-	position: relative;
-}
-
 .mejs-controls .display-playback-speed .mejs-speed-selector {
-	visibility: hidden;
 	position: absolute;
+	visibility: hidden;
 	bottom: 26px;
 	right: 20px;
 	width: 130px;
-	height: 100px;
 	background: url(background.png);
 	background: rgba(50,50,50,0.7);
 	border: solid 1px transparent;
@@ -833,6 +828,7 @@
 	font-family: helvetica, arial;
 	font-size: 10px;
 }
+
 
 /* Start: Source Chooser */
 .mejs-controls .mejs-sourcechooser-button {
