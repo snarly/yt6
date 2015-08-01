@@ -1262,7 +1262,7 @@ if (rpt != null) {//ajax2
   if ((player()) && (typeof player().getPlayerState == 'function') && (typeof player().getAttribute('flashvars') != 'string')){
     document.getElementById('snarls_player').mediasource = document.getElementsByClassName('video-stream html5-main-video')[0].getAttribute('src')
     html.push(
-     '<a href=\"#\" onclick=\"javascript:document.getElementsByClassName(\"video-stream html5-main-video\")[0].setAttribute(\"src\", document.getElementById(\"snarls_player\").mediasource ); return false\">Original YouTube mediasource (could be preemptive video commercial)</a>'
+     '<a href=\"#\" onclick=\"javascript:(function(){document.getElementsByClassName(\"video-stream html5-main-video\")[0].setAttribute(\"src\", document.getElementById(\"snarls_player\").mediasource ); return false\})()">Original YouTube mediasource \(could be preemptive video commercial\)</a>'
     )
   }
 	
