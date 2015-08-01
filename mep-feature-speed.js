@@ -86,11 +86,8 @@
 		speedSelector
 			.height(
 				speedButton.find('.mejs-speed-selector ul').outerHeight(true) + 
-				speedButton.find('.mejs-speed-translations').outerHeight(true))
-			.css('top', ( -1 * ( speedSelector.height() + 81 ) ) + 'px');
-
-		document.getElementsByClassName('mejs-speed-selector')[0]
-			.csstop = ( -1 * ( speedSelector.height() + 81 ) ) + 'px';
+				speedButton.find('.mejs-speed-translations').outerHeight(true));
+			//.css('top', ( -1 * ( speedSelector.height() + 81 ) ) + 'px');
 
 
 //            var displaySpeed =
