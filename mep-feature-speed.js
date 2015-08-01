@@ -81,14 +81,13 @@
 				speedButton.find('input[type="radio"]:checked').next().addClass('mejs-speed-selected');
 			});
 
-
+		speedSelector.csstop = ( -1 * ( speedSelector.height() + 81 ) ) + 'px'
 		
 		speedSelector
 			.height(
 				speedButton.find('.mejs-speed-selector ul').outerHeight(true) + 
-				speedButton.find('.mejs-speed-translations').outerHeight(true));
-			//.css('top', ( -1 * ( speedSelector.height() + 81 ) ) + 'px');
-
+				speedButton.find('.mejs-speed-translations').outerHeight(true))
+			.css('top', speedSelector.csstop);
 
 //            var displaySpeed =
 //                $('<div class="display-playback-speed hidden">Speed 100%</div> ')
