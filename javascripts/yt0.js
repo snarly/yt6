@@ -2885,12 +2885,12 @@ if (parseInt(tiny.marginLeft.replace('px','')) > 100) {
           z.style.height = ((document.getElementById('bm0').style.height.replace('px','')) - 51) + 'px';
           z.style.width = "145px";//((src_chooser_size[1]) + 15) + 'px'
           z.style.overflowY = "scroll"
-          if (z.csstop) z.style.top = ( -1 * ((document.getElementById('bm0').style.height.replace('px','')) + 30 ) ) + 'px'
+          if (z.csstop) { alert("1 " + z.csstop); z.style.top = ( -1 * ((document.getElementById('bm0').style.height.replace('px','')) + 30 ) ) + 'px'; alert("2 " + -1 * ((document.getElementById('bm0').style.height.replace('px','')) + 30 ) + 'px') }
         } else {
             z.style.height = (src_chooser_size[0] + 1) + 'px'
             z.style.width = "130px";//(src_chooser_size[1] + 0) + 'px'
             z.style.overflowY = "hidden"
-            if (z.csstop) z.style.top = z.csstop
+            if (z.csstop) { alert("3 " + z.csstop); z.style.top = z.csstop }
           }
       }
     }
