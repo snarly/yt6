@@ -999,6 +999,8 @@ if (typeof autoplay != 'undefined') {
 }
 var autoplay2 = gclass('playlist-mix-icon yt-sprite');
 
+if (start != false){
+
   if ( (pn == 'me_flash') || (d.indexOf('%26false') > -1) ){//alert('false ! autoplay = ' + document.getElementById('snarls_player').autoplay )
     if ( ((!mep) || (typeof fv == 'string')) && (document.getElementById('snarls_player').flash == true) ){alert('01' + start);
 	bm0.style.visibility = 'hidden'
@@ -1027,6 +1029,8 @@ var autoplay2 = gclass('playlist-mix-icon yt-sprite');
 		if (((typeof autoplay == 'string') || (typeof autoplay2[0] != 'undefined')) && (start)) player1.play()
 	  }
       }
+
+}
 
 if ((typeof p.getPlayerState != 'function') && (typeof p.getAttribute('flashvars') == 'string') && (!start)) {
 	p.style.display = 'none';
@@ -1675,7 +1679,7 @@ function mep_run(){
 					      if ((player2.currentTime > 0) && (!isNaN(player2.duration))) {
 					        player2.currentTime = player2.duration
 					      };
-					      if (autoplay()) { ;;
+					      if (autoplay(false)) { ;;
 					        if (!((typeof V[me.src.split('itag=')[1].split('&')[0]] == 'string') && (player2.currentTime == 0)) ) {
 					          document.getElementsByClassName('yt-uix-scroller-scroll-unit  currently-playing')[0].nextSibling.nextSibling.lastChild.previousSibling.click()
 					        };
@@ -1725,7 +1729,7 @@ function mep_run(){
 					    Seek = 1; me.currentTime = player2.currentTime = 0;
 					  } else {
 					      Seek = 3; me.currentTime = player2.currentTime = 0;
-					      if ((typeof autoplay == 'string') && (document.getElementById('player1').currentTime < document.getElementById('player1').duration)) {;;
+					      if ((autoplay(false)) && (document.getElementById('player1').currentTime < document.getElementById('player1').duration)) {;;
 						document.getElementsByClassName('yt-uix-scroller-scroll-unit  currently-playing')[0].nextSibling.nextSibling.lastChild.previousSibling.click();
 					      }
 					    }
@@ -1775,8 +1779,7 @@ function mep_run(){
 					    Seek = 1; me.currentTime = player2.currentTime = 0;
 					  } else {
 					      Seek = 3; me.currentTime = player2.currentTime = 0;
-                                              if (autoplay()) { 
-						me.setSrc( '' );;
+					      if ((autoplay(false)) && (document.getElementById('player1').currentTime < document.getElementById('player1').duration)) {;;
 						document.getElementsByClassName('yt-uix-scroller-scroll-unit  currently-playing')[0].nextSibling.nextSibling.lastChild.previousSibling.click();
 					      }
 					    }
