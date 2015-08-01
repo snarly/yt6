@@ -1482,7 +1482,7 @@ if (!document.getElementById('video-hide')) {
 }
 
 
-loadCSS( protocol() + "//cdn.rawgit.com/snarly/724bea9ad19bbe8d5c43019caa66f87ca921a4ca/mediaelementplayer.css", function(){
+loadCSS( protocol() + "//cdn.rawgit.com/snarly/08c79bec55e3b4a27dfa98777b94fe4c7d37f21d/mediaelementplayer.css", function(){
 //"//cdn.rawgit.com/snarly/yt6/ee5b34c3dd41fcea3f8e961389d1a715d93a9d2c/mediaelementplayer.css"
 });
 
