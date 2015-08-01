@@ -2892,6 +2892,7 @@ if (parseInt(tiny.marginLeft.replace('px','')) > 100) {
             z.style.overflowY = "hidden"
             if (z.csstop) { alert("3 " + z.csstop); z.style.top = z.csstop }
           }
+          alert(typeof z.csstop + z.csstop)
       }
     }
   }
