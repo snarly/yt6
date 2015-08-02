@@ -2735,7 +2735,7 @@ function resize_layers(w,h){
     var webgl = getElementsByAttribute(player(),'canvas','draggable','true')[0];
     if (webgl) {
   	webgl.style.width = p1.style.width;
-  	webgl.style.height = p1.style.height;
+  	webgl.style.height = Math.round(parseFloat(p1.style.width,10) / (webgl.width / webgl.height)) + 'px';//p1.style.height;
   	//webgl.style.left = p1.style.left;
   	//webgl.style.top = p1.style.top;
     }
