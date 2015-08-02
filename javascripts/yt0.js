@@ -3342,8 +3342,8 @@ if ( (typeof player().getPlayerState == 'function') && (player().getAttribute('f
 	}
 
 	  if (webgl) {
-	    webgl.parentNode.style.left = -1 * parseInt(webgl.parentNode.parentNode.style.left.replace('px','')) + 'px'
-	    webgl.parentNode.style.top = -1 * parseInt(webgl.parentNode.parentNode.style.top.replace('px','')) + 'px'
+	    webgl.parentNode.style.left = (webgl.width - parseInt(webgl.parentNode.parentNode.style.width.replace('px',''))) / 2 + 'px'
+	    webgl.parentNode.style.top = (webgl.height - parseInt(webgl.parentNode.parentNode.style.haight.replace('px',''))) / 2 + 'px'
 	  }
   }
 
@@ -3417,7 +3417,7 @@ if ((v != stage) || ((v.getAttribute('name') != null) && (v.getAttribute('name')
 }
           zoom = zoom + 0.1;
           v.style[prop] ='scale('+zoom+') rotate('+rotate+'deg)'; if (poster != null) poster.style[prop] = v.style[prop]
-          if (webgl) {
+          if ((webgl) && (bm0.style.visibility == 'hidden') {
             webgl.style[prop] = v.style[prop]
           }
           break;
@@ -3429,7 +3429,7 @@ if ((v != stage) || ((v.getAttribute('name') != null) && (v.getAttribute('name')
 }
           zoom = zoom - 0.1;
           v.style[prop]='scale('+zoom+') rotate('+rotate+'deg)'; if (poster != null) poster.style[prop] = v.style[prop]
-          if (webgl) {
+          if ((webgl) && (bm0.style.visibility == 'hidden') {
             webgl.style[prop] = v.style[prop]
           }
           break;
@@ -3441,7 +3441,7 @@ if ((v != stage) || ((v.getAttribute('name') != null) && (v.getAttribute('name')
 }
           rotate = rotate + 5;
           v.style[prop]='rotate('+rotate+'deg) scale('+zoom+')'; if (poster != null) poster.style[prop] = v.style[prop]
-          if (webgl) {
+          if ((webgl) && (bm0.style.visibility == 'hidden') {
             webgl.style[prop] = v.style[prop]
           }
         break;
@@ -3452,7 +3452,7 @@ if ((v != stage) || ((v.getAttribute('name') != null) && (v.getAttribute('name')
 }
           rotate = rotate - 5;
           v.style[prop]='rotate('+rotate+'deg) scale('+zoom+')'; if (poster != null) poster.style[prop] = v.style[prop]
-          if (webgl) {
+          if ((webgl) && (bm0.style.visibility == 'hidden') {
             webgl.style[prop] = v.style[prop]
           }
 
@@ -3461,7 +3461,7 @@ if ((v != stage) || ((v.getAttribute('name') != null) && (v.getAttribute('name')
 /* Move video around by reading its left/top and altering it */
         case 'left yt-uix-button-text':
           v.style.left = (parseInt(v.style.left.replace('px','')) - 5) + 'px'; if (poster != null) poster.style.left = v.style.left
-          if (webgl) {
+          if ((webgl) && (bm0.style.visibility == 'hidden') {
             webgl.parentNode.style.left = parseInt(webgl.parentNode.style.left.replace('px','')) - 5 + 'px'
           }
   player().removeAttribute('wmode');
@@ -3469,7 +3469,7 @@ if ((v != stage) || ((v.getAttribute('name') != null) && (v.getAttribute('name')
         break;
         case 'right yt-uix-button-text':
           v.style.left = (parseInt(v.style.left.replace('px','')) + 5) + 'px'; if (poster != null) poster.style.left = v.style.left
-          if (webgl) {
+          if ((webgl) && (bm0.style.visibility == 'hidden') {
             webgl.parentNode.style.left = parseInt(webgl.parentNode.style.left.replace('px','')) + 5 + 'px'
           }
   player().removeAttribute('wmode');
@@ -3477,7 +3477,7 @@ if ((v != stage) || ((v.getAttribute('name') != null) && (v.getAttribute('name')
         break;
         case 'up yt-uix-button-text':
           v.style.top = (parseInt(v.style.top.replace('px','')) - 5) + 'px'; if (poster != null) poster.style.top = v.style.top
-          if (webgl) {
+          if ((webgl) && (bm0.style.visibility == 'hidden') {
             webgl.parentNode.style.top = parseInt(webgl.parentNode.style.top.replace('px','')) - 5 + 'px'
           }
   player().removeAttribute('wmode');
@@ -3485,7 +3485,7 @@ if ((v != stage) || ((v.getAttribute('name') != null) && (v.getAttribute('name')
         break;
         case 'down yt-uix-button-text':
           v.style.top = (parseInt(v.style.top.replace('px','')) + 5) + 'px'; if (poster != null) poster.style.top = v.style.top
-          if (webgl) {
+          if ((webgl) && (bm0.style.visibility == 'hidden') {
             webgl.parentNode.style.top = parseInt(webgl.parentNode.style.top.replace('px','')) + 5 + 'px'
           }
   player().removeAttribute('wmode');
@@ -3533,8 +3533,8 @@ if ((v != stage) || ((v.getAttribute('name') != null) && (v.getAttribute('name')
           v.style[prop]='rotate('+rotate+'deg) scale('+zoom+')';
 
 	  if (webgl) {
-	    webgl.parentNode.style.left = -1 * parseInt(webgl.parentNode.parentNode.style.left.replace('px','')) + 'px'
-	    webgl.parentNode.style.top = -1 * parseInt(webgl.parentNode.parentNode.style.top.replace('px','')) + 'px'
+	    webgl.parentNode.style.left = (webgl.width - parseInt(webgl.parentNode.parentNode.style.width.replace('px',''))) / 2 + 'px'
+	    webgl.parentNode.style.top = (webgl.height - parseInt(webgl.parentNode.parentNode.style.haight.replace('px',''))) / 2 + 'px'
 	    webgl.style[prop] = v.style[prop]
 	  }
 
