@@ -3270,9 +3270,10 @@ var v = v; if (v == undefined) { var v = document.getElementsByClassName('video-
   //alert(v.getAttribute('id') + " " + stage.getAttribute('id'))
 
 var controls = document.getElementById('controls');
-var postr = getElementsByAttribute(document,'div','class','mejs-poster mejs-layer')[0]
+var poster = getElementsByAttribute(document.getElementById(mep_x('mep_')),'div','class','mejs-poster mejs-layer')[0]
 var bm0 = document.getElementById('bm0');
 var me_flash = document.getElementById(mep_x('me_flash__ __container'))
+var webgl = getElementsByAttribute(player(),'canvas','draggable','true')[0]; alert(typeof webgl + webgl)
 var flashvars = getFlashVars();
   
 /* Array of possible browser specific settings for transformation */
@@ -3389,9 +3390,9 @@ if ((v != stage) || ((v.getAttribute('name') != null) && (v.getAttribute('name')
   player().setAttribute('wmode','transparent');
 }
           zoom = zoom + 0.1;
-          v.style[prop] ='scale('+zoom+') rotate('+rotate+'deg)'; if (postr != null) postr.style[prop] = v.style[prop]
-          if ((me_flash != null) && (bm0.style.visibility == 'visible')) {
-            //me_flash.style[prop] = v.style[prop]
+          v.style[prop] ='scale('+zoom+') rotate('+rotate+'deg)'; if (poster != null) poster.style[prop] = v.style[prop]
+          if (webgl != null) {
+            webgl.style[prop] = v.style[prop]
           }
           break;
 
@@ -3401,11 +3402,11 @@ if ((v != stage) || ((v.getAttribute('name') != null) && (v.getAttribute('name')
   player().setAttribute('wmode','transparent');
 }
           zoom = zoom - 0.1;
-          v.style[prop]='scale('+zoom+') rotate('+rotate+'deg)'; if (postr != null) postr.style[prop] = v.style[prop]
-          if ((me_flash != null) && (bm0.style.visibility == 'visible')) {
-            //me_flash.style[prop] = v.style[prop]
+          v.style[prop]='scale('+zoom+') rotate('+rotate+'deg)'; if (poster != null) poster.style[prop] = v.style[prop]
+          if (webgl != null) {
+            webgl.style[prop] = v.style[prop]
           }
-        break;
+          break;
 
 /* Increase rotation and set the transformation */
         case 'rotateleft yt-uix-button-text':
@@ -3413,9 +3414,9 @@ if ((v != stage) || ((v.getAttribute('name') != null) && (v.getAttribute('name')
   player().setAttribute('wmode','transparent');
 }
           rotate = rotate + 5;
-          v.style[prop]='rotate('+rotate+'deg) scale('+zoom+')'; if (postr != null) postr.style[prop] = v.style[prop]
-          if ((me_flash != null) && (bm0.style.visibility == 'visible')) {
-            //me_flash.style[prop] = v.style[prop]
+          v.style[prop]='rotate('+rotate+'deg) scale('+zoom+')'; if (poster != null) poster.style[prop] = v.style[prop]
+          if (webgl != null) {
+            webgl.style[prop] = v.style[prop]
           }
         break;
 /* Decrease rotation and set the transformation */
@@ -3424,44 +3425,42 @@ if ((v != stage) || ((v.getAttribute('name') != null) && (v.getAttribute('name')
   player().setAttribute('wmode','transparent');
 }
           rotate = rotate - 5;
-          v.style[prop]='rotate('+rotate+'deg) scale('+zoom+')'; if (postr != null) postr.style[prop] = v.style[prop]
-          if ((me_flash != null) && (bm0.style.visibility === 'visible')) {
-            //me_flash.style[prop] = v.style[prop]
+          v.style[prop]='rotate('+rotate+'deg) scale('+zoom+')'; if (poster != null) poster.style[prop] = v.style[prop]
+          if (webgl != null) {
+            webgl.style[prop] = v.style[prop]
           }
-//          var width = document.getElementById('player1').getAttribute('width') - 5;
-//          document.getElementById('player1').setAttribute('width', width);
 
         break;
 
 /* Move video around by reading its left/top and altering it */
         case 'left yt-uix-button-text':
-          v.style.left = (parseInt(v.style.left,10) - 5) + 'px'; if (postr != null) postr.style.left = v.style.left
-          if ((me_flash != null) && (bm0.style.visibility === 'visible')) {
-            //me_flash.style.left = v.style.left
+          v.style.left = (parseInt(v.style.left,10) - 5) + 'px'; if (poster != null) poster.style.left = v.style.left
+          if (webgl != null) {
+            webgl.style.left = v.style.left
           }
   player().removeAttribute('wmode');
 
         break;
         case 'right yt-uix-button-text':
-          v.style.left = (parseInt(v.style.left,10) + 5) + 'px'; if (postr != null) postr.style.left = v.style.left
-          if ((me_flash != null) && (bm0.style.visibility === 'visible')) {
-            //me_flash.style.left = v.style.left
+          v.style.left = (parseInt(v.style.left,10) + 5) + 'px'; if (poster != null) poster.style.left = v.style.left
+          if (webgl != null) {
+            webgl.style.left = v.style.left
           }
   player().removeAttribute('wmode');
 
         break;
         case 'up yt-uix-button-text':
-          v.style.top = (parseInt(v.style.top,10) - 5) + 'px'; if (postr != null) postr.style.top = v.style.top
-          if ((me_flash != null) && (bm0.style.visibility === 'visible')) {
-            //me_flash.style.top = v.style.top
+          v.style.top = (parseInt(v.style.top,10) - 5) + 'px'; if (poster != null) poster.style.top = v.style.top
+          if (webgl != null) {
+            webgl.style.top = v.style.top
           }
   player().removeAttribute('wmode');
 
         break;
         case 'down yt-uix-button-text':
-          v.style.top = (parseInt(v.style.top,10) + 5) + 'px'; if (postr != null) postr.style.top = v.style.top
-          if ((me_flash != null) && (bm0.style.visibility === 'visible')) {
-            //me_flash.style.top = v.style.top
+          v.style.top = (parseInt(v.style.top,10) + 5) + 'px'; if (poster != null) poster.style.top = v.style.top
+          if (webgl != null) {
+            webgl.style.top = v.style.top
           }
   player().removeAttribute('wmode');
 
@@ -3505,16 +3504,16 @@ if ((v != stage) || ((v.getAttribute('name') != null) && (v.getAttribute('name')
 
             }
           v.style[prop]='rotate('+rotate+'deg) scale('+zoom+')';
-          if (me_flash != null) {//alert()
-            //me_flash.style.top = '0px';//v.style.top
-            //me_flash.style.top = '0px';//v.style.left
-            //me_flash.style[prop] = v.style[prop]
+          if (webgl != null) {
+            webgl.style.top = '0px';
+            webgl.style.top = '0px';
+            webgl.style[prop] = v.style[prop]
           }
         } else {
             var opacity = player().style.opacity;
             player().setAttribute("style","top:0px; left:0px; opacity:"+opacity); zoom = 1; rotate = 0;//width:" + document.getElementById('placeholder-player').firstChild.style.width + "; height:" + document.getElementById('placeholder-player').firstChild.style.height + "; 
           }
-        if (postr != null) { postr.style[prop] = 'none'; postr.style.top = '0px'; postr.style.left = '0px' }
+        if (poster != null) { poster.style[prop] = 'none'; poster.style.top = '0px'; poster.style.left = '0px' }
         //bestfit(); //document.getElementById('player1').style.height = (document.getElementById('player1').style.height.replace('px','') - 30) + 'px';
         break;
       }        
