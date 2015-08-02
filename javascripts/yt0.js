@@ -2310,6 +2310,13 @@ if (yt6){
                 }
               }
             }
+        } else {
+	    var webgl = getElementsByAttribute(player(),'canvas','draggable','true')[0];
+	    if (webgl) {
+	      webgl.removeAttribute('style')
+	      webgl.parentNode.style.left = -1 * webgl.parentNode.parentNode.style.left.replace('px','') + 'px'
+	      webgl.parentNode.style.top = -1 * webgl.parentNode.parentNode.style.top.replace('px','') + 'px'
+	    }
         }
 
 
