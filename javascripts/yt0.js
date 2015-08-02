@@ -2911,8 +2911,6 @@ if (parseInt(tiny.marginLeft.replace('px','')) > 100) {
     }
   }
 
-  document.getElementsByClassName('mejs-speed-selector')[0].style.right = parseFloat(document.getElementsByClassName('display-playback-speed')[0].offsetRight) + 40 + 'px'
-
   var z = document.getElementById("bm3")
   if (z) z.style.top = document.getElementById("masthead-positioner").offsetHeight - 2 + "px" 
 
