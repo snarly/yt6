@@ -3343,7 +3343,7 @@ if ( (typeof player().getPlayerState == 'function') && (player().getAttribute('f
 
 	  if (webgl) {
 	    webgl.parentNode.style.left = (webgl.width - parseInt(webgl.parentNode.parentNode.style.width.replace('px',''))) / 2 + 'px'
-	    webgl.parentNode.style.top = (webgl.height - parseInt(webgl.parentNode.parentNode.style.haight.replace('px',''))) / 2 + 'px'
+	    webgl.parentNode.style.top = (webgl.height - parseInt(webgl.parentNode.parentNode.style.height.replace('px',''))) / 2 + 'px'
 	  }
   }
 
@@ -3534,7 +3534,7 @@ if ((v != stage) || ((v.getAttribute('name') != null) && (v.getAttribute('name')
 
 	  if (webgl) {
 	    webgl.parentNode.style.left = (webgl.width - parseInt(webgl.parentNode.parentNode.style.width.replace('px',''))) / 2 + 'px'
-	    webgl.parentNode.style.top = (webgl.height - parseInt(webgl.parentNode.parentNode.style.haight.replace('px',''))) / 2 + 'px'
+	    webgl.parentNode.style.top = (webgl.height - parseInt(webgl.parentNode.parentNode.style.height.replace('px',''))) / 2 + 'px'
 	    webgl.style[prop] = v.style[prop]
 	  }
 
