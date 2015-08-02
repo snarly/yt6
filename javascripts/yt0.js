@@ -3347,10 +3347,10 @@ if ( (typeof player().getPlayerState == 'function') && (player().getAttribute('f
 		) / 2)	 ) + 'px';
 	}
 
-    if (webgl) {
-    	webgl.parentNode.style.left = -1 * parseInt(webgl.parentNode.parentNode.style.left,10) + parseInt(v.style.left,10) + 'px'
-        webgl.parentNode.style.top = -1 * parseInt(webgl.parentNode.parentNode.style.top,10) + parseInt(v.style.left,10)+ 'px'
-    }
+	  if (webgl) {
+	    webgl.parentNode.style.left = -1 * parseInt(webgl.parentNode.parentNode.style.left.replace('px','')) + parseInt(v.style.left.replace('pc','')) + 'px'
+	    webgl.parentNode.style.top = -1 * parseInt(webgl.parentNode.parentNode.style.top.replace('px','')) + parseInt(v.style.left.replace('px','')) + 'px'
+	  }
   }
 
 var tiny = document.getElementById('watch7-sidebar').currentStyle || window.getComputedStyle(document.getElementById('watch7-sidebar'), null)
@@ -3466,33 +3466,33 @@ if ((v != stage) || ((v.getAttribute('name') != null) && (v.getAttribute('name')
 
 /* Move video around by reading its left/top and altering it */
         case 'left yt-uix-button-text':
-          v.style.left = (parseInt(v.style.left,10) - 5) + 'px'; if (poster != null) poster.style.left = v.style.left
+          v.style.left = (parseInt(v.style.left.replace('px','')) - 5) + 'px'; if (poster != null) poster.style.left = v.style.left
           if (webgl) {
-            webgl.parentNode.style.left = parseInt(webgl.parentNode.style.left,10) - 5 + 'px'
+            webgl.parentNode.style.left = parseInt(webgl.parentNode.style.left.replace('px','')) - 5 + 'px'
           }
   player().removeAttribute('wmode');
 
         break;
         case 'right yt-uix-button-text':
-          v.style.left = (parseInt(v.style.left,10) + 5) + 'px'; if (poster != null) poster.style.left = v.style.left
+          v.style.left = (parseInt(v.style.left.replace('px','')) + 5) + 'px'; if (poster != null) poster.style.left = v.style.left
           if (webgl) {
-            webgl.parentNode.style.left = parseInt(webgl.parentNode.style.left,10) + 5 + 'px'
+            webgl.parentNode.style.left = parseInt(webgl.parentNode.style.left.replace('px','')) + 5 + 'px'
           }
   player().removeAttribute('wmode');
 
         break;
         case 'up yt-uix-button-text':
-          v.style.top = (parseInt(v.style.top,10) - 5) + 'px'; if (poster != null) poster.style.top = v.style.top
+          v.style.top = (parseInt(v.style.top.replace('px','')) - 5) + 'px'; if (poster != null) poster.style.top = v.style.top
           if (webgl) {
-            webgl.parentNode.style.top = parseInt(webgl.parentNode.style.top,10) - 5 + 'px'
+            webgl.parentNode.style.top = parseInt(webgl.parentNode.style.top.replace('px','')) - 5 + 'px'
           }
   player().removeAttribute('wmode');
 
         break;
         case 'down yt-uix-button-text':
-          v.style.top = (parseInt(v.style.top,10) + 5) + 'px'; if (poster != null) poster.style.top = v.style.top
+          v.style.top = (parseInt(v.style.top.replace('px','')) + 5) + 'px'; if (poster != null) poster.style.top = v.style.top
           if (webgl) {
-            webgl.parentNode.style.top = parseInt(webgl.parentNode.style.top,10) + 5 + 'px'
+            webgl.parentNode.style.top = parseInt(webgl.parentNode.style.top.replace('px','')) + 5 + 'px'
           }
   player().removeAttribute('wmode');
 
@@ -3539,8 +3539,8 @@ if ((v != stage) || ((v.getAttribute('name') != null) && (v.getAttribute('name')
           v.style[prop]='rotate('+rotate+'deg) scale('+zoom+')';
 
 	  if (webgl) {
-	    webgl.parentNode.style.left = -1 * parseInt(webgl.parentNode.parentNode.style.left,10) + parseInt(v.style.left,10) + 'px'
-	    webgl.parentNode.style.top = -1 * parseInt(webgl.parentNode.parentNode.style.top,10) + parseInt(v.style.left,10)+ 'px'
+	    webgl.parentNode.style.left = -1 * parseInt(webgl.parentNode.parentNode.style.left.replace('px','')) + parseInt(v.style.left.replace('pc','')) + 'px'
+	    webgl.parentNode.style.top = -1 * parseInt(webgl.parentNode.parentNode.style.top.replace('px','')) + parseInt(v.style.left.replace('px','')) + 'px'
 	    webgl.style[prop] = v.style[prop]
 	  }
 
