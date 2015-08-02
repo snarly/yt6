@@ -2310,6 +2310,13 @@ if (yt6){
                 }
               }
             }
+        } else {
+	    var webgl = getElementsByAttribute(player(),'canvas','draggable','true')[0];
+	    if (webgl) {
+	      webgl.removeAttribute('style')
+	      webgl.parentNode.style.left = -1 * webgl.parentNode.parentNode.style.left.replace('px','') + 'px'
+	      webgl.parentNode.style.top = -1 * webgl.parentNode.parentNode.style.top.replace('px','') + 'px'
+	    }
         }
 
 
@@ -2664,7 +2671,12 @@ function resize_layers(w,h){
   var z = document.getElementsByClassName('mejs-offscreen'); if ((z != null) && (z[0] != null)) z[0].style.display = 'none';
   var z = document.getElementsByClassName('mejs-time-buffering'); if ((z != null) && (z[0] != null)) z[0].setAttribute('class','mejs-time-bufferin');
   var bm0 = document.getElementById('bm0')
+
   var me_flash = document.getElementById(mep_x('me_flash__ __container'))
+  if (me_flash != null) {
+    me_flash.style.width = w;
+    me_flash.style.height = h;
+  }
 
   //var noads = document.getElementById('player').innerHTML;onDownload(noads)
   var tiny = document.getElementById('watch7-sidebar').currentStyle;
@@ -2681,10 +2693,6 @@ function resize_layers(w,h){
     document.getElementsByClassName('mejs-clear')[0].style.width = w
     document.getElementsByClassName('mejs-clear')[0].style.height = h
   }
-  if (me_flash != null) {
-    me_flash.style.width = w;
-    me_flash.style.height = h;
-  }
 
   var z = document.getElementById('placeholder-player').firstChild.style;
   if (typeof z !== 'object') {
@@ -2700,7 +2708,7 @@ function resize_layers(w,h){
 
   var p1 = document.getElementById('player1')
 
-  if (p1 != null) {
+    if (p1 != null) {
 
     if (((player().getAttribute('name') == 'me_flash') && (bm0.style.visibility == 'hidden')) || ((document.getElementById(mep_x('me_flash_')) != null) && (bm0.style.visibility == 'visible'))) {
 	p1.style.width = parseInt(w.replace('px','') - (x || 30)) + 'px'
@@ -2724,9 +2732,8 @@ function resize_layers(w,h){
 	}
       p1.style.left = '0px'
     }
+
   }
-
-
 
   var flashvars = player().getAttribute('flashvars')
   var c = document.getElementById("aspect")
@@ -3010,10 +3017,10 @@ function ythtml5_size() {
       }
     var z = document.getElementById('placeholder-player').firstChild.currentStyle || window.getComputedStyle(document.getElementById('placeholder-player').firstChild, null)
     document.getElementById('snarls_player').hdiff = parseInt( z.height.replace('px','') - ((z.height.replace('px','') / 60 >>0) * 60) ); 
-    var x = document.getElementById('snarls_player').hdiff
+    var x = document.getElementById('snarls_player').hdiff || 30
     var y = Math.round(x / 2)
     if (o != null) document.getElementById('placeholder-player').firstChild.setAttribute('style', o)
-
+    var webgl = getElementsByAttribute(player(),'canvas','draggable','true')[0];
     var bm0 = document.getElementById('bm0').style
     var yt = document.getElementsByClassName('html5-video-content')[0].style
     var v = document.getElementsByClassName('video-stream html5-main-video')[0]
@@ -3023,20 +3030,25 @@ function ythtml5_size() {
 //    v.style.left = yt.left = (Math.round((bm0.width.replace('px','') - (bm0.height.replace('px','') - x) * parseFloat(document.getElementById("snarls_player").aspect_ratio)) / 2) >>0) + 'px';
     v.style.width = yt.width = Math.round(parseInt(bm0.height.replace('px','') - x) * parseFloat(document.getElementById('snarls_player').aspect_ratio)) + 'px';
     v.style.height = yt.height = (bm0.height.replace('px','') - x) + 'px';
-    v.style.left = yt.left = Math.round( parseInt( parseInt(bm0.width.replace('px','')) - parseInt(yt.width.replace('px','')) ) / 2) + 'px';
-    v.style.top = yt.top = '0px';
+      v.style.left = yt.left = Math.round( parseInt( parseInt(bm0.width.replace('px','')) - parseInt(yt.width.replace('px','')) ) / 2) + 'px';
+      v.style.top = yt.top = '0px';
+    if (!webgl) {
+    } else {
+      webgl.style.height = bm0.height.replace('px','') - x + 'px'
+      webgl.style.width = Math.round(bm0.height.replace('px','') * parseFloat(webgl.width / webgl.height)) + 'px'
+      }
     if (parseInt(bm0.width.replace('px','')) < parseInt(yt.width.replace('px',''))){
       v.style.width = yt.width = bm0.width
       v.style.height = yt.height = ((Math.round(parseInt(bm0.width.replace('px','')) / parseFloat(document.getElementById('snarls_player').aspect_ratio)))) + 'px';
-      v.style.left = yt.left = '0px'
-      v.style.top = yt.top = (Math.round( parseInt( parseInt(bm0.height.replace('px','')) - parseInt(yt.height.replace('px','')) ) / 2) - y) + 'px';
+	v.style.left = yt.left = '0px'
+	v.style.top = yt.top = (Math.round( parseInt( parseInt(bm0.height.replace('px','')) - parseInt(yt.height.replace('px','')) ) / 2) - y) + 'px';
+      if (!webgl) {
+      } else {
+	  webgl.style.width = bm0.width
+	  webgl.style.height = Math.round(yt.width.replace('px','') / parseFloat(webgl.width / webgl.height)) + 'px'
+      }
     }
-//    } else {
-//    	v.style.width = yt.width = bm.width
-//    	v.style.left = yt.left = '0px'
-//      }
-//    v.style.height = yt.height = (bm0.height.replace('px','') - x) + 'px'
-//    v.style.top = yt.top = (((bm0.height.replace('px','') - (bm0.height.replace('px','') - x)) / 2 >>0) - y) + 'px';
+
   }
 }
 
@@ -3079,6 +3091,7 @@ function aspect2(w,h) {
 }
 
 function aspect(a) { 
+  var webgl = getElementsByAttribute(player(),'canvas','draggable','true')[0]
   var class_0 = document.getElementById('player').getAttribute('class')
   var class_1 = class_0.replace('small','small_a').replace('medium','medium_a').replace('large','large_a')
 
@@ -3090,7 +3103,8 @@ function aspect(a) {
       
   if ((document.getElementById('bm0').style.width != playerwidth ) && (!a)) {
     var w = playerwidth
-    var h = Math.round((w.replace('px','') / document.getElementById("snarls_player").aspect_ratio)) + (parseInt(document.getElementById("snarls_player").hdiff || 30)) + 'px';
+    var h = (webgl) ? Math.round(w.replace('px','') / parseFloat(webgl.width / webgl.height)) + 'px' : Math.round((w.replace('px','') / document.getElementById("snarls_player").aspect_ratio))
+    var h = parseInt(h)  + (parseInt(document.getElementById("snarls_player").hdiff || 30)) + 'px'
     document.getElementById('player-api').style.width = w;
     document.getElementById('player-api').style.height = h;
 
@@ -3128,7 +3142,7 @@ function aspect(a) {
     document.getElementById('player').setAttribute('class',class_0.replace('small_a','small').replace('medium_a','medium').replace('large_A','large'))
   } else {
       var w = fix_Width();
-      var h = fix_Height();
+      var h = (webgl) ? w.replace('px','') / parseFloat(webgl.width / webgl.height) + 'px' : fix_Height()
       document.getElementById('player-api').style.width = w;
       document.getElementById('player-api').style.height = h
       
@@ -3192,10 +3206,19 @@ function deldiv(){
   for(i=0;i<z.length;i++){
     if (z[i]) z[i].removeAttribute('style')
   }
+
   var z = document.getElementsByClassName('ytp-chrome-bottom')[0];
   if ((!z) && (typeof document.getElementsByClassName('video-stream html5-main-video')[0] != 'undefined')) {
     document.getElementsByClassName('video-stream html5-main-video')[0].removeAttribute('style')
   }
+
+  var webgl = getElementsByAttribute(player(),'canvas','draggable','true')[0];
+  if (webgl) {
+    webgl.removeAttribute('style')
+    webgl.parentNode.style.left = -1 * webgl.parentNode.parentNode.style.left.replace('px','') + 'px'
+    webgl.parentNode.style.top = -1 * webgl.parentNode.parentNode.style.top.replace('px','') + 'px'
+  }
+
 }
 
 /*
@@ -3270,9 +3293,10 @@ var v = v; if (v == undefined) { var v = document.getElementsByClassName('video-
   //alert(v.getAttribute('id') + " " + stage.getAttribute('id'))
 
 var controls = document.getElementById('controls');
-var postr = getElementsByAttribute(document,'div','class','mejs-poster mejs-layer')[0]
+var poster = getElementsByAttribute(document.getElementById(mep_x('mep_')),'div','class','mejs-poster mejs-layer')[0]
 var bm0 = document.getElementById('bm0');
 var me_flash = document.getElementById(mep_x('me_flash__ __container'))
+var webgl = getElementsByAttribute(player(),'canvas','draggable','true')[0];
 var flashvars = getFlashVars();
   
 /* Array of possible browser specific settings for transformation */
@@ -3315,9 +3339,12 @@ if ( (typeof player().getPlayerState == 'function') && (player().getAttribute('f
 		 parseInt(bm0.style.width.replace('px','')) -
 		 ( (parseInt(v.style.height.replace('px','')) ) * parseFloat(document.getElementById("snarls_player").aspect_ratio) )
 		) / 2)	 ) + 'px';
-    //v.style.left = '0px';
-    //v.style.top = '0px';
-	}//else
+	}
+
+	  if (webgl) {
+	    webgl.parentNode.style.left = (webgl.width - parseInt(webgl.parentNode.parentNode.style.width.replace('px',''))) / 2 + 'px'
+	    webgl.parentNode.style.top = (webgl.height - parseInt(webgl.parentNode.parentNode.style.height.replace('px',''))) / 2 + 'px'
+	  }
   }
 
 var tiny = document.getElementById('watch7-sidebar').currentStyle || window.getComputedStyle(document.getElementById('watch7-sidebar'), null)
@@ -3389,9 +3416,9 @@ if ((v != stage) || ((v.getAttribute('name') != null) && (v.getAttribute('name')
   player().setAttribute('wmode','transparent');
 }
           zoom = zoom + 0.1;
-          v.style[prop] ='scale('+zoom+') rotate('+rotate+'deg)'; if (postr != null) postr.style[prop] = v.style[prop]
-          if ((me_flash != null) && (bm0.style.visibility == 'visible')) {
-            //me_flash.style[prop] = v.style[prop]
+          v.style[prop] ='scale('+zoom+') rotate('+rotate+'deg)'; if (poster != null) poster.style[prop] = v.style[prop]
+          if ((webgl) && (bm0.style.visibility == 'hidden')) {
+            webgl.style[prop] = v.style[prop]
           }
           break;
 
@@ -3401,11 +3428,11 @@ if ((v != stage) || ((v.getAttribute('name') != null) && (v.getAttribute('name')
   player().setAttribute('wmode','transparent');
 }
           zoom = zoom - 0.1;
-          v.style[prop]='scale('+zoom+') rotate('+rotate+'deg)'; if (postr != null) postr.style[prop] = v.style[prop]
-          if ((me_flash != null) && (bm0.style.visibility == 'visible')) {
-            //me_flash.style[prop] = v.style[prop]
+          v.style[prop]='scale('+zoom+') rotate('+rotate+'deg)'; if (poster != null) poster.style[prop] = v.style[prop]
+          if ((webgl) && (bm0.style.visibility == 'hidden')) {
+            webgl.style[prop] = v.style[prop]
           }
-        break;
+          break;
 
 /* Increase rotation and set the transformation */
         case 'rotateleft yt-uix-button-text':
@@ -3413,9 +3440,9 @@ if ((v != stage) || ((v.getAttribute('name') != null) && (v.getAttribute('name')
   player().setAttribute('wmode','transparent');
 }
           rotate = rotate + 5;
-          v.style[prop]='rotate('+rotate+'deg) scale('+zoom+')'; if (postr != null) postr.style[prop] = v.style[prop]
-          if ((me_flash != null) && (bm0.style.visibility == 'visible')) {
-            //me_flash.style[prop] = v.style[prop]
+          v.style[prop]='rotate('+rotate+'deg) scale('+zoom+')'; if (poster != null) poster.style[prop] = v.style[prop]
+          if ((webgl) && (bm0.style.visibility == 'hidden')) {
+            webgl.style[prop] = v.style[prop]
           }
         break;
 /* Decrease rotation and set the transformation */
@@ -3424,44 +3451,42 @@ if ((v != stage) || ((v.getAttribute('name') != null) && (v.getAttribute('name')
   player().setAttribute('wmode','transparent');
 }
           rotate = rotate - 5;
-          v.style[prop]='rotate('+rotate+'deg) scale('+zoom+')'; if (postr != null) postr.style[prop] = v.style[prop]
-          if ((me_flash != null) && (bm0.style.visibility === 'visible')) {
-            //me_flash.style[prop] = v.style[prop]
+          v.style[prop]='rotate('+rotate+'deg) scale('+zoom+')'; if (poster != null) poster.style[prop] = v.style[prop]
+          if ((webgl) && (bm0.style.visibility == 'hidden')) {
+            webgl.style[prop] = v.style[prop]
           }
-//          var width = document.getElementById('player1').getAttribute('width') - 5;
-//          document.getElementById('player1').setAttribute('width', width);
 
         break;
 
 /* Move video around by reading its left/top and altering it */
         case 'left yt-uix-button-text':
-          v.style.left = (parseInt(v.style.left,10) - 5) + 'px'; if (postr != null) postr.style.left = v.style.left
-          if ((me_flash != null) && (bm0.style.visibility === 'visible')) {
-            //me_flash.style.left = v.style.left
+          v.style.left = (parseInt(v.style.left.replace('px','')) - 5) + 'px'; if (poster != null) poster.style.left = v.style.left
+          if ((webgl) && (bm0.style.visibility == 'hidden')) {
+            webgl.parentNode.style.left = parseInt(webgl.parentNode.style.left.replace('px','')) - 5 + 'px'
           }
   player().removeAttribute('wmode');
 
         break;
         case 'right yt-uix-button-text':
-          v.style.left = (parseInt(v.style.left,10) + 5) + 'px'; if (postr != null) postr.style.left = v.style.left
-          if ((me_flash != null) && (bm0.style.visibility === 'visible')) {
-            //me_flash.style.left = v.style.left
+          v.style.left = (parseInt(v.style.left.replace('px','')) + 5) + 'px'; if (poster != null) poster.style.left = v.style.left
+          if ((webgl) && (bm0.style.visibility == 'hidden')) {
+            webgl.parentNode.style.left = parseInt(webgl.parentNode.style.left.replace('px','')) + 5 + 'px'
           }
   player().removeAttribute('wmode');
 
         break;
         case 'up yt-uix-button-text':
-          v.style.top = (parseInt(v.style.top,10) - 5) + 'px'; if (postr != null) postr.style.top = v.style.top
-          if ((me_flash != null) && (bm0.style.visibility === 'visible')) {
-            //me_flash.style.top = v.style.top
+          v.style.top = (parseInt(v.style.top.replace('px','')) - 5) + 'px'; if (poster != null) poster.style.top = v.style.top
+          if ((webgl) && (bm0.style.visibility == 'hidden')) {
+            webgl.parentNode.style.top = parseInt(webgl.parentNode.style.top.replace('px','')) - 5 + 'px'
           }
   player().removeAttribute('wmode');
 
         break;
         case 'down yt-uix-button-text':
-          v.style.top = (parseInt(v.style.top,10) + 5) + 'px'; if (postr != null) postr.style.top = v.style.top
-          if ((me_flash != null) && (bm0.style.visibility === 'visible')) {
-            //me_flash.style.top = v.style.top
+          v.style.top = (parseInt(v.style.top.replace('px','')) + 5) + 'px'; if (poster != null) poster.style.top = v.style.top
+          if ((webgl) && (bm0.style.visibility == 'hidden')) {
+            webgl.parentNode.style.top = parseInt(webgl.parentNode.style.top.replace('px','')) + 5 + 'px'
           }
   player().removeAttribute('wmode');
 
@@ -3504,17 +3529,20 @@ if ((v != stage) || ((v.getAttribute('name') != null) && (v.getAttribute('name')
 		  }
 
             }
+
           v.style[prop]='rotate('+rotate+'deg) scale('+zoom+')';
-          if (me_flash != null) {//alert()
-            //me_flash.style.top = '0px';//v.style.top
-            //me_flash.style.top = '0px';//v.style.left
-            //me_flash.style[prop] = v.style[prop]
-          }
+
+	  if (webgl) {
+	    webgl.parentNode.style.left = (webgl.width - parseInt(webgl.parentNode.parentNode.style.width.replace('px',''))) / 2 + 'px'
+	    webgl.parentNode.style.top = (webgl.height - parseInt(webgl.parentNode.parentNode.style.height.replace('px',''))) / 2 + 'px'
+	    webgl.style[prop] = v.style[prop]
+	  }
+
         } else {
             var opacity = player().style.opacity;
             player().setAttribute("style","top:0px; left:0px; opacity:"+opacity); zoom = 1; rotate = 0;//width:" + document.getElementById('placeholder-player').firstChild.style.width + "; height:" + document.getElementById('placeholder-player').firstChild.style.height + "; 
           }
-        if (postr != null) { postr.style[prop] = 'none'; postr.style.top = '0px'; postr.style.left = '0px' }
+        if (poster != null) { poster.style[prop] = 'none'; poster.style.top = '0px'; poster.style.left = '0px' }
         //bestfit(); //document.getElementById('player1').style.height = (document.getElementById('player1').style.height.replace('px','') - 30) + 'px';
         break;
       }        
