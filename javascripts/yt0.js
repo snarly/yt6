@@ -2736,7 +2736,7 @@ function resize_layers(w,h){
     if (webgl) {
   	webgl.style.width = p1.style.width;
   	webgl.style.height = p1.style.height;
-  	webgl.height = Math.round(webgl.width / parseFloat(p1.style.width,10) / parseFloat(p1.style.height))
+  	webgl.height = Math.round(webgl.width / parseFloat(p1.style.width,10) / parseFloat(p1.style.height,10))
   	//webgl.style.left = p1.style.left;
   	//webgl.style.top = p1.style.top;
     }
