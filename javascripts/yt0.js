@@ -3273,7 +3273,7 @@ var controls = document.getElementById('controls');
 var poster = getElementsByAttribute(document.getElementById(mep_x('mep_')),'div','class','mejs-poster mejs-layer')[0]
 var bm0 = document.getElementById('bm0');
 var me_flash = document.getElementById(mep_x('me_flash__ __container'))
-var webgl = getElementsByAttribute(player(),'canvas','draggable','true')[0]; alert(typeof webgl + webgl)
+var webgl = getElementsByAttribute(player(),'canvas','draggable','true')[0];
 var flashvars = getFlashVars();
   
 /* Array of possible browser specific settings for transformation */
@@ -3391,7 +3391,7 @@ if ((v != stage) || ((v.getAttribute('name') != null) && (v.getAttribute('name')
 }
           zoom = zoom + 0.1;
           v.style[prop] ='scale('+zoom+') rotate('+rotate+'deg)'; if (poster != null) poster.style[prop] = v.style[prop]
-          if (webgl != null) {
+          if (webgl) {
             webgl.style[prop] = v.style[prop]
           }
           break;
@@ -3403,7 +3403,7 @@ if ((v != stage) || ((v.getAttribute('name') != null) && (v.getAttribute('name')
 }
           zoom = zoom - 0.1;
           v.style[prop]='scale('+zoom+') rotate('+rotate+'deg)'; if (poster != null) poster.style[prop] = v.style[prop]
-          if (webgl != null) {
+          if (webgl) {
             webgl.style[prop] = v.style[prop]
           }
           break;
@@ -3415,7 +3415,7 @@ if ((v != stage) || ((v.getAttribute('name') != null) && (v.getAttribute('name')
 }
           rotate = rotate + 5;
           v.style[prop]='rotate('+rotate+'deg) scale('+zoom+')'; if (poster != null) poster.style[prop] = v.style[prop]
-          if (webgl != null) {
+          if (webgl) {
             webgl.style[prop] = v.style[prop]
           }
         break;
@@ -3426,7 +3426,7 @@ if ((v != stage) || ((v.getAttribute('name') != null) && (v.getAttribute('name')
 }
           rotate = rotate - 5;
           v.style[prop]='rotate('+rotate+'deg) scale('+zoom+')'; if (poster != null) poster.style[prop] = v.style[prop]
-          if (webgl != null) {
+          if (webgl) {
             webgl.style[prop] = v.style[prop]
           }
 
@@ -3435,32 +3435,32 @@ if ((v != stage) || ((v.getAttribute('name') != null) && (v.getAttribute('name')
 /* Move video around by reading its left/top and altering it */
         case 'left yt-uix-button-text':
           v.style.left = (parseInt(v.style.left,10) - 5) + 'px'; if (poster != null) poster.style.left = v.style.left
-          if (webgl != null) {
-            webgl.style.left = v.style.left
+          if (webgl) {
+            webgl.parentNode.style.left = v.style.left
           }
   player().removeAttribute('wmode');
 
         break;
         case 'right yt-uix-button-text':
           v.style.left = (parseInt(v.style.left,10) + 5) + 'px'; if (poster != null) poster.style.left = v.style.left
-          if (webgl != null) {
-            webgl.style.left = v.style.left
+          if (webgl) {
+            webgl.parentNode.style.left = v.style.left
           }
   player().removeAttribute('wmode');
 
         break;
         case 'up yt-uix-button-text':
           v.style.top = (parseInt(v.style.top,10) - 5) + 'px'; if (poster != null) poster.style.top = v.style.top
-          if (webgl != null) {
-            webgl.style.top = v.style.top
+          if (webgl) {
+            webgl.parentNode.style.top = v.style.top
           }
   player().removeAttribute('wmode');
 
         break;
         case 'down yt-uix-button-text':
           v.style.top = (parseInt(v.style.top,10) + 5) + 'px'; if (poster != null) poster.style.top = v.style.top
-          if (webgl != null) {
-            webgl.style.top = v.style.top
+          if (webgl) {
+            webgl.parentNode.style.top = v.style.top
           }
   player().removeAttribute('wmode');
 
@@ -3504,9 +3504,9 @@ if ((v != stage) || ((v.getAttribute('name') != null) && (v.getAttribute('name')
 
             }
           v.style[prop]='rotate('+rotate+'deg) scale('+zoom+')';
-          if (webgl != null) {
-            webgl.style.top = '0px';
-            webgl.style.top = '0px';
+          if (webgl) {
+            webgl.parentNode.style.left = '0px';
+            webgl.parentNode.style.top = '0px';
             webgl.style[prop] = v.style[prop]
           }
         } else {
