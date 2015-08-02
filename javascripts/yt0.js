@@ -3110,7 +3110,7 @@ function aspect(a) {
   if ((document.getElementById('bm0').style.width != playerwidth ) && (!a)) {
     var w = playerwidth
     var h = (webgl) ? Math.round(w.replace('px','') / parseFloat(webgl.width / webgl.height)) + 'px' : Math.round((w.replace('px','') / document.getElementById("snarls_player").aspect_ratio))
-    var h = h  + (parseInt(document.getElementById("snarls_player").hdiff || 30)) + 'px'
+    var h = parseInt(h)  + (parseInt(document.getElementById("snarls_player").hdiff || 30)) + 'px'
     document.getElementById('player-api').style.width = w;
     document.getElementById('player-api').style.height = h;
 
