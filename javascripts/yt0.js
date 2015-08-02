@@ -3035,13 +3035,16 @@ function ythtml5_size() {
     if (webgl) {
       v.style.width = yt.width = bm0.width
       v.style.height = yt.height = webgl.style.height = Math.round(yt.width.replace('px','') / parseFloat(webgl.width / webgl.height)) + 'px'
+      v.style.left = yt.left = '0px'
+      webgl.parentNode.style.left = -1 * parseInt(webgl.parentNode.parentNode.style.left,10) + parseInt(v.style.left,10) + 'px'
+      webgl.parentNode.style.top = -1 * parseInt(webgl.parentNode.parentNode.style.top,10) + parseInt(v.style.left,10)+ 'px'
     }
     if (parseInt(bm0.width.replace('px','')) < parseInt(yt.width.replace('px',''))){
       v.style.width = yt.width = bm0.width
       v.style.height = yt.height = ((Math.round(parseInt(bm0.width.replace('px','')) / parseFloat(document.getElementById('snarls_player').aspect_ratio)))) + 'px';
       v.style.left = yt.left = '0px'
       v.style.top = yt.top = (Math.round( parseInt( parseInt(bm0.height.replace('px','')) - parseInt(yt.height.replace('px','')) ) / 2) - y) + 'px';
-      if (webgl) {
+      if (webgl) {alert('')
 	//v.style.height = yt.height = webgl.style.height = Math.round(v.style.height.replace('px','') * parseFloat(webgl.width / webgl.height)) + 'px'
       }
     }
