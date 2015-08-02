@@ -3042,7 +3042,7 @@ function ythtml5_size() {
     if (webgl) {
   	webgl.style.width = v.style.width;
   	webgl.style.height = v.style.height;
-  	webgl.height = webgl.width / parseFloat(parseInt(v.style.width.replace('px','')) / parseInt(v.style.height.replace('px','')))
+  	//webgl.height = webgl.width / parseFloat(parseInt(v.style.width.replace('px','')) / parseInt(v.style.height.replace('px','')))
   	//webgl.style.left = p1.style.left;
   	//webgl.style.top = p1.style.top;
     }
@@ -3088,6 +3088,7 @@ function aspect2(w,h) {
 }
 
 function aspect(a) { 
+  var webgl = getElementsByAttribute(player(),'canvas','draggable','true')[0]
   var class_0 = document.getElementById('player').getAttribute('class')
   var class_1 = class_0.replace('small','small_a').replace('medium','medium_a').replace('large','large_a')
 
@@ -3099,7 +3100,8 @@ function aspect(a) {
       
   if ((document.getElementById('bm0').style.width != playerwidth ) && (!a)) {
     var w = playerwidth
-    var h = Math.round((w.replace('px','') / document.getElementById("snarls_player").aspect_ratio)) + (parseInt(document.getElementById("snarls_player").hdiff || 30)) + 'px';
+    var h = (webgl ? (w.replace('px','') / (webgl.width / webgl.height)) : Math.round((w.replace('px','') / document.getElementById("snarls_player").aspect_ratio)) + (parseInt(document.getElementById("snarls_player").hdiff || 30)) + 'px'; 
+    )
     document.getElementById('player-api').style.width = w;
     document.getElementById('player-api').style.height = h;
 
@@ -3137,7 +3139,8 @@ function aspect(a) {
     document.getElementById('player').setAttribute('class',class_0.replace('small_a','small').replace('medium_a','medium').replace('large_A','large'))
   } else {
       var w = fix_Width();
-      var h = fix_Height();
+      var h = (webgl ? (w.replace('px','') / (webgl.width / webgl.height)) : fix_Height();
+      )
       document.getElementById('player-api').style.width = w;
       document.getElementById('player-api').style.height = h
       
@@ -3337,8 +3340,8 @@ if ( (typeof player().getPlayerState == 'function') && (player().getAttribute('f
 	}
 
     if (webgl) {
-    	webgl.parentNode.style.left = '0px';//-1 * parseInt(webgl.parentNode.parentNode.style.left,10) + parseInt(v.style.left,10) + 'px'
-        webgl.parentNode.style.top = '0px';//-1 * parseInt(webgl.parentNode.parentNode.style.top,10) + parseInt(v.style.left,10)+ 'px'
+    	webgl.parentNode.style.left = -1 * parseInt(webgl.parentNode.parentNode.style.left,10) + parseInt(v.style.left,10) + 'px'
+        webgl.parentNode.style.top = -1 * parseInt(webgl.parentNode.parentNode.style.top,10) + parseInt(v.style.left,10)+ 'px'
     }
   }
 
@@ -3528,8 +3531,8 @@ if ((v != stage) || ((v.getAttribute('name') != null) && (v.getAttribute('name')
           v.style[prop]='rotate('+rotate+'deg) scale('+zoom+')';
 
 	  if (webgl) {
-	    webgl.parentNode.style.left = '0px';//-1 * parseInt(webgl.parentNode.parentNode.style.left,10) + parseInt(v.style.left,10) + 'px'
-	    webgl.parentNode.style.top = '0px';//-1 * parseInt(webgl.parentNode.parentNode.style.top,10) + parseInt(v.style.left,10)+ 'px'
+	    webgl.parentNode.style.left = -1 * parseInt(webgl.parentNode.parentNode.style.left,10) + parseInt(v.style.left,10) + 'px'
+	    webgl.parentNode.style.top = -1 * parseInt(webgl.parentNode.parentNode.style.top,10) + parseInt(v.style.left,10)+ 'px'
 	    webgl.style[prop] = v.style[prop]
 	  }
 
