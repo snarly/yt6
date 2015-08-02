@@ -3042,10 +3042,7 @@ function ythtml5_size() {
     if (webgl) {
   	webgl.style.width = v.style.width;
   	webgl.style.height = v.style.height;
-  	alert("1: " + webgl.width + ", 3: " + parseInt(v.style.height.replace('px','')) + ", 4: " + parseFloat(parseInt(v.style.width.replace('px','')) / parseInt(v.style.height.replace('px','')))
-  	)
-	webgl.width = v.style.width.replace('px','')
-  	webgl.height = v.style.height.replace('px','');//webgl.width / parseFloat(v.style.width.replace('px','')) / parseFloat(v.style.height.replace('px','')))
+  	webgl.height = webgl.width / parseFloat(parseInt(v.style.width.replace('px','')) / parseInt(v.style.height.replace('px','')))
   	//webgl.style.left = p1.style.left;
   	//webgl.style.top = p1.style.top;
     }
