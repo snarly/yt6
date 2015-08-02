@@ -3038,17 +3038,20 @@ function ythtml5_size() {
       webgl.style.width = Math.round(bm0.height.replace('px','') * parseFloat(webgl.width / webgl.height)) + 'px'
       webgl.parentNode.style.left = -1 * parseInt(webgl.parentNode.parentNode.style.left,10) + parseInt(v.style.left,10) + 'px'
       webgl.parentNode.style.top = -1 * parseInt(webgl.parentNode.parentNode.style.top,10) + parseInt(v.style.left,10)+ 'px'
+      webgl.parentNode.style.left = Math.round((bm0.width.replace('px','') - webgl.style.width.replace('px','')) / 2) + 'px'
       }
     if (parseInt(bm0.width.replace('px','')) < parseInt(yt.width.replace('px',''))){
       v.style.width = yt.width = bm0.width
       v.style.height = yt.height = ((Math.round(parseInt(bm0.width.replace('px','')) / parseFloat(document.getElementById('snarls_player').aspect_ratio)))) + 'px';
-      v.style.left = yt.left = '0px'
-      v.style.top = yt.top = (Math.round( parseInt( parseInt(bm0.height.replace('px','')) - parseInt(yt.height.replace('px','')) ) / 2) - y) + 'px';
-      if (webgl) {alert('')
-	webgl.style.width = bm0.width
-	webgl.style.height = Math.round(yt.width.replace('px','') / parseFloat(webgl.width / webgl.height)) + 'px'
-	webgl.parentNode.style.left = -1 * parseInt(webgl.parentNode.parentNode.style.left,10) + parseInt(v.style.left,10) + 'px'
-	webgl.parentNode.style.top = -1 * parseInt(webgl.parentNode.parentNode.style.top,10) + parseInt(v.style.left,10)+ 'px'
+      if (!webgl) {
+	v.style.left = yt.left = '0px'
+	v.style.top = yt.top = (Math.round( parseInt( parseInt(bm0.height.replace('px','')) - parseInt(yt.height.replace('px','')) ) / 2) - y) + 'px';
+      } else {
+	  webgl.style.width = bm0.width
+	  webgl.style.height = Math.round(yt.width.replace('px','') / parseFloat(webgl.width / webgl.height)) + 'px'
+	  webgl.parentNode.style.left = -1 * parseInt(webgl.parentNode.parentNode.style.left,10) + parseInt(v.style.left,10) + 'px'
+	  webgl.parentNode.style.top = -1 * parseInt(webgl.parentNode.parentNode.style.top,10) + parseInt(v.style.left,10)+ 'px'
+	  webgl.parentNode.style.top = Math.round((bm0.height.replace('px','') - x - webgl.style.height.replace('px','')) / 2) + 'px'
       }
     }
 
@@ -3106,7 +3109,8 @@ function aspect(a) {
       
   if ((document.getElementById('bm0').style.width != playerwidth ) && (!a)) {
     var w = playerwidth
-    var h = (webgl) ? Math.round(w.replace('px','') / parseFloat(webgl.width / webgl.height)) + 'px' : Math.round((w.replace('px','') / document.getElementById("snarls_player").aspect_ratio)) + (parseInt(document.getElementById("snarls_player").hdiff || 30)) + 'px'
+    var h = (webgl) ? Math.round(w.replace('px','') / parseFloat(webgl.width / webgl.height)) + 'px' : Math.round((w.replace('px','') / document.getElementById("snarls_player").aspect_ratio))
+    var h = h  + (parseInt(document.getElementById("snarls_player").hdiff || 30)) + 'px'
     document.getElementById('player-api').style.width = w;
     document.getElementById('player-api').style.height = h;
 
