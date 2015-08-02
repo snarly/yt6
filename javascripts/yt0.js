@@ -3332,9 +3332,12 @@ if ( (typeof player().getPlayerState == 'function') && (player().getAttribute('f
 		 parseInt(bm0.style.width.replace('px','')) -
 		 ( (parseInt(v.style.height.replace('px','')) ) * parseFloat(document.getElementById("snarls_player").aspect_ratio) )
 		) / 2)	 ) + 'px';
-    //v.style.left = '0px';
-    //v.style.top = '0px';
-	}//else
+	}
+
+    if (webgl) {
+    	webgl.parentNode.style.left = -1 * parseInt(webgl.parentNode.parentNode.style.left,10) + parseInt(v.style.left,10) + 'px'
+        webgl.parentNode.style.top = -1 * parseInt(webgl.parentNode.parentNode.style.top,10) + parseInt(v.style.left,10)+ 'px'
+    }
   }
 
 var tiny = document.getElementById('watch7-sidebar').currentStyle || window.getComputedStyle(document.getElementById('watch7-sidebar'), null)
@@ -3452,7 +3455,7 @@ if ((v != stage) || ((v.getAttribute('name') != null) && (v.getAttribute('name')
         case 'left yt-uix-button-text':
           v.style.left = (parseInt(v.style.left,10) - 5) + 'px'; if (poster != null) poster.style.left = v.style.left
           if (webgl) {
-            webgl.parentNode.style.left = -1 * parseInt(webgl.parentNode.parentNode.style.left,10) + parseInt(webgl.parentNode.style.left,10) - 5 + 'px'
+            webgl.parentNode.style.left = parseInt(webgl.parentNode.style.left,10) - 5 + 'px'
           }
   player().removeAttribute('wmode');
 
@@ -3460,7 +3463,7 @@ if ((v != stage) || ((v.getAttribute('name') != null) && (v.getAttribute('name')
         case 'right yt-uix-button-text':
           v.style.left = (parseInt(v.style.left,10) + 5) + 'px'; if (poster != null) poster.style.left = v.style.left
           if (webgl) {
-            webgl.parentNode.style.left = -1 * parseInt(webgl.parentNode.parentNode.style.left,10) + parseInt(webgl.parentNode.style.left,10) + 5 + 'px'
+            webgl.parentNode.style.left = parseInt(webgl.parentNode.style.left,10) + 5 + 'px'
           }
   player().removeAttribute('wmode');
 
@@ -3468,7 +3471,7 @@ if ((v != stage) || ((v.getAttribute('name') != null) && (v.getAttribute('name')
         case 'up yt-uix-button-text':
           v.style.top = (parseInt(v.style.top,10) - 5) + 'px'; if (poster != null) poster.style.top = v.style.top
           if (webgl) {
-            webgl.parentNode.style.top = -1 * parseInt(webgl.parentNode.parentNode.style.top,10) + parseInt(webgl.parentNode.style.top,10) - 5 + 'px'
+            webgl.parentNode.style.top = parseInt(webgl.parentNode.style.top,10) - 5 + 'px'
           }
   player().removeAttribute('wmode');
 
@@ -3476,7 +3479,7 @@ if ((v != stage) || ((v.getAttribute('name') != null) && (v.getAttribute('name')
         case 'down yt-uix-button-text':
           v.style.top = (parseInt(v.style.top,10) + 5) + 'px'; if (poster != null) poster.style.top = v.style.top
           if (webgl) {
-            webgl.parentNode.style.top = -1 * parseInt(webgl.parentNode.parentNode.style.top,10) + parseInt(webgl.parentNode.style.top,10) + 5 + 'px'
+            webgl.parentNode.style.top = parseInt(webgl.parentNode.style.top,10) + 5 + 'px'
           }
   player().removeAttribute('wmode');
 
