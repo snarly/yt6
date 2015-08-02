@@ -2664,7 +2664,17 @@ function resize_layers(w,h){
   var z = document.getElementsByClassName('mejs-offscreen'); if ((z != null) && (z[0] != null)) z[0].style.display = 'none';
   var z = document.getElementsByClassName('mejs-time-buffering'); if ((z != null) && (z[0] != null)) z[0].setAttribute('class','mejs-time-bufferin');
   var bm0 = document.getElementById('bm0')
+
   var me_flash = document.getElementById(mep_x('me_flash__ __container'))
+  if (me_flash != null) {
+    me_flash.style.width = w;
+    me_flash.style.height = h;
+  }
+
+  var webgl = getElementsByAttribute(player(),'canvas','draggable','true')[0];
+  if (webgl) {
+  	webgl.style.width = w; webgl.style.height = h
+  }
 
   //var noads = document.getElementById('player').innerHTML;onDownload(noads)
   var tiny = document.getElementById('watch7-sidebar').currentStyle;
@@ -2681,10 +2691,6 @@ function resize_layers(w,h){
     document.getElementsByClassName('mejs-clear')[0].style.width = w
     document.getElementsByClassName('mejs-clear')[0].style.height = h
   }
-  if (me_flash != null) {
-    me_flash.style.width = w;
-    me_flash.style.height = h;
-  }
 
   var z = document.getElementById('placeholder-player').firstChild.style;
   if (typeof z !== 'object') {
@@ -2700,7 +2706,7 @@ function resize_layers(w,h){
 
   var p1 = document.getElementById('player1')
 
-  if (p1 != null) {
+    if (p1 != null) {
 
     if (((player().getAttribute('name') == 'me_flash') && (bm0.style.visibility == 'hidden')) || ((document.getElementById(mep_x('me_flash_')) != null) && (bm0.style.visibility == 'visible'))) {
 	p1.style.width = parseInt(w.replace('px','') - (x || 30)) + 'px'
@@ -2724,9 +2730,8 @@ function resize_layers(w,h){
 	}
       p1.style.left = '0px'
     }
+    
   }
-
-
 
   var flashvars = player().getAttribute('flashvars')
   var c = document.getElementById("aspect")
