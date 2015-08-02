@@ -2911,6 +2911,8 @@ if (parseInt(tiny.marginLeft.replace('px','')) > 100) {
     }
   }
 
+  document.getElementsByClassName('mejs-speed-selector')[0].style.right = parseInt(document.getElementsByClassName('mejs-speed-selector')[0].offsetRight,10) + 40 + 'px'
+
   var z = document.getElementById("bm3")
   if (z) z.style.top = document.getElementById("masthead-positioner").offsetHeight - 2 + "px" 
 
@@ -3526,8 +3528,8 @@ if ((v != stage) || ((v.getAttribute('name') != null) && (v.getAttribute('name')
           v.style[prop]='rotate('+rotate+'deg) scale('+zoom+')';
 
 	  if (webgl) {
-	    webgl.parentNode.style.left = -1 * parseInt(webgl.parentNode.parentNode.style.left,10) + parseInt(v.style.left,10) + 'px'
-	    webgl.parentNode.style.top = -1 * parseInt(webgl.parentNode.parentNode.style.top,10) + parseInt(v.style.left,10)+ 'px'
+	    webgl.parentNode.style.left = '0px';//-1 * parseInt(webgl.parentNode.parentNode.style.left,10) + parseInt(v.style.left,10) + 'px'
+	    webgl.parentNode.style.top = '0px';//-1 * parseInt(webgl.parentNode.parentNode.style.top,10) + parseInt(v.style.left,10)+ 'px'
 	    webgl.style[prop] = v.style[prop]
 	  }
 
