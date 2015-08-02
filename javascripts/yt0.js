@@ -3033,7 +3033,8 @@ function ythtml5_size() {
     v.style.left = yt.left = Math.round( parseInt( parseInt(bm0.width.replace('px','')) - parseInt(yt.width.replace('px','')) ) / 2) + 'px';
     v.style.top = yt.top = '0px';
     if (webgl) {
-      v.style.height = yt.height = webgl.style.height = Math.round(v.style.width.replace('px','') / parseFloat(webgl.width / webgl.height)) + 'px'
+      v.style.width = yt.width = bm0.width
+      v.style.height = yt.height = webgl.style.height = Math.round(yt.width.replace('px','') / parseFloat(webgl.width / webgl.height)) + 'px'
     }
     if (parseInt(bm0.width.replace('px','')) < parseInt(yt.width.replace('px',''))){
       v.style.width = yt.width = bm0.width
@@ -3041,7 +3042,7 @@ function ythtml5_size() {
       v.style.left = yt.left = '0px'
       v.style.top = yt.top = (Math.round( parseInt( parseInt(bm0.height.replace('px','')) - parseInt(yt.height.replace('px','')) ) / 2) - y) + 'px';
       if (webgl) {
-        //v.style.width = yt.width = webgl.style.width = Math.round(v.style.height.replace('px','') * parseFloat(webgl.width / webgl.height)) + 'px'
+	//v.style.height = yt.height = webgl.style.height = Math.round(v.style.height.replace('px','') * parseFloat(webgl.width / webgl.height)) + 'px'
       }
     }
 
@@ -3099,8 +3100,7 @@ function aspect(a) {
       
   if ((document.getElementById('bm0').style.width != playerwidth ) && (!a)) {
     var w = playerwidth
-    var h = (webgl) ? Math.round(w.replace('px','') / parseFloat(webgl.width / webgl.height)) : Math.round((w.replace('px','') / document.getElementById("snarls_player").aspect_ratio))
-    var h = h + (parseInt(document.getElementById("snarls_player").hdiff || 30)) + 'px'
+    var h = (webgl) ? Math.round(w.replace('px','') / parseFloat(webgl.width / webgl.height)) + 'px' : Math.round((w.replace('px','') / document.getElementById("snarls_player").aspect_ratio)) + (parseInt(document.getElementById("snarls_player").hdiff || 30)) + 'px'
     document.getElementById('player-api').style.width = w;
     document.getElementById('player-api').style.height = h;
 
@@ -3138,7 +3138,7 @@ function aspect(a) {
     document.getElementById('player').setAttribute('class',class_0.replace('small_a','small').replace('medium_a','medium').replace('large_A','large'))
   } else {
       var w = fix_Width();
-      var h = (webgl) ? w.replace('px','') / parseFloat(webgl.width / webgl.height) : fix_Height()
+      var h = (webgl) ? w.replace('px','') / parseFloat(webgl.width / webgl.height) + 'px' : fix_Height()
       document.getElementById('player-api').style.width = w;
       document.getElementById('player-api').style.height = h
       
