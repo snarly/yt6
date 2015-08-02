@@ -3036,9 +3036,8 @@ function ythtml5_size() {
     } else {
       webgl.style.height = bm0.height.replace('px','') - x + 'px'
       webgl.style.width = Math.round(bm0.height.replace('px','') * parseFloat(webgl.width / webgl.height)) + 'px'
-      webgl.parentNode.style.left = -1 * parseInt(webgl.parentNode.parentNode.style.left,10) + parseInt(v.style.left,10) + 'px'
-      webgl.parentNode.style.top = -1 * parseInt(webgl.parentNode.parentNode.style.top,10) + parseInt(v.style.left,10)+ 'px'
-      webgl.parentNode.style.left = Math.round((bm0.width.replace('px','') - webgl.style.width.replace('px','')) / 2) + 'px'
+      v.style.left = yt.left = Math.round( parseInt( parseInt(bm0.width.replace('px','')) - parseInt(yt.width.replace('px','')) ) / 2) + 'px';
+      v.style.top = yt.top = '0px';
       }
     if (parseInt(bm0.width.replace('px','')) < parseInt(yt.width.replace('px',''))){
       v.style.width = yt.width = bm0.width
@@ -3049,9 +3048,8 @@ function ythtml5_size() {
       } else {
 	  webgl.style.width = bm0.width
 	  webgl.style.height = Math.round(yt.width.replace('px','') / parseFloat(webgl.width / webgl.height)) + 'px'
-	  webgl.parentNode.style.left = -1 * parseInt(webgl.parentNode.parentNode.style.left,10) + parseInt(v.style.left,10) + 'px'
-	  webgl.parentNode.style.top = -1 * parseInt(webgl.parentNode.parentNode.style.top,10) + parseInt(v.style.left,10)+ 'px'
-	  webgl.parentNode.style.top = Math.round((bm0.height.replace('px','') - x - webgl.style.height.replace('px','')) / 2) + 'px'
+	v.style.left = yt.left = '0px'
+	v.style.top = yt.top = (Math.round( parseInt( parseInt(bm0.height.replace('px','')) - parseInt(yt.height.replace('px','')) ) / 2) - y) + 'px';
       }
     }
 
