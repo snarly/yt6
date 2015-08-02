@@ -3348,8 +3348,8 @@ if ( (typeof player().getPlayerState == 'function') && (player().getAttribute('f
 	}
 
 	  if (webgl) {
-	    webgl.parentNode.style.left = -1 * parseInt(webgl.parentNode.parentNode.style.left.replace('px','')) + parseInt(v.style.left.replace('pc','')) + 'px'
-	    webgl.parentNode.style.top = -1 * parseInt(webgl.parentNode.parentNode.style.top.replace('px','')) + parseInt(v.style.top.replace('px','')) + 'px'
+	    webgl.parentNode.style.left = -1 * parseInt(webgl.parentNode.parentNode.style.left.replace('px','')) + 'px'
+	    webgl.parentNode.style.top = -1 * parseInt(webgl.parentNode.parentNode.style.top.replace('px','')) + 'px'
 	  }
   }
 
@@ -3539,8 +3539,8 @@ if ((v != stage) || ((v.getAttribute('name') != null) && (v.getAttribute('name')
           v.style[prop]='rotate('+rotate+'deg) scale('+zoom+')';
 
 	  if (webgl) {
-	    webgl.parentNode.style.left = -1 * parseInt(webgl.parentNode.parentNode.style.left.replace('px','')) + parseInt(v.style.left.replace('pc','')) + 'px'
-	    webgl.parentNode.style.top = -1 * parseInt(webgl.parentNode.parentNode.style.top.replace('px','')) + parseInt(v.style.top.replace('px','')) + 'px'
+	    webgl.parentNode.style.left = -1 * parseInt(webgl.parentNode.parentNode.style.left.replace('px','')) + 'px'
+	    webgl.parentNode.style.top = -1 * parseInt(webgl.parentNode.parentNode.style.top.replace('px','')) + 'px'
 	    webgl.style[prop] = v.style[prop]
 	  }
 
