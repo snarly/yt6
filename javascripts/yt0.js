@@ -3042,7 +3042,8 @@ function ythtml5_size() {
     if (webgl) {
   	webgl.style.width = v.style.width;
   	webgl.style.height = v.style.height;
-  	alert(webgl.width + " " + v.style.width,10 + "  " + parseFloat(v.style.height,10) + " " + parseFloat(v.style.width,10) / parseFloat(v.style.height,10))
+  	alert("1: " + webgl.width + ", 2: " + v.style.width,10 + ", 3: " + parseFloat(v.style.height.replace('px','')) + ", 4: " + parseFloat(v.style.width.replace('px','')) / parseFloat(v.style.height.replace('px',''))
+  	)
   	webgl.height = (webgl.width / parseFloat(v.style.width,10) / parseFloat(v.style.height,10))
   	//webgl.style.left = p1.style.left;
   	//webgl.style.top = p1.style.top;
