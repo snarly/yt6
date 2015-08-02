@@ -3522,12 +3522,15 @@ if ((v != stage) || ((v.getAttribute('name') != null) && (v.getAttribute('name')
 		  }
 
             }
+
           v.style[prop]='rotate('+rotate+'deg) scale('+zoom+')';
-          if (webgl) {
-            webgl.parentNode.style.left = -1 * webgl.parentNode.parentNode.style.left.replace('px','') + 'px'
-            webgl.parentNode.style.top = -1 * webgl.parentNode.parentNode.style.top.replace('px','') + 'px'
-            webgl.style[prop] = v.style[prop]
-          }
+
+	  if (webgl) {
+	    webgl.parentNode.style.left = -1 * parseInt(webgl.parentNode.parentNode.style.left,10) + parseInt(v.style.left,10) + 'px'
+	    webgl.parentNode.style.top = -1 * parseInt(webgl.parentNode.parentNode.style.top,10) + parseInt(v.style.left,10)+ 'px'
+	    webgl.style[prop] = v.style[prop]
+	  }
+
         } else {
             var opacity = player().style.opacity;
             player().setAttribute("style","top:0px; left:0px; opacity:"+opacity); zoom = 1; rotate = 0;//width:" + document.getElementById('placeholder-player').firstChild.style.width + "; height:" + document.getElementById('placeholder-player').firstChild.style.height + "; 
