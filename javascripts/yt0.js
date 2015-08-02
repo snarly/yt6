@@ -3100,7 +3100,8 @@ function aspect(a) {
       
   if ((document.getElementById('bm0').style.width != playerwidth ) && (!a)) {
     var w = playerwidth
-    var h = (webgl) ? (w.replace('px','') / (webgl.width / webgl.height)) : Math.round((w.replace('px','') / document.getElementById("snarls_player").aspect_ratio)) + (parseInt(document.getElementById("snarls_player").hdiff || 30)) + 'px'
+    var h = (webgl) ? w.replace('px','') / parseFloat(webgl.width / webgl.height) + 'px' : Math.round((w.replace('px','') / document.getElementById("snarls_player").aspect_ratio)) + (parseInt(document.getElementById("snarls_player").hdiff || 30)) + 'px'
+alert(h)
     document.getElementById('player-api').style.width = w;
     document.getElementById('player-api').style.height = h;
 
@@ -3138,7 +3139,8 @@ function aspect(a) {
     document.getElementById('player').setAttribute('class',class_0.replace('small_a','small').replace('medium_a','medium').replace('large_A','large'))
   } else {
       var w = fix_Width();
-      var h = (webgl) ? (w.replace('px','') / (webgl.width / webgl.height)) : fix_Height()
+      var h = (webgl) ? w.replace('px','') / parseFloat(webgl.width / webgl.height) + 'px' : fix_Height()
+      alert(h)
       document.getElementById('player-api').style.width = w;
       document.getElementById('player-api').style.height = h
       
