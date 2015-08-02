@@ -2732,15 +2732,7 @@ function resize_layers(w,h){
 	}
       p1.style.left = '0px'
     }
-    var webgl = getElementsByAttribute(player(),'canvas','draggable','true')[0];
-    if (webgl) {
-  	webgl.style.width = p1.style.width;
-  	webgl.style.height = p1.style.height;
-  	webgl.height = Math.round(webgl.width / parseFloat(p1.style.width,10) / parseFloat(p1.style.height,10))
-  	//webgl.style.left = p1.style.left;
-  	//webgl.style.top = p1.style.top;
-    }
-    
+
   }
 
   var flashvars = player().getAttribute('flashvars')
@@ -3046,12 +3038,15 @@ function ythtml5_size() {
       v.style.left = yt.left = '0px'
       v.style.top = yt.top = (Math.round( parseInt( parseInt(bm0.height.replace('px','')) - parseInt(yt.height.replace('px','')) ) / 2) - y) + 'px';
     }
-//    } else {
-//    	v.style.width = yt.width = bm.width
-//    	v.style.left = yt.left = '0px'
-//      }
-//    v.style.height = yt.height = (bm0.height.replace('px','') - x) + 'px'
-//    v.style.top = yt.top = (((bm0.height.replace('px','') - (bm0.height.replace('px','') - x)) / 2 >>0) - y) + 'px';
+    var webgl = getElementsByAttribute(player(),'canvas','draggable','true')[0];
+    if (webgl) {
+  	webgl.style.width = v.style.width;
+  	webgl.style.height = v.style.height;
+  	alert(webgl.width + " " + v.style.width,10 + "  " + parseFloat(v.style.height,10) + " " + parseFloat(v.style.width,10) / parseFloat(v.style.height,10))
+  	webgl.height = (webgl.width / parseFloat(v.style.width,10) / parseFloat(v.style.height,10))
+  	//webgl.style.left = p1.style.left;
+  	//webgl.style.top = p1.style.top;
+    }
   }
 }
 
