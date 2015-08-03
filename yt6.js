@@ -466,7 +466,7 @@ document.getElementById('ytassetsjs').fcnm = fcnm
 
 if (player().getAttribute('name') == 'me_flash') {
   var file = def_link()
-  var me_flash_param = getElementsByAttribute(player(),"param","name","flashvars");
+  if ((player()) && (player() != null)) var me_flash_param = getElementsByAttribute(player(),"param","name","flashvars");
   if (me_flash_param[0] != undefined) {
     me_flash_param[0].setAttribute("value", me_flash_param[0].getAttribute("value").split("&file=")[0] + "&file=" + file)
   }
@@ -646,7 +646,8 @@ if (typeof ytplayer != 'object') {
   }
 }
 
-
+//alert('player ' + player() + 'window.ytplayer ' + window.ytplayer + 'ytplayer.config ' + ytplayer.config + 'ytplayer.config.loaded ' + ytplayer.config.loaded)
+//var x = document.getElementById('player-api').innerHTML;onDownload(x); p.paused = true;
 if ((player() != null) && (window.ytplayer) && (ytplayer.config) && (ytplayer.config.loaded == true)) {
 
   ajax1()
@@ -657,7 +658,12 @@ if ((player() != null) && (window.ytplayer) && (ytplayer.config) && (ytplayer.co
       window.ytplayer = {};
       eval(document.getElementById('player').textContent.split('var ytplayer = ytplayer || {};')[1].split(';(function()')[0]);
     }
-    if (player() == null) me_flash_up();
+    if (player() != null) {
+      if ((document.getElementsByClassName('html5-video-content')[0]) && (document.getElementsByClassName('html5-video-content')[0].innerHTML == '')) {
+	me_flash_up();
+      }
+    } else me_flash_up()
+
     if (def_link() == '') ajax1();
 
 }
@@ -2311,7 +2317,7 @@ if (yt6){
               }
             }
         } else {
-	    var webgl = getElementsByAttribute(player(),'canvas','draggable','true')[0];
+	    if ((p) && (p != null)) var webgl = getElementsByAttribute(p,'canvas','draggable','true')[0];
 	    if (webgl) {
 	      webgl.removeAttribute('style')
 	      webgl.parentNode.style.left = -1 * webgl.parentNode.parentNode.style.left.replace('px','') + 'px'
@@ -2702,7 +2708,8 @@ function resize_layers(w,h){
     }
   var z = document.getElementById('placeholder-player').firstChild.currentStyle || window.getComputedStyle(document.getElementById('placeholder-player').firstChild, null)
   document.getElementById('snarls_player').hdiff = parseInt( z.height.replace('px','') - ((z.height.replace('px','') / 60 >> 0) * 60) ); 
-  var x = document.getElementById('snarls_player').hdiff
+  var hdiff = document.getElementById('snarls_player').hdiff
+  if (hdiff == undefined) hdiff = 30
   var y = Math.round(x / 2)
   if (o != null) document.getElementById('placeholder-player').firstChild.setAttribute('style', o)
 
@@ -2711,24 +2718,32 @@ function resize_layers(w,h){
     if (p1 != null) {
 
     if (((player().getAttribute('name') == 'me_flash') && (bm0.style.visibility == 'hidden')) || ((document.getElementById(mep_x('me_flash_')) != null) && (bm0.style.visibility == 'visible'))) {
-	p1.style.width = parseInt(w.replace('px','') - (x || 30)) + 'px'
+	p1.style.width = parseInt(w.replace('px','') - hdiff) + 'px'
 	p1.style.height = h
 	p1.style.left = '0px'
     } else {
-	p1.style.width = Math.round(parseInt(h.replace('px','') - x) * parseFloat(document.getElementById('snarls_player').aspect_ratio)) + 'px';
-	p1.style.height = (h.replace('px','') - x) + 'px';
-	p1.style.left = Math.round( parseInt( parseInt(w.replace('px','')) - parseInt(p1.style.width.replace('px','')) ) / 2) + 'px';
+	if ((document.getElementsByClassName('html5-video-content')[0]) && (document.getElementsByClassName('html5-video-content')[0].innerHTML == '')) {
+	  p1.style.width = Math.round(parseInt(h.replace('px','') - hdiff) * parseFloat(document.getElementById('snarls_player').aspect_ratio)) + 'px';
+	  p1.style.height = (h.replace('px','') - hdiff) + 'px';
+	  p1.style.left = Math.round( parseInt( parseInt(w.replace('px','')) - parseInt(p1.style.width.replace('px','')) ) / 2) + 'px';
+	} else {
+	    p1.style.width = w
+	    p1.style.height = h
+	    p1.style.left = '0px'
+	  }
       }
 	p1.style.top = '0px';
+
     if (parseInt(document.getElementById('bm0').style.width.replace('px','')) < parseInt(p1.style.width.replace('px',''))){
+
       if (((player().getAttribute('name') == 'me_flash') && (bm0.style.visibility == 'hidden')) || ((document.getElementById(mep_x('me_flash_')) != null) && (bm0.style.visibility == 'visible'))) {
 	  p1.style.width = w;
-	  p1.style.height = parseInt(h.replace('px','') - (y || 15)) + 'px'
+	  p1.style.height = parseInt(h.replace('px','') - Math.round(hdiff / 2)) + 'px'
 	  p1.style.top = '0px'
       } else {
 	  p1.style.width = w
 	  p1.style.height = ((Math.round(parseInt(w.replace('px','')) / parseFloat(document.getElementById('snarls_player').aspect_ratio)))) + 'px';
-	  p1.style.top = (Math.round( parseInt( parseInt(h.replace('px','')) - parseInt(p1.style.height.replace('px','')) ) / 2) - y) + 'px';
+	  p1.style.top = (Math.round( parseInt( parseInt(h.replace('px','')) - parseInt(p1.style.height.replace('px','')) ) / 2) - Math.round(hdiff / 2)) + 'px';
 	}
       p1.style.left = '0px'
     }
@@ -2875,7 +2890,7 @@ if (parseInt(tiny.marginLeft.replace('px','')) > 100) {
         if (z[i].className !== 'mejs-overlay mejs-layer mejs-overlay-play') {
           z[i].style.height = document.getElementById('bm0').style.height
         } else {
-            z[i].style.height = parseInt(document.getElementById('bm0').style.height.replace('px','') - parseInt(document.getElementById('snarls_player').hdiff || 30)) + 'px'
+            z[i].style.height = parseInt(document.getElementById('bm0').style.height.replace('px','') - hdiff) + 'px'
           }
       }
     }
@@ -3017,10 +3032,10 @@ function ythtml5_size() {
       }
     var z = document.getElementById('placeholder-player').firstChild.currentStyle || window.getComputedStyle(document.getElementById('placeholder-player').firstChild, null)
     document.getElementById('snarls_player').hdiff = parseInt( z.height.replace('px','') - ((z.height.replace('px','') / 60 >>0) * 60) ); 
-    var x = document.getElementById('snarls_player').hdiff || 30
-    var y = Math.round(x / 2)
+    var hdiff = document.getElementById('snarls_player').hdiff
+    if (hdiff == undefined) hdiff = 30
     if (o != null) document.getElementById('placeholder-player').firstChild.setAttribute('style', o)
-    var webgl = getElementsByAttribute(player(),'canvas','draggable','true')[0];
+    if ((player()) && (player() != null)) var webgl = getElementsByAttribute(player(),'canvas','draggable','true')[0];
     var bm0 = document.getElementById('bm0').style
     var yt = document.getElementsByClassName('html5-video-content')[0].style
     var v = document.getElementsByClassName('video-stream html5-main-video')[0]
@@ -3028,20 +3043,20 @@ function ythtml5_size() {
 //      v.style.width = yt.width = Math.round((bm0.height.replace('px','') - x) * parseFloat(document.getElementById("snarls_player").aspect_ratio)) + 'px'
 //      v.style.left = yt.left = (Math.round((bm0.width.replace('px','') - (bm0.height.replace('px','') - x) * parseFloat(document.getElementById("snarls_player").aspect_ratio)) / 2) ) + 'px';
 //    v.style.left = yt.left = (Math.round((bm0.width.replace('px','') - (bm0.height.replace('px','') - x) * parseFloat(document.getElementById("snarls_player").aspect_ratio)) / 2) >>0) + 'px';
-    v.style.width = yt.width = Math.round(parseInt(bm0.height.replace('px','') - x) * parseFloat(document.getElementById('snarls_player').aspect_ratio)) + 'px';
-    v.style.height = yt.height = (bm0.height.replace('px','') - x) + 'px';
+    v.style.width = yt.width = Math.round(parseInt(bm0.height.replace('px','') - hdiff) * parseFloat(document.getElementById('snarls_player').aspect_ratio)) + 'px';
+    v.style.height = yt.height = (bm0.height.replace('px','') - hdiff) + 'px';
       v.style.left = yt.left = Math.round( parseInt( parseInt(bm0.width.replace('px','')) - parseInt(yt.width.replace('px','')) ) / 2) + 'px';
       v.style.top = yt.top = '0px';
     if (!webgl) {
     } else {
-      webgl.style.height = bm0.height.replace('px','') - x + 'px'
+      webgl.style.height = bm0.height.replace('px','') - hdiff + 'px'
       webgl.style.width = Math.round(bm0.height.replace('px','') * parseFloat(webgl.width / webgl.height)) + 'px'
       }
     if (parseInt(bm0.width.replace('px','')) < parseInt(yt.width.replace('px',''))){
       v.style.width = yt.width = bm0.width
       v.style.height = yt.height = ((Math.round(parseInt(bm0.width.replace('px','')) / parseFloat(document.getElementById('snarls_player').aspect_ratio)))) + 'px';
 	v.style.left = yt.left = '0px'
-	v.style.top = yt.top = (Math.round( parseInt( parseInt(bm0.height.replace('px','')) - parseInt(yt.height.replace('px','')) ) / 2) - y) + 'px';
+	v.style.top = yt.top = (Math.round( parseInt( parseInt(bm0.height.replace('px','')) - parseInt(yt.height.replace('px','')) ) / 2) - Math.round(hdiff / 2)) + 'px';
       if (!webgl) {
       } else {
 	  webgl.style.width = bm0.width
@@ -3091,7 +3106,7 @@ function aspect2(w,h) {
 }
 
 function aspect(a) { 
-  var webgl = getElementsByAttribute(player(),'canvas','draggable','true')[0]
+  if ((player()) && (player() != null)) var webgl = getElementsByAttribute(player(),'canvas','draggable','true')[0]
   var class_0 = document.getElementById('player').getAttribute('class')
   var class_1 = class_0.replace('small','small_a').replace('medium','medium_a').replace('large','large_a')
 
@@ -3102,9 +3117,11 @@ function aspect(a) {
     }
       
   if ((document.getElementById('bm0').style.width != playerwidth ) && (!a)) {
+    var hdiff = document.getElementById("snarls_player").hdiff
+    if (hdiff == undefined) hdiff = 30
     var w = playerwidth
     var h = (webgl) ? Math.round(w.replace('px','') / parseFloat(webgl.width / webgl.height)) + 'px' : Math.round((w.replace('px','') / document.getElementById("snarls_player").aspect_ratio))
-    var h = parseInt(h)  + (parseInt(document.getElementById("snarls_player").hdiff || 30)) + 'px'
+    var h = parseInt(h)  + hdiff + 'px'
     document.getElementById('player-api').style.width = w;
     document.getElementById('player-api').style.height = h;
 
@@ -3212,7 +3229,7 @@ function deldiv(){
     document.getElementsByClassName('video-stream html5-main-video')[0].removeAttribute('style')
   }
 
-  var webgl = getElementsByAttribute(player(),'canvas','draggable','true')[0];
+  if ((player()) && (player() != null)) var webgl = getElementsByAttribute(player(),'canvas','draggable','true')[0];
   if (webgl) {
     webgl.removeAttribute('style')
     webgl.parentNode.style.left = -1 * webgl.parentNode.parentNode.style.left.replace('px','') + 'px'
@@ -3293,10 +3310,12 @@ var v = v; if (v == undefined) { var v = document.getElementsByClassName('video-
   //alert(v.getAttribute('id') + " " + stage.getAttribute('id'))
 
 var controls = document.getElementById('controls');
-var poster = getElementsByAttribute(document.getElementById(mep_x('mep_')),'div','class','mejs-poster mejs-layer')[0]
+if (document.getElementById(mep_x('mep_')) != null) var poster = getElementsByAttribute(document.getElementById(mep_x('mep_')),'div','class','mejs-poster mejs-layer')[0]
 var bm0 = document.getElementById('bm0');
+var hdiff = parseInt(document.getElementById("snarls_player").hdiff)
+if (hdiff == undefined) hdiff = 30
 var me_flash = document.getElementById(mep_x('me_flash__ __container'))
-var webgl = getElementsByAttribute(player(),'canvas','draggable','true')[0];
+if ((player()) && (player() != null)) var webgl = getElementsByAttribute(player(),'canvas','draggable','true')[0];
 var flashvars = getFlashVars();
   
 /* Array of possible browser specific settings for transformation */
@@ -3333,7 +3352,7 @@ if ( (typeof player().getPlayerState == 'function') && (player().getAttribute('f
     } else {
     v.style.top = (Math.round( parseInt(
 		 parseInt(bm0.style.height.replace('px','')) -
-		 parseInt(v.style.height.replace('px','')) - parseInt(document.getElementById("snarls_player").hdiff || 30)
+		 parseInt(v.style.height.replace('px','')) - hdiff
 		) / 2)	 ) + 'px';
     v.style.left = (Math.round( parseInt(
 		 parseInt(bm0.style.width.replace('px','')) -
@@ -3506,7 +3525,7 @@ if ((v != stage) || ((v.getAttribute('name') != null) && (v.getAttribute('name')
 	      if (bm0 != null) {
                 v.style.top = (Math.round( parseInt(
 				 parseInt(bm0.style.height.replace('px','')) -
-				 parseInt(v.style.height.replace('px','')) - parseInt(document.getElementById("snarls_player").hdiff || 30)
+				 parseInt(v.style.height.replace('px','')) - hdiff
 				) / 2)	 ) + 'px';
 	        v.style.left = (Math.round( parseInt(
 				 parseInt(bm0.style.width.replace('px','')) -
@@ -3521,7 +3540,7 @@ if ((v != stage) || ((v.getAttribute('name') != null) && (v.getAttribute('name')
 			}
 			if (flashvars[i] == document.getElementById(mep_x('me_flash_'))) {
 			  if (flashvars[i].style.width == '') flashvars[i].style.width = bm0.style.width;
-			  if (flashvars[i].style.height == '') flashvars[i].style.height = parseInt(bm0.style.height.replace('px','') - 30) + 'px';
+			  if (flashvars[i].style.height == '') flashvars[i].style.height = parseInt(bm0.style.height.replace('px','') - hdiff) + 'px';
 			  flashvars[i].style.top = '0px'
 			  flashvars[i].style.left = '0px'
 			}
