@@ -658,11 +658,13 @@ if ((player() != null) && (window.ytplayer) && (ytplayer.config) && (ytplayer.co
       window.ytplayer = {};
       eval(document.getElementById('player').textContent.split('var ytplayer = ytplayer || {};')[1].split(';(function()')[0]);
     }
-    if (player() != null) {
-      if ((document.getElementsByClassName('html5-video-content')[0]) && (document.getElementsByClassName('html5-video-content')[0].innerHTML == '')) {
-	me_flash_up();
+    if (player() == null) {
+      document.getElementById("player-api").innerHTML = ''; me_flash_up()
+    } else {
+	if ((document.getElementsByClassName('html5-video-content')[0]) && (document.getElementsByClassName('html5-video-content')[0].innerHTML == '')) {
+	  document.getElementById("player-api").innerHTML = ''; me_flash_up();
+	}
       }
-    } else me_flash_up()
 
     if (def_link() == '') ajax1();
 
