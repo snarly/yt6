@@ -3127,15 +3127,13 @@ function aspect(a) {
 	  var h = document.getElementById('player1').height
 
 	} else {
-	    var w = fix_Width();
-	    var h = (webgl) ? w.replace('px','') / parseFloat(webgl.width / webgl.height) + 'px' : fix_Height()
 
-	    var dw = document.getElementById('aspect')
-	    if (dw != null) { dw.parentNode.removeChild(dw)}
-	    resize_layers(w,h)
-	    document.getElementById('theater-background').style.backgroundColor = "transparent"
-	    document.getElementById('player-api').style.overflow = 'hidden';
-      }
+	    var w = playerwidth
+	    var h = (webgl) ?
+	      Math.round(w / parseFloat(webgl.width / webgl.height)) :
+	        Math.round(w / document.getElementById("snarls_player").aspect_ratio);
+
+          }
 
   }
  
