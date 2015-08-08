@@ -781,11 +781,20 @@
 	color: #fff;
 }
 
-.mejs-controls .display-playback-speed .mejs-speed-selector {
+.mejs-controls .mejs-speed-button {
+	position: relative;
+}
+
+.mejs-controls .mejs-speed-button button {
+	background: none;
+}
+
+.mejs-controls .mejs-speed-button .mejs-speed-selector {
 	position: absolute;
 	visibility: hidden;
-	bottom: 30px;
-	width: 130px;
+	bottom: 26px;
+	width: 86px;
+	right: -110px;
 	background: url(background.png);
 	background: rgba(50,50,50,0.7);
 	border: solid 1px transparent;
@@ -796,7 +805,7 @@
 	border-radius: 0;
 }
 
-.mejs-controls .display-playback-speed .mejs-speed-selector ul {
+.mejs-controls .mejs-speed-button .mejs-speed-selector ul {
 	margin: 0;
 	padding: 0;
 	display: block;
@@ -804,7 +813,7 @@
 	overflow: hidden;
 }
 
-.mejs-controls .display-playback-speed .mejs-speed-selector ul li {
+.mejs-controls .mejs-speed-button .mejs-speed-selector ul li {
 	margin: 0 0 0 0;
 	padding: 0;
 	list-style-type: none !important;
@@ -812,22 +821,6 @@
 	color: #fff;
 	overflow: hidden;
 }
-
-.mejs-controls .display-playback-speed .mejs-speed-selector ul li input {
-	clear: both;
-	float: left;
-	margin: 3px 3px 0 5px;
-}
-
-.mejs-controls .display-playback-speed .mejs-speed-selector ul li label {
-	width: 100px;
-	float: left;
-	padding: 4px 0 0 0;
-	line-height: 15px;
-	font-family: helvetica, arial;
-	font-size: 10px;
-}
-
 
 /* Start: Source Chooser */
 .mejs-controls .mejs-sourcechooser-button {
