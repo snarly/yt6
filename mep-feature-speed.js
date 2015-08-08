@@ -2,6 +2,8 @@
 
     $.extend(mejs.MepDefaults, {
 
+	speedText: 'Playback Speed',
+
         fasterText: 'Speed Up',
 
         slowerText: 'Slow Down',
@@ -28,9 +30,9 @@
 		speedButton = null,
 		speedSelector = null,
 		playbackSpeed = null,
-//
-		html = '<div class="display-playback-speed"><div id="displaySpeed" style="width: 34px; padding: 0px 0px 0px 2px;">Speed 100%</div>' + 
-								'<button class="mejs-speed mejs-speed-button" aria-label="Playback Speed" title="Playback Speed" type="button" style="position: relative; width: 34px; height: 26px; top: -26px;">' + t.options.defaultSpeed + t.options.speedChar + '</button>' + 
+//display-playback-speed
+		html = '<div class="mejs-button mejs-speed-button"><div id="displaySpeed" style="width: 34px; padding: 2px 2px 2px 2px;">Speed 100%</div>' + 
+								'<button type="button" aria-label="' + t.options.speedText + '" title="' + t.options.speedText + '">' + t.options.defaultSpeed + t.options.speedChar + '</button>' + 
 								'<div class="mejs-speed-selector">' + 
 								'<ul>';
 				
@@ -100,9 +102,15 @@
 
             var faster =
                     $('<div class="mejs-button mejs-faster-button hidden" align="center" valign="center" style="padding:0px 0px 0px 10px">' +
-                        '<button type="button" aria-controls="' + t.id + '" title="' + t.options.fasterText + '" aria-label="' + t.options.fasterText + '" style="background-position: -96px -6px;margin:12px 5px;"></button>+' +
+			'<button type="button" style="background-position: -96px -6px;margin:12px 5px;"</button>' +
+                        '<button type="button" style="background: none" aria-controls="' + t.id + '" title="' + t.options.fasterText + '" aria-label="' + t.options.fasterText + '"></button>+' +
                     '</div>')
                     .appendTo(controls)
+			.hover(function() {
+				speedButton.find('.mejs-speed-selector').css('visibility','visible');
+			}, function() {
+				speedButton.find('.mejs-speed-selector').css('visibility','hidden');
+			})
                     .click(function(e) {
                         e.preventDefault();
                         if ((typeof player1 != 'undefined') && (typeof player1.src == 'string') && (player1.src != null) && (parseInt(player1.src.split('itag=')[1].split('&')[0]) > 102) && (player1.src.indexOf('mime=audio') == -1)) media.pause();
@@ -115,9 +123,15 @@
 
             var slower =
                     $('<div class="mejs-button mejs-slower-button hidden" align="center" valign="center">' +
-                        '<button type="button" aria-controls="' + t.id + '" title="' + t.options.slowerText + '" aria-label="' + t.options.slowerText + '" style="background-position: -96px 6px;margin:4px 5px"></button>-' +
+			'<button type="button" style="background-position: -96px 6px;margin:4px 5px"</button>' +
+                        '<button type="button" style="background: none" aria-controls="' + t.id + '" title="' + t.options.slowerText + '" aria-label="' + t.options.slowerText + '"></button>-' +
                         '</div>')
                         .appendTo(controls)
+			.hover(function() {
+				speedButton.find('.mejs-speed-selector').css('visibility','visible');
+			}, function() {
+				speedButton.find('.mejs-speed-selector').css('visibility','hidden');
+			})
                         .click(function(e) {
                             e.preventDefault();
                             if ((typeof player1 != 'undefined') && (typeof player1.src == 'string') && (player1.src != null) && (parseInt(player1.src.split('itag=')[1].split('&')[0]) > 102) && (player1.src.indexOf('mime=audio') == -1)) media.pause();
