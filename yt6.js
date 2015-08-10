@@ -2760,6 +2760,7 @@ function resize_layers(w,h,me_aspect){
   var z = document.getElementsByClassName('mejs-offscreen'); if ((z != null) && (z[0] != null)) z[0].style.display = 'none';
   var z = document.getElementsByClassName('mejs-time-buffering'); if ((z != null) && (z[0] != null)) z[0].setAttribute('class','mejs-time-bufferin');
   var bm0 = document.getElementById('bm0')
+  var webgl = get_webgl()
 
   //var noads = document.getElementById('player').innerHTML;onDownload(noads)
   var tiny = document.getElementById('watch7-sidebar').currentStyle;
@@ -2819,9 +2820,9 @@ if ( (me_aspect) && (  (document.getElementById(mep_x('mep_')) == null) || ((pla
 
   var p1 = document.getElementById('player1')
 
-    if (p1 != null) {
+  if (p1 != null) {
 
-      if (  (document.getElementById(mep_x('mep_')) == null) || ((player().getAttribute('name') == 'me_flash') && (bm0.style.visibility == 'hidden')) || ((document.getElementById(mep_x('me_flash_')) != null) && (bm0.style.visibility == 'visible'))  ) {
+    if (  (document.getElementById(mep_x('mep_')) == null) || ((player().getAttribute('name') == 'me_flash') && (bm0.style.visibility == 'hidden')) || ((document.getElementById(mep_x('me_flash_')) != null) && (bm0.style.visibility == 'visible'))  ) {
 	p1.style.width = (me_aspect) ? w + 'px' : h * document.getElementById('snarls_player').me_aspect + 'px';// parseInt(h.replace('px','') - hdiff) * parseFloat(document.getElementById('snarls_player').aspect_ratio) + 'px'
 	p1.style.height = h + 'px'
 	p1.style.left = '0px'
@@ -2851,7 +2852,10 @@ if ( (me_aspect) && (  (document.getElementById(mep_x('mep_')) == null) || ((pla
 	var h = 1 * h.replace('px','')
 //alert('1 ' + p1.style.width + p1.style.height)
     } else {
-	if (  ((document.getElementsByClassName('html5-video-container')[0]) && (document.getElementsByClassName('html5-video-container')[0].innerHTML != '')) || (document.getElementById(mep_x('mep_')))  ) {
+	if (  ((document.getElementsByClassName('html5-video-container')[0]) &&
+	       (document.getElementsByClassName('html5-video-container')[0].innerHTML != '')) ||
+	      (document.getElementById(mep_x('mep_')))
+	   ) {
 	  p1.style.width = (h - hdiff) * document.getElementById('snarls_player').aspect_ratio + 'px';
 	  p1.style.height = h - hdiff + 'px';
 	  p1.style.left = Math.round( (w - p1.style.width.replace('px','')) / 2) + 'px';
@@ -2865,15 +2869,15 @@ if ( (me_aspect) && (  (document.getElementById(mep_x('mep_')) == null) || ((pla
       }
 	p1.style.top = '0px';
 //alert('state ' + w + ' ww ' + windowwidth + ' p1w ' + p1.style.width + ' wh ' + windowheight + ' h ' + h + ' p1h ' + p1.style.height)
-    if ( (w < (1 * p1.style.width.replace('px',''))) || ( (1 * p1.style.height.replace('px','')) > windowheight )  ) {
+    if ( (w < (1 * p1.style.width.replace('px',''))) ){// || ( (1 * p1.style.height.replace('px','')) > windowheight )  ) {
 
       //if (document.getElementById(mep_x('mep_')) == null) {
       if ( ((1 * p1.style.height.replace('px','')) < windowheight ) || (!((1 * p1.style.height.replace('px','')) < windowheight )) ) {
 
 	    p1.style.width = w + 'px'
-	    p1.style.height = Math.round( w / document.getElementById('snarls_player').aspect_ratio ) + 'px';
+	    p1.style.height = Math.round( w / document.getElementById('snarls_player').aspect_ratio ) - hdiff + 'px';
 	    p1.style.top = Math.round( (h - p1.style.height.replace('px','')) / 2 - (hdiff / 2) ) + 'px';
-	    p1.style.left = Math.round( (w - p1.style.width.replace('px','')) / 2) + 'px';
+	    p1.style.left = Math.round( (w - (p1.style.height.replace('px','') * document.getElementById('snarls_player').aspect_ratio) / 2) + 'px';
 //alert('4 ' + p1.style.width + p1.style.height)
       } else {
 
@@ -3237,20 +3241,22 @@ function ythtml5_size() {
     v.style.height = yt.height = (1 * bm0.height.replace('px','') - hdiff) + 'px';
       v.style.left = yt.left = ( 1 * bm0.width.replace('px','') - 1 * yt.width.replace('px','') ) / 2 + 'px';
       v.style.top = yt.top = '0px';
-    if (!webgl) {
-    } else {
-      webgl.style.height = 1 * bm0.height.replace('px','') - hdiff + 'px'
-      webgl.style.width = 1 * bm0.height.replace('px','') * (webgl.width / webgl.height) + 'px'
+    if (webgl) {
+      webgl.style.height = 1 * bm0.height.replace('px','') + 'px'
+      webgl.style.width = 1 * Math.round( bm0.height.replace('px','') * (webgl.width / webgl.height)) + 'px'
+      webgl.parentNode.style.left = yt.left
+      webgl.parentNode.style.top = yt.top
       }
     if ( (1 * bm0.width.replace('px','')) < (1 * yt.width.replace('px','')) ){
       v.style.width = yt.width = bm0.width
       v.style.height = yt.height = 1 * bm0.width.replace('px','') / document.getElementById('snarls_player').aspect_ratio + 'px';
 	v.style.left = yt.left = '0px'
 	v.style.top = yt.top = (( 1 * bm0.height.replace('px','') - 1 * yt.height.replace('px','') ) / 2) - (hdiff / 2) + 'px';
-      if (!webgl) {
-      } else {
-	  webgl.style.width = bm0.width
-	  webgl.style.height = 1 * yt.width.replace('px','') / (webgl.width / webgl.height) + 'px'
+      if (webgl) {
+ 	  webgl.style.width = bm0.width
+	  webgl.style.height = Math.round(yt.width.replace('px','') / (webgl.width / webgl.height)) + 'px'
+	  webgl.parentNode.style.left = yt.left
+	  webgl.parentNode.style.top = yt.top
       }
     }
 
@@ -3468,7 +3474,7 @@ function control_panel1() {
     js.id = 'remove';
     document.getElementById('yt-alert-message').appendChild(js);
     document.getElementById("remove").setAttribute('style','display:inline-block');
-    document.getElementById("remove").innerHTML =  '<button onclick="switchflashhtml5()" class="yt-uix-button-text"><img src="//s.ytimg.com/yts/img/HTML5_1Color_Black-vfl902gVJ.png" style="vertical-align:middle;height:12px;padding:0px""></img></button><button onclick="aspect()" class="yt-uix-button-text">«\<\>»</button><br><button onclick="deldiv()" class="yt-uix-button-text">remove</button>'
+    document.getElementById("remove").innerHTML =  '<button onclick="switchflashhtml5()" class="yt-uix-button-text"><img src="//s.ytimg.com/yts/img/HTML5_1Color_Black-vfl902gVJ.png" style="vertical-align:middle;height:12px;padding:0px""></img></button><button onclick="aspect()" class="yt-uix-button-text">«↔»</button><br><button onclick="deldiv()" class="yt-uix-button-text">remove</button>'
     //&#9724;
     //&#8633;
     //&#8703;//
@@ -3705,7 +3711,7 @@ control_panel1()
 
 /* Reset all to default */
 	case 'reset yt-uix-button-text':
-	  resize_layers( document.getElementById('snarls_player').w, document.getElementById('snarls_player').h );
+	  resize_layers( bm0.style.width, bm0.style.height );
 	  if (v != player()) {
 	    zoom = 1;
 	    rotate = 0;
@@ -3746,8 +3752,8 @@ control_panel1()
 	    v.style[prop]='rotate('+rotate+'deg) scale('+zoom+')';
 
 	    if (webgl) {
-	      webgl.parentNode.style.left = (webgl.width - parseInt(webgl.parentNode.parentNode.style.width.replace('px',''))) / 2 + 'px'
-	      webgl.parentNode.style.top = (webgl.height - parseInt(webgl.parentNode.parentNode.style.height.replace('px',''))) / 2 + 'px'
+	      webgl.parentNode.style.left = (1 * webgl.width - 1 * webgl.parentNode.parentNode.style.width.replace('px','')) / 2 + 'px'
+	      webgl.parentNode.style.top = (1 * webgl.height - 1 * webgl.parentNode.parentNode.style.height.replace('px','')) / 2 + 'px'
 	      webgl.style[prop] = v.style[prop]
 	    }
 
