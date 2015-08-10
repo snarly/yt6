@@ -2344,7 +2344,7 @@ if ((yt6 != null) && (yt6.loaded)) {
   if (z != null) var ads = z.indexOf('ytp-fullscreen')
 
 	if ( (autoscale != null) && (document.getElementsByClassName('mejs-clear')[0]) &&
-	    ( ( (ads == -1) ) &&
+	    ( ( (ads == -1) || ((document.getElementById('player1').style.width == '100%') && (document.getElementById('player1').style.height == '100%')) ) &&
 	       (p.offsetWidth != screen.width) && (p.offsetHeight != screen.height) && (document.getElementById(mep_x('mep_')) != null) &&
 	       ((document.getElementById(mep_x('mep_')).offsetWidth != screen.width) &&
 	        (document.getElementById(mep_x('mep_')).offsetHeight != screen.height))
@@ -2395,6 +2395,7 @@ if ((yt6 != null) && (yt6.loaded)) {
 	    }
 	} else {
 	    //document.getElementById('snarls_player').fullscreen = true
+	    document.getElementById('player1').style.left = '0px';
 	    if ((p) && (p != null)) {
 		  if ((p.style.display != 'none') && (p.style.width != '')) {
 		    //var z = p.style.display;
