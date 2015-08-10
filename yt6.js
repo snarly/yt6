@@ -3577,10 +3577,10 @@ control_panel1()
                             '<button class="reset yt-uix-button-text" style="width:37px;text-align:left">reset</button>' +
                             '<button class="zoomin yt-uix-button-text">+</button>' +
                             '<button class="zoomout yt-uix-button-text">-</button>' +
-                            '<button class="left yt-uix-button-text">?</button>' +
-                            '<button class="right yt-uix-button-text">?</button>' +
-                            '<button class="up yt-uix-button-text">?</button>' +
-                            '<button class="down yt-uix-button-text">?</button>' +
+                            '<button class="left yt-uix-button-text">⇠</button>' +
+                            '<button class="right yt-uix-button-text">⇢</button>' +
+                            '<button class="up yt-uix-button-text">⇡</button>' +
+                            '<button class="down yt-uix-button-text">⇣</button>' +
                             '<button class="rotateleft yt-uix-button-text">&#x21bb;</button>' +
                             '<button class="rotateright yt-uix-button-text">&#x21ba;</button>' +
                           '</div>'
