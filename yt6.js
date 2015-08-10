@@ -2870,18 +2870,18 @@ if ( (me_aspect) && (  (document.getElementById(mep_x('mep_')) == null) || ((pla
 	p1.style.top = '0px';
 //alert('state ' + w + ' ww ' + windowwidth + ' p1w ' + p1.style.width + ' wh ' + windowheight + ' h ' + h + ' p1h ' + p1.style.height)
 console.log(p1.style.left)
-    if ( (w < (1 * p1.style.width.replace('px',''))) ){// || ( (1 * p1.style.height.replace('px','')) > windowheight )  ) {
+    if ( (w < (1 * p1.style.width.replace('px','')))  || ( (1 * p1.style.height.replace('px','')) > windowheight )  ) {
 
       //if (document.getElementById(mep_x('mep_')) == null) {
-
+      if ( ((1 * p1.style.height.replace('px','')) < windowheight ) || (!((1 * p1.style.height.replace('px','')) > windowheight )) ) {
 
 	    p1.style.width = w + 'px'
 	    p1.style.height = Math.round( w / document.getElementById('snarls_player').aspect_ratio ) - hdiff + 'px';
 	    p1.style.top = Math.round( (h - p1.style.height.replace('px','')) / 2 - (hdiff / 2) ) + 'px';
 	    p1.style.left = Math.round( (w - (p1.style.height.replace('px','') * document.getElementById('snarls_player').aspect_ratio)) / 2) + 'px';
 //alert('4 ' + p1.style.width + p1.style.height)
-      if ( ((1 * p1.style.height.replace('px','')) < windowheight ) && (!((1 * p1.style.height.replace('px','')) > windowheight )) ) {
-//      } else {
+
+      } else {
 
 	  if ((me_aspect != false) && (document.getElementById('aspect'))) {
 	    w = windowwidth
@@ -3244,7 +3244,7 @@ function ythtml5_size() {
       v.style.left = yt.left = ( 1 * bm0.width.replace('px','') - 1 * yt.width.replace('px','') ) / 2 + 'px';
       v.style.top = yt.top = '0px';
     if (webgl) {
-      webgl.style.height = 1 * bm0.height.replace('px','') + 'px'
+      webgl.style.height = bm0.height
       webgl.style.width = 1 * Math.round( bm0.height.replace('px','') * (webgl.width / webgl.height)) + 'px'
       webgl.parentNode.style.left = yt.left
       webgl.parentNode.style.top = 1 * yt.top.replace('px','') - ((1 * webgl.style.height.replace('px','') - 1 * yt.height.replace('px','')) / 2) + 'px'
@@ -3256,7 +3256,7 @@ function ythtml5_size() {
 	v.style.top = yt.top = (( 1 * bm0.height.replace('px','') - 1 * yt.height.replace('px','') ) / 2) - (hdiff / 2) + 'px';
       if (webgl) {
  	  webgl.style.width = bm0.width
-	  webgl.style.height = Math.round(yt.width.replace('px','') / (webgl.width / webgl.height)) + 'px'
+	  webgl.style.height = Math.round(bm0.width.replace('px','') / (webgl.width / webgl.height)) + 'px'
 	  webgl.parentNode.style.left = yt.left
 	  webgl.parentNode.style.top = 1 * yt.top.replace('px','') - ((1 * webgl.style.height.replace('px','') - 1 * yt.height.replace('px','')) / 2) + 'px'
       }
