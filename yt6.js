@@ -2850,7 +2850,7 @@ if ( (me_aspect) && (  (document.getElementById(mep_x('mep_')) == null) || ((pla
 	  }
 	var w = 1 * w.replace('px','')
 	var h = 1 * h.replace('px','')
-console.log('1: ' + p1.style.left + p1.style.height)
+//console.log('1: ' + p1.style.left + p1.style.height)
     } else {
 	if (  ((document.getElementsByClassName('html5-video-container')[0]) &&
 	       (document.getElementsByClassName('html5-video-container')[0].innerHTML != '')) ||
@@ -2859,12 +2859,12 @@ console.log('1: ' + p1.style.left + p1.style.height)
 	  p1.style.width = (h - hdiff) * document.getElementById('snarls_player').aspect_ratio + 'px';
 	  p1.style.height = h - hdiff + 'px';
 	  p1.style.left = Math.round( (w - p1.style.width.replace('px','')) / 2) + 'px';
-console.log('2: ' + p1.style.left + p1.style.height)
+//console.log('2: ' + p1.style.left + p1.style.height)
 	} else {
 	    p1.style.width = w + 'px'
 	    p1.style.height = h + 'px'
 	    p1.style.left = '0px';
-console.log('3: ' + p1.style.left + p1.style.height)
+//console.log('3: ' + p1.style.left + p1.style.height)
 	  }
       }
 	p1.style.top = '0px';
@@ -2879,7 +2879,7 @@ console.log('3: ' + p1.style.left + p1.style.height)
 	    p1.style.height = Math.round( w / document.getElementById('snarls_player').aspect_ratio ) - hdiff + 'px';
 	    p1.style.top = Math.round( (h - p1.style.height.replace('px','')) / 2 - (hdiff / 2) ) + 'px';
 	    p1.style.left = Math.round( (w - (p1.style.height.replace('px','') * document.getElementById('snarls_player').aspect_ratio)) / 2) + 'px';
-console.log('4: ' + p1.style.left + p1.style.height)
+//console.log('4: ' + p1.style.left + p1.style.height)
 
       } else {
 
@@ -2894,14 +2894,14 @@ console.log('4: ' + p1.style.left + p1.style.height)
 		p1.style.height = h + 'px'
 		p1.style.left = '0px';
 		p1.style.top = '0px'
-console.log('5: ' + p1.style.left + p1.style.height)
+//console.log('5: ' + p1.style.left + p1.style.height)
 	      }
 	  } else {
 	      p1.style.width = (h - hdiff) * document.getElementById('snarls_player').aspect_ratio + 'px';
 	      p1.style.height = h - hdiff + 'px';
 	      p1.style.top = (h - p1.style.height.replace('px','')) / 2 - (hdiff / 2) + 'px';
 	      p1.style.left = (w - p1.style.width.replace('px','')) / 2 + 'px';
-console.log('6: ' + p1.style.left + p1.style.height)
+//console.log('6: ' + p1.style.left + p1.style.height)
 	    }
 
 		w = w + 'px'
@@ -2932,7 +2932,7 @@ console.log('6: ' + p1.style.left + p1.style.height)
 		  document.getElementById('a_width').value = w
 		  document.getElementById('a_height').value = h
 		}
-console.log('7: ' + p1.style.left + p1.style.height)
+//console.log('7: ' + p1.style.left + p1.style.height)
 
 	}
       //}	
@@ -3078,8 +3078,8 @@ if (1 * tiny.marginLeft.replace('px','') > 100) {
     document.getElementById('watch7-sidebar').style.top = ''
   }
 
-if ((document.getElementById('player1').style.width != '100%') && (document.getElementById('player1').style.height != '100%')) {
-document.getElementById('player1').style.left = '0px';
+if ((document.getElementById('player1').style.width == '100%') && (document.getElementById('player1').style.height == '100%')) {
+  document.getElementById('player1').style.left = '0px';
 }
 
 
