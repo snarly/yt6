@@ -786,7 +786,11 @@ if (wide_view() == false) {
     return h_base
   }
 
-
+function get_webgl(){
+  var z = document.getElementsByClassName('webgl')[0];
+  if (z) var webgl = z.getElementsByTagName('canvas')[0]; //getElementsByAttribute(player(),'canvas','draggable','true')[0];
+  return webgl
+}
 
 function getFlashVars(){
   if (player() != null) {
@@ -2392,20 +2396,21 @@ if ((yt6 != null) && (yt6.loaded)) {
 	} else {
 	    //document.getElementById('snarls_player').fullscreen = true
 	    if ((p) && (p != null)) {
-		if ((p.style.display != 'none') && (p.style.width != '')) {
-		  //var z = p.style.display;
-		  p.removeAttribute('style');
-		  //p.style = 'width: ' + screen.width.availWidth + 'px; height: ' + screen.height.availHeight + 'px;';
-	          //if (z == 'none') p.style.display = 'none';
-		}
-		var webgl = getElementsByAttribute(p,'canvas','draggable','true')[0];
+		  if ((p.style.display != 'none') && (p.style.width != '')) {
+		    //var z = p.style.display;
+		    p.removeAttribute('style');
+		    //p.style = 'width: ' + screen.width.availWidth + 'px; height: ' + screen.height.availHeight + 'px;';
+	        //if (z == 'none') p.style.display = 'none';
+		  }
+		
+		  var webgl = get_webgl()
+		  if (webgl) {
+			webgl.removeAttribute('style')
+			webgl.parentNode.style.left = -1 * webgl.parentNode.parentNode.style.left.replace('px','') + 'px'
+			webgl.parentNode.style.top = -1 * webgl.parentNode.parentNode.style.top.replace('px','') + 'px'
+		  }
 	    }
-	    if (webgl) {
-	      webgl.removeAttribute('style')
-	      webgl.parentNode.style.left = -1 * webgl.parentNode.parentNode.style.left.replace('px','') + 'px'
-	      webgl.parentNode.style.top = -1 * webgl.parentNode.parentNode.style.top.replace('px','') + 'px'
-	    }
-	}
+	  }
 
 	
 	if (yt6.mode != wide_view()) {
@@ -2673,7 +2678,7 @@ function ytsubtitle2srt(d,track_srclang,mejs_language_code){
     var j = i + 1
     //var txt = text[i].textContent.replace("&#39;", "'");
     var txt = text[i].textContent
-    var txt = txt.split("&#39;").join("'").split("& # 39;").join("'").split("& # 39").join("'").split("&quot;").join("\"").split("& quot;").join("\"").split("& Quot;").join("\"").split("& Quot").join("\"").split("& quot").join("\"").split("Quot;").join("\"").split("Quot ;").join("\"").split("Quot.;").join(". \"").split("Quot!;").join("! \"").split("Quot?;").join("? \"").split("# 39;").join("'").split("＆QUOT;").join("\"").split("＆QUOT").join("\"").split("QUOT＆ ;").join("\"").split("QUOT＆").join("\"").split("＆＃39;").join("'").split("& amp;").join("&");
+    var txt = txt.split("&#39;").join("'").split("& # 39;").join("'").split("& # 39").join("'").split("&quot;").join("\"").split("& quot;").join("\"").split("& Quot;").join("\"").split("& Quot").join("\"").split("& quot").join("\"").split("Quot;").join("\"").split("Quot ;").join("\"").split("Quot.;").join(". \"").split("Quot!;").join("! \"").split("Quot?;").join("? \"").split("# 39;").join("'").split("&QUOT;").join("\"").split("&QUOT").join("\"").split("QUOT& ;").join("\"").split("QUOT&").join("\"").split("&#39;").join("'").split("& amp;").join("&");
     srt += j + nl + start + ' --> ' + dur + nl + txt + nl + nl;
   }
   d = srt;
@@ -3224,7 +3229,7 @@ function ythtml5_size() {
     var hdiff = document.getElementById('snarls_player').hdiff
     if (hdiff == undefined) hdiff = 30
     if (o != null) document.getElementById('placeholder-player').firstChild.setAttribute('style', o)
-    if ((player()) && (player() != null)) var webgl = getElementsByAttribute(player(),'canvas','draggable','true')[0];
+    if ((player()) && (player() != null)) var webgl = get_webgl(); //getElementsByAttribute(player(),'canvas','draggable','true')[0];
     var bm0 = document.getElementById('bm0').style
     var yt = document.getElementsByClassName('html5-video-content')[0].style
     var v = document.getElementsByClassName('video-stream html5-main-video')[0]
@@ -3254,7 +3259,7 @@ function ythtml5_size() {
 
 
 function aspect(a) { 
-  if ((player()) && (player() != null)) var webgl = getElementsByAttribute(player(),'canvas','draggable','true')[0]
+  if ((player()) && (player() != null)) var webgl = get_webgl(); //getElementsByAttribute(player(),'canvas','draggable','true')[0]
   var class_0 = document.getElementById('player').getAttribute('class')
   var class_1 = class_0.replace('small','small_a').replace('medium','medium_a').replace('large','large_a')
   var windowwidth = parseInt(window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth) - getScrollbarWidth() - 1
@@ -3410,7 +3415,7 @@ function deldiv(){
 */
 
   if ((player()) && (player() != null)) {
-    var webgl = getElementsByAttribute(player(),'canvas','draggable','true')[0];
+    var webgl = get_webgl(); //getElementsByAttribute(player(),'canvas','draggable','true')[0];
     player().width = '';
     player().height = '';
     player().style.width = ''
@@ -3503,7 +3508,7 @@ control_panel1()
   var me_flash = document.getElementById(mep_x('me_flash__ __container'))
   var flashvars = getFlashVars();
   if (document.getElementById(mep_x('mep_')) != null) var poster = getElementsByAttribute(document.getElementById(mep_x('mep_')),'div','class','mejs-poster mejs-layer')[0]
-  if ((player()) && (player() != null)) var webgl = getElementsByAttribute(player(),'canvas','draggable','true')[0];
+  if ((player()) && (player() != null)) var webgl = get_webgl(); //getElementsByAttribute(player(),'canvas','draggable','true')[0];
   
 /* Array of possible browser specific settings for transformation */
   var properties = ['transform', 'WebkitTransform', 'MozTransform',
@@ -3572,10 +3577,10 @@ control_panel1()
                             '<button class="reset yt-uix-button-text" style="width:37px;text-align:left">reset</button>' +
                             '<button class="zoomin yt-uix-button-text">+</button>' +
                             '<button class="zoomout yt-uix-button-text">-</button>' +
-                            '<button class="left yt-uix-button-text">⇠</button>' +
-                            '<button class="right yt-uix-button-text">⇢</button>' +
-                            '<button class="up yt-uix-button-text">⇡</button>' +
-                            '<button class="down yt-uix-button-text">⇣</button>' +
+                            '<button class="left yt-uix-button-text">?</button>' +
+                            '<button class="right yt-uix-button-text">?</button>' +
+                            '<button class="up yt-uix-button-text">?</button>' +
+                            '<button class="down yt-uix-button-text">?</button>' +
                             '<button class="rotateleft yt-uix-button-text">&#x21bb;</button>' +
                             '<button class="rotateright yt-uix-button-text">&#x21ba;</button>' +
                           '</div>'
