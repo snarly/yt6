@@ -2877,7 +2877,7 @@ if ( (me_aspect) && (  (document.getElementById(mep_x('mep_')) == null) || ((pla
 	    p1.style.width = w + 'px'
 	    p1.style.height = Math.round( w / document.getElementById('snarls_player').aspect_ratio ) - hdiff + 'px';
 	    p1.style.top = Math.round( (h - p1.style.height.replace('px','')) / 2 - (hdiff / 2) ) + 'px';
-	    p1.style.left = Math.round( (w - (p1.style.height.replace('px','') * document.getElementById('snarls_player').aspect_ratio) / 2) + 'px';
+	    p1.style.left = Math.round( (w - (p1.style.height.replace('px','') * document.getElementById('snarls_player').aspect_ratio)) / 2) + 'px';
 //alert('4 ' + p1.style.width + p1.style.height)
       } else {
 
