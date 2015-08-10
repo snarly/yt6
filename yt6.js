@@ -2869,17 +2869,19 @@ if ( (me_aspect) && (  (document.getElementById(mep_x('mep_')) == null) || ((pla
       }
 	p1.style.top = '0px';
 //alert('state ' + w + ' ww ' + windowwidth + ' p1w ' + p1.style.width + ' wh ' + windowheight + ' h ' + h + ' p1h ' + p1.style.height)
+console.log(p1.style.left)
     if ( (w < (1 * p1.style.width.replace('px',''))) ){// || ( (1 * p1.style.height.replace('px','')) > windowheight )  ) {
 
       //if (document.getElementById(mep_x('mep_')) == null) {
-      if ( ((1 * p1.style.height.replace('px','')) < windowheight ) || (!((1 * p1.style.height.replace('px','')) < windowheight )) ) {
+
 
 	    p1.style.width = w + 'px'
 	    p1.style.height = Math.round( w / document.getElementById('snarls_player').aspect_ratio ) - hdiff + 'px';
 	    p1.style.top = Math.round( (h - p1.style.height.replace('px','')) / 2 - (hdiff / 2) ) + 'px';
 	    p1.style.left = Math.round( (w - (p1.style.height.replace('px','') * document.getElementById('snarls_player').aspect_ratio)) / 2) + 'px';
 //alert('4 ' + p1.style.width + p1.style.height)
-      } else {
+      if ( ((1 * p1.style.height.replace('px','')) < windowheight ) && (!((1 * p1.style.height.replace('px','')) > windowheight )) ) {
+//      } else {
 
 	  if ((me_aspect != false) && (document.getElementById('aspect'))) {
 	    w = windowwidth
@@ -3245,7 +3247,7 @@ function ythtml5_size() {
       webgl.style.height = 1 * bm0.height.replace('px','') + 'px'
       webgl.style.width = 1 * Math.round( bm0.height.replace('px','') * (webgl.width / webgl.height)) + 'px'
       webgl.parentNode.style.left = yt.left
-      webgl.parentNode.style.top = yt.top
+      webgl.parentNode.style.top = 1 * yt.top.replace('px','') - ((1 * webgl.style.height.replace('px','') - 1 * yt.height.replace('px','')) / 2) + 'px'
       }
     if ( (1 * bm0.width.replace('px','')) < (1 * yt.width.replace('px','')) ){
       v.style.width = yt.width = bm0.width
@@ -3256,7 +3258,7 @@ function ythtml5_size() {
  	  webgl.style.width = bm0.width
 	  webgl.style.height = Math.round(yt.width.replace('px','') / (webgl.width / webgl.height)) + 'px'
 	  webgl.parentNode.style.left = yt.left
-	  webgl.parentNode.style.top = yt.top
+	  webgl.parentNode.style.top = 1 * yt.top.replace('px','') - ((1 * webgl.style.height.replace('px','') - 1 * yt.height.replace('px','')) / 2) + 'px'
       }
     }
 
@@ -3752,8 +3754,8 @@ control_panel1()
 	    v.style[prop]='rotate('+rotate+'deg) scale('+zoom+')';
 
 	    if (webgl) {
-	      webgl.parentNode.style.left = (1 * webgl.width - 1 * webgl.parentNode.parentNode.style.width.replace('px','')) / 2 + 'px'
-	      webgl.parentNode.style.top = (1 * webgl.height - 1 * webgl.parentNode.parentNode.style.height.replace('px','')) / 2 + 'px'
+	      webgl.parentNode.style.left = Math.round((1 * bm0.style.width.replace('px','') - webgl.style.width.replace('px','')) / 2) + 'px'
+	      webgl.parentNode.style.top = Math.round((1 * bm0.style.height.replace('px','') - webgl.style.height.replace('px','')) / 2) + 'px'
 	      webgl.style[prop] = v.style[prop]
 	    }
 
