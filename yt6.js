@@ -2395,8 +2395,8 @@ if ((yt6 != null) && (yt6.loaded)) {
 	    }
 	} else {
 	    //document.getElementById('snarls_player').fullscreen = true
-	    document.getElementById('player1').style.left = '0px';
-	    if ((p) && (p != null)) {
+	    if (document.getElementById('player1') != null) document.getElementById('player1').style.left = '0px';
+	    if (p != null) {
 		  if ((p.style.display != 'none') && (p.style.width != '')) {
 		    //var z = p.style.display;
 		    p.removeAttribute('style');
