@@ -1436,7 +1436,7 @@ if (document.getElementById("bm1") != null) document.getElementById("bm1").paren
   html.splice(1,0,'Direct links to YouTube media<br>for IP address: '+ expire_date()[0])
   html.push(
    '<br>Links will expire on <br>' + expire_date()[1] + 
-   '<br><br>V+A sources may refuse to load while separate video- and audio-only ones synced may still do for playback. If those fail as well, refresh page and reload the script.'
+   '<br><br>V+A sources may refuse to load, while separate video- and audio-only ones synced may still do for playback. If those fail as well, refresh page and reload the script.'
   )
   document.getElementById('bm2').innerHTML = html.join('<br>')
 
