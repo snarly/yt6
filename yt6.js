@@ -3272,7 +3272,7 @@ function ythtml5_size() {
     if (webgl) {
       webgl.style.height = 1 * bm0.height.replace('px','') - hdiff + 'px'
       webgl.style.width = Math.round( (1 * bm0.height.replace('px','') - hdiff) * (webgl.width / webgl.height)) + 'px'
-      webgl.parentNode.style.left = ( 1 * bm0.width.replace('px','') - 1 * webgl.style.width.replace('px','') ) / 2 + 'px';
+      webgl.parentNode.style.left = '0px';
       webgl.parentNode.style.top = 1 * yt.top.replace('px','') - ((1 * webgl.style.height.replace('px','') - 1 * yt.height.replace('px','')) / 2) + 'px'
     }
     if ( (1 * bm0.width.replace('px','')) < (1 * yt.width.replace('px','')) ){
@@ -3784,7 +3784,7 @@ control_panel1()
 	    v.style[prop]='rotate('+rotate+'deg) scale('+zoom+')';
 
 	    if (webgl) {
-	      webgl.parentNode.style.left = Math.round((((1 * bm0.style.height.replace('px','') - hdiff) * (webgl.width / webgl.height)) - webgl.style.width.replace('px','')) / 2) + 'px'
+	      webgl.parentNode.style.left = Math.round((1 * bm0.style.width.replace('px','') - webgl.style.width.replace('px','')) / 2) + 'px'
 	      webgl.parentNode.style.top = Math.round((1 * bm0.style.height.replace('px','') - hdiff - webgl.style.height.replace('px','')) / 2) + 'px'
 	      webgl.style[prop] = v.style[prop]
 	    }
