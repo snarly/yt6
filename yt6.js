@@ -1436,7 +1436,7 @@ if (document.getElementById("bm1") != null) document.getElementById("bm1").paren
   html.splice(1,0,'Direct links to YouTube media<br>for IP address: '+ expire_date()[0])
   html.push(
    '<br>Links will expire on <br>' + expire_date()[1] + 
-   '<br><br>V+A sources may refuse to stream while separate video- and audio-only ones synced may still do for playback. If those fail as well, refresh page and reload the script.'
+   '<br><br>V+A sources may refuse to load while separate video- and audio-only ones synced may still do for playback. If those fail as well, refresh page and reload the script.'
   )
   document.getElementById('bm2').innerHTML = html.join('<br>')
 
@@ -3272,7 +3272,7 @@ function ythtml5_size() {
     if (webgl) {
       webgl.style.height = 1 * bm0.height.replace('px','') - hdiff + 'px'
       webgl.style.width = Math.round( (1 * bm0.height.replace('px','') - hdiff) * (webgl.width / webgl.height)) + 'px'
-      webgl.parentNode.style.left = '0px';
+      webgl.parentNode.style.left = Math.round(( 1 * bm0.width.replace('px','') - 1 * webgl.style.width.replace('px','') ) / 2) + 'px';
       webgl.parentNode.style.top = 1 * yt.top.replace('px','') - ((1 * webgl.style.height.replace('px','') - 1 * yt.height.replace('px','')) / 2) + 'px'
     }
     if ( (1 * bm0.width.replace('px','')) < (1 * yt.width.replace('px','')) ){
