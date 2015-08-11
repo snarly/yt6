@@ -3113,11 +3113,15 @@ if ((document.getElementById('player1').style.width == '100%') && (document.getE
     for(i=0;i<z.length-1;i++){
       if ( z[i] ) {
         z[i].style.width = w + 'px'
-        if (z[i].className !== 'mejs-overlay mejs-layer mejs-overlay-play') {
-          z[i].style.height = h + 'px'
-        } else {
-            z[i].style.height = h - hdiff + 'px'
-          }
+        z[i].style.height = h + 'px'
+        if (z[i].getAttribute('class') == 'mejs-overlay mejs-layer mejs-overlay-play') {
+          var x = z[i].firstChild.currentStyle;
+          if ((x == undefined) && (typeof window.getComputedStyle != 'undefined')) var x = window.getComputedStyle(z[i].firstChild, null);
+          z[i].style.width = x.width
+          z[i].style.height = x.height
+          z[i].style.left = (w - x.width.replace('px','')) / 2 + 'px'
+          z[i].style.top = (h - hdiff -x.height.replace('px','')) / 2 + 'px'
+        }
       }
     }
   }
@@ -3263,25 +3267,25 @@ function ythtml5_size() {
     var v = document.getElementsByClassName('video-stream html5-main-video')[0]
     v.style.width = yt.width = (1 * bm0.height.replace('px','') - hdiff) * document.getElementById('snarls_player').aspect_ratio + 'px';
     v.style.height = yt.height = (1 * bm0.height.replace('px','') - hdiff) + 'px';
-      v.style.left = yt.left = ( 1 * bm0.width.replace('px','') - 1 * yt.width.replace('px','') ) / 2 + 'px';
-      v.style.top = yt.top = '0px';
+    v.style.left = yt.left = ( 1 * bm0.width.replace('px','') - 1 * yt.width.replace('px','') ) / 2 + 'px';
+    v.style.top = yt.top = '0px';
     if (webgl) {
-      webgl.style.height = bm0.height
-      webgl.style.width = 1 * Math.round( bm0.height.replace('px','') * (webgl.width / webgl.height)) + 'px'
-      webgl.parentNode.style.left = yt.left
+      webgl.style.height = 1 * bm0.height.replace('px','') - hdiff + 'px'
+      webgl.style.width = Math.round( (1 * bm0.height.replace('px','') - hdiff) * (webgl.width / webgl.height)) + 'px'
+      webgl.parentNode.style.left = ( 1 * bm0.width.replace('px','') - 1 * webgl.style.width.replace('px','') ) / 2 + 'px';
       webgl.parentNode.style.top = 1 * yt.top.replace('px','') - ((1 * webgl.style.height.replace('px','') - 1 * yt.height.replace('px','')) / 2) + 'px'
-      }
+    }
     if ( (1 * bm0.width.replace('px','')) < (1 * yt.width.replace('px','')) ){
-      v.style.width = yt.width = bm0.width
-      v.style.height = yt.height = 1 * bm0.width.replace('px','') / document.getElementById('snarls_player').aspect_ratio + 'px';
+	v.style.width = yt.width = bm0.width
+	v.style.height = yt.height = 1 * bm0.width.replace('px','') / document.getElementById('snarls_player').aspect_ratio + 'px';
 	v.style.left = yt.left = '0px'
 	v.style.top = yt.top = (( 1 * bm0.height.replace('px','') - 1 * yt.height.replace('px','') ) / 2) - (hdiff / 2) + 'px';
-      if (webgl) {
- 	  webgl.style.width = bm0.width
-	  webgl.style.height = Math.round(bm0.width.replace('px','') / (webgl.width / webgl.height)) + 'px'
-	  webgl.parentNode.style.left = yt.left
-	  webgl.parentNode.style.top = 1 * yt.top.replace('px','') - ((1 * webgl.style.height.replace('px','') - 1 * yt.height.replace('px','')) / 2) + 'px'
-      }
+	//if (webgl) {
+ 	//  webgl.style.width = bm0.width
+	//  webgl.style.height = Math.round( 1 * bm0.width.replace('px','') / (webgl.width / webgl.height)) + 'px'
+	//  webgl.parentNode.style.left = '0px'
+	//  webgl.parentNode.style.top = 1 * yt.top.replace('px','') - ((1 * webgl.style.height.replace('px','') - 1 * yt.height.replace('px','')) / 2) + 'px'
+	//}
     }
 
   }
@@ -3780,8 +3784,8 @@ control_panel1()
 	    v.style[prop]='rotate('+rotate+'deg) scale('+zoom+')';
 
 	    if (webgl) {
-	      webgl.parentNode.style.left = Math.round((1 * bm0.style.width.replace('px','') - webgl.style.width.replace('px','')) / 2) + 'px'
-	      webgl.parentNode.style.top = Math.round((1 * bm0.style.height.replace('px','') - webgl.style.height.replace('px','')) / 2) + 'px'
+	      webgl.parentNode.style.left = Math.round((((1 * bm0.style.height.replace('px','') - hdiff) * (webgl.width / webgl.height)) - webgl.style.width.replace('px','')) / 2) + 'px'
+	      webgl.parentNode.style.top = Math.round((1 * bm0.style.height.replace('px','') - hdiff - webgl.style.height.replace('px','')) / 2) + 'px'
 	      webgl.style[prop] = v.style[prop]
 	    }
 
