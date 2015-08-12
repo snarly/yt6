@@ -2886,12 +2886,12 @@ if ( (me_aspect) && (  (document.getElementById(mep_x('mep_')) == null) || ((pla
 	  p1.style.width = Math.round((h - hdiff) * document.getElementById('snarls_player').aspect_ratio) + 'px';
 	  p1.style.height = Math.round(h - hdiff) + 'px';
 	  p1.style.left = Math.round( (w - p1.style.width.replace('px','')) / 2) + 'px';
-console.log('2: ' + p1.style.left + p1.style.width)
+//console.log('2: ' + p1.style.left + p1.style.width)
 	} else {
 	    p1.style.width = w + 'px'
 	    p1.style.height = h + 'px'
 	    p1.style.left = '0px';
-console.log('3: ' + p1.style.left + p1.style.width)
+//console.log('3: ' + p1.style.left + p1.style.width)
 	  }
       }
 	p1.style.top = '0px';
@@ -2905,7 +2905,7 @@ console.log('3: ' + p1.style.left + p1.style.width)
 	    p1.style.height = Math.round( w / document.getElementById('snarls_player').aspect_ratio ) - hdiff + 'px';
 	    p1.style.top = Math.round( (h - p1.style.height.replace('px','')) / 2 - (hdiff / 2) ) + 'px';
 	    p1.style.left = '0px';//Math.round( (w - (p1.style.height.replace('px','') * document.getElementById('snarls_player').aspect_ratio)) / 2) + 'px';
-console.log('4: ' + p1.style.left + p1.style.width)
+//console.log('4: ' + p1.style.left + p1.style.width)
 
       if ( ((1 * p1.style.height.replace('px','')) > windowheight ) && (document.getElementById('snarls_player').size == 'theater') ) {
 
@@ -3122,21 +3122,21 @@ if ((document.getElementById('player1').style.width == '100%') && (document.getE
         z[i].style.width = w + 'px'
         z[i].style.height = h + 'px'
         if (z[i].getAttribute('class') == 'mejs-overlay mejs-layer mejs-overlay-play') {
-          var x = z[i].firstChild.currentStyle;
-          if ((x == undefined) && (typeof window.getComputedStyle != 'undefined')) var x = window.getComputedStyle(z[i].firstChild, null);
-	  if (z[i].getAttribute('style').width == undefined) {
+          var x = z[i].firstChild.currentStyle; if ((x == undefined) && (typeof window.getComputedStyle != 'undefined')) var x = window.getComputedStyle(z[i].firstChild, null);
+	  //if (z[i].getAttribute('style').width == undefined) {
 	    z[i].setAttribute('style',
 	  	'width: ' + x.width +
 	  	'; height: ' + x.height + 
-	  	'; left: ' + (w - x.width.replace('px','')) / 2 + 'px' +
-	  	'; top: ' + (h - hdiff -x.height.replace('px','')) / 2 + 'px; display: none;'
+	  	'; left: ' + (1 * w.replace('px','') - x.width.replace('px','')) / 2 + 'px' +
+	  	'; top: ' + (1 * h.replace('px','') - hdiff - x.height.replace('px','')) / 2 + 'px; display: none;'
 	    )
-	  }
-          z[i].style.width = x.width
+	  //}
+/*          z[i].style.width = x.width
           z[i].style.height = x.height
           z[i].style.left = (w - x.width.replace('px','')) / 2 + 'px'
           z[i].style.top = (h - hdiff -x.height.replace('px','')) / 2 + 'px'
-        }
+*/
+	}
       }
     }
   }
