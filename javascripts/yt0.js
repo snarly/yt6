@@ -2879,8 +2879,8 @@ if ( (me_aspect) && (  (document.getElementById(mep_x('mep_')) == null) || ((pla
 	       (document.getElementsByClassName('html5-video-container')[0].innerHTML != '')) ||
 	      (document.getElementById(mep_x('mep_')))
 	   ) {
-	  p1.style.width = (h - hdiff) * document.getElementById('snarls_player').aspect_ratio + 'px';
-	  p1.style.height = h - hdiff + 'px';
+	  p1.style.width = Math.round((h - hdiff) * document.getElementById('snarls_player').aspect_ratio) + 'px';
+	  p1.style.height = Math.round(h - hdiff) + 'px';
 	  p1.style.left = Math.round( (w - p1.style.width.replace('px','')) / 2) + 'px';
 console.log('2: ' + p1.style.left + p1.style.width)
 	} else {
@@ -2893,10 +2893,9 @@ console.log('3: ' + p1.style.left + p1.style.width)
 	p1.style.top = '0px';
 
 
-    if ( (w < (1 * p1.style.width.replace('px','')))  || ( (windowheight < (1 * p1.style.height.replace('px',''))) && (document.getElementById('snarls_player').size == 'theater') ) ) {
+    if ( (w < (1 * p1.style.width.replace('px',''))) ){// || ( (windowheight < (1 * p1.style.height.replace('px',''))) && (document.getElementById('snarls_player').size == 'theater') ) ) {
 
       //if (document.getElementById(mep_x('mep_')) == null) {
-      if ( ((1 * p1.style.height.replace('px','')) < windowheight ) || (!((1 * p1.style.height.replace('px','')) > windowheight )) ) {
 
 	    p1.style.width = w + 'px'
 	    p1.style.height = Math.round( w / document.getElementById('snarls_player').aspect_ratio ) - hdiff + 'px';
@@ -2904,7 +2903,9 @@ console.log('3: ' + p1.style.left + p1.style.width)
 	    p1.style.left = '0px';//Math.round( (w - (p1.style.height.replace('px','') * document.getElementById('snarls_player').aspect_ratio)) / 2) + 'px';
 console.log('4: ' + p1.style.left + p1.style.width)
 
-      } else {
+      if ( ((1 * p1.style.height.replace('px','')) > windowheight ) && (document.getElementById('snarls_player').size == 'theater') ) {
+
+//      } else {
 
 	  if ((me_aspect != false) && (document.getElementById('aspect'))) {
 	    w = windowwidth
@@ -3345,7 +3346,7 @@ function aspect(a) {
 
           }
 
-  }
+      }
  
    var w = Math.round(w) + 'px'
    var h = Math.round(h) + 'px'
