@@ -989,7 +989,7 @@ if ( ((typeof player().getAttribute('flashvars') == 'string') && (typeof player(
 if ( ((typeof player().getAttribute('flashvars') == 'string') && (typeof player().getPlayerState == 'function')) || ((player().getAttribute('name') == 'me_flash') && (typeof player().playMedia == 'function')) ) { document.getElementById('snarls_player').flash = true }
 
 
-	if (typeof document.getElementById('snarls_player').ytplayercmd == 'function') 	document.getElementById('snarls_player').removeEventListener(ytplayercmd)
+	if (typeof document.getElementById('snarls_player').ytplayercmd == 'function') document.getElementById('snarls_player').removeEventListener("message")
 
       document.getElementById('snarls_player').ytplayercmd = function(e) {
         var cmd = e.data;
@@ -2907,14 +2907,14 @@ if ( (me_aspect) && (  (document.getElementById(mep_x('mep_')) == null) || ((pla
 	    p1.style.left = '0px';//Math.round( (w - (p1.style.height.replace('px','') * document.getElementById('snarls_player').aspect_ratio)) / 2) + 'px';
 //console.log('4: ' + p1.style.left + p1.style.width)
 
-      if ( ((1 * p1.style.height.replace('px','')) > Math.round((windowheight / 100 >>0) * 80) ) && (document.getElementById('snarls_player').size == 'theater') ) {
+      if ( ((1 * p1.style.height.replace('px','')) > windowheight ) && (document.getElementById('snarls_player').size == 'theater') ) {
 
 //      } else {
 
 	  if ( (me_aspect != false) && (document.getElementById('aspect')) ) { 
-	    w = Math.round(((windowheight / 100 >>0) * 80) * document.getElementById("snarls_player").aspect_ratio)
+	    w = windowwidth
 	  }
-	  if (me_aspect != false) h = Math.round((windowheight / 100 >>0) * 80)
+	  if (me_aspect != false) h = windowheight
 
 	  if ( ((player().getAttribute('name') == 'me_flash') && (bm0.style.visibility == 'hidden')) || ((document.getElementById(mep_x('me_flash_')) != null) && (bm0.style.visibility == 'visible')) ) {
 	      if ((me_aspect == true) || (me_aspect == false)){
