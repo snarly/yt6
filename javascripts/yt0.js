@@ -2040,6 +2040,7 @@ if (typeof linx[160] === 'string') { linx.splice(132, 1, linx[160])}
       } else {
       	  js.type = 'video/mp4'; js.title = i
       	}
+
       if (typeof webm != 'undefined') {
         if ((linx[i].split('//')[1] != webm.split('//')[1]) && (i != 160)) {
           js.src = 'https:' + linx[i]
@@ -2360,11 +2361,11 @@ if ((yt6 != null) && (yt6.loaded)) {
   document.getElementsByClassName('alerts-wrapper')[0].setAttribute('id','playerState_' + p.getPlayerState())
   } else { document.getElementsByClassName('alerts-wrapper')[0].setAttribute('id','playerState_null') }
 
-  var z = p.getAttribute('class');alert(typeof z)
-  if (typeof z == 'string') var ads = z.indexOf('ytp-fullscreen');alert(ads)
+  var z = p.getAttribute('class');
+  if (typeof z == 'string') var ads = z.indexOf('ytp-fullscreen');
 
 	if ( (autoscale != null) && (document.getElementsByClassName('mejs-clear')[0]) &&
-	    ( ( (ads == -1) || ((document.getElementById('player1').style.width != '100%') && (document.getElementById('player1').style.height != '100%')) ) &&
+	    ( ( (ads == -1) && ((document.getElementById('player1').style.width != '100%') && (document.getElementById('player1').style.height != '100%')) ) &&
 	       (p.offsetWidth != screen.width) && (p.offsetHeight != screen.height) && (document.getElementById(mep_x('mep_')) != null) &&
 	       ((document.getElementById(mep_x('mep_')).offsetWidth != screen.width) &&
 	        (document.getElementById(mep_x('mep_')).offsetHeight != screen.height))
@@ -2416,10 +2417,10 @@ if ((yt6 != null) && (yt6.loaded)) {
 	} else {
 	    //document.getElementById('snarls_player').fullscreen = true
 	    if (document.getElementById('player1') != null) document.getElementById('player1').style.left = '0px';
-	    if (p != null) {alert('1 ' + ads + " style:" + p.getAttribute('style'))
+	    if (p != null) {
 		  if ((p.style.display != 'none') && (p.style.width != '')) {
 		    //var z = p.style.display;
-		    p.removeAttribute('style'); alert('2 ' + ads + " style:" + p.getAttribute('style'))
+		    p.removeAttribute('style');
 		    //p.style = 'width: ' + screen.width.availWidth + 'px; height: ' + screen.height.availHeight + 'px;';
 	        //if (z == 'none') p.style.display = 'none';
 		  }
