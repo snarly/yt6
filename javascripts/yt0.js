@@ -2968,7 +2968,7 @@ console.log('6: ' + p1.style.left + p1.style.height)
 console.log('7: ' + p1.style.left + p1.style.height)
 
 	}
-      }	
+      //}	
 
     }
 
