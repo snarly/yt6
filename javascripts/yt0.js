@@ -2900,14 +2900,14 @@ if ( (me_aspect) && (  (document.getElementById(mep_x('mep_')) == null) || ((pla
     if ( (w < (1 * p1.style.width.replace('px',''))) ){// || ( (windowheight < (1 * p1.style.height.replace('px',''))) && (document.getElementById('snarls_player').size == 'theater') ) ) {
 
       //if (document.getElementById(mep_x('mep_')) == null) {
-
+console.log('3: ' + p1.style.left + p1.style.width)
 	    p1.style.width = w + 'px'
 	    p1.style.height = Math.round( w / document.getElementById('snarls_player').aspect_ratio ) - hdiff + 'px';
 	    p1.style.top = Math.round( (h - p1.style.height.replace('px','')) / 2 - (hdiff / 2) ) + 'px';
 	    p1.style.left = '0px';//Math.round( (w - (p1.style.height.replace('px','') * document.getElementById('snarls_player').aspect_ratio)) / 2) + 'px';
-//console.log('4: ' + p1.style.left + p1.style.width)
+console.log('4: ' + p1.style.left + p1.style.width)
 
-      if ( ((1 * p1.style.height.replace('px','')) > windowheight ) && (document.getElementById('snarls_player').size == 'theater') ) {
+      if ( ((1 * p1.style.height.replace('px','')) < windowheight ) && (document.getElementById('snarls_player').size == 'theater') ) {
 
 //      } else {
 
@@ -2960,7 +2960,7 @@ if ( (me_aspect) && (  (document.getElementById(mep_x('mep_')) == null) || ((pla
 		  document.getElementById('a_width').value = w
 		  document.getElementById('a_height').value = h
 		}
-//console.log('7: ' + p1.style.left + p1.style.height)
+console.log('7: ' + p1.style.left + p1.style.height)
 
 	}
       //}	
