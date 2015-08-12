@@ -2913,9 +2913,9 @@ console.log('4: ' + p1.style.left + p1.style.width)
 
 
       } else {
+alert(document.getElementById('snarls_player').size)
+	if (document.getElementById('snarls_player').size != 'defaultr'){
 
-	if (document.getElementById('aspect').size != 'defaultr'){
-alert(document.getElementById('aspect').size)
 	  if ( (me_aspect != false) && (document.getElementById('aspect')) ) { 
 	    w = windowwidth
 	  }
