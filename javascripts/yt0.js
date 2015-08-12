@@ -3129,7 +3129,7 @@ if ((document.getElementById('player1').style.width == '100%') && (document.getE
 	  	'width: ' + x.width +
 	  	'; height: ' + x.height + 
 	  	'; left: ' + (w - x.width.replace('px','')) / 2 + 'px' +
-	  	'; top: ' + (h - hdiff -x.height.replace('px','')) / 2 + 'px'
+	  	'; top: ' + (h - hdiff -x.height.replace('px','')) / 2 + 'px; display: none;'
 	    )
 	  }
           z[i].style.width = x.width
