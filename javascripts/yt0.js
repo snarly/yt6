@@ -2363,7 +2363,11 @@ if ((yt6 != null) && (yt6.loaded)) {
   } else { document.getElementsByClassName('alerts-wrapper')[0].setAttribute('id','playerState_null') }
 
   var z = p.getAttribute('class');
-  if (typeof z == 'string') var ads = z.indexOf('ytp-fullscreen')
+  if (typeof z == 'string') {
+    var ads = z.indexOf('ytp-fullscreen')
+  } else {
+      if (bm0.style.visibility == 'visible') var ads = -1
+    }
 
 	if ( (autoscale != null) && (document.getElementsByClassName('mejs-clear')[0]) &&
 	    ( ( (ads == -1) && ((document.getElementById('player1').style.width != '100%') && (document.getElementById('player1').style.height != '100%')) ) &&
@@ -2437,7 +2441,7 @@ if ((yt6 != null) && (yt6.loaded)) {
 
 	if ( (document.getElementById('snarls_player').fullscreen == true) && (ads == -1) && ((document.getElementById('player1').style.width != '100%') && (document.getElementById('player1').style.height != '100%')) ) {
 	  document.getElementById('snarls_player').fullscreen = false
-	  //if (bm0) if (document.getElementById('aspect')) { resize_layers(document.getElementById('a_width').value + 'px', document.getElementById('a_height').value + 'px', false) } else resize_layers(yt6.w, yt6.h)
+	  if (bm0) if (document.getElementById('aspect')) { resize_layers(document.getElementById('a_width').value + 'px', document.getElementById('a_height').value + 'px', false) } else resize_layers(yt6.w, yt6.h)
 	}
 	
 	if (yt6.mode != wide_view()) {
@@ -2922,14 +2926,14 @@ console.log('4: ' + p1.style.left + p1.style.width)
 		p1.style.height = h + 'px'
 		p1.style.left = '0px';
 		p1.style.top = '0px'
-//console.log('5: ' + p1.style.left + p1.style.height)
+console.log('5: ' + p1.style.left + p1.style.height)
 	      }
 	  } else {
 	      p1.style.width = (h - hdiff) * document.getElementById('snarls_player').aspect_ratio + 'px';
 	      p1.style.height = h - hdiff + 'px';
 	      p1.style.top = (h - p1.style.height.replace('px','')) / 2 - (hdiff / 2) + 'px';
 	      p1.style.left = (w - p1.style.width.replace('px','')) / 2 + 'px';
-//console.log('6: ' + p1.style.left + p1.style.height)
+console.log('6: ' + p1.style.left + p1.style.height)
 	    }
 
 		w = w + 'px'
@@ -3123,19 +3127,18 @@ if ((document.getElementById('player1').style.width == '100%') && (document.getE
         z[i].style.height = h + 'px'
         if (z[i].getAttribute('class') == 'mejs-overlay mejs-layer mejs-overlay-play') {
           var x = z[i].firstChild.currentStyle; if ((x == undefined) && (typeof window.getComputedStyle != 'undefined')) var x = window.getComputedStyle(z[i].firstChild, null);
-	  //if (z[i].getAttribute('style').width == undefined) {
+	  if (z[i].getAttribute('style').width == undefined) {
 	    z[i].setAttribute('style',
 	  	'width: ' + x.width +
 	  	'; height: ' + x.height + 
 	  	'; left: ' + (w - x.width.replace('px','')) / 2 + 'px' +
 	  	'; top: ' + (h - hdiff - x.height.replace('px','')) / 2 + 'px; display: none;'
 	    )
-	  //}
-/*          z[i].style.width = x.width
+	  }
+          z[i].style.width = x.width
           z[i].style.height = x.height
           z[i].style.left = (w - x.width.replace('px','')) / 2 + 'px'
           z[i].style.top = (h - hdiff -x.height.replace('px','')) / 2 + 'px'
-*/
 	}
       }
     }
