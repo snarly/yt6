@@ -3744,7 +3744,7 @@ control_panel1()
 
 /* Reset all to default */
 	case 'reset yt-uix-button-text':
-	  resize_layers( bm0.style.width, bm0.style.height );
+	  resize_layers( bm0.style.width, bm0.style.height, false );
 	  if (v != player()) {
 	    zoom = 1;
 	    rotate = 0;
