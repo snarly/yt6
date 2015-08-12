@@ -3128,9 +3128,13 @@ if ((document.getElementById('player1').style.width == '100%') && (document.getE
         z[i].style.width = w + 'px'
         z[i].style.height = h + 'px'
         if (z[i].getAttribute('class').indexOf('mejs-overlay-play') > -1) {
-          var x = z[i].firstChild.currentStyle;
+          var x = z[i].firstChild.currentStyle;alert('1')
           if ((x == undefined) && (typeof window.getComputedStyle != 'undefined')) var x = window.getComputedStyle(z[i].firstChild, null);
 	  //if (z[i].getAttribute('style').width == undefined) {
+	    alert('width: ' + x.width +
+	  	'; height: ' + x.height + 
+	  	'; left: ' + (w - x.width.replace('px','')) / 2 + 'px' +
+	  	'; top: ' + (h - hdiff - x.height.replace('px','')) / 2 + 'px; display: none;')
 	    z[i].setAttribute('style',
 	  	'width: ' + x.width +
 	  	'; height: ' + x.height + 
