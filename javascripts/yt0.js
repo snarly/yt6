@@ -2911,10 +2911,10 @@ if ( (me_aspect) && (  (document.getElementById(mep_x('mep_')) == null) || ((pla
 
 //      } else {
 
-	  if ((me_aspect != false) && (document.getElementById('aspect'))) {
+	  if ( (document.getElementById('aspect')) ) { //(me_aspect != false) && 
 	    w = windowwidth
 	  }
-	  if (me_aspect != false) h = windowheight
+	  h = windowheight ;//if (me_aspect != false) 
 
 	  if ( ((player().getAttribute('name') == 'me_flash') && (bm0.style.visibility == 'hidden')) || ((document.getElementById(mep_x('me_flash_')) != null) && (bm0.style.visibility == 'visible')) ) {
 	      if ((me_aspect == true) || (me_aspect == false)){
@@ -3127,8 +3127,8 @@ if ((document.getElementById('player1').style.width == '100%') && (document.getE
 	    z[i].setAttribute('style',
 	  	'width: ' + x.width +
 	  	'; height: ' + x.height + 
-	  	'; left: ' + (1 * w.replace('px','') - x.width.replace('px','')) / 2 + 'px' +
-	  	'; top: ' + (1 * h.replace('px','') - hdiff - x.height.replace('px','')) / 2 + 'px; display: none;'
+	  	'; left: ' + (w - x.width.replace('px','')) / 2 + 'px' +
+	  	'; top: ' + (h - hdiff - x.height.replace('px','')) / 2 + 'px; display: none;'
 	    )
 	  //}
 /*          z[i].style.width = x.width
