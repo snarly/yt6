@@ -2901,10 +2901,10 @@ if ( (me_aspect) && (  (document.getElementById(mep_x('mep_')) == null) || ((pla
 	p1.style.top = '0px';
 
 
-    if ( (w < (1 * p1.style.width.replace('px',''))) || ( (windowheight < (1 * p1.style.height.replace('px',''))) && (document.getElementById('snarls_player').size == 'theater') ) ) {
+    if ( (w < (1 * p1.style.width.replace('px',''))) || (windowheight < (1 * p1.style.height.replace('px',''))) ) {
 
       //if (document.getElementById(mep_x('mep_')) == null) {
-      if ( (!((1 * p1.style.height.replace('px','')) > windowheight )) && (document.getElementById('snarls_player').size == 'theater') ) {
+       if ( ( ((1 * p1.style.height.replace('px','')) < windowheight ) || (!((1 * p1.style.height.replace('px','')) > windowheight )) ) && (document.getElementById('snarls_player').size == 'theater') ) {
 console.log('3: ' + p1.style.left + p1.style.width)
 	    p1.style.width = w + 'px'
 	    p1.style.height = Math.round( w / document.getElementById('snarls_player').aspect_ratio ) - hdiff + 'px';
