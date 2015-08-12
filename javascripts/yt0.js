@@ -2907,14 +2907,14 @@ if ( (me_aspect) && (  (document.getElementById(mep_x('mep_')) == null) || ((pla
 	    p1.style.left = '0px';//Math.round( (w - (p1.style.height.replace('px','') * document.getElementById('snarls_player').aspect_ratio)) / 2) + 'px';
 //console.log('4: ' + p1.style.left + p1.style.width)
 
-      if ( ((1 * p1.style.height.replace('px','')) > windowheight ) && (document.getElementById('snarls_player').size == 'theater') ) {
+      if ( ((1 * p1.style.height.replace('px','')) > Math.round((windowheight / 100 >>0) * 80) ) && (document.getElementById('snarls_player').size == 'theater') ) {
 
 //      } else {
 
 	  if ( (me_aspect != false) && (document.getElementById('aspect')) ) { 
-	    w = windowwidth
+	    w = Math.round(((windowheight / 100 >>0) * 80) * document.getElementById("snarls_player").aspect_ratio)
 	  }
-	  if (me_aspect != false) h = windowheight ;
+	  if (me_aspect != false) h = Math.round((windowheight / 100 >>0) * 80)
 
 	  if ( ((player().getAttribute('name') == 'me_flash') && (bm0.style.visibility == 'hidden')) || ((document.getElementById(mep_x('me_flash_')) != null) && (bm0.style.visibility == 'visible')) ) {
 	      if ((me_aspect == true) || (me_aspect == false)){
