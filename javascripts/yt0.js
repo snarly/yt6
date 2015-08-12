@@ -2360,8 +2360,8 @@ if ((yt6 != null) && (yt6.loaded)) {
   document.getElementsByClassName('alerts-wrapper')[0].setAttribute('id','playerState_' + p.getPlayerState())
   } else { document.getElementsByClassName('alerts-wrapper')[0].setAttribute('id','playerState_null') }
 
-  var z = p.getAttribute('class');
-  if (typeof z == 'string') var ads = z.indexOf('ytp-fullscreen')
+  var z = p.getAttribute('class');alert(typeof z)
+  if (typeof z == 'string') var ads = z.indexOf('ytp-fullscreen');alert(ads)
 
 	if ( (autoscale != null) && (document.getElementsByClassName('mejs-clear')[0]) &&
 	    ( ( (ads == -1) || ((document.getElementById('player1').style.width != '100%') && (document.getElementById('player1').style.height != '100%')) ) &&
