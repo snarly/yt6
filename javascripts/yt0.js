@@ -3129,18 +3129,18 @@ if ((document.getElementById('player1').style.width == '100%') && (document.getE
         z[i].style.height = h + 'px'
         if (z[i].getAttribute('class') == 'mejs-overlay mejs-layer mejs-overlay-play') {
           var x = z[i].firstChild.currentStyle; if ((x == undefined) && (typeof window.getComputedStyle != 'undefined')) var x = window.getComputedStyle(z[i].firstChild, null);
-	  if (z[i].getAttribute('style').width == undefined) {
+	  //if (z[i].getAttribute('style').width == undefined) {
 	    z[i].setAttribute('style',
 	  	'width: ' + x.width +
 	  	'; height: ' + x.height + 
 	  	'; left: ' + (w - x.width.replace('px','')) / 2 + 'px' +
 	  	'; top: ' + (h - hdiff - x.height.replace('px','')) / 2 + 'px; display: none;'
 	    )
-	  }
-          z[i].style.width = x.width
-          z[i].style.height = x.height
-          z[i].style.left = (w - x.width.replace('px','')) / 2 + 'px'
-          z[i].style.top = (h - hdiff -x.height.replace('px','')) / 2 + 'px'
+	  //}
+          //z[i].style.width = x.width
+          //z[i].style.height = x.height
+          //z[i].style.left = (w - x.width.replace('px','')) / 2 + 'px'
+          //z[i].style.top = (h - hdiff -x.height.replace('px','')) / 2 + 'px'
 	}
       }
     }
