@@ -2363,7 +2363,7 @@ if ((yt6 != null) && (yt6.loaded)) {
   } else { document.getElementsByClassName('alerts-wrapper')[0].setAttribute('id','playerState_null') }
 
   var z = p.getAttribute('class');
-  if (typeof z == 'string') var ads = z.indexOf('ytp-fullscreen');
+  if (typeof z == 'string') var ads = z.indexOf('ytp-fullscreen')
 
 	if ( (autoscale != null) && (document.getElementsByClassName('mejs-clear')[0]) &&
 	    ( ( (ads == -1) && ((document.getElementById('player1').style.width != '100%') && (document.getElementById('player1').style.height != '100%')) ) &&
@@ -2416,7 +2416,7 @@ if ((yt6 != null) && (yt6.loaded)) {
 	      }
 	    }
 	} else {
-	    //document.getElementById('snarls_player').fullscreen = true
+	    document.getElementById('snarls_player').fullscreen = true
 	    if (document.getElementById('player1') != null) document.getElementById('player1').style.left = '0px';
 	    if (p != null) {
 		  if ((p.style.display != 'none') && (p.style.width != '')) {
@@ -2435,6 +2435,10 @@ if ((yt6 != null) && (yt6.loaded)) {
 	    }
 	  }
 
+	if ( (document.getElementById('snarls_player').fullscreen == true) && (ads == -1) && ((document.getElementById('player1').style.width != '100%') && (document.getElementById('player1').style.height != '100%')) ) {
+	  document.getElementById('snarls_player').fullscreen = false
+	  if (bm0) if (document.getElementById('aspect')) { resize_layers(document.getElementById('a_width').value + 'px', document.getElementById('a_height').value + 'px', false) } else resize_layers(yt6.w, yt6.h)
+	}
 	
 	if (yt6.mode != wide_view()) {
 	  bestfit()
@@ -3120,6 +3124,14 @@ if ((document.getElementById('player1').style.width == '100%') && (document.getE
         if (z[i].getAttribute('class') == 'mejs-overlay mejs-layer mejs-overlay-play') {
           var x = z[i].firstChild.currentStyle;
           if ((x == undefined) && (typeof window.getComputedStyle != 'undefined')) var x = window.getComputedStyle(z[i].firstChild, null);
+	  if (z[i].getAttribute('style').width == undefined) {
+	    z[i].setAttribute('style',
+	  	'width: ' + x.width +
+	  	'; height: ' + x.height + 
+	  	'; left: ' + (w - x.width.replace('px','')) / 2 + 'px' +
+	  	'; top: ' + (h - hdiff -x.height.replace('px','')) / 2 + 'px'
+	    )
+	  }
           z[i].style.width = x.width
           z[i].style.height = x.height
           z[i].style.left = (w - x.width.replace('px','')) / 2 + 'px'
