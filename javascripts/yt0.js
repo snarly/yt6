@@ -2911,10 +2911,10 @@ if ( (me_aspect) && (  (document.getElementById(mep_x('mep_')) == null) || ((pla
 
 //      } else {
 
-	  if ( (document.getElementById('aspect')) ) { //(me_aspect != false) && 
+	  if ( (me_aspect != false) && (document.getElementById('aspect')) ) { 
 	    w = windowwidth
 	  }
-	  h = windowheight ;//if (me_aspect != false) 
+	  if (me_aspect != false) h = windowheight ;
 
 	  if ( ((player().getAttribute('name') == 'me_flash') && (bm0.style.visibility == 'hidden')) || ((document.getElementById(mep_x('me_flash_')) != null) && (bm0.style.visibility == 'visible')) ) {
 	      if ((me_aspect == true) || (me_aspect == false)){
