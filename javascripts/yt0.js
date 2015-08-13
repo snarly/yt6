@@ -2437,11 +2437,11 @@ if ((yt6 != null) && (yt6.loaded)) {
 	      if (bm0.style.visibility == 'visible') document.getElementById('player1').style.left = '0px'
 	      var z = document.getElementsByClassName('mejs-overlay mejs-layer mejs-overlay-play')[0]
 	      if (z) {
-		var ads = z.firstChild.currentStyle || window.getComputedStyle(z.firstChild, null)
-		z.style.width = ads.width.replace('%','px')
-		z.style.height = ads.height.replace('%','px')
-		z.style.left = (screen.width - ads.width.replace('px','')) / 2 + 'px'
-		z.style.top = (screen.height - ads.height.replace('px','')) / 2 + 'px'
+		var webgl = z.firstChild.currentStyle || window.getComputedStyle(z.firstChild, null)
+		z.style.width = webgl.width.replace('%','px')
+		z.style.height = webgl.height.replace('%','px')
+		z.style.left = (screen.width - webgl.width.replace('px','')) / 2 + 'px'
+		z.style.top = (screen.height - webgl.height.replace('px','')) / 2 + 'px'
 	      }
 	    }
 	    if (p != null) {
