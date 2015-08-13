@@ -2369,7 +2369,7 @@ if ((yt6 != null) && (yt6.loaded)) {
   if (typeof z == 'string') {
     var ads = z.indexOf('ytp-fullscreen')
   } else {
-      if (bm0.style.visibility == 'visible') var ads = -1
+//      if (bm0.style.visibility == 'visible') var ads = -1
     }
 
 	if ( (autoscale != null) && (document.getElementsByClassName('mejs-clear')[0]) &&
@@ -2383,7 +2383,7 @@ if ((yt6 != null) && (yt6.loaded)) {
 	  if ((autoscale.offsetWidth != autoscale.width) && (autoscale.offsetHeight != autoscale.height)) { //alert('0 ' + autoscale.height +" "+ autoscale.offsetHeight); 
 	    autoscale.width = autoscale.offsetWidth;
 	    autoscale.height = autoscale.offsetHeight;
-	    bestfit()
+	    //bestfit()
 	    //alert('01')
 	    if (bm0) if (document.getElementById('aspect')) { resize_layers(document.getElementById('a_width').value + 'px', document.getElementById('a_height').value + 'px', false) } else resize_layers(yt6.w, yt6.h)
 
@@ -2393,14 +2393,14 @@ if ((yt6 != null) && (yt6.loaded)) {
 		//alert('02')
 		if (bm0) if (document.getElementById('aspect')) { resize_layers(document.getElementById('a_width').value + 'px', document.getElementById('a_height').value + 'px', false) } else resize_layers(yt6.w, yt6.h)
 		if ( (!document.getElementById("aspect")) && (document.getElementById('watch7-sidebar').currentStyle || window.getComputedStyle(document.getElementById('watch7-sidebar'))).marginLeft == '0px' ) {
-		  bestfit()
+		  //bestfit()
 		  //alert('03')
 		  if (bm0) if (document.getElementById('aspect')) { resize_layers(document.getElementById('a_width').value + 'px', document.getElementById('a_height').value + 'px', false) } else resize_layers(yt6.w, yt6.h)
 		}
 	      } else {
 		  if (autoscale.offsetWidth != autoscale.width) { //alert('1 width:' + autoscale.width +" offsetWidth:"+ autoscale.offsetWidth +" thb:"+ document.getElementById("theater-background").offsetWidth ); 
 		    autoscale.width = autoscale.offsetWidth;
-		    bestfit()
+		    //bestfit()
 		    //alert('04')
 		    if (bm0) if (document.getElementById('aspect')) { resize_layers(document.getElementById('a_width').value + 'px', document.getElementById('a_height').value + 'px', false) } else resize_layers(yt6.w, yt6.h)
 		  }
@@ -2865,10 +2865,10 @@ if ( (me_aspect) && (  (document.getElementById(mep_x('mep_')) == null) || ((pla
 	  h = h + 'px'
 	  document.getElementById('snarls_player').w = w;
 	  document.getElementById('snarls_player').h = h;
-	  document.getElementById('bm0').style.width = w;
-	  document.getElementById('bm0').style.height = h;
 	  document.getElementById('player-api').style.width = w
 	  document.getElementById('player-api').style.height = h
+	  document.getElementById('bm0').style.width = w;
+	  document.getElementById('bm0').style.height = h;
 	  player().style.width = w
 	  player().style.height = h
 	  var me_flash = document.getElementById(mep_x('me_flash__ __container'))
@@ -2906,12 +2906,12 @@ if ( (me_aspect) && (  (document.getElementById(mep_x('mep_')) == null) || ((pla
 
   if ( (w < (1 * p1.style.width.replace('px',''))) || ( (windowheight < (1 * p1.style.height.replace('px',''))) && (document.getElementById('snarls_player').size == 'theater') ) ) {
 
-    if ( ((1 * p1.style.height.replace('px','')) < windowheight ) || (!((1 * p1.style.height.replace('px','')) > windowheight )) ) {
+    if ( ((1 * p1.style.height.replace('px','')) < windowheight ) ){//|| (!((1 * p1.style.height.replace('px','')) > windowheight )) ) {
 //console.log('3: ' + p1.style.left + p1.style.width)
 	    p1.style.width = w + 'px'
 	    p1.style.height = Math.round( w / document.getElementById('snarls_player').aspect_ratio ) - hdiff + 'px';
 	    p1.style.top = Math.round( (h - p1.style.height.replace('px','')) / 2 - (hdiff / 2) ) + 'px';
-	    p1.style.left = '0px';//Math.round( (w - (p1.style.height.replace('px','') * document.getElementById('snarls_player').aspect_ratio)) / 2) + 'px';
+	    p1.style.left = Math.round( (w - (p1.style.height.replace('px','') * document.getElementById('snarls_player').aspect_ratio)) / 2) + 'px';
 //console.log('4: ' + p1.style.left + p1.style.width)
 
 
@@ -2944,10 +2944,10 @@ if ( (me_aspect) && (  (document.getElementById(mep_x('mep_')) == null) || ((pla
 		h = h + 'px'
 		document.getElementById('snarls_player').w = w;
 		document.getElementById('snarls_player').h = h;
-		document.getElementById('bm0').style.width = w;
-		document.getElementById('bm0').style.height = h;
 		document.getElementById('player-api').style.width = w
 		document.getElementById('player-api').style.height = h
+		document.getElementById('bm0').style.width = w;
+		document.getElementById('bm0').style.height = h;
 		player().style.width = w
 		player().style.height = h
 		var me_flash = document.getElementById(mep_x('me_flash__ __container'))
