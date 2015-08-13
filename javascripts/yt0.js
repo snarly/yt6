@@ -3161,10 +3161,12 @@ if ((document.getElementById('player1').style.width == '100%') && (document.getE
 	    )
 	  }
 */
+alert(x.width + z[i].style.width))
 	  z[i].style.width = x.width
+alert(x.width + z[i].style.width)
 	  z[i].style.height = x.height
-	  z[i].style.left = (w - x.width.replace('px','')) / 2 + 'px'
-	  z[i].style.top = (h - hdiff -x.height.replace('px','')) / 2 + 'px'
+	  z[i].style.left = (z[i].style.width != '100%') ? (w - x.width.replace('px','')) / 2 + 'px' : (screen.width - x.width) / 2 + 'px'
+	  z[i].style.top = (z[i].style.width != '100%') ? (h - hdiff -x.height.replace('px','')) / 2 + 'px' : (screen.height - x.height) / 2 + 'px'
 	  z[i].style.display = y
         }
       }
