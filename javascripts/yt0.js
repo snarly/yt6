@@ -2431,7 +2431,8 @@ if ((yt6 != null) && (yt6.loaded)) {
 	      }
 	    }
 	} else {
-	    document.getElementById('snarls_player').fullscreen = true
+          if (yt6.fullscreen != true){
+	    yt6.fullscreen = true
 	    if (document.getElementById('player1') != null) {
 	      if (bm0.style.visibility == 'visible') document.getElementById('player1').style.left = '0px'
 	      var z = document.getElementsByClassName('mejs-overlay mejs-layer mejs-overlay-play')[0]
@@ -2439,17 +2440,13 @@ if ((yt6 != null) && (yt6.loaded)) {
 		var ads = z.firstChild.currentStyle || window.getComputedStyle(z.firstChild, null)
 		z.style.width = ads.width
 		z.style.height = ads.height
-		z.style.left = (screen.width.availWidth - ads.width.replace('px','')) / 2 + 'px'
-		z.style.top = (screen.height.availHeight - ads.height.replace('px','')) / 2 + 'px'
-alert(z.style.left + " " + screen.width + " " + screen.width.availWidth + " " + ads.width.replace('px',''))
+		z.style.left = (screen.width - ads.width.replace('px','')) / 2 + 'px'
+		z.style.top = (screen.height - ads.height.replace('px','')) / 2 + 'px'
 	      }
 	    }
 	    if (p != null) {
 		  if ((p.style.display != 'none') && (p.style.width != '')) {
-		    //var z = p.style.display;
 		    p.removeAttribute('style');
-		    //p.style = 'width: ' + screen.width.availWidth + 'px; height: ' + screen.height.availHeight + 'px;';
-	        //if (z == 'none') p.style.display = 'none';
 		  }
 		
 		  var webgl = get_webgl()
@@ -2459,6 +2456,7 @@ alert(z.style.left + " " + screen.width + " " + screen.width.availWidth + " " + 
 			webgl.parentNode.style.top = -1 * webgl.parentNode.parentNode.style.top.replace('px','') + 'px'
 		  }
 	    }
+          }
 	  }
 
 	if ( (document.getElementById('snarls_player').fullscreen == true) && (ads == -1) && ((document.getElementById('player1').style.width != '100%') && (document.getElementById('player1').style.height != '100%')) ) {
@@ -3164,10 +3162,9 @@ if ((p1 != null) && (bm0.style.visibility == 'visible') && (p1.style.width == '1
 	  var y = z[i].style.display
 	  z[i].style.width = x.width
 	  z[i].style.height = x.height
-	  z[i].style.left = ((p1.style.width != '100%') && (p1.style.height != '100%')) ? (w - x.width.replace('px','')) / 2 + 'px' : (screen.width.availWidth - x.width.replace('px','')) / 2 + 'px'
-	  z[i].style.top = ((p1.style.width != '100%') && (p1.style.height != '100%')) ? (h - hdiff -x.height.replace('px','')) / 2 + 'px' : (screen.height.availHeight - x.height.replace('px','')) / 2 + 'px'
+	  z[i].style.left = ((p1.style.width != '100%') && (p1.style.height != '100%')) ? (w - x.width.replace('px','')) / 2 + 'px' : (screen.width - x.width.replace('px','')) / 2 + 'px'
+	  z[i].style.top = ((p1.style.width != '100%') && (p1.style.height != '100%')) ? (h - hdiff -x.height.replace('px','')) / 2 + 'px' : (screen.height - x.height.replace('px','')) / 2 + 'px'
 	  z[i].style.display = y
-alert(z[i].style.left + " " + screen.width + " " + screen.width.availWidth + " " + x.width.replace('px',''))
         }
       }
     }
