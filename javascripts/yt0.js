@@ -2373,7 +2373,11 @@ if ((yt6 != null) && (yt6.loaded)) {
     }
 
 	if ( (autoscale != null) && (document.getElementsByClassName('mejs-clear')[0]) &&
-	    ( ( (ads == -1) || ((document.getElementById('player1').style.width != '100%') && (document.getElementById('player1').style.height != '100%')) ) &&
+	    (
+	      ( (
+		 ( (ads == -1) || ((document.getElementById('player1').style.width != '100%') && (document.getElementById('player1').style.height != '100%')) ) &&
+		!( (ads == -1) && ((document.getElementById('player1').style.width != '100%') && (document.getElementById('player1').style.height != '100%')) )
+		) ) &&
 	       (p.offsetWidth != screen.width) && (p.offsetHeight != screen.height) && (document.getElementById(mep_x('mep_')) != null) &&
 	       ((document.getElementById(mep_x('mep_')).offsetWidth != screen.width) &&
 	        (document.getElementById(mep_x('mep_')).offsetHeight != screen.height))
