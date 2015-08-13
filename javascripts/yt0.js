@@ -2360,6 +2360,10 @@ if ((yt6 != null) && (yt6.loaded)) {
 	  }
 	}
 
+  var z = document.getElementById('ticker')
+  if (z) {
+    if (z.style.display == 'none') console.log(z.offsetHeight)
+  }
 
   if (typeof p.getPlayerState == 'function') {
   document.getElementsByClassName('alerts-wrapper')[0].setAttribute('id','playerState_' + p.getPlayerState())
@@ -2369,7 +2373,7 @@ if ((yt6 != null) && (yt6.loaded)) {
   if (typeof z == 'string') {
     var ads = z.indexOf('ytp-fullscreen')
   } else {
-//      if (bm0.style.visibility == 'visible') var ads = -1
+      if (bm0.style.visibility == 'visible') var ads = -1
     }
 
 	if ( (autoscale != null) && (document.getElementsByClassName('mejs-clear')[0]) &&
