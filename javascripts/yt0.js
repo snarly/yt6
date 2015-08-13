@@ -3127,10 +3127,12 @@ if ((document.getElementById('player1').style.width == '100%') && (document.getE
   
   var z = gclass("mejs-layer");
   var x = document.getElementsByClassName('mejs-overlay mejs-layer mejs-overlay-play')[0]
-  if (x != undefined) z.push.apply(z, x)
+  if (x != undefined) z.push(x)
   if ((z != null) && (z[0] != null)) {
     for(i=0;i<z.length-1;i++){
       if ( z[i] ) {
+        z[i].style.width = w + 'px'
+        z[i].style.height = h + 'px'
         if (z[i].getAttribute('class') == 'mejs-overlay mejs-layer mejs-overlay-play') {
           var x = z[i].firstChild.currentStyle;
           if ((x == undefined) && (typeof window.getComputedStyle != 'undefined')) var x = window.getComputedStyle(z[i].firstChild, null);
@@ -3146,10 +3148,7 @@ if ((document.getElementById('player1').style.width == '100%') && (document.getE
           z[i].style.height = x.height
           z[i].style.left = (w - x.width.replace('px','')) / 2 + 'px'
           z[i].style.top = (h - hdiff -x.height.replace('px','')) / 2 + 'px'
-        } else {
-            z[i].style.width = w + 'px'
-            z[i].style.height = h + 'px'
-         }
+        }
       }
     }
   }
