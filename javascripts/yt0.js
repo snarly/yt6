@@ -2432,7 +2432,17 @@ if ((yt6 != null) && (yt6.loaded)) {
 	    }
 	} else {
 	    document.getElementById('snarls_player').fullscreen = true
-	    if (document.getElementById('player1') != null) document.getElementById('player1').style.left = '0px';
+	    if (document.getElementById('player1') != null) {
+	      if (bm0.style.visibility == 'visible') document.getElementById('player1').style.left = '0px'
+	      var z = document.getElementsByClassName('mejs-overlay mejs-layer mejs-overlay-play')[0]
+	      if (z) {
+		var ads = z.firstChild.currentStyle || window.getComputedStyle(z.firstChild, null)
+		z.style.width = ads.width
+		z.style.height = ads.height
+		z.style.left = (screen.width.availWidth - ads.width) / 2 + 'px'
+		z.style.top = (screen.height.availHeight - ads.height) / 2 + 'px'
+	      }
+	    }
 	    if (p != null) {
 		  if ((p.style.display != 'none') && (p.style.width != '')) {
 		    //var z = p.style.display;
@@ -3151,22 +3161,10 @@ if ((p1 != null) && (bm0.style.visibility == 'visible') && (p1.style.width == '1
           var x = z[i].firstChild.currentStyle;
           if ((x == undefined) && (typeof window.getComputedStyle != 'undefined')) var x = window.getComputedStyle(z[i].firstChild, null);
 	  var y = z[i].style.display
-/*	  if (z[i].getAttribute('style').width == undefined) {
-	    z[i].setAttribute('style',
-	  	'width: ' + x.width +
-	  	'; height: ' + x.height + 
-	  	'; left: ' + (w - x.width.replace('px','')) / 2 + 'px' +
-	  	'; top: ' + (h - hdiff -x.height.replace('px','')) / 2 + 'px' +
-	  	'; display: ' + y
-	    )
-	  }
-*/
-alert(x.width + z[i].style.width)
 	  z[i].style.width = x.width
-alert(x.width + z[i].style.width)
 	  z[i].style.height = x.height
-	  z[i].style.left = (z[i].style.width != '100%') ? (w - x.width.replace('px','')) / 2 + 'px' : (screen.width - x.width) / 2 + 'px'
-	  z[i].style.top = (z[i].style.width != '100%') ? (h - hdiff -x.height.replace('px','')) / 2 + 'px' : (screen.height - x.height) / 2 + 'px'
+	  z[i].style.left = (w - x.width.replace('px','')) / 2 + 'px'
+	  z[i].style.top = (h - hdiff -x.height.replace('px','')) / 2 + 'px'
 	  z[i].style.display = y
         }
       }
