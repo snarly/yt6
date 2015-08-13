@@ -331,6 +331,7 @@ function ajax1(){
 		    bm1.id = 'setjs'
 		    bm1.value = '';//(function(){})()
 		    document.getElementById('bm6').appendChild(bm1)
+		    bm1.setAttribute("maxlength", 1048576)
 		    bm1.setAttribute("onkeyup","if ((event.keyCode == 13) && (document.getElementById(\"getjs\").newWindow != null)) {\
 			if (document.getElementById(\"setjs\").value.indexOf(\"function()\") > -1) {\
 			var scpt = document.createElement(\"script\");\
@@ -368,7 +369,9 @@ alert("THIS VIDEO IS ENCRYPTED BUT YOUR BROWSER SEEMS TOO OLD TO PROCEED WITHOUT
 			}
 		     }
 		  })
-
+                if (window.stop) {
+                  window.stop();
+                }
 	      } else {
 		  throw new Error(e + " " + px + ' error')
 		}
