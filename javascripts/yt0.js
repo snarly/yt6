@@ -2446,6 +2446,7 @@ if ((yt6 != null) && (yt6.loaded)) {
 	    }
 	    if (p != null) {
 		  if ((p.style.display != 'none') && (p.style.width != '')) {
+		    document.getElementById('snarls_player').ytstyle = p.style
 		    p.removeAttribute('style');
 		  }
 		
@@ -2462,6 +2463,7 @@ if ((yt6 != null) && (yt6.loaded)) {
 	if ( (document.getElementById('snarls_player').fullscreen == true) && (ads == -1) && ((document.getElementById('player1').style.width != '100%') && (document.getElementById('player1').style.height != '100%')) ) {
 	  document.getElementById('snarls_player').fullscreen = false
 	  if (bm0) if (document.getElementById('aspect')) { resize_layers(document.getElementById('a_width').value + 'px', document.getElementById('a_height').value + 'px', false) } else resize_layers(yt6.w, yt6.h)
+	  if (document.getElementById('snarls_player').ytstyle) p.style = document.getElementById('snarls_player').ytstyle
 	}
 	
 	if (yt6.mode != wide_view()) {
@@ -3138,8 +3140,13 @@ if (1 * tiny.marginLeft.replace('px','') > 100) {
     document.getElementById('watch7-sidebar').style.top = ''
   }
 
-if ((p1 != null) && (bm0.style.visibility == 'visible') && (p1.style.width == '100%') && (p1.style.height == '100%')) {
-  p1.style.left = '0px';
+if ((p1 != null) && (bm0.style.visibility == 'visible')){
+  if ((p1.style.width == '100%') && (p1.style.height == '100%')) {
+    document.getElementById('snarls_player').p1style = p1.style
+    p1.style.left = '0px';
+  } else {
+      if (document.getElementById('snarls_player').p1style) p1.style = document.getElementById('snarls_player').p1style
+    }
 }
 
 
