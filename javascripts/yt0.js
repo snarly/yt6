@@ -3129,8 +3129,8 @@ if (1 * tiny.marginLeft.replace('px','') > 100) {
     document.getElementById('watch7-sidebar').style.top = ''
   }
 
-if ((document.getElementById('player1').style.width == '100%') && (document.getElementById('player1').style.height == '100%')) {
-  document.getElementById('player1').style.left = '0px';
+if ((p1 != null) && (bm0.style.visibility == 'visible') && (p1.style.width == '100%') && (p1.style.height == '100%')) {
+  p1.style.left = '0px';
 }
 
 
@@ -3161,7 +3161,7 @@ if ((document.getElementById('player1').style.width == '100%') && (document.getE
 	    )
 	  }
 */
-alert(x.width + z[i].style.width))
+alert(x.width + z[i].style.width)
 	  z[i].style.width = x.width
 alert(x.width + z[i].style.width)
 	  z[i].style.height = x.height
