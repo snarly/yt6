@@ -3139,8 +3139,8 @@ if ((document.getElementById('player1').style.width == '100%') && (document.getE
 	  	'; height: ' + x.height + 
 	  	'; left: ' + (w - x.width.replace('px','')) / 2 + 'px' +
 	  	'; top: ' + (h - hdiff - x.height.replace('px','')) / 2 + 'px; display: block;'
-alert(z[i].getAttribute('style'))
 	    )
+	    alert(z[i].getAttribute('style'))
 	  }
           z[i].style.width = x.width
           z[i].style.height = x.height
