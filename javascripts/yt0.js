@@ -2441,6 +2441,7 @@ if ((yt6 != null) && (yt6.loaded)) {
 		z.style.height = ads.height
 		z.style.left = (screen.width.availWidth - ads.width.replace('px','')) / 2 + 'px'
 		z.style.top = (screen.height.availHeight - ads.height.replace('px','')) / 2 + 'px'
+alert(z.style.left + " " + screen.width + " " + screen.width.availWidth + " " + ads.width.replace('px',''))
 	      }
 	    }
 	    if (p != null) {
@@ -3166,6 +3167,7 @@ if ((p1 != null) && (bm0.style.visibility == 'visible') && (p1.style.width == '1
 	  z[i].style.left = ((p1.style.width != '100%') && (p1.style.height != '100%')) ? (w - x.width.replace('px','')) / 2 + 'px' : (screen.width.availWidth - x.width.replace('px','')) / 2 + 'px'
 	  z[i].style.top = ((p1.style.width != '100%') && (p1.style.height != '100%')) ? (h - hdiff -x.height.replace('px','')) / 2 + 'px' : (screen.height.availHeight - x.height.replace('px','')) / 2 + 'px'
 	  z[i].style.display = y
+alert(z[i].style.left + " " + screen.width + " " + screen.width.availWidth + " " + x.width.replace('px',''))
         }
       }
     }
