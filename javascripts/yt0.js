@@ -2383,7 +2383,7 @@ if ((yt6 != null) && (yt6.loaded)) {
 	  if ((autoscale.offsetWidth != autoscale.width) && (autoscale.offsetHeight != autoscale.height)) { //alert('0 ' + autoscale.height +" "+ autoscale.offsetHeight); 
 	    autoscale.width = autoscale.offsetWidth;
 	    autoscale.height = autoscale.offsetHeight;
-	    //bestfit()
+	    bestfit()
 	    //alert('01')
 	    if (bm0) if (document.getElementById('aspect')) { resize_layers(document.getElementById('a_width').value + 'px', document.getElementById('a_height').value + 'px', false) } else resize_layers(yt6.w, yt6.h)
 
@@ -2393,14 +2393,14 @@ if ((yt6 != null) && (yt6.loaded)) {
 		//alert('02')
 		if (bm0) if (document.getElementById('aspect')) { resize_layers(document.getElementById('a_width').value + 'px', document.getElementById('a_height').value + 'px', false) } else resize_layers(yt6.w, yt6.h)
 		if ( (!document.getElementById("aspect")) && (document.getElementById('watch7-sidebar').currentStyle || window.getComputedStyle(document.getElementById('watch7-sidebar'))).marginLeft == '0px' ) {
-		  //bestfit()
+		  bestfit()
 		  //alert('03')
 		  if (bm0) if (document.getElementById('aspect')) { resize_layers(document.getElementById('a_width').value + 'px', document.getElementById('a_height').value + 'px', false) } else resize_layers(yt6.w, yt6.h)
 		}
 	      } else {
 		  if (autoscale.offsetWidth != autoscale.width) { //alert('1 width:' + autoscale.width +" offsetWidth:"+ autoscale.offsetWidth +" thb:"+ document.getElementById("theater-background").offsetWidth ); 
 		    autoscale.width = autoscale.offsetWidth;
-		    //bestfit()
+		    bestfit()
 		    //alert('04')
 		    if (bm0) if (document.getElementById('aspect')) { resize_layers(document.getElementById('a_width').value + 'px', document.getElementById('a_height').value + 'px', false) } else resize_layers(yt6.w, yt6.h)
 		  }
@@ -3130,17 +3130,18 @@ if ((document.getElementById('player1').style.width == '100%') && (document.getE
       if ( z[i] ) {
         z[i].style.width = w + 'px'
         z[i].style.height = h + 'px'
-        if (z[i].getAttribute('class').indexOf('mejs-overlay mejs-layer mejs-overlay-play') > -1) {
+        if (z[i].getAttribute('class') == 'mejs-overlay mejs-layer mejs-overlay-play') {
           var x = z[i].firstChild.currentStyle;
           if ((x == undefined) && (typeof window.getComputedStyle != 'undefined') && (z[i] != undefined)) var x = window.getComputedStyle(z[i].firstChild, null);
-	  //if (z[i].getAttribute('style').width == undefined) {
+	  if (z[i].getAttribute('style').width == undefined) {
 	    z[i].setAttribute('style',
 	  	'width: ' + x.width +
 	  	'; height: ' + x.height + 
 	  	'; left: ' + (w - x.width.replace('px','')) / 2 + 'px' +
-	  	'; top: ' + (h - hdiff - x.height.replace('px','')) / 2 + 'px; display: none;'
+	  	'; top: ' + (h - hdiff - x.height.replace('px','')) / 2 + 'px; display: block;'
+alert(z[i].getAttribute('style'))
 	    )
-	  //}
+	  }
           z[i].style.width = x.width
           z[i].style.height = x.height
           z[i].style.left = (w - x.width.replace('px','')) / 2 + 'px'
