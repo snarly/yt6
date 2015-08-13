@@ -2360,10 +2360,6 @@ if ((yt6 != null) && (yt6.loaded)) {
 	  }
 	}
 
-  var z = document.getElementById('ticker')
-  if (z) {
-    if (z.style.display == 'none') console.log(z.offsetHeight)
-  }
 
   if (typeof p.getPlayerState == 'function') {
   document.getElementsByClassName('alerts-wrapper')[0].setAttribute('id','playerState_' + p.getPlayerState())
@@ -2372,6 +2368,10 @@ if ((yt6 != null) && (yt6.loaded)) {
   var z = p.getAttribute('class');
   if (typeof z == 'string') {
     var ads = z.indexOf('ytp-fullscreen')
+    if (document.getElementById('player1) {
+      document.getElementById('player1').style.width = '100%'
+      document.getElementById('player1').style.height = '100%'
+    }
   } else {
       if (bm0.style.visibility == 'visible') var ads = -1
     }
@@ -2379,8 +2379,8 @@ if ((yt6 != null) && (yt6.loaded)) {
 	if ( (autoscale != null) && (document.getElementsByClassName('mejs-clear')[0]) &&
 	    (
 	      ( (
-		 ( (ads == -1) || ((document.getElementById('player1').style.width != '100%') && (document.getElementById('player1').style.height != '100%')) ) &&
-		!( (ads == -1) && ((document.getElementById('player1').style.width != '100%') && (document.getElementById('player1').style.height != '100%')) )
+		 ( (ads == -1) && ((document.getElementById('player1').style.width != '100%') && (document.getElementById('player1').style.height != '100%')) )
+		//&& !( (ads == -1) && ((document.getElementById('player1').style.width != '100%') && (document.getElementById('player1').style.height != '100%')) )
 		) ) &&
 	       (p.offsetWidth != screen.width) && (p.offsetHeight != screen.height) && (document.getElementById(mep_x('mep_')) != null) &&
 	       ((document.getElementById(mep_x('mep_')).offsetWidth != screen.width) &&
