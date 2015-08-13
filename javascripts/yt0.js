@@ -3124,7 +3124,10 @@ if ((document.getElementById('player1').style.width == '100%') && (document.getE
   if ((z != null) && (z[0] != null)) z[0].style.maxWidth = w + 'px'
   var z = document.getElementsByClassName('ytp-chrome-bottom')
   if ((z != null) && (z[0] != null)) { z[0].style.width = w + 'px'; z[0].style.left = '0px' }
+  
   var z = gclass("mejs-layer");
+  var x = document.getElementsByClassName('mejs-overlay mejs-layer mejs-overlay-play')[0]
+  if (x != undefined) z.push.apply(z, x)
   if ((z != null) && (z[0] != null)) {
     for(i=0;i<z.length-1;i++){
       if ( z[i] ) {
