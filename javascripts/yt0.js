@@ -3163,8 +3163,8 @@ if ((p1 != null) && (bm0.style.visibility == 'visible') && (p1.style.width == '1
 	  var y = z[i].style.display
 	  z[i].style.width = x.width
 	  z[i].style.height = x.height
-	  z[i].style.left = (w - x.width.replace('px','')) / 2 + 'px'
-	  z[i].style.top = (h - hdiff -x.height.replace('px','')) / 2 + 'px'
+	  z[i].style.left = ((p1.style.width != '100%') && (p1.style.height != '100%')) ? (w - x.width.replace('px','')) / 2 + 'px' : (screen.width.availWidth - x.width.replace('px','')) / 2 + 'px'
+	  z[i].style.top = ((p1.style.width != '100%') && (p1.style.height != '100%')) ? (h - hdiff -x.height.replace('px','')) / 2 + 'px' : (screen.height.availHeight - x.height.replace('px','')) / 2 + 'px'
 	  z[i].style.display = y
         }
       }
