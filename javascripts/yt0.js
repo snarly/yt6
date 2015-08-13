@@ -2368,7 +2368,7 @@ if ((yt6 != null) && (yt6.loaded)) {
   var z = p.getAttribute('class');
   if (typeof z == 'string') {
     var ads = z.indexOf('ytp-fullscreen')
-    if (document.getElementById('player1) {
+    if (document.getElementById('player1')) {
       document.getElementById('player1').style.width = '100%'
       document.getElementById('player1').style.height = '100%'
     }
