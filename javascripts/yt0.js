@@ -2368,7 +2368,7 @@ if ((yt6 != null) && (yt6.loaded)) {
   var z = p.getAttribute('class');
   if (typeof z == 'string') {
     var ads = z.indexOf('ytp-fullscreen')
-    if (document.getElementById('player1')) {
+    if ((ads > -1) && document.getElementById('player1')) {
       document.getElementById('player1').style.width = '100%'
       document.getElementById('player1').style.height = '100%'
     }
@@ -2438,8 +2438,8 @@ if ((yt6 != null) && (yt6.loaded)) {
 	      var z = document.getElementsByClassName('mejs-overlay mejs-layer mejs-overlay-play')[0]
 	      if (z) {
 		var ads = z.firstChild.currentStyle || window.getComputedStyle(z.firstChild, null)
-		z.style.width = ads.width
-		z.style.height = ads.height
+		z.style.width = ads.width.replace('%','px')
+		z.style.height = ads.height.replace('%','px')
 		z.style.left = (screen.width - ads.width.replace('px','')) / 2 + 'px'
 		z.style.top = (screen.height - ads.height.replace('px','')) / 2 + 'px'
 	      }
@@ -3160,8 +3160,8 @@ if ((p1 != null) && (bm0.style.visibility == 'visible') && (p1.style.width == '1
           var x = z[i].firstChild.currentStyle;
           if ((x == undefined) && (typeof window.getComputedStyle != 'undefined')) var x = window.getComputedStyle(z[i].firstChild, null);
 	  var y = z[i].style.display
-	  z[i].style.width = x.width
-	  z[i].style.height = x.height
+	  z[i].style.width = x.width.replace('%','px')
+	  z[i].style.height = x.height.replace('%','px')
 	  z[i].style.left = ((p1.style.width != '100%') && (p1.style.height != '100%')) ? (w - x.width.replace('px','')) / 2 + 'px' : (screen.width - x.width.replace('px','')) / 2 + 'px'
 	  z[i].style.top = ((p1.style.width != '100%') && (p1.style.height != '100%')) ? (h - hdiff -x.height.replace('px','')) / 2 + 'px' : (screen.height - x.height.replace('px','')) / 2 + 'px'
 	  z[i].style.display = y
