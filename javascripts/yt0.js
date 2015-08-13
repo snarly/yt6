@@ -2439,8 +2439,8 @@ if ((yt6 != null) && (yt6.loaded)) {
 		var ads = z.firstChild.currentStyle || window.getComputedStyle(z.firstChild, null)
 		z.style.width = ads.width
 		z.style.height = ads.height
-		z.style.left = (screen.width.availWidth - ads.width) / 2 + 'px'
-		z.style.top = (screen.height.availHeight - ads.height) / 2 + 'px'
+		z.style.left = (screen.width.availWidth - ads.width.replace('px','')) / 2 + 'px'
+		z.style.top = (screen.height.availHeight - ads.height.replace('px','')) / 2 + 'px'
 	      }
 	    }
 	    if (p != null) {
