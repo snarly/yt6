@@ -2446,7 +2446,6 @@ if ((yt6 != null) && (yt6.loaded)) {
 	    }
 	    if (p != null) {
 		  if ((p.style.display != 'none') && (p.style.width != '')) {
-		    document.getElementById('snarls_player').ytstyle = p.style
 		    p.removeAttribute('style');
 		  }
 		
@@ -2460,10 +2459,10 @@ if ((yt6 != null) && (yt6.loaded)) {
           }
 	  }
 
-	if ( (document.getElementById('snarls_player').fullscreen == true) && (ads == -1) && ((document.getElementById('player1').style.width != '100%') && (document.getElementById('player1').style.height != '100%')) ) {
+	if ( (ads == -1) && ((p.style.width != bm0.style.width) || (p.style.height != bm0.style.height)) ) {
 	  document.getElementById('snarls_player').fullscreen = false
-	  if (bm0) if (document.getElementById('aspect')) { resize_layers(document.getElementById('a_width').value + 'px', document.getElementById('a_height').value + 'px', false) } else resize_layers(yt6.w, yt6.h)
-	  if (document.getElementById('snarls_player').ytstyle) p.style = document.getElementById('snarls_player').ytstyle
+	  //if (bm0) if (document.getElementById('aspect')) { resize_layers(document.getElementById('a_width').value + 'px', document.getElementById('a_height').value + 'px', false) } else resize_layers(yt6.w, yt6.h)
+	  p.style.width = bm0.style.width; p.style.height = bm0.style.height
 	}
 	
 	if (yt6.mode != wide_view()) {
