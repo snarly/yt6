@@ -2460,8 +2460,10 @@ if ((yt6 != null) && (yt6.loaded)) {
 
 	if ( (ads == -1) && (yt6.fullscreen == true ) ) {
 	  yt6.fullscreen = false
-	  if (bm0) if (document.getElementById('aspect')) { resize_layers(document.getElementById('a_width').value + 'px', document.getElementById('a_height').value + 'px', false) } else resize_layers(yt6.w, yt6.h)
-	  p.style.width = bm0.style.width; p.style.height = bm0.style.height
+	  if (bm0) {
+	    if (document.getElementById('aspect')) { resize_layers(document.getElementById('a_width').value + 'px', document.getElementById('a_height').value + 'px', false) } else resize_layers(yt6.w, yt6.h)
+	    p.style.width = bm0.style.width; p.style.height = bm0.style.height
+	  }
 	}
 	
 	if (yt6.mode != wide_view()) {
@@ -2995,6 +2997,8 @@ if ( (me_aspect) && (  (document.getElementById(mep_x('mep_')) == null) || ((pla
 
 //if (Math.abs(document.getElementById('player1').width - p1.style.width.replace('px','')) < 2) p1.style.width = document.getElementById('player1').width + 'px';
 //if (Math.abs(document.getElementById('player1').height - p1.style.height.replace('px','')) < 2) p1.style.height = document.getElementById('player1').height + 'px';
+if (Math.abs(p1.style.width.replace('px','') - (p1.width.replace('px','') / 10 >> 0) * 10) < 2) (p1.width.replace('px','') / 10 >> 0) * 10 + 'px'
+if (Math.abs(p1.style.height.replace('px','') - (p1.height.replace('px','') / 10 >> 0) * 10) < 2) (p1.height.replace('px','') / 10 >> 0) * 10 + 'px'
   }
 
   var flashvars = player().getAttribute('flashvars')
