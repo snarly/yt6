@@ -2527,6 +2527,8 @@ if ((yt6 != null) && (yt6.loaded)) {
 	      document.getElementById('player-api').style.overflow = 'hidden';
 	      mep_up();mep_run();
 
+		aspect(yt6.size)
+
 	      //if ((document.getElementById('movie_player1')) && (document.getElementById('movie_player1').firstChild.getAttribute('id') == 'movie_player0')) { document.getElementById('movie_player1').parentNode.removeChild(document.getElementById('movie_player1')) }
 	      if (wide_view() == false) document.getElementById('theater-background').style.backgroundColor = "transparent"
 	      document.getElementById('bm4').style.display = 'inline-block';
