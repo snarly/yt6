@@ -1688,7 +1688,7 @@ function mep_run(){
 					  }
 					});
 					me.addEventListener('loadedmetadata', function() {
-					  document.getElemensByClassName('mejs-controls')[0].style.visibiilty = 'hidden'
+					  document.getElementsByClassName('mejs-controls')[0].style.visibiilty = 'hidden'
 					  if ((typeof this.videoWidth == 'number') || (typeof this.videoHeight == 'number')) {
 					    document.getElementById('player1').width = this.videoWidth;  document.getElementById('player1').height = this.videoHeight;
 					  }
