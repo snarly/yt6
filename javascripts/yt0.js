@@ -2480,7 +2480,7 @@ if ((yt6 != null) && (yt6.loaded)) {
 	// Check to see if the location has changed.
 	if ( (yt6.strLocation != window.location.href) || (watch == null) ) {
 
-	if ((document.getElementById('placeholder-player') != null) && (bm0 != null) && (bm0.style.width != fix_Width()) ) aspect(true)
+	if ((document.getElementById('placeholder-player') != null) && (bm0 != null) && (bm0.style.width != fix_Width()) ) aspect(yt6.size)
 
 
         if (watch != null) {
@@ -3370,14 +3370,14 @@ function aspect(a) {
 //(!a) &&
 //  if ((document.getElementById('bm0').style.width != playerwidth ) && (  ( (webgl) && (document.getElementById('bm0').style.height != Math.round(playerwidth / parseFloat(webgl.width / webgl.height)) + 'px') ) || ( (!webgl) && ( (parseInt(document.getElementById('bm0').style.height.replace('px','')) != Math.round((playerwidth / document.getElementById("snarls_player").aspect_ratio))) && (parseInt(document.getElementById('bm0').style.height.replace('px','')) != Math.round(((windowheight / 100 >>0) * 80) * document.getElementById("snarls_player").aspect_ratio)) ))  ))  {
 
-  if ((!a) && (document.getElementById('bm0').style.width != windowwidth + 'px') &&
+  if (((!a) || (a != 'default' )) && (document.getElementById('bm0').style.width != windowwidth + 'px') &&
 	(  ((webgl) && (  (document.getElementById('bm0').style.height != Math.round(playerwidth / parseFloat(webgl.width / webgl.height)) + 'px') || (!dw)  )) ||
 	   ((!webgl) && (  (document.getElementById('bm0').style.height != Math.round(playerwidth / document.getElementById("snarls_player").aspect_ratio)  + 'px') || (!dw)  ))
 	   //((!webgl) && (  (parseInt(document.getElementById('player1').style.width.replace('px','')) != document.getElementById('player1').width) || (!dw)  ))
 	)
      ) {
 
-    if (dw) {
+    if ((dw) || (a == 'theater'))  {
 	document.getElementById('snarls_player').size = 'theater'
 	var w = playerwidth
 	var h = (webgl) ?
