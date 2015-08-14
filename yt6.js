@@ -2372,7 +2372,7 @@ if ((yt6 != null) && (yt6.loaded)) {
       document.getElementById('player1').style.height = '100%'
     }
   } else {
-      if (bm0.style.visibility == 'visible') var ads = -1
+      if ((bm0 != null) && (bm0.style.visibility == 'visible')) var ads = -1
     }
 
 	if ( (autoscale != null) && (document.getElementsByClassName('mejs-clear')[0]) &&
@@ -2460,8 +2460,10 @@ if ((yt6 != null) && (yt6.loaded)) {
 
 	if ( (ads == -1) && (yt6.fullscreen == true ) ) {
 	  yt6.fullscreen = false
-	  if (bm0) if (document.getElementById('aspect')) { resize_layers(document.getElementById('a_width').value + 'px', document.getElementById('a_height').value + 'px', false) } else resize_layers(yt6.w, yt6.h)
-	  p.style.width = bm0.style.width; p.style.height = bm0.style.height
+	  if (bm0) {
+	    if (document.getElementById('aspect')) { resize_layers(document.getElementById('a_width').value + 'px', document.getElementById('a_height').value + 'px', false) } else resize_layers(yt6.w, yt6.h)
+	    p.style.width = bm0.style.width; p.style.height = bm0.style.height
+	  }
 	}
 	
 	if (yt6.mode != wide_view()) {
@@ -2869,6 +2871,11 @@ if ( (me_aspect) && (  (document.getElementById(mep_x('mep_')) == null) || ((pla
   var w = 1 * w.replace('px','')
   var h = 1 * h.replace('px','')
 
+  var flashvars = player().getAttribute('flashvars')
+  var c = document.getElementById("aspect")
+  var d = document.getElementById('player').getAttribute("class")
+  var e = document.getElementById('theater-background').style
+
   var p1 = document.getElementById('player1')
 
   if (p1 != null) {
@@ -2993,14 +3000,16 @@ if ( (me_aspect) && (  (document.getElementById(mep_x('mep_')) == null) || ((pla
 
     }
 
-//if (Math.abs(document.getElementById('player1').width - p1.style.width.replace('px','')) < 2) p1.style.width = document.getElementById('player1').width + 'px';
-//if (Math.abs(document.getElementById('player1').height - p1.style.height.replace('px','')) < 2) p1.style.height = document.getElementById('player1').height + 'px';
+    if (document.getElementById('snarls_player').size != 'theater'){
+	//if (Math.abs(document.getElementById('player1').width - p1.style.width.replace('px','')) < 2) p1.style.width = document.getElementById('player1').width + 'px';
+	//if (Math.abs(document.getElementById('player1').height - p1.style.height.replace('px','')) < 2) p1.style.height = document.getElementById('player1').height + 'px';
+	//console.log(Math.floor(p1.style.width.replace('px','') / 2) * 2 + 2 + " " + Math.ceil(p1.style.width.replace('px','') / 2) * 2 + " " + Math.floor(p1.style.width.replace('px','') / 2) * 2 + " " + Math.abs(p1.style.width.replace('px','') - Math.floor(p1.style.width.replace('px','') / 2) * 2))
+	if (Math.abs(p1.style.width.replace('px','') - Math.floor(p1.style.width.replace('px','') / 2) * 2) < Math.abs(p1.style.width.replace('px','') - Math.ceil(p1.style.width.replace('px','') / 2) * 2)) { p1.style.width = Math.floor(p1.style.width.replace('px','') / 2) * 2 + 2 + 'px' } else { p1.style.width = Math.ceil(p1.style.width.replace('px','') / 2) * 2 + 'px' }
+	if (Math.abs(p1.style.height.replace('px','') - Math.floor(p1.style.height.replace('px','') / 2) * 2) < Math.abs(p1.style.height.replace('px','') - Math.ceil(p1.style.height.replace('px','') / 2) * 2)) { p1.style.height = Math.floor(p1.style.height.replace('px','') / 2) * 2 + 2 + 'px' } else { p1.style.height = Math.ceil(p1.style.height.replace('px','') / 2) * 2 + 'px' }
+	if (c) { document.getElementById('a_width').value = p1.style.width.replace('px',''); document.getElementById('a_height').value = p1.style.height.replace('px','') }
+    }
   }
 
-  var flashvars = player().getAttribute('flashvars')
-  var c = document.getElementById("aspect")
-  var d = document.getElementById('player').getAttribute("class")
-  var e = document.getElementById('theater-background').style
 
   if (document.getElementById("placeholder-player").offsetWidth < windowwidth) { //alert(a0.width + " " + a0.height);
     //e.width = parseInt(window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth) - getScrollbarWidth() + 'px';
