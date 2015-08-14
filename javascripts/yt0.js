@@ -2537,7 +2537,8 @@ if ((yt6 != null) && (yt6.loaded)) {
 	      mep_up();mep_run();
 
 		if (yt6.size != 'media') { aspect(yt6.size) }
-		  else { waitUntilExists('mejs-clear', function() { aspect(yt6.size); resize_layers(document.getElementById('player1').width + 'px', document.getElementById('player1').height + 'px') }) }
+		  else { waitUntilExists('mejs-clear', function() { if (yt6.size == 'media') { aspect(yt6.size) } }) };
+		  //; resize_layers(document.getElementById('player1').width + 'px', document.getElementById('player1').height + 'px')
 
 	      //if ((document.getElementById('movie_player1')) && (document.getElementById('movie_player1').firstChild.getAttribute('id') == 'movie_player0')) { document.getElementById('movie_player1').parentNode.removeChild(document.getElementById('movie_player1')) }
 	      if (yt6.size == 'default') document.getElementById('theater-background').style.backgroundColor = "transparent"
