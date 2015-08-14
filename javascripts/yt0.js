@@ -1691,7 +1691,7 @@ function mep_run(){
 					  document.getElementsByClassName('mejs-controls')[0].style.visibiilty = 'hidden'
 					  if ((typeof this.videoWidth == 'number') && (typeof this.videoHeight == 'number')) {
 					    document.getElementById('player1').width = this.videoWidth;  document.getElementById('player1').height = this.videoHeight;
-					    if (document.getElementById('snarls_player').size == 'media') aspect(this.videoWidth, this.videoHeight)
+					    if (document.getElementById('snarls_player').size == 'media') { aspect('media'); return false }
 					  }
 					  var dw = document.getElementById('aspect');
 					  if ( (me.offsetWidth == screen.width) || (me.offsetHeight == screen.height) ) {
