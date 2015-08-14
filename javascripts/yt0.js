@@ -2530,7 +2530,7 @@ if ((yt6 != null) && (yt6.loaded)) {
 		aspect(yt6.size)
 
 	      //if ((document.getElementById('movie_player1')) && (document.getElementById('movie_player1').firstChild.getAttribute('id') == 'movie_player0')) { document.getElementById('movie_player1').parentNode.removeChild(document.getElementById('movie_player1')) }
-	      if (wide_view() == false) document.getElementById('theater-background').style.backgroundColor = "transparent"
+	      if ((wide_view() == false) && (yt6.size == 'default')) document.getElementById('theater-background').style.backgroundColor = "transparent"
 	      document.getElementById('bm4').style.display = 'inline-block';
 
 	      if (flashvars == null) var flashvars = getFlashVars();
@@ -3379,7 +3379,7 @@ function aspect(a) {
 	)
      ) {
 
-    if ((dw) || (a == 'theater'))  {
+    if ((dw) || (dw && a == 'theater'))  {
 	document.getElementById('snarls_player').size = 'theater'
 	var w = playerwidth
 	var h = (webgl) ?
@@ -3388,7 +3388,7 @@ function aspect(a) {
 	  
     } else {
 
-	if (document.getElementById('player1').width) {
+	if ((document.getElementById('player1').width) || (document.getElementById('player1').height && document.getElementById('snarls_player').size == 'media')) {
 
 	  document.getElementById('snarls_player').size = 'media'
 	  var w = document.getElementById('player1').width
