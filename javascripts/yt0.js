@@ -2999,8 +2999,8 @@ if ( (me_aspect) && (  (document.getElementById(mep_x('mep_')) == null) || ((pla
 	//if (Math.abs(document.getElementById('player1').width - p1.style.width.replace('px','')) < 2) p1.style.width = document.getElementById('player1').width + 'px';
 	//if (Math.abs(document.getElementById('player1').height - p1.style.height.replace('px','')) < 2) p1.style.height = document.getElementById('player1').height + 'px';
 	console.log(Math.floor(p1.style.width.replace('px','') / 2) * 2 + " " + Math.floor(p1.style.width.replace('px','') / 2) * 2 + " " + Math.abs(p1.style.width.replace('px','') - Math.floor(p1.style.width.replace('px','') / 2) * 2))
-	if (Math.abs(p1.style.width.replace('px','') - Math.floor(p1.style.width.replace('px','') / 2) * 2) < Math.abs(p1.style.width.replace('px','') - Math.ceil(p1.style.width.replace('px','') / 2) * 2)) p1.style.width = Math.floor(p1.style.width.replace('px','') / 2) * 2 + 'px' else p1.style.width = Math.ceil(p1.style.width.replace('px','') / 2) * 2 + 'px'
-	if (Math.abs(p1.style.height.replace('px','') - Math.floor(p1.style.height.replace('px','') / 2) * 2) < Math.abs(p1.style.height.replace('px','') - Math.ceil(p1.style.height.replace('px','') / 2) * 2)) p1.style.height = Math.floor(p1.style.height.replace('px','') / 2) * 2 + 'px' else p1.style.height = Math.ceil(p1.style.width.replace('px','') / 2) * 2 + 'px'
+	if (Math.abs(p1.style.width.replace('px','') - Math.floor(p1.style.width.replace('px','') / 2) * 2) < Math.abs(p1.style.width.replace('px','') - Math.ceil(p1.style.width.replace('px','') / 2) * 2)) { p1.style.width = Math.floor(p1.style.width.replace('px','') / 2) * 2 + 'px' } else { p1.style.width = Math.ceil(p1.style.width.replace('px','') / 2) * 2 + 'px' }
+	if (Math.abs(p1.style.height.replace('px','') - Math.floor(p1.style.height.replace('px','') / 2) * 2) < Math.abs(p1.style.height.replace('px','') - Math.ceil(p1.style.height.replace('px','') / 2) * 2)) { p1.style.height = Math.floor(p1.style.height.replace('px','') / 2) * 2 + 'px' } else { p1.style.height = Math.ceil(p1.style.width.replace('px','') / 2) * 2 + 'px' }
     }
   }
 
