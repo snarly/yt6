@@ -2372,7 +2372,7 @@ if ((yt6 != null) && (yt6.loaded)) {
       document.getElementById('player1').style.height = '100%'
     }
   } else {
-      if (bm0.style.visibility == 'visible') var ads = -1
+      if ((bm0 != null) && (bm0.style.visibility == 'visible')) var ads = -1
     }
 
 	if ( (autoscale != null) && (document.getElementsByClassName('mejs-clear')[0]) &&
