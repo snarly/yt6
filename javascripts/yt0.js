@@ -3379,7 +3379,7 @@ function aspect(a) {
 	)
      ) {
 
-    if ( (dw) || ((dw) && (a == 'theater')) )  {
+    if ( (dw) || (a == 'theater') )  {
 	document.getElementById('snarls_player').size = 'theater'
 	var w = playerwidth
 	var h = (webgl) ?
