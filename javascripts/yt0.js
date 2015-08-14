@@ -1688,6 +1688,7 @@ function mep_run(){
 					  }
 					});
 					me.addEventListener('loadedmetadata', function() {
+					  document.getElementsByClassName('mejs-clear')[0].setAttribute('id','mejs-clear')
 					  var dw = document.getElementById('aspect');
 					  if ((typeof this.videoWidth == 'number') && (typeof this.videoHeight == 'number')) {
 					    document.getElementById('player1').width = this.videoWidth;  document.getElementById('player1').height = this.videoHeight;
@@ -2535,10 +2536,10 @@ if ((yt6 != null) && (yt6.loaded)) {
 	      document.getElementById('player-api').style.overflow = 'hidden';
 	      mep_up();mep_run();
 
-		aspect(yt6.size)
+		if (yt6.size != 'media') { aspect(yt6.size) } else { waitUntilExists('mejs-clear', function() { aspect(yt6.size) }) }
 
 	      //if ((document.getElementById('movie_player1')) && (document.getElementById('movie_player1').firstChild.getAttribute('id') == 'movie_player0')) { document.getElementById('movie_player1').parentNode.removeChild(document.getElementById('movie_player1')) }
-	      if ((wide_view() == false) && (yt6.size == 'default')) document.getElementById('theater-background').style.backgroundColor = "transparent"
+	      if (yt6.size == 'default') document.getElementById('theater-background').style.backgroundColor = "transparent"
 	      document.getElementById('bm4').style.display = 'inline-block';
 
 	      if (flashvars == null) var flashvars = getFlashVars();
