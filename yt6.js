@@ -1700,6 +1700,7 @@ function mep_run(){
 		  success: function(me) {  $('#audio-type').html( me.pluginType);
 					me.addEventListener('loadstart', function() {
 					  document.getElementsByClassName('mejs-controls')[0].style.visibility = 'hidden'
+					  document.getElementsByClassName('mejs-controls')[0].focus()
 					  document.getElementsByClassName('mejs-clear')[0].setAttribute('id','mejs-clear')
 					});
 					me.addEventListener('error', function() {
@@ -1730,6 +1731,7 @@ function mep_run(){
 					});
 					me.addEventListener('loadedmetadata', function() {
 					  document.getElementsByClassName('mejs-controls')[0].style.visibility = 'hidden'
+					  document.getElementsByClassName('mejs-controls')[0].focus()
 					  document.getElementsByClassName('mejs-clear')[0].setAttribute('id','mejs-clear')
 					  var dw = document.getElementById('aspect');
 					  if ((typeof this.videoWidth == 'number') && (typeof this.videoHeight == 'number')) {
@@ -1756,6 +1758,7 @@ function mep_run(){
 					});
 					me.addEventListener('loadeddata', function() {
 					  document.getElementsByClassName('mejs-controls')[0].style.visibility = 'hidden'
+					  document.getElementsByClassName('mejs-controls')[0].focus()
 					  document.getElementsByClassName('mejs-clear')[0].setAttribute('id','mejs-clear')
 					});
 					me.addEventListener('play', function() {
