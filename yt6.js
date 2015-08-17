@@ -1700,8 +1700,8 @@ function mep_run(){
 		  success: function(me) {  $('#audio-type').html( me.pluginType);
 					me.addEventListener('loadstart', function() {
 					  document.getElementsByClassName('mejs-controls')[0].style.visibility = 'hidden'
-					  document.getElementsByClassName('mejs-controls')[0].focus()
 					  document.getElementsByClassName('mejs-clear')[0].setAttribute('id','mejs-clear')
+					  me.focus()
 					});
 					me.addEventListener('error', function() {
 					  if (me.networkState == 3) {
@@ -1731,8 +1731,8 @@ function mep_run(){
 					});
 					me.addEventListener('loadedmetadata', function() {
 					  document.getElementsByClassName('mejs-controls')[0].style.visibility = 'hidden'
-					  document.getElementsByClassName('mejs-controls')[0].focus()
 					  document.getElementsByClassName('mejs-clear')[0].setAttribute('id','mejs-clear')
+					  me.focus()
 					  var dw = document.getElementById('aspect');
 					  if ((typeof this.videoWidth == 'number') && (typeof this.videoHeight == 'number')) {
 					    document.getElementById('player1').width = this.videoWidth;  document.getElementById('player1').height = this.videoHeight;
@@ -1758,8 +1758,8 @@ function mep_run(){
 					});
 					me.addEventListener('loadeddata', function() {
 					  document.getElementsByClassName('mejs-controls')[0].style.visibility = 'hidden'
-					  document.getElementsByClassName('mejs-controls')[0].focus()
 					  document.getElementsByClassName('mejs-clear')[0].setAttribute('id','mejs-clear')
+					  me.focus()
 					});
 					me.addEventListener('play', function() {
 					  var bn = document.getElementsByClassName('play yt-uix-button-text');
