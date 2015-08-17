@@ -268,6 +268,24 @@ return encodeURIComponent('https:' + def + sig)
             }
 
 
+function FireEvent( ElementId, EventName )
+{
+    if( document.getElementById(ElementId) != null )    
+    {   
+        if( document.getElementById( ElementId ).fireEvent ) 
+        {
+            document.getElementById( ElementId ).fireEvent( 'on' + EventName );     
+        }
+        else 
+        {   
+            var evObj = document.createEvent( 'Events' );
+            evObj.initEvent( EventName, true, false );
+            document.getElementById( ElementId ).dispatchEvent( evObj );
+        }
+    }
+}
+
+
   var a,b,i,j,k,x,y,z;
 
 
@@ -1699,8 +1717,8 @@ function mep_run(){
 		  translations:['en','de','es'],
 		  success: function(me) {  $('#audio-type').html( me.pluginType);
 					me.addEventListener('loadstart', function() {
-					  document.getElementsByClassName('mejs-controls')[0].style.visibility = 'hidden'
-					  document.getElementsByClassName('mejs-controls')[0].style.visibility = ''
+					  //document.getElementsByClassName('mejs-controls')[0].style = 'display: block; visibility: hidden;'
+					  FireEvent( mep_x('mep_'), 'mouseover' );
 					  document.getElementsByClassName('mejs-clear')[0].setAttribute('id','mejs-clear')
 					});
 					me.addEventListener('error', function() {
@@ -1730,8 +1748,8 @@ function mep_run(){
 					  }
 					});
 					me.addEventListener('loadedmetadata', function() {
-					  document.getElementsByClassName('mejs-controls')[0].style.visibility = 'hidden'
-					  document.getElementsByClassName('mejs-controls')[0].style.visibility = ''
+					  //document.getElementsByClassName('mejs-controls')[0].style = 'display: block; visibility: hidden;'
+					  FireEvent( mep_x('mep_'), 'mouseover' );
 					  document.getElementsByClassName('mejs-clear')[0].setAttribute('id','mejs-clear')
 					  var dw = document.getElementById('aspect');
 					  if ((typeof this.videoWidth == 'number') && (typeof this.videoHeight == 'number')) {
@@ -1757,8 +1775,8 @@ function mep_run(){
 					    };
 					});
 					me.addEventListener('loadeddata', function() {
-					  document.getElementsByClassName('mejs-controls')[0].style.visibility = 'hidden'
-					  document.getElementsByClassName('mejs-controls')[0].style.visibility = ''
+					  //document.getElementsByClassName('mejs-controls')[0].style = 'display: block; visibility: hidden;'
+					  FireEvent( mep_x('mep_'), 'mouseover' );
 					  document.getElementsByClassName('mejs-clear')[0].setAttribute('id','mejs-clear')
 					});
 					me.addEventListener('play', function() {
