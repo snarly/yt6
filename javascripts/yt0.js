@@ -2903,6 +2903,8 @@ function bestfit(){
 
 function resize_layers(w,h,me_aspect){
 
+  waitUntilExists('watch7-sidebar', function(){
+
   var z = document.getElementsByClassName('mejs-offscreen'); if ((z != null) && (z[0] != null)) z[0].style.display = 'none';
   var z = document.getElementsByClassName('mejs-time-buffering'); if ((z != null) && (z[0] != null)) z[0].setAttribute('class','mejs-time-bufferin');
   var bm0 = document.getElementById('bm0')
@@ -3321,6 +3323,7 @@ if ((p1 != null) && (bm0.style.visibility == 'visible')){
 
   ythtml5_size()
 
+  })//watch7-sidebar
 }
 
 
