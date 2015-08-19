@@ -2411,9 +2411,6 @@ if (typeof fnCheckLocation != 'number') {
 
 function mep_reload(){
 
-	    var webgl = get_webgl()
-	    if (!webgl) try { document.getElementsByClassName('video-stream html5-main-video')[0].pause() } catch(e) {};
-
 	    $.removeData([mejs.players['mep_1'], mejs.players['mep_0']])
 	    mejs.players['mep_1'] = null; delete mejs.players['mep_1'];
 	    mejs.players['mep_0'] = null; delete mejs.players['mep_0'];
@@ -2421,15 +2418,19 @@ function mep_reload(){
 	    mejs.players = null; delete mejs.players;
 	    mejs.mepIndex = 0; mejs.players = {}
 
-    if ( ( (typeof ytplayer != 'object') || ((typeof ytplayer == 'object') && (ytplayer.config == null)) ) && (document.getElementById('player').textContent.split('var ytplayer = ytplayer || {};')[1] != null) ) {
-      window.ytplayer = {};
-      eval(document.getElementById('player').textContent.split('var ytplayer = ytplayer || {};')[1].split(';(function()')[0]);
-    }
+	    var webgl = get_webgl()
+	    if (!webgl) try { document.getElementsByClassName('video-stream html5-main-video')[0].pause() } catch(e) {};
+
+	    if ( ( (typeof ytplayer != 'object') || ((typeof ytplayer == 'object') && (ytplayer.config == null)) ) && (document.getElementById('player').textContent.split('var ytplayer = ytplayer || {};')[1] != null) ) {
+	      window.ytplayer = {};
+	      eval(document.getElementById('player').textContent.split('var ytplayer = ytplayer || {};')[1].split(';(function()')[0]);
+	    }
 
 	    crossXmlHttpReq(window.ytplayer);
 	    if (document.getElementsByClassName('ytp-time-duration')[0]){
 	      var ads = yt6.href.split('dur=')[1].split('&')[0].toHHMMSS()
 	      if (ads.substring(0,2) == '00') { var ads = ads.substring(3,ads.length - 4).split('.')[0] };
+	      if (ads.substring(0,1) == '0') { var ads = ads.substirng(1,ads.length - 2).split('.')[0] };
 	      if (ads != document.getElementsByClassName('ytp-time-duration')[0].textContent) { alert(ads +" "+ document.getElementsByClassName('ytp-time-duration')[0].textContent);try { document.getElementsByClassName('video-stream html5-main-video')[0].mute() } catch(e) {}; }
 	    }
 	    redo_dl_button(  yt6.args,  yt6.html,  yt6.href);
