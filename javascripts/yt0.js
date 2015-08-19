@@ -2420,6 +2420,12 @@ function mep_reload(){
 	    mejs.players = null; delete mejs.players;
 	    mejs.mepIndex = 0; mejs.players = {}
 
+	    if ((document.getElementById('html5toflash').checked == true) && (p != null) && (p.getAttribute('class') != null)){
+	      p.parentNode.removeChild(p); var z = def_link(); ((z == undefined) || (z.indexOf('%26true') > -1)) ?
+	        document.getElementsByClassName('video-stream html5-main-video')[0].setAttribute('src','')
+	        : me_flash_up();//html5toflash()
+	    }
+
 	    crossXmlHttpReq(window.ytplayer);
 	    if (document.getElementsByClassName('ytp-time-duration')[0]){
 	      var ads = yt6.href.split('dur=')[1].split('&')[0].toHHMMSS()
@@ -2431,11 +2437,6 @@ function mep_reload(){
 	    document.getElementById('player-api').style.overflow = 'hidden';
 	    mep_up();mep_run();
 
-	    if ((document.getElementById('html5toflash').checked == true) && (p != null) && (p.getAttribute('class') != null)){
-	      p.parentNode.removeChild(p); var z = def_link(); ((z == undefined) || (z.indexOf('%26true') > -1)) ?
-	        document.getElementsByClassName('video-stream html5-main-video')[0].setAttribute('src','')
-	        : me_flash_up();//html5toflash()
-	    }
 
 	    if (yt6.size == undefined) yt6.size = 'default'
 	    aspect(yt6.size)
