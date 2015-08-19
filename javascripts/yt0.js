@@ -2717,8 +2717,8 @@ if ((yt6 != null) && (yt6.loaded)) {
 
 	    if ((document.getElementById('html5toflash').checked == true) && (p != null) && (p.getAttribute('class') != null)){
 	      p.parentNode.removeChild(p); var z = def_link(); ((z == undefined) || (z.indexOf('%26true') > -1)) ?
-	        document.getElementsByClassName('video-stream html5-main-video')[0].setAttribute('src','')
-	        : me_flash_up();//html5toflash()
+	        html5toflash()
+	        : me_flash_up();//document.getElementsByClassName('video-stream html5-main-video')[0].setAttribute('src','')
 	    }
 
 		waitUntilExists('movie_player', function() { mep_reload() })
