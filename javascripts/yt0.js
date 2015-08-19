@@ -2730,7 +2730,7 @@ function mep_reload(){
 		  }
 	      );
 		document.getElementById('signin-container').removeAttribute('id')
-		waitUntilExists('ytplayer-config', function() { mep_reload() }
+		waitUntilExists('ytplayer-config', function() { mep_reload() })
 
 	    }//else
 
