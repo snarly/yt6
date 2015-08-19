@@ -2409,6 +2409,9 @@ if (typeof fnCheckLocation != 'number') {
 	var ads = document.getElementById("google_companion_ad_div"); if (ads) { ads.parentNode.removeChild(ads) };
 	var ads = document.getElementById(mep_x("google_ads_frame")); if (ads) { ads.parentNode.removeChild(ads) };
 
+
+if ((yt6 != null) && (yt6.loaded)) {
+
 function mep_reload(){
 
 	    $.removeData([mejs.players['mep_1'], mejs.players['mep_0']])
@@ -2421,10 +2424,10 @@ function mep_reload(){
 	    var webgl = get_webgl()
 	    if (!webgl) try { document.getElementsByClassName('video-stream html5-main-video')[0].pause() } catch(e) {};
 
-	    if ( ( (typeof ytplayer != 'object') || ((typeof ytplayer == 'object') && (ytplayer.config == null)) ) && (document.getElementById('player').textContent.split('var ytplayer = ytplayer || {};')[1] != null) ) {
-	      window.ytplayer = {};
-	      eval(document.getElementById('player').textContent.split('var ytplayer = ytplayer || {};')[1].split(';(function()')[0]);
-	    }
+//	    if ( ( (typeof ytplayer != 'object') || ((typeof ytplayer == 'object') && (ytplayer.config == null)) ) && (document.getElementById('player').textContent.split('var ytplayer = ytplayer || {};')[1] != null) ) {
+//	      window.ytplayer = {};
+//	      eval(document.getElementById('player').textContent.split('var ytplayer = ytplayer || {};')[1].split(';(function()')[0]);
+//	    }
 
 	    crossXmlHttpReq(window.ytplayer);
 	    if (document.getElementsByClassName('ytp-time-duration')[0]){
@@ -2554,7 +2557,6 @@ function mep_reload(){
 
 }//mep_reload
 
-if ((yt6 != null) && (yt6.loaded)) {
 
 	if ((bm0 == null) && (p != null) && (p.getAttribute('class') != null)) { mep_reload() }
 	var ads = document.getElementsByTagName('iframe')
@@ -2577,6 +2579,10 @@ if ((yt6 != null) && (yt6.loaded)) {
   if (typeof p.getPlayerState == 'function') {
   document.getElementsByClassName('alerts-wrapper')[0].setAttribute('id','playerState_' + p.getPlayerState())
   } else { document.getElementsByClassName('alerts-wrapper')[0].setAttribute('id','playerState_null') }
+
+	if (window.ytplayer.config.loaded == true) {
+	  document.getElementById('signin-container').setAttribute('id','ytplayer-config')
+	} else document.getElementById('signin-container').removeAttribute('id')
 
   var z = p.getAttribute('class');
   if (typeof z == 'string') {
@@ -2723,8 +2729,8 @@ if ((yt6 != null) && (yt6.loaded)) {
 		    previousHash: fnCleanHash( strPrevHash )
 		  }
 	      );
-
-		mep_reload()
+		document.getElementById('signin-container').removeAttribute('id')
+		waitUntilExists('ytplayer-config', function() { mep_reload() }
 
 	    }//else
 
