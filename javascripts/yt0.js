@@ -2420,11 +2420,6 @@ function mep_reload(){
 	    mejs.players = null; delete mejs.players;
 	    mejs.mepIndex = 0; mejs.players = {}
 
-	    if ((document.getElementById('html5toflash').checked == true) && (p != null) && (p.getAttribute('class') != null)){
-	      p.parentNode.removeChild(p); var z = def_link(); ((z == undefined) || (z.indexOf('%26true') > -1)) ?
-	        document.getElementsByClassName('video-stream html5-main-video')[0].setAttribute('src','')
-	        : me_flash_up();//html5toflash()
-	    }
 
 	    crossXmlHttpReq(window.ytplayer);
 	    if (document.getElementsByClassName('ytp-time-duration')[0]){
@@ -2720,7 +2715,13 @@ if ((yt6 != null) && (yt6.loaded)) {
 		  }
 	      );
 
-		mep_reload()
+	    if ((document.getElementById('html5toflash').checked == true) && (p != null) && (p.getAttribute('class') != null)){
+	      p.parentNode.removeChild(p); var z = def_link(); ((z == undefined) || (z.indexOf('%26true') > -1)) ?
+	        document.getElementsByClassName('video-stream html5-main-video')[0].setAttribute('src','')
+	        : me_flash_up();//html5toflash()
+	    }
+
+		waitUntilExists('movie_player', function() { mep_reload() })
 
 	    }//else
 
