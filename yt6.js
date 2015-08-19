@@ -1097,7 +1097,7 @@ var autoplay2 = gclass('playlist-mix-icon yt-sprite');
 if (start != false){
 
   if ( (pn == 'me_flash') || (d.indexOf('%26false') > -1) ){//alert('false ! autoplay = ' + document.getElementById('snarls_player').autoplay )
-    if ( (((!mep) || (typeof fv == 'string')) && (document.getElementById('snarls_player').flash == true)) || ( (typeof p.getPlayerState == 'function') && (typeof fv != 'string') && (webgl)  ) ){//alert('01' + start);
+    if ( (((!mep) || (typeof fv == 'string')) && (document.getElementById('snarls_player').flash == true)) ){// || ( (typeof p.getPlayerState == 'function') && (typeof fv != 'string') && (webgl)  ) ){//alert('01' + start);
 	bm0.style.visibility = 'hidden'
 	p.style.display = '';
 	if (((typeof autoplay == 'string') || (typeof autoplay2[0] != 'undefined')) && (typeof p.playMedia == 'function') && (start)) p.playMedia(); p.paused = false;
