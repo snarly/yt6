@@ -1077,9 +1077,6 @@ if ( ((typeof player().getAttribute('flashvars') == 'string') && (typeof player(
 
 function autoplay(start) {
 
-waitUntilExists('bm0', function(){
-waitUntilExists('movie_player', function(){
-
 var p = player()
 var d = def_link()
 var fv = p.getAttribute('flashvars')
@@ -1139,8 +1136,7 @@ if ((typeof p.getPlayerState != 'function') && (typeof p.getAttribute('flashvars
 set_controls()
 
 if ((typeof autoplay == 'string') || (typeof autoplay2[0] != 'undefined')) { return true } else { return false }
-})
-})
+
 }
 
 
@@ -2553,7 +2549,7 @@ function mep_reload(){
 
 if ((yt6 != null) && (yt6.loaded)) {
 
-	if (bm0 == null) { mep_reload() }
+	if ((bm0 == null) && (p != null) && (p.getAttribute('class') != null)) { mep_reload() }
 	var ads = document.getElementsByTagName('iframe')
 	for(i=0;i<ads.length;i++){
 	  if (ads[i].getAttribute('id') == ads[i].getAttribute('name')) { ads[i].parentNode.removeChild(ads[i]) }
