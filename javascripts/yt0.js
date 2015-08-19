@@ -2411,7 +2411,8 @@ if (typeof fnCheckLocation != 'number') {
 
 function mep_reload(){
 
-	    try { document.getElementsByClassName('video-stream html5-main-video')[0].pause() } catch(e) {};
+	    var webgl = get_webgl()
+	    if (!webgl) try { document.getElementsByClassName('video-stream html5-main-video')[0].pause() } catch(e) {};
 
 	    $.removeData([mejs.players['mep_1'], mejs.players['mep_0']])
 	    mejs.players['mep_1'] = null; delete mejs.players['mep_1'];
@@ -2429,7 +2430,7 @@ function mep_reload(){
 	    if (document.getElementsByClassName('ytp-time-duration')[0]){
 	      var ads = yt6.href.split('dur=')[1].split('&')[0].toHHMMSS()
 	      if (ads.substring(0,2) == '00') { var ads = ads.substring(3,ads.length - 4).split('.')[0] };
-	      if (ads != document.getElementsByClassName('ytp-time-duration')[0].textContent) try { document.getElementsByClassName('video-stream html5-main-video')[0].mute() } catch(e) {};
+	      if (ads != document.getElementsByClassName('ytp-time-duration')[0].textContent) { alert(ads +" "+ document.getElementsByClassName('ytp-time-duration')[0].textContent);try { document.getElementsByClassName('video-stream html5-main-video')[0].mute() } catch(e) {}; }
 	    }
 	    redo_dl_button(  yt6.args,  yt6.html,  yt6.href);
 
