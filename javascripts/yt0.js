@@ -2433,8 +2433,8 @@ function mep_reload(){
 
 	    if ((document.getElementById('html5toflash').checked == true) && (p != null) && (p.getAttribute('class') != null)){
 	      p.parentNode.removeChild(p); var z = def_link(); ((z == undefined) || (z.indexOf('%26true') > -1)) ?
-	        document.getElementsByClassName('video-stream html5-main-video')[0].setAttribute('src',''); //html5toflash()
-	        : me_flash_up()
+	        document.getElementsByClassName('video-stream html5-main-video')[0].setAttribute('src','')
+	        : me_flash_up();//html5toflash()
 	    }
 
 	    if (yt6.size == undefined) yt6.size = 'default'
