@@ -1077,6 +1077,9 @@ if ( ((typeof player().getAttribute('flashvars') == 'string') && (typeof player(
 
 function autoplay(start) {
 
+waitUntilExists('bm0', function(){
+waitUntilExists('movie_player', function(){
+
 var p = player()
 var d = def_link()
 var fv = p.getAttribute('flashvars')
@@ -1136,6 +1139,8 @@ if ((typeof p.getPlayerState != 'function') && (typeof p.getAttribute('flashvars
 set_controls()
 
 if ((typeof autoplay == 'string') || (typeof autoplay2[0] != 'undefined')) { return true } else { return false }
+})
+})
 }
 
 
