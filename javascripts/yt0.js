@@ -2420,6 +2420,10 @@ function mep_reload(){
 	    mejs.players = null; delete mejs.players;
 	    mejs.mepIndex = 0; mejs.players = {}
 
+    if ( ( (typeof ytplayer != 'object') || ((typeof ytplayer == 'object') && (ytplayer.config == null)) ) && (document.getElementById('player').textContent.split('var ytplayer = ytplayer || {};')[1] != null) ) {
+      window.ytplayer = {};
+      eval(document.getElementById('player').textContent.split('var ytplayer = ytplayer || {};')[1].split(';(function()')[0]);
+    }
 
 	    crossXmlHttpReq(window.ytplayer);
 	    if (document.getElementsByClassName('ytp-time-duration')[0]){
@@ -2432,6 +2436,9 @@ function mep_reload(){
 	    document.getElementById('player-api').style.overflow = 'hidden';
 	    mep_up();mep_run();
 
+	    if (document.getElementById('html5toflash').checked == true){
+	      p.parentNode.removeChild(p); var z = def_link(); ((z == undefined) || (z.indexOf('%26true') > -1)) ? html5toflash() : me_flash_up()
+	    }
 
 	    if (yt6.size == undefined) yt6.size = 'default'
 	    aspect(yt6.size)
@@ -2715,13 +2722,7 @@ if ((yt6 != null) && (yt6.loaded)) {
 		  }
 	      );
 
-	    if ((document.getElementById('html5toflash').checked == true) && (p != null) && (p.getAttribute('class') != null)){
-	      p.parentNode.removeChild(p); var z = def_link(); ((z == undefined) || (z.indexOf('%26true') > -1)) ?
-	        html5toflash()
-	        : me_flash_up();//document.getElementsByClassName('video-stream html5-main-video')[0].setAttribute('src','')
-	    }
-
-		waitUntilExists('movie_player', function() { mep_reload() })
+		mep_reload()
 
 	    }//else
 
