@@ -2588,6 +2588,7 @@ if ((yt6 != null) && (yt6.loaded)) {
 	}//mep_reload
 
 	      if ((bm0 == null) && (p != null) && (p.getAttribute('class') != null)) {
+	      	 document.getElementsByClassName('video-stream html5-main-video')[0].setAttribute('src','')
 		/*var z = document.getElementById('player-api').textContent.split(',"title":"')[1]
 		console.log('bm0' + z);
 		if (z == undefined) {
