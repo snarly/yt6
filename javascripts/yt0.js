@@ -2582,7 +2582,7 @@ if ((yt6 != null) && (yt6.loaded)) {
 
 	    if (document.getElementById('html5toflash').checked == true){
 	      p.parentNode.removeChild(p); var z = def_link(); ((z == undefined) || (z.indexOf('%26true') > -1)) ? html5toflash() : me_flash_up()
-	      waitUntilExists('displaySpeed', function(){ console.log('check3'); playNext()  })
+	      waitUntilExists('displaySpeed', function(){ console.log('check3'); if ((p!= null) && (p.getAttribute('name') != 'me_flash')) { p.setAttribute('name','movie_player') }; playNext()  })
 	    } else { playNext() }
 
 	}//mep_reload
