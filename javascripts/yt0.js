@@ -2517,7 +2517,7 @@ if ((yt6 != null) && (yt6.loaded)) {
 		      }
 
                   }
-            } else { console.log(p + bm0 + p.getAttribute('name'))
+            } else { console.log(p + bm0 + p.getAttribute('name')) }
 	    if (yt6.autoplay == false) {console.log('15');
 		waitUntilExists("displaySpeed", function(){console.log('16');
 		  if (typeof document.getElementById('player1').play == 'function') { yt6.autoplay = true; autoplay(true) } 
