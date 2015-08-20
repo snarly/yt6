@@ -2743,12 +2743,18 @@ if ((yt6 != null) && (yt6.loaded)) {
 
 	  } else {//args
 	      if ((bm0 == null) && (p != null) && (p.getAttribute('class') != null)) {
-		var ads = document.getElementById('player-api').textContent.split(',"title":"')[1]
-		console.log('bm0' + ads);
-		if (ads == undefined) { var ads = window.location.href; location.href = strPrevLocation; location.href = ads }
+		var z = document.getElementById('player-api').textContent.split(',"title":"')[1]
+		console.log('bm0' + z);
+		if (z == undefined) {
+		  xhr.open('get', yt6.strLocation, false);
+  		  xhr.send('');
+  		  var z = parseXml(z.responseText);
+  		  var ads = z.getElementById('player-api').textContent.split(',"title":"')[1]
+		  console.log('bm0' + ads);
+		}
 		if ( (typeof window.ytplayer != 'object') || ((typeof window.ytplayer == 'object') && (window.ytplayer.config == null)) ) {
 		  window.ytplayer = {};
-		  eval(document.getElementById('player-api').textContent.split('var ytplayer = ytplayer || {};')[1].split(';(function()')[0]);
+		  eval(z.getElementById('player-api').textContent.split('var ytplayer = ytplayer || {};')[1].split(';(function()')[0]);
 		}
 		mep_reload()
 	      }
