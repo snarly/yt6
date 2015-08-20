@@ -2731,6 +2731,8 @@ function mep_reload(){
 		    previousHash: fnCleanHash( strPrevHash )
 		  }
 	      );
+
+		document.getElementById('player-api').innerHTML = ''
 		document.getElementsByClassName('signin-container')[0].removeAttribute('id')
 		waitUntilExists('ytplayer-config', function() { mep_reload() })
 
