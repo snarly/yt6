@@ -2743,10 +2743,10 @@ if ((yt6 != null) && (yt6.loaded)) {
 
 	  } else {//args
 	      if ((bm0 == null) && (p != null) && (p.getAttribute('class') != null)) {
-		console.log('bm0');
+		var ads = document.getElementById('player-api').textContent.split(',"title":"')[1]
+		console.log('bm0' + ads);
+		if (ads == undefined) { var ads = window.location.href; location.href = strPrevLocation; location.href = ads }
 		if ( (typeof window.ytplayer != 'object') || ((typeof window.ytplayer == 'object') && (window.ytplayer.config == null)) ) {
-		  var ads = document.getElementById('player-api').textContent.split(',"title":"')[1].split('","')[0]
-		  console.log(ads)
 		  window.ytplayer = {};
 		  eval(document.getElementById('player-api').textContent.split('var ytplayer = ytplayer || {};')[1].split(';(function()')[0]);
 		}
