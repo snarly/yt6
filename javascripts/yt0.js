@@ -2562,9 +2562,9 @@ function mep_reload(){
 
 }//mep_reload
 
-	if ((window.ytplayer != null) && (window.ytplayer.config != null) && (window.ytplayer.config.loaded == true)) {
+	if ((window.ytplayer != null) && (window.ytplayer.config != null)) { //&& (window.ytplayer.config.loaded == true)) {
 	  document.getElementsByClassName('signin-container')[0].setAttribute('id','ytplayer-config')
-	} else document.getElementsByClassName('signin-container')[0].removeAttribute('id')
+	} //else document.getElementsByClassName('signin-container')[0].removeAttribute('id')
 
 
 	if ((bm0 == null) && (p != null) && (p.getAttribute('class') != null)) {
