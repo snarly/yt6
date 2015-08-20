@@ -2569,8 +2569,9 @@ function mep_reload(){
 
 	if ((bm0 == null) && (p != null) && (p.getAttribute('class') != null)) {
 
+		waitUntilExists('ytplayer-config', function() {
 		  mep_reload()
-
+		})
 	}
 	var ads = document.getElementsByTagName('iframe')
 	for(i=0;i<ads.length;i++){
