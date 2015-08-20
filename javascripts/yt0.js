@@ -1191,6 +1191,11 @@ function rewrite_ytplayer(node_value, s, sig){
   //document.getElementById('snarls_player').ytplayer = clone(ytplayer)
   var linx = [];
   var lang_def = null; var lang_asr = null;
+  
+  if ( (typeof ytplayer != 'object') || ((typeof ytplayer == 'object') && (ytplayer.config == null)) ) {
+      ytplayer = {};
+      eval(document.getElementById('player').textContent.split('var ytplayer = ytplayer || {};')[1].split(';(function()')[0]);
+  }
   var args = ytplayer.config.args;
   var html = [new Date().toLocaleString(),
     'Click to switch streams in HTML5 player. Right click & "Save as" to download.<br>'
