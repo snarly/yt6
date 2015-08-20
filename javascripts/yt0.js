@@ -2576,9 +2576,9 @@ window.ytplayer = {};
 eval(document.getElementById('player').textContent.split('var ytplayer = ytplayer || {};')[1].split(';(function()')[0]);
 }
 
-		//waitUntilExists('ytplayer-config', function() {
+		waitUntilExists('ytplayer-config', function() {
 		  mep_reload()
-		//})
+		})
 	}
 	var ads = document.getElementsByTagName('iframe')
 	for(i=0;i<ads.length;i++){
