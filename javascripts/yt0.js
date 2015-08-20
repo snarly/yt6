@@ -2579,7 +2579,9 @@ window.ytplayer = {};
 eval(document.getElementById('player').textContent.split('var ytplayer = ytplayer || {};')[1].split(';(function()')[0]);
 };console.log('bm0')
 
+		waitUntilExists('ytplayer-config', function() {
 		  mep_reload()
+		})
 
 	}
 	var ads = document.getElementsByTagName('iframe')
@@ -2753,7 +2755,7 @@ eval(document.getElementById('player').textContent.split('var ytplayer = ytplaye
 
 		document.getElementsByClassName('signin-container')[0].removeAttribute('id')
 
-	    if ((document.getElementById('html5toflash').checked == true) && (document.getElementsByClassName('video-stream html5-main-video')[0])){
+/*	    if ((document.getElementById('html5toflash').checked == true) && (document.getElementsByClassName('video-stream html5-main-video')[0])){
 	      p.parentNode.removeChild(p); var z = def_link(); ((z == undefined) || (z.indexOf('%26true') > -1)) ? html5toflash() : me_flash_up()
 //	      document.getElementsByClassName('video-stream html5-main-video')[0].setAttribute('src','')
 	    }
@@ -2762,10 +2764,10 @@ if ( (typeof window.ytplayer != 'object') || ((typeof window.ytplayer == 'object
 window.ytplayer = {};
 eval(document.getElementById('player').textContent.split('var ytplayer = ytplayer || {};')[1].split(';(function()')[0]);
 }
-
-		waitUntilExists('ytplayer-config', function() {
+*/
+//		waitUntilExists('ytplayer-config', function() {
 		  mep_reload()
-		})
+//		})
 
 	    }//else
 
