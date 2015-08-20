@@ -2412,6 +2412,34 @@ if (typeof fnCheckLocation != 'number') {
 
 if ((yt6 != null) && (yt6.loaded)) {
 
+	var ads = document.getElementsByTagName('iframe')
+	for(i=0;i<ads.length;i++){
+	  if (ads[i].getAttribute('id') == ads[i].getAttribute('name')) { ads[i].parentNode.removeChild(ads[i]) }
+	}
+
+	if ((window.ytplayer != null) && (window.ytplayer.config != null) && (window.ytplayer.config.loaded == true) && (p != null) && (p.getAttribute('name') != null)) {
+	  document.getElementsByClassName('signin-container')[0].setAttribute('id','ytplayer-config')
+	} else document.getElementsByClassName('signin-container')[0].removeAttribute('id')
+
+	if (typeof p.getPlayerState == 'function') {
+  	document.getElementsByClassName('alerts-wrapper')[0].setAttribute('id','playerState_' + p.getPlayerState())
+  	} else { document.getElementsByClassName('alerts-wrapper')[0].setAttribute('id','playerState_null') }
+  	
+  	
+	//var reset = document.getElementsByClassName('reset yt-uix-button-text')[0];//  
+	var autoscale = document.getElementById("placeholder-player")
+	var watch = document.getElementById("page");if (watch != null) var watch = watch.getAttribute("class"); if ((typeof watch == 'string') && (watch.indexOf('watch') == -1)) var watch = null
+	var flashvars = player().getAttribute('flashvars')
+
+	if ((document.getElementById("player2")) && (typeof document.getElementById("player2").play == 'function')) {
+	  var z = document.getElementById("player1").getElementsByTagName('source');
+	  while (z.length > 0){
+		document.getElementById("player1").removeChild(z[0]);
+	  }
+	}
+
+
+
 	function playNext(){
 
 		if (yt6.size == undefined) yt6.size = 'default'
@@ -2517,7 +2545,7 @@ if ((yt6 != null) && (yt6.loaded)) {
 		      }
 
                   }
-            } else { console.log(p + bm0 + p.getAttribute('name')) }
+            } else { console.log(p + bm0 + p.getAttribute('name') + 'playNext') }
 	    if (yt6.autoplay == false) {console.log('15');
 		waitUntilExists("displaySpeed", function(){console.log('16');
 		  if (typeof document.getElementById('player1').play == 'function') { yt6.autoplay = true; autoplay(true) } 
@@ -2539,10 +2567,6 @@ if ((yt6 != null) && (yt6.loaded)) {
 	    var webgl = get_webgl()
 	    if (!webgl) try { document.getElementsByClassName('video-stream html5-main-video')[0].pause() } catch(e) {};
 
-//	    if ( ( (typeof ytplayer != 'object') || ((typeof ytplayer == 'object') && (ytplayer.config == null)) ) && (document.getElementById('player').textContent.split('var ytplayer = ytplayer || {};')[1] != null) ) {
-//	      window.ytplayer = {};
-//	      eval(document.getElementById('player').textContent.split('var ytplayer = ytplayer || {};')[1].split(';(function()')[0]);
-//	    }
 
 	    crossXmlHttpReq(window.ytplayer);
 	    if (document.getElementsByClassName('ytp-time-duration')[0]){
@@ -2557,37 +2581,13 @@ if ((yt6 != null) && (yt6.loaded)) {
 	    mep_up();mep_run();
 
 	    if (document.getElementById('html5toflash').checked == true){
-	      console.log('check1'); p.parentNode.removeChild(p); var z = def_link(); ((z == undefined) || (z.indexOf('%26true') > -1)) ? html5toflash() : me_flash_up()
-	      console.log('check2');waitUntilExists('displaySpeed', function(){ console.log('check3'); playNext()  })
+	      p.parentNode.removeChild(p); var z = def_link(); ((z == undefined) || (z.indexOf('%26true') > -1)) ? html5toflash() : me_flash_up()
+	      waitUntilExists('displaySpeed', function(){ console.log('check3'); playNext()  })
 	    } else { playNext() }
 
 	}//mep_reload
 
-	if ((window.ytplayer != null) && (window.ytplayer.config != null) && (window.ytplayer.config.loaded == true)) {
-	  document.getElementsByClassName('signin-container')[0].setAttribute('id','ytplayer-config')
-	} else document.getElementsByClassName('signin-container')[0].removeAttribute('id')
 
-
-	var ads = document.getElementsByTagName('iframe')
-	for(i=0;i<ads.length;i++){
-	  if (ads[i].getAttribute('id') == ads[i].getAttribute('name')) { ads[i].parentNode.removeChild(ads[i]) }
-	}
-	//var reset = document.getElementsByClassName('reset yt-uix-button-text')[0];//  
-	var autoscale = document.getElementById("placeholder-player")
-	var watch = document.getElementById("page");if (watch != null) var watch = watch.getAttribute("class"); if ((typeof watch == 'string') && (watch.indexOf('watch') == -1)) var watch = null
-	var flashvars = player().getAttribute('flashvars')
-
-	if ((document.getElementById("player2")) && (typeof document.getElementById("player2").play == 'function')) {
-	  var z = document.getElementById("player1").getElementsByTagName('source');
-	  while (z.length > 0){
-		document.getElementById("player1").removeChild(z[0]);
-	  }
-	}
-
-
-  if (typeof p.getPlayerState == 'function') {
-  document.getElementsByClassName('alerts-wrapper')[0].setAttribute('id','playerState_' + p.getPlayerState())
-  } else { document.getElementsByClassName('alerts-wrapper')[0].setAttribute('id','playerState_null') }
 
 
   var z = p.getAttribute('class');
