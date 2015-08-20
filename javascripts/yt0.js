@@ -2737,7 +2737,9 @@ if ((yt6 != null) && (yt6.loaded)) {
 		  }
 	      );
 		document.getElementsByClassName('signin-container')[0].removeAttribute('id')
-		waitUntilExists('ytplayer-config', function() { mep_reload() })
+		//waitUntilExists('ytplayer-config', function() { 
+		mep_reload()
+		//})
 
 	    }//else
 
@@ -2746,7 +2748,7 @@ if ((yt6 != null) && (yt6.loaded)) {
 		var z = document.getElementById('player-api').textContent.split(',"title":"')[1]
 		console.log('bm0' + z);
 		if (z == undefined) {
-		  xhr.open('get', yt6.strLocation, false);
+		  xhr.open('get', window.location.href, false);
   		  xhr.send('');
   		  var z = parseXml(z.responseText);
   		  var ads = z.getElementById('player-api').textContent.split(',"title":"')[1]
