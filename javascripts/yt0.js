@@ -2567,11 +2567,10 @@ function mep_reload(){
 	} else document.getElementsByClassName('signin-container')[0].removeAttribute('id')
 
 
-	if ((bm0 == null) && (p != null) && (p.getAttribute('class') != null)) {
+	if ((bm0 == null) && (p != null) && (p.getAttribute('class') != null) && (document.getElementsByClassName('signin-container')[0].getAttribute('id') == 'ytplayer-config')) {
 
-		waitUntilExists('ytplayer-config', function() {
 		  mep_reload()
-		})
+
 	}
 	var ads = document.getElementsByTagName('iframe')
 	for(i=0;i<ads.length;i++){
