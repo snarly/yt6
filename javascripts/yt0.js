@@ -2564,15 +2564,17 @@ function mep_reload(){
 
 	if ((window.ytplayer != null) && (window.ytplayer.config != null)) { //&& (window.ytplayer.config.loaded == true)) {
 	  document.getElementsByClassName('signin-container')[0].setAttribute('id','ytplayer-config')
-	} //else document.getElementsByClassName('signin-container')[0].removeAttribute('id')
+	} else document.getElementsByClassName('signin-container')[0].removeAttribute('id')
 
 
 	if ((bm0 == null) && (p != null) && (p.getAttribute('class') != null)) {
 
-if ( (typeof window.ytplayer != 'object') || ((typeof window.ytplayer == 'object') && (window.ytplayer.config == null)) ) {
-window.ytplayer = {};
-eval(document.getElementById('player').textContent.split('var ytplayer = ytplayer || {};')[1].split(';(function()')[0]);
-}
+//if ( (typeof window.ytplayer != 'object') || ((typeof window.ytplayer == 'object') && (window.ytplayer.config == null)) ) {
+//window.ytplayer = {};
+//eval(document.getElementById('player').textContent.split('var ytplayer = ytplayer || {};')[1].split(';(function()')[0]);
+//}
+document.getElementsByClassName('video-stream html5-main-video')[0].setAttribute('src','')
+
 		waitUntilExists('ytplayer-config', function() {
 		  mep_reload()
 		})
