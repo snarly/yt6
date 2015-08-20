@@ -2750,7 +2750,7 @@ if ((yt6 != null) && (yt6.loaded)) {
 		if (z == undefined) {
 		  xhr.open('get', window.location.href, false);
   		  xhr.send('');
-  		  var z = parseXml(z.responseText);
+  		  var z = parseXml(xhr.responseText);
   		  var ads = z.getElementById('player-api').textContent.split(',"title":"')[1]
 		  console.log('bm0' + ads);
 		}
