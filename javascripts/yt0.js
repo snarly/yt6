@@ -2743,7 +2743,7 @@ if ((yt6 != null) && (yt6.loaded)) {
 
 	    }//else
 
-	  } else {//args
+	  } /*else {//args
 	      if ((bm0 == null) && (p != null) && (p.getAttribute('class') != null)) {
 		var z = document.getElementById('player-api').textContent.split(',"title":"')[1]
 		console.log('bm0' + z);
@@ -2761,7 +2761,7 @@ if ((yt6 != null) && (yt6.loaded)) {
 		}
 		mep_reload()
 	      }
-	    }
+	    }*/
 
 	}//watch
 	}//location change
