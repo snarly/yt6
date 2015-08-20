@@ -2426,9 +2426,9 @@ if ((yt6 != null) && (yt6.loaded)) {
 	    if ( (p != null) && (bm0 != null) && 
 		   ( (p.getAttribute('name') == 'movie_player') || (p.getAttribute('name') == 'me_flash') )
 //		&& ( (typeof p.getPlayerState == 'function') || (typeof p.playMedia == 'function') || (( me_flash != null) && (typeof me_flash.playMedia == 'function')) )
-		) {//alert(z)
+		) {
 
-		    var z = def_link();
+		    var z = def_link(); console.log(p.getAttribute('name') + z)
 		    var me_flash = getElementsByAttribute(document.getElementById("player-api"),"embed","name",mep_x("me_flash_"))
 		    if (me_flash[0] != undefined){
 		      var x = gclass('mejs-shim');
@@ -2517,7 +2517,7 @@ if ((yt6 != null) && (yt6.loaded)) {
 		      }
 
                   }
-            }
+            } else { console.log(p + bm0 + p.getAttribute('name'))
 	    if (yt6.autoplay == false) {console.log('15');
 		waitUntilExists("displaySpeed", function(){console.log('16');
 		  if (typeof document.getElementById('player1').play == 'function') { yt6.autoplay = true; autoplay(true) } 
@@ -2742,7 +2742,14 @@ if ((yt6 != null) && (yt6.loaded)) {
 	    }//else
 
 	  } else {//args
-	      if ((bm0 == null) && (p != null) && (p.getAttribute('class') != null)) { console.log('bm0'); mep_reload() }
+	      if ((bm0 == null) && (p != null) && (p.getAttribute('class') != null)) {
+		console.log('bm0');
+		if ( (typeof window.ytplayer != 'object') || ((typeof window.ytplayer == 'object') && (window.ytplayer.config == null)) ) {
+		  window.ytplayer = {};
+		  eval(document.getElementById('player').textContent.split('var ytplayer = ytplayer || {};')[1].split(';(function()')[0]);
+		}
+		mep_reload()
+	      }
 	    }
 
 	}//watch
