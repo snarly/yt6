@@ -2557,8 +2557,8 @@ if ((yt6 != null) && (yt6.loaded)) {
 	    mep_up();mep_run();
 
 	    if (document.getElementById('html5toflash').checked == true){
-	      console.log('check'); p.parentNode.removeChild(p); var z = def_link(); ((z == undefined) || (z.indexOf('%26true') > -1)) ? html5toflash() : me_flash_up()
-	      waitUntilExists('displaySpeed', function(){ playNext()  })
+	      console.log('check1'); p.parentNode.removeChild(p); var z = def_link(); ((z == undefined) || (z.indexOf('%26true') > -1)) ? html5toflash() : me_flash_up()
+	      console.log('check2');waitUntilExists('displaySpeed', function(){ console.log('check3'); playNext()  })
 	    } else { playNext() }
 
 	}//mep_reload
@@ -2568,7 +2568,6 @@ if ((yt6 != null) && (yt6.loaded)) {
 	} else document.getElementsByClassName('signin-container')[0].removeAttribute('id')
 
 
-	if ((bm0 == null) && (p != null) && (p.getAttribute('class') != null)) { console.log('bm0'); mep_reload() }
 	var ads = document.getElementsByTagName('iframe')
 	for(i=0;i<ads.length;i++){
 	  if (ads[i].getAttribute('id') == ads[i].getAttribute('name')) { ads[i].parentNode.removeChild(ads[i]) }
@@ -2742,7 +2741,9 @@ if ((yt6 != null) && (yt6.loaded)) {
 
 	    }//else
 
-	  }//args
+	  } else {//args
+	      if ((bm0 == null) && (p != null) && (p.getAttribute('class') != null)) { console.log('bm0'); mep_reload() }
+	    }
 
 	}//watch
 	}//location change
