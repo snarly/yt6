@@ -2571,10 +2571,10 @@ function mep_reload(){
 
 document.getElementsByClassName('video-stream html5-main-video')[0].setAttribute('src','')
 
-//if ( (typeof window.ytplayer != 'object') || ((typeof window.ytplayer == 'object') && (window.ytplayer.config == null)) ) {
-//window.ytplayer = {};
-//eval(document.getElementById('player').textContent.split('var ytplayer = ytplayer || {};')[1].split(';(function()')[0]);
-//}
+if ( (typeof window.ytplayer != 'object') || ((typeof window.ytplayer == 'object') && (window.ytplayer.config == null)) ) {
+window.ytplayer = {};
+eval(document.getElementById('player').textContent.split('var ytplayer = ytplayer || {};')[1].split(';(function()')[0]);
+}
 
 		//waitUntilExists('ytplayer-config', function() {
 		  mep_reload()
