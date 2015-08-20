@@ -2744,8 +2744,6 @@ function mep_reload(){
 		document.getElementsByClassName('signin-container')[0].removeAttribute('id')
 
 	    if (document.getElementById('html5toflash').checked == true){
-
-	    if (document.getElementById('html5toflash').checked == true){
 //	      p.parentNode.removeChild(p); var z = def_link(); ((z == undefined) || (z.indexOf('%26true') > -1)) ? html5toflash() : me_flash_up()
 	      document.getElementsByClassName('video-stream html5-main-video')[0].setAttribute('src','')
 	    }
