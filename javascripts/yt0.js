@@ -2732,9 +2732,10 @@ function mep_reload(){
 		  }
 	      );
 
-		document.getElementById('player-api').innerHTML = ''
 		document.getElementsByClassName('signin-container')[0].removeAttribute('id')
-		waitUntilExists('ytplayer-config', function() { mep_reload() })
+		//waitUntilExists('ytplayer-config', function() {
+		  mep_reload()
+		//})
 
 	    }//else
 
