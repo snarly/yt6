@@ -2568,7 +2568,10 @@ function mep_reload(){
 
 
 	if ((bm0 == null) && (p != null) && (p.getAttribute('class') != null)) {
-
+if ( (typeof window.ytplayer != 'object') || ((typeof window.ytplayer == 'object') && (window.ytplayer.config == null)) ) {
+window.ytplayer = {};
+eval(document.getElementById('player').textContent.split('var ytplayer = ytplayer || {};')[1].split(';(function()')[0]);
+};console.log('bm0')
 		  mep_reload()
 
 	}
