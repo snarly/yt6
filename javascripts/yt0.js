@@ -2446,9 +2446,9 @@ function mep_reload(){
 	    document.getElementById('player-api').style.overflow = 'hidden';
 	    mep_up();mep_run();
 
-	    if (document.getElementById('html5toflash').checked == true){
-	      p.parentNode.removeChild(p); var z = def_link(); ((z == undefined) || (z.indexOf('%26true') > -1)) ? html5toflash() : me_flash_up()
-	    }
+//	    if (document.getElementById('html5toflash').checked == true){
+//	      p.parentNode.removeChild(p); var z = def_link(); ((z == undefined) || (z.indexOf('%26true') > -1)) ? html5toflash() : me_flash_up()
+//	    }
 
 	    if (yt6.size == undefined) yt6.size = 'default'
 	    aspect(yt6.size)
@@ -2569,16 +2569,8 @@ function mep_reload(){
 
 	if ((bm0 == null) && (p != null) && (p.getAttribute('class') != null)) {
 
-document.getElementsByClassName('video-stream html5-main-video')[0].setAttribute('src','')
-
-if ( (typeof window.ytplayer != 'object') || ((typeof window.ytplayer == 'object') && (window.ytplayer.config == null)) ) {
-window.ytplayer = {};
-eval(document.getElementById('player').textContent.split('var ytplayer = ytplayer || {};')[1].split(';(function()')[0]);
-}
-
-		waitUntilExists('ytplayer-config', function() {
 		  mep_reload()
-		})
+
 	}
 	var ads = document.getElementsByTagName('iframe')
 	for(i=0;i<ads.length;i++){
@@ -2751,10 +2743,18 @@ eval(document.getElementById('player').textContent.split('var ytplayer = ytplaye
 
 		document.getElementsByClassName('signin-container')[0].removeAttribute('id')
 
+	    if (document.getElementById('html5toflash').checked == true){
+
+	    if (document.getElementById('html5toflash').checked == true){
+//	      p.parentNode.removeChild(p); var z = def_link(); ((z == undefined) || (z.indexOf('%26true') > -1)) ? html5toflash() : me_flash_up()
+	      document.getElementsByClassName('video-stream html5-main-video')[0].setAttribute('src','')
+	    }
+
 if ( (typeof window.ytplayer != 'object') || ((typeof window.ytplayer == 'object') && (window.ytplayer.config == null)) ) {
 window.ytplayer = {};
 eval(document.getElementById('player').textContent.split('var ytplayer = ytplayer || {};')[1].split(';(function()')[0]);
 }
+
 		waitUntilExists('ytplayer-config', function() {
 		  mep_reload()
 		})
