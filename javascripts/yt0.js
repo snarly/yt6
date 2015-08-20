@@ -2748,7 +2748,8 @@ if ((yt6 != null) && (yt6.loaded)) {
 		var z = document.getElementById('player-api').textContent.split(',"title":"')[1]
 		console.log('bm0' + z);
 		if (z == undefined) {
-		  xhr.open('get', window.location.href, false);
+		  var z = yt6.strLocation.split('&')[0];console.log(z)
+		  xhr.open('get', z, false);
   		  xhr.send('');
   		  var z = parseXml(xhr.responseText);
   		  var ads = z.getElementById('player-api').textContent.split(',"title":"')[1]
