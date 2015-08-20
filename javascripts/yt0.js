@@ -2569,15 +2569,16 @@ function mep_reload(){
 
 	if ((bm0 == null) && (p != null) && (p.getAttribute('class') != null)) {
 
+document.getElementsByClassName('video-stream html5-main-video')[0].setAttribute('src','')
+
 //if ( (typeof window.ytplayer != 'object') || ((typeof window.ytplayer == 'object') && (window.ytplayer.config == null)) ) {
 //window.ytplayer = {};
 //eval(document.getElementById('player').textContent.split('var ytplayer = ytplayer || {};')[1].split(';(function()')[0]);
 //}
-document.getElementsByClassName('video-stream html5-main-video')[0].setAttribute('src','')
 
-		waitUntilExists('ytplayer-config', function() {
+		//waitUntilExists('ytplayer-config', function() {
 		  mep_reload()
-		})
+		//})
 	}
 	var ads = document.getElementsByTagName('iframe')
 	for(i=0;i<ads.length;i++){
