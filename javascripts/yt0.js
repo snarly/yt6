@@ -2417,9 +2417,15 @@ if ((yt6 != null) && (yt6.loaded)) {
 	  if (ads[i].getAttribute('id') == ads[i].getAttribute('name')) { ads[i].parentNode.removeChild(ads[i]) }
 	}
 */
-	if ((window.ytplayer != null) && (window.ytplayer.config != null) && (window.ytplayer.config.loaded == true)) {
-	  document.getElementsByClassName('signin-container')[0].setAttribute('id','ytplayer-config')
-	} else document.getElementsByClassName('signin-container')[0].removeAttribute('id')
+	if (window.ytplayer != null){
+	  if (window.ytplayer.config != null)){
+	    var z = document.getElementsByClassName('signin-container')[0]
+	    z.setAttribute('id','ytp-conf-loading')
+	    if (window.ytplayer.config.loaded == true)) {
+	      z.setAttribute('id','ytp-conf-loaded')
+	    }
+	  } else z.setAttribute('id','ytp-conf-null')
+	}
 
 	if (typeof p.getPlayerState == 'function') {
   	document.getElementsByClassName('alerts-wrapper')[0].setAttribute('id','playerState_' + p.getPlayerState())
