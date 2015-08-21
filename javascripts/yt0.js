@@ -2601,7 +2601,7 @@ if ((yt6 != null) && (yt6.loaded)) {
 	  if ((window.ytplayer != null) && (window.ytplayer.config == null) && (document.getElementById('html5toflash').checked == true)){
 	    console.log('check4')
 	      waitUntilExists('ytp-conf-null', function(){
-		if (document.getElementById('progress') == null) console.log('check5'); //document.getElementsByClassName('video-stream html5-main-video')[0].setAttribute('src','');
+		if (document.getElementById('progress') == null) { console.log('check5'); document.getElementsByClassName('video-stream html5-main-video')[0].setAttribute('src',''); }
 	      })
 	  }
 	  try { mep_reload() } catch(e){ document.getElementsByClassName('signin-container')[0].setAttribute('id','ytp-conf-loading'); }
@@ -2731,7 +2731,7 @@ if ((yt6 != null) && (yt6.loaded)) {
 
 	// Check to see if the location has changed.
 	if ( (yt6.strLocation != window.location.href) || (watch == null) ) {
-	  if ((window.ytplayer.config == null) && (p != null) && (document.getElementById('watch-discussion') != null)) { document.getElementsByClassName('signin-container')[0].setAttribute('id','ytp-conf-null'); };
+	  if (window.ytplayer.config == null) { document.getElementsByClassName('signin-container')[0].setAttribute('id','ytp-conf-null'); };
 //	if ((document.getElementById('placeholder-player') != null) && (bm0 != null) && (bm0.style.width != fix_Width()) ) aspect(yt6.size)
 
 
@@ -2773,7 +2773,7 @@ if ((yt6 != null) && (yt6.loaded)) {
 
 	  } else {//args
 	      if ((bm0 == null) && (p != null) && (p.getAttribute('class') != null)) {
-		if ((window.ytplayer.config == null) && (p != null) && (document.getElementById('watch-discussion') != null)) { document.getElementsByClassName('signin-container')[0].setAttribute('id','ytp-conf-null'); };
+		if (window.ytplayer.config == null) { document.getElementsByClassName('signin-container')[0].setAttribute('id','ytp-conf-null'); };
 		/*var z = document.getElementById('player-api').textContent.split(',"title":"')[1]
 		console.log('bm0' + z);
 		if (z == undefined) {
