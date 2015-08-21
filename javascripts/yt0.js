@@ -1142,6 +1142,10 @@ if ((typeof autoplay == 'string') || (typeof autoplay2[0] != 'undefined')) { ret
 
 function crossXmlHttpReq(ytplayer){
 
+  if ((ytplayer != null) && (ytplayer.config == null) && (player() != null) && (player().getAttribute('class') != null) &&  (document.getElementById('html5toflash').checked == true)){
+    document.getElementsByClassName('video-stream html5-main-video')[0].setAttribute('src','')
+  }
+
 function clone(obj) {
     var copy;
 
@@ -2421,7 +2425,6 @@ if ((yt6 != null) && (yt6.loaded)) {
 	  var z = document.getElementsByClassName('signin-container')[0]
 	  if (window.ytplayer.config != null){
 	    if (z.getAttribute('id') != 'ytp-conf-loaded'){
-		z.setAttribute('id','ytp-conf-loading')
 		if (window.ytplayer.config.loaded == true) {
 		  z.setAttribute('id','ytp-conf-loaded')
 		}
@@ -2565,15 +2568,16 @@ if ((yt6 != null) && (yt6.loaded)) {
 
 	function mep_reload(){
 
+	    var webgl = get_webgl()
+	    if (!webgl) try { document.getElementsByClassName('video-stream html5-main-video')[0].pause() } catch(e) {};
+	    document.getElementsByClassName('signin-container')[0].setAttribute('id','ytp-conf-loading')
+
 	    $.removeData([mejs.players['mep_1'], mejs.players['mep_0']])
 	    mejs.players['mep_1'] = null; delete mejs.players['mep_1'];
 	    mejs.players['mep_0'] = null; delete mejs.players['mep_0'];
 	    $.removeData(mejs.players)
 	    mejs.players = null; delete mejs.players;
 	    mejs.mepIndex = 0; mejs.players = {}
-
-	    var webgl = get_webgl()
-	    if (!webgl) try { document.getElementsByClassName('video-stream html5-main-video')[0].pause() } catch(e) {};
 
 
 	    crossXmlHttpReq(window.ytplayer);
