@@ -1193,6 +1193,9 @@ function rewrite_ytplayer(node_value, s, sig){
   var linx = [];
   var lang_def = null; var lang_asr = null;
   var args = ytplayer.config.args;
+  
+  if (ytplayer.config != null) document.getElementsByClassName('signin-container')[0].setAttribute('id','ytp-conf-loading')
+
   var html = [new Date().toLocaleString(),
     'Click to switch streams in HTML5 player. Right click & "Save as" to download.<br>'
   ];document.getElementById('early-body').innerHTML = ''
@@ -2567,7 +2570,7 @@ if ((yt6 != null) && (yt6.loaded)) {
 
 	    var webgl = get_webgl()
 	    if (!webgl) try { document.getElementsByClassName('video-stream html5-main-video')[0].pause() } catch(e) {};
-	    document.getElementsByClassName('signin-container')[0].setAttribute('id','ytp-conf-loading')
+
 
 	    $.removeData([mejs.players['mep_1'], mejs.players['mep_0']])
 	    mejs.players['mep_1'] = null; delete mejs.players['mep_1'];
