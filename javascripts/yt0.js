@@ -1625,7 +1625,7 @@ loadCSS( protocol() + "//cdn.rawgit.com/snarly/yt6/250f5383074bc9af3ecd2006ee457
 });
 
 
-waitUntilExists('content', function(){
+//waitUntilExists('content', function(){
 /*
 if (!document.getElementById('placeholder-player')){
   var js = document.createElement('dev')
@@ -2600,13 +2600,11 @@ if ((yt6 != null) && (yt6.loaded)) {
 	if ((bm0 == null) && (p != null) && (p.getAttribute('class') != null)) {
 	  if ((window.ytplayer != null) && (window.ytplayer.config == null) && (document.getElementById('html5toflash').checked == true)){
 	    console.log('check4')
-	      waitUntilExists('ytp-conf-loading', function(){
-console.log('check5'); //document.getElementsByClassName('video-stream html5-main-video')[0].setAttribute('src','');
-})
-
-
+	      waitUntilExists('ytp-conf-null', function(){
+		console.log('check5'); document.getElementsByClassName('video-stream html5-main-video')[0].setAttribute('src','');
+	      })
 	  }
-	  try { mep_reload() } catch(e){ document.getElementsByClassName('signin-container')[0].setAttribute('id','ytp-conf-null'); }
+	  try { mep_reload() } catch(e){ document.getElementsByClassName('signin-container')[0].setAttribute('id','ytp-conf-loading'); }
 	}
 
 	if (window.ytplayer != null){
@@ -2733,7 +2731,7 @@ console.log('check5'); //document.getElementsByClassName('video-stream html5-mai
 
 	// Check to see if the location has changed.
 	if ( (yt6.strLocation != window.location.href) || (watch == null) ) {
-		if (window.ytplayer.config == null) { document.getElementsByClassName('signin-container')[0].setAttribute('id','ytp-conf-loading'); };
+	  if ((window.ytplayer.config == null) && (p != null) && (document.getElementById('watch-discussion') != null)) { document.getElementsByClassName('signin-container')[0].setAttribute('id','ytp-conf-null'); };
 //	if ((document.getElementById('placeholder-player') != null) && (bm0 != null) && (bm0.style.width != fix_Width()) ) aspect(yt6.size)
 
 
@@ -2809,7 +2807,7 @@ console.log('check5'); //document.getElementsByClassName('video-stream html5-mai
   //raw.githubusercontent.com/
   loadScript( protocol() + "//cdn.rawgit.com/snarly/yt6/747fd7ad7b481ee96ea874a8f0126df995f32006/jquery.js", jq0);
 
-})//waitUntilExists placeholder-player
+//})//waitUntilExists 'content'
 
 
 
