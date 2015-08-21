@@ -2429,7 +2429,7 @@ if ((yt6 != null) && (yt6.loaded)) {
 		  z.setAttribute('id','ytp-conf-loaded')
 		}
 	     }
-	  } else z.setAttribute('id','ytp-conf-null')
+	  } //else z.setAttribute('id','ytp-conf-null')
 	}
 
 	if (typeof p.getPlayerState == 'function') {
@@ -2604,6 +2604,7 @@ if ((yt6 != null) && (yt6.loaded)) {
 		  console.log('check4')
 		  document.getElementsByClassName('signin-container')[0].removeAttribute('id');
 		  waitUntilExists('ytp-conf-null', function(){ console.log('check5'); document.getElementsByClassName('video-stream html5-main-video')[0].setAttribute('src','') })
+		  document.getElementsByClassName('signin-container')[0].setAttribute('id','ytp-conf-null')
 	        }
 		mep_reload()
 	      }
