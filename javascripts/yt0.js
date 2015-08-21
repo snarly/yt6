@@ -524,9 +524,9 @@ function getPoster(){
 	if (z){
 	  z.style.backgroundImage = "url('" + document.getElementById('test_poster').src + "')";
 	  z.firstChild.src = document.getElementById('test_poster').src;
-	  document.getElementById('snarls_player').removeChild(document.getElementById('test_poster'))
 	}
       }
+      document.getElementById('snarls_player').removeChild(document.getElementById('test_poster'))
   }
   document.getElementById('snarls_player').appendChild(img)
 
@@ -2597,16 +2597,15 @@ if ((yt6 != null) && (yt6.loaded)) {
 
 	var z = document.getElementsByClassName('signin-container')[0]
 
-	if ((bm0 == null)){// && (p != null) && (p.getAttribute('class') != null)) {
-mep_reload();/*
+	if ((bm0 == null) && ( ((p != null) && (p.getAttribute('class') != null)) || (yt6.strLocation == window.location.href) )) {
 	  if ((window.ytplayer != null) && (window.ytplayer.config == null) && (document.getElementById('html5toflash').checked == true)){
 	    console.log('check4')
 	      waitUntilExists('ytp-conf-null', function(){
-		console.log('check5'); document.getElementsByClassName('video-stream html5-main-video')[0].setAttribute('src','');
+		if (document.getElementById('progress') == null) console.log('check5'); //document.getElementsByClassName('video-stream html5-main-video')[0].setAttribute('src','');
 	      })
 	  }
 	  try { mep_reload() } catch(e){ document.getElementsByClassName('signin-container')[0].setAttribute('id','ytp-conf-loading'); }
-*/	}
+	}
 
 	if (window.ytplayer != null){
 	  if (window.ytplayer.config != null){
