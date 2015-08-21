@@ -2418,8 +2418,8 @@ if ((yt6 != null) && (yt6.loaded)) {
 	}
 */
 	if (window.ytplayer != null){
-	  if (window.ytplayer.config != null){
-	    var z = document.getElementsByClassName('signin-container')[0]
+	  var z = document.getElementsByClassName('signin-container')[0]
+	  if ((window.ytplayer.config != null) && (z.getAttribute('id') != 'ytp-conf-loaded')){
 	    z.setAttribute('id','ytp-conf-loading')
 	    if (window.ytplayer.config.loaded == true) {
 	      z.setAttribute('id','ytp-conf-loaded')
