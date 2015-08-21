@@ -2773,7 +2773,7 @@ if ((yt6 != null) && (yt6.loaded)) {
 
 	  } else {//args
 	      if ((bm0 == null) && (p != null) && (p.getAttribute('class') != null)) {
-		if ((window.ytplayer.config == null) && (p != null) && (document.getElementById('watch-discussion') != null)) { document.getElementsByClassName('signin-container')[0].setAttribute('id','ytp-conf-null'); };
+		//if ((window.ytplayer.config == null) && (p != null) && (document.getElementById('watch-discussion') != null)) { document.getElementsByClassName('signin-container')[0].setAttribute('id','ytp-conf-null'); };
 		/*var z = document.getElementById('player-api').textContent.split(',"title":"')[1]
 		console.log('bm0' + z);
 		if (z == undefined) {
