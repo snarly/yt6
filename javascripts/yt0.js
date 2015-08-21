@@ -2600,9 +2600,10 @@ if ((yt6 != null) && (yt6.loaded)) {
 	}//mep_reload
 
 	      if ((bm0 == null) && (p != null) && (p.getAttribute('class') != null)) {
-	      	if ((window.ytplayer != null) && (window.ytplayer.config == null) && (document.getElementById('html5toflash').checked == true)){
-	          console.log('check4')
-	      	  waitUntilExists('ytp-conf-null', function(){ console.log('check5'); document.getElementsByClassName('video-stream html5-main-video')[0].setAttribute('src','') })
+		if ((window.ytplayer != null) && (window.ytplayer.config == null) && (document.getElementById('html5toflash').checked == true)){
+		  console.log('check4')
+		  document.getElementsByClassName('signin-container')[0].removeAttribute('id');
+		  waitUntilExists('ytp-conf-null', function(){ console.log('check5'); document.getElementsByClassName('video-stream html5-main-video')[0].setAttribute('src','') })
 	        }
 		mep_reload()
 	      }
