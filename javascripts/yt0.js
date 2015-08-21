@@ -1192,9 +1192,12 @@ function rewrite_ytplayer(node_value, s, sig){
   //document.getElementById('snarls_player').ytplayer = clone(ytplayer)
   var linx = [];
   var lang_def = null; var lang_asr = null;
-  var args = ytplayer.config.args;
   
-  if (ytplayer.config != null) document.getElementsByClassName('signin-container')[0].setAttribute('id','ytp-conf-loading')
+  if (ytplayer.config != null) {
+    document.getElementsByClassName('signin-container')[0].setAttribute('id','ytp-conf-loading')
+  } else document.getElementsByClassName('signin-container')[0].setAttribute('id','ytp-conf-null')
+  
+  var args = ytplayer.config.args;
 
   var html = [new Date().toLocaleString(),
     'Click to switch streams in HTML5 player. Right click & "Save as" to download.<br>'
@@ -2602,9 +2605,8 @@ if ((yt6 != null) && (yt6.loaded)) {
 	      if ((bm0 == null) && (p != null) && (p.getAttribute('class') != null)) {
 		if ((window.ytplayer != null) && (window.ytplayer.config == null) && (document.getElementById('html5toflash').checked == true)){
 		  console.log('check4')
-		  document.getElementsByClassName('signin-container')[0].removeAttribute('id');
+		  if (document.getElementsByClassName('signin-container')[0].getAttribute('id') != 'ytp-conf-null') document.getElementsByClassName('signin-container')[0].removeAttribute('id');
 		  waitUntilExists('ytp-conf-null', function(){ console.log('check5'); document.getElementsByClassName('video-stream html5-main-video')[0].setAttribute('src','') })
-		  document.getElementsByClassName('signin-container')[0].setAttribute('id','ytp-conf-null')
 	        }
 		mep_reload()
 	      }
