@@ -2418,10 +2418,10 @@ if ((yt6 != null) && (yt6.loaded)) {
 	}
 */
 	if (window.ytplayer != null){
-	  if (window.ytplayer.config != null)){
+	  if (window.ytplayer.config != null){
 	    var z = document.getElementsByClassName('signin-container')[0]
 	    z.setAttribute('id','ytp-conf-loading')
-	    if (window.ytplayer.config.loaded == true)) {
+	    if (window.ytplayer.config.loaded == true) {
 	      z.setAttribute('id','ytp-conf-loaded')
 	    }
 	  } else z.setAttribute('id','ytp-conf-null')
