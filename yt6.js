@@ -1100,7 +1100,7 @@ if (start != false){
     if ( (((!mep) || (typeof fv == 'string')) && (document.getElementById('snarls_player').flash == true)) || ( (typeof p.getPlayerState == 'function') && (typeof fv != 'string') && (webgl)  ) ){//alert('01' + start);
 	bm0.style.visibility = 'hidden'
 	p.style.display = ''; //console.log('autoplay1')
-	if (((typeof autoplay == 'string') || (typeof autoplay2[0] != 'undefined')) && (typeof p.playMedia == 'function') && (start)) { p.playMedia(); p.paused = false; //console.log('autoplay2') }
+	if (((typeof autoplay == 'string') || (typeof autoplay2[0] != 'undefined')) && (typeof p.playMedia == 'function') && (start)) { p.playMedia(); p.paused = false; }//console.log('autoplay2')
     } else {
 	p.style.display = 'none';
 	bm0.style.visibility = 'visible'; //console.log('autoplay3')
