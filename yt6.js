@@ -2551,7 +2551,7 @@ if ((yt6 != null) && (yt6.loaded)) {
 		      }
 
                   }
-            } else { //console.log(p + bm0 + p.getAttribute('name') + 'playNext') }
+            } else {};//console.log(p + bm0 + p.getAttribute('name') + 'playNext')
 	    if (yt6.autoplay == false) {//console.log('15');
 		waitUntilExists("displaySpeed", function(){//console.log('16');
 		  if (typeof document.getElementById('player1').play == 'function') { yt6.autoplay = true; autoplay(true) } 
@@ -2601,7 +2601,7 @@ if ((yt6 != null) && (yt6.loaded)) {
 	  if ((window.ytplayer != null) && (window.ytplayer.config == null) && (document.getElementById('html5toflash').checked == true)){
 	    //console.log('check4')
 	      waitUntilExists('ytp-conf-null', function(){
-		if (document.getElementById('progress') == null) { //console.log('check5'); document.getElementsByClassName('video-stream html5-main-video')[0].setAttribute('src',''); }
+		if (document.getElementById('progress') == null) { document.getElementsByClassName('video-stream html5-main-video')[0].setAttribute('src',''); }
 	      })
 	  }
 	  try { mep_reload() } catch(e){ document.getElementsByClassName('signin-container')[0].setAttribute('id','ytp-conf-loading'); }
