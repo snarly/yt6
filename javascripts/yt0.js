@@ -2429,7 +2429,7 @@ if ((yt6 != null) && (yt6.loaded)) {
 
 	if (typeof p.getPlayerState == 'function') {
   	document.getElementsByClassName('alerts-wrapper')[0].setAttribute('id','playerState_' + p.getPlayerState())
-  	} else { document.getElementsByClassName('alerts-wrapper')[0].setAttribute('id','playerState_null') }
+  	} else { if (document.getElementsByClassName('alerts-wrapper')[0].getAttribute('id') != 'playerState_null') document.getElementsByClassName('alerts-wrapper')[0].setAttribute('id','playerState_null') }
   	
   	
 	//var reset = document.getElementsByClassName('reset yt-uix-button-text')[0];//  
@@ -2595,9 +2595,9 @@ if ((yt6 != null) && (yt6.loaded)) {
 	}//mep_reload
 
 
-	var z = document.getElementsByClassName('signin-container')[0]
+	var z = document.getElementsByClassName('alerts-wrapper')[0].getAttribute('id')
 
-	if ((bm0 == null) && ( ((p != null) && (p.getAttribute('class') != null)) || (yt6.strLocation == window.location.href) )) {
+	if ((bm0 == null) && ( ((p != null) && (p.getAttribute('class') != null)) || ( (p != null) && (p.getAttribute('class') == null) && (yt6.strLocation == window.location.href)) )) {
 	  if ((window.ytplayer != null) && (window.ytplayer.config == null) && (document.getElementById('html5toflash').checked == true)){
 	    console.log('check4')
 	      waitUntilExists('ytp-conf-null', function(){
@@ -2608,6 +2608,7 @@ if ((yt6 != null) && (yt6.loaded)) {
 	}
 
 	if (window.ytplayer != null){
+	  var z = document.getElementsByClassName('signin-container')[0]
 	  if (window.ytplayer.config != null){
 	    if (z.getAttribute('id') != 'ytp-conf-loaded'){
 		if (window.ytplayer.config.loaded == true) {
