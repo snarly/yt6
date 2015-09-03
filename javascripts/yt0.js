@@ -1559,10 +1559,10 @@ if (document.getElementById("bm1") != null) document.getElementById("bm1").paren
 
     if  ((window.ytplayer != null) &&
 	 (window.ytplayer.config != null) &&
+	 (document.getElementById("bm0") != null) &&
 	 ((document.getElementById("watch7-notification-area") == null) ||
 	  (document.getElementById("remove") == null) ||
-	  (document.getElementById("controls") == null) ||
-	  (document.getElementById("bm0") == null))
+	  (document.getElementById("controls") == null))
 	)
       { //}
 
@@ -2614,10 +2614,10 @@ function recreate_ytp_conf_flash(){
 		        })
 		      } else {console.log('a-5');
 			  yt6.autoplay = true;
-			  //waitUntilExists('movie_player',function(){
+			  waitUntilExists('movie_player',function(){
 			    bm0.style.visibility = 'hidden';console.log('a-6');
 			    flashplugin(); autoplay(true);
-			  //})
+			  })
 			}
 		    } else {console.log('a-7');
 			yt6.autoplay = true;
