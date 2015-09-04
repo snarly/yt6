@@ -3347,7 +3347,7 @@ if ( (me_aspect) && (  (document.getElementById(mep_x('mep_')) == null) || ((pla
 	  if (me_aspect != false) h = windowheight
 
 	  if ( ((player().getAttribute('name') == 'me_flash') && (bm0.style.visibility == 'hidden')) || ((document.getElementById(mep_x('me_flash_')) != null) && (bm0.style.visibility == 'visible')) ) {
-	      if ((me_aspect == true) || (me_aspect == false)){
+	      if ( (document.getElementById(mep_x('mep_')) == null) && ((me_aspect == true) || (me_aspect == false)) ){
 		p1.style.width = w + 'px'
 		p1.style.height = h + 'px'
 		p1.style.left = '0px';
@@ -3426,7 +3426,7 @@ if ( (me_aspect) && (  (document.getElementById(mep_x('mep_')) == null) || ((pla
   e.height = h + 'px'
 
   var playlist = document.getElementById('watch-appbar-playlist')
-  if (playlist) playlist.removeAttribute('style')
+  //if (playlist) playlist.removeAttribute('style')
 
   var a = document.getElementById('placeholder-player').firstChild; var b = a.style
   if (b != null) {
