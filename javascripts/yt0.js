@@ -3250,6 +3250,7 @@ if ( (me_aspect) && (  (document.getElementById(mep_x('mep_')) == null) || ((pla
   document.getElementById('player-api').style.height = h
   player().style.width = w
   player().style.height = h
+/*
   var me_flash = document.getElementById(mep_x('me_flash__ __container'))
   if (me_flash != null) {
     me_flash.style.width = w;
@@ -3261,7 +3262,7 @@ if ( (me_aspect) && (  (document.getElementById(mep_x('mep_')) == null) || ((pla
     document.getElementsByClassName('mejs-clear')[0].style.width = w
     document.getElementsByClassName('mejs-clear')[0].style.height = h
   }
-
+*/
 
   var windowwidth = parseInt(window.innerWidth || document.documentElement.clientWidth || document.getElementsByTagName('body')[0].clientWidth) - getScrollbarWidth() - 1
   var windowheight = parseInt(window.innerHeight || document.documentElement.clientHeight || document.getElementsByTagName('body')[0].clientHeight)
@@ -3347,7 +3348,7 @@ if ( (me_aspect) && (  (document.getElementById(mep_x('mep_')) == null) || ((pla
 	  if (me_aspect != false) h = windowheight
 
 	  if ( ((player().getAttribute('name') == 'me_flash') && (bm0.style.visibility == 'hidden')) || ((document.getElementById(mep_x('me_flash_')) != null) && (bm0.style.visibility == 'visible')) ) {
-	      if ( (document.getElementById(mep_x('mep_')) == null) && ((me_aspect == true) || (me_aspect == false)) ){
+	      if ( (me_aspect == true) || (me_aspect == false) ){
 		p1.style.width = w + 'px'
 		p1.style.height = h + 'px'
 		p1.style.left = '0px';
