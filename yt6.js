@@ -17,10 +17,17 @@ var noads = setInterval(function(){
 function qr(sr) {
   var qa = [];
   var prs = sr.split('&');
-  for (i in prs) {
-    var pra = prs[i].split('=');
-    qa[pra[0]] = pra[1];
-  };
+  if (typeof prs[1] != 'undefined') {
+    for (i in prs) {
+      var pra = prs[i].split('=');
+      qa[pra[0]] = pra[1];
+    };
+  } else {
+      var prs = sr.split('/')
+      for (i=4;i<prs.length;i=i+2) {
+        qa[prs[i]] = prs[i+1];
+      };
+    }
   return qa;
 }
 
@@ -1158,6 +1165,22 @@ if ((typeof autoplay == 'string') || (typeof autoplay2[0] != 'undefined')) { ret
 }
 
 
+String.prototype.toHHMMSS = function () {
+    var sec_num = parseFloat(this, 10); // don't forget the second param
+    var hours   = Math.floor(sec_num / 3600);
+    var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
+    var seconds = sec_num - (hours * 3600) - (minutes * 60);
+    var seconds = seconds.toFixed(3);
+
+    if (hours   < 10) {hours   = "0"+hours;}
+    if (minutes < 10) {minutes = "0"+minutes;}
+    if (seconds < 10) {seconds = "0"+seconds;}
+    var time    = hours+':'+minutes+':'+seconds;
+    return time;
+}
+
+
+
 function crossXmlHttpReq(ytplayer){
 
 
@@ -1239,7 +1262,19 @@ function rewrite_ytplayer(node_value, s, sig){
           href += '&signature=' + dc(qs.s);     //rewrite_ytplayer(z[j], qs.s, dc(qs.s))
 	}
         if (href.indexOf("&ratebypass=yes") == -1) { href += '&ratebypass=yes'}
-        if (qq.indexOf("+") != -1) { href += '&2' }
+        if (qq.indexOf("+") != -1) {
+	  href += '&2'; if (qs.dur) { var ads = qs.dur } else { var ads = z[j].split('dur%3D')[1]; if (ads) var ads = ads.split('%')[0] }
+	  var ads = Math.round(ads)
+	  if (!isNaN(ads) && (ads != 0)) {
+	    var ads = document.getElementById('snarls_player').duration = ads.toString()
+	    if (document.getElementsByClassName('ytp-time-duration')[0]){
+	      var ads = ads.toHHMMSS()
+	      if (ads.substring(0,2) == '00') { var ads = ads.substring(3,ads.length - 4).split('.')[0] };
+	      if (ads.substring(0,1) == '0') { var ads = ads.substring(1,ads.length - 2).split('.')[0] };
+	      if (ads != document.getElementsByClassName('ytp-time-duration')[0].textContent) { try { document.getElementsByClassName('video-stream html5-main-video')[0].mute() } catch(e) {}; }
+	      }
+	    }
+	  }
         if (qq.indexOf('DASH') != -1) { if ((document.getElementById('snarls_player') != undefined) && (document.getElementById('snarls_player') != null) && (typeof document.getElementById('snarls_player').aspect_ratio != 'string')) { document.getElementById('snarls_player').aspect_ratio = ft.toString().split("size=")[1].split("&")[0].split(",")[0] } }
         if (qs.itag !== '278') { linx[qs.itag] = href } else { linx[241] = href }
         if (qq.indexOf('360p WebM VP8') != -1) { var webm = 'https:' + href };
@@ -1355,28 +1390,28 @@ if (rpt != null) {//ajax2
            //break
         }
       if ((xhr.responseText.indexOf('Representation id="278"') > -1) && (typeof linx[241] == 'undefined')){
-        for (j=0;html.length-1;j++) {
-          if (html[j].indexOf("itag=160") > -1) {
-            href = getElementsByAttribute(parseXml(xhr.responseText),"Representation","id","278")[0].textContent.replace(protocol(),'');
-            var qq = get_quality(href)
-            HTMLPush(j)
-            linx[241] = href
-            break
-          }
-        }
+	for (j=0;html.length-1;j++) {
+	  if (html[j].indexOf("itag=160") > -1) {
+	    href = getElementsByAttribute(parseXml(xhr.responseText),"Representation","id","278")[0].textContent.replace(protocol(),'');
+	    var qq = get_quality(href)
+	    HTMLPush(j)
+	    linx[241] = href
+	    break
+	  }
+	}
       }
       var x = ['139','172','141']
       for (b=0;b<350;b++){
-        if ((qual[b]) && (b != 278)) {
-          if ((xhr.responseText.indexOf('Representation id="'+b+'"') > -1) && (typeof linx[b] == 'undefined')) {
-            href = getElementsByAttribute(parseXml(xhr.responseText),"Representation","id",b)[0].textContent.replace(protocol(),'');
-            if (b == '172') { var audio = 'https:' + href }
-            //if (b == '141') { if (typeof audio == 'undefined') { var audio = 'https:' + href }}
-            var qq = get_quality(href)
-            HTMLPush()
-            linx[b] = href
-          }
-        }
+	if ((qual[b]) && (b != 278)) {
+	  if ((xhr.responseText.indexOf('Representation id="'+b+'"') > -1) && (typeof linx[b] == 'undefined')) {
+	    href = getElementsByAttribute(parseXml(xhr.responseText),"Representation","id",b)[0].textContent.replace(protocol(),'');
+	    if (b == '172') { var audio = 'https:' + href }
+	    //if (b == '141') { if (typeof audio == 'undefined') { var audio = 'https:' + href }}
+	    var qq = get_quality(href)
+	    HTMLPush()
+	    linx[b] = href
+	  }
+	}
       };break
     }
 
@@ -1496,11 +1531,11 @@ if (document.getElementById("bm1") != null) document.getElementById("bm1").paren
   document.getElementById('bm2').setAttribute('style','display:block;visibility:hidden; position:fixed;left:0px;top:0px;width:100%;z-index:2000000000;')
 
   function expire_date(){
-    var ip = (href.indexOf("?ip=") == -1) ? "&ip=":"?ip="
-    var ip = href.split(ip)[1].split("&")[0]
-    var expire = (href.indexOf("?expire=") == -1) ? "&expire=":"?expire="
-    var expire = new Date(parseInt(href.split(expire)[1].toString().substring(0,10) * 1000)).toLocaleString()
+    var qs = qr(href)
+    var ip = qs.ip
+    var expire = new Date(parseInt(qs.expire.toString().substring(0,10) * 1000)).toLocaleString()
     var bh = (expire.length < 33) ? 91 : 104
+    return [ip,expire,bh]
     return [ip,expire,bh]
   }
   html.splice(1,0,'Direct links to YouTube media<br>for IP address: '+ expire_date()[0])
@@ -1799,6 +1834,8 @@ function mep_run(){
 					});
 					me.addEventListener('loadedmetadata', function() {
 					  //document.getElementsByClassName('mejs-controls')[0].style = 'display: block; visibility: hidden;'
+					  var A = []; A = document.getElementById('snarls_player').A;
+					  if (typeof A[me.src.split('itag=')[1].split('&')[0]] == 'string') { player2.setSrc(me.src); player2.load() }
 					  FireEvent( mep_x('mep_'), 'mouseover' );
 					  if (document.getElementsByClassName('mejs-clear')[0]) document.getElementsByClassName('mejs-clear')[0].setAttribute('id','mejs-clear')
 					  var dw = document.getElementById('aspect');
@@ -2014,9 +2051,12 @@ function mep_run(){
 }//player2
 
 var z = document.getElementsByClassName('mejs-duration'); if ((z != null) && (z[0] != null)) {
-  var x = href.split('dur=')[1].split('&')[0].toHHMMSS();
+  var x = document.getElementById('snarls_player').duration
+  if (x) {
+  var x = x.toHHMMSS();
   if (x.substring(0,2) == '00') { var x = x.substring(3,x.length - 4) };
   z[0].innerHTML = x.split('.')[0];
+  }
 }
 
 player1.setPoster(getPoster()); document.getElementsByClassName('mejs-poster mejs-layer')[0].setAttribute('id','mejs-poster')
@@ -2712,15 +2752,10 @@ function recreate_ytp_conf_flash(){
 	    $.removeData(mejs.players)
 	    mejs.players = null; delete mejs.players;
 	    mejs.mepIndex = 0; mejs.players = {}
-
+	    yt6.duration = 0
 
 	    crossXmlHttpReq(window.ytplayer);
-	    if (document.getElementsByClassName('ytp-time-duration')[0]){
-	      var ads = yt6.href.split('dur=')[1].split('&')[0].toHHMMSS()
-	      if (ads.substring(0,2) == '00') { var ads = ads.substring(3,ads.length - 4).split('.')[0] };
-	      if (ads.substring(0,1) == '0') { var ads = ads.substring(1,ads.length - 2).split('.')[0] }; //console.log(ads +" "+ document.getElementsByClassName('ytp-time-duration')[0].textContent);
-	      if (ads != document.getElementsByClassName('ytp-time-duration')[0].textContent) { try { document.getElementsByClassName('video-stream html5-main-video')[0].mute() } catch(e) {}; }
-	    }
+
 	    redo_dl_button(  yt6.args,  yt6.html,  yt6.href);
 
 	    document.getElementById('player-api').style.overflow = 'hidden';
@@ -3057,19 +3092,6 @@ window.ytplayer.config.loaded = true;
 
 
 
-String.prototype.toHHMMSS = function () {
-    var sec_num = parseFloat(this, 10); // don't forget the second param
-    var hours   = Math.floor(sec_num / 3600);
-    var minutes = Math.floor((sec_num - (hours * 3600)) / 60);
-    var seconds = sec_num - (hours * 3600) - (minutes * 60);
-    var seconds = seconds.toFixed(3);
-
-    if (hours   < 10) {hours   = "0"+hours;}
-    if (minutes < 10) {minutes = "0"+minutes;}
-    if (seconds < 10) {seconds = "0"+seconds;}
-    var time    = hours+':'+minutes+':'+seconds;
-    return time;
-}
 
 function getScrollbarWidth() {
     var outer = document.createElement("div");
