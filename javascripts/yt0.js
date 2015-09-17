@@ -3276,11 +3276,15 @@ if ( (me_aspect) && (  (document.getElementById(mep_x('mep_')) == null) || ((pla
   document.getElementById('player-api').style.height = h
   player().style.width = w
   player().style.height = h
+
+/*
   var me_flash = document.getElementById(mep_x('me_flash__ __container'))
   if (me_flash != null) {
     me_flash.style.width = w;
     me_flash.style.height = h;
   }
+*/
+
   if (document.getElementById(mep_x('mep_')) != null) {
     document.getElementById(mep_x('mep_')).style.width = w;
     document.getElementById(mep_x('mep_')).style.height = h;
@@ -3368,12 +3372,12 @@ if ( (me_aspect) && (  (document.getElementById(mep_x('mep_')) == null) || ((pla
 	if (document.getElementById('snarls_player').size == 'theater'){
 
 	  if ( (me_aspect != false) && (document.getElementById('aspect')) ) { 
-	    w = windowwidth
+	    //w = windowwidth
 	  }
 	  if (me_aspect != false) h = windowheight
 
 	  if ( ((player().getAttribute('name') == 'me_flash') && (bm0.style.visibility == 'hidden')) || ((document.getElementById(mep_x('me_flash_')) != null) && (bm0.style.visibility == 'visible')) ) {
-	      if ( (document.getElementById(mep_x('mep_')) == null) && ((me_aspect == true) || (me_aspect == false)) ){
+	      if ( (me_aspect == true) || (me_aspect == false) ){
 		p1.style.width = w + 'px'
 		p1.style.height = h + 'px'
 		p1.style.left = '0px';
