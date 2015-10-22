@@ -1533,7 +1533,7 @@ if (document.getElementById("bm1") != null) document.getElementById("bm1").paren
   function expire_date(){
     var qs = qr(href)
     var ip = qs.ip
-    var expire = new Date(parseInt(qs.expire.toString().substring(0,10) * 1000)).toLocaleString()
+    var expire = (qs.expire) ? new Date(parseInt(qs.expire.toString().substring(0,10) * 1000)).toLocaleString() : ''
     var bh = (expire.length < 33) ? 91 : 104
     return [ip,expire,bh]
     return [ip,expire,bh]
