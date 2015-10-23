@@ -26,15 +26,24 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        <p>Just bookmark any page whose icon you like. Right click on the link below and "Copy link address" (if your browser offers this option in its pop-up menu. If not, the code is written below the link, so just select and copy it manually.) <br>Edit the bookmark's Properties / Location. and paste over the bookmark's URL-address, that is, replace the bookmarked page's original address with this snippet of javascript code. Finally, save the bookmark (now bookmarklet).</p>
+        <p>Just bookmark any page whose icon you like. Right click on the link below and "Copy link address". (If you have no such option, the code is also written below the link, so select and copy it manually.) <br>Edit the created bookmark's Properties / Location, and paste over it's URL-address, that is, replace the bookmark's original address of the bookmarked page with this snippet of javascript code. Finally, save the bookmark (now bookmarklet).</p>
 
-<a href="javascript:%20(function(){if(document.location.href.indexOf('youtube.com/watch?v=')>-1){if(document.getElementById('snarls_player')==undefined){var%20i,j,o,x;o%20=['.githack','git'];for(i=o.length;i;j=Math.floor(Math.random()*i),x=o[--i],o[i]=o[j],o[j]=x);%20var%20q=document.createElement('script');q.id='snarls_player';q.onerror=function(){%20var%20q=document.createElement('script');q.id='snarls_player';q.src=%22https%3A%2F%2Fraw%22%2Bo%5B0%5D%2B%22.com%2Fsnarly%2Fyt6%2Fmaster%2Fyt6.js%22;document.body.appendChild(q);document.body.removeChild(document.getElementById('snarls_player'));void%200;};q.setAttribute('onload','');q.src=%22https%3A%2F%2Fraw%22%2Bo%5B1%5D%2B%22.com%2Fsnarly%2Fyt6%2Fmaster%2Fyt6.js%22;document.body.appendChild(q);void%200;}}else{void%200}})();">Bookmarklet to Snarl's YouTube Video Player</a>
+<a href="javascript:%20(function(){if(document.location.href.indexOf('youtube.com/watch?v=')>-1){if(document.getElementById('snarls_player')==undefined){var%20i,j,o,x;o%20=['.githack','git'];for(i=o.length;i;j=Math.floor(Math.random()*i),x=o[--i],o[i]=o[j],o[j]=x);%20var%20q=document.createElement('script');q.id='snarls_player';q.onerror=function(){%20var%20q=document.createElement('script');q.id='snarls_player';q.src=%22https%3A%2F%2Fraw%22%2Bo%5B0%5D%2B%22.com%2Fsnarly%2Fyt6%2Fmaster%2Fyt6.js%22;document.body.appendChild(q);document.body.removeChild(document.getElementById('snarls_player'));void%200;};q.setAttribute('onload','');q.src=%22https%3A%2F%2Fraw%22%2Bo%5B1%5D%2B%22.com%2Fsnarly%2Fyt6%2Fmaster%2Fyt6.js%22;document.body.appendChild(q);void%200;}}else{void%200}})();">Yt6 -- Snarl's YouTube Video Player (bookmarklet)</a>
 
 <p>javascript:%20(function(){if(document.location.href.indexOf('youtube.com/watch?v=')>-1){if(document.getElementById('snarls_player')==undefined){var%20i,j,o,x;o%20=['.githack','git'];for(i=o.length;i;j=Math.floor(Math.random()*i),x=o[--i],o[i]=o[j],o[j]=x);%20var%20q=document.createElement('script');q.id='snarls_player';q.onerror=function(){%20var%20q=document.createElement('script');q.id='snarls_player';q.src=%22https%3A%2F%2Fraw%22%2Bo%5B0%5D%2B%22.com%2Fsnarly%2Fyt6%2Fmaster%2Fyt6.js%22;document.body.appendChild(q);document.body.removeChild(document.getElementById('snarls_player'));void%200;};q.setAttribute('onload','');q.src=%22https%3A%2F%2Fraw%22%2Bo%5B1%5D%2B%22.com%2Fsnarly%2Fyt6%2Fmaster%2Fyt6.js%22;document.body.appendChild(q);void%200;}}else{void%200}})();</p>
 
 <p>__</p>
 
-<p>On any YouTube video page, this bookmarklet will call an external player and load some extra functions which can be used with YouTube's native player as well. Use the HTML5 emblem to switch between the native and external player. <del>The script should at least work with newer versions of Firefox (24+).</del> It should work now on most browsers, even older ones. Bugs are gonna stay forever...</p>
+<p>On any YouTube video page (save for live streams), this bookmarklet will call an external player and load some extra functions which can be used with YouTube's native player as well. You have to <strong><b>click on it on your bookmarks list</b></strong> each time you enter a video page (unless you have the external player code already running). Use the HTML5 emblem to switch between the native and external player. The program is able to</p>
+<p>
+- restrict on-site advertisement,<br>
+- resize, zoom, rotate and move around video picture arbitrarily,<br>
+- change video playback rate ("speed" or tempo) from 0 or 25% to up to 500 or 800%,<br>
+- pick your favoured (and supported) video/audio codec and resolution for playback,<br>
+- download the video/audio content.<br>
+</p>
+<p>
+<del>The script should at least work with newer versions of Firefox (24+).</del> It should work now on most browsers, even older ones. Bugs are gonna stay forever...</p>
 
 <p>Credit should go to the authors of their respective open source code:<br>
 <h3>
