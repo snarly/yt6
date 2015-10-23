@@ -22,6 +22,13 @@ function qr(sr) {
       var pra = prs[i].split('=');
       qa[pra[0]] = pra[1];
     };
+    var pra = prs[0].split('?')
+    if (typeof prs[1] != 'undefined') {
+      var pra = prs[1].split('=')
+      if (typeof pra[1] != 'undefined') {
+	qa[pra[0]] = pra[1];
+      }
+    }
   } else {
       var prs = sr.split('/')
       for (i=4;i<prs.length;i=i+2) {
@@ -1535,7 +1542,6 @@ if (document.getElementById("bm1") != null) document.getElementById("bm1").paren
     var ip = qs.ip
     var expire = (qs.expire) ? new Date(parseInt(qs.expire.toString().substring(0,10) * 1000)).toLocaleString() : ''
     var bh = (expire.length < 33) ? 91 : 104
-    return [ip,expire,bh]
     return [ip,expire,bh]
   }
   html.splice(1,0,'Direct links to YouTube media<br>for IP address: '+ expire_date()[0])
