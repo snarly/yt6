@@ -6,7 +6,7 @@ var noads = setInterval(function(){
   var ads = document.getElementsByClassName("video-ads html5-stop-propagation")[0]; if (ads) { ads.parentNode.removeChild(ads) };
   var ads = document.getElementById("google_companion_ad_div"); if (ads) { ads.parentNode.removeChild(ads) };
   var ads = document.getElementById(mep_x("google_ads_frame")); if (ads) { ads.parentNode.removeChild(ads) };
-  var ads = docuemnt.getElementById('content'); if (ads) { ads.setAttribute('id','content') };
+  var ads = document.getElementById('content'); if (ads) { ads.setAttribute('id','content') };
   if ((document.getElementById('snarls_player') == undefined) || (typeof fnCheckLocation == 'number')) { clearInterval(noads) }
 
             },2000)
