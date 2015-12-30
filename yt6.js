@@ -75,8 +75,14 @@ function qr(sr) {
     140: '128k DASH AAC',
     141: '256k DASH AAC',
     160: '144p DASH H.264',
+    167: '360p WebM VP8',
+    168: '480p WebM VP8 670k',
+    169: '720p WebM VP8',
+    170: '1080p WebM VP8',
     171: '128k WebM Vorbis',
     172: '192k WebM Vorbis',
+    218: '480p WebM VP8 720k',
+    219: '480p WebM VP8 820k',
     242: '240p WebM VP9',
     243: '360p WebM VP9',
     244: '480p WebM VP9',
@@ -90,7 +96,7 @@ function qr(sr) {
     264: '1440p DASH H.264',
     266: '2160p DASH H.264',
     271: '1440p WebM VP9',
-    272: '2160p WebM VP9',
+    272: '4320p WebM VP9',
     241: '144p WebM VP9',
     278: '144p WebM VP9',
     298: '720p DASH H.264 ^fps',
@@ -462,7 +468,7 @@ alert("THIS VIDEO IS ENCRYPTED BUT YOUR BROWSER SEEMS TOO OLD TO PROCEED WITHOUT
   var fs = new RegExp(    sprintf('var %s=function[^}]+};', fcnm.replace('$', '\\$'))  ); if (rpt.match(fs) == null) {
   var fs = new RegExp(    sprintf('%s=function[^}]+}', fcnm.replace('$', '\\$'))  );
   }
-  };console.log(fs)
+  };//console.log(fs)
   //var fs = new RegExp('function ' + fcnm.replace('\$','\\$') + '[^}]+}[^}]+}');
 
   function fcobj(){
@@ -1553,6 +1559,7 @@ if (document.getElementById("bm1") != null) document.getElementById("bm1").paren
   )
   document.getElementById('bm2').innerHTML = html.join('<br>')
 
+function nop(){
   var dw = document.createElement('div')
   dw.id = 'bm6'
   dw.textContent = 'Force Flashplayer'
@@ -1568,6 +1575,7 @@ if (document.getElementById("bm1") != null) document.getElementById("bm1").paren
   dw.setAttribute('onclick', onclic)
   dw.setAttribute('style','inline-block')
   if (document.getElementById('snarls_player').forceflash) { dw.setAttribute('checked','checked') } else { dw.removeAttribute('checked') }
+}//nop
 
   var dw = document.createElement('button');
   dw.id = "bm5";
@@ -2769,7 +2777,7 @@ function recreate_ytp_conf_flash(){
 	    document.getElementById('player-api').style.overflow = 'hidden';
 	    mep_up();mep_run();
 
-	    if ((document.getElementById('html5toflash').checked == true) && (p != null) && (p.getAttribute('name') != 'me_flash') && (p.getAttribute('class') != null)) {
+/*	    if ((document.getElementById('html5toflash').checked == true) && (p != null) && (p.getAttribute('name') != 'me_flash') && (p.getAttribute('class') != null)) {
 	      $.removeData(p); p = null; // 	      p.parentNode.removeChild(p);p = {}; delete p;
 	      var z = def_link(); ((z == undefined) || (z.indexOf('%26true') > -1)) ? html5toflash() : me_flash_up()
 	      waitUntilExists('displaySpeed', function(){
@@ -2779,7 +2787,8 @@ function recreate_ytp_conf_flash(){
 		//console.log('check' + p.getAttribute('name'));
 		playNext()
 	      })
-	    } else { playNext() }
+	    } else { */
+playNext() //}
 
 	}//mep_reload
 
