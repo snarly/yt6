@@ -1283,9 +1283,9 @@ function rewrite_ytplayer(node_value, s, sig){
 	  if (!isNaN(ads) && (ads != 0)) {
 	    document.getElementById('snarls_player').duration = ads.toString().toHHMMSS().split('.')[0]
 	    if (document.getElementsByClassName('ytp-time-duration')[0]){
-	      var ads0 = document.getElementsByClassName('ytp-time-duration')[0].textContent.split(':')
+	      var ads0 = document.getElementsByClassName('ytp-time-duration')[0].textContent.split(':');console.log(typeof ads0)
 	      if (ads0[2]){
-	      	var ads0 = ads0[0] * 3600 + ads0[1] * 60 + ads0]2]
+	      	var ads0 = ads0[0] * 3600 + ads0[1] * 60 + ads0[2]
 	      } else var ads0 = ads0[0] * 60 + ads0[1]
 	      //if (ads.substring(0,2) == '00') { var ads = ads.substring(3,ads.length - 4).split('.')[0] };
 	      //if (ads.substring(0,1) == '0') { var ads = ads.substring(1,ads.length - 4).split('.')[0] };
