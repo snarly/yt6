@@ -3775,11 +3775,12 @@ function ythtml5_size() {
     var bm0 = document.getElementById('bm0').style
     var yt = document.getElementsByClassName('html5-video-content')[0].style
     var v = document.getElementsByClassName('video-stream html5-main-video')[0]
+    var p1 = document.getElementById('player1').style
 
-
-    if ( (1 * bm0.width.replace('px','')) < Math.round((bm0.height.replace('px','') - hdiff) / document.getElementById('snarls_player').aspect_ratio )) {
+    if (p1.height != undefined){
+    if ( (1 * bm0.width.replace('px','')) < Math.round((bm0.height.replace('px','') - hdiff) * document.getElementById('snarls_player').aspect_ratio )) {
  console.log('bm0w: '+ document.getElementById('bm0').style.width +' ,bm0h: '+ document.getElementById('bm0').style.height +' -- '+
- 1 * bm0.width.replace('px','') +'x'+ Math.round((bm0.height.replace('px','') - hdiff) / document.getElementById('snarls_player').aspect_ratio) +', hdiff = '+ hdiff +', ar = '+ document.getElementById('snarls_player').aspect_ratio
+ 1 * bm0.width.replace('px','') +'x'+ Math.round((bm0.height.replace('px','') - hdiff) * document.getElementById('snarls_player').aspect_ratio) +', hdiff = '+ hdiff +', ar = '+ document.getElementById('snarls_player').aspect_ratio
  )
 	v.style.width = yt.width = bm0.width
 	v.style.height = yt.height = Math.round(bm0.width.replace('px','') / document.getElementById('snarls_player').aspect_ratio ) + 'px';
@@ -3797,7 +3798,7 @@ function ythtml5_size() {
 		webgl.parentNode.style.left = Math.round((bm0.width.replace('px','') - webgl.style.width.replace('px','') ) / 2) + 'px';
 		webgl.parentNode.style.top = Math.round(yt.top.replace('px','') - ((1 * webgl.style.height.replace('px','') - 1 * yt.height.replace('px','')) / 2)) + 'px'
 	    }
-	};//resize_layers(yt.width, yt.height)
+	};console.log(bm0.width +' '+bm0.height);//resize_layers(yt.width, yt.height)
     } else {
 	v.style.width = yt.width = Math.round((bm0.height.replace('px','') - hdiff) * document.getElementById('snarls_player').aspect_ratio ) + 'px';
 	v.style.height = yt.height = (1 * bm0.height.replace('px','') - hdiff) + 'px';
@@ -3810,6 +3811,7 @@ function ythtml5_size() {
 	  webgl.parentNode.style.top = Math.round(yt.top.replace('px','') - ((1 * webgl.style.height.replace('px','') - 1 * yt.height.replace('px','')) / 2)) + 'px'
 	}
       }
+    }
   }
 }
 
