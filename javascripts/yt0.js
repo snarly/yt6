@@ -3773,8 +3773,9 @@ function ythtml5_size() {
     if (o != null) document.getElementById('placeholder-player').firstChild.setAttribute('style', o)
     if ((player()) && (player() != null)) var webgl = get_webgl(); //getElementsByAttribute(player(),'canvas','draggable','true')[0];
     var bm0 = document.getElementById('bm0').style
-    var yt = document.getElementsByClassName('html5-video-content')[0].style
+    //var yt = document.getElementsByClassName('html5-video-content')[0].style
     var v = document.getElementsByClassName('video-stream html5-main-video')[0]
+    if (v) var yt = v.style
     var p1 = document.getElementById('player1').style
 
     if (p1.height != undefined){
