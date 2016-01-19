@@ -2738,11 +2738,11 @@ function recreate_ytp_conf_flash(){
 
                   }
             } else {
-		//console.log(p + bm0 + p.getAttribute('name') + 'playNext')
+		console.log(p + bm0 + p.getAttribute('name') + 'playNext')
 		//if (bm0 == null) yt6.args = null
 		var z = document.getElementsByClassName('video-stream html5-main-video')[0]
 		if ((z) && (z.parentNode) && (z.parentNode.parentNode) && (z.parentNode.parentNode.getAttribute('id') == 'movie_player')) {// && (document.getElementById('html5toflash').checked == true)) {
-		  z.setAttribute('src','');
+		  //z.setAttribute('src','');
 		  //recreate_ytp_conf_flash()
 		} else {
 		    waitUntilExists("displaySpeed", function(){
