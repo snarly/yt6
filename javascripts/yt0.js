@@ -3349,7 +3349,7 @@ if ( (me_aspect) && (  (document.getElementById(mep_x('mep_')) == null) || ((pla
 	  }
 	var w = 1 * w.replace('px','')
 	var h = 1 * h.replace('px','')
-console.log('1: ' + p1.style.left + p1.style.height);
+//console.log('1: ' + p1.style.left + p1.style.height);
     } else {
 	if (  ((document.getElementsByClassName('html5-video-container')[0]) &&
 	       (document.getElementsByClassName('html5-video-container')[0].innerHTML != '')) ||
@@ -3358,12 +3358,12 @@ console.log('1: ' + p1.style.left + p1.style.height);
 	  p1.style.width = Math.round((h - hdiff) * document.getElementById('snarls_player').aspect_ratio) + 'px';
 	  p1.style.height = Math.round(h - hdiff) + 'px';
 	  p1.style.left = Math.round( (w - p1.style.width.replace('px','')) / 2) + 'px';
-console.log('2: ' + p1.style.left + p1.style.width);
+//console.log('2: ' + p1.style.left + p1.style.width);
 	} else {
 	    p1.style.width = w + 'px'
 	    p1.style.height = h + 'px'
 	    p1.style.left = '0px';
-console.log('3: ' + p1.style.left + p1.style.width);
+//console.log('3: ' + p1.style.left + p1.style.width);
 	  }
       }
 	p1.style.top = '0px';
@@ -3372,12 +3372,12 @@ console.log('3: ' + p1.style.left + p1.style.width);
   if ( (w < (1 * p1.style.width.replace('px',''))) || ( (windowheight < (1 * p1.style.height.replace('px',''))) && (document.getElementById('snarls_player').size == 'theater') ) ) {
 
     if ( ((1 * p1.style.height.replace('px','')) < windowheight ) || (w < (1 * p1.style.width.replace('px',''))) ){//|| (!((1 * p1.style.height.replace('px','')) > windowheight )) ) {
-console.log('3: ' + p1.style.left + p1.style.width);
+//console.log('3: ' + p1.style.left + p1.style.width);
 	    p1.style.width = w + 'px'
 	    p1.style.height = Math.round( w / document.getElementById('snarls_player').aspect_ratio ) - hdiff + 'px';
 	    p1.style.top = Math.round( (h - p1.style.height.replace('px','')) / 2 - (hdiff / 2) ) + 'px';
 	    p1.style.left = Math.round( (w - (p1.style.height.replace('px','') * document.getElementById('snarls_player').aspect_ratio)) / 2) + 'px';
-console.log('4: ' + p1.style.left + p1.style.width);
+//console.log('4: ' + p1.style.left + p1.style.width);
 
 
       } else {
@@ -3395,14 +3395,14 @@ console.log('4: ' + p1.style.left + p1.style.width);
 		p1.style.height = h + 'px'
 		p1.style.left = '0px';
 		p1.style.top = '0px'
-console.log('5: ' + p1.style.left + p1.style.height);
+//console.log('5: ' + p1.style.left + p1.style.height);
 	      }
 	  } else {
 	      p1.style.width = (h - hdiff) * document.getElementById('snarls_player').aspect_ratio + 'px';
 	      p1.style.height = h - hdiff + 'px';
 	      p1.style.top = (h - p1.style.height.replace('px','')) / 2 - (hdiff / 2) + 'px';
 	      p1.style.left = (w - p1.style.width.replace('px','')) / 2 + 'px';
-console.log('6: ' + p1.style.left + p1.style.height);
+//console.log('6: ' + p1.style.left + p1.style.height);
 	    }
 
 		w = w + 'px'
@@ -3433,7 +3433,7 @@ console.log('6: ' + p1.style.left + p1.style.height);
 		  document.getElementById('a_width').value = w
 		  document.getElementById('a_height').value = h
 		}
-console.log('7: ' + p1.style.left + p1.style.height);
+//console.log('7: ' + p1.style.left + p1.style.height);
 
 	}
 
@@ -3668,9 +3668,9 @@ if ((p1 != null) && (bm0.style.visibility == 'visible')){
 
   var z = document.getElementById("bm3")
   if (z) z.style.top = document.getElementById("masthead-positioner").offsetHeight - 2 + "px" 
- console.log('bm0w: '+ document.getElementById('bm0').style.width +' ,bm0h: '+ document.getElementById('bm0').style.height)
+
   ythtml5_size()
- console.log('bm0w: '+ document.getElementById('bm0').style.width +' ,bm0h: '+ document.getElementById('bm0').style.height)
+
 }
 
 
@@ -3776,6 +3776,9 @@ function ythtml5_size() {
     var yt = document.getElementsByClassName('html5-video-content')[0].style
     var v = document.getElementsByClassName('video-stream html5-main-video')[0]
 
+ console.log('bm0w: '+ document.getElementById('bm0').style.width +' ,bm0h: '+ document.getElementById('bm0').style.height +' -- '+
+ 1 * bm0.width.replace('px','') +'x'+ Math.round((bm0.height.replace('px','') - hdiff) * document.getElementById('snarls_player').aspect_ratio) +', hdiff = '+ hdiff +', ar = '+ document.getElementById('snarls_player').aspect_ratio
+ )
     if ( (1 * bm0.width.replace('px','')) < Math.round((bm0.height.replace('px','') - hdiff) * document.getElementById('snarls_player').aspect_ratio )) {
 	v.style.width = yt.width = bm0.width
 	v.style.height = yt.height = Math.round(bm0.width.replace('px','') / document.getElementById('snarls_player').aspect_ratio ) + 'px';
