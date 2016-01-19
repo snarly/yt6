@@ -1493,7 +1493,7 @@ document.getElementById('movie_player').style.display = ''
           w_orig = '640px'; h_orig = '360px'; document.getElementById('snarls_player').aspect_ratio = 16/9
         }
     }
-
+  if (document.getElementById('snarls_player').aspect_ratio.toFixed(2) == 1.78) { document.getElementById('snarls_player').aspect_ratio = 16/9 }
 
   if (typeof ytcenter !== 'undefined') { 
     var w = document.getElementById('player-api').style.width;
