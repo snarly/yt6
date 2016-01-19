@@ -3363,12 +3363,12 @@ if ( (me_aspect) && (  (document.getElementById(mep_x('mep_')) == null) || ((pla
 	  p1.style.width = Math.round((h - hdiff) * document.getElementById('snarls_player').aspect_ratio) + 'px';
 	  p1.style.height = Math.round(h - hdiff) + 'px';
 	  p1.style.left = Math.round( (w - p1.style.width.replace('px','')) / 2) + 'px';
-//console.log('2: ' + p1.style.left + p1.style.width);
+console.log('2: ' + p1.style.left + p1.style.width);
 	} else {
 	    p1.style.width = w + 'px'
 	    p1.style.height = h + 'px'
 	    p1.style.left = '0px';
-//console.log('3: ' + p1.style.left + p1.style.width);
+console.log('3: ' + p1.style.left + p1.style.width + p1.style.height);
 	  }
       }
 	p1.style.top = '0px';
@@ -3377,12 +3377,12 @@ if ( (me_aspect) && (  (document.getElementById(mep_x('mep_')) == null) || ((pla
   if ( (w < (1 * p1.style.width.replace('px',''))) || ( (windowheight < (1 * p1.style.height.replace('px',''))) && (document.getElementById('snarls_player').size == 'theater') ) ) {
 
     if ( ((1 * p1.style.height.replace('px','')) < windowheight ) || (w < (1 * p1.style.width.replace('px',''))) ){//|| (!((1 * p1.style.height.replace('px','')) > windowheight )) ) {
-//console.log('3: ' + p1.style.left + p1.style.width);
+console.log('3: ' + p1.style.left + p1.style.width);
 	    p1.style.width = w + 'px'
 	    p1.style.height = Math.round( w / document.getElementById('snarls_player').aspect_ratio ) - hdiff + 'px';
 	    p1.style.top = Math.round( (h - p1.style.height.replace('px','')) / 2 - (hdiff / 2) ) + 'px';
 	    p1.style.left = Math.round( (w - (p1.style.height.replace('px','') * document.getElementById('snarls_player').aspect_ratio)) / 2) + 'px';
-//console.log('4: ' + p1.style.left + p1.style.width);
+console.log('4: ' + p1.style.left + p1.style.width + p1.style.height);
 
 
       } else {
@@ -3400,14 +3400,14 @@ if ( (me_aspect) && (  (document.getElementById(mep_x('mep_')) == null) || ((pla
 		p1.style.height = h + 'px'
 		p1.style.left = '0px';
 		p1.style.top = '0px'
-//console.log('5: ' + p1.style.left + p1.style.height);
+console.log('5: ' + p1.style.left + p1.style.height + p1.style.height);
 	      }
 	  } else {
 	      p1.style.width = (h - hdiff) * document.getElementById('snarls_player').aspect_ratio + 'px';
 	      p1.style.height = h - hdiff + 'px';
 	      p1.style.top = (h - p1.style.height.replace('px','')) / 2 - (hdiff / 2) + 'px';
 	      p1.style.left = (w - p1.style.width.replace('px','')) / 2 + 'px';
-//console.log('6: ' + p1.style.left + p1.style.height);
+console.log('6: ' + p1.style.left + p1.style.height + p1.style.height);
 	    }
 
 		w = w + 'px'
@@ -3438,7 +3438,7 @@ if ( (me_aspect) && (  (document.getElementById(mep_x('mep_')) == null) || ((pla
 		  document.getElementById('a_width').value = w
 		  document.getElementById('a_height').value = h
 		}
-//console.log('7: ' + p1.style.left + p1.style.height);
+console.log('7: ' + p1.style.left + p1.style.height + p1.style.height);
 
 	}
 
