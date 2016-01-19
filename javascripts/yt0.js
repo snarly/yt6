@@ -2741,7 +2741,7 @@ function recreate_ytp_conf_flash(){
 		//console.log(p + bm0 + p.getAttribute('name') + 'playNext')
 		//if (bm0 == null) yt6.args = null
 		var z = document.getElementsByClassName('video-stream html5-main-video')[0]
-		if ((z) && (z.parentNode) && (z.parentNode.parentNode) && (z.parentNode.parentNode.getAttribute('id') == 'movie_player') && (document.getElementById('html5toflash').checked == true)) {
+		if ((z) && (z.parentNode) && (z.parentNode.parentNode) && (z.parentNode.parentNode.getAttribute('id') == 'movie_player')) {// && (document.getElementById('html5toflash').checked == true)) {
 		  z.setAttribute('src','');
 		  //recreate_ytp_conf_flash()
 		} else {
@@ -2872,7 +2872,7 @@ window.ytplayer.config.loaded = true;
 		//}
 	      //})
 	  }//html5toflash*/
-	  if (document.getElementById('html5toflash').checked == true) recreate_ytp_conf_flash()
+	  //if (document.getElementById('html5toflash').checked == true) recreate_ytp_conf_flash()
 	  try { mep_reload()  } catch(e){ document.getElementsByClassName('clear')[0].setAttribute('id','ytp-conf-loading'); }
 	}
 
@@ -3773,20 +3773,15 @@ function ythtml5_size() {
     if (o != null) document.getElementById('placeholder-player').firstChild.setAttribute('style', o)
     if ((player()) && (player() != null)) var webgl = get_webgl(); //getElementsByAttribute(player(),'canvas','draggable','true')[0];
     var bm0 = document.getElementById('bm0').style
-    //var yt = document.getElementsByClassName('html5-video-content')[0].style
+    var yt = document.getElementsByClassName('html5-video-content')[0].style
     var v = document.getElementsByClassName('video-stream html5-main-video')[0]
-    if (v) var yt = v.style
-    var p1 = document.getElementById('player1').style
+    if (document.getElementById('bm0').getAttribute('id') == document.getElementsByClassName('html5-video-content')[0].getAttribute('id')) var yt = v.style
 
-    if (p1.height != undefined){
     if ( (1 * bm0.width.replace('px','')) < Math.round((bm0.height.replace('px','') - hdiff) * document.getElementById('snarls_player').aspect_ratio )) {
- console.log('bm0w: '+ document.getElementById('bm0').style.width +' ,bm0h: '+ document.getElementById('bm0').style.height +' -- '+
- 1 * bm0.width.replace('px','') +'x'+ Math.round((bm0.height.replace('px','') - hdiff) * document.getElementById('snarls_player').aspect_ratio) +', hdiff = '+ hdiff +', ar = '+ document.getElementById('snarls_player').aspect_ratio
- )
-	v.style.width = yt.width = bm0.width;console.log(bm0.width +' '+bm0.height);
-	v.style.height = yt.height = Math.round(bm0.width.replace('px','') / document.getElementById('snarls_player').aspect_ratio ) + 'px';console.log(bm0.width +' '+bm0.height);
-	v.style.left = yt.left = '0px';console.log(bm0.width +' '+bm0.height);
-	v.style.top = yt.top = Math.round((( 1 * bm0.height.replace('px','') - yt.height.replace('px','') ) / 2) - (hdiff / 2)) + 'px';console.log(bm0.width +' '+bm0.height);
+	v.style.width = yt.width = bm0.width;
+	v.style.height = yt.height = Math.round(bm0.width.replace('px','') / document.getElementById('snarls_player').aspect_ratio ) + 'px';
+	v.style.left = yt.left = '0px';
+	v.style.top = yt.top = Math.round((( 1 * bm0.height.replace('px','') - yt.height.replace('px','') ) / 2) - (hdiff / 2)) + 'px';
 	if (webgl) {
 	  if (!( (1 * bm0.height.replace('px','')) < Math.round(bm0.width.replace('px','') / (webgl.width / webgl.height)) )) {
  	    webgl.style.width = bm0.width;
@@ -3799,7 +3794,7 @@ function ythtml5_size() {
 		webgl.parentNode.style.left = Math.round((bm0.width.replace('px','') - webgl.style.width.replace('px','') ) / 2) + 'px';
 		webgl.parentNode.style.top = Math.round(yt.top.replace('px','') - ((1 * webgl.style.height.replace('px','') - 1 * yt.height.replace('px','')) / 2)) + 'px'
 	    }
-	};//resize_layers(yt.width, yt.height)
+	}
     } else {
 	v.style.width = yt.width = Math.round((bm0.height.replace('px','') - hdiff) * document.getElementById('snarls_player').aspect_ratio ) + 'px';
 	v.style.height = yt.height = (1 * bm0.height.replace('px','') - hdiff) + 'px';
