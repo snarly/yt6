@@ -1493,7 +1493,7 @@ document.getElementById('movie_player').style.display = ''
           w_orig = '640px'; h_orig = '360px'; document.getElementById('snarls_player').aspect_ratio = 16/9
         }
     }
-
+  if (document.getElementById('snarls_player').aspect_ratio.toFixed(2) == 1.78) { document.getElementById('snarls_player').aspect_ratio = 16/9 }
 
   if (typeof ytcenter !== 'undefined') { 
     var w = document.getElementById('player-api').style.width;
@@ -3368,7 +3368,7 @@ if ( (me_aspect) && (  (document.getElementById(mep_x('mep_')) == null) || ((pla
 	    p1.style.width = w + 'px'
 	    p1.style.height = h + 'px'
 	    p1.style.left = '0px';
-//console.log('3: ' + p1.style.left + p1.style.width);
+//console.log('3: ' + p1.style.left + p1.style.width + p1.style.height);
 	  }
       }
 	p1.style.top = '0px';
@@ -3382,7 +3382,7 @@ if ( (me_aspect) && (  (document.getElementById(mep_x('mep_')) == null) || ((pla
 	    p1.style.height = Math.round( w / document.getElementById('snarls_player').aspect_ratio ) - hdiff + 'px';
 	    p1.style.top = Math.round( (h - p1.style.height.replace('px','')) / 2 - (hdiff / 2) ) + 'px';
 	    p1.style.left = Math.round( (w - (p1.style.height.replace('px','') * document.getElementById('snarls_player').aspect_ratio)) / 2) + 'px';
-//console.log('4: ' + p1.style.left + p1.style.width);
+//console.log('4: ' + p1.style.left + p1.style.width + p1.style.height);
 
 
       } else {
@@ -3400,14 +3400,14 @@ if ( (me_aspect) && (  (document.getElementById(mep_x('mep_')) == null) || ((pla
 		p1.style.height = h + 'px'
 		p1.style.left = '0px';
 		p1.style.top = '0px'
-//console.log('5: ' + p1.style.left + p1.style.height);
+//console.log('5: ' + p1.style.left + p1.style.height + p1.style.height);
 	      }
 	  } else {
 	      p1.style.width = (h - hdiff) * document.getElementById('snarls_player').aspect_ratio + 'px';
 	      p1.style.height = h - hdiff + 'px';
 	      p1.style.top = (h - p1.style.height.replace('px','')) / 2 - (hdiff / 2) + 'px';
 	      p1.style.left = (w - p1.style.width.replace('px','')) / 2 + 'px';
-//console.log('6: ' + p1.style.left + p1.style.height);
+//console.log('6: ' + p1.style.left + p1.style.height + p1.style.height);
 	    }
 
 		w = w + 'px'
@@ -3438,9 +3438,9 @@ if ( (me_aspect) && (  (document.getElementById(mep_x('mep_')) == null) || ((pla
 		  document.getElementById('a_width').value = w
 		  document.getElementById('a_height').value = h
 		}
-//console.log('7: ' + p1.style.left + p1.style.height);
+//console.log('7: ' + p1.style.left + p1.style.height + p1.style.height);
 
-	}
+	}//theater
 
         }	
 
@@ -3450,12 +3450,14 @@ if ( (me_aspect) && (  (document.getElementById(mep_x('mep_')) == null) || ((pla
 //	((Math.abs(document.getElementById('player1').width - p1.style.width.replace('px','')) < 2) &&
 //	  (Math.abs(document.getElementById('player1').height - p1.style.height.replace('px','')) < 2))	  
 	(
-	  (!(Math.abs(document.getElementById('player1').width - p1.style.width.replace('px','')) > 1) && !(Math.abs(document.getElementById('player1').height - p1.style.height.replace('px','')) > 1))
+	  (!(Math.abs(document.getElementById('player1').width - p1.style.width.replace('px','')) > 2) && !(Math.abs(document.getElementById('player1').height - p1.style.height.replace('px','')) > 2))
 	)
       )
-    {
+    {//console.log('rescale')
 	p1.style.width = document.getElementById('player1').width + 'px'
 	p1.style.height = document.getElementById('player1').height + 'px'
+	p1.style.top = Math.round( (h - p1.style.height.replace('px','')) / 2 - (hdiff / 2) ) + 'px';
+	p1.style.left = Math.round( (w - (p1.style.height.replace('px','') * document.getElementById('snarls_player').aspect_ratio)) / 2) + 'px';
 //      if (Math.abs(p1.style.width.replace('px','') - Math.floor(p1.style.width.replace('px','') / 2) * 2) < Math.abs(p1.style.width.replace('px','') - Math.ceil(p1.style.width.replace('px','') / 2) * 2)) { p1.style.width = Math.floor(p1.style.width.replace('px','') / 2) * 2 + 2 + 'px' } else { p1.style.width = Math.ceil(p1.style.width.replace('px','') / 2) * 2 + 'px' }
 //      if (Math.abs(p1.style.height.replace('px','') - Math.floor(p1.style.height.replace('px','') / 2) * 2) < Math.abs(p1.style.height.replace('px','') - Math.ceil(p1.style.height.replace('px','') / 2) * 2)) { p1.style.height = Math.floor(p1.style.height.replace('px','') / 2) * 2 + 2 + 'px' } else { p1.style.height = Math.ceil(p1.style.height.replace('px','') / 2) * 2 + 'px' }
       if (c) { document.getElementById('a_width').value = bm0.style.width.replace('px',''); document.getElementById('a_height').value = bm0.style.height.replace('px','') }
