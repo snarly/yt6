@@ -1132,28 +1132,28 @@ if (start != false){
   if ( (pn == 'me_flash') || (d.indexOf('%26false') > -1) ){
     if ( ( ((!mep) || (typeof fv == 'string')) && (document.getElementById('snarls_player').flash == true) ) || ( (typeof p.getPlayerState == 'function') && (typeof fv != 'string') && (webgl)  ) ){//alert('01' + start + webgl + typeof fv + mep + document.getElementById('snarls_player').flash);
 	bm0.style.visibility = 'hidden'
-	p.style.display = ''; //console.log('autoplay1')
+	p.style.display = ''; console.log('autoplay1')
 	if (((typeof autoplay == 'string') || (typeof autoplay2[0] != 'undefined')) && (typeof p.playMedia == 'function') && (start)) {
 	  p.playMedia(); document.getElementById('movie_player').paused = false; //console.log('autoplay2')
 	}
     } else {
 	p.style.display = 'none';
-	bm0.style.visibility = 'visible'; //console.log('autoplay3' + typeof autoplay + typeof autoplay2[0] + start)
+	bm0.style.visibility = 'visible'; console.log('autoplay3' + typeof autoplay + typeof autoplay2[0] + start)
 	if (((typeof autoplay == 'string') || (typeof autoplay2[0] != 'undefined')) && (start)) player1.play()
       }
   } else {
-	if ((d == undefined) || (d.indexOf('%26true') > -1)) {; //console.log('autoplay4')
+	if ((d == undefined) || (d.indexOf('%26true') > -1)) {; console.log('autoplay4')
 	  if ( (typeof p.getPlayerState == 'function') && ((typeof fv == 'string') || (webgl)) ) {
 	    bm0.style.visibility = 'hidden'
-	    p.style.display = '';; //console.log('autoplay5')
+	    p.style.display = ''; console.log('autoplay5')
 	  } else {
 		p.style.display = 'none';
-		bm0.style.visibility = 'visible'; //console.log('autoplay6')
+		bm0.style.visibility = 'visible'; console.log('autoplay6')
 		try { document.getElementsByClassName('video-stream html5-main-video')[0].pause() } catch(e) {};
 		if (((typeof autoplay == 'string') || (typeof autoplay2[0] != 'undefined')) && (start)) player1.play()
 	    }
 	} else {
-		p.style.display = 'none'; //console.log('autoplay7')
+		p.style.display = 'none'; console.log('autoplay7')
 		try { document.getElementsByClassName('video-stream html5-main-video')[0].pause() } catch(e) {};
 		bm0.style.visibility = 'visible'
 		if (((typeof autoplay == 'string') || (typeof autoplay2[0] != 'undefined')) && (start)) player1.play()
@@ -1163,7 +1163,7 @@ if (start != false){
 }
 
 if ((typeof p.getPlayerState != 'function') && (typeof p.getAttribute('flashvars') == 'string') && (!start)) {
-	p.style.display = 'none'; //console.log('autoplay8')
+	p.style.display = 'none'; console.log('autoplay8')
 	bm0.style.visibility = 'visible';
 	if ((document.getElementById('snarls_player').size == undefined) || (document.getElementById('snarls_player').size == 'default')) {
 	  document.getElementById('snarls_player').size = 'default'
@@ -2660,26 +2660,26 @@ function recreate_ytp_conf_flash(){
 		}
 
                 if ((p.getAttribute("name") != "me_flash") && (typeof p.getAttribute('flashvars') == 'string')) {
-		    if ((z.indexOf('%26false') > -1)) {//console.log('a-1');
+		    if ((z.indexOf('%26false') > -1)) {console.log('a-1');
 		      p.style.display = 'none';
 		      me_flash_2load();
 		      if (!document.getElementById(mep_x("mep_"))) set_controls()
-		      if (bm0.style.visibility == 'hidden'){//console.log('a-2');
+		      if (bm0.style.visibility == 'hidden'){console.log('a-2');
 			yt6.autoplay = true;
-			waitUntilExists('playerState_null',function(){//console.log('a-3');
+			waitUntilExists('playerState_null',function(){console.log('a-3');
 			  //waitUntilExists('movie_player',function(){
-			    bm0.style.visibility = 'visible';//console.log('a-4');
+			    bm0.style.visibility = 'visible';console.log('a-4');
 			    flashplugin(); autoplay(true);
 			  //})
 		        })
-		      } else {//console.log('a-5');
+		      } else {console.log('a-5');
 			  yt6.autoplay = true;
 			  waitUntilExists('movie_player',function(){
-			    bm0.style.visibility = 'hidden';//console.log('a-6');
+			    bm0.style.visibility = 'hidden';console.log('a-6');
 			    flashplugin(); autoplay(true);
 			  })
 			}
-		    } else {//console.log('a-7');
+		    } else {console.log('a-7');
 			yt6.autoplay = true;
 			  //var z = p.getAttribute('src');
 		        p.style.display = 'none';window.ytplayer.config.args.html5_unavailable = 1; window.ytplayer.config.args.autoplay = 1;
@@ -2691,13 +2691,14 @@ function recreate_ytp_conf_flash(){
 		  
                 } else {//me_flash
 		    if ( ((z == undefined) || (z.indexOf('%26true') > -1)) && (typeof p.getAttribute('flashvars') == 'object') && (p.getAttribute('name') == 'me_flash') && (document.getElementById('movie_player_bup')) && (document.getElementById('movie_player_'))){
-			yt6.autoplay = true;//console.log('a-8');
-			waitUntilExists('movie_player',function(){//console.log('a-9');
+			yt6.autoplay = true;console.log('a-8');
+			waitUntilExists('movie_player',function(){console.log('a-9');
 			  window.ytplayer.config.args.html5_unavailable = 1; window.ytplayer.config.args.autoplay = 1;
 			  document.getElementById('movie_player').setAttribute("flashvars",correct_flashvars(window.ytplayer.config.args));
 	  		  document.getElementById('movie_player').style.display = '';
 			  //document.getElementById('movie_player').setAttribute('id','movie_player')
-			  //waitUntilExists('playerState_-1',function(){console.log('10');
+			  //waitUntilExists('playerState_-1',function(){
+			  console.log('10');
 			  //  bm0.style.visibility = 'hidden';
 			  //  document.getElementById('movie_player').style.display = '';
 			    flashplugin(); reload_flashplayer();
@@ -2711,14 +2712,14 @@ function recreate_ytp_conf_flash(){
 			bup.setAttribute('id','movie_player')
         		document.getElementById("player-api").insertBefore(bup, document.getElementById("bm0"));
 
-		    } else {//console.log('a-11');
+		    } else {console.log('a-11');
 			if ((typeof p.getAttribute('flashvars') == 'object') && (p.getAttribute('name') == 'me_flash')) {
 
 			  var z = def_link()
 			  var me_flash = getElementsByAttribute(document.getElementById("player-api"),"object","name","me_flash");
-			  if ((me_flash != undefined) && (me_flash.length != 0)) {//console.log('a-12');
+			  if ((me_flash != undefined) && (me_flash.length != 0)) {console.log('a-12');
 			    yt6.autoplay = true
-			    waitUntilExists('movie_player',function(){//console.log('a-13');
+			    waitUntilExists('movie_player',function(){console.log('a-13');
 			      document.getElementById('movie_player').style.display = 'none'
 			      if (bm0.style.visibility == 'hidden'){
 			        bm0.style.visibility = 'visible'
@@ -2731,7 +2732,7 @@ function recreate_ytp_conf_flash(){
 			    document.getElementsByClassName("video-stream html5-main-video")[0].setAttribute("src", z);
 			    reload_flashplayer();
 			  }
-			} else {//console.log('a-14');
+			} else {console.log('a-14');
 			    yt6.autoplay = true; flashplugin(); autoplay(true)
 			  }
 		      }
