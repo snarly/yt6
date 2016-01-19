@@ -3440,7 +3440,7 @@ console.log('6: ' + p1.style.left + p1.style.height + p1.style.height);
 		}
 console.log('7: ' + p1.style.left + p1.style.height + p1.style.height);
 
-	}
+	}//theater
 
         }	
 
@@ -3450,10 +3450,10 @@ console.log('7: ' + p1.style.left + p1.style.height + p1.style.height);
 //	((Math.abs(document.getElementById('player1').width - p1.style.width.replace('px','')) < 2) &&
 //	  (Math.abs(document.getElementById('player1').height - p1.style.height.replace('px','')) < 2))	  
 	(
-	  (!(Math.abs(document.getElementById('player1').width - p1.style.width.replace('px','')) > 1) && !(Math.abs(document.getElementById('player1').height - p1.style.height.replace('px','')) > 1))
+	  (!(Math.abs(document.getElementById('player1').width - p1.style.width.replace('px','')) > 2) && !(Math.abs(document.getElementById('player1').height - p1.style.height.replace('px','')) > 2))
 	)
       )
-    {
+    {console.log('rescale')
 	p1.style.width = document.getElementById('player1').width + 'px'
 	p1.style.height = document.getElementById('player1').height + 'px'
 //      if (Math.abs(p1.style.width.replace('px','') - Math.floor(p1.style.width.replace('px','') / 2) * 2) < Math.abs(p1.style.width.replace('px','') - Math.ceil(p1.style.width.replace('px','') / 2) * 2)) { p1.style.width = Math.floor(p1.style.width.replace('px','') / 2) * 2 + 2 + 'px' } else { p1.style.width = Math.ceil(p1.style.width.replace('px','') / 2) * 2 + 'px' }
