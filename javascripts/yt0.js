@@ -3807,7 +3807,6 @@ function ythtml5_size() {
 	  webgl.parentNode.style.top = Math.round(yt.top.replace('px','') - ((1 * webgl.style.height.replace('px','') - 1 * yt.height.replace('px','')) / 2)) + 'px'
 	}
       }
-    }
   }
 }
 
