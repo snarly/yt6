@@ -2739,13 +2739,17 @@ function recreate_ytp_conf_flash(){
 
                   }
             } else {
-		console.log(p + bm0 + p.getAttribute('name') + 'playNext')
 		//if (bm0 == null) yt6.args = null
 		var z = document.getElementsByClassName('video-stream html5-main-video')[0]
 		if ((z) && (z.parentNode) && (z.parentNode.parentNode) && (z.parentNode.parentNode.getAttribute('id') == 'movie_player')) {// && (document.getElementById('html5toflash').checked == true)) {
+		  console.log(p + bm0 + p.getAttribute('name') + '1 playNext')
 		  //z.setAttribute('src','');
 		  //recreate_ytp_conf_flash()
+		  waitUntilExists("displaySpeed", function(){
+		    if (typeof document.getElementById('player1').play == 'function') { yt6.autoplay = true; autoplay(true) } 
+		  })
 		} else {
+		  console.log(p + bm0 + p.getAttribute('name') + '2 playNext')
 		    waitUntilExists("displaySpeed", function(){
 		      if (typeof document.getElementById('player1').play == 'function') { yt6.autoplay = true; autoplay(true) } 
 		    })
