@@ -3775,6 +3775,7 @@ function ythtml5_size() {
     var bm0 = document.getElementById('bm0').style
     var yt = document.getElementsByClassName('html5-video-content')[0].style
     var v = document.getElementsByClassName('video-stream html5-main-video')[0]
+    var yt = v
     var p1 = document.getElementById('player1').style
 
     if (p1.height != undefined){
