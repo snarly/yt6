@@ -466,7 +466,7 @@ alert("THIS VIDEO IS ENCRYPTED BUT YOUR BROWSER SEEMS TOO OLD TO PROCEED WITHOUT
   }
   var fs = new RegExp(    sprintf('function %s[^}]+}[^}]+}', fcnm.replace('$', '\\$'))  ); if (rpt.match(fs) == null) {
   var fs = new RegExp(    sprintf('var %s=function[^}]+};', fcnm.replace('$', '\\$'))  ); if (rpt.match(fs) == null) {
-  var fs = new RegExp(    sprintf('\W+%s=function[^}]+}', fcnm.replace('$', '\\$'))  );console.log('fs='+rpt.match(fs))
+  var fs = new RegExp(    sprintf('\\W+%s=function[^}]+}', fcnm.replace('$', '\\$'))  );console.log('fs='+rpt.match(fs))
   }
   };//console.log(fs)
   //var fs = new RegExp('function ' + fcnm.replace('\$','\\$') + '[^}]+}[^}]+}');
