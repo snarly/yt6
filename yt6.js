@@ -321,33 +321,7 @@ function FireEvent( ElementId, EventName )
     return o;
   };
 
-
-
-
-function ajax1(){
-//  px = 'https://allow-any-origin.appspot.com/https:';
-//  px = 'https://cors-anywhere.herokuapp.com/https:'
-//  var px = 'http://www.corsproxy.com'
-  var ytassetsjs = document.getElementById('ytassetsjs')
-  if ((ytassetsjs == null) || ytassetsjs.innerHTML.indexOf("function(){") == -1) {
-    if (ytassetsjs != null) ytassetsjs.parentNode.removeChild(ytassetsjs)
-    function setProxy(){
-      var proxiez = shuffle(proxies)
-      for (i=0;i<proxiez.length;i++){
-        var px = proxiez[i]
-        try {
-          xhr.open('get', px + ytplayer.config.assets.js, false);
-          xhr.send('');
-        } catch (e) {
-
-            if (i === proxiez.length-1) {
-
-	      if ((e.toString().indexOf('"Access to restricted URI denied"  code: "1012"') > -1) || (e.toString().indexOf('ReferenceError: Security violation') > -1)) {
-
-
-		//if ( document.getElementById("snarls_player").newWindow != null) {
-		  //window.open( protocol() + ytplayer.config.assets.js, "_blank", "width=100,height=100").focus()
-		//} else {///alert(typeof newWindow)
+function hand_axe(){
 		    var bm1 = document.createElement('button')
 		    bm1.id = 'getjs'
 		    bm1.type = 'button'
@@ -390,10 +364,13 @@ function ajax1(){
 			  document.getElementById(\"snarls_player\").parentNode.removeChild(document.getElementById(\"snarls_player\"));\
 			}}")
 
-alert("THIS VIDEO IS ENCRYPTED BUT YOUR BROWSER SEEMS TOO OLD TO PROCEED WITHOUT USER INTERACTION. You need the »WHOLE« content found inside the new pop-up window's frame. (NOT this message. If pop-ups are blocked, click the Transformer-icon.) The content is a text starting with something like \"(function()...\". Please select and copy it all (Ctrl+A, Ctrl+C), then paste it into the input field just below the YouTube logo (Ctrl+V). If done, press ENTER.")
+alert("Decryption data was not received by proxy. Use the Stone Age Hand-axe method instead. A small pop-up window should have opened / should open up after you OK this alert box. If pop-ups are blocked, or you already closed the window, click the Transformer-icon. You need the »WHOLE« content found inside this new pop-up window's frame. The CONTENT is a text starting with something like \"var _yt_player...\" or \"(function(...\". Please select & copy it all (Ctrl+A, Ctrl+C), then paste it into the input field just below the YouTube logo (Ctrl+V). If done, press ENTER.")
 
 		  waitUntilExists( "ytassetsjs", function() {
-		    document.getElementById("snarls_player").parentNode.removeChild(document.getElementById("snarls_player"))
+		    if (typeof deldiv == 'function') { deldiv() }
+		      else {
+			if (document.getElementById("snarls_player")) document.getElementById("snarls_player").parentNode.removeChild(document.getElementById("snarls_player"))
+		      }
 		    player().style.display = ''
 		    if (document.getElementById('snarls_player')==undefined) {
 			var proxiez = shuffle(['https://raw.githack.com','https://rawgit.com'])
@@ -409,6 +386,35 @@ alert("THIS VIDEO IS ENCRYPTED BUT YOUR BROWSER SEEMS TOO OLD TO PROCEED WITHOUT
 		     }
 		  })
 
+
+}//hand_axe
+
+
+
+
+function ajax1(){
+
+//  px = 'https://allow-any-origin.appspot.com/https:';
+//  px = 'https://cors-anywhere.herokuapp.com/https:'
+//  var px = 'http://www.corsproxy.com'
+  var ytassetsjs = document.getElementById('ytassetsjs')
+  if ((ytassetsjs == null) || ytassetsjs.innerHTML.indexOf("function(){") == -1) {
+    if (ytassetsjs != null) ytassetsjs.parentNode.removeChild(ytassetsjs)
+    function setProxy(){
+      var proxiez = shuffle(proxies)
+      for (i=0;i<proxiez.length;i++){
+        var px = proxiez[i]
+        try {
+          xhr.open('get', px + ytplayer.config.assets.js, false);
+          xhr.send('');
+        } catch (e) {
+
+            if (i === proxiez.length-1) {
+
+	      if ((e.toString().indexOf('"Access to restricted URI denied"  code: "1012"') > -1) || (e.toString().indexOf('ReferenceError: Security violation') > -1) || (xhr.responseText.indexOf('403 Forbidden') > -1)) {
+
+		hand_axe()
+
 	      } else {
 		  throw new Error(e + " " + px + ' error')
 		}
@@ -421,6 +427,10 @@ alert("THIS VIDEO IS ENCRYPTED BUT YOUR BROWSER SEEMS TOO OLD TO PROCEED WITHOUT
 		  alert(e + " " + px + ' error')
               }
           }//catch
+
+
+	      if ((xhr.responseText.indexOf('403 Forbidden') > -1) && (xhr.responseText == '403_Forbidden')) hand_axe()
+
 
         var rpt = xhr.responseText,scpt;
         if (rpt.indexOf("function(){") != -1) {
@@ -1257,7 +1267,20 @@ function rewrite_ytplayer(node_value, s, sig){
     document.getElementsByClassName('clear')[0].setAttribute('id','ytp-conf-loading')
   } 
 
+  xhr.open('get', window.location, false);
+  xhr.send('');
+  var source = xhr.responseText.toString();
+  var tts_url = source.match(/TTS_URL.*\",/)[0]
+  if ((tts_url) && (tts_url.split('"')[2] == ',')) tts_url = tts_url.split('"')[1].split('\\/').join('/').split('\\u0026').join('&')
+  if (ytplayer.config.args) {
+    if (tts_url != '') {
+      ytplayer.config.args.ttsurl = tts_url
+    } else delete ytplayer.config.args.ttsurl
+  }
+
+
   var args = ytplayer.config.args;
+
 
   var html = [new Date().toLocaleString(),
     'Click to switch streams in HTML5 player. Right click & "Save as" to download.<br>'
@@ -1559,7 +1582,7 @@ if (document.getElementById("bm1") != null) document.getElementById("bm1").paren
   html.splice(1,0,'Direct links to YouTube media<br>for IP address: '+ expire_date()[0])
   html.push(
    '<br>Links will expire on <br>' + expire_date()[1] + 
-   '<br><br>V+A sources may refuse to load, while separate video- and audio-only ones synced may still do for playback. If those fail as well, refresh page and reload the script.'
+   '<br><br>V+A sources may refuse to load, while separate video- and audio-only ones synced may still do for playback. If those fail as well, clear YT-cookies, refresh page and reload the script.'
   )
   document.getElementById('bm2').innerHTML = html.join('<br>')
 
@@ -1658,7 +1681,7 @@ function nop(){
 
 
   if (unescape(args.ttsurl) != 'undefined') {
-    document.getElementById("bm3").innerHTML = document.getElementById("bm3").innerHTML + '<br><br>SubRip/WebVTT subtitles:<br>'
+    document.getElementById("bm3").innerHTML = document.getElementById("bm3").innerHTML + '<br><br>SubRip/WebVTT subtitles:<br>(On Bookmarklet-URL line, edit the value to "add_subs")<br>'
   }
 
 document.getElementById("bm3").style.top = document.getElementById("masthead-positioner").offsetHeight - 2 + "px"
@@ -2247,7 +2270,6 @@ var sref = unescape(ytplayer.config.args.ttsurl) + '&type=list&tlangs=1&fmts=0&a
   xhr.open('get', sref, false);
   xhr.send('');
   var tts = parseXml(xhr.responseText);
-  //var array = [lang_code, name, kind, lang_default];
   var tracks = [];
   
   var lang_codeA = window.navigator.userLanguage || window.navigator.language
@@ -2256,7 +2278,7 @@ var sref = unescape(ytplayer.config.args.ttsurl) + '&type=list&tlangs=1&fmts=0&a
       var tlang_codeA = document.getElementsByClassName("content-region")[0].textContent || getElementsByAttribute(document,"span","class","content-region")[0].textContent
       if (tlang_codeA) { tlang_codeA = tlang_codeA.toLowerCase() }
     }
-    var tlang_codeA = lang_codeA + ',' + tlang_codeA + ',hu,en,nl,fr,de,it,ja,ko,pt,ru,es'; tlang_codeA = tlang_codeA.split(",")
+    var tlang_codeA = lang_codeA + ',' + tlang_codeA + ',' + document.getElementById('snarls_player').add_subs; tlang_codeA = tlang_codeA.split(",")//',hu,en,nl,fr,de,it,ja,ko,pt,ru,es';
     //var lang_codeA = sref.split("&asr_langs=")[1];
     //if (lang_codeA) { lang_codeA = lang_codeA.toLowerCase().split("&")[0].split(","); var tlang_codeA = tlang_codeA.concat( lang_codeA ) };//alert(tlang_codeA)
 
@@ -2272,7 +2294,7 @@ if ((!slang) && ((kind != 'asr') || (text.length == b+1)) ) { var slang = lang_c
     var id = text[b].getAttribute('id'); if ((id) && (id != 'null')) { tracks[id] = surl; lang_codeA[id] = lang_code };
     var lang_default = text[b].getAttribute('lang_default'); if ((lang_default) && (lang_default != 'null')) { surl += '&type=track&fmt=1'; var track = surl ;var lang_def = lang_code; if (kind != 'asr') { var slang = lang_code; var slangurl = surl } };
     }
-  if (!lang_def) { var a=0; do { if ((!track) && (typeof tracks[a] != "undefined")) { var track = tracks[a]}; a++; } while (a<100)};
+  if (!lang_def) { var a=0; do { if ((!track) && (typeof tracks[a] != "undefined")) { var track = tracks[a]}; a++; } while (a<160)};
 
 //function translate(){
   var text = tts.getElementsByTagName("target");
@@ -2286,7 +2308,7 @@ if ((!slang) && ((kind != 'asr') || (text.length == b+1)) ) { var slang = lang_c
     var id = text[b].getAttribute('id'); if ((id) && (id != 'null')) { if (typeof lang_codeA[id] != 'undefined') { id = parseInt(id) + 1000 }; tracks[id] = surl; lang_codeA[id] = lang_code };
     var lang_default = text[b].getAttribute('lang_default'); if ((lang_default) && (lang_default != 'null')) { surl += '&type=track&fmt=1'; var track = surl ;var lang_def = lang_code };
     }
-  if (!lang_def) { var a=0; do { if ((!track) && (typeof tracks[a] != "undefined")) { var track = tracks[a]}; a++; } while (a<100)};
+  if (!lang_def) { var a=0; do { if ((!track) && (typeof tracks[a] != "undefined")) { var track = tracks[a]}; a++; } while (a<160)};
 //}//translate
 
 //    html.push(
@@ -2469,7 +2491,7 @@ mep_up()
 
     //loadScript( protocol() + "//cdn.rawgit.com/snarly/yt6/1a2653c6f02a907c52e6a9a9d6f071e05926d95b/mediaelement-and-player.js",jq1)
 
-    loadScript( protocol() + "//cdn.rawgit.com/snarly/yt6/c081d5f0139560dcd79b6ef4a027e586e4b576d8/mep-ceeb1a7.js", jq1)
+    loadScript( protocol() + "//cdn.rawgit.com/snarly/yt6/83f842c26b87c7aca0e7745213cfe21ae04fe36a/mep-ceeb1a7.js", jq1)
 
 if (typeof fnCheckLocation != 'number') {
     jQuery(document).ready(function( $ ){
@@ -4333,4 +4355,3 @@ control_panel1()
   },false);//click eventlistener
 
 }//CtrlS
-
