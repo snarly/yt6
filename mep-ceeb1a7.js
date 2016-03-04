@@ -4649,12 +4649,20 @@ if (typeof jQuery != 'undefined') {
 				player.captionsButton.on('click',function() {
 					if (player.selectedTrack === null) {
 						lang = player.tracks[0].srclang;
+						id = player.tracks[0].id;//yt6
 					} else {
 						lang = 'none';
 					}
-					player.setTrack(lang);
+					player.setTrack(lang, id);//yt6
 				});
 			} else {
+				//yt6 hover
+				player.captionsButton.hover(function() {
+					$(this).find('.mejs-captions-selector').css('visibility','visible');
+				}, function() {
+					$(this).find('.mejs-captions-selector').css('visibility','hidden');
+				})
+
 				// hover or keyboard focus
 				player.captionsButton.on( 'mouseenter focusin', function() {
 					$(this).find('.mejs-captions-selector').css('visibility','visible');
@@ -4663,12 +4671,13 @@ if (typeof jQuery != 'undefined') {
 				// handle clicks to the language radio buttons
 				.on('click','input[type=radio]',function() {
 					lang = this.value;
-					player.setTrack(lang);
+					id = this.id;//yt6
+					player.setTrack(lang, id);//yt6
 				});
 
-				player.captionsButton.on( 'mouseleave focusout', function() {
-					$(this).find(".mejs-captions-selector").css("visibility","hidden");
-				});
+//				player.captionsButton.on( 'mouseleave focusout', function() {
+//					$(this).find(".mejs-captions-selector").css("visibility","hidden");
+//				});//yt6
 
 			}
 
@@ -4697,7 +4706,7 @@ if (typeof jQuery != 'undefined') {
 			// add to list
 			for (i=0; i<player.tracks.length; i++) {
 				if (player.tracks[i].kind == 'subtitles') {
-					player.addTrackButton(player.tracks[i].srclang, player.tracks[i].label);
+					player.addTrackButton(player.tracks[i].srclang, player.tracks[i].label, i);//yt6
 				}
 			}
 
@@ -4744,7 +4753,7 @@ if (typeof jQuery != 'undefined') {
 			}
 		},
 
-		setTrack: function(lang){
+		setTrack: function(lang, id){//yt6
 
 			var t = this,
 				i;
@@ -4754,7 +4763,7 @@ if (typeof jQuery != 'undefined') {
 				t.captionsButton.removeClass('mejs-captions-enabled');
 			} else {
 				for (i=0; i<t.tracks.length; i++) {
-					if (t.tracks[i].srclang == lang) {
+					if (i == id.split("_")[3]) {//yt6 if (t.tracks[i].srclang == lang) {
 						if (t.selectedTrack === null)
 							t.captionsButton.addClass('mejs-captions-enabled');
 						t.selectedTrack = t.tracks[i];
@@ -4851,7 +4860,7 @@ d = ytsubtitle2srt(d,track.srclang,mejs.language.codes[track.srclang])
 			t.adjustLanguageBox();
 		},
 
-		addTrackButton: function(lang, label) {
+		addTrackButton: function(lang, label, id) {//yt6
 			var t = this;
 			if (label === '') {
 				label = mejs.language.codes[lang] || lang;
@@ -4859,10 +4868,10 @@ d = ytsubtitle2srt(d,track.srclang,mejs.language.codes[track.srclang])
 
 			t.captionsButton.find('ul').append(
 				$('<li>'+
-					'<input type="radio" name="' + t.id + '_captions" id="' + t.id + '_captions_' + lang + '" value="' + lang + '" disabled="disabled" />' +
+					'<input type="radio" name="' + t.id + '_captions" id="' + t.id + '_captions_' + id + '" value="' + lang + '" disabled="disabled" />' +
 					'<label for="' + t.id + '_captions_' + lang + '">' + label + ' (loading)' + '</label>'+
 				'</li>')
-			);
+			);//yt6 captions_+lang -> captions_+id
 
 			t.adjustLanguageBox();
 
@@ -5055,101 +5064,121 @@ d = ytsubtitle2srt(d,track.srclang,mejs.language.codes[track.srclang])
 	mejs.language = {
 		codes:  {
 			af:'Afrikaans',
-			sq:'Albanian',
+			am:'Amharik',
 			ar:'Arabic',
+			az:'Azerbaijani',
 			be:'Belarusian',
 			bg:'Bulgarian',
+			bn:'Bengali',
+			bs:'Bosnian',
 			ca:'Catalan',
-			zh:'Chinese',
-			'zh-cn':'Chinese (Simplified)',
-			'zh-hans':'Chinese (Simplified)',
-			'zh-hant':'Chinese (Traditional)',
-			'zh-tw':'Chinese (Taiwan)',
-			hr:'Croatian',
+			ceb:'Cebuano',
+			co:'Corsican',
 			cs:'Czech',
+			cy:'Welsh',
 			da:'Danish',
-			nl:'Dutch',
-			en:'English',
-			'en-us':'English (United States)',
-			'en-gb':'English (United Kingdom)',
-			'en-ca':'English (Canada)',
-			'en-au':'English (Australia)',
-			'en-nz':'English (New Zealand)',
-			'en-za':'English (South Africa)',
-			et:'Estonian',
-			tl:'Filipino',
-			fi:'Finnish',
-			fr:'French',
-			gl:'Galician',
 			de:'German',
+			en:'English',
+			'en-au':'English (Australia)',
+			'en-ca':'English (Canada)',
+			'en-gb':'English (United Kingdom)',
+			'en-nz':'English (New Zealand)',
+			'en-us':'English (United States)',
+			'en-za':'English (South Africa)',
 			el:'Greek',
-			ht:'Haitian Creole',
-			iw:'Hebrew',
-			hi:'Hindi',
-			hu:'Hungarian',
-			is:'Icelandic',
-			id:'Indonesian',
+			eo:'Esperanto',
+			es:'Spanish',
+			'es-mx':'Spanish (Mexico)',
+			et:'Estonian',
+			eu:'Basque',
+			fa:'Persian',
+			fi:'Finnish',
+			fil:'Filipino',
+			fr:'French',
+			fy:'Western Frisian',
 			ga:'Irish',
+			gd:'Scottish Gaelic',
+			gl:'Galician',
+			gu:'Gujarati',
+			ha:'Hausa',
+			haw:'Hawaiian',
+			hi:'Hindi',
+			hmn:'Hmong',
+			hr:'Croatian',
+			ht:'Haitian Creole',
+			hu:'Hungarian',
+			hy:'Armeniah',
+			id:'Indonesian',
+			ig:'Igbo',
+			is:'Icelandic',
 			it:'Italian',
+			iw:'Hebrew',
 			ja:'Japanese',
+			jv:'Javanese',
+			kk:'Kazakh',
 			ko:'Korean',
-			lv:'Latvian',
+			ku:'Kurdish',
+			ky:'Kyrgyz',
+			ka:'Georgian',
+			km:'Khmer',
+			kn:'Kannada',
+			la:'Latin',
+			lb:'Luxembourgish',
+			lo:'Lao',
 			lt:'Lithuanian',
+			lv:'Latvian',
+			mg:'Malagasy',
+			mi:'Maori',
 			mk:'Macedonian',
+			ml:'Malayalam',
+			mn:'Mongolian',
+			mr:'Marathi',
 			ms:'Malay',
 			mt:'Maltese',
+			my:'Burmese',
+			ne:'Nepali',
+			nl:'Dutch',
 			no:'Norwegian',
-			fa:'Persian',
+			ny:'Nyanja',
+			pa:'Punjabi',
 			pl:'Polish',
+			ps:'Pashto',
 			pt:'Portuguese',
 			'pt-br':'Portuguese (Brazil)',
 			'pt-pt':'Portuguese (Portugal)',
 			ro:'Romanian',
 			ru:'Russian',
-			sr:'Serbian',
+			sd:'Sindhi',
+			si:'Sinhala',
 			sk:'Slovak',
 			sl:'Slovenian',
-			es:'Spanish',
-			'es-mx':'Spanish (Mexico)',
-			sw:'Swahili',
-			sv:'Swedish',
-			tl:'Tagalog',
-			th:'Thai',
-			tr:'Turkish',
-			uk:'Ukrainian',
-			vi:'Vietnamese',
-			cy:'Welsh',
-			yi:'Yiddish',
-			hy:'Armenian',
-			az:'Azerbaijani',
-			eu:'Basque',
-			be:'Belarussian',
-			bn:'Bengali',
-			bs:'Bosnian',
-			ceb:'Cebuano',
-			eo:'Esperanto',
-			fil:'Filipino',
-			ka:'Georgian',
-			gu:'Gujarati',
-			ha:'Hausa',
-			hmn:'Hmong',
-			ig:'Igbo',
-			jv:'Javanese',
-			kn:'Kannada',
-			km:'Khmer',
-			la:'Latin',
-			lo:'Lao',
-			hy:'Armeniah',
-			mi:'Maori',
-			mr:'Marathi',
-			mn:'Mongolian',
-			ne:'Nepali',
-			pa:'Punjabi',
+			sm:'Samoan',
+			sn:'Shona',
 			so:'Somali',
+			sq:'Albanian',
+			sr:'Serbian',
+			st:'Southern Soto',
+			su:'Sundanese',
+			sv:'Swedish',
+			sw:'Swahili',
 			ta:'Tamil',
 			te:'Telugu',
+			tg:'Tajik',
+			th:'Thai',
+			tl:'Tagalog',
+			tr:'Turkish',
+			uk:'Ukrainian',
 			ur:'Urdu',
+			uz:'Uzbek',
+			vi:'Vietnamese',
+			xh:'Xhosa',
+			yi:'Yiddish',
 			yo:'Yoruba',
+			zh:'Chinese',
+			'zh-cn':'Chinese (Simplified)',
+			'zh-hans':'Chinese (Simplified)',
+			'zh-hant':'Chinese (Traditional)',
+			'zh-tw':'Chinese (Taiwan)',
 			zu:'Zulu'
 		}
 	};
