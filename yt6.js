@@ -719,7 +719,7 @@ player().style.display = 'none'
    }
 
 
-if ( (document.getElementById("movie_player") == null) || ((document.getElementById("movie_player") != null) && (document.getElementsByClassName("html5-video-container")[0].innerHTML == '')) ) {
+if ( (document.getElementById("movie_player") == null) || ((document.getElementById("movie_player") != null) && (document.getElementsByClassName("html5-video-container")[0]) && (document.getElementsByClassName("html5-video-container")[0].innerHTML == '')) ) {
 
 if (typeof ytplayer != 'object') {
   window.ytplayer = {}
