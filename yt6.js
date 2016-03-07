@@ -364,7 +364,7 @@ function hand_axe(){
 			  document.getElementById(\"snarls_player\").parentNode.removeChild(document.getElementById(\"snarls_player\"));\
 			}}")
 
-alert("Decryption data was not received by proxy. Use the Stone Age Hand-axe method instead. A small pop-up window should have opened / should open up after you OK this alert box. If pop-ups are blocked, or you already closed the window, click the Transformer-icon. You need the »WHOLE« content found inside this new pop-up window's frame. The CONTENT is a text starting with something like \"var _yt_player...\" or \"(function(...\". Please select & copy it all (Ctrl+A, Ctrl+C), then paste it into the input field just below the YouTube logo (Ctrl+V). If done, press ENTER.")
+alert("Did not receive decryption data via proxy. Use the Stone Age Hand-axe method instead! A small pop-up window should have opened / should open up after you OK this alert box. If pop-ups are blocked, click the Transformer-icon. The required CONTENT inside the pop-up window's frame is a text starting with something like \"var _yt_player\" or \"(function\"... Please select & copy it all (Ctrl+A, Ctrl+C), then paste it into the input field just below the YouTube logo (Ctrl+V). If done, press ENTER.")
 
 		  waitUntilExists( "ytassetsjs", function() {
 		    if (typeof deldiv == 'function') { deldiv() }
@@ -719,17 +719,17 @@ player().style.display = 'none'
    }
 
 
-
-if (document.getElementById("movie_player") == null) {
+//alert(document.getElementById("movie_player").nextSibling.innerHTML)
+if ( (document.getElementById("movie_player") == null) || ((document.getElementById("player-api").firstChild.nextSibling == null) && (document.getElementById("movie_player") != null) && (document.getElementById("movie_player").getAttribute('class').indexOf('html5-video-player') > -1)) ) {
 
 if (typeof ytplayer != 'object') {
   window.ytplayer = {}
   eval(document.getElementById('player').textContent.split('var ytplayer = ytplayer || {};')[1].split(';(function()')[0]);//.split('"args":{')[1].split('",')[0]
 }
 
-  if (typeof ytplay0 !== 'undefined') {
+  if (typeof ytplay0 == 'undefined') {
     document.getElementById("player-api").innerHTML = '\
-      <span tabindex="0"></span><embed style="" wmode="transparent" type="application/x-shockwave-flash" src="https://s.ytimg.com/yts/swfbin/player-vfl6ioL_0/watch_as3.swf" name="movie_player" id="movie_player" flashvars="" allowfullscreen="true" allowscriptaccess="always" bgcolor="#000000"><span tabindex="0"></span>\
+      <span tabindex="0"></span><embed style="" wmode="transparent" type="application/x-shockwave-flash" src="https://s.ytimg.com/yts/swfbin/player-vflm0X9AB/watch_as3.swf" name="movie_player" id="movie_player" flashvars="" allowfullscreen="true" allowscriptaccess="always" bgcolor="#000000"><span tabindex="0"></span>\
   <noembed><div class="yt-alert yt-alert-default yt-alert-error  yt-alert-player">  <div class="yt-alert-icon">\
     <span class="icon master-sprite yt-sprite"></span>\
   </div>\
@@ -1819,7 +1819,7 @@ var jq0 = function()
 //loadCSS("https://goo.gl/ivCwqv",function(){
 
 
-function mep_run(){
+function mep_run() {
 
 		var Srcto;
 		var href = document.getElementById('snarls_player').href;
@@ -2421,7 +2421,7 @@ if (document.getElementById('mep_init') == null) {
     //document.getElementById('video-hide').appendChild(js)
 
     var code = "jQuery(document).ready(function($) {\
-		$('#version').html( mejs.version);" + mep_run.toString().replace("function mep_run(){",'') + ")"
+		$('#version').html( mejs.version);" + mep_run.toString().replace("function mep_run() {",'') + ")";//!!!function_body.toString() -> "() {" may insert a white space there!!!
 
     try {
       js.appendChild(document.createTextNode(code));
@@ -3861,7 +3861,8 @@ function aspect(a) {
 
   if ((a != 'default' ) && (document.getElementById('bm0').style.width != windowwidth + 'px') &&
 	(  ((webgl) && (  (document.getElementById('bm0').style.height != Math.round(playerwidth / parseFloat(webgl.width / webgl.height)) + 'px') || (!dw)  )) ||
-	   ((!webgl) && (  (document.getElementById('bm0').style.height != Math.round(playerwidth / document.getElementById("snarls_player").aspect_ratio)  + 'px') || (!dw)  ))
+	   ((!webgl) && (  (document.getElementById('bm0').style.height != Math.round(playerwidth / document.getElementById("snarls_player").aspect_ratio) + 'px') || (!dw)  )) ||
+	   ((  (document.getElementById('bm0').style.height != Math.round(playerwidth / document.getElementById("snarls_player").aspect_ratio) + 'px') && (dw)  ))
 	   //((!webgl) && (  (parseInt(document.getElementById('player1').style.width.replace('px','')) != document.getElementById('player1').width) || (!dw)  ))
 	)
      ) {
@@ -4338,8 +4339,8 @@ control_panel1()
 	    }
 
 	  } else {
-	      var opacity = player().style.opacity;
-	      player().setAttribute("style","top:0px; left:0px; opacity:"+opacity); zoom = 1; rotate = 0;//width:" + document.getElementById('placeholder-player').firstChild.style.width + "; height:" + document.getElementById('placeholder-player').firstChild.style.height + "; 
+	      var opacity = player().style.opacity; var display = player().style.display;
+	      player().setAttribute("style","top:0px; left:0px; display:"+display+"; opacity:"+opacity); zoom = 1; rotate = 0;//width:" + document.getElementById('placeholder-player').firstChild.style.width + "; height:" + document.getElementById('placeholder-player').firstChild.style.height + "; 
 	    }
 	  if (poster != null) { poster.style[prop] = 'none'; poster.style.top = '0px'; poster.style.left = '0px' }
 	  //bestfit(); //document.getElementById('player1').style.height = (document.getElementById('player1').style.height.replace('px','') - 30) + 'px';
