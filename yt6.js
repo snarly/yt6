@@ -719,8 +719,7 @@ player().style.display = 'none'
    }
 
 
-//alert(document.getElementById("movie_player").nextSibling.innerHTML)
-if ( (document.getElementById("movie_player") == null) || ((document.getElementById("player-api").firstChild.nextSibling == null) && (document.getElementById("movie_player") != null) && (document.getElementById("movie_player").getAttribute('class').indexOf('html5-video-player') > -1)) ) {
+if ( (document.getElementById("movie_player") == null) || ((document.getElementById("movie_player") != null) && (document.getElementsByClassName("html5-video-container")[0].innerHTML == '')) ) {
 
 if (typeof ytplayer != 'object') {
   window.ytplayer = {}
