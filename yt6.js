@@ -386,7 +386,7 @@ alert("Did not receive decryption data via proxy. Use the Stone Age Hand-axe met
 		     }
 		  })
 
-
+throw ''
 }//hand_axe
 
 
@@ -411,7 +411,7 @@ function ajax1(){
 
             if (i === proxiez.length-1) {
 
-	      if ((e.toString().indexOf('"Access to restricted URI denied"  code: "1012"') > -1) || (e.toString().indexOf('ReferenceError: Security violation') > -1) || (xhr.responseText.indexOf('403 Forbidden') > -1)) {
+	      if ((e.toString().indexOf('"Access to restricted URI denied"  code: "1012"') > -1) || (e.toString().indexOf('ReferenceError: Security violation') > -1) || (xhr.responseText.indexOf('403 Forbidden') > -1) || (e.toString().indexOf('XMLHttpRequest Exception 101') > -1)) {
 
 		hand_axe()
 
@@ -430,7 +430,7 @@ function ajax1(){
           }//catch
 
 
-	      if ((xhr.responseText.indexOf('403 Forbidden') > -1) && (xhr.responseText == '403_Forbidden')) hand_axe()
+	      if ((xhr.responseText.indexOf('403 Forbidden') > -1) || (xhr.responseText == '403_Forbidden')) hand_axe()
 
 
         var rpt = xhr.responseText,scpt;
@@ -455,7 +455,7 @@ function ajax1(){
       if (rpt.indexOf("function(){") != -1) { return [px, rpt] }
     }//setProxy
 
-    var spx = setProxy();
+    var spx = setProxy();//alert(typeof spx + typeof spx[0])
     if (typeof spx[0] == 'undefined') hand_axe()
     var px = spx[0]
     var rpt = spx[1]
@@ -719,7 +719,8 @@ function me_flash_up(){
 player().style.display = 'none'
 
    }
-
+//overwrite p
+//document.getElementById("player-api").innerHTML = ''; me_flash_up()
 
 if ( (document.getElementById("movie_player") == null) || ((document.getElementById("movie_player") != null) && (document.getElementsByClassName("html5-video-container")[0]) && (document.getElementsByClassName("html5-video-container")[0].innerHTML == '')) ) {
 
@@ -1053,13 +1054,9 @@ function set_controls(){
 		    v.paused = true
 		  }
 		}
-	    } else { //player1 != player
+	    } else { //flash object != movie_player
 		var stage = document.getElementById('player1')
-		var v = document.getElementsByClassName('mejs_shim');
-		for(i=0;i<v.length;i++){
-		  if( v[i].getAttribute('name') == 'movie') var a = v[i];
-		}
-		var v = a
+		var v = flashvars[0];
 	      }
 	  }
       }
@@ -1359,7 +1356,7 @@ function rewrite_ytplayer(node_value, s, sig){
                 var fn = (args.title + x).replace(/&/g,'%26').replace(/\+/g,'%2B')
               }
 
-          var size = href.match(/[&\?]clen=([0-9]+)&/i)
+          var size = href.match(/[&\?]clen=([0-9]+)&/i);
           if ((typeof size != 'undefined') && (size !== null)) {
             size = parseInt(size[1],10);
               if (size>=1073741824) {
@@ -1373,7 +1370,8 @@ function rewrite_ytplayer(node_value, s, sig){
                 }
             var y = 25;
             if (qq.indexOf("fps") > -1) y = y + 1;
-            size = Array(y - qq.length - 3*((qq.length/18)>>0)).join(".") + size
+            size = Array(y - qq.length - 3*Math.ceil(((qq.length/18)>>0)) ).join(".") + size
+	    //Bit shift by 0 which is equivalent to division by 1
           } else { size = '' }
 
 
@@ -2110,7 +2108,7 @@ var z = document.getElementsByClassName('mejs-duration'); if ((z != null) && (z[
   }
 }
 
-player1.setPoster(getPoster()); document.getElementsByClassName('mejs-poster mejs-layer')[0].setAttribute('id','mejs-poster')
+player1.setPoster(getPoster()); if (document.getElementsByClassName('mejs-poster mejs-layer')[0]) document.getElementsByClassName('mejs-poster mejs-layer')[0].setAttribute('id','mejs-poster')
 
 resize_layers( document.getElementById('snarls_player').w, document.getElementById('snarls_player').h );
 
@@ -3388,7 +3386,7 @@ if ( (me_aspect) && (  (document.getElementById(mep_x('mep_')) == null) || ((pla
     } else {
 	if (  ((document.getElementsByClassName('html5-video-container')[0]) &&
 	       (document.getElementsByClassName('html5-video-container')[0].innerHTML != '')) ||
-	      (document.getElementById(mep_x('mep_')))
+	      (document.getElementById(mep_x('mep_')) != null)
 	   ) {
 	  p1.style.width = Math.round((h - hdiff) * document.getElementById('snarls_player').aspect_ratio) + 'px';
 	  p1.style.height = Math.round(h - hdiff) + 'px';
@@ -3406,7 +3404,7 @@ if ( (me_aspect) && (  (document.getElementById(mep_x('mep_')) == null) || ((pla
 
   if ( (w < (1 * p1.style.width.replace('px',''))) || ( (windowheight < (1 * p1.style.height.replace('px',''))) && (document.getElementById('snarls_player').size == 'theater') ) ) {
 
-    if ( ((1 * p1.style.height.replace('px','')) < windowheight ) || (w < (1 * p1.style.width.replace('px',''))) ){//|| (!((1 * p1.style.height.replace('px','')) > windowheight )) ) {
+    if ( ( ((1 * p1.style.height.replace('px','')) < windowheight ) || (w < (1 * p1.style.width.replace('px',''))) ) && (document.getElementById(mep_x('mep_')) != null) ){//|| (!((1 * p1.style.height.replace('px','')) > windowheight )) ) {
 //console.log('3: ' + p1.style.left + p1.style.width);
 	    p1.style.width = w + 'px'
 	    p1.style.height = Math.round( w / document.getElementById('snarls_player').aspect_ratio ) - hdiff + 'px';
@@ -3476,7 +3474,7 @@ if ( (me_aspect) && (  (document.getElementById(mep_x('mep_')) == null) || ((pla
 
     }
 
-    if( (document.getElementById('snarls_player').size != 'theater') &&
+    if( (document.getElementById('snarls_player').size != 'theater') && (document.getElementById(mep_x("mep_")) != null) &&
 //	((Math.abs(document.getElementById('player1').width - p1.style.width.replace('px','')) < 2) &&
 //	  (Math.abs(document.getElementById('player1').height - p1.style.height.replace('px','')) < 2))	  
 	(
@@ -3796,7 +3794,7 @@ set_controls()
 }
 
 function ythtml5_size() {
-  if ( (typeof player().getPlayerState == 'function') && (player().getAttribute('flashvars') == null) ) {
+  if ( (typeof player().getPlayerState == 'function') && (player().getAttribute('flashvars') == null) && (document.getElementById(mep_x("mep_")) != null) ) {
     var z = document.getElementById('placeholder-player').firstChild.style;
     if (typeof z !== 'object') {
       document.getElementById('placeholder-player').innerHTML = '<div class="player-api player-width player-height"></div>';
@@ -3867,7 +3865,8 @@ function aspect(a) {
 //(!a) &&
 //  if ((document.getElementById('bm0').style.width != playerwidth ) && (  ( (webgl) && (document.getElementById('bm0').style.height != Math.round(playerwidth / parseFloat(webgl.width / webgl.height)) + 'px') ) || ( (!webgl) && ( (parseInt(document.getElementById('bm0').style.height.replace('px','')) != Math.round((playerwidth / document.getElementById("snarls_player").aspect_ratio))) && (parseInt(document.getElementById('bm0').style.height.replace('px','')) != Math.round(((windowheight / 100 >>0) * 80) * document.getElementById("snarls_player").aspect_ratio)) ))  ))  {
 
-  if ((a != 'default' ) && (document.getElementById('bm0').style.width != windowwidth + 'px') &&
+//alert(document.getElementById('bm0').style.width + ' ' + Math.round(1*((windowheight / 100 >>0) * 80) * document.getElementById("snarls_player").me_aspect) +  'px '+ document.getElementById('bm0').style.height + ' ' + Math.round((windowheight / 100 >>0) * 80) + 'px')
+  if ((a != 'default' ) && (!((1*document.getElementById('bm0').style.height.replace('px','') == Math.round((windowheight / 100 >>0) * 80)) && (1*document.getElementById('bm0').style.width.replace('px','') == Math.round(2+((windowheight / 100 >>0) * 80) * document.getElementById("snarls_player").me_aspect)) && (document.getElementById('snarls_player').size == 'theater') )) &&
 	(  ((webgl) && (  (document.getElementById('bm0').style.height != Math.round(playerwidth / parseFloat(webgl.width / webgl.height)) + 'px') || (!dw)  )) ||
 	   ((!webgl) && (  (document.getElementById('bm0').style.height != Math.round(playerwidth / document.getElementById("snarls_player").aspect_ratio) + 'px') || (!dw)  )) ||
 	   ((!webgl) && (  (document.getElementById('bm0').style.height != Math.round(playerwidth / document.getElementById("snarls_player").aspect_ratio) + 'px') && (dw)  ))
@@ -4310,7 +4309,7 @@ control_panel1()
 
 	    } else {//alert(v + 'width:' + v.style.width + ' left:' + v.style.left + ' height:' + v.style.height + ' top:' + v.style.top)
 
-		if (bm0 != null) {
+		if ((bm0 != null) && (v) && (document.getElementById(mep_x("mep_")) != null)) {
 		  v.style.top = (Math.round( parseInt(
 			 parseInt(bm0.style.height.replace('px','')) -
 			 parseInt(v.style.height.replace('px','')) - hdiff
