@@ -340,11 +340,12 @@ function hand_axe(){
 		    bm1.id = 'bm6'
 		    document.getElementsByClassName('yt-masthead-logo-container ')[0].insertBefore(bm1,document.getElementsByClassName('yt-masthead-logo-container ')[0].lastChild);
 //		    document.getElementById('page').insertBefore(bm1,document.getElementById('page').firstChild);
-		    var bm1 = document.createElement('input')
+		    var bm1 = document.createElement('textarea');//input
 		    bm1.id = 'setjs'
 		    bm1.value = '';//(function(){})()
 		    document.getElementById('bm6').appendChild(bm1)
-		    bm1.setAttribute("maxlength", 2097152); bm1.setAttribute("maxLength", 2097152);
+		    bm1.setAttribute("maxlength", 2097152);
+		    bm1.setAttribute('rows','1'); bm1.setAttribute('cols','15')
 		    bm1.setAttribute("onkeyup","if ((event.keyCode == 13) && (document.getElementById(\"getjs\").newWindow != null)) {\
 			if (document.getElementById(\"setjs\").value.indexOf(\"function()\") > -1) {\
 			var scpt = document.createElement(\"script\");\
