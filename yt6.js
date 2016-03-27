@@ -365,7 +365,7 @@ function hand_axe(){
 			  document.getElementById(\"snarls_player\").parentNode.removeChild(document.getElementById(\"snarls_player\"));\
 			}}")
 
-alert("Did not receive decryption data via proxy. Use the Stone Age Hand-axe method instead! A small pop-up window should have opened / should open up after you OK this alert box. If pop-ups are blocked, click the Transformer-icon. The required CONTENT inside the pop-up window's frame is a text starting with something like \"var _yt_player\" or \"(function\"... Please select & copy it all (Ctrl+A, Ctrl+C), then paste it into the input field just below the YouTube logo (Ctrl+V). If done, press ENTER.")
+alert("Did not receive video decryption data via proxy. Use the Stone Age Hand-axe method instead! A small pop-up window should have opened / should open up after you OK this alert box. If pop-ups are blocked, click the Transformer-icon. The required CONTENT inside the pop-up window's frame is a text starting with something like \"var _yt_player\" or \"(function\"... Please select & copy it all (Ctrl+A, Ctrl+C), then paste it into the input field just below the YouTube logo (Ctrl+V). If done, press ENTER.")
 
 		  waitUntilExists( "ytassetsjs", function() {
 		    if (typeof deldiv == 'function') { deldiv() }
@@ -387,7 +387,7 @@ alert("Did not receive decryption data via proxy. Use the Stone Age Hand-axe met
 		     }
 		  })
 
-throw ''
+throw 'XMLHttpRequest failure'
 }//hand_axe
 
 
@@ -431,26 +431,58 @@ function ajax1(){
           }//catch
 
 
-	      if ((xhr.responseText.indexOf('403 Forbidden') > -1) || (xhr.responseText == '403_Forbidden')) hand_axe()
+	  if ((xhr.responseText.indexOf('403 Forbidden') > -1) || (xhr.responseText == '403_Forbidden')) {
+	      //alert(px + ' proxy denied to serve data: 403 Forbidden')
+	      var axe = proxiez.indexOf(px);
+	      proxiez.splice(axe, 1);
+	      for (j=0;j<proxiez.length;j++){
+	        var px = proxiez[j]
+	        try {
+	          xhr.open('get', px + ytplayer.config.assets.js, false);
+	          xhr.send('');
+	        } catch (e) {
 
+	            if (j === proxiez.length-1) {
 
-        var rpt = xhr.responseText,scpt;
-        if (rpt.indexOf("function(){") != -1) {
-          scpt = document.createElement("script");
-          scpt.type = "text/javascript";
-          scpt.id = "ytassetsjs";;
-          scpt.textContent = rpt;
-          document.body.appendChild(scpt);
-          var z = new Date().toLocaleString().toString()
-          scpt.setAttribute("time",z)
-          break
-        } else {
-            scpt = document.createElement("div");
-            scpt.id = px + " error";
-            scpt.textContent = rpt;
-            document.body.appendChild(scpt);
-            scpt.setAttribute("style","display:none")
-          }
+		      if ((e.toString().indexOf('"Access to restricted URI denied"  code: "1012"') > -1) || (e.toString().indexOf('ReferenceError: Security violation') > -1) || (xhr.responseText.indexOf('403 Forbidden') > -1) || (e.toString().indexOf('XMLHttpRequest Exception 101') > -1)) {
+
+			hand_axe()
+
+		      } else {
+			  hand_axe()
+	//		  throw new Error(e + " " + px + ' error')
+			}
+              
+	              //exit(e + " " + px + ' error') 
+	            } else {
+			if (e.toString().indexOf('"Access to restricted URI denied"  code: "1012"') == -1) {
+
+			}
+			  alert(e + " " + px + ' error')
+	              }
+	          }//catch
+	      }
+	  //hand_axe()
+	  }//403
+
+	
+	var rpt = xhr.responseText,scpt;
+	if (rpt.indexOf("function(){") != -1) {
+	  scpt = document.createElement("script");
+	  scpt.type = "text/javascript";
+	  scpt.id = "ytassetsjs";;
+	  scpt.textContent = rpt;
+	  document.body.appendChild(scpt);
+	  var z = new Date().toLocaleString().toString()
+	  scpt.setAttribute("time",z)
+	  break
+	} else {
+	    scpt = document.createElement("div");
+	    scpt.id = px + " error";
+	    scpt.textContent = rpt;
+	    document.body.appendChild(scpt);
+	    scpt.setAttribute("style","display:none")
+	  }
       }//for
 
       if (rpt.indexOf("function(){") != -1) { return [px, rpt] }
