@@ -311,7 +311,7 @@ function FireEvent( ElementId, EventName )
 
 
   var xhr = new XMLHttpRequest(), px
-  var proxies = ['https://allow-any-origin.appspot.com/https:','https://cors-anywhere.herokuapp.com/https:']
+  var proxies = ['https://allow-any-origin.appspot.com/https:','https://cors-anywhere.herokuapp.com/https:','https://crossorigin.me/https:']
 
 //+ Jonas Raoni Soares Silva
 //@ http://jsfromhell.com/array/shuffle [v1.0]
