@@ -130,12 +130,6 @@ function dc(sg) {
 
 function def_link(){
 
-if (ytplayer.config == null) {
-  document.getElementById('snarls_player').parentNode.removeChild(document.getElementById('snarls_player'))
-} else {
-    if (ytplayer.config.args == null) document.getElementById('snarls_player').parentNode.removeChild(document.getElementById('snarls_player'))
-  }
-
   document.getElementById('snarls_player').sig = '&'
   var ft = [ytplayer.config.args.url_encoded_fmt_stream_map, ytplayer.config.args.adaptive_fmts]
   for (i in ft) {
