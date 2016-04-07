@@ -1319,6 +1319,10 @@ function rewrite_ytplayer(node_value, s, sig){
         if ((typeof z[2] != 'undefined') && (z[2] != null)) {
           tts_url[i] = z[0] + 'v=' + z[1]
         }
+        var z = tts_url[i].split('lang=');
+        if ((typeof z[1] != 'undefined') && (z[1] != null)) {
+          tts_url[i] = z[0] + z[1].split('&')[1]
+        }
     var z = tts_url[i].split('https://') || tts_url[i].split('http://');
     if (typeof z[1] != 'undefined') {
       tts_url[i] = 'https://' + z[1].split('?')[0] + '?' + z[0] + z[1].split('?')[1]
