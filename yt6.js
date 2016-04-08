@@ -427,7 +427,7 @@ function ajax1(){
 		if (e.toString().indexOf('"Access to restricted URI denied"  code: "1012"') == -1) {
 
 		}
-		  alert(e + " " + px + ' error')
+		  //alert(e + " " + px + ' error')
               }
           }//catch
 
@@ -1314,6 +1314,10 @@ function rewrite_ytplayer(node_value, s, sig){
           tts_url[i] = z[0] + 'v=' + z[1]
         }
         var z = tts_url[i].split('lang=');
+        if ((typeof z[1] != 'undefined') && (z[1] != null)) {
+          tts_url[i] = z[0] + z[1].split('&')[1]
+        }
+        var z = tts_url[i].split('kind=asr');
         if ((typeof z[1] != 'undefined') && (z[1] != null)) {
           tts_url[i] = z[0] + z[1].split('&')[1]
         }
