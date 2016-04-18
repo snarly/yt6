@@ -1154,7 +1154,8 @@ var autoplay = document.getElementById('watch-appbar-playlist');
 if (typeof autoplay != 'undefined') {
   var autoplay = gclass('yt-uix-button-icon-watch-appbar-autoplay')
   if (typeof autoplay[0] != 'undefined') {
-    var autoplay = document.getElementsByClassName('playlist-nav-controls')[0].innerHTML.split('\>')[0].split('yt-uix-button-toggled')[1];
+    var autoplay = document.getElementsByClassName('playlist-nav-controls')[0]
+    if (autoplay != undefined) var autoplay = autoplay.innerHTML.split('\>')[0].split('yt-uix-button-toggled')[1];
   }
 }
 var autoplay2 = gclass('playlist-mix-icon yt-sprite');
