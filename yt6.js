@@ -1333,7 +1333,7 @@ function rewrite_ytplayer(node_value, s, sig){
 	}
 	var x = x.replace(tts_url[i],'') + tts_url[i]; tts_url[i] = ''
       }
-    if (tts_url[i].substring(tts_url[i].length-1,tts_url[i].length) == ',') { tts_url[i] = tts_url[i].substring(0,tts_url[i].length-1) }; tts_url[i].split('&&').join(''); console.log(tts_url[i]);
+    if (tts_url[i].substring(tts_url[i].length-1,tts_url[i].length) == ',') { tts_url[i] = tts_url[i].substring(0,tts_url[i].length-1) }; tts_url[i].split('&&').join(''); //console.log(tts_url[i]);
   }}
 
 //  if ((tts_url) && (tts_url.split('"')[2] == ',')) tts_url = tts_url.split('"')[1].split('\\/').join('/').split('\\u0026').join('&')
@@ -2408,7 +2408,7 @@ if (k < 3) {
 }//for
   var k = document.getElementsByTagName('track')
   if ((typeof k[0] != 'undefined') && (k[0].getAttribute('kind') == 'subtitles')){
-    for(i=k.length-1;i>0;--i){console.log(k.length + ' ' + i + ' ' + typeof k[i])
+    for(i=k.length-1;i>0;--i){//console.log(k.length + ' ' + i + ' ' + typeof k[i])
       if (k[i].getAttribute('title') == k[i].getAttribute('srclang')){
 	var js = document.createElement('track');
 	js.id = k[i].getAttribute('id');
