@@ -1316,15 +1316,18 @@ function rewrite_ytplayer(node_value, s, sig){
         }
         var z = tts_url[i].split('lang=');
         if ((typeof z[1] != 'undefined') && (z[1] != null)) {
-          //tts_url[i] = z[0] + z[1].split('&')[1]
-        }
-        var z = tts_url[i].split('kind=asr');
-        if ((typeof z[1] != 'undefined') && (z[1] != null)) {
           tts_url[i] = z[0] + z[1].split('&')[1]
         }
+	if (tts_url[i].indexOf('kind=') > -1) {
+          var z = tts_url[i].split('kind=');
+          if ((typeof z[1] != 'undefined') && (z[1] != null)) {
+            tts_url[i] = z[0] + z[1].split('&')[1]
+          };
+	}
     var z = tts_url[i].split('https://') || tts_url[i].split('http://');
     if (typeof z[1] != 'undefined') {
       tts_url[i] = 'https://' + z[1].split('?')[0] + '?' + z[0] + z[1].split('?')[1]
+      if (tts_url[i].substring(tts_url[i].length-1,tts_url[i].length) == ',') { tts_url[i] = tts_url[i].substring(0,tts_url[i].length-1) };
       if (x) tts_url[i] = tts_url[i] + '&' + x;
     } else {
 	var z = tts_url[i].split('v=');
@@ -2359,15 +2362,16 @@ var sref = unescape(ytplayer.config.args.ttsurl[k]) + '&type=list&tlangs=1&fmts=
     var name = text[k-1].getAttribute('name'); if ((name) && (name != 'null')) { surl += '&name=' + name } else { surl += '&name' };
     var kind = text[k-1].getAttribute('kind'); if ((kind) && (kind != 'null')) { surl += '&kind=' + kind } else { surl += '&kind' };
 //if ((typeof slang == 'undefined') && ((kind != 'asr') || (text.length == b+1)) ) {
- var slang = lang_code; var slangurl = surl;
+    var slang = lang_code; var slangurl = surl;
 // }
+    var lang_default = text[k-1].getAttribute('lang_default'); if ((lang_default) && (lang_default != 'null')) { surl += '&type=track&fmt=1' };// var track = surl ;var lang_def = lang_code; if (kind != 'asr') { var slang = lang_code; var slangurl = surl } };
     var id = text[k-1].getAttribute('id'); if ((id) && (id != 'null')) { tracks[id] = surl; lang_codeA[id] = lang_code };
-    //var lang_default = text[k-1].getAttribute('lang_default'); if ((lang_default) && (lang_default != 'null')) { surl += '&type=track&fmt=1'; var track = surl ;var lang_def = lang_code; if (kind != 'asr') { var slang = lang_code; var slangurl = surl } };
 
   //if (!lang_def) { var a=0; do { if ((!track) && (typeof tracks[a] != "undefined")) { var track = tracks[a]}; a++; } while (a<160)};
 
 //function translate(){
-if (k < 3) {
+if (k < 4) {
+ if (!((text.length > 2) && (kind) && (kind == 'asr'))){
   var ttext = tts.getElementsByTagName("target");var c
   for (c=0;c<ttext.length;c++)
     {
@@ -2380,7 +2384,8 @@ if (k < 3) {
     //var lang_default = ttext[c].getAttribute('lang_default'); if ((lang_default) && (lang_default != 'null')) { surl += '&type=track&fmt=1'; var track = surl ;var lang_def = lang_code };
     }
   //if (!lang_def) { var a=0; do { if ((!track) && (typeof tracks[a] != "undefined")) { var track = tracks[a]}; a++; } while (a<160)};
-}
+ }
+} 
 //}//translate
 
 //    }//for(b
@@ -2396,8 +2401,7 @@ if (k < 3) {
       var js = document.createElement('track');
       js.id = 'captions-' + i;
       document.getElementById('player1').appendChild(js);
-      delete js;
-      if (sref != undefined) {
+      if (typeof sref != 'undefined') {
 	js.setAttribute('kind','subtitles');
 	js.setAttribute('title',slang)
 	js.setAttribute('srclang',lang_codeA[i])
@@ -2408,21 +2412,42 @@ if (k < 3) {
 }//for
   var k = document.getElementsByTagName('track')
   if ((typeof k[0] != 'undefined') && (k[0].getAttribute('kind') == 'subtitles')){
-    for(i=k.length-1;i>0;--i){//console.log(k.length + ' ' + i + ' ' + typeof k[i])
-      if (k[i].getAttribute('title') == k[i].getAttribute('srclang')){
+    var x = 0
+    for(i=k.length-1;i>0;i--){
+      if (k[i+x].getAttribute('title') == k[i+x].getAttribute('srclang')){
 	var js = document.createElement('track');
-	js.id = k[i].getAttribute('id');
+	js.id = k[i+x].getAttribute('id');
         document.getElementById('player1').insertBefore(js,document.getElementById('player1').firstChild);
 	js.setAttribute('kind','subtitles')
-	js.setAttribute('title',k[i+1].getAttribute('title'))
-	js.setAttribute('aria-label',k[i+1].getAttribute('srclang'))
-	js.setAttribute('srclang',k[i+1].getAttribute('srclang'))
-	js.setAttribute('src',k[i+1].getAttribute('src'))
-	k[i+1].setAttribute('class','remove-tracks')
-      }
+	js.setAttribute('title',k[i+x+1].getAttribute('title'))
+	js.setAttribute('aria-label',k[i+x+1].getAttribute('srclang'))
+	js.setAttribute('srclang',k[i+x+1].getAttribute('srclang'))
+	js.setAttribute('src',k[i+x+1].getAttribute('src'))
+	k[i+x+1].setAttribute('class','remove-tracks')
+	var x = 1
+      } else var x = 0
     }
-  var k = document.getElementsByClassName('remove-tracks');
-  while (k[0]) { k[0].parentNode.removeChild(k[0]);  }
+    var k = document.getElementsByClassName('remove-tracks');
+    while (k[0]) { k[0].parentNode.removeChild(k[0]);  }
+
+    var k = document.getElementsByTagName('track')
+    var x = 0
+    for(i=k.length-1;i>0;--i){
+      if (k[i+x].getAttribute('src').indexOf('&type=track&fmt=1') > -1){
+	var js = document.createElement('track');
+	js.id = k[i+x].getAttribute('id');
+        document.getElementById('player1').insertBefore(js,document.getElementById('player1').firstChild);
+	js.setAttribute('kind','subtitles')
+	js.setAttribute('title',k[i+x+1].getAttribute('title'))
+	js.setAttribute('aria-label',k[i+x+1].getAttribute('srclang'))
+	js.setAttribute('srclang',k[i+x+1].getAttribute('srclang'))
+	js.setAttribute('src',k[i+x+1].getAttribute('src'))
+	k[i+x+1].setAttribute('class','remove-tracks')
+	var x = 1
+      } else var x = 0
+    }
+    var k = document.getElementsByClassName('remove-tracks');
+    while (k[0]) { k[0].parentNode.removeChild(k[0]);  }
 
   }
 } else { var sref = null; var tracks = null }
