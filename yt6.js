@@ -545,9 +545,9 @@ if (player().getAttribute('name') == 'me_flash') {
 
 
 function itag(me_src){
-  var itag = me_src.split('itag')[1]
-  if (itag.indexOf('&') > -1) { var itag = itag.split('&')[0].replace('=','') } else { var itag = itag.split('/')[1] }
-  return itag
+  if (me_src.indexOf('itag=') > -1) var itagx = me_src.split('itag=')[1].split('&')[0]
+  if (me_src.indexOf('itag/') > -1) var itagx = me_src.split('itag/')[1].split('/')[0]
+  if (itagx) { return itagx } else { return 999 }
 }
 
 
