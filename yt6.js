@@ -546,7 +546,7 @@ if (player().getAttribute('name') == 'me_flash') {
 
 function itag(me_src){
   var itag = me_src.split('itag')[1]
-  if (itag.indexOf('&') > -1) { var itag = itag.split('&')[0] } else { var itag = itag.split('/')[1] }
+  if (itag.indexOf('&') > -1) { var itag = itag.split('&')[0].replace('=','') } else { var itag = itag.split('/')[1] }
   return itag
 }
 
