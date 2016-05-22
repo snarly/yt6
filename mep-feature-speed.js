@@ -75,8 +75,11 @@
 				if (newSpeed == 'PAL to NTSC') newSpeed = parseFloat(parseFloat(parseFloat(24000/1001) - 25) / 25 + 1).toFixed(11) 
 				if (newSpeed == 'Normal') newSpeed = 1
 				playbackspeed = newSpeed;
-				if ((typeof player1 != 'undefined') && (typeof player1.src == 'string') && (player1.src != null) && (parseInt(itag(player1.src)) > 102) && ((player1.src.indexOf('mime=audio') == -1) || (player1.src.indexOf('mime/audio') == -1)) ) media.pause();
+
 				media.playbackRate = parseFloat(newSpeed);
+
+				if ((typeof player1 != 'undefined') && (typeof player1.src == 'string') && (player1.src != null) && (parseInt(itag(player1.src)) > 102) && ((player1.src.indexOf('mime=audio') == -1) && (player1.src.indexOf('mime/audio') == -1)) ) { player1.currentTime = player1.currentTime }
+
 				document.getElementById('displaySpeed').innerHTML = "Speed " + Math.round(media.playbackRate * 100) + "%";
 				//speedButton.find('button').html("Speed " + Math.round(media.playbackRate * 100) + "%");//newSpeed + t.options.speedChar);
 				speedButton.find('.mejs-speed-selected').removeClass('mejs-speed-selected');
@@ -113,8 +116,11 @@
 			})
                     .click(function(e) {
                         e.preventDefault();
-                        if ((typeof player1 != 'undefined') && (typeof player1.src == 'string') && (player1.src != null) && (parseInt(itag(player1.src)) > 102) && ((player1.src.indexOf('mime=audio') == -1) || (player1.src.indexOf('mime/audio') == -1)) ) media.pause();
+
                         if(media.playbackRate < 8.0) media.playbackRate = (media.playbackRate + 0.01).toFixed(2);
+
+                        if ((typeof player1 != 'undefined') && (typeof player1.src == 'string') && (player1.src != null) && (parseInt(itag(player1.src)) > 102) && ((player1.src.indexOf('mime=audio') == -1) && (player1.src.indexOf('mime/audio') == -1)) ) { player1.currentTime = player1.currentTime }
+
                         //media.play();
 			document.getElementById('displaySpeed').innerHTML = "Speed " + Math.round(media.playbackRate * 100) + "%";
 			//speedButton.find('button').html("Speed " + Math.round(media.playbackRate * 100) + "%");
@@ -134,8 +140,11 @@
 			})
                         .click(function(e) {
                             e.preventDefault();
-                            if ((typeof player1 != 'undefined') && (typeof player1.src == 'string') && (player1.src != null) && (parseInt(player1.src.split('itag=')[1].split('&')[0]) > 102) && (player1.src.indexOf('mime=audio') == -1)) media.pause();
+
                             if(media.playbackRate > 0.0) media.playbackRate = (media.playbackRate - 0.01).toFixed(2);
+
+                            if ((typeof player1 != 'undefined') && (typeof player1.src == 'string') && (player1.src != null) && (parseInt(itag(player1.src)) > 102) && ((player1.src.indexOf('mime=audio') == -1) && (player1.src.indexOf('mime/audio') == -1)) ) { player1.currentTime = player1.currentTime }
+
                             //media.play();
 			    document.getElementById('displaySpeed').innerHTML = "Speed " + Math.round(media.playbackRate * 100) + "%";
 			    //speedButton.find('button').html("Speed " + Math.round(media.playbackRate * 100) + "%");
