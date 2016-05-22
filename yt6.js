@@ -1943,12 +1943,12 @@ function mep_run() {
 					      var dash = document.getElementById(mep_x('mep_') + '_sourcechooser_240p  VP9webm');
 					      if ((dash != null)) {
 						dash.setAttribute('checked','checked'); player1.setSrc(document.getElementById('snarls_player').linx[242]);player1.load();
-						if (autoplay) player1.play();
+						if (autoplay(false)) player1.play();
 					      } else {
 						  var dash = document.getElementById(mep_x('mep_') + '_sourcechooser_240p DASH mp4');
 						  if ((dash != null)) {
 						    dash.setAttribute('checked','checked'); player1.setSrc(document.getElementById('snarls_player').linx[133]);player1.load();
-						    if (autoplay) player1.play();
+						    if (autoplay(false)) player1.play();
 						  } else { alert('Decryption failure!'); }
 						}
 					    } else { alert('Decryption failure!'); };
@@ -2039,8 +2039,8 @@ function mep_run() {
 					  }
 					});
 					me.addEventListener('ended', function() {
-					  if (player1.options.loop1) {
-					    Seek = 1; try { me.currentTime = player2.currentTime = 0 } catch(e) { me.currentTime = 0 }; me.play();
+					  if (player1.options.loop1) { 
+					    Seek = 5; try { me.currentTime = player2.currentTime = 0 } catch(e) { me.currentTime = 0 }; if (typeof AV[itag(me.src)] == 'string') me.play();
 					    if (!isNaN(player2.duration)) {
 					      player2.currentTime = player2.duration
 					    }
@@ -2086,7 +2086,7 @@ function mep_run() {
 		  audioWidth: 1, audioHeight: 1,
 		  success: function(me) {  $('#audio-type').html( me.pluginType);
 					me.addEventListener('seeked', function() {
-					  if (Seek == 1) {
+					  if ((Seek == 1) || (Seek == 5)) {
 					    Seek = null ;  player1.play()
 					  } else {
 					      if ( (!me.paused) && (document.getElementById('bm0').style.visibility != 'hidden') ) {
@@ -2136,7 +2136,7 @@ function mep_run() {
 		  audioWidth: 1, audioHeight: 1,
 		  success: function(me) {  $('#audio-type').html( me.pluginType);
 					me.addEventListener('seeked', function() {
-					  if (Seek == 1) {
+					  if ((Seek == 1) || (Seek == 5)) {
 					    Seek = null ;  player1.play()
 					  } else {
 					      if (!me.paused) {
@@ -2608,7 +2608,7 @@ if ( getElementsByAttribute(document,'div','class','yt-masthead-logo-container')
 
 mep_up()
             };
-            loadScript( protocol() + "//cdn.rawgit.com/snarly/yt6/811852205e4e9a447ec9f822953e198d4e638a7e/mep-feature-speed.js",jq5)
+            loadScript( protocol() + "//cdn.rawgit.com/snarly/yt6/90c833e40a485c77fb393aa91c4c9b8817067172/mep-feature-speed.js",jq5)
 
 //          };
 //          loadScript( protocol() + "//cdn.rawgit.com/snarly/yt6/f684d6c92fc170be45129a7f2c12069689fcc0b0/mep-feature-playlist.js",jq4)
