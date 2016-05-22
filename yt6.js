@@ -1360,7 +1360,7 @@ function rewrite_ytplayer(node_value, s, sig){
 
 
   var html = [new Date().toLocaleString(),
-    'Click to switch streams in HTML5 player. Right click & "Save as" to download.<br>'
+    'Click to switch streams in both native and alternative HTML5 player. Right click & "Save as" to download.<br>'
   ];//document.getElementById('early-body').innerHTML = ''
   var ft = [args.url_encoded_fmt_stream_map, args.adaptive_fmts]
   for (i in ft) {
@@ -1660,8 +1660,9 @@ if (document.getElementById("bm1") != null) document.getElementById("bm1").paren
   }
   html.splice(1,0,'Direct links to YouTube media<br>for IP address: '+ expire_date()[0])
   html.push(
+   '<br><b>' + document.getElementById("eow-title").textContent + '</b>' +
    '<br>Links will expire on <br>' + expire_date()[1] + 
-   '<br><br>V+A sources may refuse to load, while separate video- and audio-only ones may still do for synced playback. If those fail as well, clear YT-cookies, refresh page and reload the script.'
+   '<br><br>V+A sources may refuse to load, while separate video- and audio-only ones synced may still do for playback. If those fail as well, clear YT-cookies, refresh page and reload the script.'
   )
   document.getElementById('bm2').innerHTML = html.join('<br>')
 
@@ -1947,9 +1948,20 @@ function mep_run() {
 					      } else {
 						  var dash = document.getElementById(mep_x('mep_') + '_sourcechooser_240p DASH mp4');
 						  if ((dash != null)) {
-						    dash.setAttribute('checked','checked'); player1.setSrc(document.getElementById('snarls_player').linx[133]);player1.load();
-						    if (autoplay(false)) player1.play();
+						    if ((document.getElementById('snarls_player').linx[133]) && (document.getElementById('snarls_player').linx[133].indexOf('/yt_otf/') > -1)) {//not yet available links
+						      var dash = document.getElementById(mep_x('mep_') + '_sourcechooser_360p DASH mp4');
+						      if ((dash != null)) {
+							dash.setAttribute('checked','checked'); player1.setSrc(document.getElementById('snarls_player').linx[134]);player1.load();
+							if (autoplay(false)) player1.play();
+						      } else { alert('Decryption failure!'); }
+
+						    } else {//normal case
+
+							dash.setAttribute('checked','checked'); player1.setSrc(document.getElementById('snarls_player').linx[133]);player1.load();
+							if (autoplay(false)) player1.play();
+						      }
 						  } else { alert('Decryption failure!'); }
+
 						}
 					    } else { alert('Decryption failure!'); };
 					  }
@@ -2652,6 +2664,7 @@ window.addEventListener("spfdone", function(e) {
     var z = document.getElementById('re-embed2')
     if (z != null) { z.parentNode.removeChild(z); document.querySelector('#player-unavailable').style.display = ''}
 
+    if (document.getElementById('unavailable-submessage').textContent.replace(/(\r\n|\n|\r)/gm," ").split(' ').join('') != '') {
     if (document.querySelector('#watch7-player-age-gate-content') != null) {
       var z = document.createElement('iframe');
       z.id = 're-embed2';
@@ -2667,7 +2680,44 @@ window.addEventListener("spfdone", function(e) {
       }
       document.querySelector('#player-unavailable').style.display = 'none'; player().style.display = 'none';
       if (document.getElementById('bm0') != null) document.getElementById('bm0').style.visibility = 'hidden'
-    }
+    } else {
+	var z = document.querySelector('[itemprop="regionsAllowed"]')
+	if (z != null) {
+	  var z = z.content
+	  if ((document.getElementById('bm3') != null) && (document.getElementById('bm2') != null)) {
+	    document.getElementById('bm2').innerHTML = document.getElementById('bm3').innerHTML
+	    document.getElementById('bm2').setAttribute('onerror','geo-blocked')
+	    if (z != '') {
+	      document.getElementById('bm3').innerHTML = 'See all NON geo-blocked countries here:  <br>' + z
+	      var z = "Use a HTTP/HTTPS proxy\\'s IP that is located in one of these countries: " + z
+	    } else {
+		var z = 'This video seems to be blocked worldwide.'
+		document.getElementById('bm3').innerHTML = z
+	      }
+	    document.getElementById('player-unavailable').title = z
+	    document.getElementById('player-unavailable').setAttribute('aria-label',z)
+	    document.getElementById('player-unavailable').setAttribute("onclick","javascript:if(document.getElementById('unavailable-submessage').innerHTML != '') { alert('"+z+"') }");
+
+	    document.getElementById('bm3').style.height = '250px'
+	    document.getElementById('bm3').style.fontSize = '150%'
+	    document.getElementById('bm3').style.visibility = 'visible'
+	    document.getElementById('bm3').setAttribute('onclick', document.getElementById('player-unavailable').getAttribute("onclick"))
+	  }
+        }
+      }
+    } else {
+	if (document.getElementById('bm2').getAttribute('onerror') == 'geo-blocked') {
+	  document.getElementById('bm3').style.visibility = 'hidden'
+	  document.getElementById('bm3').style.fontSize = ''
+	  document.getElementById('bm3').innerHTML = document.getElementById('bm2').innerHTML
+	  document.getElementById('bm3').removeAttribute('onclick')
+	  document.getElementById('bm2').removeAttribute('onerror')
+	  document.getElementById('bm2').innerHTML = ''
+	}
+	document.getElementById('player-unavailable').removeAttribute('title')
+	document.getElementById('player-unavailable').removeAttribute('aria-label')
+	document.getElementById('player-unavailable').removeAttribute('onclick')
+      }
 });
 
     jQuery(document).ready(function( $ ){
