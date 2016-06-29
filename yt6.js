@@ -1429,9 +1429,9 @@ function rewrite_ytplayer(node_value, s, sig){
 
   var linx = [];
   var z = document.getElementById('masthead-positioner-height-offset')
-  if (z != null) z.style = 'height:50px'
+  if (z != null) z.setAttribute('style','height:50px')
   var lang_def = document.getElementById('yt-lang-alert-container')
-  if (lang_def != null) lang_def.style = 'display: none'
+  if (lang_def != null) lang_def.setAttribute('style','display: none')
   var lang_def = null; var lang_asr = null;
   if (document.getElementsByClassName('clear')[0] == null) {
     var z = document.createElement('div')
