@@ -1080,7 +1080,9 @@ function set_controls(){
 			    }
 		    }
 		} else {
-		    var z = getElementsByAttribute(document,'object','id','me_flash')
+		    //var z = getElementsByAttribute(document,'object','id','me_flash')
+		    var z = document.getElementsByClassName('me-cannotplay')
+		    if (z[0]) {
 		    var x = gclass('mejs-shim');
 		    if ((x != undefined) && (x != null) && (x[0] != undefined) && (x[0] != null)) {
 		    //if (typeof x[0].pauseMedia == 'function') {
@@ -1095,6 +1097,7 @@ function set_controls(){
 			  }
 		    //}
 		      v.paused = true
+		    }
 		    }
 		  }
 
