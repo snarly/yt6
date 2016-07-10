@@ -123,8 +123,10 @@ function rp(tx) {
 
 function dc(sg) {
   //return eval(fcnm + '("' + sg + '")');
-  var fcnm = document.getElementById('ytassetsjs').fcnm
-  return fcnm(sg);
+  if (document.getElementById('ytassetsjs') != null) {
+    var fcnm = document.getElementById('ytassetsjs').fcnm
+    return fcnm(sg);
+  } else return sg
 }
 
 
@@ -145,12 +147,7 @@ function def_link(){
 	  sig += '&signature=' + qs.signature;
 	}
 	if (qs.s) {//alert('Encrypted content! '+ qs.s + dc(qs.s) + document.getElementById('ytassetsjs').fcnm )
-	  if ( (document.getElementById('ytassetsjs') == null) ||
-		((document.getElementById('ytassetsjs') != null) && (document.getElementById('ytassetsjs').fcnm == undefined)) ) { 
-		    return ''
-	  } else {
-		href += '&signature=' + dc(qs.s);
-	    }
+	  href += '&signature=' + dc(qs.s);
 	}
 	if (href.indexOf("&ratebypass=yes") == -1) { href += '&ratebypass=yes'}
 	if (qq.indexOf("360p MP4 H.264") != -1) var def = href
@@ -409,14 +406,15 @@ function hand_axe(){
 			  document.getElementById(\"snarls_player\").parentNode.removeChild(document.getElementById(\"snarls_player\"));\
 			}}")
 
-alert("PROXY REQUEST DENIED! Workaround: a small pop-up window has opened / should open after you OK this. If pop-ups are blocked, you must click the Transformer-icon to proceed. Inside the pop-up window's frame there is a text of native code / site data starting with something like \"var _yt_player\" or \"(function\"... Please SELECT & COPY it ALL (Ctrl+A, Ctrl+C) and PASTE it into the input field just below the YouTube logo (Ctrl+V). If done, press ENTER.")
+alert("ERROR: PROXY REQUEST WAS DENIED! A small pop-up window has opened / should open after you OK this message. If pop-ups are blocked, you must click the Transformer-icon in order to proceed. Inside the pop-up window's frame there is a text of native code and site data starting with something like \"var _yt_player\" or \"(function\"... Please SELECT & COPY it ALL (Ctrl+A, Ctrl+C) then PASTE it into the input field just below the YouTube logo (Ctrl+V). If done, press ENTER.")
 
 		  waitUntilExists( "ytassetsjs", function() {
 		    if (typeof deldiv == 'function') { deldiv() }
 		      else {
-			if (yt6) yt6.parentNode.removeChild(yt6)
+			if (document.getElementById("snarls_player")) document.getElementById("snarls_player").parentNode.removeChild(document.getElementById("snarls_player"))
 		      }
-		    if (yt6==undefined) {
+		    player().style.display = ''
+		    if (document.getElementById('snarls_player')==undefined) {
 			var proxiez = shuffle(['https://raw.githack.com','https://rawgit.com'])
 			for (i=0;i<proxiez.length;i++){
 			  var px = proxiez[i]
@@ -424,7 +422,7 @@ alert("PROXY REQUEST DENIED! Workaround: a small pop-up window has opened / shou
 			  q.id='snarls_player';
 			  q.src=px + '/snarly/yt6/master/yt6.js';
 			  document.body.appendChild(q);
-			  if (yt6!=undefined) break;
+			  if (document.getElementById('snarls_player')!=undefined) break;
 			  void 0;
 			}
 		     }
@@ -2092,7 +2090,13 @@ function mep_run() {
 						}
 					      }
 					    }
-					    document.getElementById('ytassetsjs').error = true;
+					    function decryption_failure(){
+					      var z = document.getElementsByClassName('mejs-overlay-error');
+					      if (z[0]) {
+					        z[0].textContent = 'Video signature decryption failed!';
+					        z[0].parentNode.style.setProperty('display','block','')
+					      }
+					    }
 					    if (typeof V[itag(me.src)] !== 'string') {
 					      var dash = document.getElementById(mep_x('mep_') + '_sourcechooser_240p  VP9webm');
 					      if ((dash != null)) {
@@ -2106,17 +2110,17 @@ function mep_run() {
 						      if ((dash != null)) {
 							dash.setAttribute('checked','checked'); player1.setSrc(yt6.linx[134]);player1.load();
 							if (autoplay(false)) player1.play();
-						      } else { alert('Decryption failure!'); }
+						      } else { decryption_failure(); }
 
 						    } else {//normal case
 
 							dash.setAttribute('checked','checked'); player1.setSrc(yt6.linx[133]);player1.load();
 							if (autoplay(false)) player1.play();
 						      }
-						  } else { alert('Decryption failure!'); }
+						  } else { decryption_failure(); }
 
 						}
-					    } else { alert('Decryption failure!'); };
+					    } else { decryption_failure(); };
 					  }
 					});
 					me.addEventListener('loadedmetadata', function() {
@@ -2613,12 +2617,11 @@ if (k < 4) {
     js.setAttribute("loop","false");
     js.setAttribute("quality","high");
     js.setAttribute("bgcolor","#000000");
-    js.setAttribute("wmode","transparent");
     js.setAttribute("allowscriptaccess","always");
     js.setAttribute("allowfullscreen","true");
     js.setAttribute("type","application/x-shockwave-flash");
     js.setAttribute("pluginspage","//www.macromedia.com/go/getflashplayer");
-    js.setAttribute("src",protocol() + "//cdn.rawgit.com/johndyer/mediaelement/8adf73f1a2bec0b6867f83917ce8c491d01c1aa9/build/flashmediaelement-cdn.swf");
+    js.setAttribute("src", protocol() + "//cdn.rawgit.com/johndyer/mediaelement/8adf73f1a2bec0b6867f83917ce8c491d01c1aa9/build/flashmediaelement-cdn.swf");
     //js.setAttribute("flashvars","id=me_flash&amp;isvideo=true&amp;autoplay=false&amp;preload=none&amp;width="+yt6.w.replace('px','')+"&amp;startvolume=0.8&amp;timerrate=250&amp;flashstreamer=&amp;height="+yt6.h.replace('px','')+"&amp;pseudostreamstart=start&amp;file=" + encodeURIComponent(protocol() + yt6.linx[18]) );
     js.setAttribute("width",yt6.w.replace('px',''));
     js.setAttribute("height",yt6.h.replace('px',''));
