@@ -3169,7 +3169,7 @@ document.getElementById('bm3').style.top = yt6.mhp.offsetHeight + z + 'px'
 	  document.getElementById('me_flash').parentNode.appendChild(yt6.bup)
 	  document.getElementById('me_flash').parentNode.removeChild(document.getElementById('me_flash'))
 	  yt6.bup = null;
-	} else alert('Zsir!'+typeof document.getElementById('me_flash').playMedia)
+	}
 	//player().addEventListener("onStateChange", Sync, true);
       }
     )
@@ -3988,7 +3988,7 @@ if ((document.querySelector('#unavailable-message') != null) && (document.queryS
   //}//idoc
 }//content warning
 
-	if (yt6.spf) { yt6.spf = false } else {
+	if (yt6.spf == true) { yt6.spf = true } else { yt6.spf = false
 
 	// Check to see if the location has changed.
 	if ( (yt6.strLocation != window.location.href) || (watch == null) ) {
