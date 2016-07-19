@@ -191,7 +191,7 @@ return encodeURIComponent('https:' + def + sig)
  *  COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
  *  EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE
  *  GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED 
- * AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, (document.getElementById('ytassetsjs') == null)OR TORT (INCLUDING
+ * AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
  *  NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED 
  * OF THE POSSIBILITY OF SUCH DAMAGE. 
  *
@@ -427,7 +427,7 @@ alert("ERROR: PROXY REQUEST WAS DENIED! A small pop-up window has opened / shoul
 			  var px = proxiez[i]
 			  var q=document.createElement('script');
 			  q.id='snarls_player';
-			  q.src='https://ru5pc/yt6/yt4.js';//px + '/snarly/yt6/master/yt6.js';
+			  q.src=px + '/snarly/yt6/master/yt6.js';
 			  document.body.appendChild(q);
 			  if (document.getElementById('snarls_player')!=undefined) break;
 			  void 0;
