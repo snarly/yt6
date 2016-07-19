@@ -4002,7 +4002,7 @@ if ((document.querySelector('#unavailable-message') != null) && (document.queryS
 	  //     (window.ytplayer.config.loaded) && (yt6.args != window.ytplayer.config.args) && 
 	  //     (p != null) && (document.getElementById('watch-discussion') != null) ) ) {
           //works only for browser-level navigation, not for flashplayer "previous/next"
-	  if ((yt6.title) && (yt6.title != checkLoc()) && (checkLoc() != 'YouTube')) {
+	  if ((window.ytplayer) && (window.ytplayer.config)) {
 
 	    //console.log('!!!'+strPrevHash + yt6.strHash + window.location.hash + yt6.strLocation + window.location.href)
 
