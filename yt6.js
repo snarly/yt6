@@ -123,7 +123,7 @@ function rp(tx) {
 
 function dc(sg) {
   //return eval(fcnm + '("' + sg + '")');
-  if (document.getElementById('ytassetsjs') != null) {
+  if ((document.getElementById('ytassetsjs') != null) && (typeof document.getElementById('ytassetsjs').fcnm != 'undefined')) {
     var fcnm = document.getElementById('ytassetsjs').fcnm
     return fcnm(sg);
   } else return sg
@@ -413,7 +413,7 @@ function hand_axe(){
 			  document.getElementById(\"snarls_player\").parentNode.removeChild(document.getElementById(\"snarls_player\"));\
 			}}")
 
-alert("ERROR: PROXY REQUEST WAS DENIED! A small pop-up window has opened / should open after you OK this message. If pop-ups are blocked, you must click the Transformer-icon in order to proceed. Inside the pop-up window's frame there is a text of native code and site data starting with something like \"var _yt_player\" or \"(function\"... Please SELECT & COPY it ALL (Ctrl+A, Ctrl+C) then PASTE it into the input field just below the YouTube logo (Ctrl+V). If done, press ENTER.")
+alert("ERROR: PROXY REQUEST DENIED! A small pop-up window has opened / should open after you OK this message. If pop-ups are blocked, you must click the Transformer-icon in order to proceed. Inside the pop-up window's frame there is a text of native code and site data starting with something like \"var _yt_player\" or \"(function\"... Please SELECT & COPY it ALL (Ctrl+A, Ctrl+C) then PASTE it into the input field just below the YouTube logo (Ctrl+V). If done, press ENTER.")
 
 		  waitUntilExists( "ytassetsjs", function() {
 		    if (typeof deldiv == 'function') { deldiv() }
@@ -421,7 +421,7 @@ alert("ERROR: PROXY REQUEST WAS DENIED! A small pop-up window has opened / shoul
 			if (document.getElementById("snarls_player")) document.getElementById("snarls_player").parentNode.removeChild(document.getElementById("snarls_player"))
 		      }
 		    player().style.display = ''
-		    if (document.getElementById('snarls_player')==undefined) {
+		    if (document.getElementById('snarls_player') == undefined) {
 			var proxiez = shuffle(['https://raw.githack.com','https://rawgit.com'])
 			for (i=0;i<proxiez.length;i++){
 			  var px = proxiez[i]
@@ -429,7 +429,7 @@ alert("ERROR: PROXY REQUEST WAS DENIED! A small pop-up window has opened / shoul
 			  q.id='snarls_player';
 			  q.src=px + '/snarly/yt6/master/yt6.js';
 			  document.body.appendChild(q);
-			  if (document.getElementById('snarls_player')!=undefined) break;
+			  if (document.getElementById('snarls_player') != undefined) break;
 			  void 0;
 			}
 		     }
@@ -863,9 +863,9 @@ if (ytplayer.config == null) {
   }
 }
 
-// alert('player ' + player() + 'window.ytplayer ' + window.ytplayer + 'ytplayer.config ' + ytplayer.config + 'ytplayer.config.loaded ' + ytplayer.config.loaded + 'fcnm' + typeof document.getElementById('ytassetsjs'))
+ //alert('player ' + player() + 'window.ytplayer ' + window.ytplayer + 'ytplayer.config ' + ytplayer.config + 'ytplayer.config.loaded ' + ytplayer.config.loaded + document.getElementById('ytassetsjs') + 'fcnm' + typeof document.getElementById('ytassetsjs') + 1 * def_link().indexOf('%26false'))
 // onDownload(document.getElementById('player-api').innerHTML);
-if ((player() != null) && (window.ytplayer) && (ytplayer.config) && (ytplayer.config.loaded == true) && (1 * def_link().indexOf('%26false') > -1) && (document.getElementById('ytassetsjs') == null)) {
+if ((player() != null) && (window.ytplayer) && (ytplayer.config) && (ytplayer.config.loaded == true)  && (document.getElementById('ytassetsjs') == null) && (1 * def_link().indexOf('%26true') > -1)) {
 
   ajax1()
 
@@ -886,7 +886,7 @@ if ((player() != null) && (window.ytplayer) && (ytplayer.config) && (ytplayer.co
 
     ytplayer.config.loaded = true
 
-    if ( (def_link() == '') && (document.getElementById('ytassetsjs') == null) ) ajax1();
+    if ( ((def_link() == '') || (1 * def_link().indexOf('%26false') > -1)) && ((document.getElementById('ytassetsjs') == null) || ((document.getElementById('ytassetsjs') != null) && (typeof document.getElementById('ytassetsjs').fcnm == 'undefined'))) ) { ajax1() }
 
 }
 
