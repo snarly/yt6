@@ -1085,13 +1085,13 @@ function set_controls(){
 	    if (stage == undefined) {
 	      var stage = document.getElementsByClassName('html5-video-content')[0];
 	    }
-	    //var v = document.getElementsByClassName('video-stream html5-main-video')[2];
-	    //if (v == undefined) {
+	    var v = document.getElementsByClassName('video-stream html5-main-video')[2];
+	    if (v == undefined) {
 	      var v = document.getElementsByClassName('video-stream html5-main-video')[1];
 	      if (v == undefined) {
 	        var v = document.getElementsByClassName('video-stream html5-main-video')[0];
 	      }
-            //}
+            }
 		var me_flash_ = getElementsByAttribute(document.getElementById("player-api"),"embed","name",mep_x("me_flash_"))
 		if (me_flash_[0] != undefined){
 		    var x = gclass('mejs-shim');
@@ -1131,7 +1131,7 @@ function set_controls(){
 		    //}
 		        v.paused = true
 		      }
-		    }
+		    } else if (document.getElementById('watch7-hidden-extras')) document.getElementById('watch7-hidden-extras').setAttribute('class', stage.getAttribute('id') + v.getAttribute('id'))
 		  }
 
 	  }
