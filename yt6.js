@@ -1234,7 +1234,7 @@ function set_controls(){
 	  }
       }
       //alert(stage.id + v.id)
-      if (document.getElementById('watch7-hidden-extras').firstChild) document.getElementById('watch7-hidden-extras').firstChild.innerHTML = stage.id + v.id
+      if (document.getElementById('watch7-hidden-extras').firstChild) document.getElementById('watch7-hidden-extras').firstChild.innerHTML = stage.getAttribute('id') + v.getAttribute('id')
       CtrlS(stage,v);
 }
 
@@ -5310,9 +5310,11 @@ if (z != null) {
     }
   }
 
+  if (document.getElementById('placeholder-player')) document.getElementById('placeholder-player').removeAttribute('style')
+
   if (document.getElementById('watch7-notification-area')) {
     document.getElementById('watch7-notification-area').removeAttribute('class')
-    document.getElementById('watch7-notification-area').setAttribute('style', 'display: none')
+    document.getElementById('watch7-notification-area').setAttribute('style', 'padding: 0px 0px 0px 0px')
   }
 
   var webgl = get_webgl();
