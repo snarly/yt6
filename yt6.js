@@ -1234,7 +1234,6 @@ function set_controls(){
 	  }
       }
       //alert(stage.id + v.id)
-      if (document.getElementById('watch7-hidden-extras')) document.getElementById('watch7-hidden-extras').setAttribute('class', stage.getAttribute('id') + v.getAttribute('id'))
       CtrlS(stage,v);
 }
 
@@ -5296,7 +5295,7 @@ if (z != null) {
   z.setAttribute('src','https://s.ytimg.com/yts/swfbin/player-' + swfbin4 + '/watch_as3.swf')
 }
 
-  var z = ['theater-background','masthead-positioner-height-offset','movie_player','watch7-sidebar','watch-appbar-playlist','playlist','related','player-api','player','player-container','dropShadow']
+  var z = ['theater-background','masthead-positioner-height-offset','movie_player','watch7-sidebar','watch-appbar-playlist','playlist','related','player-api','player','player-container','placeholder-player','dropShadow']
   for(i=0;i < z.length;i++){
     var x = document.getElementById(z[i])
     if (x != null) {
