@@ -1115,7 +1115,7 @@ function set_controls(){
 		    }
 		} else {
 		    var z = document.getElementsByClassName('me-cannotplay')
-		    if ((z[0]) && (bm0.style.visibility == 'visible')) {
+		    if ((z[0]) && (z[0].getAttribute('id') == 'player1') && (bm0.style.visibility == 'visible')) {
 		      var x = gclass('mejs-shim');
 		      if ((x != undefined) && (x != null) && (x[0] != undefined) && (x[0] != null)) {
 		    //if (typeof x[0].pauseMedia == 'function') {
