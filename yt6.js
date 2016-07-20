@@ -1234,7 +1234,7 @@ function set_controls(){
 	  }
       }
       //alert(stage.id + v.id)
-      if (document.getElementById('watch7-hidden-extras').firstChild) document.getElementById('watch7-hidden-extras').firstChild.innerHTML = stage.getAttribute('id') + v.getAttribute('id')
+      if (document.getElementById('watch7-hidden-extras')) document.getElementById('watch7-hidden-extras').setAttribute('class', stage.getAttribute('id') + v.getAttribute('id'))
       CtrlS(stage,v);
 }
 
@@ -5296,7 +5296,7 @@ if (z != null) {
   z.setAttribute('src','https://s.ytimg.com/yts/swfbin/player-' + swfbin4 + '/watch_as3.swf')
 }
 
-  var z = ['theater-background','masthead-positioner-height-offset','movie_player','watch7-sidebar','watch-appbar-playlist','playlist','related','player-api','player','player-container','placeholder-player','dropShadow']
+  var z = ['theater-background','masthead-positioner-height-offset','movie_player','watch7-sidebar','watch-appbar-playlist','playlist','related','player-api','player','player-container','dropShadow']
   for(i=0;i < z.length;i++){
     var x = document.getElementById(z[i])
     if (x != null) {
@@ -5307,15 +5307,15 @@ if (z != null) {
         for (var j in y) { if (y.hasOwnProperty(j)) { y.setProperty(y[j],'','') } };
         x.removeAttribute('style')
       } else { y.width = ''; y.height = ''; y.left = ''; };
+      if ((z[i] == 'placeholder-player') && (typeof x.firstChild.style == 'object')) {
+      	y = x.firstChild.style
+        for (var j in y) { if (y.hasOwnProperty(j)) { y.setProperty(y[j],'','') } };
+        x.firstChild.removeAttribute('style')
+      }
     }
   }
 
-  if (document.getElementById('placeholder-player')) document.getElementById('placeholder-player').removeAttribute('style')
-
-  if (document.getElementById('watch7-notification-area')) {
-    document.getElementById('watch7-notification-area').removeAttribute('class')
-    document.getElementById('watch7-notification-area').setAttribute('style', 'padding: 0px 0px 0px 0px')
-  }
+  if (document.getElementById('watch7-notification-area')) document.getElementById('watch7-notification-area').style.display = 'none'
 
   var webgl = get_webgl();
   if (webgl) {
@@ -5348,10 +5348,13 @@ function control_panel1() {
       var js = document.createElement('div');
       js.id = 'watch7-notification-area';
       document.getElementById('watch-header').parentNode.insertBefore(js, document.getElementById('watch-header'))
-      js.setAttribute('class','yt-card')
-      js.setAttribute('style','display: block; padding: 0px 0px 0px; z-index: 5')
       yt6.wna = document.getElementById('watch7-notification-area')
       delete js;
+   }
+
+   if (document.getElementById('watch7-notification-area') != null) {
+      document.getElementById('watch7-notification-area').setAttribute('class','yt-card')
+      document.getElementById('watch7-notification-area').setAttribute('style','display: block; padding: 0px 0px 0px; z-index: 5')
    }
 
   var z = yt6.wna
