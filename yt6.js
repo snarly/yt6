@@ -1085,13 +1085,13 @@ function set_controls(){
 	    if (stage == undefined) {
 	      var stage = document.getElementsByClassName('html5-video-content')[0];
 	    }
-	    var v = document.getElementsByClassName('video-stream html5-main-video')[2];
-	    if (v == undefined) {
+	    //var v = document.getElementsByClassName('video-stream html5-main-video')[2];
+	    //if (v == undefined) {
 	      var v = document.getElementsByClassName('video-stream html5-main-video')[1];
 	      if (v == undefined) {
 	        var v = document.getElementsByClassName('video-stream html5-main-video')[0];
 	      }
-            }
+            //}
 		var me_flash_ = getElementsByAttribute(document.getElementById("player-api"),"embed","name",mep_x("me_flash_"))
 		if (me_flash_[0] != undefined){
 		    var x = gclass('mejs-shim');
@@ -1234,6 +1234,7 @@ function set_controls(){
 	  }
       }
       //alert(stage.id + v.id)
+      if (document.getElementById('watch7-hidden-extras').firstChild) document.getElementById('watch7-hidden-extras').firstChild.innerHTML = stage.id + v.id
       CtrlS(stage,v);
 }
 
@@ -5295,9 +5296,7 @@ if (z != null) {
   z.setAttribute('src','https://s.ytimg.com/yts/swfbin/player-' + swfbin4 + '/watch_as3.swf')
 }
 
-    var webgl = get_webgl();
-
-  var z = ['theater-background','masthead-positioner-height-offset','movie_player','watch7-sidebar','watch-appbar-playlist','playlist','related','player-api','player','player-container','dropShadow']
+  var z = ['theater-background','masthead-positioner-height-offset','movie_player','watch7-sidebar','watch-appbar-playlist','playlist','related','player-api','player','player-container','placeholder-player','dropShadow']
   for(i=0;i < z.length;i++){
     var x = document.getElementById(z[i])
     if (x != null) {
@@ -5311,7 +5310,12 @@ if (z != null) {
     }
   }
 
+  if (document.getElementById('watch7-notification-area')) {
+    document.getElementById('watch7-notification-area').removeAttribute('class')
+    document.getElementById('watch7-notification-area').setAttribute('style', 'display: none')
+  }
 
+  var webgl = get_webgl();
   if (webgl) {
     webgl.removeAttribute('style')
     webgl.parentNode.style.left = -1 * webgl.parentNode.parentNode.style.left.replace('px','') + 'px'
