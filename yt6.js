@@ -865,7 +865,7 @@ if (ytplayer.config == null) {
 
  //alert('player ' + player() + 'window.ytplayer ' + window.ytplayer + 'ytplayer.config ' + ytplayer.config + 'ytplayer.config.loaded ' + ytplayer.config.loaded + document.getElementById('ytassetsjs') + 'fcnm' + typeof document.getElementById('ytassetsjs') + 1 * def_link().indexOf('%26false'))
 // onDownload(document.getElementById('player-api').innerHTML);
-if ((player() != null) && (window.ytplayer) && (ytplayer.config) && (ytplayer.config.loaded == true)  && (document.getElementById('ytassetsjs') == null) && (1 * def_link().indexOf('%26true') > -1)) {
+if ((player() != null) && (window.ytplayer) && (ytplayer.config) && (ytplayer.config.loaded == true)  && (document.getElementById('ytassetsjs') == null) && (1 * def_link().indexOf('%26false') > -1)) {
 
   ajax1()
 
@@ -1115,7 +1115,7 @@ function set_controls(){
 		    }
 		} else {
 		    var z = document.getElementsByClassName('me-cannotplay')
-		    if ((z[0]) && (z[0].getAttribute('id') == 'player1') && (bm0.style.visibility == 'visible')) {
+		    if ((z[0]) && (z[0].nextSibling.getAttribute('id') == 'player1') && (bm0.style.visibility == 'visible')) {
 		      var x = gclass('mejs-shim');
 		      if ((x != undefined) && (x != null) && (x[0] != undefined) && (x[0] != null)) {
 		    //if (typeof x[0].pauseMedia == 'function') {
