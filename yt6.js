@@ -3106,7 +3106,9 @@ if ( (location.href.indexOf("aC4BC-Hxq9g_muted") != -1 )  ) {
 
 
     js.src = yt6.audio;
-    js.type = "audio/ogg";
+    if (navigator.userAgent.match(/Edge\/\d+/) == null ) {
+      js.type = "audio/ogg";
+    } else js.type = "audio/mp4";
     document.getElementById('player2').appendChild(js);
     js.setAttribute('style',"display: none; visibility: hidden");
     delete js;
