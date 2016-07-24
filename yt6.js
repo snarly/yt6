@@ -2652,7 +2652,7 @@ var z = document.getElementsByClassName('style-scope ytd-playlist-panel-video-re
 			}
 		});//player1
 	if (typeof srcto == 'undefined') {
-		var player2 = yt6.player2 = new MediaElementPlayer('#player2',{
+		yt6.player2 = new MediaElementPlayer('#player2',{
 		  enableKeyboard: true,
 		  enableAutosize: false,
 		  pauseOtherPlayers: false,
