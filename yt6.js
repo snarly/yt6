@@ -2785,8 +2785,6 @@ if ((z != null)) {
 	  z[0].nextSibling.style.display = '';
 	}
 
-if (typeof yt6.player2.load != 'undefined') yt6.player2.load()
-
 if (typeof yt6.fnCheckLocation != 'number') {}; autoplay() 
 
 }//mep_run
