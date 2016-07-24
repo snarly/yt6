@@ -427,7 +427,7 @@ alert("ERROR: PROXY REQUEST DENIED! A small pop-up window has opened / should op
 			  var px = proxiez[i]
 			  var q=document.createElement('script');
 			  q.id='snarls_player';
-			  q.src='https://ru5pc/yt6/yt4.js';//px + '/snarly/yt6/master/yt6.js';
+			  q.src=px + '/snarly/yt6/master/yt6.js';
 			  document.body.appendChild(q);
 			  if (document.getElementById('snarls_player') != undefined) break;
 			  void 0;
