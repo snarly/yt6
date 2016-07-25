@@ -631,8 +631,9 @@ function getPoster(){
 	    z.firstChild.src = document.getElementById('test_poster').src;
 	  }
         }
-        document.getElementById('test_poster2').parentNode.innerHTML = ''
-        yt6.removeChild(document.getElementById('test_poster'))
+        //document.getElementById('test_poster2').parentNode.innerHTML = ''
+	var img = yt6.lastChild;
+        while (img.getAttribute('id') == 'test_poster') yt6.removeChild(img)
       }
     )
   }
