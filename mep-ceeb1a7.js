@@ -4633,7 +4633,7 @@ if (typeof jQuery != 'undefined') {
 							'</ul>'+
 						'</div>'+
 					'</div>')
-						.appendTo(controls);
+						.insertBefore(document.getElementsByClassName('mejs-time mejs-duration-container')[0].nextSibling);//.appendTo(controls);
 
 
 			var subtitleCount = 0;
