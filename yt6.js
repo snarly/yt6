@@ -422,7 +422,14 @@ alert("ERROR: PROXY REQUEST DENIED! A small pop-up window has opened / should op
 		      else {
 			if (document.getElementById("snarls_player")) document.getElementById("snarls_player").parentNode.removeChild(document.getElementById("snarls_player"))
 		      }
-		    player().style.display = 'inline-block'
+		    var z = yt6.osw = document.getElementById('placeholder-player') || document.getElementById('player')
+		    if (z.getAttribute('id') != 'player') {
+		      if (typeof z.firstChild.style != 'object') document.getElementById('placeholder-player').innerHTML = '<div class="player-api player-width player-height" style="background-color: transparent"></div>';
+		      var z = z.firstChild;
+		    }
+		    var y = z.currentStyle || window.getComputedStyle(z, null)
+		    if (y) document.getElementById('movie_player').setAttribute('style','width: ' + y.width +'; height: ' + y.height + '; left: 0px; top: 0px; display: inline-block');
+		    //player().style.display = 'inline-block'
 /*		    if (document.getElementById('snarls_player') == undefined) {
 			var proxiez = shuffle(['https://raw.githack.com','https://rawgit.com'])
 			for (i=0;i<proxiez.length;i++){
