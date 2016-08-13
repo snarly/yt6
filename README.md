@@ -2,12 +2,12 @@ http://snarly.github.io/yt6/
 
 Script to play, manipulate and download YouTube videos. Just bookmark any page whose icon you like and replace the bookmark's URL-address with the following javascript code:
 
-javascript:%20(function(){var%20d=document;if(d.location.href.indexOf('youtube.com/watch')>-1){var%20r='snarls_player';if(d.getElementById(r)==undefined){var%20i,j,o,x;o%20=['.githack','git'];for(i=o.length;i;j=Math.floor(Math.random()*i),x=o[--i],o[i]=o[j],o[j]=x);%20var%20q=d.createElement('script');q.id=r;q.src=%22https%3A%2F%2Fraw%22%2Bo%5B1%5D%2B%22.com%2Fsnarly%2Fyt6%2Fmaster%2Fyt6.js%22;q.onerror=function(){%20var%20q=d.createElement('script');q.id=r;q.src=%22https%3A%2F%2Fraw%22%2Bo%5B0%5D%2B%22.com%2Fsnarly%2Fyt6%2Fmaster%2Fyt6.js%22;q.onerror=function(){%20var%20q=d.createElement('script');q.id=r;q.src=%22http%3A%2F%2Fraw%22%2Bo%5B1%5D%2B%22.com%2Fsnarly%2Fyt6%2Fmaster%2Fyt6.js%22;q.onerror=function(){%20var%20q=d.createElement('script');q.id=r;q.src=%22http%3A%2F%2Fraw%22%2Bo%5B0%5D%2B%22.com%2Fsnarly%2Fyt6%2Fmaster%2Fyt6.js%22;d.body.appendChild(q);d.body.removeChild(d.getElementById(r));};d.body.appendChild(q);d.body.removeChild(d.getElementById(r));};d.body.appendChild(q);d.body.removeChild(d.getElementById(r));};q.setAttribute('onload','');d.body.appendChild(q);};if(q)q.add_subs='en,hu,de'}else{void%200};})();
+javascript:%20(function(){var%20d=document;if(d.location.href.indexOf('youtube.com/watch')>-1){var%20id='snarls_player';function%20s(){return%20d.getElementById(id)};function%20c(){return%20d.createElement('script')};function%20a(q){d.body.appendChild(q)};function%20r(){d.body.removeChild(s())};function%20b(){var%20i,j,o,x;o%20=['.githack','git'];for(i=o.length;i;j=Math.floor(Math.random()*i),x=o[--i],o[i]=o[j],o[j]=x);var%20q=c();q.id=id;var%20src=%22http%3A%2F%2Fraw%22%2Bo%5B1%5D%2B%22.com%2Fsnarly%2Fyt6%2Fmaster%2Fyt6.js%22;q.src=src;q.onerror=function(){var%20q=c();q.id=id;q.src=src.replace(o[1],o[0]);q.onerror=function(){var%20q=c();q.id=id;q.src=src.replace('http','https');q.onerror=function(){var%20q=c();q.id=id;q.src=src.replace(o[1],o[0]).replace('http','https');a(q);r();};a(q);r();};a(q);r();};q.setAttribute('onload','');a(q);if(s()!=null)s().add_subs='en,hu,de'};if(s()!=null&&s().innerHTML==''){r();b();}else{b();}}else{void%200};})();
 
 
 __
 
-On any YouTube video page, this bookmarklet will call an external player and load some extra functions which can be used with YouTube's native player as well. Use the HTML5 emblem to switch between the native and external player. It should work now on most browsers, even older ones. Bugs are gonna stay forever...
+On any (non-live streaming) YouTube video page, this bookmarklet will call an external player and load some extra functions which can be used with YouTube's native player as well. Use the HTML5 emblem to switch between the native and external player. It should work now on most browsers, even older ones. Bugs are gonna stay forever...
 
 
 Credit should go to the authors of their respective open source code:
@@ -31,12 +31,13 @@ Note: Users of FF-addon NoScript
 
       githubusercontent.com
       rawgit.com
+      githack.com
       allow-any-origin.appspot.com
       cors-anywhere.herokuapp.com
-      githack.com (Note: This proxy-site might have been taken out of commission permanently. For now, I added error handling to the bbokmarklet code. Please do an update on your own copy. Expect delays upon first load.)
+      crossorigin.me
 
 
-3. Look at Firefox's internal page "about:config" (type it on the address bar) and edit the following entry
+3. (DEPRECATED) Look at Firefox's internal page "about:config" (type it on the address bar) and edit the following entry
       
          noscript.inclusionTypeChecking.exceptions
    - add:
