@@ -1586,7 +1586,7 @@ var audio_with_poster = function() {
   if ( (typeof z[0] != 'undefined') && (( 1 * unescape(media.src).indexOf('mime=audio') > -1) || (1*unescape(media.src).indexOf('mime/audio') > -1)) ) {
    z[0].style.display = 'block'
    var z = gclass("mejs-overlay-play")
-   if (typeof z[0] == 'object') { z[0].style.display = 'block'; z[0].click() }
+   if (typeof z[0] == 'object') { z[0].style.display = 'block'; }
  };
 }
 
@@ -4279,7 +4279,6 @@ function mep_run() {
 					        z[0].textContent = 'Video signature decryption failed!';
 					        z[0].parentNode.style.setProperty('display','block','')
 					      }
-						if (yt6.newvideo) {
 							//console.log('Boo!');
 							ajax1(true);
 							crossXmlHttpReq(window.ytplayer);
@@ -4288,7 +4287,6 @@ function mep_run() {
 							rebuildradiobutttons();
 							//var z = gclass('mejs-playpause-button')
 							//if (typeof z[0] != 'undefined') { z[0].firstChild.click();z[0].firstChild.click(); }
-						}
 
 					    }
 					    if (typeof V[itag(me.src)] !== 'string') {
