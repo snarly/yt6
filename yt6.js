@@ -4319,7 +4319,7 @@ function mep_run() {
 					});
 					me.addEventListener('loadedmetadata', function() {
 					  //document.getElementsByClassName('mejs-controls')[0].style = 'display: block; visibility: hidden;'
-					  yt6.newvideo = false;
+					  if (yt6.newvideo) { yt6.newvideo = true; } else { yt6.newvideo = false }
 					  var A = []; A = yt6.A;
 					  if (typeof A[itag(me.src)] == 'string') { yt6.player2.setSrc(me.src); yt6.player2.load() }
 					  FireEvent( mep_x('mep_'), 'mouseover' );
@@ -4348,7 +4348,6 @@ function mep_run() {
 					        }
 					    };
 					  }//else fullscreen
-					  yt6.newvideo = true;
 					});
 					me.addEventListener('loadeddata', function() {
 					  if (yt6.newvideo) { yt6.newvideo = true; me.setCurrentTime(0) } else { if (yt6.ct) me.setCurrentTime(yt6.ct) };
