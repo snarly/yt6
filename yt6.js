@@ -1672,7 +1672,6 @@ function preload(){
     if (z != null) {
       if (autoplay()) {
 	z.click()
-	if ( (navigator.userAgent.match(/Edge\/\d+/) != null || navigator.userAgent.match(/MSIE /) != null) && yt6.player2 && typeof yt6.player2.load == 'function' ) yt6.player2.load()
       } else {
 	  z.setAttribute('checked','checked');
 	  if (1 * z.id.indexOf('VP8') > -1) {
@@ -1681,7 +1680,6 @@ function preload(){
 	  var z = document.getElementsByClassName('mejs-time-loaded')
 	  if (typeof z[0] != 'undefined') z[0].style.width = '0px';
 	  yt6.player1.load()
-	  if ( (navigator.userAgent.match(/Edge\/\d+/) != null || navigator.userAgent.match(/MSIE /) != null) && yt6.player2 && typeof yt6.player2.load == 'function' ) yt6.player2.load()
 	}
     } else set_controls()
 
@@ -2122,7 +2120,7 @@ function rewrite_ytplayer(node_value, s, sig){
         if (qq.indexOf('DASH') != -1) { if ((yt6 != undefined) && (yt6 != null) && (typeof yt6.aspect_ratio != 'string')) { yt6.aspect_ratio = ft.toString().split("size=")[1].split("&")[0].split(",")[0] } }
         if (qs.itag !== '278') { linx[qs.itag] = href } else { linx[241] = href }
         if (qq.indexOf('360p WebM VP8') != -1) { var webm = 'https:' + href };
-        if (qq.indexOf('WebM Vorbis') != -1) { var audio = 'https:' + href };//.replace('&ratebypass=yes','') };
+        if ( (qq.indexOf('WebM Vorbis') != -1) && (navigator.userAgent.match(/Edge\/\d+/) == null ) ) { var audio = 'https:' + href };//.replace('&ratebypass=yes','') };
         //if (qq.indexOf('160k WebM Opus') != -1) { var audio = 'https:' + href };
 	if ( (qq.indexOf('DASH AAC') != -1) && ((audio == undefined) || (navigator.userAgent.match(/Edge\/\d+/) != null )) ) { var audio = 'https:' + href };
         //var fn = (args.title + '-' + qq).toLowerCase()
