@@ -446,7 +446,7 @@ function hand_axe(){
 		    if (z[0]) {
 		      var z = z[0]
 		    } else {
-			var z = document.getElementById('start');
+			var z = document.getElementById('logo');
 			if (z == null) throw 'YouTube layout mismatch';
 		      }
 		    z.insertBefore(bm1, z.lastChild);
@@ -1750,7 +1750,7 @@ yt6.tbg.setAttribute('class','player-height')
 yt6.tbg.style = 'display: inline-block'
 }
 
-yt6.mhp = document.getElementById('masthead-positioner') || document.getElementById('start');//document.getElementsByClassName('x-scope ytd-masthead-1')[0]
+yt6.mhp = document.getElementById('masthead-positioner') || document.getElementById('logo');//document.getElementsByClassName('x-scope ytd-masthead-1')[0]
 yt6.wsb = document.getElementById('watch7-sidebar') || document.getElementById('related')
 yt6.wsa = document.getElementById('watch7-sidebar-ads') || document.getElementById('player-ads')
 yt6.wna = document.getElementById('watch-header') || document.getElementById('alerts')
@@ -2536,7 +2536,7 @@ if (document.getElementById("bm1") != null) document.getElementById("bm1").paren
   if (z[0]) {
     var z = z[0]
   } else {
-      var z = document.getElementById('start');
+      var z = document.getElementById('logo');
       if (z == null) throw 'YouTube layout mismatch';
     }
   z.insertBefore(dw,z.lastChild);
@@ -5091,7 +5091,7 @@ var z = document.getElementsByClassName('yt-masthead-logo-container')
 if (z[0]) {
   var z = z[0]
 } else {
-    var z = document.getElementById('start');
+    var z = document.getElementById('logo');
     if (z == null) throw 'YouTube layout mismatch';
   }
 if ( 1 * getElementsByAttribute(document,'div','class', z.getAttribute('class').indexOf('doodle') > -1 )) {alert(z.getAttribute('class').indexOf('doodle') )
@@ -6585,7 +6585,7 @@ function ytsubtitle2srt(d,track_srclang,mejs_language_code){
   var nl = String.fromCharCode(13) + String.fromCharCode(10);
 
   for (i=0;i<text.length;i++) {
-    var start = text[i].getAttribute('start');
+    var start = text[i].getAttribute('logo');
     if (!start) var start = "99:00:00.000";
     var dur = text[i].getAttribute('dur');
     if (!dur) { var dur = "00:00:00.000" } else { var dur = parseFloat(start) + parseFloat(dur); var dur = dur.toString(); var dur = dur.toHHMMSS() };
