@@ -6159,7 +6159,7 @@ window.ytplayer.config.loaded = true;
   //var ads = getElementsByAttribute(document.getElementById('watch7-content'),'div','id','controls');
   //if (ads) for(i=ads.length-1;i>1;i--) { if (ads[i]) ads[i].parentNode.removeChild(ads[i]) }
 
-  if (wide_view() || document.getElementById('aspect') != null) {
+  if ((wide_view() || document.getElementById('aspect') != null) && yt6.tbg) {
     if (yt6.size && yt6.size != 'default') { if (yt6.tbg.style.backgroundColor != 'rgb(16, 16, 16)') yt6.tbg.style.backgroundColor = 'rgb(16, 16, 16)' } else if (yt6.tbg.style.backgroundColor != 'black') yt6.tbg.style.backgroundColor = 'black';
   } else {
       if (!yt6.size || yt6.size == 'default') if (yt6.tbg.style.backgroundColor != 'transparent') yt6.tbg.style.backgroundColor = 'transparent'
