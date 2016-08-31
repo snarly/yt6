@@ -1701,7 +1701,7 @@ function preload(){
     if (z != null) {
       if (autoplay()) {
 	z.click()
-	if ( (navigator.userAgent.match(/Edge\/\d+/) != null || navigator.userAgent.match(/MSIE /) != null) && yt6.player2 && typeof yt6.player2.load == 'function' ) yt6.player2.load()
+	if ( (navigator.userAgent.match(/Edge\/\d+/) != null || navigator.userAgent.match(/MSIE /) != null || navigator.userAgent.match(/Trident\//) != null) && yt6.player2 && typeof yt6.player2.load == 'function' ) yt6.player2.load()
       } else {
 	  z.setAttribute('checked','checked');
 	  if (1 * z.id.indexOf('VP8') > -1) {
@@ -1710,7 +1710,7 @@ function preload(){
 	  var z = document.getElementsByClassName('mejs-time-loaded')
 	  if (typeof z[0] != 'undefined') z[0].style.width = '0px';
 	  yt6.player1.load()
-	  if ( (navigator.userAgent.match(/Edge\/\d+/) != null || navigator.userAgent.match(/MSIE /) != null) && yt6.player2 && typeof yt6.player2.load == 'function' ) yt6.player2.load()
+	  if ( (navigator.userAgent.match(/Edge\/\d+/) != null || navigator.userAgent.match(/MSIE /) != null || navigator.userAgent.match(/Trident\//) != null) && yt6.player2 && typeof yt6.player2.load == 'function' ) yt6.player2.load()
 	}
     } else set_controls()
 
@@ -2151,9 +2151,9 @@ function rewrite_ytplayer(node_value, s, sig){
         if (qq.indexOf('DASH') != -1) { if ((yt6 != undefined) && (yt6 != null) && (typeof yt6.aspect_ratio != 'string')) { yt6.aspect_ratio = ft.toString().split("size=")[1].split("&")[0].split(",")[0] } }
         if (qs.itag !== '278') { linx[qs.itag] = href } else { linx[241] = href }
         if (qq.indexOf('360p WebM VP8') != -1) { var webm = 'https:' + href };
-        if ( (qq.indexOf('WebM Vorbis') != -1) && (navigator.userAgent.match(/Edge\/\d+/) == null ) ) { var audio = 'https:' + href };//.replace('&ratebypass=yes','') };
+        if ( (qq.indexOf('WebM Vorbis') != -1) && (navigator.userAgent.match(/Edge\/\d+/) == null && navigator.userAgent.match(/MSIE /) == null && navigator.userAgent.match(/Trident\//) == null) ) { var audio = 'https:' + href };//.replace('&ratebypass=yes','') };
         //if (qq.indexOf('160k WebM Opus') != -1) { var audio = 'https:' + href };
-	if ( (qq.indexOf('DASH AAC') != -1) && ((audio == undefined) || (navigator.userAgent.match(/Edge\/\d+/) != null )) ) { var audio = 'https:' + href };
+	if ( (qq.indexOf('DASH AAC') != -1) && (audio == undefined || navigator.userAgent.match(/Edge\/\d+/) != null || navigator.userAgent.match(/MSIE /) != null || navigator.userAgent.match(/Trident\//) != null) ) { var audio = 'https:' + href };
         //var fn = (args.title + '-' + qq).toLowerCase()
         //         .replace(/[!"&'().:[\]|]/g,'')
         //         .replace(/ /g,'-')
@@ -4674,6 +4674,7 @@ if (cw != null) {
 */
 
 //document.cookie="VISITOR_INFO1_LIVE=Qa1hUZu3gtk;path=/;domain=.youtube.com";
+//JeHnI4pp768
 //if (!cw) {
     var z = yt6.osw
     if (z.getAttribute('id') != 'player') {
@@ -5011,7 +5012,7 @@ if ( (location.href.indexOf("aC4BC-Hxq9g_muted") != -1 )  ) {
 
     if ((document.getElementById('player2').parentNode) && (document.getElementById('player2').parentNode.getAttribute('class') == 'mejs-mediaelement')) document.getElementById('player2').src = yt6.audio;
     document.getElementById('no.2').src = yt6.audio;
-    if (navigator.userAgent.match(/Edge\/\d+/) == null ) {
+    if (navigator.userAgent.match(/Edge\/\d+/) == null && navigator.userAgent.match(/MSIE /) == null && navigator.userAgent.match(/Trident\//) == null) {
       //document.getElementById('player2').type = "audio/ogg";
       document.getElementById('no.2').type = "audio/ogg";
     } else {
@@ -5805,7 +5806,7 @@ document.getElementsByTagName('body')[0].spfdone = function(e) {
 
 //console.log(yt6.title + document.title + yt6.spf);
 
-    if (yt6.osw.getAttribute('id') != 'player') {
+    if (yt6.osw.getAttribute('id') != 'player' && navigator.userAgent.match(/MSIE /) == null && navigator.userAgent.match(/Trident\//) == null) {
         yt6.pps = yt6.osw.firstChild.style
 	document.getElementById('placeholder-player').parentNode.removeChild(document.getElementById('placeholder-player'))
 	var js = document.createElement('div')
