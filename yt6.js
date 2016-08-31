@@ -372,9 +372,9 @@ function find_key(rpt){
   if (rpt.indexOf("function fcnm(") != -1) { eval(rpt); return fcnm }
 
   //  var fcnm = rpt.match(/signature=([^(]+)/)[1];
-  var fcnm = rpt.match(/dashmpd.[^]*signature\/".*\;/)[0]
+  var fcnm = rpt.match(/dashmpd.[^]*signature\/"\+(.|[\s\S].\)\)\;)/)[0];//+ 2ik_1ez&
   if (document.location.href.indexOf('//s.ytimg.com/') > -1) fcnm = fcnm.split('&amp;').join('&')
-  var i = fcnm.split('\"/signature/\"+')[1].split(")")[0]
+  var i = fcnm.split('\"/signature/\"\+')[1].split(")")[0].split("\n").join("").split("\r").join("");
   var fcnm = fcnm.split("&&("+i+"=")[1].substring(0,2)
   
   function sprintf(nw) {
@@ -649,7 +649,7 @@ function ajax1(update){
 	  scpt.id = "ytassetsjs";
 	  scpt.textContent = rpt;
 	  document.body.appendChild(scpt);
-	  scpt.setAttribute('name',px);
+	  scpt.setAttribute('name',px + ytplayer.config.assets.js.split('.com')[1]);
 	  var z = new Date().toLocaleString().toString()
 	  scpt.setAttribute("time",z)
 	  break
