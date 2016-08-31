@@ -6776,7 +6776,12 @@ if ( (me_aspect) && (  (mep == null) || ((player().getAttribute('name') == 'me_f
   var w = w + 'px'*/
 }
   if (typeof JSON != 'undefined') {
-    var y = JSON.parse(JSON.stringify(y))
+    yy = {}
+    yy.width = JSON.stringify(y.width)
+    yy.height = JSON.stringify(y.height)
+    yy.left = JSON.stringify(y.left)
+    var y = yy;
+    //var y = JSON.parse(JSON.stringify(y));
   } else var y = z.currentStyle || window.getComputedStyle(z, null)
 
   if (o != null) z.setAttribute('style', o)
