@@ -6845,9 +6845,9 @@ if ( (me_aspect) && (  (document.getElementById(mep_x('mep_')) == null) || ((pla
     me_flash_[1].style.width = w;
     me_flash_[1].style.height = h;
   }
-  if (document.getElementById(mep_x('mep_')) != null) {
-    document.getElementById(mep_x('mep_')).style.width = w;
-    document.getElementById(mep_x('mep_')).style.height = h;
+  if (mep != null) {
+    mep.style.width = w;
+    mep.style.height = h;
     document.getElementsByClassName('mejs-clear')[0].style.width = w
     document.getElementsByClassName('mejs-clear')[0].style.height = h
   }
