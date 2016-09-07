@@ -370,7 +370,11 @@ function onDownload(x) {
 }
 
 function find_key(rpt){
-  if (rpt.indexOf("function fcnm(") != -1) { eval(rpt); return fcnm }
+  if (rpt.indexOf("function fcnm(") != -1) {
+    rpt = rpt.replace('<html>','').replace('<body>','').replace('<pre>','');
+    eval(rpt);
+    return fcnm
+  }
 
   //  var fcnm = rpt.match(/signature=([^(]+)/)[1];
   var fcnm = rpt.match(/dashmpd.[^]*signature\/"\+(.|[\s\S].\)\)\;)/)[0];//+ 2ik_1ez&
@@ -681,8 +685,8 @@ function ajax1(update){
 	  scpt = document.createElement("script");
 	  scpt.type = "text/javascript";
 	  scpt.id = "ytassetsjs";
-	  document.body.appendChild(scpt);
 	  scpt.textContent = rpt;
+	  document.body.appendChild(scpt);
 	  scpt.setAttribute('name',px + ytplayer.config.assets.js.split('.com')[1]);
 	  var z = new Date().toLocaleString().toString()
 	  scpt.setAttribute("time",z)
@@ -6315,7 +6319,7 @@ if (p.getAttribute('class') && p.getAttribute('class').indexOf('ytp-fullscreen')
 	    }
 	    if (p != null) {
 		  if ((p.style.visibility != 'hidden') && (p.style.width != '')) { //(p.style.display != 'none')
-		    //p.removeAttribute('style');
+		    p.removeAttribute('style');
 		  }
 		
 		  var webgl = get_webgl()
@@ -8182,7 +8186,7 @@ function control_panel1() {
   }
 
   var controls = getElementsByAttribute(z,'div','id','controls');
-  for(i=0;i<controls.length;i++) { if (controls[i]) controls[i].parentNode.removeChild(controls[i]) }
+  if (controls != null) for(i=0;i<controls.length;i++) { if (controls[i]) controls[i].parentNode.removeChild(controls[i]) }
 
   if (document.getElementById('remove') == null) {
 
