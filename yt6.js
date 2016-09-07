@@ -4506,7 +4506,7 @@ function mep_run() {
 						      if (z && z[0]) {
 							var mix = gclass('flex style-scope ytd-playlist-panel-renderer x-scope ytd-menu-renderer-0');
 							for(i=0;i<z.length;i++) {//console.log(z[i].textContent)
-							  if (z[i] && z[i].parentNode.parentNode.getAttribute('href') != null) {console.log(z[i].parentNode.parentNode.outerHTML)
+							  if (z[i] && z[i].parentNode.parentNode.getAttribute('href') != null) {//console.log(z[i].parentNode.parentNode.outerHTML)
 							    var x = z[i].parentNode.parentNode.getAttribute('href').split('v=')[1].split('&')[0];
 							    if ((z[i].textContent == '▶') || (mix[0] && mix[0].hasAttribute('hidden') && ytplayer.config.args.video_id == x) ) {
 							      if ((document.getElementById('bm0')) && (document.getElementById('bm0').style.visibility == 'visible')) {
