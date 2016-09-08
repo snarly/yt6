@@ -1798,16 +1798,19 @@ yt6.tbg.style = 'display: inline-block'
 yt6.mhp = document.getElementById('masthead-positioner') || document.getElementById('logo');//document.getElementsByClassName('x-scope ytd-masthead-1')[0]
 yt6.wsb = document.getElementById('watch7-sidebar') || document.getElementById('related')
 yt6.wsa = document.getElementById('watch7-sidebar-ads') || document.getElementById('player-ads')
-yt6.wna = document.getElementById('watch-header') || document.getElementById('alerts')
-if (yt6.wna.getAttribute('id') == 'watch-header') yt6.wna = document.getElementById('watch7-notification-area')
+yt6.wna = document.getElementById('watch-header') //|| document.getElementById('alerts')
+if (yt6.wna && yt6.wna.getAttribute('id') == 'watch-header') yt6.wna = document.getElementById('watch7-notification-area')
 
 if (yt6.osw.getAttribute('id') == 'player') {
 	var l = document.getElementsByClassName('style-scope ytd-watch')
 	for (i=0;i<l.length;i++) {
 	  if (l[i].getAttribute('id') == 'container') {
-	    yt6.con = l[i]; var l = null
-	    break
+	    yt6.con = l[i]
 	  }
+	  if (l[i].getAttribute('id') == 'alerts') {
+	    yt6.wna = l[i]
+	  }
+	  if (yt6.con && yt6.wna) { var l = null; break }
 	}
 }
 
@@ -1871,11 +1874,11 @@ yt6.scrollT = document.getElementsByClassName('style-scope ytd-playlist-panel-vi
 
 if ((typeof ytplayer.config == 'object') && (ytplayer.config.args) && (typeof ytplayer.config.args.url_encoded_fmt_stream_map == 'undefined')) {
 
-alert('YouTube\'s 2016 layout is active but certain variables which are critical for this script were not defined yet. We\'ll have to do a page refresh and reload the bookmarklet once again to make the script (somewhat) operational. So, let\'s do it!')
-location.href = window.location.href
+//alert('YouTube\'s 2016 layout is active but certain variables which are critical for this script were not defined yet. We\'ll have to do a page refresh and reload the bookmarklet once again to make the script (somewhat) operational. So, let\'s do it!')
+//location.href = window.location.href
 
-  //(
-function tick() {
+  (
+function tck() {
     var z = document.getElementsByClassName('hidden')
     for(i=0;i<z.length;i++){
       if (z[i].getAttribute('id') == 'player') { var z = z[i]; break }
@@ -1903,7 +1906,7 @@ function tick() {
 
     }
 
-}//)()//tick
+})()//tick
 } else {
     if ((typeof yt6.osw != 'undefined') && (yt6.osw.getAttribute('id') == 'player')) {
           xhr.open('get', window.location, false);
@@ -2542,7 +2545,9 @@ if (rpt != null) {//ajax2
   yt6.w = w
   yt6.h = h
 
-  yt6.fn = fn;//alert(fn)
+  yt6.fn = fn;
+  yt6.linx = []
+  for(i=0;i<100;i++){ if (yt6.linx[i]) delete yt6.linx[i] }
   yt6.linx = linx
   yt6.html = html
   yt6.href = href
@@ -2550,6 +2555,7 @@ if (rpt != null) {//ajax2
   yt6.args = args
 
 try {
+  if (typeof yt6.mep_up == 'function') {
   if (linx[249]) { var probe = linx[249] } else var probe = linx[140]; //console.log(protocol() + probe)
   xhr.open('get', probe, true)
   xhr.onreadystatechange = function() {
@@ -2563,6 +2569,7 @@ try {
     }
   }
   xhr.send('')
+  }
 } catch(e){}
 
 }//crossXmlHttpReq
