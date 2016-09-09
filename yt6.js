@@ -499,7 +499,7 @@ function hand_axe(){
 control_panel1()
 var panel = document.getElementById('controls')
 if (panel) {
-  panel.parentNode.removeChild(document.getElementById('remove'))
+  panel.parentNode.removeChild(document.getElementById('remove-sp'))
   panel.innerHTML = "ERROR: PROXY REQUEST DENIED! A pop-up window should have opened. If pop-ups are blocked, click the Transformer-icon to proceed. Inside the pop-up window's frame there is a text of YouTube site data starting with something like \"var _yt_player\" or \"(function\"... (Run the bookmarklet on that window too to get just the few lines needed.) Please SELECT & COPY it ALL (Ctrl+A, Ctrl+C) then PASTE it into the input field just below the YouTube logo (Ctrl+V). If done, press ENTER."
 }
 
@@ -1810,7 +1810,10 @@ if (yt6.osw.getAttribute('id') == 'player') {
 	  if (l[i].getAttribute('id') == 'alerts') {
 	    yt6.wna = l[i]
 	  }
-	  if (yt6.con && yt6.wna) { var l = null; break }
+	  if (l[i].getAttribute('id') == 'info') {
+	    yt6.inf = l[i]
+	  }
+	  if (yt6.con && yt6.wna && yt6.inf) { var l = null; break }
 	}
 }
 
@@ -2674,7 +2677,7 @@ function nop(){
 	 (window.ytplayer.config != null) &&
 	 (document.getElementById("bm0") != null) &&
 	 ((yt6.wna == null) ||
-	  (document.getElementById("remove") == null) ||
+	  (document.getElementById('remove-sp') == null) ||
 	  (document.getElementById("controls") == null))
 	)
       { //}
@@ -6420,7 +6423,7 @@ if ((document.querySelector('#unavailable-message') != null) && (document.queryS
     //var idocz = null;
     //p.setAttribute('flashvars', idocz);
     //document.getElementById('re-embed2').parentNode.removeChild(document.getElementById('re-embed2'))*/
-    if ( (document.getElementById('re-embed2') != null) && ((player().style.width != '0px') || (player().style.display != 'none')) && (document.getElementById('remove') == null) ) {
+    if ( (document.getElementById('re-embed2') != null) && ((player().style.width != '0px') || (player().style.display != 'none')) && (document.getElementById('remove-sp') == null) ) {
       if (typeof player().getAttribute('flashvars') == 'string') {
         if (typeof player().getPlayerState === 'function') {
 	  window.postMessage("pauseVideo", "*")
@@ -6750,7 +6753,7 @@ function resize_layers(w,h,me_aspect){
   if (document.getElementById('aspect')) {
 	var c = 1 * document.getElementById('yt-alert-message').offsetWidth
 	var d = 1 * document.getElementById('aspect').firstChild.offsetWidth
-	var e = 1 * document.getElementById('remove').parentNode.offsetWidth
+	var e = 1 * document.getElementById('remove-sp').parentNode.offsetWidth
     document.getElementById('aspect').setAttribute('style','display: inline-block; vertical-align: top; color:#333; position: relative; left:' + parseFloat(c - d - e) + 'px;');
   }
 
@@ -6809,7 +6812,7 @@ function nop(){//    } else {
       b.style.setProperty('margin-top','',''); b.removeAttribute('style');// = '0px'
       yt6.tbg.style.setProperty('margin-bottom','','')
       yt6.tbg.style.setProperty('display','inline-block','')
-      document.getElementById('info').style.setProperty('marginTop','',''); document.getElementById('info').removeAttribute('style')
+      yt6.inf.style.setProperty('marginTop','',''); yt6.inf.removeAttribute('style')
     }
   var c = document.getElementById('aspect')
   var d = document.getElementById('player').getAttribute("class")
@@ -7521,14 +7524,14 @@ if (b.getAttribute('id') != 'top') { //pre-2016 layout start
 			if (Math.ceil(l.offsetWidth/854) == 1 && playlist) {
 			  playlist.style.top = '42px'
 			  yt6.wna.style.marginTop = '-340px'
-			  document.getElementById('info').style.marginTop = '316px'
+			  yt6.inf.style.marginTop = '316px'
 			}
 
 
 	//(-c)
 	} else {//console.log('s-24');
 	    if (windowwidth < 657) {//console.log('s-25');
-	      document.getElementById('info').style.marginTop = h - 53 + 'px'
+	      yt6.inf.style.marginTop = h - 53 + 'px'
 	      if (yt6.wna != null) yt6.wna.style.marginTop = '-308px'
 	      if (playlist) playlist.style.top = '42px'
 	      if (!wide_view()) {
@@ -7542,15 +7545,19 @@ if (b.getAttribute('id') != 'top') { //pre-2016 layout start
 		if (l.offsetWidth >= 1066) {
 		  l.firstElementChild.setAttribute('style','margin-top: ' + yh + 'px')
 		  if (yt6.wna != null) yt6.wna.style.marginTop = ''
+		  yt6.inf.style.marginTop = ''
 	          if (playlist) playlist.style.top = ''
 		  if (yt6.wsb != null) yt6.wsb.style.top = ''
-		  document.getElementById('info').style.marginTop = ''
 		} else {
 		    l.firstElementChild.setAttribute('style',''); l.firstElementChild.removeAttribute('style')
-		    if (yt6.wna != null) yt6.wna.style.marginTop = '-340px'
+		    if (navigator.userAgent.indexOf('Chrome') != -1) {
+		      if (yt6.wna != null) yt6.wna.style.marginTop = '-340px'
+		      yt6.inf.style.marginTop = '316px'
+		    } else {
+			yt6.wna.style.marginTop = yt6.inf.style.marginTop = ''
+		      }
 		    if (yt6.wsb != null) yt6.wsb.style.top = ''
 	            if (playlist) playlist.style.top = '42px'
-		    document.getElementById('info').style.marginTop = '316px'
 		  }
 		a.style.top = l.style.marginTop;
 		a.style.left = api.left = '0px';
@@ -7579,7 +7586,7 @@ if (b.getAttribute('id') != 'top') { //pre-2016 layout start
 	    } else {
 	        a.parentNode.style.backgroundColor = 'transparent'
 	      }
-	    document.getElementById('info').style.marginTop = '308px'
+	    yt6.inf.style.marginTop = '308px'
 	    if (yt6.wna != null) yt6.wna.style.marginTop = (!playlist) ? '' : '-308px';
 
 	    if (windowwidth > b.offsetWidth) { //console.log('tiny-1')
@@ -7980,7 +7987,7 @@ function aspect(a) {
       document.getElementById('yt-alert-message').appendChild(dw);
 	var c = 1 * document.getElementById('yt-alert-message').offsetWidth
 	var d = 1 * document.getElementById('aspect').firstChild.offsetWidth
-	var e = 1 * document.getElementById('remove').parentNode.offsetWidth
+	var e = 1 * document.getElementById('remove-sp').parentNode.offsetWidth
       document.getElementById('aspect').setAttribute('style','display: inline-block; vertical-align: top; color:#333; position: relative; left:' + parseFloat(c - d - e) + 'px;');
       document.getElementById('a_width').value = w.replace('px','')
       document.getElementById('a_height').value = h.replace('px','')
@@ -8102,7 +8109,7 @@ function deldiv(){
     if (y != null) y.parentNode.removeChild(y)
   }
 
-  if (document.getElementById('remove') != null) document.getElementById('yt-alert-message').removeChild(document.getElementById('remove').parentNode)
+  if (document.getElementById('remove-sp') != null) document.getElementById('yt-alert-message').removeChild(document.getElementById('remove-sp').parentNode)
 
   var z = ['movie_player','player','player-api']
   for(i=0;i<z.length;i++){
@@ -8195,15 +8202,15 @@ function control_panel1() {
   var controls = getElementsByAttribute(z,'div','id','controls');
   if (controls != null) for(i=0;i<controls.length;i++) { if (controls[i]) controls[i].parentNode.removeChild(controls[i]) }
 
-  if (document.getElementById('remove') == null) {
+  if (document.getElementById('remove-sp') == null) {
 
     var js = document.createElement('span')
     document.getElementById('yt-alert-message').appendChild(js);
     var js = document.createElement('div');
-    js.id = 'remove';
+    js.id = 'remove-sp';
     document.getElementById('yt-alert-message').firstChild.appendChild(js);
-    document.getElementById("remove").setAttribute('style','display:inline-block');
-    document.getElementById("remove").innerHTML =  '<button onclick="switchflashhtml5()" class="yt-uix-button-text"><img src="//s.ytimg.com/yts/img/HTML5_1Color_Black-vfl902gVJ.png" style="vertical-align:middle;height:12px;padding:0px""></img></button><button onclick="aspect()" class="yt-uix-button-text">«↔»</button><br><button onclick="deldiv()" class="yt-uix-button-text">remove</button>'
+    document.getElementById('remove-sp').setAttribute('style','display:inline-block');
+    document.getElementById('remove-sp').innerHTML =  '<button onclick="switchflashhtml5()" class="yt-uix-button-text"><img src="//s.ytimg.com/yts/img/HTML5_1Color_Black-vfl902gVJ.png" style="vertical-align:middle;height:12px;padding:0px""></img></button><button onclick="aspect()" class="yt-uix-button-text">«↔»</button><br><button onclick="deldiv()" class="yt-uix-button-text">remove</button>'
     //&#9724;
     //&#8633;
     //&#8703;//
@@ -8214,7 +8221,7 @@ if (document.getElementById('controls') == null) {
   js.id = 'controls';
   //    document.getElementById('masthead-search').setAttribute('style','display:inline-block;width:650px;max-width:650px;overflow:hidden;margin-top:3px;padding:0px;position:relative;')
   //    document.getElementById('masthead-search').parentNode.insertBefore(js, document.getElementById('masthead-search').nextSibling);
-  document.getElementById('remove').parentNode.insertBefore(js, document.getElementById('remove').nextSibling);
+  document.getElementById('remove-sp').parentNode.insertBefore(js, document.getElementById('remove-sp').nextSibling);
   document.getElementById('controls').setAttribute('style','display: inline-block; padding-left: 1px');
 }
 
@@ -8237,7 +8244,7 @@ var controls = document.getElementById('controls')
                           '</div>'
   }
 
-  document.getElementById("remove").parentNode.setAttribute('style','display:inline-block');
+  document.getElementById('remove-sp').parentNode.setAttribute('style','display:inline-block');
 
 }//control_panel1
 
