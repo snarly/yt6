@@ -2422,7 +2422,7 @@ function rewrite_ytplayer(node_value, s, sig){
             if (typeof z == 'number' && z > 0 && qq.indexOf('+') == -1) {
               size = Array(z).join(".") + size; //Bit shift by 0 which is equivalent to division by 1
             } else {
-                size = ''; var sizeq = ' title="' + size + '" aria-label="' + size +'" ';
+                var sizeq = ' title="' + size + '" aria-label="' + size +'" '; size = '';
               }
           } else { size = ''; }
 
