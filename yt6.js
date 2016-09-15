@@ -2418,7 +2418,7 @@ function rewrite_ytplayer(node_value, s, sig){
                 }
             var y = 25;
             if (qq.indexOf("fps") != -1) y = y + 1;
-	    var z = 1 * ( y - 1 * qq.length - 0 - 3*Math.floor((1 * qq.length/18) - 0) ); //console.log('Array '+ z + typeof z)
+	    var z = 1 * ( y - 1 * qq.length - 0 - 3*Math.floor((1 * qq.length/18) - 0) ); console.log('Array '+ z + typeof z)
             size = Array(z).join(".") + size
 	    //Bit shift by 0 which is equivalent to division by 1
           } else { size = '' }
