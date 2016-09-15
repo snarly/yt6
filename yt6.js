@@ -454,6 +454,11 @@ if (document.location.href.indexOf('//s.ytimg.com/') > -1) {
 }
 
 function hand_axe(){
+
+var bm1 = document.getElementById('bm1')
+if (bm1) bm1.parentNode.removeChild(bm1)
+var bm1 = document.getElementById('ytassetsjs')
+if (bm1) bm1.parentNode.removeChild(bm1)
 		    var bm1 = document.createElement('button')
 		    bm1.id = 'getjs'
 		    bm1.type = 'button'
@@ -646,12 +651,11 @@ function ajax1(update){
 //  px = 'https://cors-anywhere.herokuapp.com/https:'
 //  var px = 'http://www.corsproxy.com'
   var ytassetsjs = document.getElementById('ytassetsjs')
-  if ((ytassetsjs == null) || (ytassetsjs.innerHTML.indexOf("function(){") == -1 && ytassetsjs.innerHTML.indexOf("function fcnm(") == -1) || (update)) {
-    if (ytassetsjs != null) ytassetsjs.parentNode.removeChild(ytassetsjs)
+
     function setProxy(){
       var proxiez = shuffle(proxies)
       for (i=0;i<proxiez.length;i++){
-        if (ytassetsjs != null) break;
+        if (ytassetsjs != null) { return [ytassetsjs.name.split('/https')[0], ytassetsjs.innerHTML]; break };
         var px = proxiez[i]
         try {
           xhr.open('get', px + ytplayer.config.assets.js, false);
@@ -700,7 +704,7 @@ function ajax1(update){
 	  scpt.textContent = rpt;
 	  document.body.appendChild(scpt);
 	  scpt.setAttribute('class','ytassetsjs');
-	  scpt.setAttribute('name',px + ytplayer.config.assets.js.split('.com')[1]);
+	  scpt.setAttribute('name',px + '/https:' + ytplayer.config.assets.js);//.split('.com')[1]);
 	  var z = new Date().toLocaleString().toString()
 	  scpt.setAttribute("time",z)
 	  break
@@ -718,31 +722,37 @@ function ajax1(update){
       if (rpt.indexOf("function(){") != -1) { return [px, rpt] }
     }//setProxy
 
+  if ((ytassetsjs == null) || (ytassetsjs.innerHTML.indexOf("function(){") == -1 && ytassetsjs.innerHTML.indexOf("function fcnm(") == -1) || (update)) {
+    if (ytassetsjs != null) ytassetsjs.parentNode.removeChild(ytassetsjs)
+
+    var spx = setProxy();
+
+    if (typeof spx == 'undefined') {
+
+      $waitUntil(
+        function(){ var js = document.getElementById('ytassetsjs'); if (js != null && js.innerHTML.indexOf('var ') != -1) return true },
+        function(){  },
+      500,5000
+      )//document.getElementById('ytassetsjs').fcnm = find_key(document.getElementById('ytassetsjs').innerHTML)
+
+      if (document.getElementById('bm1') == null && document.getElementById('getjs') == null) {
+        hand_axe();
+      } //else console.log('One too many')
+
+    } else {
+
+        var px = spx[0]
+        var rpt = spx[1]
+
+        document.getElementById('ytassetsjs').fcnm = find_key(rpt)
+      }
+
 
   } else {
-      var rpt = ytassetsjs.innerHTML
-    }
-
-  var spx = setProxy();
-
-  if (typeof spx == 'undefined') {
-
-    $waitUntil(
-      function(){ var js = document.getElementById('ytassetsjs'); if (js != null && js.innerHTML.indexOf('var ') != -1) return true },
-      function(){  },
-    500,5000
-    )//document.getElementById('ytassetsjs').fcnm = find_key(document.getElementById('ytassetsjs').innerHTML)
-    if (document.getElementById('bm1') == null && document.getElementById('getjs') == null) {
-      //hand_axe()
-    } //else console.log('One too many')
-
-  } else {
-
-      var px = spx[0]
-      var rpt = spx[1]
-
+      var rpt = ytassetsjs.innerHTML;
       document.getElementById('ytassetsjs').fcnm = find_key(rpt)
     }
+
 
 /*if (player().getAttribute('name') == 'me_flash') {
   var file = def_link()
@@ -8291,7 +8301,7 @@ function control_panel1() {
     var js = document.createElement('div');
     js.id = 'yt-alert-message';
     z.insertBefore(js, z.firstChild);
-    document.getElementById('yt-alert-message').setAttribute('class','yt-alert-message');
+    js.setAttribute('class','yt-alert-message');
     delete js;
   }
 
