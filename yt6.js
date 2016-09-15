@@ -2404,7 +2404,7 @@ function rewrite_ytplayer(node_value, s, sig){
                 var fn = (args.title + x).replace(/&/g,'%26').replace(/\+/g,'%2B')
               }
 
-          var size = href.match(/[&\?]clen=([0-9]+)&/i);
+          var size = href.match(/[&\?]clen=([0-9]+)&/i); var sizeq = ''
           if ((typeof size != 'undefined') && (size !== null)) {
             size = parseInt(size[1],10);
               if (size>=1073741824) {
@@ -2419,20 +2419,22 @@ function rewrite_ytplayer(node_value, s, sig){
             var y = 25;
             if (qq.indexOf("fps") != -1) y = y + 1;
 	    var z = 1 * ( y - 1 * qq.length - 0 - 3*Math.floor((1 * qq.length/18) - 0) ); //console.log('Array '+ z + typeof z)
-            if (typeof z == 'number' && z < 0) var z = 1; //Math.abs(z)
-            size = Array(z).join(".") + size
-	    //Bit shift by 0 which is equivalent to division by 1
-          } else { size = '' }
+            if (typeof z == 'number' && z > 0 && qq.indexOf('+') == -1) {
+              size = Array(z).join(".") + size; //Bit shift by 0 which is equivalent to division by 1
+            } else {
+                size = ''; var sizeq = ' title="' + size + '" aria-label="' + size +'" ';
+              }
+          } else { size = ''; }
 
 
           if (typeof qq.split(" ")[1] != 'undefined') { 
             if (typeof j != 'number') {
               html.push(
-                '<a class="" href="' + protocol() + href + '&title=' + fn +'" onclick="' + rp(onclic) + '" download="' + fn + '.' + qq.split(" ")[1].toLowerCase() + '">' + qq + size + '</a>'
+                '<a class="" href="' + protocol() + href + '&title=' + fn +'" onclick="' + rp(onclic) + '"' + sizeq + ' download="' + fn + '.' + qq.split(" ")[1].toLowerCase() + '">' + qq + size + '</a>'
               );
             } else {
                 html.splice(
-                  j+1, 0, '<a class="" href="' + protocol() + href + '&title=' + fn +'" onclick="' + rp(onclic) + '" download="' + fn + '.' + qq.split(" ")[1].toLowerCase() + '">' + qq + size + '</a>'
+                  j+1, 0, '<a class="" href="' + protocol() + href + '&title=' + fn +'" onclick="' + rp(onclic) + '"' + sizeq + ' download="' + fn + '.' + qq.split(" ")[1].toLowerCase() + '">' + qq + size + '</a>'
                 );
               }
     
@@ -2441,11 +2443,11 @@ function rewrite_ytplayer(node_value, s, sig){
           } else {
               if (typeof j != 'number'){
                 html.push(
-                  '<a class="" href="' + protocol() + href + '&title=' + fn +'" onclick="' + rp(onclic) + '" download="' + fn + '">' + qs.itag + size + '</a>'
+                  '<a class="" href="' + protocol() + href + '&title=' + fn +'" onclick="' + rp(onclic) + '"' + sizeq + ' download="' + fn + '">' + qs.itag + size + '</a>'
                 );
               } else {
                   html.splice(
-                      j+1, 0, '<a class="" href="' + protocol() + href + '&title=' + fn +'" onclick="' + rp(onclic) + '" download="' + fn + '">' + qs.itag + size + '</a>'
+                      j+1, 0, '<a class="" href="' + protocol() + href + '&title=' + fn +'" onclick="' + rp(onclic) + '"' + sizeq + ' download="' + fn + '">' + qs.itag + size + '</a>'
                   );
                 }
             }
