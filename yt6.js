@@ -5950,7 +5950,8 @@ document.getElementsByTagName('body')[0].spfdone = function(e) {
 
     if (yt6.osw.getAttribute('id') != 'player' && navigator.userAgent.match(/MSIE /) == null && navigator.userAgent.match(/Trident\//) == null) {
         yt6.pps = yt6.osw.firstChild.style
-	document.getElementById('placeholder-player').parentNode.removeChild(document.getElementById('placeholder-player'))
+        var js = document.getElementById('placeholder-player')
+	if (js) js.parentNode.removeChild(js)
 	var js = document.createElement('div')
 	js.id = 'placeholder-player'
 	document.getElementById('content').insertBefore(js, document.getElementById('content').firstChild)
