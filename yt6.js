@@ -4505,7 +4505,7 @@ function mep_run() {
 					me.addEventListener('loadeddata', function() {
 					  if (yt6.newvideo) { yt6.newvideo = true; me.setCurrentTime(0) } else { if (yt6.ct) me.setCurrentTime(yt6.ct) };
 					  //document.getElementsByClassName('mejs-controls')[0].style = 'display: block; visibility: hidden;'
-					  if (yt6.speed) { yt6.player2.playbackRate = me.playbackRate = yt6.speed; document.getElementById('displaySpeed').innerHTML = "Speed " + Math.round(yt6.speed * 100) + "%" };
+					  if (yt6.speed) { player2.playbackRate = me.playbackRate = yt6.speed; document.getElementById('displaySpeed').innerHTML = "Speed " + Math.round(yt6.speed * 100) + "%" };
 					  FireEvent( mep_x('mep_'), 'mouseover' );
 					  if (document.getElementsByClassName('mejs-clear')[0]) document.getElementsByClassName('mejs-clear')[0].setAttribute('id','mejs-clear')
 					  yt6.newvideo = false;
