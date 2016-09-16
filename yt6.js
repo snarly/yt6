@@ -1914,7 +1914,7 @@ yt6.scrollT = document.getElementsByClassName('style-scope ytd-playlist-panel-vi
   yt6.cdn = shuffle(yt6.cdns)[0]
 
 
-if ((typeof ytplayer.config == 'object') && (ytplayer.config.args) && (typeof ytplayer.config.args.url_encoded_fmt_stream_map == 'undefined')) {
+if (ytplayer.config && ytplayer.config.args && typeof ytplayer.config.args.url_encoded_fmt_stream_map == 'undefined') {
 
 //alert('YouTube\'s 2016 layout is active but certain variables which are critical for this script were not defined yet. We\'ll have to do a page refresh and reload the bookmarklet once again to make the script (somewhat) operational. So, let\'s do it!')
 //location.href = window.location.href
@@ -1950,7 +1950,7 @@ function tck() {
 
 })()//tick
 } else {
-    if ((typeof yt6.osw != 'undefined') && (yt6.osw.getAttribute('id') == 'player')) {
+    if (yt6.osw && yt6.osw.getAttribute('id') == 'player') {
           xhr.open('get', window.location, false);
           xhr.send('');
           var source = xhr.responseText.toString();
@@ -2081,7 +2081,10 @@ yt6.ytcsi = {
     })();
 */  
 
-    }
+    } else if (yt6.osw && yt6.osw.getAttribute('id') == 'placeholder-player' && window.ytplayer && window.ytplayer.config == null) {
+	      yt6.osw.setAttribute('style','display: none')
+	      return void 0;
+	   }
   } //else
 
 
@@ -2451,7 +2454,7 @@ function rewrite_ytplayer(node_value, s, sig){
                   );
                 }
             }
-          return fn
+	  return fn
         };//HTMLPush
         var fn = HTMLPush()
       }//for
@@ -5790,6 +5793,11 @@ waitUntilExists('movie_player',function(){
 
 	function mep_reload(){
 
+	    if (yt6.osw && yt6.osw.getAttribute('id') == 'placeholder-player' && window.ytplayer && window.ytplayer.config == null) {
+	      yt6.osw.setAttribute('style','display: none')
+	      return void 0;
+	    }
+
 	    var webgl = get_webgl()
 	    ///if (!webgl) try { document.getElementsByClassName('video-stream html5-main-video')[0].pause() } catch(e) {};
 
@@ -5950,7 +5958,7 @@ document.getElementsByTagName('body')[0].spfdone = function(e) {
 
     if (yt6.osw.getAttribute('id') != 'player' && navigator.userAgent.match(/MSIE /) == null && navigator.userAgent.match(/Trident\//) == null) {
         yt6.pps = yt6.osw.firstChild.style
-        var js = document.getElementById('placeholder-player')
+	var js = document.getElementById('placeholder-player')
 	if (js) js.parentNode.removeChild(js)
 	var js = document.createElement('div')
 	js.id = 'placeholder-player'
@@ -5960,7 +5968,7 @@ document.getElementsByTagName('body')[0].spfdone = function(e) {
         delete js;
     }
 
-	if ((yt6.title != document.title) && (checkLoc() != 'YouTube'))  {
+	if (yt6.title != document.title || yt6.strLocation != window.location.href && checkLoc() != 'YouTube') {
 	    if ( (window.location.href.indexOf("Ypkv0HeUvTc_MM") > -1 ) || (strPrevLocation.indexOf("aC4BC-Hxq9g_PD") > -1 ) ) {
 	      location.href = window.location.href
 	    } else {
@@ -6535,13 +6543,13 @@ if ((document.querySelector('#unavailable-message') != null) && (document.queryS
 //	if ((document.getElementById('placeholder-player') != null) && (bm0 != null) && (bm0.style.width != fix_Width()) ) aspect(yt6.size)
 
 
-	if ((yt6.title) && (yt6.title != checkLoc()) && (checkLoc() != 'YouTube')) {
+	if (yt6.title && (yt6.title != checkLoc() || yt6.strLocation != window.location.href) && checkLoc() != 'YouTube') {
         //if ((watch != null) && (strPrevLocation != yt6.strLocation)) {
 	  //if ( ((window.ytplayer != null) && (window.ytplayer.config != null) && 
 	  //     (window.ytplayer.config.loaded) && (yt6.args != window.ytplayer.config.args) && 
 	  //     (p != null) && (document.getElementById('watch-discussion') != null) ) ) {
           //works only for browser-level navigation, not for flashplayer "previous/next"
-	  if ((window.ytplayer) && (window.ytplayer.config)) {
+	  if (window.ytplayer && window.ytplayer.config) {
 
 	    //console.log('!!!'+strPrevHash + yt6.strHash + window.location.hash + yt6.strLocation + window.location.href)
 
@@ -6633,8 +6641,10 @@ if ((document.querySelector('#unavailable-message') != null) && (document.queryS
 
 
         if (checkLoc() != 'YouTube') {
-	  if (typeof yt6.title == 'undefined') yt6.title = document.title;
-	  if (yt6.title != checkLoc()) yt6.title = document.title;
+	  if (typeof yt6.title == 'undefined' || yt6.title != checkLoc() || yt6.strLocation != window.location.href) {
+	    yt6.title = document.title;
+	    yt6.strLocation = window.location.href;
+	  }
 	}
 
 
