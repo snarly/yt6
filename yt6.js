@@ -6780,7 +6780,7 @@ function ytsubtitle2srt(d,track_srclang,mejs_language_code){
   var nl = String.fromCharCode(13) + String.fromCharCode(10);
 
   for (i=0;i<text.length;i++) {
-    var start = text[i].getAttribute('logo');
+    var start = text[i].getAttribute('start');
     if (!start) var start = "99:00:00.000";
     var dur = text[i].getAttribute('dur');
     if (!dur) { var dur = "00:00:00.000" } else { var dur = parseFloat(start) + parseFloat(dur); var dur = dur.toString(); var dur = dur.toHHMMSS() };
