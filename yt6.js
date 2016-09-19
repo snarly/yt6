@@ -455,6 +455,7 @@ if (document.location.href.indexOf('//s.ytimg.com/') > -1) {
 
 function hand_axe(){
 
+if (document.getElementById('getjs') != null && document.getElementById('setjs') != null) return void 0;
 var bm1 = document.getElementById('bm1')
 if (bm1) bm1.parentNode.removeChild(bm1)
 var bm1 = document.getElementById('ytassetsjs')
