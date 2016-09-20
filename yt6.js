@@ -661,6 +661,21 @@ function ajax1(update){
 	  return [ytassetsjs.name.split('/https')[0], ytassetsjs.innerHTML];
 	  break
 	};
+	var z = document.getElementsByClassName('ytassetsjs-0')
+	if (z && z[0]) {
+	  for (j=0;j<z.length-1;j++) {
+	    if (z[j].innerHTML.indexOf("function(){") != -1 || z[j].innerHTML.indexOf("function fcnm(") |= -1) {
+	      if (ytassetsjs != null) ytassetsjs.parentNode.removeChild(ytassetsjs)
+	      z[j].id = 'ytassetsjs'
+	      for (k=0;k<z.lenth-1;k++) {
+	      	if (z[k]) z[k].parentNode.removeChild(z[k])
+	      }
+	      return [z[j].name.split('/https')[0], z[j].innerHTML]
+	      break
+	    }
+	  }
+        }
+        
         var px = proxiez[i]
       	var z = document.getElementById(px + ' error' ); if (z != null) continue;
         try {
@@ -732,7 +747,10 @@ function ajax1(update){
     }//setProxy
 
   if ((ytassetsjs == null) || (ytassetsjs.innerHTML.indexOf("function(){") == -1 && ytassetsjs.innerHTML.indexOf("function fcnm(") == -1) || (update)) {
-    if (ytassetsjs != null) ytassetsjs.parentNode.removeChild(ytassetsjs)
+    if (ytassetsjs != null) {//ytassetsjs.parentNode.removeChild(ytassetsjs)
+      ytassetsjs.id = 'ytassetsjs-0'
+      ytassetsjs.setAttribute('class', 'ytassetsjs-0')
+    }
 
     var spx = setProxy();
 
