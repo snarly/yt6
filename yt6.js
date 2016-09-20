@@ -664,7 +664,7 @@ function ajax1(update){
 	var z = document.getElementsByClassName('ytassetsjs-0')
 	if (z && z[0]) {
 	  for (j=0;j<z.length-1;j++) {
-	    if (z[j].innerHTML.indexOf("function(){") != -1 || z[j].innerHTML.indexOf("function fcnm(") |= -1) {
+	    if (z[j].innerHTML.indexOf("function(){") != -1 || z[j].innerHTML.indexOf("function fcnm(") != -1) {
 	      if (ytassetsjs != null) ytassetsjs.parentNode.removeChild(ytassetsjs)
 	      z[j].id = 'ytassetsjs'
 	      for (k=0;k<z.lenth-1;k++) {
