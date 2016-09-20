@@ -662,7 +662,7 @@ function ajax1(update){
 	  break
 	};
         var px = proxiez[i]
-      	var z = document.getElementById(px + ' error' ); if (z != null) break;
+      	var z = document.getElementById(px + ' error' ); if (z != null) continue;
         try {
           xhr.open('get', px + ytplayer.config.assets.js, false);
           xhr.send('');
