@@ -662,6 +662,7 @@ function ajax1(update){
 	  break
 	};
         var px = proxiez[i]
+      	var z = document.getElementById(px + ' error' ) break;
         try {
           xhr.open('get', px + ytplayer.config.assets.js, false);
           xhr.send('');
@@ -694,7 +695,8 @@ function ajax1(update){
 	      scpt.id = px + " error";
 	      scpt.textContent = 'HTTP 403 Forbidden: Access was denied to this resource over internal quota';
 	      document.body.appendChild(scpt);
-	      scpt.setAttribute("style","display:none")
+	      scpt.setAttribute('class','yt6-proxy-error')
+	      scpt.setAttribute('style','display: none')
 	      continue;
 
 	  }//403
