@@ -1140,7 +1140,7 @@ if (typeof window.DOMParser != "undefined") {
       if ( (z.firstChild && !z.firstChild.style) || (z.firstChild && z.firstChild.style && typeof z.firstChild.style != 'object') ) z.innerHTML = '<div class="player-api player-width player-height" style="background-color: transparent"></div>';
       var z = z.firstChild;
     }
-    var o = z.getAttribute('style'); if (o) z.removeAttribute('style')
+    if (z) { var o = z.getAttribute('style') } else return '-1px'; if (o) z.removeAttribute('style')
     //if (z.getAttribute('id') != 'player') {
       var y = z.currentStyle || window.getComputedStyle(z, null)
 function nop(){//    } else {
@@ -1196,7 +1196,7 @@ if ( (wide_view() == false) || ((wide_view() == true) && ((yt6.size == 'default'
       if ( (z.firstChild && !z.firstChild.style) || (z.firstChild && z.firstChild.style && typeof z.firstChild.style != 'object') ) z.innerHTML = '<div class="player-api player-width player-height" style="background-color: transparent"></div>';
       var z = z.firstChild;
     }
-    var o = z.getAttribute('style'); if (o) z.removeAttribute('style')
+    if (z) { var o = z.getAttribute('style') } else return '-1px'; if (o) z.removeAttribute('style')
     //if (z.getAttribute('id') != 'player') {
       var y = z.currentStyle || window.getComputedStyle(z, null)
 function nop(){//    } else {
