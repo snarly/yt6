@@ -748,8 +748,8 @@ function ajax1(update){
 
   if ((ytassetsjs == null) || (ytassetsjs.innerHTML.indexOf("function(){") == -1 && ytassetsjs.innerHTML.indexOf("function fcnm(") == -1) || (update)) {
     if (ytassetsjs != null) {//ytassetsjs.parentNode.removeChild(ytassetsjs)
-      ytassetsjs.id = 'ytassetsjs-0'
       ytassetsjs.setAttribute('class', 'ytassetsjs-0')
+      ytassetsjs.id = 'ytassetsjs-0'
     }
 
     var spx = setProxy();
