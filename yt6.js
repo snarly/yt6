@@ -1847,7 +1847,7 @@ function preload(){
     var z = document.getElementById(mep_x('mep_') + '_sourcechooser_' + yt6.userpref[i])
     if (find && z != null) {
       if (autoplay()) {
-	z.click(); if (typeof yt6.player1.play == 'function') yt6.player1.play();
+		z.click(); if (typeof yt6.player1.play == 'function' && document.getElementById('bm0').style.visibility == 'visible') yt6.player1.play();
       } else {
 	  z.setAttribute('checked','checked');
 	  //if (1 * z.id.indexOf('VP8') > -1) {
