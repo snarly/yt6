@@ -4441,7 +4441,7 @@ function mep_run() {
 					      }
 							//console.log('Boo!');
 
-						//if (document.getElementsByClassName('yt6-proxy-error') && document.getElementsByClassName('yt6-proxy-error').length < proxies.length) {
+						if (document.getElementsByClassName('yt6-proxy-error') && document.getElementsByClassName('yt6-proxy-error').length < proxies.length) {
 							ajax1(true);
 							crossXmlHttpReq(window.ytplayer);
 							redo_dl_button(  yt6.args,  yt6.html,  yt6.href);
@@ -4452,7 +4452,7 @@ function mep_run() {
 							  var z = gclass('mejs-overlay-play')//mejs-playpause-button
 							  if (typeof z[0] != 'undefined') z[0].style.display = 'none';//{ z[0].firstChild.click();z[0].firstChild.click(); }
 							};*/
-						//}
+						}
 					    }
 					    function no_default(_itag){ 
 					      $waitUntil(
