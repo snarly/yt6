@@ -5886,7 +5886,7 @@ waitUntilExists('movie_player',function(){
 
 	    document.getElementById('player-api').style.overflow = 'hidden';
 	    yt6.mep_up();
-	    if (!document.getElementById(mep_x('mep_')) {
+	    if (!document.getElementById(mep_x('mep_'))) {
 	      mep_run();
 	    } else rebuildradiobutttons()
 
