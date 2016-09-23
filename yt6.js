@@ -584,9 +584,9 @@ function ajax1(update){
 
     try { var ypa = yt.player.Application.create('test-4', ytplayer.config);
       ypa.dispose();
-    } catch(e) { yt6.error = ' ' }
+    } catch(e) { yt6.error = '  \n  ' }
 
-    if (yt6.error != ' ') {
+    if (yt6.error != '  \n  ') {
 
     var gvd = JSON.stringify(ypa.getVideoData());
     //test.textContent = yt6.gvd;
@@ -5885,8 +5885,10 @@ waitUntilExists('movie_player',function(){
 	    redo_dl_button(  yt6.args,  yt6.html,  yt6.href);
 
 	    document.getElementById('player-api').style.overflow = 'hidden';
-	    yt6.mep_up();//mep_run();
-rebuildradiobutttons()
+	    yt6.mep_up();
+	    if (!document.getElementById(mep_x('mep_'))) {
+	      mep_run();
+	    } else rebuildradiobutttons()
 
 
 
