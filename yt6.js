@@ -198,7 +198,7 @@ return encodeURIComponent('https:' + def + sig)
  *
 */
 
-
+/*
 (function(){
 	var _waitUntilExists = {
 		pending_functions : [],
@@ -244,7 +244,7 @@ return encodeURIComponent('https:' + def + sig)
 		_waitUntilExists.pending_functions = []
 	}
 })()
-
+*/
 
 /// $waitUntil
 ///      waits until a certain function returns true and then executes a code. checks the function periodically
