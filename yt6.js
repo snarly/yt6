@@ -342,6 +342,8 @@ function FireEvent( ElementId, EventName )
 
 
 function FireEvent2( element, event ) {
+
+	if (element) {
 	      if (window.CustomEvent) {
 	        element.dispatchEvent(new CustomEvent( event));
 	      } else {
@@ -353,6 +355,8 @@ function FireEvent2( element, event ) {
 		      element.fireEvent( event );
 		    }
 		}
+	}
+
 }
 
   var a,b,i,j,k,x,y,z;
@@ -871,7 +875,7 @@ function getPoster(){
       }
     )
   }
-  document.getElementById('test_poster').appendChild(img)
+  if (document.getElementById('test_poster')) document.getElementById('test_poster').appendChild(img)
   delete img
 
   return poster
@@ -2304,7 +2308,14 @@ function rewrite_ytplayer(node_value, s, sig){
 	    }
 	  }
 	}
-        if (qq.indexOf('DASH') != -1) { var ar = ft.toString().split("size=")[1].split("&")[0].split(",")[0]; if ( !yt6.aspect_ratio || (yt6.aspect_ratio && 1 * ar.replace('x','*') > 1 * yt6.aspect_ratio.replace('x','*')) ) { yt6.aspect_ratio = ar; yt6.ar = ar  } }
+        if (qq.indexOf('DASH') != -1) {
+	  var ar = ft.toString().split("size=")[1];
+	  if (ar) var ar = ar.split("&")[0].split(",")[0];
+	  if ( (!yt6.aspect_ratio && typeof ar == 'string') || (yt6.aspect_ratio && 1 * ar.replace('x','*') > 1 * yt6.aspect_ratio.replace('x','*')) ) {
+	    yt6.aspect_ratio = ar
+	    yt6.ar = ar
+	  }
+	}
         if (qs.itag !== '278') { linx[qs.itag] = href } else { linx[241] = href }
         if (qq.indexOf('360p WebM VP8') != -1) { var webm = 'https:' + href };
         if ( (qq.indexOf('WebM Vorbis') != -1) && (navigator.userAgent.match(/Edge\/\d+/) == null && navigator.userAgent.match(/MSIE /) == null && navigator.userAgent.match(/Trident\//) == null) ) { var audio = 'https:' + href };//.replace('&ratebypass=yes','') };
@@ -2649,8 +2660,10 @@ if (rpt != null) {//ajax2
   } else {
       var w = fix_Width(); var h = fix_Height();
     }
+
   if (w.replace('px','') < 640) {var w = '640px'}
   if (h.replace('px','') < 390) {var h = '390px'}
+
 
   yt6.w_init = w_init
   yt6.h_init = h_init
@@ -4462,6 +4475,8 @@ for (i=0;i<z.length-1;i++) { if (z) { delete z } }
 					});
 					me.addEventListener('error', function() {
 					  if (me.networkState == 3) {
+					    if (me.src == window.location.href) { return void 0 };
+
 					    var sauce = getElementsByAttribute(document,"input","name",mep_x("mep_") + "_sourcechooser");
 					    if ((sauce != undefined) && (sauce.length != 0)) {
 					      for (i=0;i<parseInt(sauce.length - 1);i++) {//alert(i)
@@ -4470,6 +4485,7 @@ for (i=0;i<z.length-1;i++) { if (z) { delete z } }
 						}
 					      }
 					    }
+
 					    function decryption_failure(){
 					      var z = document.getElementsByClassName('mejs-overlay-error');
 					      if (z[0]) {
@@ -4559,7 +4575,7 @@ for (i=0;i<z.length-1;i++) { if (z) { delete z } }
 						if (yt6.size == 'media') {
 						  yt6.w = this.videoWidth + 'px'; document.getElementById('a_width').value = this.videoWidth
 						  yt6.h = this.videoHeight + 'px'; document.getElementById('a_height').value = this.videoHeight
-						  aspect('media'); //resize_layers(document.getElementById('a_width').value + 'px', document.getElementById('a_height').value + 'px', false);
+						  aspect('media'); resize_layers(document.getElementById('a_width').value + 'px', document.getElementById('a_height').value + 'px', false);
 						} else resize_layers(document.getElementById('a_width').value + 'px', document.getElementById('a_height').value + 'px');
 					      } else {
 						  yt6.w = fix_Width()
@@ -4736,7 +4752,7 @@ for (i=0;i<z.length-1;i++) { if (z) { delete z } }
 		  audioWidth: 1, audioHeight: 1,
 		  success: function(me) {  $('#audio-type').html( me.pluginType);
 					me.addEventListener('seeked', function() {
-					if (yt6.player2.media.currentTime != player2.currentTime) { player2.currentTime = yt6.player1.media.currentTime; }
+					if (yt6.player2.media.currentTime.toFixed(2) != player2.currentTime.toFixed(2)) { player2.currentTime = yt6.player1.media.currentTime; }
 					  if (Seek == 1) {
 					    Seek = null ;  player1.play()
 					  } else {
@@ -4798,7 +4814,7 @@ for (i=0;i<z.length-1;i++) { if (z) { delete z } }
 					    }
 					});
 					me.addEventListener('play', function() {
-					  if (yt6.player2.media.currentTime != player2.currentTime) {
+					  if (yt6.player2.media.currentTime.toFixed(2) != player2.currentTime.toFixed(2)) {
 					    me.pause(); player2.currentTime = yt6.player1.media.currentTime;
 					    Seek = 1; if (document.getElementById('bm0').style.visibility != 'hidden') yt6.player1.play()
 					  }
@@ -6800,7 +6816,7 @@ yt6.timer = 0
 
 $waitUntil(function(){ if (typeof $ == 'function') { return true } else {
   yt6.timer++; //console.log('waiting ' + yt6.timer)
-  if (yt6.timer == 22){
+  if (yt6.timer == 12){
     for(i=0;i<yt6.cdns.length;i++){
       if(yt6.cdns[i] != yt6.cdn) {//alert(yt6.cdn + ' failed!!! Retrying with ' + yt6.cdns[i])
         yt6.cdn = yt6.cdns[i];
@@ -6811,7 +6827,7 @@ $waitUntil(function(){ if (typeof $ == 'function') { return true } else {
     loadScript( protocol() + yt6.cdn + "snarly/yt6/747fd7ad7b481ee96ea874a8f0126df995f32006/jquery.js", jq0);
   }
 }//else
-}, function(){ yt6.timer = true },500,12000
+}, function(){ yt6.timer = true },500,7000
 )
 
 //})//waitUntilExists 'content'
@@ -8224,13 +8240,13 @@ function aspect(a) {
 		  if (z) {
 		    var z = z.split('<span>')[1]
 		    if (z) {
-		      var z = z.split('@')[0]
+		      var z = z.split(' ').join('').split('</span>')[0].split('@')[0]
 		      if (z && z.indexOf('x') != -1) {
 		        var w = 1 * z.split('x')[0]
 		        var h = 1 * z.split('x')[1]
-		        if (parseFloat(w / h).toFixed(4) !== yt6.aspect_ratio.toFixed(4)) {
+		        if (!isNaN(parseFloat(w / h)) && parseFloat(w / h).toFixed(4) !== yt6.aspect_ratio.toFixed(4)) {
 		          yt6.aspect_ratio = parseFloat(w / h)
-		        } else yt6.aspect_ratio = yt6.ar
+		        } else { yt6.aspect_ratio = yt6.ar }
 		      }
 		    }
 	          }
@@ -8299,7 +8315,9 @@ function deldiv(){
     }
   }
 
-  if (typeof ($) !== 'undefined') {
+  if (typeof ($) !== 'undefined') {//alert(''+ytplayer.config.args.probe_url.split('u0026').join('&'))
+    if (yt6.player1) { try { yt6.player1.setSrc(''); yt6.player1.load() } catch(e) { } }
+    if (yt6.player2) { try { yt6.player2.setSrc(''); yt6.player2.load() } catch(e) { } }
     $.removeData([mejs.players['mep_1'], mejs.players['mep_0']])
     mejs.players['mep_1'] = null; delete mejs.players['mep_1'];
     mejs.players['mep_0'] = null; delete mejs.players['mep_0'];
