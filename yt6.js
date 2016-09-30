@@ -2261,6 +2261,8 @@ function rewrite_ytplayer(node_value, s, sig){
 
   var args = ytplayer.config.args;
 
+  yt6.aspect_ratio = {}
+  delete yt6.aspect_ratio
 
   var html = [new Date().toLocaleString(),
     'Click to switch streams in both native and alternative (HTML5) player. Right click & "Save as" to download.<br>'
