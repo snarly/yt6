@@ -6817,7 +6817,7 @@ if ((document.querySelector('#unavailable-message') != null) && (document.queryS
 
 yt6.timer = 0
 
-$waitUntil(function(){ if (typeof $ == 'function') { return true } else {
+$waitUntil(function(){ if (typeof jQuery == 'function' && typeof $ == 'function') { return true } else {
   yt6.timer++; //console.log('waiting ' + yt6.timer)
   if (yt6.timer == 12){
     for(i=0;i<yt6.cdns.length;i++){
