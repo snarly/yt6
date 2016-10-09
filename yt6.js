@@ -362,7 +362,7 @@ function FireEvent2( element, event ) {
   var a,b,i,j,k,x,y,z;
 
 if (document.getElementById('player') != null) {
-  var swfbin4 = document.getElementById('player').textContent.split('var ytplayer = ytplayer || {};')[1]
+  var swfbin4 = document.getElementById('player').innerHTML.split('var ytplayer = ytplayer || {};')[1]
   if (swfbin4 != null) {
     swfbin4 = swfbin4.split('"url":"')[1].split('"')[0];
     swfbin4 = swfbin4.split('player-')[1].split('\\')[0];
@@ -2475,7 +2475,7 @@ function rewrite_ytplayer(node_value, s, sig){
             if (navigator.oscpu) {
               if (navigator.oscpu.indexOf("Windows") > -1) {
                 var fn = (args.title + x)
-                    .replace(/[#"\?:\*]/g,'').replace(/[&\|\\\/]/g,'_').replace(/'/g,'\'').replace(/^\s+|\s+$/g,'').replace(/\.+$/g,'');  
+                    .replace(/"/g,'\'').replace(/[#"\?:\*]/g,'').replace(/[&\|\\\/]/g,'_').replace(/'/g,'\'').replace(/^\s+|\s+$/g,'').replace(/\.+$/g,'');  
               } else {
                   if (navigator.oscpu.indexOf("Linux") > -1) {
                     var fn = (args.title + x).replace(/\"/g,'_').replace(/&/g,'%26').replace(/\+/g,'%2B').replace(/[\/]/g,'_')
