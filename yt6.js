@@ -1566,10 +1566,10 @@ if (autoplay != null) {
       if (autoplay.getAttribute('disabled')) autoplay.removeAttribute('disabled');
       if (autoplay.parentNode.innerHTML.indexOf('disabled=""')) autoplay.parentNode.innerHTML = autoplay.parentNode.innerHTML.split('disabled=""').join('')
       for (var i in autoplay.children) {
-        var bt = autoplay.children[i];console.log(bt + typeof bt.getAttribute + bt[0])
-        if (bt && typeof bt.getAttribute == 'function' && bt.getAttribute('type') == 'button') break;
+        var bt = autoplay.children[i];console.log(bt + typeof bt.getAttribute + bt.getAttribute('class'))
+        if (bt && typeof bt.getAttribute == 'function' && bt.getAttribute('class').indexOf('yt-uix-button yt-uix-button-size-default yt-uix-button-player-controls yt-uix-button-empty yt-uix-button-has-icon toggle-loop yt-uix-button-opacity yt-uix-tooltip yt-uix-tooltip') != -1) break;
       }
-      if (!bt) var bt = autoplay.children[0];
+      //if (!bt) var bt = autoplay.children[0];
       if (yt6.autoplay == true && bt && bt.getAttribute('class') && bt.getAttribute('aria-pressed') != 'true') {
           bt.setAttribute('class', bt.getAttribute('class') + ' yt-uix-button-toggled');console.log(bt.getAttribute('type') + bt.getAttribute('class'))
 	  bt.setAttribute('aria-pressed','true')
