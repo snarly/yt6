@@ -1557,24 +1557,38 @@ var webgl = get_webgl()
       var z = z.firstChild;
     }
 
-var autoplay = document.getElementById('watch-appbar-playlist');console.log(autoplay)
+var autoplay = document.getElementById('watch-appbar-playlist')
 if (autoplay != null) {
-  var autoplay = gclass('yt-uix-button-icon-watch-appbar-autoplay');console.log(autoplay)
+  var autoplay = gclass('yt-uix-button-icon-watch-appbar-autoplay')
   if (autoplay != undefined) {
-    var autoplay = document.getElementsByClassName('playlist-nav-controls')[0] || document.getElementsByClassName('appbar-playlist-controls clearfix')[0];console.log(autoplay)
+    var autoplay = document.getElementsByClassName('playlist-nav-controls')[0] || document.getElementsByClassName('appbar-playlist-controls clearfix')[0]
     if (autoplay != undefined) {
       if (autoplay.getAttribute('disabled')) autoplay.removeAttribute('disabled');
       if (autoplay.parentNode.innerHTML.indexOf('disabled=""')) autoplay.parentNode.innerHTML = autoplay.parentNode.innerHTML.split('disabled=""').join('')
-      var autoplay = autoplay.innerHTML.split('>')[0];console.log(typeof autoplay + autoplay)
-      var autoplay = autoplay.split('yt-uix-button-toggled')[1];console.log(typeof autoplay + autoplay)
+      if (yt6.autoplay == true && autoplay.firstElementChild.getAttribute('class') && autoplay.firstElementChild.getAttribute('aria-pressed') != 'true') {
+          autoplay.firstElementChild.class += ' yt-uix-button-toggled';console.log(autoplay.firstElementChild.class)
+	  autoplay.firstElementChild.setAttribute('aria-pressed','true')
+	}
+      }
+      if (autoplay.firstElementChild.getAttribute('aria-pressed') == 'true') {console.log(autoplay.firstElementChild.getAttribute('aria-pressed'))
+        yt6.autoplay = true;
+        var autoplay = autoplay.innerHTML.split('>')[0]
+        //var autoplay = autoplay.split('yt-uix-button-toggled')[1]
+      } else { yt6.autoplay = false }
     }
   }
   var autoplay2 = gclass('playlist-mix-icon yt-sprite');
 } else {//2016 layout
+    var autoplay = gclass('style-scope ytd-toggle-button-renderer x-scope paper-icon-button-0 style-grey-text')
+    if (yt6.autoplay == true && autoplay[0] && autoplay[0].innerHTML.indexOf('alt="Loop playlist"') != -1) {console.log('grey')
+      autoplay[0].class = autoplay[1].class = autoplay[0].class.replace('style-grey-text','style-default-active')
+    }
     var autoplay = gclass('style-scope ytd-toggle-button-renderer x-scope paper-icon-button-0 style-default-active')
-    if (autoplay[0]) {//console.log('1111')
+    if (autoplay[0] && autoplay[0].innerHTML.indexOf('alt="Loop playlist"') != -1) {console.log('active')
+      yt6.autoplay = true;
       var autoplay = autoplay[0].getAttribute('class')
-    } else {//console.log('1110')
+    } else {console.log('none')
+        yt6.autoplay = false;
 	var autoplay2 = gclass('flex style-scope ytd-playlist-panel-renderer x-scope ytd-menu-renderer-0');
 	if (!(autoplay2[0] && autoplay2[0].hasAttribute('hidden'))) delete autoplay2[0];
       }
