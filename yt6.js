@@ -1569,8 +1569,8 @@ if (autoplay != null) {
       if (yt6.autoplay == true && bt && bt.split('>')[0].indexOf('yt-uix-button-toggled') == -1) {
         var bt = bt.replace( bt.split('>')[0], bt.split('>')[0].replace('";return false;"','";if (yt6) if (yt6.autoplay == true) { yt6.autoplay = false } else { yt6.autoplay = true }; return false;"').replace('yt-uix-button yt-uix-button-size-default yt-uix-button-player-controls yt-uix-button-empty yt-uix-button-has-icon toggle-loop yt-uix-button-opacity yt-uix-tooltip yt-uix-tooltip','yt-uix-button yt-uix-button-size-default yt-uix-button-player-controls yt-uix-button-empty yt-uix-button-has-icon toggle-loop yt-uix-button-opacity yt-uix-tooltip yt-uix-tooltip yt-uix-button-toggled') + ' aria-pressed="true">')
         console.log(autoplay.innerHTML.split('>')[0])
-	autoplay.innerHTML = bt
-        console.log(autoplay.innerHTML.split('>')[0])
+	//autoplay.innerHTML = bt
+        //console.log(autoplay.innerHTML.split('>')[0])
       }
       var bt = autoplay.innerHTML.split('>')[0]
       if ( autoplay.getAttribute('class') == 'playlist-nav-controls' && bt.indexOf('yt-uix-button-toggled') != -1) {console.log('toggle 1')
