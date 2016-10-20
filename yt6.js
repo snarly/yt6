@@ -1566,7 +1566,7 @@ if (autoplay != null) {
       if (autoplay.getAttribute('disabled')) autoplay.removeAttribute('disabled');
       if (autoplay.parentNode.innerHTML.indexOf('disabled=""')) autoplay.parentNode.innerHTML = autoplay.parentNode.innerHTML.split('disabled=""').join('')
       if (yt6.autoplay == true && autoplay.firstElementChild.getAttribute('class') && autoplay.firstElementChild.getAttribute('aria-pressed') != 'true') {
-          autoplay.firstElementChild.class += ' yt-uix-button-toggled';console.log(autoplay.firstElementChild.class)
+          autoplay.firstElementChild.setAttribute('class', autoplay.firstElementChild.getAttribute('class') + ' yt-uix-button-toggled';console.log(typeof autoplay.firstElementChild + autoplay.firstElementChild.getAttribute('class'))
 	  autoplay.firstElementChild.setAttribute('aria-pressed','true')
       }
       if (autoplay.firstElementChild.getAttribute('aria-pressed') == 'true') {console.log(autoplay.firstElementChild.getAttribute('aria-pressed'))
@@ -1580,7 +1580,8 @@ if (autoplay != null) {
 } else {//2016 layout
     var autoplay = gclass('style-scope ytd-toggle-button-renderer x-scope paper-icon-button-0 style-grey-text')
     if (yt6.autoplay == true && autoplay[0] && autoplay[0].innerHTML.indexOf('alt="Loop playlist"') != -1) {console.log('grey')
-      autoplay[0].class = autoplay[1].class = autoplay[0].class.replace('style-grey-text','style-default-active')
+      autoplay[1].setAttribute('class', autoplay[0].getAttribute('class').replace('style-grey-text','style-default-active'))
+      autoplay[0].setAttribute('class', autoplay[0].getAttribute('class').replace('style-grey-text','style-default-active'))
     }
     var autoplay = gclass('style-scope ytd-toggle-button-renderer x-scope paper-icon-button-0 style-default-active')
     if (autoplay[0] && autoplay[0].innerHTML.indexOf('alt="Loop playlist"') != -1) {console.log('active')
