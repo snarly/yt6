@@ -1572,7 +1572,7 @@ if (autoplay != null) {
 	//autoplay.innerHTML = bt
         //console.log(autoplay.innerHTML.split('>')[0])
       }*/
-      var bt = autoplay.innerHTML.split('>')[0]; console.log(bt.indexOf('yt-uix-button-toggled') + bt)
+      var bt = autoplay.innerHTML.split('>')[0]; console.log(bt.indexOf('yt-uix-button-toggled'))
       if ( autoplay.getAttribute('class') == 'playlist-nav-controls' && ( bt.indexOf('yt-uix-button-toggled') != -1 ) ) { //|| navigator.userAgent.match(/Trident\//) != null ) ) {
         console.log('toggle 1')
         /*yt6.autoplay = true
@@ -1586,19 +1586,19 @@ if (autoplay != null) {
   }
   var autoplay2 = gclass('playlist-mix-icon yt-sprite');
 } else {//2016 layout
-    var autoplay = gclass('style-scope ytd-toggle-button-renderer x-scope paper-icon-button-0')
-    if (autoplay[0] && autoplay[0].innerHTML.indexOf('alt="Loop playlist"') != -1) {
-      for (var i in autoplay[0].children) {
-        var a = autoplay[0].children[i]; console.log(a.tagName);
-        if (a && a.tagName == 'A') {
+    var autoplay = gclass('style-scope ytd-toggle-button-renderer x-scope paper-icon-button-0 style-grey-text')
+    if (autoplay[0] && autoplay[0].innerHTML.indexOf('alt="Loop playlist"') != -1) {console.log('grey1')
+      var a = gclass('style-scope ytd-toggle-button-renderer x-scope yt-endpoint-0')
+      for (i=0;i<a.length;i++) { if (a[i]) console.log(a[i].tagName)
+        if (a[i] && a[i].tagName == 'A' && a[i].innerHTML.indexOf('alt="Loop playlist"') != -1) {
           a.setAttribute('onclick',
             'var yt6 = document.getElementById("snarls_player"); if (yt6) if (yt6.autoplay == true && this.parentNode.getAttribute("class").indexOf("style-default-active") != -1) { yt6.autoplay == false } else { yt6.autoplay = true };');
         }
       }      
-      if (autoplay[0] && yt6.autoplay == true) {
-        autoplay[0].setAttribute('class', autoplay[0].getAttribute('class').replace('style-grey-text','style-default-active'))
-        console.log('grey')
-      }
+    }
+    if (autoplay[0] && yt6.autoplay == true) {
+      autoplay[0].setAttribute('class', autoplay[0].getAttribute('class').replace('style-grey-text','style-default-active'))
+      console.log('grey0')
     }
     var autoplay = gclass('style-scope ytd-toggle-button-renderer x-scope paper-icon-button-0 style-default-active')
     if (autoplay[0] && autoplay[0].innerHTML.indexOf('alt="Loop playlist"') != -1) {//console.log('active')
