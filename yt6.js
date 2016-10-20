@@ -1565,18 +1565,13 @@ if (autoplay != null) {
     if (autoplay != undefined) {
       if (autoplay.getAttribute('disabled')) autoplay.removeAttribute('disabled');
       if (autoplay.parentNode.innerHTML.indexOf('disabled=""')) autoplay.parentNode.innerHTML = autoplay.parentNode.innerHTML.split('disabled=""').join('')
-      for (var i in autoplay.children) {
-        var bt = autoplay.children[i]
-        if (bt && typeof bt.getAttribute == 'function' && bt.getAttribute('class').indexOf('yt-uix-button yt-uix-button-size-default yt-uix-button-player-controls yt-uix-button-empty yt-uix-button-has-icon toggle-loop yt-uix-button-opacity yt-uix-tooltip yt-uix-tooltip') != -1) break;
+      var bt = autoplay.innerHTML
+      if (yt6.autoplay == true && bt && bt.indexOf('aria-pressed="true"') == -1) {
+        autoplay.innerHTML = bt.replace( bt.split('>')[0], bt.split('>')[0].replace('yt-uix-button yt-uix-button-size-default yt-uix-button-player-controls yt-uix-button-empty yt-uix-button-has-icon toggle-loop yt-uix-button-opacity yt-uix-tooltip yt-uix-tooltip','yt-uix-button yt-uix-button-size-default yt-uix-button-player-controls yt-uix-button-empty yt-uix-button-has-icon toggle-loop yt-uix-button-opacity yt-uix-tooltip yt-uix-tooltip yt-uix-button-toggled') + ' aria-pressed="true">')
+console.log(autoplay.innerHTML.split('>')[0])
       }
-      //if (!bt) var bt = autoplay.children[0];
-      if (yt6.autoplay == true && bt && bt.getAttribute('class') && bt.getAttribute('aria-pressed') != 'true') {
-        if (typeof bt.click == 'function') bt.click();
-        console.log(bt.getAttribute('type') + bt.getAttribute('class') + bt.getAttribute('aria-pressed'))
-        //bt.setAttribute('class', bt.getAttribute('class') + ' yt-uix-button-toggled')
-        //bt.setAttribute('aria-pressed','true')
-      }
-      if (bt && bt.getAttribute('aria-pressed') == 'true') {console.log(bt.getAttribute('aria-pressed'))
+
+      if (autoplay.innerHTML.indexOf('aria-pressed="true"') != -1) {
         yt6.autoplay = true;
         var autoplay = autoplay.innerHTML.split('>')[0]
         //var autoplay = autoplay.split('yt-uix-button-toggled')[1]
