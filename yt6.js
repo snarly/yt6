@@ -1565,11 +1565,16 @@ if (autoplay != null) {
     if (autoplay != undefined) {
       if (autoplay.getAttribute('disabled')) autoplay.removeAttribute('disabled');
       if (autoplay.parentNode.innerHTML.indexOf('disabled=""')) autoplay.parentNode.innerHTML = autoplay.parentNode.innerHTML.split('disabled=""').join('')
-      if (yt6.autoplay == true && autoplay.firstElementChild.getAttribute('class') && autoplay.firstElementChild.getAttribute('aria-pressed') != 'true') {
-          autoplay.firstElementChild.setAttribute('class', autoplay.firstElementChild.getAttribute('class') + ' yt-uix-button-toggled');console.log(typeof autoplay.firstElementChild + autoplay.firstElementChild.getAttribute('class'))
-	  autoplay.firstElementChild.setAttribute('aria-pressed','true')
+      for (var i in autoplay.children) {
+        var bt = autoplay.children[i];
+        if (bt && bt.getAttribute('type') == 'button') break;
       }
-      if (autoplay.firstElementChild.getAttribute('aria-pressed') == 'true') {console.log(autoplay.firstElementChild.getAttribute('aria-pressed'))
+      if (!bt) var bt = autoplay.children[0];
+      if (yt6.autoplay == true && bt && bt.getAttribute('class') && bt.getAttribute('aria-pressed') != 'true') {
+          bt.setAttribute('class', bt.getAttribute('class') + ' yt-uix-button-toggled');console.log(bt.getAttribute('type') + bt.getAttribute('class'))
+	  bt.setAttribute('aria-pressed','true')
+      }
+      if (bt && bt.getAttribute('aria-pressed') == 'true') {console.log(bt.getAttribute('aria-pressed'))
         yt6.autoplay = true;
         var autoplay = autoplay.innerHTML.split('>')[0]
         //var autoplay = autoplay.split('yt-uix-button-toggled')[1]
@@ -1580,8 +1585,8 @@ if (autoplay != null) {
 } else {//2016 layout
     var autoplay = gclass('style-scope ytd-toggle-button-renderer x-scope paper-icon-button-0 style-grey-text')
     if (yt6.autoplay == true && autoplay[0] && autoplay[0].innerHTML.indexOf('alt="Loop playlist"') != -1) {console.log('grey')
-      autoplay[1].setAttribute('class', autoplay[0].getAttribute('class').replace('style-grey-text','style-default-active'))
-      autoplay[0].setAttribute('class', autoplay[0].getAttribute('class').replace('style-grey-text','style-default-active'))
+      if (autoplay[1]) autoplay[1].setAttribute('class', autoplay[0].getAttribute('class').replace('style-grey-text','style-default-active'))
+      if (autoplay[0]) autoplay[0].setAttribute('class', autoplay[0].getAttribute('class').replace('style-grey-text','style-default-active'))
     }
     var autoplay = gclass('style-scope ytd-toggle-button-renderer x-scope paper-icon-button-0 style-default-active')
     if (autoplay[0] && autoplay[0].innerHTML.indexOf('alt="Loop playlist"') != -1) {console.log('active')
