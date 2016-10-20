@@ -1565,7 +1565,8 @@ if (autoplay != null) {
     if (autoplay != undefined) {
       if (autoplay.getAttribute('disabled')) autoplay.removeAttribute('disabled');
       if (autoplay.parentNode.innerHTML.indexOf('disabled=""')) autoplay.parentNode.innerHTML = autoplay.parentNode.innerHTML.split('disabled=""').join('')
-      var autoplay = autoplay.innerHTML.split('\>')[0].split('yt-uix-button-toggled')[1];console.log(autoplay)
+      var autoplay = autoplay.innerHTML.split('>')[0];console.log(typeof autoplay + autoplay)
+      var autoplay = autoplay.split('yt-uix-button-toggled')[1];console.log(typeof autoplay + autoplay)
     }
   }
   var autoplay2 = gclass('playlist-mix-icon yt-sprite');
