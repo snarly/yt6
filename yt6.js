@@ -1573,7 +1573,7 @@ if (autoplay != null) {
         console.log(autoplay.innerHTML.split('>')[0])
       }
       var bt = autoplay.innerHTML.split('>')[0]
-      if ( autoplay.getAttribute('class') == 'playlist-nav-controls' && ( bt.indexOf('yt-uix-button-toggled') != -1 || yt6.autoplay.indexOf('yt-uix-button-toggled') ) ) {console.log('toggle 1')
+      if ( autoplay.getAttribute('class') == 'playlist-nav-controls' && ( bt.indexOf('yt-uix-button-toggled') != -1 || (typeof yt6.autoplay == 'string' && yt6.autoplay.split('>')[0].indexOf('yt-uix-button-toggled')) ) ) {console.log('toggle 1')
         if (bt.indexOf('aria-pressed="true"') == -1) {console.log('toggle 2')
           if (typeof yt6.autoplay == 'string' && yt6.autoplay.split('>')[0].indexOf('yt-uix-button-toggled') != -1) { autoplay.innerHTML = yt6.autoplay }
           //yt6.autoplay = false;
