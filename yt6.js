@@ -690,8 +690,8 @@ function ajax1(update){
 		for (k=0;k<z.length;k++) {
 		  if (z[k] && z[k].id != 'ytassetsjs') z[k].parentNode.removeChild(z[k])
 		}
-		var ytassetsjs = document.getElementById('ytassetsjs')
-		return [ytassetsjs.name.split('/https')[0], ytassetsjs.innerHTML]
+		//var ytassetsjs = document.getElementById('ytassetsjs')
+		return [z[j].getAttribute('name').split('/https')[0], z[j].innerHTML]
 		break
 	      }
 	    }
