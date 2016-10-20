@@ -1594,7 +1594,7 @@ if (autoplay != null) {
         if (a[i] && a[i].innerHTML.indexOf('alt="Loop playlist"') != -1) {
           var b = ';var yt6 = document.getElementById("snarls_player"); if (yt6) { console.log(this.tagName+this.firstElementChild.tagName+this.firstElementChild.getAttribute("class")+this.getAttribute("class")); if (this.firstElementChild.getAttribute("class").indexOf("style-default-active") == -1) { yt6.autoplay == true } else { yt6.autoplay = false } };'
           if (a[i].tagName == 'PAPER-ICON-BUTTON') a[i].parentNode.setAttribute('onclick', b);
-          if (a[i].tagName == 'A') { a[i].setAttribute('onclick', b);
+          if (a[i].tagName == 'A') a[i].setAttribute('onclick', b);
           break;
 	}
       }      
