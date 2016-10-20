@@ -1568,7 +1568,6 @@ if (autoplay != null) {
       if (yt6.autoplay == true && autoplay.firstElementChild.getAttribute('class') && autoplay.firstElementChild.getAttribute('aria-pressed') != 'true') {
           autoplay.firstElementChild.class += ' yt-uix-button-toggled';console.log(autoplay.firstElementChild.class)
 	  autoplay.firstElementChild.setAttribute('aria-pressed','true')
-	}
       }
       if (autoplay.firstElementChild.getAttribute('aria-pressed') == 'true') {console.log(autoplay.firstElementChild.getAttribute('aria-pressed'))
         yt6.autoplay = true;
