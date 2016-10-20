@@ -1571,8 +1571,10 @@ if (autoplay != null) {
       }
       //if (!bt) var bt = autoplay.children[0];
       if (yt6.autoplay == true && bt && bt.getAttribute('class') && bt.getAttribute('aria-pressed') != 'true') {
-          bt.setAttribute('class', bt.getAttribute('class') + ' yt-uix-button-toggled');console.log(bt.getAttribute('type') + bt.getAttribute('class'))
-	  bt.setAttribute('aria-pressed','true')
+        if (typeof bt.click == 'function') bt.click();
+        console.log(bt.getAttribute('type') + bt.getAttribute('class') + bt.getAttribute('aria-pressed'))
+        //bt.setAttribute('class', bt.getAttribute('class') + ' yt-uix-button-toggled')
+        //bt.setAttribute('aria-pressed','true')
       }
       if (bt && bt.getAttribute('aria-pressed') == 'true') {console.log(bt.getAttribute('aria-pressed'))
         yt6.autoplay = true;
