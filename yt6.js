@@ -1566,8 +1566,8 @@ if (autoplay != null) {
       if (autoplay.getAttribute('disabled')) autoplay.removeAttribute('disabled');
       if (autoplay.parentNode.innerHTML.indexOf('disabled=""')) autoplay.parentNode.innerHTML = autoplay.parentNode.innerHTML.split('disabled=""').join('')
       for (var i in autoplay.children) {
-        var bt = autoplay.children[i];
-        if (bt && bt.getAttribute('type') == 'button') break;
+        var bt = autoplay.children[i];console.log(bt + typeof bt.getAttribute + bt[0])
+        if (bt && typeof bt.getAttribute == 'function' && bt.getAttribute('type') == 'button') break;
       }
       if (!bt) var bt = autoplay.children[0];
       if (yt6.autoplay == true && bt && bt.getAttribute('class') && bt.getAttribute('aria-pressed') != 'true') {
