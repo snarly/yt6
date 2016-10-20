@@ -1557,15 +1557,15 @@ var webgl = get_webgl()
       var z = z.firstChild;
     }
 
-var autoplay = document.getElementById('watch-appbar-playlist')
+var autoplay = document.getElementById('watch-appbar-playlist');console.log(autoplay)
 if (autoplay != null) {
-  var autoplay = gclass('yt-uix-button-icon-watch-appbar-autoplay')
+  var autoplay = gclass('yt-uix-button-icon-watch-appbar-autoplay');console.log(autoplay)
   if (autoplay != undefined) {
-    var autoplay = document.getElementsByClassName('playlist-nav-controls')[0] || document.getElementsByClassName('appbar-playlist-controls clearfix')[0]
+    var autoplay = document.getElementsByClassName('playlist-nav-controls')[0] || document.getElementsByClassName('appbar-playlist-controls clearfix')[0];console.log(autoplay)
     if (autoplay != undefined) {
       if (autoplay.getAttribute('disabled')) autoplay.removeAttribute('disabled');
       if (autoplay.parentNode.innerHTML.indexOf('disabled=""')) autoplay.parentNode.innerHTML = autoplay.parentNode.innerHTML.split('disabled=""').join('')
-      var autoplay = autoplay.innerHTML.split('\>')[0].split('yt-uix-button-toggled')[1];
+      var autoplay = autoplay.innerHTML.split('\>')[0].split('yt-uix-button-toggled')[1];console.log(autoplay)
     }
   }
   var autoplay2 = gclass('playlist-mix-icon yt-sprite');
