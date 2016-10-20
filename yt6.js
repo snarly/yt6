@@ -1570,9 +1570,17 @@ if (autoplay != null) {
         autoplay.innerHTML = bt.replace( bt.split('>')[0], bt.split('>')[0].replace('yt-uix-button yt-uix-button-size-default yt-uix-button-player-controls yt-uix-button-empty yt-uix-button-has-icon toggle-loop yt-uix-button-opacity yt-uix-tooltip yt-uix-tooltip','yt-uix-button yt-uix-button-size-default yt-uix-button-player-controls yt-uix-button-empty yt-uix-button-has-icon toggle-loop yt-uix-button-opacity yt-uix-tooltip yt-uix-tooltip yt-uix-button-toggled') + ' aria-pressed="true">')
 console.log(autoplay.innerHTML.split('>')[0])
       }
-
-      if (autoplay.innerHTML.indexOf('aria-pressed="true"') != -1) {
+      var bt = autoplay.innerHTML.split('>')[0]
+      if (bt.indexOf('yt-uix-button-toggled') != -1) {console.log('toggle 1')
         yt6.autoplay = true;
+        if (bt.indexOf('aria-pressed="true"') == -1) {console.log('toggle 2')
+          var bt = autoplay.children
+          for (var i in bt){
+            if (typeof bt[i].getAttribute == 'function' && bt.getAttribute('type') == 'button') {
+              bt.setAttribute('aria-pressed','true'); console.log('toggle 3'); break;
+            }
+          }
+	}
         var autoplay = autoplay.innerHTML.split('>')[0]
         //var autoplay = autoplay.split('yt-uix-button-toggled')[1]
       } else { yt6.autoplay = false }
