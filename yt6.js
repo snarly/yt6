@@ -4502,7 +4502,7 @@ for (i=0;i<z.length-1;i++) { if (z) { delete z } }
 					});
 					me.addEventListener('error', function() {
 					  if (me.networkState == 3) {
-					    if (me.src == window.location.href) { return void 0 };
+					    if (yt6.timer == 999999999 || me.src == window.location.href) { return void 0 };
 
 					    var sauce = getElementsByAttribute(document,"input","name",mep_x("mep_") + "_sourcechooser");
 					    if ((sauce != undefined) && (sauce.length != 0)) {
@@ -8354,8 +8354,8 @@ function deldiv(){
   }
 
   if (typeof ($) !== 'undefined') {//alert(''+ytplayer.config.args.probe_url.split('u0026').join('&'))
-    if (yt6.player1) { try { yt6.player1.setSrc(''); yt6.player1.load() } catch(e) { } }
-    if (yt6.player2) { try { yt6.player2.setSrc(''); yt6.player2.load() } catch(e) { } }
+    if (yt6.player1) { try { yt6.timer = 999999999; yt6.player1.setSrc(''); yt6.player1.load() } catch(e) { } }
+    if (yt6.player2) { try { yt6.timer = 999999999; yt6.player2.setSrc(''); yt6.player2.load() } catch(e) { } }
     $.removeData([mejs.players['mep_1'], mejs.players['mep_0']])
     mejs.players['mep_1'] = null; delete mejs.players['mep_1'];
     mejs.players['mep_0'] = null; delete mejs.players['mep_0'];
