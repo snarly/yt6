@@ -1566,7 +1566,7 @@ if (autoplay != null) {
       if (autoplay.getAttribute('disabled')) autoplay.removeAttribute('disabled');
       if (autoplay.parentNode.innerHTML.indexOf('disabled=""')) autoplay.parentNode.innerHTML = autoplay.parentNode.innerHTML.split('disabled=""').join('')
       if (yt6.autoplay == true && autoplay.firstElementChild.getAttribute('class') && autoplay.firstElementChild.getAttribute('aria-pressed') != 'true') {
-          autoplay.firstElementChild.setAttribute('class', autoplay.firstElementChild.getAttribute('class') + ' yt-uix-button-toggled';console.log(typeof autoplay.firstElementChild + autoplay.firstElementChild.getAttribute('class'))
+          autoplay.firstElementChild.setAttribute('class', autoplay.firstElementChild.getAttribute('class') + ' yt-uix-button-toggled');console.log(typeof autoplay.firstElementChild + autoplay.firstElementChild.getAttribute('class'))
 	  autoplay.firstElementChild.setAttribute('aria-pressed','true')
       }
       if (autoplay.firstElementChild.getAttribute('aria-pressed') == 'true') {console.log(autoplay.firstElementChild.getAttribute('aria-pressed'))
