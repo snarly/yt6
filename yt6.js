@@ -1480,7 +1480,7 @@ if (player() != null) {
       yt6.ytplayercmd = function(e) {
         var cmd = e.data;
         //var player = document.getElementById("movie_player");
-        if (typeof player()[cmd] == 'function') { player()[cmd]() }
+        if (player() && typeof player()[cmd] == 'function') { player()[cmd]() }
         return false;
       }
 
@@ -6566,7 +6566,7 @@ if (p.getAttribute('class') && p.getAttribute('class').indexOf('ytp-fullscreen')
           if (yt6.fullscreen != true){
 	    yt6.fullscreen = true
 	    if (document.getElementById('player1') != null) {
-	      if (bm0.style.visibility == 'visible') document.getElementById('player1').style.left = '0px'
+	      if (bm0 && bm0.style.visibility == 'visible') document.getElementById('player1').style.left = '0px'
 	      var z = document.getElementsByClassName('mejs-overlay mejs-layer mejs-overlay-play')[0]
 	      if (z) {
 		var webgl = z.firstChild.currentStyle || window.getComputedStyle(z.firstChild, null)
