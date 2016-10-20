@@ -1568,8 +1568,7 @@ if (autoplay != null) {
       var bt = autoplay.innerHTML
       if (yt6.autoplay == true && bt && bt.indexOf('aria-pressed="true"') == -1) {
         var bt = bt.replace( bt.split('>')[0], bt.split('>')[0].replace('yt-uix-button yt-uix-button-size-default yt-uix-button-player-controls yt-uix-button-empty yt-uix-button-has-icon toggle-loop yt-uix-button-opacity yt-uix-tooltip yt-uix-tooltip','yt-uix-button yt-uix-button-size-default yt-uix-button-player-controls yt-uix-button-empty yt-uix-button-has-icon toggle-loop yt-uix-button-opacity yt-uix-tooltip yt-uix-tooltip yt-uix-button-toggled') + ' aria-pressed="true">')
-console.log(autoplay.innerHTML.split('>')[0])
-        autoplay.parentNode.innerHTML = autoplay.parentNode.innerHTML.split(autoplay.innerHTML).join(bt)
+        console.log(autoplay.innerHTML.split('>')[0])
       }
       var bt = autoplay.innerHTML.split('>')[0]
       if (autoplay.getAttribute('class') == 'playlist-nav-controls' && bt.indexOf('yt-uix-button-toggled') != -1) {console.log('toggle 1')
