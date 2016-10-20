@@ -1572,8 +1572,9 @@ if (autoplay != null) {
 	//autoplay.innerHTML = bt
         //console.log(autoplay.innerHTML.split('>')[0])
       }*/
-      var bt = autoplay.innerHTML.split('>')[0]
-      if ( autoplay.getAttribute('class') == 'playlist-nav-controls' && ( bt.indexOf('yt-uix-button-toggled') != -1 ) ) { //|| navigator.userAgent.match(/Trident\//) != null ) ) {//console.log('toggle 1')
+      var bt = autoplay.innerHTML.split('>')[0]; console.log(bt.indexOf('yt-uix-button-toggled') + bt)
+      if ( autoplay.getAttribute('class') == 'playlist-nav-controls' && ( bt.indexOf('yt-uix-button-toggled') != -1 ) ) { //|| navigator.userAgent.match(/Trident\//) != null ) ) {
+        console.log('toggle 1')
         /*yt6.autoplay = true
         if (bt.indexOf('aria-pressed="true"') == -1) {console.log('toggle 2')
           yt6.autoplay = false;
@@ -1587,10 +1588,13 @@ if (autoplay != null) {
 } else {//2016 layout
     var autoplay = gclass('style-scope ytd-toggle-button-renderer x-scope paper-icon-button-0')
     if (autoplay[0] && autoplay[0].innerHTML.indexOf('alt="Loop playlist"') != -1) {
-      if (autoplay[0].firstElementChild.tagName == 'A') {
-        autoplay[0].firstElementChild.setAttribute('onclick',
-          'var yt6 = document.getElementById("snarls_player"); if (yt6) if (yt6.autoplay == true && this.parentNode.getAttribute("class").indexOf("style-default-active") != -1) { yt6.autoplay == false } else { yt6.autoplay = true };');
-      }
+      for (var i in autoplay[0].children) {
+        var a = autoplay[0].children[i]; console.log(a.tagName);
+        if (a && a.tagName == 'A') {
+          a.setAttribute('onclick',
+            'var yt6 = document.getElementById("snarls_player"); if (yt6) if (yt6.autoplay == true && this.parentNode.getAttribute("class").indexOf("style-default-active") != -1) { yt6.autoplay == false } else { yt6.autoplay = true };');
+        }
+      }      
       if (autoplay[0] && yt6.autoplay == true) {
         autoplay[0].setAttribute('class', autoplay[0].getAttribute('class').replace('style-grey-text','style-default-active'))
         console.log('grey')
