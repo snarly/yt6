@@ -681,12 +681,13 @@ function ajax1(update){
 	  return [ytassetsjs.name.split('/https')[0], ytassetsjs.innerHTML];
 	  break
 	};
-	if (document.getElementsByClassName('ytassetsjs-0')[0]) {
+	if (document.getElementsByClassName('ytassetsjs-0')[proxies.length-1]) {
 	  var z = document.getElementsByClassName('ytassetsjs-0')
 	    for (j=0;j<z.length;j++) {
 	      if (z[j].innerHTML.indexOf("function(){") != -1 || z[j].innerHTML.indexOf("function fcnm(") != -1) {
 		if (ytassetsjs != null && ytassetsjs != z[j]) ytassetsjs.parentNode.removeChild(ytassetsjs)
 		z[j].setAttribute('id','ytassetsjs')
+		z[j].setAttribute('class','ytassetsjs')
 		for (k=0;k<z.length;k++) {
 		  if (z[k] && z[k].getAttribute('id') != 'ytassetsjs') z[k].parentNode.removeChild(z[k])
 		}
@@ -1590,10 +1591,12 @@ if (autoplay != null) {
     if (autoplay[0] && autoplay[0].innerHTML.indexOf('alt="Loop playlist"') != -1) {console.log('grey1')
       var a = gclass('style-scope ytd-toggle-button-renderer x-scope yt-endpoint-0')
       for (i=0;i<a.length;i++) { if (a[i]) console.log(a[i].tagName)
-        if (a[i] && a[i].tagName == 'A' && a[i].innerHTML.indexOf('alt="Loop playlist"') != -1) {
-          a.setAttribute('onclick',
-            'var yt6 = document.getElementById("snarls_player"); if (yt6) if (yt6.autoplay == true && this.parentNode.getAttribute("class").indexOf("style-default-active") != -1) { yt6.autoplay == false } else { yt6.autoplay = true };');
-        }
+        if (a[i] && a[i].innerHTML.indexOf('alt="Loop playlist"') != -1) {
+          var b = ';var yt6 = document.getElementById("snarls_player"); if (yt6) if (this.firstElementChild.getAttribute("class").indexOf("style-default-active") == -1) { yt6.autoplay == true } else { yt6.autoplay = false };'
+          if (a[i].tagName == 'PAPER-ICON-BUTTON') a[i].parentNode.setAttribute('onclick', b)
+          if (a[i].tagName == 'A') a[i].setAttribute('onclick', b)
+          break;
+	}
       }      
     }
     if (autoplay[0] && yt6.autoplay == true) {
