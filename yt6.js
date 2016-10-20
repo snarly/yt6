@@ -686,9 +686,9 @@ function ajax1(update){
 	    for (j=0;j<z.length;j++) {
 	      if (z[j].innerHTML.indexOf("function(){") != -1 || z[j].innerHTML.indexOf("function fcnm(") != -1) {
 		if (ytassetsjs != null) ytassetsjs.parentNode.removeChild(ytassetsjs)
-		z[j].id = 'ytassetsjs'
+		z[j].setAttribute('id','ytassetsjs')
 		for (k=0;k<z.length;k++) {
-		  if (z[k] && z[k].id != 'ytassetsjs') z[k].parentNode.removeChild(z[k])
+		  if (z[k] && z[k].getAttribute('id') != 'ytassetsjs') z[k].parentNode.removeChild(z[k])
 		}
 		//var ytassetsjs = document.getElementById('ytassetsjs')
 		return [z[j].getAttribute('name').split('/https')[0], z[j].innerHTML]
