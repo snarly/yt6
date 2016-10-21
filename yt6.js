@@ -688,14 +688,18 @@ function ajax1(update){
 		if (ytassetsjs != null) ytassetsjs.parentNode.removeChild(ytassetsjs)
 		z[j].setAttribute('id','ytassetsjs')
 		z[j].setAttribute('class','ytassetsjs')
-		for (k=0;k<z.length;k++) {
-		  if (z[k] && z[k].getAttribute('id') != 'ytassetsjs') z[k].parentNode.removeChild(z[k])
-		}
-		var ytassetsjs = document.getElementById('ytassetsjs')
-		return [ytassetsjs.getAttribute('name').split('/https')[0], ytassetsjs.innerHTML]
 		break
 	      }
 	    }
+          var z = document.getElementsByClassName('ytassetsjs-0')
+          for (k=0;k<z.length;k++) {
+            if (z[k]) z[k].parentNode.removeChild(z[k])
+          }
+          var ytassetsjs = document.getElementById('ytassetsjs')
+          if (ytassetsjs != null && ytassetsjs.name && ytassetsjs.innerHTML.indexOf('var ') != -1) {
+            return [ytassetsjs.getAttribute('name').split('/https')[0], ytassetsjs.innerHTML]
+            break
+	  }
 	}
 
 	var px = proxiez[i]
@@ -6029,9 +6033,8 @@ document.getElementsByTagName('body')[0].spfrequest = function(e) {
 
     yt6.autoplay = document.getElementsByClassName('playlist-nav-controls')[0]
     if (yt6.autoplay) {
-      yt6.autoplay = yt6.autoplay.parentNode.innerHTML.split('</button>')[0]; console.log(yt6.autoplay)
+      yt6.autoplay = yt6.autoplay.parentNode.innerHTML.split('</button>')[0]
       if (yt6.autoplay.indexOf('yt-uix-button-toggled') != -1) { yt6.autoplay = true } else { yt6.autoplay = false }
-      console.log(yt6.autoplay)
     }
 
 	
