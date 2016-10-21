@@ -6052,16 +6052,14 @@ if (typeof yt6.fnCheckLocation != 'number') {
 document.getElementsByTagName('body')[0].spfrequest = function(e) {
     yt6.spf = true
 
-    var autoplay = document.getElementsByClassName('playlist-nav-controls')[0]
-    /*if (typeof JSON != 'undefined') {
-      yt6.autoplay = JSON.parse(JSON.stringify(yt6.autoplay))
+    yt6.autoplay = document.getElementsByClassName('playlist-nav-controls')[0]
+    if (yt6.autoplay) {
+      yt6.autoplay = yt6.autoplay.parentNode.innerHTML.split('</button>')[0]; console.log(yt6.autoplay)
       if (yt6.autoplay.indexOf('yt-uix-button-toggled') != -1) { yt6.autoplay = true } else { yt6.autoplay = false }
-    } else {*/
-        var autoplay = yt6.autoplay.parentNode.innerHTML.split('</button>')[0]; console.log(autoplay)
-	if (autoplay.indexOf('yt-uix-button-toggled') != -1) { yt6.autoplay = true } else { yt6.autoplay = false }
-	console.log(yt6.autoplay)
-      //}
+      console.log(yt6.autoplay)
+    }
 
+	
     if ((bm0) && (bm0.style.visibility == 'visible')) { yt6.x = true } else { yt6.x = false };
 
 /*    var webgl = get_webgl()
@@ -6206,7 +6204,7 @@ document.getElementsByTagName('body')[0].spfdone = function(e) {
 		// change event on the location object,
 		// passing in the current and previous
 		// location values.
-		yt6.autoplay = false;
+		//yt6.autoplay = false;
 
 
 
@@ -6782,7 +6780,7 @@ if ((document.querySelector('#unavailable-message') != null) && (document.queryS
 	    // change event on the location object,
 	    // passing in the current and previous
 	    // location values.
-	    yt6.autoplay = false;
+	    //yt6.autoplay = false;
 
 	    if ( (window.location.href.indexOf("Ypkv0HeUvTc_MM") > -1 ) || (strPrevLocation.indexOf("aC4BC-Hxq9g_PD") > -1 ) ) {
 	      location.href = window.location.href
@@ -6845,7 +6843,8 @@ if ((document.querySelector('#unavailable-message') != null) && (document.queryS
 		  }
 	      );
 		yt6.args = window.ytplayer.config.args;
-		yt6.autoplay = true; autoplay(true); set_controls();
+		//yt6.autoplay = true;
+                autoplay(true); set_controls();
 	    }
 /*
 	      if (yt6.strLocation.split('&')[0] == window.location.href.split('&')[0]) {
