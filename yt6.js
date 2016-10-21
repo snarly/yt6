@@ -1573,8 +1573,8 @@ if (autoplay != null) {
 	//autoplay.innerHTML = bt
         //console.log(autoplay.innerHTML.split('>')[0])
       }*/
-      var bt = autoplay.parentNode.innerHTML; console.log(typeof bt + bt.indexOf('yt-uix-button-toggled')+' '+bt.length + '"' + bt +'"')
-      if ( autoplay.getAttribute('class') == 'playlist-nav-controls' && bt.autoplay == true ) { //|| navigator.userAgent.match(/Trident\//) != null ) ) {
+      var bt = autoplay.parentNode.innerHTML; console.log(typeof bt + bt.indexOf('yt-uix-button-toggled'))
+      if ( autoplay.getAttribute('class') == 'playlist-nav-controls' && yt6.autoplay == true ) { //|| navigator.userAgent.match(/Trident\//) != null ) ) {
         console.log('toggle 1')
         /*yt6.autoplay = true
         if (bt.indexOf('aria-pressed="true"') == -1) {console.log('toggle 2')
@@ -1592,7 +1592,7 @@ if (autoplay != null) {
       /*var a = gclass('style-scope ytd-toggle-button-renderer x-scope yt-endpoint-0')
       for (i=0;i<a.length;i++) { if (a[i]) console.log(a[i].tagName)
         if (a[i] && a[i].innerHTML.indexOf('alt="Loop playlist"') != -1) {
-          var b = ';var yt6 = document.getElementById("snarls_player"); if (yt6) { console.log(this.firstElementChild.getAttribute("class").indexOf("style-default-active")); if (this.firstElementChild.getAttribute("class").indexOf("style-default-active") != -1) { yt6.autoplay = true } else { yt6.autoplay = false }; console.log(yt6.autoplay) };'
+          var b = ';var yt6 = document.getElementById("snarls_player"); if (yt6) { if (this.firstElementChild.getAttribute("class").indexOf("style-default-active") != -1) { yt6.autoplay = true } else { yt6.autoplay = false }; console.log(yt6.autoplay) };'
           if (a[i].tagName == 'PAPER-ICON-BUTTON') a[i].parentNode.setAttribute('onclick', b);
           if (a[i].tagName == 'A') a[i].setAttribute('onclick', b);
           break;		
@@ -1601,17 +1601,19 @@ if (autoplay != null) {
       if (yt6.autoplay == true) {
         autoplay[0].setAttribute('class', autoplay[0].getAttribute('class').replace('style-grey-text','style-default-active'))
         console.log('grey0')
-      }										    
+      }									    
     }
     var autoplay = gclass('style-scope ytd-toggle-button-renderer x-scope paper-icon-button-0 style-default-active')
     if (autoplay[0] && autoplay[0].innerHTML.indexOf('alt="Loop playlist"') != -1) {//console.log('active')
-      //yt6.autoplay = true;
+      yt6.autoplay = true
       var autoplay = autoplay[0].getAttribute('class')
     } else {//console.log('none')
-        //yt6.autoplay = false;
+        yt6.autoplay = false
+        var autoplay = null;
 	var autoplay2 = gclass('flex style-scope ytd-playlist-panel-renderer x-scope ytd-menu-renderer-0');
 	if (!(autoplay2[0] && autoplay2[0].hasAttribute('hidden'))) delete autoplay2[0];
-      }
+    }
+
   }
 
 
@@ -2014,6 +2016,20 @@ yt6.scrollT = document.getElementsByClassName('style-scope ytd-playlist-panel-vi
   yt6.cdns = ['//cdn.rawgit.com/','//rawcdn.githack.com/']
   yt6.cdn = shuffle(yt6.cdns)[0]
 
+var autoplay = document.getElementById('watch-appbar-playlist')
+if (autoplay) {
+    var autoplay = gclass('style-scope ytd-toggle-button-renderer x-scope paper-icon-button-0 style-grey-text')
+    if (autoplay[0] && autoplay[0].innerHTML.indexOf('alt="Loop playlist"') != -1) {console.log('grey1')
+      var a = gclass('style-scope ytd-toggle-button-renderer x-scope yt-endpoint-0')
+      for (i=0;i<a.length;i++) { if (a[i]) console.log(a[i].tagName)
+        if (a[i] && a[i].innerHTML.indexOf('alt="Loop playlist"') != -1) {
+          var b = ';var yt6 = document.getElementById("snarls_player"); var a = this.firstElementChild; if (yt6) { if (a.getAttribute("class").indexOf("style-default-active") != -1) { yt6.autoplay = true } else { yt6.autoplay = false }; console.log(yt6.autoplay) };'
+          if (a[i].tagName == 'PAPER-ICON-BUTTON') a[i].parentNode.setAttribute('onclick', b);
+          if (a[i].tagName == 'A') a[i].setAttribute('onclick', b);
+          break;		
+	}
+      }
+}
 
 if (ytplayer.config && ytplayer.config.args && typeof ytplayer.config.args.url_encoded_fmt_stream_map == 'undefined') {
 
@@ -6032,13 +6048,14 @@ if (typeof yt6.fnCheckLocation != 'number') {
 document.getElementsByTagName('body')[0].spfrequest = function(e) {
     yt6.spf = true
 
-    yt6.autoplay = document.getElementsByClassName('playlist-nav-controls')[0] || document.getElementsByClassName('appbar-playlist-controls clearfix')[0];
-    if (typeof JSON != 'undefined') {
+    yt6.autoplay = document.getElementsByClassName('playlist-nav-controls')[0]
+    /*if (typeof JSON != 'undefined') {
       yt6.autoplay = JSON.parse(JSON.stringify(yt6.autoplay))
       if (yt6.autoplay.indexOf('yt-uix-button-toggled') != -1) { yt6.autoplay = true } else { yt6.autoplay = false }
-    } else {
-        if (yt6.autoplay.innerHTML.indexOf('yt-uix-button-toggled') != -1) { yt6.autoplay = true } else { yt6.autoplay = false }
-      }
+    } else {*/
+        yt6.autoplay = yt6.autoplay.parentNode.innerHTML.split('</button>')[0]
+	if (yt6.autoplay.innerHTML.indexOf('yt-uix-button-toggled') != -1) { yt6.autoplay = true } else { yt6.autoplay = false }
+      //}
 
     if ((bm0) && (bm0.style.visibility == 'visible')) { yt6.x = true } else { yt6.x = false };
 
