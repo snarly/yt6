@@ -1788,6 +1788,20 @@ function getReferenceObjects() {
   if (yt6.wna && yt6.wna.getAttribute('id') == 'watch-header') yt6.wna = document.getElementById('watch7-notification-area')
 
   if (yt6.osw.getAttribute('id') == 'player') {
+
+    var autoplay = gclass('style-scope ytd-toggle-button-renderer x-scope paper-icon-button-0 style-grey-text')
+    if (autoplay[0] && autoplay[0].innerHTML.indexOf('alt="Loop playlist"') != -1) {
+      var a = gclass('style-scope ytd-toggle-button-renderer x-scope yt-endpoint-0')
+      for (i=0;i<a.length;i++) { if (a[i]) console.log(a[i].tagName)
+        if (a[i] && a[i].innerHTML.indexOf('alt="Loop playlist"') != -1) {
+          var b = ';var yt6 = document.getElementById("snarls_player"); var a = this.firstElementChild; if (yt6) { if (a.getAttribute("class").indexOf("style-default-active") != -1) { yt6.autoplay = true } else { yt6.autoplay = false }; console.log(yt6.autoplay) };'
+          if (a[i].tagName == 'PAPER-ICON-BUTTON') a[i].parentNode.setAttribute('onclick', b);
+          if (a[i].tagName == 'A') a[i].setAttribute('onclick', b);
+          break;		
+	}
+      }
+    }
+
 	var l = document.getElementsByClassName('style-scope ytd-watch')
 	for (i=0;i<l.length;i++) {
 	  if (l[i].getAttribute('id') == 'container') {
@@ -2016,23 +2030,8 @@ yt6.scrollT = document.getElementsByClassName('style-scope ytd-playlist-panel-vi
   yt6.cdns = ['//cdn.rawgit.com/','//rawcdn.githack.com/']
   yt6.cdn = shuffle(yt6.cdns)[0]
 
-var autoplay = document.getElementById('watch-appbar-playlist')
-if (autoplay) {
-    var autoplay = gclass('style-scope ytd-toggle-button-renderer x-scope paper-icon-button-0 style-grey-text')
-    if (autoplay[0] && autoplay[0].innerHTML.indexOf('alt="Loop playlist"') != -1) {console.log('grey1')
-      var a = gclass('style-scope ytd-toggle-button-renderer x-scope yt-endpoint-0')
-      for (i=0;i<a.length;i++) { if (a[i]) console.log(a[i].tagName)
-        if (a[i] && a[i].innerHTML.indexOf('alt="Loop playlist"') != -1) {
-          var b = ';var yt6 = document.getElementById("snarls_player"); var a = this.firstElementChild; if (yt6) { if (a.getAttribute("class").indexOf("style-default-active") != -1) { yt6.autoplay = true } else { yt6.autoplay = false }; console.log(yt6.autoplay) };'
-          if (a[i].tagName == 'PAPER-ICON-BUTTON') a[i].parentNode.setAttribute('onclick', b);
-          if (a[i].tagName == 'A') a[i].setAttribute('onclick', b);
-          break;		
-	}
-      }
-    }
-}
 
-if (ytplayer.config && ytplayer.config.args && typeof ytplayer.config.args.url_encoded_fmt_stream_map == 'undefined') {
+  if (ytplayer.config && ytplayer.config.args && typeof ytplayer.config.args.url_encoded_fmt_stream_map == 'undefined') {
 
 //alert('YouTube\'s 2016 layout is active but certain variables which are critical for this script were not defined yet. We\'ll have to do a page refresh and reload the bookmarklet once again to make the script (somewhat) operational. So, let\'s do it!')
 //location.href = window.location.href
@@ -6055,7 +6054,7 @@ document.getElementsByTagName('body')[0].spfrequest = function(e) {
       if (yt6.autoplay.indexOf('yt-uix-button-toggled') != -1) { yt6.autoplay = true } else { yt6.autoplay = false }
     } else {*/
         yt6.autoplay = yt6.autoplay.parentNode.innerHTML.split('</button>')[0]
-	if (yt6.autoplay.innerHTML.indexOf('yt-uix-button-toggled') != -1) { yt6.autoplay = true } else { yt6.autoplay = false }
+	if (yt6.autoplay.indexOf('yt-uix-button-toggled') != -1) { yt6.autoplay = true } else { yt6.autoplay = false }
       //}
 
     if ((bm0) && (bm0.style.visibility == 'visible')) { yt6.x = true } else { yt6.x = false };
