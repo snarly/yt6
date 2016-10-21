@@ -1565,7 +1565,7 @@ if (autoplay != null) {
     var autoplay = document.getElementsByClassName('playlist-nav-controls')[0] || document.getElementsByClassName('appbar-playlist-controls clearfix')[0]
     if (autoplay != undefined) {
       if (autoplay.getAttribute('disabled')) autoplay.removeAttribute('disabled');
-      // if (autoplay.parentNode.innerHTML.indexOf('disabled=""')) autoplay.parentNode.innerHTML = autoplay.parentNode.innerHTML.split('disabled=""').join('')
+      if (autoplay.parentNode.innerHTML.indexOf('disabled=""')) autoplay.parentNode.innerHTML = autoplay.parentNode.innerHTML.split('disabled=""').join('')
       /*var bt = autoplay.innerHTML
       if (yt6.autoplay == true && bt && bt.split('>')[0].indexOf('yt-uix-button-toggled') == -1) {
         var bt = bt.replace( bt.split('>')[0], bt.split('>')[0].replace('";return false;"','";if (yt6) if (yt6.autoplay == true) { yt6.autoplay = false } else { yt6.autoplay = true }; return false;"').replace('yt-uix-button yt-uix-button-size-default yt-uix-button-player-controls yt-uix-button-empty yt-uix-button-has-icon toggle-loop yt-uix-button-opacity yt-uix-tooltip yt-uix-tooltip','yt-uix-button yt-uix-button-size-default yt-uix-button-player-controls yt-uix-button-empty yt-uix-button-has-icon toggle-loop yt-uix-button-opacity yt-uix-tooltip yt-uix-tooltip yt-uix-button-toggled') + ' aria-pressed="true">')
@@ -1787,15 +1787,15 @@ function getReferenceObjects() {
 
   if (yt6.osw.getAttribute('id') == 'player') {
 
-    var autoplay = gclass('style-scope ytd-toggle-button-renderer x-scope paper-icon-button-0 style-grey-text')
+    var autoplay = gclass('style-scope ytd-toggle-button-renderer x-scope paper-icon-button-0');//style-grey-text
     if (autoplay[0] && autoplay[0].innerHTML.indexOf('alt="Loop playlist"') != -1) {
       var a = gclass('style-scope ytd-toggle-button-renderer x-scope');// yt-endpoint-0
       for (i=0;i<a.length;i++) {
         if (a[i] && a[i].innerHTML.indexOf('alt="Loop playlist"') != -1) {
           var b = ';var yt6 = document.getElementById("snarls_player"); var a = this.firstElementChild; if (yt6) { if (a.getAttribute("class").indexOf("style-default-active") != -1) { yt6.autoplay = true } else { yt6.autoplay = false }; console.log(yt6.autoplay) };'
-          if (a[i].getAttribute("class").indexOf("style-default-active") != -1) { yt6.autoplay = true } else { yt6.autoplay = false }; a[i].setAttribute('onclick', b); console.log(yt6.autoplay);
+          console.log(yt6.autoplay);
 	  //if (a[i].tagName == 'PAPER-ICON-BUTTON') a[i].parentNode.setAttribute('onclick', b);
-          //if (a[i].tagName == 'A') a[i].setAttribute('onclick', b);
+          if (a[i].tagName == 'A') a[i].setAttribute('onclick', b);
           break;		
 	}
       }
@@ -6052,8 +6052,9 @@ document.getElementsByTagName('body')[0].spfrequest = function(e) {
       yt6.autoplay = JSON.parse(JSON.stringify(yt6.autoplay))
       if (yt6.autoplay.indexOf('yt-uix-button-toggled') != -1) { yt6.autoplay = true } else { yt6.autoplay = false }
     } else {*/
-        yt6.autoplay = yt6.autoplay.parentNode.innerHTML.split('</button>')[0]
+        yt6.autoplay = yt6.autoplay.parentNode.innerHTML.split('</button>')[0]; console.log(yt6.autoplay)
 	if (yt6.autoplay.indexOf('yt-uix-button-toggled') != -1) { yt6.autoplay = true } else { yt6.autoplay = false }
+	console.log(yt6.autoplay)
       //}
 
     if ((bm0) && (bm0.style.visibility == 'visible')) { yt6.x = true } else { yt6.x = false };
