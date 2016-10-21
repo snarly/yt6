@@ -1795,7 +1795,7 @@ function getReferenceObjects() {
       var a = gclass('style-scope ytd-toggle-button-renderer x-scope');// yt-endpoint-0
       for (i=0;i<a.length;i++) {
         if (a[i] && a[i].innerHTML.indexOf('alt="Loop playlist"') != -1) {
-          var b = ';var yt6 = document.getElementById("snarls_player"); var a = this.firstElementChild; if (yt6) { if (a.getAttribute("class").indexOf("style-default-active") != -1) { yt6.autoplay = true } else { yt6.autoplay = false }; console.log(yt6.autoplay) };'
+          var b = ';var yt6 = document.getElementById("snarls_player"); var a = this.firstElementChild; if (yt6) { if (a.getAttribute("class").indexOf("style-default-active") != -1) { console.log(yt6.autoplay); yt6.autoplay = true; console.log(yt6.autoplay +" ?" } else { yt6.autoplay = false }; console.log(yt6.autoplay) };'
           console.log(yt6.autoplay);
 	  //if (a[i].tagName == 'PAPER-ICON-BUTTON') a[i].parentNode.setAttribute('onclick', b);
           if (a[i].tagName == 'A') a[i].setAttribute('onclick', b);
@@ -5864,7 +5864,7 @@ yt6.mep_up();
 		      me_flash_2load();
 		      if (!document.getElementById(mep_x("mep_"))) set_controls()
 		      if (bm0.style.visibility == 'hidden'){//console.log('a-2');
-			yt6.autoplay = true;
+			//yt6.autoplay = true;
 			waitUntilExists('playerState_null',function(){//console.log('a-3');
 			  //
 waitUntilExists('movie_player',function(){
@@ -5874,14 +5874,14 @@ waitUntilExists('movie_player',function(){
 })
 		        })
 		      } else {//console.log('a-5');
-			  yt6.autoplay = true;
+			  //yt6.autoplay = true;
 			  waitUntilExists('movie_player',function(){
 			    bm0.style.visibility = 'hidden';//console.log('a-6');
 			    flashplugin(); autoplay(true);
 			  })
 			}
 		    } else {//console.log('a-7');
-			yt6.autoplay = true;
+			//yt6.autoplay = true;
 			  //var z = p.getAttribute('src');p.setAttribute('src',''); 
 		        //p.style.display = 'none';
 			window.ytplayer.config.args.html5_unavailable = 1; window.ytplayer.config.args.autoplay = 1;
@@ -5909,7 +5909,7 @@ waitUntilExists('movie_player',function(){
 		  
                 } else {//me_flash
 		    if ( ((z == undefined) || (z.indexOf('%26true') > -1)) && (typeof p.getAttribute('flashvars') == 'object') && (p.getAttribute('name') == 'me_flash') && (document.getElementById('movie_player_bup')) && (document.getElementById('movie_player_'))){
-			yt6.autoplay = true;//console.log('a-8');
+			//yt6.autoplay = true;//console.log('a-8');
 			waitUntilExists('movie_player',function(){//console.log('a-9');
 			  window.ytplayer.config.args.html5_unavailable = 1; window.ytplayer.config.args.autoplay = 1;
 			  document.getElementById('movie_player').setAttribute("flashvars",correct_flashvars(window.ytplayer.config.args));
@@ -5936,7 +5936,7 @@ waitUntilExists('movie_player',function(){
 			  var z = def_link()
 			  var me_flash = getElementsByAttribute(document.getElementById("player-api"),"object","name","me_flash");
 			  if ((me_flash != undefined) && (me_flash.length != 0)) {//console.log('a-12');
-			    yt6.autoplay = true
+			    //yt6.autoplay = true
 			    waitUntilExists('movie_player',function(){//console.log('a-13');
 			      document.getElementById('movie_player').style.display = 'none'
 			      if (bm0.style.visibility == 'hidden'){
@@ -5951,7 +5951,8 @@ waitUntilExists('movie_player',function(){
 			    reload_flashplayer();
 			  }
 			} else {//console.log('a-14');
-			    yt6.autoplay = true; flashplugin(); autoplay(true)
+			    //yt6.autoplay = true;
+			    flashplugin(); autoplay(true)
 			  }
 		      }
 
@@ -5975,7 +5976,8 @@ waitUntilExists('movie_player',function(){
 		  }*/
 		$waitUntil(
 		  function(){ if (document.getElementById('displaySpeed')) return true },
-		  function(){ yt6.autoplay = true; autoplay(true) },
+		  function(){ //yt6.autoplay = true;
+			     autoplay(true) },
 		  100,
 		  1000
 		)
@@ -6050,13 +6052,13 @@ if (typeof yt6.fnCheckLocation != 'number') {
 document.getElementsByTagName('body')[0].spfrequest = function(e) {
     yt6.spf = true
 
-    yt6.autoplay = document.getElementsByClassName('playlist-nav-controls')[0]
+    var autoplay = document.getElementsByClassName('playlist-nav-controls')[0]
     /*if (typeof JSON != 'undefined') {
       yt6.autoplay = JSON.parse(JSON.stringify(yt6.autoplay))
       if (yt6.autoplay.indexOf('yt-uix-button-toggled') != -1) { yt6.autoplay = true } else { yt6.autoplay = false }
     } else {*/
-        yt6.autoplay = yt6.autoplay.parentNode.innerHTML.split('</button>')[0]; console.log(yt6.autoplay)
-	if (yt6.autoplay.indexOf('yt-uix-button-toggled') != -1) { yt6.autoplay = true } else { yt6.autoplay = false }
+        var autoplay = yt6.autoplay.parentNode.innerHTML.split('</button>')[0]; console.log(autoplay)
+	if (autoplay.indexOf('yt-uix-button-toggled') != -1) { yt6.autoplay = true } else { yt6.autoplay = false }
 	console.log(yt6.autoplay)
       //}
 
