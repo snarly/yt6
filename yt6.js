@@ -1604,11 +1604,9 @@ if (autoplay != null) {
       }									    
     }
     var autoplay = gclass('style-scope ytd-toggle-button-renderer x-scope paper-icon-button-0 style-default-active')
-    if (autoplay[0] && autoplay[0].innerHTML.indexOf('alt="Loop playlist"') != -1) {//console.log('active')
-      yt6.autoplay = true
-      var autoplay = autoplay[0].getAttribute('class')
-    } else {//console.log('none')
-        yt6.autoplay = false
+    if (autoplay[0] && autoplay[0].innerHTML.indexOf('alt="Loop playlist"') != -1) {console.log('active')
+      var autoplay = '';//autoplay[0].getAttribute('class')
+    } else {console.log('none')
         var autoplay = null;
 	var autoplay2 = gclass('flex style-scope ytd-playlist-panel-renderer x-scope ytd-menu-renderer-0');
 	if (!(autoplay2[0] && autoplay2[0].hasAttribute('hidden'))) delete autoplay2[0];
@@ -1791,12 +1789,13 @@ function getReferenceObjects() {
 
     var autoplay = gclass('style-scope ytd-toggle-button-renderer x-scope paper-icon-button-0 style-grey-text')
     if (autoplay[0] && autoplay[0].innerHTML.indexOf('alt="Loop playlist"') != -1) {
-      var a = gclass('style-scope ytd-toggle-button-renderer x-scope yt-endpoint-0')
-      for (i=0;i<a.length;i++) { if (a[i]) console.log(a[i].tagName)
+      var a = gclass('style-scope ytd-toggle-button-renderer x-scope');// yt-endpoint-0
+      for (i=0;i<a.length;i++) {
         if (a[i] && a[i].innerHTML.indexOf('alt="Loop playlist"') != -1) {
           var b = ';var yt6 = document.getElementById("snarls_player"); var a = this.firstElementChild; if (yt6) { if (a.getAttribute("class").indexOf("style-default-active") != -1) { yt6.autoplay = true } else { yt6.autoplay = false }; console.log(yt6.autoplay) };'
-          if (a[i].tagName == 'PAPER-ICON-BUTTON') a[i].parentNode.setAttribute('onclick', b);
-          if (a[i].tagName == 'A') a[i].setAttribute('onclick', b);
+          if (a[i].getAttribute("class").indexOf("style-default-active") != -1) { yt6.autoplay = true } else { yt6.autoplay = false }; a[i].setAttribute('onclick', b); console.log(yt6.autoplay) };'
+	  //if (a[i].tagName == 'PAPER-ICON-BUTTON') a[i].parentNode.setAttribute('onclick', b);
+          //if (a[i].tagName == 'A') a[i].setAttribute('onclick', b);
           break;		
 	}
       }
