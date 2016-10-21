@@ -1793,7 +1793,7 @@ function getReferenceObjects() {
       for (i=0;i<a.length;i++) {
         if (a[i] && a[i].innerHTML.indexOf('alt="Loop playlist"') != -1) {
           var b = ';var yt6 = document.getElementById("snarls_player"); var a = this.firstElementChild; if (yt6) { if (a.getAttribute("class").indexOf("style-default-active") != -1) { yt6.autoplay = true } else { yt6.autoplay = false }; console.log(yt6.autoplay) };'
-          if (a[i].getAttribute("class").indexOf("style-default-active") != -1) { yt6.autoplay = true } else { yt6.autoplay = false }; a[i].setAttribute('onclick', b); console.log(yt6.autoplay) };
+          if (a[i].getAttribute("class").indexOf("style-default-active") != -1) { yt6.autoplay = true } else { yt6.autoplay = false }; a[i].setAttribute('onclick', b); console.log(yt6.autoplay);
 	  //if (a[i].tagName == 'PAPER-ICON-BUTTON') a[i].parentNode.setAttribute('onclick', b);
           //if (a[i].tagName == 'A') a[i].setAttribute('onclick', b);
           break;		
