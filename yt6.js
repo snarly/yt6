@@ -2029,6 +2029,7 @@ if (autoplay) {
           break;		
 	}
       }
+    }
 }
 
 if (ytplayer.config && ytplayer.config.args && typeof ytplayer.config.args.url_encoded_fmt_stream_map == 'undefined') {
