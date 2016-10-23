@@ -612,12 +612,14 @@ function ajax1(update){
     //test.textContent = yt6.gvd;
     var xr = gvd.match(/https:[^"]+videoplayback[^"]+/g);
 
+    if (xr) {//xr defined?
+
     //yt6.ya = yt6.xr.filter(z => z.length < 1000);
     var filtR = function(z) { if (z && z.length < 1000) return z }
 
     var ya = xr.filter(filtR);
 
-    if (ya.length) {
+    if (ya && ya.length) {
       var filtR = function(z) { if (z && z.length > 20) return z }
       var dsig = gvd.match(/[0123456789ABCDEF.]+(?=")/g)
         .filter(filtR).filter(uniq);//.filter(z => z.length > 20).filter(uniq);
@@ -629,7 +631,7 @@ function ajax1(update){
 	var durl = xr.filter(uniq);
       }
 
-    ya = xr = gvd = ypa = undefined;
+    ya = xr = gvd = ypa = null;
 
 
     var cfmt = [];
@@ -656,7 +658,9 @@ function ajax1(update){
       //document.getElementById('test-4').innerHTML = Object.keys(cfmt).map(z => cfmt[z]).filter(z => /href/.test(z)).join('<br>');
 	document.getElementById('test-4').innerHTML = cfmt.join('').split('</a>').join('</a><br>')
 
-    dsig = durl = usp = efmt = cfmt = undefined;
+    dsig = durl = usp = efmt = cfmt = null;
+
+    }//xr undefined
   //},200,4000)
 
 
@@ -1571,20 +1575,20 @@ if (autoplay != null) {
       if (autoplay.getAttribute('class') == 'playlist-nav-controls') {
 	if (autoplay.parentNode.innerHTML.split('</button>')[0].indexOf('yt-uix-button-toggled') != -1) {
 	  yt6.autoplay = true
-	} else {//console.log('1')
+	} else {
 	    if (yt6.autoplay) {//"Replay playlist" sometimes greyed out by YT
 	      if (start) {
 		var btn = autoplay.getElementsByTagName('button')
 		for (var i in btn){
-		  if (btn[i] && yt6.autoplay == true) {//console.log('click')
+		  if (btn[i] && yt6.autoplay == true) {
 		    btn[i].click(); break
 		  }
 		}
 	      } else {
-		  //console.log('2')
+		  yt6.autoplay = false;
 		}
 	    } else {
-		yt6.autoplay = false; //console.log('3')
+		yt6.autoplay = false;
 	      }
 	  }
 
@@ -1596,7 +1600,8 @@ if (autoplay != null) {
       }
     }
   }
-  var autoplay2 = gclass('playlist-mix-icon yt-sprite'); //console.log(yt6.autoplay + ' '+ autoplay2[0])
+  var autoplay2 = gclass('playlist-mix-icon yt-sprite');
+
 } else {//2016 layout
     if (yt6.osw.getAttribute('id') != 'player') { yt6.autoplay = false };
     var autoplay = gclass('style-scope ytd-toggle-button-renderer x-scope paper-icon-button-0 style-grey-text')
@@ -1608,7 +1613,7 @@ if (autoplay != null) {
     }
     var autoplay = gclass('style-scope ytd-toggle-button-renderer x-scope paper-icon-button-0 style-default-active')
     if (autoplay[0] && autoplay[0].innerHTML.indexOf('alt="Loop playlist"') != -1) {
-      autoplay2 = {}; delete autoplay2[0]; //console.log('active')
+      yt6.autoplay = true; autoplay2 = {}; delete autoplay2[0]; //console.log('active')
     } else {//console.log('none')
 	var autoplay2 = gclass('flex style-scope ytd-playlist-panel-renderer x-scope ytd-menu-renderer-0');
 	if (!(autoplay2[0] && autoplay2[0].hasAttribute('hidden'))) { delete autoplay2[0]; if (!autoplay[0]) yt6.autoplay = false }
@@ -1616,7 +1621,7 @@ if (autoplay != null) {
 
   }
 
-
+//console.log(yt6.autoplay + ' '+ autoplay2[0])
 
 function select_player(){
   if ((typeof p.getPlayerState == 'function') && (!yt6.x)) {
@@ -1802,7 +1807,7 @@ function getReferenceObjects() {
       var a = gclass('style-scope ytd-toggle-button-renderer x-scope');// yt-endpoint-0
       for (i=0;i<a.length;i++) {
         if (a[i] && a[i].innerHTML.indexOf('alt="Loop playlist"') != -1) {
-          var b = ';var yt6 = document.getElementById("snarls_player"); var a = this.firstElementChild; if (yt6) { if (a.getAttribute("class").indexOf("style-default-active") != -1) { yt6.autoplay = true } else { yt6.autoplay = false } };'
+          var b = ';var yt6 = document.getElementById("snarls_player"); var a = this.firstElementChild; if (yt6) { if (a.getAttribute("class").indexOf("style-default-active") != -1) { this.click(); if (yt6.autoplay == false) { this.click(); yt6.autoplay = true } } else { yt6.autoplay = false } };'
           if (a[i].tagName == 'A') a[i].setAttribute('onclick', b);
           break;		
 	}
@@ -4513,8 +4518,8 @@ function mep_run() {
 		var AV = yt6.A_V;
 		var Seek = yt6.Seek = null;
 		var player2 = document.getElementById('player2')
-var z = [player2.play, player2.pause, player2.currentTime]
-for (i=0;i<z.length-1;i++) { if (z) { delete z } }
+		var z = [player2.play, player2.pause, player2.currentTime]
+		for (i=0;i<z.length-1;i++) { if (z[i]) { delete z[i] } }
 		var player1 = yt6.player1 = new MediaElementPlayer('#player1',{
 		  enableAutosize: false,
 		  poster: getPoster(),
@@ -4573,7 +4578,19 @@ for (i=0;i<z.length-1;i++) { if (z) { delete z } }
 							  var z = gclass('mejs-overlay-play')//mejs-playpause-button
 							  if (typeof z[0] != 'undefined') z[0].style.display = 'none';//{ z[0].firstChild.click();z[0].firstChild.click(); }
 							};*/
-						}
+						} else {
+						    var t4 = document.getElementById('test-4')
+						    if (t4 != null && t4.innerHTML != ''){
+						      var z = t4.children
+						      for(i=0;i<z.length;i++){
+						        if (z[i] && z[i].tagName == 'A' && z[i].name && z[i].href) {
+							  yt6.linx[z[i].name] = z[i].href; //console.log(z[i])
+							  var y = document.getElementById(mep_x('mep_') + '_sourcechooser_' + z[i].name)
+							  if (y && y.tagName == 'INPUT') y.value = z[i].href
+						        }
+						      }
+						    }
+						  }
 					    }
 
 					    function no_default(_itag){ 
@@ -4802,7 +4819,9 @@ function() { yt6.timer = 0; try { if (typeof AV[itag(me.src)] !== 'string') { me
 					    if (me.paused) {
 					      yt6.player2.setCurrentTime( me.currentTime )
 					    } else {
-					        if (Seek != 3 && Seek != 0) { Seek = 1 };
+					        if (Seek != 3 && Seek != 0) {
+						  Seek = 1; //case of seeking without hitting pause
+						};
 					        if (Audio == Srcto) { player2.currentTime = me.currentTime; }
 					      };
 					    if ((me.src.slice(-2) !== '&2') && (Math.abs(parseFloat(parseFloat(player2.currentTime) - parseFloat(me.currentTime))) > parseFloat(0.3))) {
