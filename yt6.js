@@ -1590,7 +1590,7 @@ if (autoplay != null) {
 		  }
 		}*/
 	      } else {
-		  //yt6.autoplay = false;
+		  yt6.autoplay = false;
 		}
 	    } else {
 		yt6.autoplay = false;
