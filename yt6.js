@@ -1573,19 +1573,24 @@ if (autoplay != null) {
     var autoplay = document.getElementsByClassName('playlist-nav-controls')[0] || document.getElementsByClassName('appbar-playlist-controls clearfix')[0]
     if (autoplay != undefined) {
       if (autoplay.getAttribute('class') == 'playlist-nav-controls') {
-	if (autoplay.parentNode.innerHTML.split('</button>')[0].indexOf('yt-uix-button-toggled') != -1) {
+        var btn = autoplay.getElementsByTagName('button')[0];
+	if (btn) {
+	  var b = ';var yt6 = document.getElementById("snarls_player"); if (yt6) { if (this.getAttribute("class").indexOf("yt-uix-button-toggled") != -1) { this.setAttribute("class", this.getAttribute("class").split(" yt6").join("") + " yt6"); yt6.autoplay = true } else { this.setAttribute("class", this.getAttribute("class").split(" yt6").join("")); yt6.autoplay = false } }; return false;'
+	  btn.setAttribute('onclick', b);
+	]
+        if (autoplay.parentNode.innerHTML.split('</button>')[0].indexOf('yt-uix-button-toggled') != -1) {
 	  yt6.autoplay = true
 	} else {
 	    if (yt6.autoplay) {//"Replay playlist" sometimes greyed out by YT
-	      if (start) {
-		var btn = autoplay.getElementsByTagName('button')
+	      if (start) { if (btn) btn.click()
+		/*var btn = autoplay.getElementsByTagName('button')
 		for (var i in btn){
 		  if (btn[i] && yt6.autoplay == true) {
 		    btn[i].click(); break
 		  }
-		}
+		}*/
 	      } else {
-		  yt6.autoplay = false;
+		  if (!(btn && btn.getAttribute("class").indexOf(" yt6") != -1)) yt6.autoplay = false;
 		}
 	    } else {
 		yt6.autoplay = false;
@@ -4578,7 +4583,7 @@ function mep_run() {
 							  var z = gclass('mejs-overlay-play')//mejs-playpause-button
 							  if (typeof z[0] != 'undefined') z[0].style.display = 'none';//{ z[0].firstChild.click();z[0].firstChild.click(); }
 							};*/
-						} else {
+						} /*else {
 						    var t4 = document.getElementById('test-4')
 						    if (t4 != null && t4.innerHTML != ''){
 						      var z = t4.children
@@ -4590,7 +4595,7 @@ function mep_run() {
 						        }
 						      }
 						    }
-						  }
+						  }*/
 					    }
 
 					    function no_default(_itag){ 
