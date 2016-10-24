@@ -1577,7 +1577,7 @@ if (autoplay != null) {
 	if (btn) {
 	  var b = ';var yt6 = document.getElementById("snarls_player"); if (yt6) { if (this.getAttribute("class").indexOf("yt-uix-button-toggled") != -1) { this.setAttribute("class", this.getAttribute("class").split(" yt6").join("") + " yt6"); yt6.autoplay = true } else { this.setAttribute("class", this.getAttribute("class").split(" yt6").join("")); yt6.autoplay = false } }; return false;'
 	  btn.setAttribute('onclick', b);
-	]
+	}
         if (autoplay.parentNode.innerHTML.split('</button>')[0].indexOf('yt-uix-button-toggled') != -1) {
 	  yt6.autoplay = true
 	} else {
