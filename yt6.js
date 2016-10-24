@@ -1582,7 +1582,7 @@ if (autoplay != null) {
 	  yt6.autoplay = true
 	} else {
 	    if (yt6.autoplay) {//"Replay playlist" sometimes greyed out by YT
-	      if (start) { if (btn) btn.click()
+	      if (start) { //if (btn) btn.click()
 		/*var btn = autoplay.getElementsByTagName('button')
 		for (var i in btn){
 		  if (btn[i] && yt6.autoplay == true) {
