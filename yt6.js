@@ -4696,9 +4696,13 @@ function mep_run() {
 					  FireEvent( mep_x('mep_'), 'mouseover' );
 					  if (document.getElementsByClassName('mejs-clear')[0]) document.getElementsByClassName('mejs-clear')[0].setAttribute('id','mejs-clear')
 					  yt6.newvideo = false;
-				          var z = document.getElementsByClassName('ytassetsjs-0')
+				          var z = document.getElementsByClassName('yt6-proxy-error')
           				  for (k=0;k<z.length;k++) {
 				            if (z[k]) z[k].parentNode.removeChild(z[k])
+				          }
+				          var z = document.getElementsByClassName('ytassetsjs-0')
+          				  for (k=0;k<z.length;k++) {
+				            if (z[k] && document.getElementById('ytassetsjs') != null && document.getElementById('ytassetsjs').innerHTML.indexOf('var ') != -1 && z[k].innerHTML.indexOf('var ') != -1) z[k].parentNode.removeChild(z[k])
 				          }
 					});
 					me.addEventListener('play', function() {//console.log('1play')
