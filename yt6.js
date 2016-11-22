@@ -115,6 +115,7 @@ yt6.userpref = [43,18]
 function get_quality(url) {
 
   var qs = qr(url);
+  if (qs == null) return null
   return qual[qs.itag] || qs.itag
 }
 
@@ -141,8 +142,8 @@ function def_link(){
     if (typeof ft[i] !== 'undefined') {
       var z = ft ? ft[i].split(',') : '';
       for (j in z) {
-	var qq = get_quality(z[j]);if (qq == null) alert('0qq')
-	var qs = qr(z[j]);if (qs == null) alert('0qs')
+	var qq = get_quality(z[j]);if (qq == null) continue;//alert('0qq')
+	var qs = qr(z[j]);if (qs == null) continue;//alert('0qs')
 	var href = unescape(qs.url).replace('http:', '').replace('https:', '');
 	var sig = href
 	if (qs.signature){
@@ -1612,14 +1613,14 @@ if (autoplay != null) {
 } else {//2016 layout
     if (yt6.osw.getAttribute('id') != 'player') { yt6.autoplay = false };
     var autoplay = gclass('style-scope ytd-toggle-button-renderer x-scope paper-icon-button-0 style-grey-text')
-    if (autoplay[0] && autoplay[0].innerHTML.indexOf('alt="Loop playlist"') != -1) {//console.log('grey1')
+    if (autoplay[0] && autoplay[0].parentNode.parentNode.parentNode.id == 'top-level-buttons') {//autoplay[0].innerHTML.indexOf('alt="Loop playlist"') != -1) {//console.log('grey1')
       if (yt6.autoplay == true) {
         autoplay[0].setAttribute('class', autoplay[0].getAttribute('class').split(' style-grey-text').join('') + ' style-default-active')
         //console.log('grey0')
       }									    
     }
     var autoplay = gclass('style-scope ytd-toggle-button-renderer x-scope paper-icon-button-0 style-default-active')
-    if (autoplay[0] && autoplay[0].innerHTML.indexOf('alt="Loop playlist"') != -1) {
+    if (autoplay[0] && autoplay[0].parentNode.parentNode.parentNode.id == 'top-level-buttons') {//autoplay[0].innerHTML.indexOf('alt="Loop playlist"') != -1) {
       yt6.autoplay = true; autoplay2 = {}; delete autoplay2[0]; //console.log('active')
     } else {//console.log('none')
 	var autoplay2 = gclass('flex style-scope ytd-playlist-panel-renderer x-scope ytd-menu-renderer-0');
@@ -2396,8 +2397,8 @@ function rewrite_ytplayer(node_value, s, sig){
     if (typeof ft[i] !== 'undefined') {
       var z = ft ? ft[i].split(',') : '';
       for (j in z) {
-        var qq = get_quality(z[j]); //if (qq == null) alert('qq')
-        var qs = qr(z[j]); //if (qs == null) alert('qs')
+        var qq = get_quality(z[j]); if (qq == null) continue;//alert('qq')
+        var qs = qr(z[j]); if (qs == null) continue;//alert('qs')
         var href = unescape(qs.url).replace('http:', '').replace('https:', '');
         if (qs.signature){	  //yt6.flash = true;
           href += '&signature=' + qs.signature;
@@ -4865,7 +4866,7 @@ function mep_run() {
 						  } else {
 						      var z = document.getElementById('playlist')
 						      if (z && z.style.display != 'none') {
-						      var z = document.getElementsByClassName('style-scope ytd-playlist-panel-video-renderer x-scope yt-formatted-string-0');
+						      var z = document.getElementsByClassName('style-scope ytd-playlist-panel-video-renderer x-scope yt-endpoint-0');
 						      if (z && z[0]) {
 							var mix = gclass('flex style-scope ytd-playlist-panel-renderer x-scope ytd-menu-renderer-0');
 							for(i=0;i<z.length;i++) {//console.log(z[i].textContent)
@@ -4967,7 +4968,7 @@ function mep_run() {
 						  } else {
 						      var z = document.getElementById('playlist')
 						      if (z && z.style.display != 'none') {
-						      var z = document.getElementsByClassName('style-scope ytd-playlist-panel-video-renderer x-scope yt-formatted-string-0');
+						      var z = document.getElementsByClassName('style-scope ytd-playlist-panel-video-renderer x-scope yt-endpoint-0');
 						      if (z && z[0]) {
 							for(i=0;i<z.length;i++) {//console.log(z[i].textContent)
 							  if ((z[i]) && (z[i].textContent == '▶')) {
@@ -7530,7 +7531,7 @@ function zip(){
   e.width = windowwidth + 'px';
   e.height = h + 'px'
 
-  var playlist = document.getElementById('watch-appbar-playlist') || document.getElementById('playlist')
+  var playlist = document.getElementById('watch-appbar-playlist') || document.getElementById('playlist') || document.getElementById('chat')
   //if (playlist) playlist.removeAttribute('style')
 
   //var b = document.getElementById('placeholder-player')
