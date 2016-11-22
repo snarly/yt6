@@ -7,7 +7,7 @@ javascript: (function(){var d=document;if(d.location.href.indexOf('youtube.com/w
 
 __
 
-On any (non-live streaming) YouTube video page, this bookmarklet will call an external player and load some extra functions which can be used with YouTube's native player as well. Use the HTML5 emblem to switch between the native and external player. It should work now on most browsers, even older ones. Bugs are gonna stay forever...
+On any unrestricted YouTube video page, this bookmarklet will call an external player and load some extra functions which can be used with YouTube's native player as well. Use the HTML5 emblem to switch between the native and external player. It should work now on most browsers, even older ones. Bugs are gonna stay forever...
 
 
 Credit should go to the authors of their respective open source code:
