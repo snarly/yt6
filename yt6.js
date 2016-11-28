@@ -932,7 +932,7 @@ function protocol() { var protocol = 'http:'; //return protocol
 function player() {
   if (document.getElementById('movie_player') && !yt6.api) yt6.api = document.getElementById("movie_player").parentNode;
     yt6.movie_player = document.getElementById('movie_player')
-  if (!yt6.yt6) {
+  if (!yt6.ytg) {
     return document.getElementById('movie_player')
   } else {
       if (!yt6.api && document.getElementById('player')) {
