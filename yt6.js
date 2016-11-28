@@ -1130,6 +1130,7 @@ else if("function"==b&&"undefined"==typeof a.call)return"object";return b}
 		  var z = document.querySelector('#player-unavailable');// || gclass('ytd-playability-error-supported-renderers-0')[0]
 		  if (z) z.style.display = 'none'
 		}
+	      }
 	  }
 	}
 	xhr.send('')
