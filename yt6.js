@@ -1115,10 +1115,21 @@ else if("function"==b&&"undefined"==typeof a.call)return"object";return b}
 	xhr.onreadystatechange = function() {
 	  if (xhr.readyState == 4 && xhr.status == 200) {
 	    if (!ytplayer.config.args) {
-	      $waitUntil(function(){if (ytplayer.config.args) return true },function(){ parse_video_info(xhr.responseText);},200,6000)
+	      $waitUntil(function(){if (ytplayer.config.args) return true },
+		function(){ parse_video_info(xhr.responseText);
+		  var z = document.querySelector('#unavailable-message');// || document.getElementById('reason')
+		  if ( z != null && z.textContent.replace(/(\r\n|\n|\r)/gm," ").split(' ').join('') != '') {
+		    var z = document.querySelector('#player-unavailable');// || gclass('ytd-playability-error-supported-renderers-0')[0]
+		    if (z) z.style.display = 'none'
+		  }
+		},200,6000)
 	    } else {
 		parse_video_info(xhr.responseText);
-	      }
+		var z = document.querySelector('#unavailable-message');// || document.getElementById('reason')
+		if ( z != null && z.textContent.replace(/(\r\n|\n|\r)/gm," ").split(' ').join('') != '') {
+		  var z = document.querySelector('#player-unavailable');// || gclass('ytd-playability-error-supported-renderers-0')[0]
+		  if (z) z.style.display = 'none'
+		}
 	  }
 	}
 	xhr.send('')
@@ -7091,7 +7102,7 @@ if (p.getAttribute('class') && p.getAttribute('class').indexOf('ytp-fullscreen')
 
 }//(p)
 
-if ((document.querySelector('#unavailable-message') != null) && (document.querySelector('#unavailable-message').innerHTML.indexOf('Content Warning') > -1)) { 
+if ((document.querySelector('#unavailable-message') != null && document.querySelector('#unavailable-message').textContent.replace(/(\r\n|\n|\r)/gm," ").split(' ').join('') != '') {
 
   if (document.querySelector('#player-unavailable').style.display != 'none') document.querySelector('#player-unavailable').style.display = 'none';
   /*var idoc = document.getElementById('re-embed2')
