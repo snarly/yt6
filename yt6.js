@@ -7103,7 +7103,7 @@ if (p.getAttribute('class') && p.getAttribute('class').indexOf('ytp-fullscreen')
 
 }//(p)
 
-if ((document.querySelector('#unavailable-message') != null && document.querySelector('#unavailable-message').textContent.replace(/(\r\n|\n|\r)/gm," ").split(' ').join('') != '') {
+if (document.querySelector('#unavailable-message') != null && document.querySelector('#unavailable-message').textContent.replace(/(\r\n|\n|\r)/gm," ").split(' ').join('') != '') {
 
   if (document.querySelector('#player-unavailable').style.display != 'none') document.querySelector('#player-unavailable').style.display = 'none';
   /*var idoc = document.getElementById('re-embed2')
