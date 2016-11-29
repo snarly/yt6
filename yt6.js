@@ -1054,7 +1054,10 @@ else if("function"==b&&"undefined"==typeof a.call)return"object";return b}
 	    }
 	  }
 
-	  //if (!yt6.ytg) { //(player() && player().getAttribute('src') == '') {
+	  if (document.querySelector('#watch7-player-age-gate-content') != null || document.getElementsByClassName('ytp-error-content-wrap')[0] ) {
+
+	  var z = document.getElementById('overlay')
+	  if (z) { z.setAttribute('hidden','') }
 
 	  if (window.ytplayer.config.html5 == false) {
 	    player().setAttribute("flashvars", correct_flashvars(window.ytplayer.config.args))
@@ -1135,7 +1138,7 @@ else if("function"==b&&"undefined"==typeof a.call)return"object";return b}
 		}
 	    }
 
-	  //}
+	  }
 
 	}
 
@@ -1849,6 +1852,11 @@ if (autoplay != null) {
 	if (!(autoplay2[0] && autoplay2[0].hasAttribute('hidden'))) { delete autoplay2[0]; if (!autoplay[0]) yt6.autoplay = false }
     }
 
+    /*if (yt6.ytg) {
+      var autoplay2 = document.getElementById('sidebar');
+      if (autoplay2) { autoplay2 = document.getElementsByClassName('mejs-clear') }
+    }*/
+
   }
 
 //console.log(yt6.autoplay + ' '+ autoplay2[0])
@@ -2370,7 +2378,7 @@ if (playlist.id == 'playlist') {
 })()//tck
 
 
-} else {
+} else {//console.log('2')
 
     if (yt6.osw && yt6.osw.getAttribute('id') == 'player') {
           xhr.open('get', window.location, false);
@@ -2502,6 +2510,17 @@ yt6.ytcsi = {
       window.ytcfg.set('FILLER_DATA', fillerData);
     })();
 */  
+
+if (yt6.ytg && window.ytplayer.config.args) {
+  window.ytplayer.config.args.adaptive_fmts = undefined;
+  window.ytplayer.config.args.url_encoded_fmt_stream_map = undefined;
+  window.ytplayer.config.args.videostats_playback_base_url = undefined;
+  window.ytplayer.config.args.dashmpd = undefined;
+  window.ytplayer.config.args.title = undefined;
+  window.ytplayer.config.args.video_ID = undefined;
+  window.ytplayer.config.args.ttsurl = undefined;
+  ageless_verification()
+}
 
     } else {
 	if (yt6.osw && yt6.osw.getAttribute('id') == 'placeholder-player' && window.ytplayer && window.ytplayer.config == null) {
