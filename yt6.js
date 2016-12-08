@@ -8850,6 +8850,7 @@ function aspect(a) {
 		var k = document.getElementsByClassName('ytp-menuitem')
 		for(i=0;i<k.length-1;i++){
 		  if (k[i] && k[i].innerHTML.indexOf('Stats for nerds') != -1) { FireEvent2( k[i], 'click'); break }
+		  if (i == k.length-1) { FireEvent2( k[6], 'click'); }
 		}
 
 		var z = document.getElementsByClassName('html5-video-info-panel-content')[0]
