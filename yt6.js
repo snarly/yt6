@@ -345,7 +345,7 @@ function FireEvent( ElementId, EventName )
 
 function FireEvent2( element, event ) {
 
-	if (element) {
+	if (element) {console.log(element.getAttribute('class') + ' ' + typeof element.dispatchEvent)
 	      if (window.CustomEvent) {
 	        element.dispatchEvent(new CustomEvent( event));
 	      } else {
