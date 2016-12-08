@@ -358,7 +358,7 @@ function FireEvent2( element, event ) {
 		      element.fireEvent( event );
 		    }
 		}
-	    } catch(e) {console.log(element.getAttribute('class'));console.log(e) // IE11 error
+	    } catch(e) {//console.log(element.getAttribute('class'));console.log(e) // IE11 error
 		if (document.createEvent) {
 		  var ev = document.createEvent('HTMLEvents');
 		  ev.initEvent( event, true, false);
@@ -8844,9 +8844,6 @@ function aspect(a) {
 
 	  if (bm0.style.visibility == 'hidden') {
 
-	    /*if (typeof player().getAttribute('flashvars') != 'string') {
-              var z = document.getElementsByClassName('video-stream html5-main-video')[0];
-	    } else var z = player()*/
 
 		FireEvent2(player(), 'contextmenu')
 
