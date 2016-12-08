@@ -5106,6 +5106,7 @@ function mep_run() {
 					  }
 					});
 					me.addEventListener('ended', function() {
+					  if (me.src.indexOf('source=yt_live_broadcast') == -1) {
 					  if (player1.options.loop1) { 
 					    Seek = 1; try {
 					      yt6.player1.media.currentTime = me.currentTime = yt6.player2.media.currentTime = player2.currentTime = 0
@@ -5172,16 +5173,19 @@ function mep_run() {
 					        };
 					      }
 					    }
+					  } else {//live broadcast
+function resync_live(){
+me.src1 = me.src; me.src2 = player2.src;
+yt6.player2.setSrc(''); yt6.player1.setSrc('');
+yt6.player2.load(); yt6.player1.load();
+yt6.player2.setSrc(me.src2); yt6.player1.setSrc(yt6.player1.media.src1);
+yt6.player2.load(); yt6.player1.load();
+yt6.player1.play();
+}
+resync_live();
+					    }
 					});
 					me.addEventListener('playing', function() {
-/*  var z = document.getElementsByClassName('mejs-currenttime');
-  if ((typeof z[0] != 'undefined') && (1 * z[0].innerHTML.indexOf(':') > -1)) {
-    var time = z[0].innerHTML.split(':')
-    if (typeof time[2] != 'undefined') {
-      var time = 3600 * time[0] + 60 * time[1] + time[2]
-    } else var time = 60 * time[0] + time[1]
-    yt6.ct = time;
-  }*/
 					  if ( (me.src.slice(-2) == '&2') && (Srcto != Audio) )  {
 					    player2.pause()
 					  }
@@ -5230,6 +5234,7 @@ function mep_run() {
 					    }
 					});
 					me.addEventListener('ended', function() {
+					  if (me.src.indexOf('source=yt_live_broadcast') == -1) {
 					  if (player1.options.loop1) {
 					    Seek = 1; yt6.player2.media.currentTime = me.currentTime = 0;
 					  } else {
@@ -5268,6 +5273,17 @@ function mep_run() {
 						      }//display: none
 						    }
 					      }
+					    }
+					  } else {//live broadcast
+function resync_live(){
+me.src1 = me.src; me.src2 = player2.src;
+yt6.player2.setSrc(''); yt6.player1.setSrc('');
+yt6.player2.load(); yt6.player1.load();
+yt6.player2.setSrc(me.src2); yt6.player1.setSrc(yt6.player1.media.src1);
+yt6.player2.load(); yt6.player1.load();
+yt6.player1.play();
+}
+resync_live();
 					    }
 					});
 					me.addEventListener('pause', function() {//console.log('2pause')
@@ -5850,7 +5866,8 @@ if (z[0]) {
       } else throw 'YouTube layout mismatch';
     }
   }
-if ( 1 * getElementsByAttribute(document,'div','class', z.getAttribute('class').indexOf('doodle') > -1 )) {//alert(z.getAttribute('class').indexOf('doodle') )
+
+if (gclass('doodle')[0]) {
   var z = document.getElementById('logo-container') || document.getElementById('logo') || document.getElementById('home-button').parentNode;
   z.setAttribute('style','width:88px');
 }
