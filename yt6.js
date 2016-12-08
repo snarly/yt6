@@ -358,11 +358,11 @@ function FireEvent2( element, event ) {
 		      element.fireEvent( event );
 		    }
 		}
-	    } catch(e) {console.log(element.getAttribute('class') + ' ' + e) // IE error
+	    } catch(e) {console.log(element.getAttribute('class'));console.log(e) // IE11 error
 		if (document.createEvent) {
 		  var ev = document.createEvent('HTMLEvents');
 		  ev.initEvent( event, true, false);
-		  element.target.dispatchEvent(ev);
+		  element.dispatchEvent(ev);
 		}
 	      }
 	}
