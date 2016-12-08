@@ -346,6 +346,7 @@ function FireEvent( ElementId, EventName )
 function FireEvent2( element, event ) {
 
 	if (element) {console.log(element.getAttribute('class') + ' ' + typeof element.dispatchEvent)
+	    try {
 	      if (window.CustomEvent) {
 	        element.dispatchEvent(new CustomEvent( event));
 	      } else {
@@ -357,6 +358,9 @@ function FireEvent2( element, event ) {
 		      element.fireEvent( event );
 		    }
 		}
+	    } catch(e) {console.log(e) // IE error
+		element.fireEvent( event );
+	      }
 	}
 
 }
@@ -8836,11 +8840,11 @@ function aspect(a) {
 
 	  if (bm0.style.visibility == 'hidden') {
 
-	    if (typeof player().getAttribute('flashvars') != 'string') {
+	    /*if (typeof player().getAttribute('flashvars') != 'string') {
               var z = document.getElementsByClassName('video-stream html5-main-video')[0];
-	    } else var z = player()
+	    } else var z = player()*/
 
-		FireEvent2(z, 'contextmenu')
+		FireEvent2(player(), 'contextmenu')
 
 		var k = document.getElementsByClassName('ytp-menuitem')
 		for(i=0;i<k.length-1;i++){
