@@ -345,7 +345,7 @@ function FireEvent( ElementId, EventName )
 
 function FireEvent2( element, event ) {
 
-	if (element) {console.log(element.getAttribute('class') + ' ' + typeof element.dispatchEvent)
+	if (element) {
 	    try {
 	      if (window.CustomEvent) {
 	        element.dispatchEvent(new CustomEvent( event));
@@ -358,8 +358,12 @@ function FireEvent2( element, event ) {
 		      element.fireEvent( event );
 		    }
 		}
-	    } catch(e) {console.log(e) // IE error
-		element.fireEvent( event );
+	    } catch(e) {console.log(element.getAttribute('class') + ' ' + e) // IE error
+		if (document.createEvent) {
+		  var ev = document.createEvent('HTMLEvents');
+		  ev.initEvent( event, true, false);
+		  element.target.dispatchEvent(ev);
+		}
 	      }
 	}
 
