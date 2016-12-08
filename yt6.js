@@ -8836,8 +8836,11 @@ function aspect(a) {
 
 	  if (bm0.style.visibility == 'hidden') {
 
+	    if (typeof player().getAttribute('flashvars') != 'string') {
+              var z = document.getElementsByClassName('video-stream html5-main-video')[0];
+	    } else var z = player()
 
-		FireEvent2(player(), 'contextmenu')
+		FireEvent2(z, 'contextmenu')
 
 		var k = document.getElementsByClassName('ytp-menuitem')
 		for(i=0;i<k.length-1;i++){
