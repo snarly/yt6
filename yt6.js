@@ -346,7 +346,6 @@ function FireEvent( ElementId, EventName )
 function FireEvent2( element, event ) {
 
 	if (element) {
-	    try {
 	      if (window.CustomEvent) {
 	        element.dispatchEvent(new CustomEvent( event));
 	      } else {
@@ -358,13 +357,6 @@ function FireEvent2( element, event ) {
 		      element.fireEvent( event );
 		    }
 		}
-	    } catch(e) {//console.log(element.getAttribute('class'));console.log(e) // IE11 error
-		if (document.createEvent) {
-		  var ev = document.createEvent('HTMLEvents');
-		  ev.initEvent( event, true, false);
-		  element.dispatchEvent(ev);
-		}
-	      }
 	}
 
 }
@@ -1826,7 +1818,7 @@ if (autoplay != null) {
 		  }
 		}
 	      } else {
-		  yt6.autoplay = false;
+		  //yt6.autoplay = false;
 		}
 	    } else {
 		yt6.autoplay = false;
@@ -1846,10 +1838,31 @@ if (autoplay != null) {
 } else {//2016 layout
     if (yt6.osw.getAttribute('id') != 'player') { yt6.autoplay = false };
     var autoplay = gclass('style-scope ytd-toggle-button-renderer x-scope paper-icon-button-0 style-grey-text')
-    if (autoplay[0] && autoplay[0].parentNode.parentNode.parentNode.id == 'top-level-buttons') {//autoplay[0].innerHTML.indexOf('alt="Loop playlist"') != -1) {//console.log('grey1')
-      if (yt6.autoplay == true) {
-        autoplay[0].setAttribute('class', autoplay[0].getAttribute('class').split(' style-grey-text').join('') + ' style-default-active')
+    if (autoplay[0] && autoplay[0].parentNode.parentNode.parentNode.id == 'top-level-buttons') {//console.log('grey1')
+      if (yt6.autoplay != false) {
+	yt6.tmp = document.getElementById('top-level-buttons');
+	if (yt6.tmp == autoplay[0].parentNode.parentNode.parentNode) {
+	  yt6.tmp = yt6.tmp.getElementsByTagName('PAPER-ICON-BUTTON')
+	  if (yt6.tmp[0] == autoplay[0]) {
+	    if (yt6.tmp[0].getAttribute('aria-pressed') == 'false') yt6.autoplay = false
+
+	    //$waitUntil(function(){if(yt6.tmp[0].getAttribute('class').indexOf(' style-default-active') != 0) return true},
+	      //function(){
+//$waitUntil(function(){if(yt6.tmp[0].getAttribute('class').indexOf(' style-grey-text') != 0) return true},
+  //function(){
+	FireEvent(yt6.tmp[0], 'click'); if (yt6.autoplay == false) FireEvent2(yt6.tmp[0], 'click');
+
+  //},100,10000)
+	      //},
+	      //100,10000)
+
+
+//yt6.tmp[0].setAttribute('class', yt6.tmp[0].getAttribute("class").split(" style-grey-text").join("") + " style-default-active")
+
+	  }
+
         //console.log('grey0')
+	}
       }									    
     }
     var autoplay = gclass('style-scope ytd-toggle-button-renderer x-scope paper-icon-button-0 style-default-active')
@@ -2039,15 +2052,13 @@ function getReferenceObjects() {
 
   yt6.layout = 16
 
-    var autoplay = gclass('style-scope ytd-toggle-button-renderer x-scope paper-icon-button-0');//style-grey-text
-    if (autoplay[0] && autoplay[0].innerHTML.indexOf('alt="Loop playlist"') != -1) {
-      var a = gclass('style-scope ytd-toggle-button-renderer x-scope');// yt-endpoint-0
-      for (i=0;i<a.length;i++) {
-        if (a[i] && a[i].innerHTML.indexOf('alt="Loop playlist"') != -1) {
-          var b = ';var yt6 = document.getElementById("snarls_player"); var a = this.firstElementChild; if (yt6) { if (a.getAttribute("class").indexOf("style-default-active") != -1) { this.click(); if (yt6.autoplay == false) { this.click(); yt6.autoplay = true } } else { yt6.autoplay = false } };'
-          if (a[i].tagName == 'A') a[i].setAttribute('onclick', b);
-          break;		
-	}
+    yt6.tmp = document.getElementById('top-level-buttons');
+    if (yt6.tmp) {
+      yt6.tmp = yt6.tmp.getElementsByTagName('PAPER-ICON-BUTTON')
+      if (yt6.tmp[0]){
+        var a = yt6.tmp[0].parentNode;// yt-endpoint-0
+        var b = ';var yt6 = document.getElementById("snarls_player"); var a = this.firstElementChild; if (yt6) {; if (a.getAttribute("class").indexOf("style-default-active") != -1) { if (yt6.autoplay == false) { yt6.autoplay = true } } else { yt6.autoplay = false } };'
+        if (a.tagName == 'A') a.setAttribute('onclick', b);
       }
     }
 
@@ -8848,12 +8859,8 @@ function aspect(a) {
 		FireEvent2(player(), 'contextmenu')
 
 		var k = document.getElementsByClassName('ytp-menuitem')
-		if (k[6]) { FireEvent2( k[6], 'click'); }
-		var z = document.getElementsByClassName('html5-video-info-panel-content')[0]
-		if (!z) {
-		  for(i=0;i<k.length-1;i++){
-		    if (k[i] && k[i].innerHTML.indexOf('Stats for nerds') != -1) { FireEvent2( k[i], 'click'); break }
-		  }
+		for(i=0;i<k.length-1;i++){
+		  if (k[i] && k[i].innerHTML.indexOf('Stats for nerds') != -1) { FireEvent2( k[i], 'click'); break }
 		}
 
 		var z = document.getElementsByClassName('html5-video-info-panel-content')[0]
