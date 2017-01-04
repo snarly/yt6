@@ -26,18 +26,18 @@
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
-        <p>Right click on the link below and "Copy link address". If you have no such option, the code is written below the link, select and copy it manually. Bookmark any page whose icon you like.<br>Edit the created bookmark's Properties / Location, and paste over its URL-address, that is, replace the bookmark's original location with this snippet of javascript code. Give it an adequate name / description you want. Finally, save the bookmark(let).<br><br>Also, you can just drag and drop the link to the Bookmarks Toolbar, or right click on it and select "Bookmark this link". It will have no icon attached to it this way.</p>
+        <p>Right click on the link below and "Copy link address". If you have no such option, the code is written below the link, select and copy it manually.<br>Bookmark any page whose icon you like.<br>Edit the created bookmark's Properties / Location, and paste over it, that is, replace the bookmark's original URL-address with this snippet of javascript code. Give it an adequate name or description you want. Finally, save the bookmark(let).<br><br>Also, you can just drag and drop the link to the Bookmarks Toolbar or right click on it and select "Bookmark this link". It will have no icon attached to it this way.</p>
 
 <a href="javascript:%20(function(){var%20d=document;if(d.location.href.indexOf('youtube.com/watch')>-1||d.location.href.indexOf('//s.ytimg.com/')>-1){var%20id='snarls_player';function%20s(){return%20d.getElementById(id)};function%20c(){return%20d.createElement('script')};function%20a(q){d.body.appendChild(q)};function%20r(){d.body.removeChild(s())};function%20b(){var%20i,j,o,x;o=['.githack','git'];for(i=o.length;i;j=Math.floor(Math.random()*i),x=o[--i],o[i]=o[j],o[j]=x);o.splice(0,0,'.githubusercontent');var%20q=c();q.id=id;var%20src=%22https%3A%2F%2Fraw%22%2Bo%5B0%5D%2B%22.com%2Fsnarly%2Fyt6%2Fmaster%2Fyt6.js%22;q.src=src;q.onerror=function(){var%20q=c();q.id=id;q.src=src.replace(o[0],o[1]);q.onerror=function(){var%20q=c();q.id=id;q.src=src.replace('https','http');q.onerror=function(){var%20q=c();q.id=id;q.src=src.replace(o[1],o[2]);q.onerror=function(){var%20q=c();q.id=id;q.src=src.replace('https','http');a(q);r();};a(q);r();};a(q);r();};a(q);r();};q.setAttribute('onload','');a(q);if(s())s().add_subs='en,hu,de'};if(!s()){b();}else{if(!s().firstChild){r();b();};}}else{void%200};})();">Yt6 -- Snarl's YouTube Video Player (bookmarklet)</a><br>
 Last updated on January 4, 2017<br>
-Please try and use the latest versions (and dump the older ones). It may be crucial regarding its functonality.<br>
+(Please try and use the latest version (and dump the older ones). It may be crucial regarding its functonality.)<br>
 <br>
 
 <p>javascript: (function(){var d=document;if(d.location.href.indexOf('youtube.com/watch')>-1||d.location.href.indexOf('//s.ytimg.com/')>-1){var id='snarls_player';function s(){return d.getElementById(id)};function c(){return d.createElement('script')};function a(q){d.body.appendChild(q)};function r(){d.body.removeChild(s())};function b(){var i,j,o,x;o=['.githack','git'];for(i=o.length;i;j=Math.floor(Math.random()*i),x=o[--i],o[i]=o[j],o[j]=x);o.splice(0,0,'.githubusercontent');var q=c();q.id=id;var src='https://raw'+o[0]+'.com/snarly/yt6/master/yt6.js';q.src=src;q.onerror=function(){var q=c();q.id=id;q.src=src.replace(o[0],o[1]);q.onerror=function(){var q=c();q.id=id;q.src=src.replace('https','http');q.onerror=function(){var q=c();q.id=id;q.src=src.replace(o[1],o[2]);q.onerror=function(){var q=c();q.id=id;q.src=src.replace('https','http');a(q);r();};a(q);r();};a(q);r();};a(q);r();};q.setAttribute('onload','');a(q);if(s())s().add_subs='en,hu,de'};if(!s()){b();}else{if(!s().firstChild){r();b();};}}else{void 0};})();</p>
 
 <p>__</p>
 
-<p>On any unrestricted YouTube video page, this bookmarklet will call an external player and load some extra functions which can be used with YouTube's native player as well. It doesn't work with live streams as intended yet. To use it, you have to <strong><b>click on it on your bookmarks list</b></strong> each time you enter a video page, unless you have the code already running. Use the HTML5 emblem to switch between the native and external player. The program is able to</p>
+<p>On any YouTube video (watch) page, this bookmarklet will call an external player and load some extra functions, some of which can be used with YouTube's original player as well. It doesn't work with live streams as intended yet. To use it, you have to <strong><b>click on it on your bookmarks list</b></strong> each time you enter a video page, unless you have the code already running. Use the HTML5 emblem to switch between the native and this alternative player. The program is able to</p>
 <p>
 - restrict on-site advertisement,<br>
 - resize, zoom, rotate and move around video picture arbitrarily,<br>
@@ -45,10 +45,10 @@ Please try and use the latest versions (and dump the older ones). It may be cruc
 - pick your favoured (and supported) video/audio codec and resolution for playback,<br>
 - download the video/audio content,<br>
 - download subtitles/closed captions (CC) (on bookmarklet line, edit the value of 'add_subs' (2) (comma separated list of ISO 639-1 languge codes) to add Google-Translated tracks of your choice),<br>
-- bypass age verification <del>(experimental, native player only, without download links)</del>
+- bypass age verification.
 </p>
 <p>
-<del>The script should at least work with newer versions of Firefox (24+).</del> It should work now on most browsers, even older ones. Bugs are gonna stay forever...</p>
+It should work with almost any browser now, even older ones that are dated back to like 2010-12 or so. Bugs are gonna stay forever...</p>
 
 <p>Credit should go to the authors of their respective open source code:<br>
 <h3>
@@ -73,10 +73,10 @@ I just wrapped up to make their programs work together:</p>
 <p>Add to NoScript Settings / Whitelist</p>
 
 <p>
-  githubusercontent.com - program code is stored on this site.<br>
-  <a href="https://rawgit.com">rawgit.com</a> - #1 external proxy to load the main script.<br>
+  githubusercontent.com - program code is stored on this site<br>
+  <a href="https://rawgit.com">rawgit.com</a> - #1 proxy to load the main script<br>
   <a href="https://raw.githack.com">githack.com</a> - #2<br>
-  <a href="https://allow-any-origin.appspot.com">allow-any-origin.appspot.com</a> - #1 external proxy to get the video signature decryption data.<br>
+  <a href="https://allow-any-origin.appspot.com">allow-any-origin.appspot.com</a> - #1 proxy to get the decryption data<br>
   <a href="https://cors-anywhere.herokuapp.com">cors-anywhere.herokuapp.com</a> - #2<br>
   <a href="https://crossorigin.me">crossorigin.me</a> - #3<br>
 
@@ -88,7 +88,7 @@ I just wrapped up to make their programs work together:</p>
 <p> - add:</p>
 <pre><code>https://raw.githubusercontent.com/snarly/yt6/master/yt6.js</code></pre>
 
-<p>If the player still won't show up, check the browser's "Webdeveloper's Console" to see which files NoScript shows having trouble with on a repeated try and add their full URL-address to this entry.</p>
+<p>If the player still won't show up, check the browser's "Webdeveloper's Console" to see which files NoScript shows having trouble with on a repeated try, and add their full URL-address to this entry.</p>
 
 </li>
 </ol>
