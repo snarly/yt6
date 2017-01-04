@@ -9422,7 +9422,7 @@ try { window.removeEventListener('spfrequest', document.getElementsByTagName('bo
 try { window.removeEventListener('spfprocess', document.getElementsByTagName('body')[0].spfprocess, false) } catch(e) {}
 try { window.removeEventListener('spfdone', document.getElementsByTagName('body')[0].spfdone, false) } catch(e) {}
 
-document.getElementsByTagName('body')[0].snarls_watchdog.disconnect()
+if (document.getElementsByTagName('body')[0].snarls_watchdog) document.getElementsByTagName('body')[0].snarls_watchdog.disconnect()
 }
 
 
