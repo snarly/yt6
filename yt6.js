@@ -1559,10 +1559,10 @@ function blank_fmp() {
     v.appendChild(div)
   }
 
-  wrap().innerHTML = '<span tabindex="0"></span><embed style="" wmode="transparent" type="application/x-shockwave-flash" src="" aria-label="YouTube Video Player" name="movie_player" id="movie_player" flashvars="" allowfullscreen="true" allowscriptaccess="always" bgcolor="#000000"><span tabindex="0"></span><noembed></noembed>';
+  document.getElementById('sp-element-wrap').innerHTML = '<span tabindex="0"></span><embed style="" wmode="transparent" type="application/x-shockwave-flash" src="" aria-label="YouTube Video Player" name="movie_player" id="movie_player" flashvars="" allowfullscreen="true" allowscriptaccess="always" bgcolor="#000000"><span tabindex="0"></span><noembed></noembed>';
 
       (function noembed(){
-	var z = wrap().lastChild
+	var z = document.getElementById('sp-element-wrap').lastChild
 	var y = document.createElement('div')
 	z.appendChild(y); y.setAttribute('class', 'yt-alert yt-alert-default yt-alert-error  yt-alert-player')
 	var x = document.createElement('div')
@@ -1601,8 +1601,8 @@ function blank_fmp() {
 if ( (player() == null) || ((player() != null) && (typeof document.getElementById('movie_player').getPlayerState != 'function') && (document.getElementsByClassName("html5-video-container")[0]) && (document.getElementsByClassName("html5-video-container")[0].innerHTML == '')) ) {
 
 
-  if (typeof ytplay0 == 'undefined') { blank_fmp()
-/*
+  if (typeof ytplay0 == 'undefined') { //blank_fmp()
+
     document.getElementById("player-api").innerHTML = '<span tabindex="0"></span><embed style="" wmode="transparent" type="application/x-shockwave-flash" src="" aria-label="YouTube Video Player" name="movie_player" id="movie_player" flashvars="" allowfullscreen="true" allowscriptaccess="always" bgcolor="#000000"><span tabindex="0"></span><noembed></noembed>';
 
     (function noembed(){
@@ -1621,7 +1621,7 @@ if ( (player() == null) || ((player() != null) && (typeof document.getElementByI
 	var w = document.createElement('div')
 	y.appendChild(w); w.setAttribute('class', 'yt-alert-buttons')
     })();
-*/
+
     if (ytplayer.config == null) {
 
 	ageless_verification()
