@@ -6862,7 +6862,8 @@ if (typeof Polymer != 'undefined') {
 
 //new page is processed
 document.getElementsByTagName('body')[0].spfprocess = function(e) {
-    yt6.spf = true
+	var yt6 = document.getElementById('snarls_player')
+	yt6.spf = true
   var webgl = get_webgl()
   if ((yt6 != null) && (!webgl)) {
     if (player().getAttribute('flashvars') == null) {
@@ -6875,10 +6876,10 @@ window.addEventListener('spfprocess', document.getElementsByTagName('body')[0].s
 
 //new page is displayed
 document.getElementsByTagName('body')[0].spfdone = function(e) {
-	yt6.spf = true
 	var p = player();
 	var bm0 = document.getElementById('bm0')
 	var yt6 = document.getElementById('snarls_player')
+	yt6.spf = true
 
 if (p && typeof p.pauseVideo == 'function' && bm0 && bm0.style.visibility != 'hidden') p.pauseVideo()
 
