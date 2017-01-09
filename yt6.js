@@ -9246,6 +9246,8 @@ function aspect(a) {
 		  if (k[i] && k[i].innerHTML.indexOf('Stats for nerds') != -1) { FireEvent2( k[i], 'click'); break }
 		}
 
+		var z = document.getElementsByClassName('ytp-popup ytp-contextmenu')[0]
+		if (z) z.style.display = 'none'
 		var z = document.getElementsByClassName('html5-video-info-panel-content')[0]
 		if (z) {
 		  z.parentNode.style = 'display: none'
