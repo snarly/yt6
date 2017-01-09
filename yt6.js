@@ -6862,14 +6862,14 @@ if (typeof Polymer != 'undefined') {
 
 //new page is processed
 document.getElementsByTagName('body')[0].spfprocess = function(e) {
-	var yt6 = document.getElementById('snarls_player')
+/*	var yt6 = document.getElementById('snarls_player')
 	yt6.spf = true
   var webgl = get_webgl()
   if ((yt6 != null) && (!webgl)) {
     if (player().getAttribute('flashvars') == null) {
 	try { document.getElementsByClassName('video-stream html5-main-video')[0].pause() } catch(e) {}
     } else	window.postMessage("pauseVideo", "*")
-  }
+  }*/
 
  }
 window.addEventListener('spfprocess', document.getElementsByTagName('body')[0].spfprocess, false);
