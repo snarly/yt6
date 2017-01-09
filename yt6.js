@@ -6881,7 +6881,7 @@ document.getElementsByTagName('body')[0].spfdone = function(e) {
 	var yt6 = document.getElementById('snarls_player')
 	yt6.spf = true
 
-//if (p && typeof p.pauseVideo == 'function' && bm0 && bm0.style.visibility != 'hidden') p.pauseVideo()
+if (p && typeof p.pauseVideo == 'function' && bm0 && bm0.style.visibility != 'hidden') p.pauseVideo()
 
     var z = document.getElementById('re-embed2')
     if (z != null) { z.parentNode.removeChild(z); document.getElementById('player-unavailable').style.display = ''}
