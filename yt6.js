@@ -2550,7 +2550,7 @@ function preload(){
 	  //  yt6.player1.setSrc(yt6.linx[43])
 	  //} else yt6.player1.setSrc(yt6.linx[18])
 	  yt6.player1.setSrc(yt6.linx[yt6.userpref[i]])
-	  var z = document.getElementsByClassName('mejs-time-loaded'){0]
+	  var z = document.getElementsByClassName('mejs-time-loaded')[0]
 	  if (z) z.style.width = '0px';
 	  //yt6.player1.load()
 	}
