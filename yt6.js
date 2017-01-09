@@ -2216,7 +2216,7 @@ $waitUntil(function(){
       if (autoplay2[0]) yt6.autoplay = true
     }
 
-//console.log(yt6.autoplay + ' '+start+ autoplay2[0])
+console.log(yt6.autoplay + ' '+start+ autoplay2[0])
 
 function select_player(){
   if ((typeof p.getPlayerState == 'function') && (!yt6.x)) {
@@ -2290,7 +2290,7 @@ if (start != false){
 		p.style.display = 'inline-block';
 		if (yt6.ytp)  yt6.ytp.style.display = '';
 	      }
-	  } else { //console.log('autoplay6')
+	  } else { console.log('autoplay6')
 	      if (typeof fv == 'string') {
 		p.style.setProperty('width', '0', 'important')
 		p.style.setProperty('height', '0', 'important')
@@ -2306,7 +2306,7 @@ if (start != false){
 		    function() { yt6.player1.play() },
 		    100,1000)
 	    }
-	} else { //console.log('autoplay7')
+	} else { console.log('autoplay7')
 	      if (typeof fv == 'string') {
 	        if (yt6.osw.getAttribute('id') != 'player') {
 		  p.style.setProperty('width', '0', 'important')
@@ -2328,7 +2328,7 @@ if (start != false){
 
 }
 
-if ((typeof p.getPlayerState != 'function') && (typeof p.getAttribute('flashvars') == 'string') && (!start)) { //console.log('autoplay8')
+if ((typeof p.getPlayerState != 'function') && (typeof p.getAttribute('flashvars') == 'string') && (!start)) { console.log('autoplay8')
 	if (typeof fv == 'string') {
 	  if (yt6.osw.getAttribute('id') != 'player') {
 	    p.style.setProperty('width', '0', 'important')
@@ -7012,7 +7012,7 @@ document.getElementsByTagName('body')[0].spfdone = function(e) {
 	      );
 		//document.getElementsByClassName('clear')[0].removeAttribute('id');
 		//waitUntilExists('ytplayer-config', function() { 
-		console.log('01 - Regular spf page change 12 '+document.title+ yt6.change);
+		//console.log('01 - Regular spf page change 12 '+document.title+ yt6.change);
 		mep_reload()
 		//})
 
