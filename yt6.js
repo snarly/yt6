@@ -2249,7 +2249,7 @@ if ( ((typeof player().getAttribute('flashvars') == 'string') && (typeof player(
 if (start != false){
 
   if (start) if ((yt6.autoplay || autoplay2[0]) && yt6.player1 && typeof yt6.player2.load == 'function') yt6.player1.load()
-  if ( (navigator.userAgent.match(/Edge\/\d+/) != null || navigator.userAgent.match(/MSIE /) != null || navigator.userAgent.match(/Trident\//) != null) && yt6.player2 && typeof yt6.player2.load == 'function' ) console.log('IEx');//yt6.player2.load()
+  if ( (navigator.userAgent.match(/Edge\/\d+/) != null || navigator.userAgent.match(/MSIE /) != null || navigator.userAgent.match(/Trident\//) != null) && yt6.player2 && typeof yt6.player2.load == 'function' ) yt6.player2.load()
 
   if ( (pn == 'me_flash') || (d.indexOf('%26false') > -1) && (!yt6.x) ){
     if ( ( ((!mep) || (typeof fv == 'string')) && (yt6.flash == true) ) || ( (typeof p.getPlayerState == 'function') && (typeof fv != 'string') && (webgl)  ) ){ //console.log('autoplay1');
@@ -2520,21 +2520,21 @@ function preload(){
     yt6.player1.setPoster(getPoster());
 
     if (typeof bigplay[0] == "object") bigplay[0].style.display = 'block'
-    var z = document.getElementsByClassName('mejs-poster mejs-layer')
-    if (typeof z[0] != 'undefined') {
-      //z[0].setAttribute('id','mejs-poster')
-      z[0].style.display = 'block'
+    var z = document.getElementsByClassName('mejs-poster mejs-layer')[0]
+    if (z) {
+      //z.setAttribute('id','mejs-poster')
+      z.style.display = 'block'
     }
 
-    var z = document.getElementsByClassName('me-cannotplay');
-    if (z[0]) {
-      z[0].style.display = 'none';
-      z[0].nextSibling.style.display = 'inline-block';
+    var z = document.getElementsByClassName('me-cannotplay')[0];
+    if (z) {
+      z.style.display = 'none';
+      z.nextSibling.style.display = 'inline-block';
     }
 
-    var z = document.getElementsByClassName('mejs-time-current')
-    if (typeof z[0] != 'undefined') z[0].setAttribute('width', '0px')
-    resize_layers( yt6.w, yt6.h );
+    var z = document.getElementsByClassName('mejs-time-current')[0]
+    if (z) z.setAttribute('width', '0px')
+    if (!yt6.fullscreen) resize_layers( yt6.w, yt6.h );
     //autoplay()
 
     //var z = document.getElementById(mep_x('mep_') + '_sourcechooser_360p  VP8 + 128k Vorbiswebm') ||    document.getElementById(mep_x('mep_') + '_sourcechooser_360p  H.264 + 96k AACmp4');
@@ -2550,8 +2550,8 @@ function preload(){
 	  //  yt6.player1.setSrc(yt6.linx[43])
 	  //} else yt6.player1.setSrc(yt6.linx[18])
 	  yt6.player1.setSrc(yt6.linx[yt6.userpref[i]])
-	  var z = document.getElementsByClassName('mejs-time-loaded')
-	  if (typeof z[0] != 'undefined') z[0].style.width = '0px';
+	  var z = document.getElementsByClassName('mejs-time-loaded'){0]
+	  if (z) z.style.width = '0px';
 	  //yt6.player1.load()
 	}
       var find = false
@@ -5311,10 +5311,8 @@ function mep_run() {
 					  yt6.newvideo = false;
 					});
 					me.addEventListener('play', function() {//console.log('1play')
-					  var bn = document.getElementsByClassName('play yt-uix-button-text');
-					  if ((bn != null) && (bn[0] != null)) {
-					    bn[0].innerHTML = 'pause'
-					  };
+					  var bn = document.getElementsByClassName('play yt-uix-button-text')[0];
+					  if (bn) bn.innerHTML = 'pause'
 					  var A = [], V = [], AV = [];
 					  A = yt6.A_;
 					  V = yt6.V_;
@@ -5348,15 +5346,13 @@ function mep_run() {
 					  if (Seek == 3 ) {Seek = null}
 					});
 					me.addEventListener('pause', function() {//console.log('1pause')
-					  var bn = document.getElementsByClassName('play yt-uix-button-text');
-					  if ((bn != null) && (bn[0] != null)) {
-					    bn[0].innerHTML = 'play'
-					  };
+					  var bn = document.getElementsByClassName('play yt-uix-button-text')[0];
+					  if (bn) bn.innerHTML = 'play'
 					  if (typeof player2 != 'undefined') {
 					    if (me.src.replace('&ratebypass=yes','') != player2.src.replace('&ratebypass=yes','')) {
-					      if (Seek == 3) { player2.pause() };
+					      if (Seek == 3) { try { player2.pause() } catch(e) {console.log('?1 ' + e + typeof player2)} };
 					      if (Seek === 0) { Seek = 1 };
-					      try { player2.pause(); player2.currentTime = me.currentTime } catch(e) {}
+					      try { player2.pause(); player2.currentTime = me.currentTime } catch(e) {console.log('?2 ' + e + typeof player2)}
 					    }
 					  }
 					});
