@@ -5350,9 +5350,9 @@ function mep_run() {
 					  if (bn) bn.innerHTML = 'play'
 					  if (typeof player2 != 'undefined') {
 					    if (me.src.replace('&ratebypass=yes','') != player2.src.replace('&ratebypass=yes','')) {
-					      if (Seek == 3) { try { player2.pause() } catch(e) {console.log('?1 ' + e + typeof player2)} };
+					      if (Seek == 3) { try { player2.pause() } catch(e) {};
 					      if (Seek === 0) { Seek = 1 };
-					      try { player2.pause(); player2.currentTime = me.currentTime } catch(e) {console.log('?2 ' + e + typeof player2)}
+					      try { player2.pause(); player2.currentTime = me.currentTime } catch(e) {}
 					    }
 					  }
 					});
@@ -6843,7 +6843,8 @@ window.addEventListener('spfrequest', document.getElementsByTagName('body')[0].s
 if (typeof Polymer != 'undefined') {
   if (!document.getElementsByTagName('body')[0].snarls_watchdog) {
     document.getElementsByTagName('body')[0].snarls_watchdog = new MutationObserver(function(){
- 	$waitUntil(function() { var a = document.getElementById('bm0'); var b = document.getElementsByClassName('mejs-controls')[0]
+ 	$waitUntil(function() { var a = document.getElementById('bm0'); var b = document.getElementsByClassName('mejs-controls')[0]; var c = (typeof player().playerState == 'function') ? player().playerState() : null;
+	if (a && a.style.visibility == 'visible' && c != null && c > 2) player().pauseVideo()
 	  if (a && a.style.visibility == 'hidden' && b) b.style.visibility = 'hidden'; return yt6.newvideo },
 	  function(){
 	    $waitUntil(function() { if (player() && typeof player().pauseVideo == 'function') return true },
@@ -6874,11 +6875,13 @@ window.addEventListener('spfprocess', document.getElementsByTagName('body')[0].s
 
 //new page is displayed
 document.getElementsByTagName('body')[0].spfdone = function(e) {
+	yt6.spf = true
 	var p = player();
 	var bm0 = document.getElementById('bm0')
 	var yt6 = document.getElementById('snarls_player')
 
-    yt6.spf = true
+if (p && typeof p.pauseVideo == 'function' && bm0 && bm0.style.visibility != 'hidden') p.pauseVideo()
+
     var z = document.getElementById('re-embed2')
     if (z != null) { z.parentNode.removeChild(z); document.getElementById('player-unavailable').style.display = ''}
 
