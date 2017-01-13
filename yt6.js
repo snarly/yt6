@@ -2761,7 +2761,7 @@ if (yt6.ytg && window.ytplayer.config.args) {
 		  if (yt6.ytg && document.getElementById('bm0') && document.getElementById('bm0').style.visibility != 'hidden' && typeof switch_players == 'function') {
 		    switch_players()
 		    yt6.player1.media.currentTime = yt6.player2.media.currentTime = 0
-		    yt6.player1.pause(); autoplay(true)
+		    yt6.player1.pause(); player().playVideo()
 		  }
 		  yt6.ytplayer = {}; yt6.ytplayer.config = {}; yt6.ytplayer.config.args = {};
 	        }
@@ -5228,7 +5228,7 @@ function mep_run() {
 							}
 						      }
 						    }
-						    if (yt6.ytg) { if (document.getElementById('bm0').style.visibility == 'visible') switch_players(); autoplay(true) }
+						    if (yt6.ytg) { if (document.getElementById('bm0').style.visibility == 'visible') switch_players(); player().playVideo() }
 						  }
 					    }
 
@@ -7694,7 +7694,7 @@ if (document.getElementById('unavailable-message') != null && document.getElemen
 	  } else {//args
 	      if (yt6.ytg) {//console.log('05 - args')
 		//ageless_verification();
-		yt6.timer = 0; mep_reload(); yt6.age.check(); if (ytplayer.config.args.status == 'ok' && yt6.block && yt6.block.replace(/(\r\n|\n|\r)/gm," ").split(' ').join('') != '') { alt_yt() }
+		yt6.timer = 0; mep_reload(); yt6.age.check(); if (ytplayer.config.args.status == 'ok' && yt6.block && yt6.block.replace(/(\r\n|\n|\r)/gm," ").split(' ').join('') == '') { alt_yt() }
 	      }
 	      if ((bm0 == null) && (p != null) && (p.getAttribute('class') != null)) {
 		if (window.ytplayer.config == null) { document.getElementsByClassName('clear')[0].setAttribute('id','ytp-conf-null'); };
