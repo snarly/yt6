@@ -2539,7 +2539,7 @@ function preload(){
   for(i=0;i<yt6.userpref.length;i++){
     var z = document.getElementById(mep_x('mep_') + '_sourcechooser_' + yt6.userpref[i])
     if (find && z != null) {
-      if (autoplay()) {
+      if (autoplay(true)) {
 	z.click(); if (typeof yt6.player1.play == 'function' && document.getElementById('bm0').style.visibility == 'visible') yt6.player1.play();
       } else {
 	  z.setAttribute('checked','checked');
@@ -5240,10 +5240,10 @@ function mep_run() {
 					      )
 					    }
 
-					    if (typeof V[itag(me.src)] !== 'string' && yt6.timer < 3) {
+					    if (typeof V[itag(me.src)] !== 'string' && yt6.timer < 4) {
 					      var dash = document.getElementById(mep_x('mep_') + '_sourcechooser_242')//240p  VP9webm');
 					      if (dash != null && yt6.current != 242) {
-						no_default(242); yt6.error++
+						no_default(242); yt6.timer++
 						dash.setAttribute('checked','checked');
 						player1.setSrc(yt6.linx[242]);
 						player1.load();
@@ -5252,7 +5252,7 @@ function mep_run() {
 						  var dash = document.getElementById(mep_x('mep_') + '_sourcechooser_133')//240p DASH mp4');
 						  if (dash != null && yt6.current != 133) {
 						    if (yt6.linx[133] && yt6.linx[133].indexOf('/yt_otf/') == -1) {//normal case
-						      no_default(133); yt6.error++
+						      no_default(133); yt6.timer++
 						      dash.setAttribute('checked','checked');
 						      player1.setSrc(yt6.linx[133]);
 						      player1.load();
@@ -5260,7 +5260,7 @@ function mep_run() {
 						    } else {//"otf" links
 							var dash = document.getElementById(mep_x('mep_') + '_sourcechooser_134')//360p DASH mp4');
 							if (dash != null && yt6.current != 134) {
-							  no_default(134); yt6.error++
+							  no_default(134); yt6.timer++
 							  dash.setAttribute('checked','checked');
 							  player1.setSrc(yt6.linx[134]);
 							  player1.load();
