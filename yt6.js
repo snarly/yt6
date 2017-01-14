@@ -2216,7 +2216,7 @@ if (autoplay != null) {
       if (autoplay2[0]) yt6.autoplay = true
     }
 
-//console.log(yt6.autoplay + ' '+start+ autoplay2[0])
+console.log(yt6.autoplay + ' '+start+ autoplay2[0])
 
 function select_player(){
   if ((typeof p.getPlayerState == 'function') && (!yt6.x)) {
@@ -2279,7 +2279,7 @@ if (start != false){
 	if (yt6.autoplay || autoplay2[0] && start) player1.play()
       }
   } else {
-	if ((d == undefined) || (d.indexOf('%26true') > -1) && (!yt6.x)) {; //console.log('autoplay4')
+	if ((d == undefined) || (d.indexOf('%26true') > -1) && (!yt6.x)) {; console.log('autoplay4')
 	  if ( (typeof p.getPlayerState == 'function') && ((typeof fv == 'string') || (webgl) || (!yt6.x)) ) { //console.log('autoplay5' + typeof d + d + yt6.x)
 	    bm0.style.visibility = 'hidden'
 	    if (typeof fv == 'string') {
@@ -2290,7 +2290,7 @@ if (start != false){
 		p.style.display = 'inline-block';
 		if (yt6.ytp)  yt6.ytp.style.display = '';
 	      }
-	  } else { //console.log('autoplay6')
+	  } else { console.log('autoplay6')
 	      if (typeof fv == 'string') {
 		p.style.setProperty('width', '0', 'important')
 		p.style.setProperty('height', '0', 'important')
@@ -2306,7 +2306,7 @@ if (start != false){
 		    function() { yt6.player1.play() },
 		    100,1000)
 	    }
-	} else { //console.log('autoplay7')
+	} else { console.log('autoplay7')
 	      if (typeof fv == 'string') {
 	        if (yt6.osw.getAttribute('id') != 'player') {
 		  p.style.setProperty('width', '0', 'important')
@@ -6751,18 +6751,15 @@ waitUntilExists('movie_player',function(){
 		      if (typeof document.getElementById('player1').play == 'function') { yt6.autoplay = true; autoplay(true) } 
 		    })
 		  }*/
-		    var z = document.getElementById('mejs-clear')
-		    if (z != null) z.setAttribute('id','mejs-clear0');
+
 		$waitUntil(
-		  function(){ if (document.getElementById('mejs-clear') != null) return true },
-		  function(){ //yt6.autoplay = true;
-			  console.log(typeof document.getElementById('mejs-clear'))
-			     if (autoplay(false)) autoplay(true) },
-		  100,
-		  2000
-		)
-		    var z = document.getElementById('mejs-clear0')
-		    if (z != null) z.setAttribute('id','mejs-clear');
+		  function(){ if (document.getElementById('displaySpeed') != null) return true },
+		  function(){
+		    if (autoplay(false)) {
+		      autoplay(true); console.log(typeof document.getElementById('displaySpeed'))
+		    }
+		  },100,2000);
+
 	      }
 /*	    if ((yt6.autoplay == false) || (yt6.args == null)) {console.log('a-15');
 		waitUntilExists("displaySpeed", function(){console.log('a-16');
