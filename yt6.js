@@ -2324,12 +2324,12 @@ if (start != false){
 			if (typeof player().getPlayerState == 'function' && (navigator.userAgent.match(/Edge\/\d+/) != null || navigator.userAgent.match(/MSIE /) != null || navigator.userAgent.match(/Trident\//) != null)) {
 			  $waitUntil(function(){ if (player().getPlayerState() == 3) return true },
 			    function(){
-			      $waitUntil(function(){ if (player().getPlayerState() == -1 || player().getPlayerState() == 2) return true },
+			      $waitUntil(function(){ if (player().getPlayerState() == -1) return true },
 				function(){
 				  $waitUntil(function(){ return yt6.player1.media.paused },
-				    function(){ yt6.player1.play() })
-			        })
-			    })
+				    function(){ yt6.player1.play() },20,500)
+			        },20,600)
+			    },20,700)
 			} else if (document.getElementById('bm0') && document.getElementById('bm0').style.visibility == 'visible') yt6.player1.play();
 		      },100,6000)
 		  }
