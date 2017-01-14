@@ -2326,10 +2326,10 @@ if (start != false){
 			    function(){
 			      $waitUntil(function(){ if (player().getPlayerState() == -1) return true },
 				function(){
-				  $waitUntil(function(){ return yt6.player1.media.paused },
-				    function(){ yt6.player1.play() },20,500)
-			        },20,600)
-			    },20,700)
+				  $waitUntil(function(){ if (yt6.player1.media.paused == true && document.getElementById('bm0') && document.getElementById('bm0').style.visibility == 'visible') return true },
+				    function(){ yt6.player1.play() },50,2000)
+			        },50,2000)
+			    },50,2000)
 			} else if (document.getElementById('bm0') && document.getElementById('bm0').style.visibility == 'visible') yt6.player1.play();
 		      },100,6000)
 		  }
