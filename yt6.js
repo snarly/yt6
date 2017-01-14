@@ -9083,9 +9083,10 @@ function switch_players() {
     yt6.wmode = p.getAttribute('wmode')
     if (document.getElementById('iaextractor-menu')) { document.getElementById('iaextractor-menu').parentNode.removeChild(document.getElementById('iaextractor-menu')) }
     if (p.id == 'movie_player') {
+      var m = (p.name != 're-embed2') ? window : p
       if (typeof p.getAttribute('flashvars') == 'string') {
         //if (typeof p.getPlayerState === 'function') {
-	  window.postMessage("pauseVideo", "*")
+	  m.postMessage("pauseVideo", "*")
 	  p.style.setProperty('width', '0px', 'important')
 	  p.style.setProperty('height', '0px', 'important')
 	  resize_layers( bm0.style.width, bm0.style.height, false );
@@ -9830,7 +9831,7 @@ var CtrlS = function (stage,v){
           }
 	  if (player() && typeof player().getPlayerState == 'function' && player().getPlayerState() > 2 && bm0.style.visibility == 'hidden') { player().playVideo(); player().playVideo() }
 	} else {
-	    if (player().tagName != 're-embed2') {
+	    if (player().name != 're-embed2') {
 		var p = player(); var m = window
 	    } else {
 		var p = yt6.embed.player; var m = p
