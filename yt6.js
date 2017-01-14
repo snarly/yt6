@@ -569,7 +569,7 @@ control_panel1()
 var panel = document.getElementById('controls-sp')
 if (panel) {
   panel.parentNode.removeChild(document.getElementById('remove-sp'))
-  panel.innerHTML = "ERROR: Data could not be retrieved via proxy, but you can do this by hand. A new window/tab should have opened. If pop-ups are blocked, click the Transformer-icon. (If your browser, such as IE, can\'t display the javascript code but wants to download instead, do this in another browser which can!) The content is a wall of text starting with something like \"var _yt_player\" or \"(function\". If possible, run the bookmarklet on that page too to only get the few lines needed. SELECT & COPY (Ctrl+A, Ctrl+C) then PASTE the content into the input field here just below the YouTube logo (Ctrl+V) and press ENTER."
+  panel.innerHTML = "ERROR: Data could not be retrieved via proxy, but you can do this by hand. A new window/tab should have opened. If pop-ups are blocked, click the Transformer-icon. (If your browser can\'t display raw javascript code but offers a download instead, do a page refresh and try again. You may also need to look for another video first.) The content is a wall of text starting with something like \"var _yt_player\" or \"(function\". If possible, run the bookmarklet on that page too to only get the few lines needed. SELECT & COPY (Ctrl+A, Ctrl+C) then PASTE the content into the input field here just below the YouTube logo (Ctrl+V) and press ENTER."
 }
 
 
