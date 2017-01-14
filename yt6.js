@@ -2323,20 +2323,21 @@ if (start != false){
 		      function() {
 			if (typeof player().getPlayerState == 'function' && (navigator.userAgent.match(/Edge\/\d+/) != null || navigator.userAgent.match(/MSIE /) != null || navigator.userAgent.match(/Trident\//) != null)) {
 			$waitUntil(function(){ if (player().getPlayerState() == -1) return true },
-			  $waitUntil(function(){ if (player().getPlayerState() == 3) return true },
-			    function(){
-			      $waitUntil(function(){ if (player().getPlayerState() == -1) return true },
-			        function(){
-				  $waitUntil(function(){ if (yt6.player1.media.paused == true && document.getElementById('bm0') && document.getElementById('bm0').style.visibility == 'visible') return true },
-				    function(){
-				      yt6.player1.play()
-				      $waitUntil(function(){ if (yt6.player1.media.paused == true && document.getElementById('bm0') && document.getElementById('bm0').style.visibility == 'visible') return true },
-					function(){
-					  yt6.player1.play()
-				        },50,2000)
-				    },50,2000)
-			        },50,2000)
-			    },50,2000)
+			  function(){
+			    $waitUntil(function(){ if (player().getPlayerState() == 3) return true },
+			      function(){
+				$waitUntil(function(){ if (player().getPlayerState() == -1) return true },
+				  function(){
+				    $waitUntil(function(){ if (yt6.player1.media.paused == true && document.getElementById('bm0') && document.getElementById('bm0').style.visibility == 'visible') return true },
+				      function(){
+					yt6.player1.play()
+					$waitUntil(function(){ if (yt6.player1.media.paused == true && document.getElementById('bm0') && document.getElementById('bm0').style.visibility == 'visible') return true },
+					  function(){
+					    yt6.player1.play()
+					  },50,2000)
+				      },50,2000)
+			          },50,2000)
+			      },50,2000)
 			  },50,2000)
 			} else if (document.getElementById('bm0') && document.getElementById('bm0').style.visibility == 'visible') yt6.player1.play();
 		      },100,6000)
