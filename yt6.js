@@ -2321,18 +2321,17 @@ if (start != false){
 		  if ((yt6.autoplay || autoplay2[0]) && start) {
 		    $waitUntil(function(){ if (yt6.newvideo == true && yt6.player1 && typeof yt6.player1.play == 'function') return true },
 		      function() {
-			yt6.player1.play();
 			if (typeof player().getPlayerState == 'function' && (navigator.userAgent.match(/Edge\/\d+/) != null || navigator.userAgent.match(/MSIE /) != null || navigator.userAgent.match(/Trident\//) != null)) {
 			  $waitUntil(function(){ if (player().getPlayerState() == 3) return true },
 			    function(){
 			      $waitUntil(function(){ if (player().getPlayerState() == -1 || player().getPlayerState() == 2) return true },
 				function(){
 				  $waitUntil(function(){ return yt6.player1.media.paused },
-				    function(){ yt6.player1.play(); console.log('FU') },100,1000)
-			        },100,3000)
-			    },100,3000)
-			}
-		      },100,3000)
+				    function(){ yt6.player1.play() })
+			        })
+			    })
+			} else if (document.getElementById('bm0') && document.getElementById('bm0').style.visibility == 'visible') yt6.player1.play();
+		      },100,6000)
 		  }
 	        }
 	  }
