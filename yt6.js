@@ -2323,8 +2323,8 @@ if (start != false){
 		      function() {
 			yt6.player1.play();
 			if (navigator.userAgent.match(/Edge\/\d+/) != null || navigator.userAgent.match(/MSIE /) != null || navigator.userAgent.match(/Trident\//) != null) {
-			  $waitUntil(function(){ return yt6.player1.media.paused },
-			    function(){ yt6.player1.play() },50,1000)
+			  $waitUntil(function(){ if (typeof player().getPlayerState == 'function' && player().getPlayerState() == 2 && yt6.player1.media.paused == true) return true },
+			    function(){ yt6.player1.play() },50,1500)
 			}
 		      },100,1000)
 	        }
