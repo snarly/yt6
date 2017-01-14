@@ -6751,14 +6751,18 @@ waitUntilExists('movie_player',function(){
 		      if (typeof document.getElementById('player1').play == 'function') { yt6.autoplay = true; autoplay(true) } 
 		    })
 		  }*/
+		    var z = document.getElementById('mejs-clear')
+		    if (z != null) z.setAttribute('id','mejs-clear0');
 		$waitUntil(
-		  function(){ if (document.getElementById('displaySpeed')) return true },
+		  function(){ if (document.getElementById('mejs-clear') != null) return true },
 		  function(){ //yt6.autoplay = true;
+			  console.log(typeof document.getElementById('mejs-clear'))
 			     if (autoplay(false)) autoplay(true) },
 		  100,
-		  1000
+		  2000
 		)
-
+		    var z = document.getElementById('mejs-clear0')
+		    if (z != null) z.setAttribute('id','mejs-clear');
 	      }
 /*	    if ((yt6.autoplay == false) || (yt6.args == null)) {console.log('a-15');
 		waitUntilExists("displaySpeed", function(){console.log('a-16');
