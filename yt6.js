@@ -2324,9 +2324,9 @@ if (start != false){
 			if (typeof player().getPlayerState == 'function' && (navigator.userAgent.match(/Edge\/\d+/) != null || navigator.userAgent.match(/MSIE /) != null || navigator.userAgent.match(/Trident\//) != null)) {
 			$waitUntil(function(){ if (player().getPlayerState() == -1) return true },
 			  function(){console.log('2')
-			    $waitUntil(function(){ if (player().getPlayerState() == 3 || player().getPlayerState() == 2) return true },
+			    $waitUntil(function(){ if (player().getPlayerState() == 3 || player().getPlayerState() == 2 || player().getPlayerState() == -1) return true },
 			      function(){console.log('3')
-				$waitUntil(function(){ if (player().getPlayerState() == -1 || player().getPlayerState() == 2) return true },
+				$waitUntil(function(){ if (player().getPlayerState() == -1 || player().getPlayerState() == 2 || player().getPlayerState() == 3) return true },
 				  function(){console.log('4')
 				    $waitUntil(function(){ if (yt6.player1.media.paused == true && document.getElementById('bm0') && document.getElementById('bm0').style.visibility == 'visible') return true },
 				      function(){console.log('5')
