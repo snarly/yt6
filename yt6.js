@@ -2318,15 +2318,16 @@ if (start != false){
 		  if (yt6.ytp) yt6.ytp.style.display = 'none';
 		  bm0.style.visibility = 'visible';
 		  try { document.getElementsByClassName('video-stream html5-main-video')[0].pause() } catch(e) {};
-		  if ((yt6.autoplay || autoplay2[0]) && start) $waitUntil(function(){
-		    if (yt6.newvideo == true && yt6.player1 && typeof yt6.player1.play == 'function') return true },
+		  if ((yt6.autoplay || autoplay2[0]) && start) {
+		    $waitUntil(function(){ if (yt6.newvideo == true && yt6.player1 && typeof yt6.player1.play == 'function') return true },
 		      function() {
 			yt6.player1.play();
 			if (navigator.userAgent.match(/Edge\/\d+/) != null || navigator.userAgent.match(/MSIE /) != null || navigator.userAgent.match(/Trident\//) != null) {
 			  $waitUntil(function(){ if (typeof player().getPlayerState == 'function' && player().getPlayerState() == 2 && yt6.player1.media.paused == true) return true },
-			    function(){ yt6.player1.play() },50,1500)
+			    function(){ yt6.player1.play(); console.log('FU') })
 			}
-		      },100,1000)
+		      },100,3000)
+		  }
 	        }
 	  }
       }
