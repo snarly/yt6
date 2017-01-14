@@ -5363,7 +5363,7 @@ function mep_run() {
 						      function() { yt6.diff = Math.abs(parseFloat(parseFloat(me.currentTime) - parseFloat(player2.currentTime)));//console.log(yt6.diff);console.log(yt6.timer);
 						        if (yt6.diff > parseFloat(0.3) && yt6.timer < 8) { return true } else { yt6.timer++ }
 						      },
-						      function() { console.log('play'); if (yt6.timer > 5) yt6.timer = 0; try { me.pause() ; Seek = 1; player2.currentTime = me.currentTime } catch(e) {} },50,1200)
+						      function() { if (yt6.timer > 5) yt6.timer = 0; try { me.pause() ; Seek = 1; player2.currentTime = me.currentTime } catch(e) {} },50,1200)
 
 						  }
 						} else {
@@ -5526,7 +5526,7 @@ resync_live();
 					    if (typeof AV[itag(yt6.player1.media.src)] !== 'string') {
 					      me.play(); $waitUntil(
 						function(){ if (!yt6.player2.media.paused) return true },
-						function(){ console.log('pause'); if (document.getElementById('bm0').style.visibility != 'hidden') { player1.play() } else { me.pause() }},5,1000)
+						function(){ if (document.getElementById('bm0').style.visibility != 'hidden') { player1.play() } else { me.pause() }},5,1000)
 					    }
 					  } else {
 					      if ( (!me.paused) && (player1.media.paused) && (document.getElementById('bm0').style.visibility != 'hidden') ) {
