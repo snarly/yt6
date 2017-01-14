@@ -2320,19 +2320,19 @@ if (start != false){
 		  try { document.getElementsByClassName('video-stream html5-main-video')[0].pause() } catch(e) {};
 		  if ((yt6.autoplay || autoplay2[0]) && start) {
 		    $waitUntil(function(){ if (yt6.newvideo == true && yt6.player1 && typeof yt6.player1.play == 'function') return true },
-		      function() {
+		      function() {console.log('1')
 			if (typeof player().getPlayerState == 'function' && (navigator.userAgent.match(/Edge\/\d+/) != null || navigator.userAgent.match(/MSIE /) != null || navigator.userAgent.match(/Trident\//) != null)) {
 			$waitUntil(function(){ if (player().getPlayerState() == -1) return true },
-			  function(){
+			  function(){console.log('2')
 			    $waitUntil(function(){ if (player().getPlayerState() == 3 || player().getPlayerState() == 2) return true },
-			      function(){
+			      function(){console.log('3')
 				$waitUntil(function(){ if (player().getPlayerState() == -1 || player().getPlayerState() == 2) return true },
-				  function(){
+				  function(){console.log('4')
 				    $waitUntil(function(){ if (yt6.player1.media.paused == true && document.getElementById('bm0') && document.getElementById('bm0').style.visibility == 'visible') return true },
-				      function(){
+				      function(){console.log('5')
 					yt6.player1.play()
 					$waitUntil(function(){ if (yt6.player1.media.paused == true && document.getElementById('bm0') && document.getElementById('bm0').style.visibility == 'visible') return true },
-					  function(){
+					  function(){console.log('6')
 					    yt6.player1.play()
 					  },50,2000)
 				      },50,2000)
