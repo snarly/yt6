@@ -736,7 +736,7 @@ function ajax1(update){
 	  xhr.send('');
 	} catch (e) {
 	    yt6.error = e;
-	    if (i === proxiez.length) {
+	    if (i === proxiez.length-1) {
 
 	      if ((e.toString().indexOf('"Access to restricted URI denied"  code: "1012"') > -1) || (e.toString().indexOf('ReferenceError: Security violation') > -1) || (xhr.responseText.indexOf('403 Forbidden') > -1) || (e.toString().indexOf('XMLHttpRequest Exception 101') > -1)) {
 
