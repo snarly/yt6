@@ -2321,7 +2321,7 @@ if (start != false){
 		  if ((yt6.autoplay || autoplay2[0]) && start) {
 		    $waitUntil(function(){ if (yt6.newvideo == true && yt6.player1 && typeof yt6.player1.play == 'function') return true },
 		      function() {
-			if (typeof player().getPlayerState == 'function' && (navigator.userAgent.match(/Edge\/\d+/) != null || navigator.userAgent.match(/MSIE /) != null || navigator.userAgent.match(/Trident\//) != null)) {
+			if (typeof player().getPlayerState == 'function' && ((yt6.layout == 16 && typeof yt6.A_V[itag(yt6.player1.media.src)] != 'string') || navigator.userAgent.match(/Edge\/\d+/) != null || navigator.userAgent.match(/MSIE /) != null || navigator.userAgent.match(/Trident\//) != null)) {
 			$waitUntil(function(){ if (player().getPlayerState() == -1) return true },
 			  function(){
 			    $waitUntil(function(){ if (player().getPlayerState() == 3 || player().getPlayerState() == 2 || ytplayer.config.args.video_id == video_id()) return true },
