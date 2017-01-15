@@ -5652,7 +5652,7 @@ resync_live();
 					  }
 					});
 					me.addEventListener('loadeddata', function() {
-					  if (Seek !== 2) { Seek = 0; player1.pause(); console.log('pause');  if (yt6.layout == 16) yt6.player1.play() } else { }
+					  if (Seek !== 2) { Seek = 0; me.currentTime = yt6.player1.media.currentTime } else { }//player1.pause();
 					});
 					me.addEventListener('error', function() {//console.log('player2 error: ' + me.networkState + ', media type: '+ me.canPlayType(me.type))
 					  if (me.networkState == 1) {
