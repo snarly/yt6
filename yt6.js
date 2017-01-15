@@ -5358,7 +5358,7 @@ function mep_run() {
 						) || ((typeof srcto != 'undefined') && (Srcto == Audio)) 
 					     )  {
 						  player2.play(); 
-						  if (typeof AV[itag(me.src)] !== 'string' && yt6.layout != 16) {
+						  if (typeof AV[itag(me.src)] !== 'string') {
 						    $waitUntil(
 						      function() { yt6.diff = Math.abs(parseFloat(parseFloat(me.currentTime) - parseFloat(player2.currentTime)));//console.log(yt6.diff);console.log(yt6.timer);
 						        if (yt6.diff > parseFloat(0.3) && yt6.timer < 8) { return true } else { yt6.timer++ }
@@ -5502,7 +5502,7 @@ resync_live();
 					        if (Audio == Srcto) { player2.currentTime = me.currentTime; }
 					      };
 					    if ((me.src.slice(-2) !== '&2') && (Math.abs(parseFloat(parseFloat(player2.currentTime) - parseFloat(me.currentTime))) > parseFloat(0.3))) {
-					      me.pause()
+					      me.pause(); console.log('pause');  if (yt6.layout == 16) yt6.player1.play()
 					    }
 					  }
 					});
