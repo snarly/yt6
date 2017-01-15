@@ -5382,7 +5382,7 @@ function mep_run() {
 					  if (typeof player2 != 'undefined') {
 					    if (me.src.replace('&ratebypass=yes','') != player2.src.replace('&ratebypass=yes','')) {
 					      if (Seek == 3) try { player2.pause() } catch(e) {};
-					      if (Seek === 0) { Seek = 1 };
+					      //if (Seek === 0) { Seek = 1 };
 					      try { player2.pause(); player2.currentTime = me.currentTime } catch(e) {}
 					    }
 					  }
@@ -5475,15 +5475,15 @@ function mep_run() {
 					      }
 					    }
 					  } else {//live broadcast
-function resync_live(){
-me.src1 = me.src; me.src2 = player2.src;
-yt6.player2.setSrc(''); yt6.player1.setSrc('');
-yt6.player2.load(); yt6.player1.load();
-yt6.player2.setSrc(me.src2); yt6.player1.setSrc(yt6.player1.media.src1);
-yt6.player2.load(); yt6.player1.load();
-yt6.player1.play();
-}
-resync_live();
+					      function resync_live(){
+						me.src1 = me.src; me.src2 = player2.src;
+						yt6.player2.setSrc(''); yt6.player1.setSrc('');
+						yt6.player2.load(); yt6.player1.load();
+						yt6.player2.setSrc(me.src2); yt6.player1.setSrc(yt6.player1.media.src1);
+						yt6.player2.load(); yt6.player1.load();
+						yt6.player1.play();
+					      }
+					      resync_live();
 					    }
 					});
 					me.addEventListener('playing', function() {
@@ -5607,15 +5607,15 @@ resync_live();
 					      }
 					    }
 					  } else {//live broadcast
-function resync_live(){
-player1.media.src1 = player1.media.src; me.src2 = me.src;
-yt6.player2.setSrc(''); yt6.player1.setSrc('');
-yt6.player2.load(); yt6.player1.load();
-yt6.player2.setSrc(me.src2); yt6.player1.setSrc(yt6.player1.media.src1);
-yt6.player2.load(); yt6.player1.load();
-yt6.player1.play();
-}
-resync_live();
+					      function resync_live(){
+						player1.media.src1 = player1.media.src; me.src2 = me.src;
+						yt6.player2.setSrc(''); yt6.player1.setSrc('');
+						yt6.player2.load(); yt6.player1.load();
+						yt6.player2.setSrc(me.src2); yt6.player1.setSrc(yt6.player1.media.src1);
+						yt6.player2.load(); yt6.player1.load();
+						yt6.player1.play();
+					      }
+					      resync_live();
 					    }
 					});
 					me.addEventListener('pause', function() {//console.log('2pause')
@@ -5652,7 +5652,7 @@ resync_live();
 					  }
 					});
 					me.addEventListener('loadeddata', function() {
-					  if (Seek !== 2) { if (!player1.media.paused) { Seek = 1; yt6.player1.pause(); }; Seek = 0; } else { }
+					  if (Seek !== 2) { if (!player1.media.paused) Seek = 0; yt6.player1.pause(); if (Seek == 0) yt6.player1.play() } else { }
 					});
 					me.addEventListener('error', function() {//console.log('player2 error: ' + me.networkState + ', media type: '+ me.canPlayType(me.type))
 					  if (me.networkState == 1) {
