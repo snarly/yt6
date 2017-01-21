@@ -3507,7 +3507,7 @@ if (document.getElementById("bm1") != null) document.getElementById("bm1").paren
   var title = (title) ? title.textContent : document.title.substring(0, document.title.length)
   if (title.indexOf(' - YouTube') == title.length - 10) title = title.substring(0, title.length - 10)
   if (title.indexOf(' - YouTube Gaming') == title.length - 17) title = title.substring(0, title.length - 17)
-  if (ytplayer.config.args && ytplayer.config.args.video_id) var title = ytplayer.config.args.video_id
+  if (ytplayer.config.args && ytplayer.config.args.title) var title = ytplayer.config.args.title
 
   html.splice(1,0,'Direct links to YouTube media<br>for IP address: '+ expire_date()[0])
   html.push(
