@@ -3699,7 +3699,11 @@ var jq0 = function()
 "display:none;"+
 "}"+
 
-".sitewide-consent-visible .yt-consent-banner, .ytd-consent-bump-lightbox-0, .iron-overlay-backdrop-0 {"+
+".sitewide-consent-visible .yt-consent-banner {"+
+"display:none;"+
+"}"+
+
+".ytd-consent-bump-lightbox-0, .iron-overlay-backdrop-0 {"+
 "display:none;"+
 "}"+
 
@@ -5407,7 +5411,7 @@ function mep_run() {
 						      function() { yt6.diff = Math.abs(parseFloat(parseFloat(me.currentTime) - parseFloat(player2.currentTime)));//console.log(yt6.diff);console.log(yt6.timer);
 						        if (yt6.diff > parseFloat(0.3) && yt6.timer < 8) { return true } else { yt6.timer++ }
 						      },
-						      function() { if (yt6.timer > 5) yt6.timer = 0; try { me.pause(); Seek = 1; player2.currentTime = me.currentTime; yt6.player1.play() } catch(e) {} },50,1200)
+						      function() { if (yt6.timer > 5) yt6.timer = 0; try { me.pause(); Seek = 1; player2.currentTime = me.currentTime; } catch(e) {} },50,1200)
 
 						  }
 						} else {
@@ -5428,8 +5432,8 @@ function mep_run() {
 					      //if (Seek == 3)
 					      try { player2.pause() } catch(e) {};
 					      if (Seek === 0) { Seek = 1 };
-					      if (typeof AV[itag(me.src)] !== 'string') yt6.player1.setCurrentTime(player2.currentTime);
 					      try { player2.currentTime = me.currentTime } catch(e) {}
+					      if (typeof AV[itag(me.src)] !== 'string') yt6.player1.setCurrentTime(player2.currentTime);
 					    }
 					  }
 					});
