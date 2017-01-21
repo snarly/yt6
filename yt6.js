@@ -5429,8 +5429,7 @@ function mep_run() {
 					  if (bn) bn.innerHTML = 'play'
 					  if (typeof player2 != 'undefined') {
 					    if (me.src.replace('&ratebypass=yes','') != player2.src.replace('&ratebypass=yes','')) {
-					      //if (Seek == 3)
-					      try { player2.pause() } catch(e) {};
+					      if (Seek == 3) try { player2.pause() } catch(e) {};
 					      if (Seek === 0) { Seek = 1 };
 					      try { player2.currentTime = me.currentTime } catch(e) {}
 					      if (typeof AV[itag(me.src)] !== 'string') yt6.player1.setCurrentTime(player2.currentTime);
