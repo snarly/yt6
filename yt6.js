@@ -924,8 +924,58 @@ function ajax1(update){
 
 	var px = proxiez[i]
 	var z = document.getElementById(px + ' error' ); if (z != null) continue;
+        if (ytplayer.config.assets.js && ytplayer.config.assets.js.indexOf('//s.ytimg.com/') ==  -1) {
+          var px = '', domain = '//www.youtube.com'
+        } else var domain = ''
+
 	try {
-	  xhr.open('get', px + ytplayer.config.assets.js, false);
+	  xhr.open('get', px + domain + ytplayer.config.assets.js, false);
+	  xhr.onreadystatechange = function() {
+	    if (xhr.readyState == 4 && xhr.status == 200) {
+
+	      if ((xhr.responseText.indexOf('403 Forbidden') > -1) || (xhr.responseText == '403_Forbidden')) {
+	        //alert(px + ' proxy denied to serve data: 403 Forbidden')
+	        var scpt = document.createElement("div");
+	        scpt.id = px + " error";
+	        scpt[yt6.txt] = 'HTTP 403 Forbidden: Access was denied to this resource over internal quota';
+	        yt6.body.appendChild(scpt);
+	        scpt.setAttribute('class','yt6-proxy-error')
+	        scpt.setAttribute('style','display: none')
+	        continue;
+
+	      }//403
+
+	
+	      var rpt = xhr.responseText, scpt;
+	      var px = px.replace('/https:','');
+	      if (!gc('ytassetsjs')[0] && (rpt.indexOf("function(){") != -1 || rpt.indexOf("function fcnm(") != -1)) {
+		scpt = document.createElement("div");
+		scpt.type = "text/javascript";
+		scpt.id = "ytassetsjs";
+		scpt[yt6.txt] = rpt
+		yt6.body.appendChild(scpt);
+		scpt.setAttribute('class','ytassetsjs');
+		scpt.setAttribute('style','display: none');
+		if (px != '') {
+		  scpt.setAttribute('name',px + '/https:' + ytplayer.config.assets.js);
+		} else scpt.setAttribute('name', 'https:' + domain + ytplayer.config.assets.js);
+		var z = new Date().toLocaleString().toString()
+		scpt.setAttribute("time",z)
+		//console.log('0'+i+document.getElementById('ytassetsjs'))
+		break
+	      } else {
+		//if (yt6.error) {
+		  scpt = document.createElement("div");
+		  scpt.id = px + " error";
+		  scpt[yt6.txt] = yt6.error;
+		  yt6.body.appendChild(scpt);
+		  scpt.setAttribute('class','yt6-proxy-error')
+		  scpt.setAttribute('style','display: none')
+		//}
+		}
+
+	    }
+	  }
 	  xhr.send('');
 	} catch (e) {
 	    yt6.error = e;
@@ -949,47 +999,9 @@ function ajax1(update){
               }
           }//catch
 
-
-	  if ((xhr.responseText.indexOf('403 Forbidden') > -1) || (xhr.responseText == '403_Forbidden')) {
-	      //alert(px + ' proxy denied to serve data: 403 Forbidden')
-	      var scpt = document.createElement("div");
-	      scpt.id = px + " error";
-	      scpt[yt6.txt] = 'HTTP 403 Forbidden: Access was denied to this resource over internal quota';
-	      yt6.body.appendChild(scpt);
-	      scpt.setAttribute('class','yt6-proxy-error')
-	      scpt.setAttribute('style','display: none')
-	      continue;
-
-	  }//403
-
-	
-	var rpt = xhr.responseText,scpt;
-	var px = px.replace('/https:','');
-	if (!gc('ytassetsjs')[0] && (rpt.indexOf("function(){") != -1 || rpt.indexOf("function fcnm(") != -1)) {
-	  scpt = document.createElement("div");
-	  scpt.type = "text/javascript";
-	  scpt.id = "ytassetsjs";
-	  scpt[yt6.txt] = rpt
-	  yt6.body.appendChild(scpt);
-	  scpt.setAttribute('class','ytassetsjs');
-	  scpt.setAttribute('style','display: none');
-	  scpt.setAttribute('name',px + '/https:' + ytplayer.config.assets.js);//.split('.com')[1]);
-	  var z = new Date().toLocaleString().toString()
-	  scpt.setAttribute("time",z)
-	  //console.log('0'+i+document.getElementById('ytassetsjs'))
-	  break
-	} else {
-	    //if (yt6.error) {
-	    scpt = document.createElement("div");
-	    scpt.id = px + " error";
-	    scpt[yt6.txt] = yt6.error;
-	    yt6.body.appendChild(scpt);
-	    scpt.setAttribute('class','yt6-proxy-error')
-	    scpt.setAttribute('style','display: none')
-            //}
-	  }
       }//for
 
+      var rpt = xhr.responseText
       if (rpt.indexOf("function(){") != -1) { return [px, rpt] }
     }//setProxy
 
