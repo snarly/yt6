@@ -930,6 +930,7 @@ function ajax1(update){
 
 	try {
 	  xhr.open('get', px + domain + ytplayer.config.assets.js, false);
+	  xhr.done = false;
 	  xhr.onreadystatechange = function() {
 	    if (xhr.readyState == 4 && xhr.status == 200) {
 
@@ -941,38 +942,40 @@ function ajax1(update){
 	        yt6.body.appendChild(scpt);
 	        scpt.setAttribute('class','yt6-proxy-error')
 	        scpt.setAttribute('style','display: none')
-	        continue;
+	        //continue; //403
 
-	      }//403
+	      } else {
 
 	
-	      var rpt = xhr.responseText, scpt;
-	      var px = px.replace('/https:','');
-	      if (!gc('ytassetsjs')[0] && (rpt.indexOf("function(){") != -1 || rpt.indexOf("function fcnm(") != -1)) {
-		scpt = document.createElement("div");
-		scpt.type = "text/javascript";
-		scpt.id = "ytassetsjs";
-		scpt[yt6.txt] = rpt
-		yt6.body.appendChild(scpt);
-		scpt.setAttribute('class','ytassetsjs');
-		scpt.setAttribute('style','display: none');
-		if (px != '') {
-		  scpt.setAttribute('name',px + '/https:' + ytplayer.config.assets.js);
-		} else scpt.setAttribute('name', 'https:' + domain + ytplayer.config.assets.js);
-		var z = new Date().toLocaleString().toString()
-		scpt.setAttribute("time",z)
-		//console.log('0'+i+document.getElementById('ytassetsjs'))
-		break
-	      } else {
-		//if (yt6.error) {
-		  scpt = document.createElement("div");
-		  scpt.id = px + " error";
-		  scpt[yt6.txt] = yt6.error;
-		  yt6.body.appendChild(scpt);
-		  scpt.setAttribute('class','yt6-proxy-error')
-		  scpt.setAttribute('style','display: none')
-		//}
-		}
+		      var rpt = xhr.responseText, scpt;
+		      var px = px.replace('/https:','');
+		      if (!gc('ytassetsjs')[0] && (rpt.indexOf("function(){") != -1 || rpt.indexOf("function fcnm(") != -1)) {
+			scpt = document.createElement("div");
+			scpt.type = "text/javascript";
+			scpt.id = "ytassetsjs";
+			scpt[yt6.txt] = rpt
+			yt6.body.appendChild(scpt);
+			scpt.setAttribute('class','ytassetsjs');
+			scpt.setAttribute('style','display: none');
+			if (px != '') {
+			  scpt.setAttribute('name',px + '/https:' + ytplayer.config.assets.js);
+			} else scpt.setAttribute('name', 'https:' + domain + ytplayer.config.assets.js);
+			var z = new Date().toLocaleString().toString()
+			scpt.setAttribute("time",z)
+			//console.log('0'+i+document.getElementById('ytassetsjs'))
+			xhr.done = true;//break
+		      } else {
+			//if (yt6.error) {
+			  scpt = document.createElement("div");
+			  scpt.id = px + " error";
+			  scpt[yt6.txt] = yt6.error;
+			  yt6.body.appendChild(scpt);
+			  scpt.setAttribute('class','yt6-proxy-error')
+			  scpt.setAttribute('style','display: none')
+			//}
+			}
+
+	        }
 
 	    }
 	  }
@@ -996,9 +999,10 @@ function ajax1(update){
 
 		}
 		  //alert(e + " " + px + ' error')
-              }
-          }//catch
+	      }
+	  }//catch
 
+	if (xhr.done) break
       }//for
 
       var rpt = xhr.responseText
