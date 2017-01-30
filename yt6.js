@@ -983,7 +983,7 @@ function ajax1(update){
 	  }//onreadystatechange
 	  xhr.send('');
 	} catch (e) {
-	    yt6.error = e; console.log(typeof xhr.responseText)
+	    yt6.error = e;
 	    if (typeof xhr.responseText != 'unknown') {
 	      if (i === proxiez.length-1) {
 
@@ -1008,8 +1008,7 @@ function ajax1(update){
 
       }//for
 
-      var rpt = xhr.responseText
-      if (typeof rpt != 'unknown' && rpt.indexOf("function(){") != -1) { return [px, rpt] }
+      if (typeof xhr.responseText != 'unknown' && xhr.responseText.indexOf("function(){") != -1) { return [px, xhr.responseText] }
     }//setProxy
 
   if ((ytassetsjs == null) || (ytassetsjs.innerHTML.indexOf("function(){") == -1 && ytassetsjs.innerHTML.indexOf("function fcnm(") == -1) || (update)) {
@@ -1034,7 +1033,7 @@ function ajax1(update){
 	    }
 	  } else {
 	      yt6.timer++;
-	      if (yt6.timer > 12) {
+	      if (yt6.timer > 10) {
 		if (document.getElementById('getjs') == null) {
 		  hand_axe();
 		} //else console.log('One too many')
