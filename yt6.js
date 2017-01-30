@@ -923,6 +923,8 @@ function ajax1(update){
 	  }
 	}
 
+	if (xhr.done) break
+
 	var px = yt6.px = proxiez[i]
 	var z = document.getElementById(px + ' error' ); if (z != null) continue;
         if (ytplayer.config.assets.js && ytplayer.config.assets.js.indexOf('//s.ytimg.com/') ==  -1) {
@@ -1002,7 +1004,6 @@ function ajax1(update){
 	      }
 	  }//catch
 
-	if (xhr.done) break
       }//for
 
       var rpt = xhr.responseText
