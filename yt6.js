@@ -922,17 +922,18 @@ function ajax1(update){
 	  }
 	}
 
-	var px = proxiez[i]
+	var px = yt6.px = proxiez[i]
 	var z = document.getElementById(px + ' error' ); if (z != null) continue;
         if (ytplayer.config.assets.js && ytplayer.config.assets.js.indexOf('//s.ytimg.com/') ==  -1) {
-          var px = '', domain = '//www.youtube.com'
-        } else var domain = ''
+          var px = yt6.px = '//www.youtube.com'
+        }
 
 	try {
 	  xhr.open('get', px + domain + ytplayer.config.assets.js, false);
 	  xhr.done = false;
-	  xhr.onreadystatechange = function(px, domain) {
+	  xhr.onreadystatechange = function() {
 	    if (xhr.readyState == 4 && xhr.status == 200) {
+	      var px = yt6.px.replace('/https:','');
 
 	      if ((xhr.responseText.indexOf('403 Forbidden') > -1) || (xhr.responseText == '403_Forbidden')) {
 	        //alert(px + ' proxy denied to serve data: 403 Forbidden')
@@ -948,7 +949,6 @@ function ajax1(update){
 
 	
 		      var rpt = xhr.responseText, scpt;
-		      if (px && typeof px == 'string') var px = px.replace('/https:','');
 		      if (!gc('ytassetsjs')[0] && (rpt.indexOf("function(){") != -1 || rpt.indexOf("function fcnm(") != -1)) {
 			scpt = document.createElement("div");
 			scpt.type = "text/javascript";
@@ -957,9 +957,9 @@ function ajax1(update){
 			yt6.body.appendChild(scpt);
 			scpt.setAttribute('class','ytassetsjs');
 			scpt.setAttribute('style','display: none');
-			if (px != '') {
-			  scpt.setAttribute('name',px + '/https:' + ytplayer.config.assets.js);
-			} else scpt.setAttribute('name', 'https:' + domain + ytplayer.config.assets.js);
+			if (px != '//www.youtube.com') {
+			  scpt.setAttribute('name', px + '/https:' + ytplayer.config.assets.js);
+			} else scpt.setAttribute('name', 'https:' + px + ytplayer.config.assets.js);
 			var z = new Date().toLocaleString().toString()
 			scpt.setAttribute("time",z)
 			//console.log('0'+i+document.getElementById('ytassetsjs'))
