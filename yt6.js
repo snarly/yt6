@@ -896,6 +896,7 @@ function ajax1(update){
 
     function setProxy(){
       var proxiez = shuffle(proxies)
+      xhr.done = false;
       for (i=0;i<proxiez.length;i++){
 	if (ytassetsjs != null && ytassetsjs.name && ytassetsjs.innerHTML.indexOf('var ') != -1) { //console.log('0');
 	  return [ytassetsjs.name.split('/https')[0], ytassetsjs.innerHTML];
@@ -930,7 +931,6 @@ function ajax1(update){
 
 	try {
 	  xhr.open('get', px + ytplayer.config.assets.js, false);
-	  xhr.done = false;
 	  xhr.onreadystatechange = function() {
 	    if (xhr.readyState == 4 && xhr.status == 200) {
 	      var px = yt6.px.replace('/https:','');
