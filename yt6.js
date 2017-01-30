@@ -931,7 +931,7 @@ function ajax1(update){
 	try {
 	  xhr.open('get', px + domain + ytplayer.config.assets.js, false);
 	  xhr.done = false;
-	  xhr.onreadystatechange = function(px) {
+	  xhr.onreadystatechange = function(px, domain) {
 	    if (xhr.readyState == 4 && xhr.status == 200) {
 
 	      if ((xhr.responseText.indexOf('403 Forbidden') > -1) || (xhr.responseText == '403_Forbidden')) {
@@ -948,7 +948,7 @@ function ajax1(update){
 
 	
 		      var rpt = xhr.responseText, scpt;
-		      var px = px.replace('/https:','');
+		      if (px && typeof px == 'string') var px = px.replace('/https:','');
 		      if (!gc('ytassetsjs')[0] && (rpt.indexOf("function(){") != -1 || rpt.indexOf("function fcnm(") != -1)) {
 			scpt = document.createElement("div");
 			scpt.type = "text/javascript";
