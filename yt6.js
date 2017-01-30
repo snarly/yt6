@@ -929,7 +929,7 @@ function ajax1(update){
         }
 
 	try {
-	  xhr.open('get', px + domain + ytplayer.config.assets.js, false);
+	  xhr.open('get', px + ytplayer.config.assets.js, false);
 	  xhr.done = false;
 	  xhr.onreadystatechange = function() {
 	    if (xhr.readyState == 4 && xhr.status == 200) {
