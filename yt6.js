@@ -931,7 +931,7 @@ function ajax1(update){
 	try {
 	  xhr.open('get', px + domain + ytplayer.config.assets.js, false);
 	  xhr.done = false;
-	  xhr.onreadystatechange = function() {
+	  xhr.onreadystatechange = function(px) {
 	    if (xhr.readyState == 4 && xhr.status == 200) {
 
 	      if ((xhr.responseText.indexOf('403 Forbidden') > -1) || (xhr.responseText == '403_Forbidden')) {
