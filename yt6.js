@@ -980,34 +980,36 @@ function ajax1(update){
 	        }
 
 	    }
-	  }
+	  }//onreadystatechange
 	  xhr.send('');
 	} catch (e) {
-	    yt6.error = e;
-	    if (i === proxiez.length-1) {
+	    yt6.error = e; console.log(typeof xhr.responseText)
+	    if (typeof xhr.responseText != 'unknown') {
+	      if (i === proxiez.length-1) {
 
-	      if ((e.toString().indexOf('"Access to restricted URI denied"  code: "1012"') > -1) || (e.toString().indexOf('ReferenceError: Security violation') > -1) || (xhr.responseText.indexOf('403 Forbidden') > -1) || (e.toString().indexOf('XMLHttpRequest Exception 101') > -1)) {
+		if ((e.toString().indexOf('"Access to restricted URI denied"  code: "1012"') > -1) || (e.toString().indexOf('ReferenceError: Security violation') > -1) || (xhr.responseText.indexOf('403 Forbidden') > -1) || (e.toString().indexOf('XMLHttpRequest Exception 101') > -1)) {
 
-		hand_axe()
-
-	      } else {
 		  hand_axe()
-//		  throw new Error(e + " " + px + ' error')
-		}
-              
-              //exit(e + " " + px + ' error') 
-            } else {
-		if (e.toString().indexOf('"Access to restricted URI denied"  code: "1012"') == -1) {
 
-		}
+		} else {
+		    hand_axe()
+//		    throw new Error(e + " " + px + ' error')
+		  }
+              
+                //exit(e + " " + px + ' error') 
+	      } else {
+		  if (e.toString().indexOf('"Access to restricted URI denied"  code: "1012"') == -1) {
+
+		  }
 		  //alert(e + " " + px + ' error')
-	      }
+	        }
+	    }//unknown
 	  }//catch
 
       }//for
 
       var rpt = xhr.responseText
-      if (rpt.indexOf("function(){") != -1) { return [px, rpt] }
+      if (typeof rpt != 'unknown' && rpt.indexOf("function(){") != -1) { return [px, rpt] }
     }//setProxy
 
   if ((ytassetsjs == null) || (ytassetsjs.innerHTML.indexOf("function(){") == -1 && ytassetsjs.innerHTML.indexOf("function fcnm(") == -1) || (update)) {
