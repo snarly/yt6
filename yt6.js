@@ -3500,6 +3500,7 @@ if (ytplayer.config.args) {
 var rpt = document.getElementById('ytassetsjs') ? document.getElementById('ytassetsjs').fcnm : null
 if (rpt != null) {//ajax2
 
+  var xhr = new XMLHttpRequest();
   var aac = unescape(args.dashmpd)
   var z = aac.split('/')
   var sig = null;
