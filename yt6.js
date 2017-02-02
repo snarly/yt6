@@ -2258,25 +2258,29 @@ if (player() != null) {
 addEL(window, 'message', yt6.ytplayercmd, false);
 
 
-		var Sync = function(newState) {
-		  var bm0 = document.getElementById('bm0')
-	      var player2 = document.getElementById('player2')
-		  if (yt6 && bm0 && bm0.style.visibility == 'hidden') {
-            if (typeof player().getPlayerState == 'function') {
-              if (typeof player().getAttribute('flashvars') != 'string') {
-                var stage = gc('html5-video-content')[0];
-                var v = gc('video-stream html5-main-video')[0];
-              } else {
-                  var stage = player();
-                  var v = player();  
-                }
-            }
-            var AV = yt6.A_V
-            var A = yt6.A_
-            var V = yt6.V_
-            switch (newState) {
-              case 0: player2.pause(); break;
-              case 1: if ((typeof srcto != 'undefined') && (srcto == yt6.audio)) { player2.play(); break }; 
+      var Sync = function(newState) {
+
+	var bm0 = document.getElementById('bm0')
+	var player2 = document.getElementById('player2')
+
+	if (yt6 && bm0 && bm0.style.visibility == 'hidden') {
+          if (typeof player().getPlayerState == 'function') {
+	    if (typeof player().getAttribute('flashvars') != 'string') {
+		var stage = gc('html5-video-content')[0];
+		var v = gc('video-stream html5-main-video')[0];
+	    } else {
+		var stage = player();
+		var v = player();  
+	      }
+	  }
+
+	  var AV = yt6.A_V
+	  var A = yt6.A_
+	  var V = yt6.V_
+
+	  switch (newState) {
+	      case 0: player2.pause(); break;
+	      case 1: if ((typeof srcto != 'undefined') && (srcto == yt6.audio)) { player2.play(); break }; 
 			if (v && v.src) {
 			  if (typeof v.src.split('itag=')[1] != 'undefined') {
 			    if  ( (typeof AV[v.src.split('itag=')[1].split('&')[0]] !== 'string')
@@ -2291,18 +2295,18 @@ addEL(window, 'message', yt6.ytplayercmd, false);
               case 3: player2.pause(); break;
               case 5: player2.pause(); break;
 
-            if (bm0.style.visibility == 'hidden') {
-	      try {
- 		player2.currentTime = player().getCurrentTime();
-		player2.playbackRate = player().getPlaybackRate();
-		player().setPlaybackRate( player2.playbackRate );
-	      } catch(e) {}
-	    } else {
-	        try { player2.currentTime = document.getElementById('player1').currentTime } catch(e) {}
-	      }
-            }
-	  }
+		if (bm0.style.visibility == 'hidden') {
+		  try {
+ 		    player2.currentTime = player().getCurrentTime();
+		    player2.playbackRate = player().getPlaybackRate();
+		    player().setPlaybackRate( player2.playbackRate );
+		  } catch(e) {}
+		} else {
+		    try { player2.currentTime = document.getElementById('player1').currentTime } catch(e) {}
+		  }
+          }
 	}
+      }
 
 
 //      if (typeof player() !== 'undefined') {
@@ -3707,7 +3711,7 @@ if (document.getElementById("bm1") != null) document.getElementById("bm1").paren
 
   var dw = document.createElement('div')
   dw.id = 'bm6'
-  dw[yt6.txt] = 'Suppress cards over video frame'
+  dw[yt6.txt] = 'Suppress cards over videos'
   document.getElementById('bm2').appendChild(dw);
   dw.setAttribute('style','inline-block')
 
