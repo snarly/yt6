@@ -3759,9 +3759,9 @@ if (document.getElementById("bm1") != null) document.getElementById("bm1").paren
   var bm3 = document.getElementById('bm3')
 
   bm3.height = parseInt(document.getElementById('bm2').offsetHeight) + expire_date()[2];  
-  bm3.setAttribute('style','cursor: default; font-size: 13px; color:black; display:block; visibility:hidden; position:fixed; left:0%; top:48px; max-width:224px; height:' + bm3.height + 'px; margin-top:0px; margin-right:0px; background:#FFFFFF; opacity:1; padding:2px 2px 2px 2px; border:1px solid #DDD; z-index: 5; overflow-y:hidden');
+  bm3.setAttribute('style','cursor: default; font-size: 13px; color:black; display:block; visibility:hidden; position:fixed; left:0%; top:48px; max-width:224px; height:' + bm3.height + 'px; margin-top:0px; margin-right:0px; background:#FFFFFF; opacity:1; padding:2px 2px 2px 2px; border:1px solid #DDD; z-index: 2147483648; overflow-y:hidden');
   var z = bm3.style
-  z.cursor = 'default'; z.fontSize = '13px'; z.color = 'black'; z.display = 'block'; z.visibility = 'hidden'; z.position = 'fixed'; z.left = '0%'; z.top = '48px'; z.maxWidth = '224px'; z.height = bm3.height + 'px'; z.marginTop = '0px'; z.marginRight = '0px'; z.background = '#FFFFFF'; z.opacity = '1'; z.padding = '2px 2px 2px 2px'; z.border = '1px solid #DDD'; z.zIndex = '5'; z.overflowY = 'hidden';
+  z.cursor = 'default'; z.fontSize = '13px'; z.color = 'black'; z.display = 'block'; z.visibility = 'hidden'; z.position = 'fixed'; z.left = '0%'; z.top = '48px'; z.maxWidth = '224px'; z.height = bm3.height + 'px'; z.marginTop = '0px'; z.marginRight = '0px'; z.background = '#FFFFFF'; z.opacity = '1'; z.padding = '2px 2px 2px 2px'; z.border = '1px solid #DDD'; z.zIndex = '2147483648'; z.overflowY = 'hidden';
 
   bm3.setAttribute('class','yt-uix-button-menu ')
   bm3.innerHTML = document.getElementById('bm2').innerHTML;
@@ -9729,9 +9729,9 @@ function control_panel1() {
   var z = document.getElementById('watch7-notification-area')
   if (z != null) {
      z.setAttribute('class','yt-card')
-     z.setAttribute('style','display: block; padding: 0px 0px 1px 0px; z-index: 6')
+     z.setAttribute('style','display: block; padding: 0px 0px 1px 0px; z-index: 5')
      var z = z.style
-     z.display = 'block'; z.padding = '0px 0px 1px 0px'; z.zIndex = '6'
+     z.display = 'block'; z.padding = '0px 0px 1px 0px'; z.zIndex = '5'
   }
 
   var z = yt6.wna
