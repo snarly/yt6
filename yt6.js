@@ -2274,8 +2274,8 @@ addEL(window, 'message', yt6.ytplayercmd, false);
             var A = yt6.A_
             var V = yt6.V_
             switch (newState) {
-              case 0: player2.pause(); break;
-              case 1:	if ((typeof srcto != 'undefined') && (srcto == yt6.audio)) { player2.play(); break }; 
+              case 0: if (document.getElementById('bm0').style.visibility == 'hidden') player2.pause(); break;
+              case 1: if ((typeof srcto != 'undefined') && (srcto == yt6.audio)) { player2.play(); break }; 
 			if (v && v.src) {
 			  if (typeof v.src.split('itag=')[1] != 'undefined') {
 			    if  ( (typeof AV[v.src.split('itag=')[1].split('&')[0]] !== 'string')
@@ -2286,9 +2286,9 @@ addEL(window, 'message', yt6.ytplayercmd, false);
 				) { player2.play() }
 			  }
 			}; break;
-              case 2: player2.pause(); break;
-              case 3: player2.pause(); break;
-              case 5: player2.pause(); break;
+              case 2: if (document.getElementById('bm0').style.visibility == 'hidden') player2.pause(); break;
+              case 3: if (document.getElementById('bm0').style.visibility == 'hidden') player2.pause(); break;
+              case 5: if (document.getElementById('bm0').style.visibility == 'hidden') player2.pause(); break;
             }
             if (document.getElementById('bm0').style.visibility == 'hidden') {
 	      try {
@@ -5629,8 +5629,8 @@ function mep_run() {
 					  if (typeof player2 != 'undefined') {
 					    if (me.src.replace('&ratebypass=yes','') != player2.src.replace('&ratebypass=yes','')) {
 					      if (Seek == 3) try { player2.pause() } catch(e) {};
-					      if (Seek === 0) { Seek = 1 };
-					      if (typeof AV[itag(me.src)] !== 'string') yt6.player1.setCurrentTime(me.currentTime);
+					      //if (Seek === 0) { Seek = 1 };
+					      if (typeof AV[itag(me.src)] !== 'string' && Seek != 1 && me.playbackRate == player2.playbackRate) { yt6.player1.setCurrentTime(me.currentTime) } else player2;playbackRate = me.playbackRate;
 					      try { player2.pause(); player2.currentTime = me.currentTime } catch(e) {}
 					    }
 					  }
@@ -5901,7 +5901,7 @@ function mep_run() {
 					});
 					addEL(me, 'loadeddata', function() {
 					  if (Seek !== 2) {
-					   if (!player1.media.paused) Seek = 0; yt6.player1.pause(); if (Seek == 0) yt6.player1.play()
+					   if (!player1.media.paused) Seek = 0; yt6.player1.pause(); //if (Seek == 0) yt6.player1.play()
 					  } else { }
 					});
 					addEL(me, 'error', function() {//console.log('player2 error: ' + me.networkState + ', media type: '+ me.canPlayType(me.type))
@@ -6484,6 +6484,10 @@ if (gclass('doodle')[0]) {
 
 var z = document.getElementById('bm3')
 if (z) z.style.top = yt6.mhp.offsetHeight + 2 + 'px'
+
+var z = yt6.body.getAttribute('class')
+if (z && z.indexOf('yt-dialog-active')) yt6.body.setAttribute('class', z.replace('yt-dialog-active',''))
+
 
 var z = document.getElementById('yt-consent-dialog')
 if (z) z.style.display = 'none'
