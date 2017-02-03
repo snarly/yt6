@@ -2294,17 +2294,17 @@ addEL(window, 'message', yt6.ytplayercmd, false);
               case 2: player2.pause(); break;
               case 3: player2.pause(); break;
               case 5: player2.pause(); break;
+	  }
+	  if (bm0.style.visibility == 'hidden') {
+	    try {
+ 	      player2.currentTime = player().getCurrentTime();
+	      player2.playbackRate = player().getPlaybackRate();
+	      player().setPlaybackRate( player2.playbackRate );
+	    } catch(e) {}
+	  } else {
+	      try { player2.currentTime = document.getElementById('player1').currentTime } catch(e) {}
+	    }
 
-		if (bm0.style.visibility == 'hidden') {
-		  try {
- 		    player2.currentTime = player().getCurrentTime();
-		    player2.playbackRate = player().getPlaybackRate();
-		    player().setPlaybackRate( player2.playbackRate );
-		  } catch(e) {}
-		} else {
-		    try { player2.currentTime = document.getElementById('player1').currentTime } catch(e) {}
-		  }
-          }
 	}
       }
 
