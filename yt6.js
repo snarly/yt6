@@ -5777,7 +5777,7 @@ function mep_run() {
 						    $waitUntil(
 						      function() { 
 							yt6.diff = Math.abs(parseFloat(parseFloat(me.currentTime) - parseFloat(player2.currentTime)));//console.log(yt6.diff);console.log(yt6.sync_timer);
-						        if (yt6.diff > parseFloat(0.3) && yt6.sync_timer < 8) { return true } else { if (yt6.newvideo) { me.play(); yt6.newvideo = false; me.play(); } else { yt6.sync_timer++ } }
+						        if (yt6.diff > parseFloat(0.3) && yt6.sync_timer < 8) { return true } else { if (yt6.newvideo) { me.play(); yt6.newvideo = false; me.play(); yt6.player2.media.currentTime = me.currentTime = 0; } else { yt6.sync_timer++ } }
 						      },
 						      function() { if (yt6.sync_timer > 5) yt6.sync_timer = 0; try { me.pause() ; Seek = 1; player2.currentTime = me.currentTime } catch(e) {} },50,1200)
 
@@ -5792,13 +5792,13 @@ function mep_run() {
 					          };
 					  if (Seek == 3 ) {Seek = null}
 					});
-					addEL(me, 'pause', function() {//console.log('1pause')
+					addEL(me, 'pause', function() {//console.log('1pause ' + Seek)
 					  var bn = gc('play yt-uix-button-text')[0];
 					  if (bn) bn.innerHTML = 'play'
 					  if (typeof player2 != 'undefined') {
 					    if (me.src.replace('&ratebypass=yes','') != player2.src.replace('&ratebypass=yes','')) {
 					      if (Seek == 3) try { player2.pause() } catch(e) {};
-					      //if (Seek === 0) { Seek = 1 };
+					      if (Seek === 0) { Seek = null; me.play() };
 					      if (typeof AV[itag(me.src)] !== 'string' && Seek != 1 && me.playbackRate == player2.playbackRate) { yt6.player1.setCurrentTime(me.currentTime) } else player2;playbackRate = me.playbackRate;
 					      try { player2.pause(); player2.currentTime = me.currentTime } catch(e) {}
 					    }
@@ -5934,13 +5934,40 @@ function mep_run() {
 		  features: ['',],
 		  audioWidth: 1, audioHeight: 1,
 		  success: function(me) {  $('#audio-type').html( me.pluginType);
-					addEL(me, 'error', function() {
-					  if (me.networkState == 3 && yt6.retry < 5) {//console.log('audio decoding failure')
-					    yt6.player2.setSrc(me.src);
-					    yt6.player2.load();
+					addEL(me, 'error', function() {//console.log('player2 error: ' + me.networkState + ', media type: "'+ me.canPlayType(me.type) + '"')
+					  if (me.networkState == 1 || me.networkState == 3 && yt6.retry < 25) {
 					    yt6.retry++
-					  }
-					})
+					    yt6.player2.setSrc(me.src);
+					    Seek = 1;
+					    yt6.player2.load();
+					    if (!yt6.player1.media.paused) {
+						yt6.player1.pause()
+						$waitUntil(function() { if (yt6.player1.media.paused) return true },
+						function() { yt6.player1.play(); yt6.player1.play() },250,2500);
+					    } else {
+						Seek = 0;
+						if (autoplay(false)) yt6.player1.play()
+					      }
+					  } else Seek = 0
+/*					  if (me.networkState == 1) {
+					    if (!yt6.player1.media.paused) Seek = 1
+					    me.srco = me.src;
+					    yt6.player2.media.removeAttribute('src');
+					    yt6.player2.load();
+					    yt6.player2.setSrc(me.srco);
+					    yt6.player2.load();
+					    delete me.srco;
+					    //if (Seek == 1) {
+
+					    //}
+					  }*/
+					});
+					addEL(me, 'loadeddata', function() {//console.log('2loaded')
+					  yt6.retry = 0;
+					  if (Seek !== 2) { Seek = 1;
+					   if (!player1.media.paused) yt6.player1.pause(); yt6.player2.media.currentTime = me.currentTime; Seek = 0; //if (Seek == 0) yt6.player1.play()
+					  } else { }
+					});
 					addEL(me, 'seeked', function() {//console.log('2seeked')
 					  if (yt6.player2.media.currentTime.toFixed(2) != player2.currentTime.toFixed(2)) {
 					    player2.currentTime = yt6.player1.media.currentTime;
@@ -6073,25 +6100,6 @@ function mep_run() {
 					          //}
 					        }
 					    } else me.pause()
-					  }
-					});
-					addEL(me, 'loadeddata', function() {
-					  yt6.retry = 0
-					  if (Seek !== 2) {
-					   if (!player1.media.paused) Seek = 0; yt6.player1.pause(); //if (Seek == 0) yt6.player1.play()
-					  } else { }
-					});
-					addEL(me, 'error', function() {//console.log('player2 error: ' + me.networkState + ', media type: '+ me.canPlayType(me.type))
-					  if (me.networkState == 1) {
-					    me.srco = me.src;
-					    yt6.player2.media.removeAttribute('src');
-					    yt6.player2.load();
-					    yt6.player2.setSrc(me.srco);
-					    yt6.player2.load();
-					    delete me.srco;
-					    if (Seek == 1) {
-					      yt6.player2.media.currentTime = me.currentTime
-					    }
 					  }
 					});
 		}});
