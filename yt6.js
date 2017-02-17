@@ -2576,27 +2576,30 @@ if (start != false){
 		  bm0.style.visibility = 'visible';
 		  try { gc('video-stream html5-main-video')[0].pause() } catch(e) {};
 		  if ((yt6.autoplay || autoplay2[0]) && start) {
-		    $waitUntil(function(){ if (yt6.sync_timer == true && yt6.player1 && typeof yt6.player1.play == 'function') return true },
+		    $waitUntil(function(){ if (yt6.sync_timer == true || yt6.sync_timer == 0 && yt6.player1 && typeof yt6.player1.play == 'function') { return true } else {  }},
 		      function() {
-			if (typeof player().getPlayerState == 'function' && (navigator.userAgent.match(/Edge\/\d+/) != null || navigator.userAgent.match(/MSIE /) != null || navigator.userAgent.match(/Trident\//) != null)) {
+			if (typeof player().getPlayerState == 'function') {//&& (navigator.userAgent.match(/Edge\/\d+/) != null || navigator.userAgent.match(/MSIE /) != null || navigator.userAgent.match(/Trident\//) != null)) {
 			$waitUntil(function(){ if (player().getPlayerState() == -1) return true },
-			  function(){
+			  function(){//console.log('1 ' + player().getPlayerState())
 			    $waitUntil(function(){ if (player().getPlayerState() == 3 || player().getPlayerState() == 2 || ytplayer.config.args.video_id == video_id()[0]) return true },
-			      function(){
+			      function(){//console.log('2 ' + player().getPlayerState())
 				$waitUntil(function(){ if (player().getPlayerState() == -1 || player().getPlayerState() == 2 || player().getPlayerState() == 3) return true },
-				  function(){
+				  function(){//console.log('3 ' + player().getPlayerState())
 				    $waitUntil(function(){ if (yt6.player1.media.paused == true && document.getElementById('bm0') && document.getElementById('bm0').style.visibility == 'visible') return true },
-				      function(){
+				      function(){//console.log('4 ' + player().getPlayerState())
 					yt6.player1.play()
 					$waitUntil(function(){ if (yt6.player1.media.paused == true && document.getElementById('bm0') && document.getElementById('bm0').style.visibility == 'visible') return true },
-					  function(){
+					  function(){//console.log('5 ' + player().getPlayerState())
 					    yt6.player1.play()
 					  },50,2000)
 				      },50,2000)
 			          },50,2000)
 			      },50,2000)
 			  },50,2000)
-			} else if (document.getElementById('bm0') && document.getElementById('bm0').style.visibility == 'visible') yt6.player1.play();
+			} else  if (document.getElementById('bm0') && document.getElementById('bm0').style.visibility == 'visible') {
+				  yt6.player1.play();
+				  //console.log('0 ' + player().getPlayerState())
+				}
 		      },100,6000)
 		  }
 
@@ -3862,7 +3865,7 @@ if (document.getElementById("bm1") != null) document.getElementById("bm1").paren
    '<br><br><div id="bm7" style="inline-block">Preferred format:<br>'+
    '<input type="radio" class="preferred-format all" onclick="yt6.select_fmt(\'all\')">Any</input>'+
    '<input type="radio" class="preferred-format webm" onclick="yt6.select_fmt(\'webm\')">WebM</input>'+
-   '<input type="radio" class="preferred-format h264" onclick="yt6.select_fmt(\'h264\')">H.264</input>'+
+   '<input type="radio" class="preferred-format h264" onclick="yt6.select_fmt(\'h264\')">DASH/MP4</input>'+
    '</div>'+
    '<br>Sometimes YouTube has certain, typically V+A formats disabled, while the rest may work. When decryption key update fails, no valid media video links occur. To fix it, remove and reload the script manually.'
   )
