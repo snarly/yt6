@@ -2578,7 +2578,7 @@ if (start != false){
 		  if ((yt6.autoplay || autoplay2[0]) && start) {
 		    $waitUntil(function(){ if (yt6.sync_timer == true || yt6.sync_timer == 0 && yt6.player1 && typeof yt6.player1.play == 'function') { return true } else {  }},
 		      function() {
-			if (typeof player().getPlayerState == 'function') {//&& (navigator.userAgent.match(/Edge\/\d+/) != null || navigator.userAgent.match(/MSIE /) != null || navigator.userAgent.match(/Trident\//) != null)) {
+			if (typeof player().getPlayerState == 'function' && yt6.layout == 16 || (navigator.userAgent.match(/Edge\/\d+/) != null || navigator.userAgent.match(/MSIE /) != null || navigator.userAgent.match(/Trident\//) != null)) {
 			$waitUntil(function(){ if (player().getPlayerState() == -1) return true },
 			  function(){//console.log('1 ' + player().getPlayerState())
 			    $waitUntil(function(){ if (player().getPlayerState() == 3 || player().getPlayerState() == 2 || ytplayer.config.args.video_id == video_id()[0]) return true },
