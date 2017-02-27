@@ -6135,11 +6135,16 @@ function mep_run() {
 					  } else {//live broadcast
 					      function resync_live(){
 						player1.media.src1 = player1.media.src; me.src2 = me.src;
-						yt6.player2.setSrc(''); yt6.player1.setSrc('');
-						yt6.player2.load(); yt6.player1.load();
-						yt6.player2.setSrc(me.src2); yt6.player1.setSrc(yt6.player1.media.src1);
-						yt6.player2.load(); yt6.player1.load();
-						yt6.player1.play();
+						yt6.player2.setSrc('');
+						yt6.player2.load();
+						yt6.player2.setSrc(me.src2);
+						yt6.player2.load();
+						if (yt6.x) {
+						  yt6.player1.setSrc(yt6.player1.media.src1);
+						  yt6.player1.setSrc(''); yt6.player1.load();
+						  yt6.player1.load();
+						  yt6.player1.play();
+						}
 					      }
 					      resync_live();
 					    }
