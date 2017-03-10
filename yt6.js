@@ -147,16 +147,16 @@ function no_cards() {
 
 	var x = gc('ytp-button ytp-cards-button')[0]
 	if (x) var y = gc('ytp-cards-teaser')[0]
-	var z = gc('ytp-ce-covering-overlay')[0]
-	if (x || y || z) {
+	var z = gclass('ytp-ce-element'); //gc('ytp-ce-covering-overlay')[0]
+	if (x || y || z[0]) {
 	  if (!yt6.no_cards && bm0.style.visibility == 'hidden') {
 	    if (x) x.style.display = ''
 	    if (y) y.style.display = ''
-	    if (z) z.parentNode.style.display = ''
+	    if (z[0]) for(i=0;i<z.length;i++){ z[i].style.display = '' }
 	  } else {
 	      if (x) x.style.display = 'none'
 	      if (y) y.style.display = 'none'
-	      if (z) z.parentNode.style.display = 'none'
+	      if (z[0]) for(i=0;i<z.length;i++){ z[i].style.display = 'none' }
 	    }
 	}
 
@@ -9529,10 +9529,13 @@ function nop(){//    } else {
     var yt = gc('html5-video-content')[0].style
     var v = gc('video-stream html5-main-video')[0]
     if (document.getElementById('bm0').getAttribute('id') == gc('html5-video-content')[0].getAttribute('id')) var yt = v.style
-
+    //console.log(v.style.height + ' '+bm0.height);console.log( 1 * bm0.height.replace('px','') - hdiff - v.style.height.replace('px','') - 0 )
+    var x = Math.abs(1 * bm0.height.replace('px','') - hdiff - v.style.height.replace('px','') - 0);
     if ( (1 * bm0.width.replace('px','')) < Math.round((bm0.height.replace('px','') - hdiff) * yt6.aspect_ratio )) {
 	v.style.width = yt.width = bm0.width;
-	v.style.height = yt.height = Math.round(bm0.width.replace('px','') / yt6.aspect_ratio ) + 'px';
+	if (x > 0 && x < 1) {
+	  yt.height = v.style.height
+	} else v.style.height = yt.height = bm0.width.replace('px','') / yt6.aspect_ratio - 0 + 'px';
 	v.style.left = yt.left = '0px';
 	v.style.top = yt.top = Math.round((( 1 * bm0.height.replace('px','') - yt.height.replace('px','') ) / 2) - (hdiff / 2)) + 'px';
 	if (webgl) {
@@ -9550,7 +9553,9 @@ function nop(){//    } else {
 	}
     } else {
 	v.style.width = yt.width = Math.round((bm0.height.replace('px','') - hdiff) * yt6.aspect_ratio ) + 'px';
-	v.style.height = yt.height = (1 * bm0.height.replace('px','') - hdiff) + 'px';
+	if (x > 0 && x < 1) {
+	  yt.height = v.style.height
+	} else v.style.height = yt.height = (1 * bm0.height.replace('px','') - hdiff) + 'px';
 	v.style.left = yt.left = Math.round((bm0.width.replace('px','') - yt.width.replace('px','') ) / 2) + 'px';
 	v.style.top = yt.top = '0px';
 	if (webgl) {
@@ -9609,7 +9614,7 @@ function aspect(a) {
 
 //alert(a + ' ' + windowwidth + ' ' + playerwidth + bm0.style.width + bm0.style.height + Math.round(1*((windowheight / 100 >>0) * 80) * yt6.me_aspect) +  'px '+ bm0.style.height + ' ' + Math.round((windowheight / 100 >>0) * 80) + 'px' + Math.round(playerwidth / yt6.aspect_ratio) + 'px')
 
-  if ((a != 'default' ) && (!((1*bm0.style.height.replace('px','') == Math.round((windowheight / 100 >>0) * 80)) && (1*bm0.style.width.replace('px','') == Math.round(2+((windowheight / 100 >>0) * 80) * yt6.me_aspect)) && (yt6.size == 'theater') )) &&
+  if ( (a != 'default') && ( (!((1*bm0.style.height.replace('px','') == Math.round((windowheight / 100 >>0) * 80)) && (1*bm0.style.width.replace('px','') == Math.round(2+((windowheight / 100 >>0) * 80) * yt6.me_aspect)) && (yt6.size == 'theater') )) || yt6.size != 'theater' ) &&
 	(  ((webgl) && (  (bm0.style.height != Math.round(playerwidth / parseFloat(webgl.width / webgl.height)) + 'px') || (!dw)  )) ||
 	   ((!webgl) && (  (bm0.style.height != Math.round(playerwidth / yt6.aspect_ratio) + 'px') || (!dw)  )) ||
 	   ((!webgl) && (  (bm0.style.height != Math.round(playerwidth / yt6.aspect_ratio) + 'px') && (dw)  ))
@@ -9640,8 +9645,12 @@ function aspect(a) {
 		FireEvent2(player(), 'contextmenu')
 
 		var k = gc('ytp-menuitem')
-		for(i=0;i<k.length-1;i++){
-		  if (k[i] && k[i].innerHTML.indexOf('Stats for nerds') != -1 || i==6) { FireEvent2( k[i], 'click'); break }
+		for(i=0;i<k.length;i++){//console.log(i + k[i].textContent)
+		  if (k[i] && ( k[i].textContent.indexOf('Stats for nerds') != -1 || i == k.length-1 )) {
+		    //console.log(k[i].textContent + 'click');
+		    FireEvent2( k[i], 'click');
+		    break
+		  }
 		}
 
 		var z = gc('ytp-popup ytp-contextmenu')[0]
@@ -9658,28 +9667,39 @@ function aspect(a) {
 		        var w = 1 * y.split('x')[0]
 		        var h = 1 * y.split('x')[1]
 			if (w == 0 && h == 0) {
-		  var y = z.innerHTML.split('Dimensions')[1]
-		  if (y) {
-		    var y = y.split('<span>')[1]
-		    if (y) {
-		      var y = y.split(' ').join('').split('</span>')[0].split('@')[0]
-		      if (y && y.indexOf('x') != -1) {
-		        var w = 1 * y.split('x')[0]
-		        var h = 1 * y.split('x')[1]
-		      }
-		    }
-		  }
-
+			  var y = z.innerHTML.split('Dimensions')[1]
+			  if (y) {
+			    var y = y.split('<span>')[1]
+			    if (y) {
+			      var y = y.split(' ').join('').split('</span>')[0].split('@')[0]
+			      if (y && y.indexOf('x') != -1) {
+			        var w = 1 * y.split('x')[0]
+			        var h = 1 * y.split('x')[1]
+			      }
+			    }
+			  }
 			}
-		        if (!isNaN(parseFloat(w / h)) && parseFloat(w / h).toFixed(4) !== yt6.aspect_ratio.toFixed(4)) {
+
+		        if ( !isNaN(parseFloat(w / h)) //&&
+			     //parseFloat(w / h).toFixed(4) !== yt6.aspect_ratio.toFixed(4)
+			   ) {
 		          yt6.aspect_ratio = parseFloat(w / h)
 		        } else { yt6.aspect_ratio = yt6.ar }
-		      }
+		      }; //console.log(yt6.aspect_ratio)
 		    }
 	          }
 		}
 
-		FireEvent2( gclass('html5-video-info-panel-close')[0], 'click')
+		var x = gclass('html5-video-info-panel-close')[0]; //console.log(typeof x +'"'+gclass('html5-video-info-panel-close')[0]+'"')
+		if (x) { FireEvent2( x, 'click') } else {
+		  $waitUntil(function(){ if (gc('ytp-popup ytp-contextmenu')[1]) return true },
+		    function() { var z = gc('ytp-popup ytp-contextmenu');
+			if (z[1]) z[1].style.display = 'none';
+			if (z[0]) z[0].parentNode.removeChild(z[0])
+		    },250,5000)
+		}
+
+
 
 	  }
 
