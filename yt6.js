@@ -3224,7 +3224,7 @@ fix_playlist()
 
 
 
-if (window.ytplayer.config.args && yt6.layout == 16 || yt6.ytg) {// && ytplayer.config.args.video_id != video_id()[0]) {
+if (window.ytplayer.config.args && (yt6.layout == 16 || yt6.ytg)) {// && ytplayer.config.args.video_id != video_id()[0]) {
 
   window.ytplayer.config.args.adaptive_fmts = undefined;
   window.ytplayer.config.args.url_encoded_fmt_stream_map = undefined;
