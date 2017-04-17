@@ -2733,7 +2733,7 @@ function getReferenceObjects() {
         var a = yt6.tmp[0].parentNode;// yt-endpoint-0
         var b = ';var yt6 = document.getElementById("snarls_player"); var a = this.firstElementChild; if (yt6) {; if (a.getAttribute("class").indexOf("style-default-active") != -1) { if (yt6.autoplay == false) { yt6.autoplay = true } } else { yt6.autoplay = false } };'
         if (a.tagName == 'A') a.setAttribute('onclick', b);
-      } else alert('')
+      }
     }
 
     var z = document.getElementsByTagName('ytd-app')[0]
