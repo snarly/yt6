@@ -2650,7 +2650,7 @@ if (start != false){
 			  },50,2000)
 			} else  if (document.getElementById('bm0') && document.getElementById('bm0').style.visibility == 'visible') {
 				  yt6.player1.play();
-				  console.log('0 ' + player().getPlayerState())
+				  //console.log('0 ' + player().getPlayerState())
 				}
 		      },100,6000)
 		  }
