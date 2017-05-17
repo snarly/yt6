@@ -6213,9 +6213,8 @@ function mep_run() {
 					addEL(me, 'loadeddata', function() {//console.log('2loaded')
 					  yt6.retry = 0; yt6.newvideo = false;
 					  var player1_src = document.getElementById('player1').getAttribute('src')
-					  if (Seek !== 2) {
+					  if (Seek !== 2) { Seek = 1;
 					    if (typeof AV[itag(player1_src)] != 'string' && !player1.media.paused) yt6.player1.pause();
-					    //Seek = 1;
 					    yt6.player2.media.currentTime = me.currentTime = yt6.ct;
 					    //if (Seek == 0) yt6.player1.play()
 					  } else { }
