@@ -6022,9 +6022,24 @@ function mep_run() {
 						    $waitUntil(
 						      function() { 
 							yt6.diff = Math.abs(parseFloat(parseFloat(me.currentTime) - parseFloat(player2.currentTime))); //console.log(yt6.diff);console.log(yt6.sync_timer);
-						        if (yt6.diff > parseFloat(0.2) + parseFloat(yt6.speed/10) && yt6.sync_timer < 8) { return true } else { if (yt6.newvideo) { me.play(); me.play(); yt6.player2.media.currentTime = me.currentTime = 0; } else { if (yt6.sync_timer < 8) { yt6.sync_timer++ } else { yt6.sync_timer = 0 }  } }
+						        if (yt6.diff > parseFloat(0.2) + parseFloat(yt6.speed/10) && yt6.sync_timer < 8) { return true }
+							  else {
+							    if (yt6.newvideo) {
+							      if (typeof yt6.player2.media.setCurrentTime == 'function') {
+								me.play(); //me.play();
+								yt6.player2.media.currentTime = me.currentTime = 0;
+							      }
+							    } else {
+								if (yt6.sync_timer < 8) {
+								  yt6.sync_timer++
+								} else {
+								    yt6.sync_timer = 0
+								  }
+							      }
+							  }
 						      },
-						      function() { if (yt6.sync_timer > 5 && me.loaded) { yt6.sync_timer = 0 } else try { me.pause() ; Seek = 1; player2.currentTime = me.currentTime } catch(e) {} },50,1200)
+						      function() { if (yt6.sync_timer > 5 && me.loaded) { yt6.sync_timer = 0 } else try { me.pause() ; Seek = 1; player2.currentTime = me.currentTime } catch(e) {}
+						      },50,1200)
 
 						  }
 						} else {
@@ -6213,8 +6228,9 @@ function mep_run() {
 					addEL(me, 'loadeddata', function() {//console.log('2loaded')
 					  yt6.retry = 0; yt6.newvideo = false;
 					  var player1_src = document.getElementById('player1').getAttribute('src')
-					  if (Seek !== 2) { Seek = 1;
+					  if (Seek !== 2) {
 					    if (typeof AV[itag(player1_src)] != 'string' && !player1.media.paused) yt6.player1.pause();
+					    //Seek = 1;
 					    yt6.player2.media.currentTime = me.currentTime = yt6.ct;
 					    //if (Seek == 0) yt6.player1.play()
 					  } else { }
@@ -6365,7 +6381,7 @@ function mep_run() {
 					        player1.play(); //prevents an unwanted video restart
 					      } else {
 					          //if (yt6.x) {
-					            Seek = 1;
+					            //Seek = 1;
 						    yt6.player1.pause();// yt6.player1.media.currentTime = me.currentTime
 					          //}
 					        }
