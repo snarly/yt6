@@ -6366,7 +6366,7 @@ function mep_run() {
 					        player1.play(); //prevents an unwanted video restart
 					      } else {
 					          //if (yt6.x) {
-					            //Seek = 1;
+					            Seek = 1;
 						    yt6.player1.pause();// yt6.player1.media.currentTime = me.currentTime
 					          //}
 					        }
