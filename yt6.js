@@ -579,7 +579,7 @@ function find_key(rpt){
   var fcnm = rpt.split('dashmpd,')[1]
   if (fcnm) {
     fcnm = fcnm.split('));')[0];
-	if (document.location.href.indexOf('/base.js') == document.location.href.length-8 && fcnm.indexOf('&amp;') != -1) rpt = rpt.split('&amp;').join('&')
+    if (document.location.href.indexOf('/base.js') == document.location.href.length-8 && fcnm.indexOf('&amp;') != -1) fcnm = fcnm.split('&amp;').join('&')
     var i = fcnm.split('\"/signature/\"\+')[1].split(")")[0].split("\n").join("").split("\r").join("");
     fcnm = fcnm.split("&&("+i+"=")[1] || fcnm.split("&amp;&amp;("+i+"=")[1]
     if (fcnm) fcnm = fcnm.substring(0,2)
