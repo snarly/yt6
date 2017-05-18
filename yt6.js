@@ -1,4 +1,4 @@
-var yt6 = document.getElementById('snarls_player')
+var yt6 = window.document.getElementById('snarls_player')
 
   yt6.body = document.getElementsByTagName('body')[0]
   if (yt6.body) {
@@ -572,12 +572,14 @@ function find_key(rpt){
     return fcnm
   }
 
+
   //  var fcnm = rpt.match(/signature=([^(]+)/)[1];
   //  var fcnm = rpt.match(/dashmpd.[^]*signature\/"\+(.|[\s\S].\)\)\;)/)[0];//+ 2ik_1ez&
+
   var fcnm = rpt.split('dashmpd,')[1]
   if (fcnm) {
     fcnm = fcnm.split('));')[0];
-    if (document.location.href.indexOf('//s.ytimg.com/') != -1 && fcnm.indexOf('&amp;') != -1) fcnm = fcnm.split('&amp;').join('&')
+	if (document.location.href.indexOf('/base.js') == document.location.href.length-8 && fcnm.indexOf('&amp;') != -1) rpt = rpt.split('&amp;').join('&')
     var i = fcnm.split('\"/signature/\"\+')[1].split(")")[0].split("\n").join("").split("\r").join("");
     fcnm = fcnm.split("&&("+i+"=")[1] || fcnm.split("&amp;&amp;("+i+"=")[1]
     if (fcnm) fcnm = fcnm.substring(0,2)
@@ -613,13 +615,13 @@ function find_key(rpt){
     var mch = mch.join('');
     var mch = mch.split('\;');
     for (i=0;i<mch.length;i++) {
-      var zzx = mch[i].substring(0,3);
+      var zzx = mch[i].substring(0,3)
       if ((zzx === zzy) && (zzx.charAt(2)==='.')) { var zzz = zzy.substring(0,2) };
       var zzy = zzx
     }
     if (typeof zzz === 'undefined') {
       for (i=0;i<mch.length;i++) {
-        var zzx = mch[i].substring(0,4);
+        var zzx = mch[i].substring(0,4)
         if ((zzx === zzy) && (zzx.charAt(3)==='.')) { var zzz = zzy.substring(0,3) };
         var zzy = zzx
       }
@@ -628,7 +630,10 @@ function find_key(rpt){
     return [mch,zzz]
   }//fcobj
 
-  var decrypt0 = rpt.match(fcobj()[0])[0].split(" " + fcobj()[1] + "=").join(" dekrypt0=")
+  var f1 = fcobj()[0]
+  var f2 = fcobj()[1]
+  
+  var decrypt0 = rpt.match(f1)[0].split(" " + f2 + "=").join(" dekrypt0=")
   if (rpt.match(fs)[0] && rpt.match(fs)[0].split(';')[0] && rpt.match(fs)[0].split(';')[0].indexOf('function') == -1 && rpt.match(fs)[0].split(';')[1].indexOf('function') != -1) {
     var fs0 = (rpt.match(fs)[0].match(/;/g) || []).length;
     var fs1 = rpt.match(fs)[0].split(';')
@@ -638,7 +643,7 @@ function find_key(rpt){
     }
   } else fs2 = rpt.match(fs)[0]
 
-  var fcnm = 'function fcnm(' + fs2.split("(")[1].split(")")[0] + '){ ' + decrypt0 + '; ' + fs2.split(fcobj()[1]+".").join("dekrypt0.").split("\"").join("'").split("){")[1]
+  var fcnm = 'function fcnm(' + fs2.split("(")[1].split(")")[0] + '){ ' + decrypt0 + '; ' + fs2.split(f2+".").join("dekrypt0.").split(f2+"['").join("dekrypt0['").split(f2+"[\"").join("dekrypt0['").split("\"").join("'").split("){")[1]
   var fcnm = "function " + fcnm.split("function ")[1]
 
   eval(fcnm)
@@ -649,7 +654,7 @@ function find_key(rpt){
 }
 
 
-if (document.location.href.indexOf('//s.ytimg.com/') > -1) {
+if (document.location.href.indexOf('/base.js') == document.location.href.length-8) {
   window.fcnm = find_key(yt6.body.firstChild[yt6.txt]);
   if (window.fcnm && window.fcnm.toString().indexOf('function fcnm(') != -1) {
     yt6.body.firstChild[yt6.txt] = window.fcnm.toString()
