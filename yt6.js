@@ -871,7 +871,7 @@ function ajax1(update){
         seen.push(value);
         for (q in value)
           if (Object.prototype.hasOwnProperty.call(value, q)) {
-            z = prune(q, value, depthDecr - 1);
+		  try { z = prune(q, value, depthDecr - 1); } catch(e){}
             if (z) {
               partial.push(q + ':' + z);
             }
@@ -2434,7 +2434,7 @@ var Sync = function(newState) {
               case 5: player2.pause(); resync(); break;
 	  }
 
-	} else if (yt6 && yt6.x && newState == -1) player().pauseVideo(); 
+	} else if (yt6 && yt6.x && newState == 1) player().pauseVideo(); 
       }
 
 //      if (typeof player() !== 'undefined') {
