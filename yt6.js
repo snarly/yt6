@@ -1,4 +1,4 @@
-var yt6 = window.document.getElementById('snarls_player')
+var yt6 = document.getElementById('snarls_player')
 
   yt6.body = document.getElementsByTagName('body')[0]
   if (yt6.body) {
@@ -579,7 +579,7 @@ function find_key(rpt){
   var fcnm = rpt.split('dashmpd,')[1]
   if (fcnm) {
     fcnm = fcnm.split('));')[0];
-    if (document.location.href.indexOf('/base.js') == document.location.href.length-8 && fcnm.indexOf('&amp;') != -1) fcnm = fcnm.split('&amp;').join('&')
+	if (document.location.href.indexOf('/base.js') == document.location.href.length-8 && fcnm.indexOf('&amp;') != -1) rpt = rpt.split('&amp;').join('&')
     var i = fcnm.split('\"/signature/\"\+')[1].split(")")[0].split("\n").join("").split("\r").join("");
     fcnm = fcnm.split("&&("+i+"=")[1] || fcnm.split("&amp;&amp;("+i+"=")[1]
     if (fcnm) fcnm = fcnm.substring(0,2)
@@ -857,15 +857,37 @@ function ajax1(update){
 	ypa.dispose();
     } catch(e) { yt6.error = '  \n  ' }
 
-    if (yt6.error != '  \n  ' && typeof ypa.getVideoData == 'function') {
+    if (yt6.error != '  \n  ') {
 
-    var gvd = JSON.stringify(ypa.getVideoData());
+
+    function prune(key, holder, depthDecr) {
+      var q, z, partial = [], value = holder[key];
+      switch (typeof value) {
+      case 'string':
+        return '"' + value + '"';
+      case 'object':
+        if (0 >= depthDecr || seen.indexOf(value) >= 0)
+          return;
+        seen.push(value);
+        for (q in value)
+          if (Object.prototype.hasOwnProperty.call(value, q)) {
+            z = prune(q, value, depthDecr - 1);
+            if (z) {
+              partial.push(q + ':' + z);
+            }
+          }
+        return '{' + partial.join() + '}';
+      }
+    }
+	
+	var seen = []
+    var gvd = prune('', {'': ypa}, 9);//YT deleted getvideodata: JSON.stringify(ypa.getVideoData());
     //test[yt6.txt] = yt6.gvd;
     var xr = gvd.match(/https:[^"]+videoplayback[^"]+/g);
 
-    if (xr) {//xr defined?
+    if (xr) {
 
-    //yt6.ya = yt6.xr.filter(z => z.length < 1000);
+    //var ya = yt6.xr.filter(z => z.length < 1000);
     var filtR = function(z) { if (z && z.length < 1000) return z }
 
     var ya = xr.filter(filtR);
@@ -879,7 +901,7 @@ function ajax1(update){
       var durl = ya.filter(uniq).map(filtR);//.map((item, pos) => item + '&signature=' + yt6.dsig[pos]);
 
     } else {
-	var durl = xr.filter(uniq);
+        var durl = xr.filter(uniq);
       }
 
     ya = xr = gvd = ypa = null;
@@ -887,13 +909,13 @@ function ajax1(update){
 
     var cfmt = [];
 
-    //for (eurl of yt6.durl) {
+    //for (var eurl of durl) {
     for (k=0;k < durl.length;k++) {
       var eurl = durl[k];
       if (eurl.indexOf('itag') != -1) {
 	if (typeof URLSearchParams != 'undefined') {
 	  var usp = new URLSearchParams(eurl.split('?')[1]);
-	  var efmt = qual[usp.get('itag')] || usp.get('itag');
+	  var efmt = get_quality(usp.get('itag')) || usp.get('itag');
 	  cfmt[usp.get('itag')] =
 	  //`<a href="${eurl}">${efmt}</a>`;
 	    '<a name="' + usp.get('itag') + '" href="' + eurl + '">' + efmt + '</a>';
