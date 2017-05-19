@@ -2434,7 +2434,7 @@ var Sync = function(newState) {
               case 5: player2.pause(); resync(); break;
 	  }
 
-	} else if (yt6 && yt6.x && newState == 1) player().pauseVideo(); 
+	} else if (yt6 && yt6.x && newState == -1) player().pauseVideo(); 
       }
 
 //      if (typeof player() !== 'undefined') {
@@ -2578,6 +2578,11 @@ if (autoplay != null) {
     if (yt6.ytg) {
       var autoplay2 = document.getElementsByTagName('ytg-playlist-panel-renderer');//gc('style-scope ytg-playlist-panel-renderer')
       if (autoplay2[0]) yt6.autoplay = true
+      if (typeof yt6.player1.media.firstChild != 'undefined' && yt6.player1.media.firstChild.name == '0' && yt6.x) {
+	switch_players();
+	if (yt6.autoplay) player().playVideo();
+	return
+      }
     }
 
 //console.log(yt6.autoplay + ' '+start+ autoplay2[0])
@@ -4079,11 +4084,12 @@ if (document.getElementById("bm1") != null) document.getElementById("bm1").paren
    '<input type="radio" class="preferred-format webm" onclick="yt6.select_fmt(\'webm\')">WebM</input>'+
    '<input type="radio" class="preferred-format h264" onclick="yt6.select_fmt(\'h264\')">DASH/MP4</input>'+
    '</div>'+
-   '<br>Sometimes YouTube has certain, typically V+A formats disabled, while the rest may work. When decryption key update fails, no valid media links occur. To fix it, remove and reload the script manually.'
+   '<br>Sometimes YouTube has certain, typically V+A formats disabled, while the rest may work. When decryption key update fails, no valid media links occur. To fix it, remove and reload the script manually.<br>'
   )
   document.getElementById('bm2').innerHTML = html.join('<br>')
 
   yt6.select_fmt()
+
 
   var dw = document.createElement('div')
   dw.id = 'bm6'
@@ -4105,6 +4111,19 @@ if (document.getElementById("bm1") != null) document.getElementById("bm1").paren
   } else {
       dw.removeAttribute('checked');
     }
+
+  var dw = document.createElement('br')
+  document.getElementById('bm2').appendChild(dw);
+
+  var dw = document.createElement('div')
+  dw[yt6.txt] = 'Backup controls:'
+  document.getElementById('bm2').appendChild(dw);
+
+  var dw = document.createElement('div')
+  dw.id = 'bm8'
+  dw.innerHTML = '<span></span>'
+  document.getElementById('bm2').appendChild(dw);
+
 
 
   var dw = document.createElement('button');
@@ -6269,10 +6288,13 @@ function mep_run() {
 					  }
 					  if (Seek == 1) {
 					    Seek = null ;
-					    if (typeof AV[itag(yt6.player1.media.src)] !== 'string' && yt6.browser_tab == 'visible') {
-					      me.play(); $waitUntil(
+					    if (typeof AV[itag(yt6.player1.media.src)] !== 'string') {
+					      me.play();
+					      if (yt6.browser_tab == 'visible') {
+					        $waitUntil(
 						function(){ if (!yt6.player2.media.paused) return true },
 						function(){ if (yt6.x) { player1.play() } else { me.pause() }},5,1000)
+					      }
 					    }
 					  } else {
 					      if ( (!me.paused) && (player1.media.paused) && (yt6.x) ) {
@@ -10252,7 +10274,7 @@ function control_panel1() {
 
     var remove = document.createElement('div');
     remove.id = 'remove-sp';
-    var remove_sp_innerhtml = '<button onclick="switch_players()" class="yt-uix-button-text" aria-label="Switch" title="Switch" style="padding: 0 1px 0 0"><img src="//s.ytimg.com/yts/img/HTML5_1Color_Black-vfl902gVJ.png" style="vertical-align:middle; height:12px; padding:0px""></img></button><button onclick="aspect()" class="yt-uix-button-text" aria-label="Resize" title="Resize">«↔»</button><br><button onclick="deldiv()" class="yt-uix-button-text">X</button><button id="audio_x" class="yt-uix-button-text" style="padding: 0 1px 0 1px; right: 0px" onclick="if (yt6.player1 && yt6.player2 && typeof yt6.player2.load == \'function\') { var audio_x = window.prompt(\'Enter URL of any audio (or video) file across the net to use as background sound. Only plays alongside non-MSE-mode video-only sources.\', document.getElementById(\'no.2\').src); yt6.audiox = document.getElementById(\'no.2\').src = yt6.player2.media.src = audio_x || yt6.linx[yt6.userprefA[0]]; if (!audio_x) { yt6.audiox = null; delete yt6.audiox }; yt6.player1.pause(); yt6.player2.load() };">audio</button></div>'
+    var remove_sp_innerhtml = '<button onclick="switch_players()" class="yt-uix-button-text" aria-label="Switch" title="Switch" style="padding: 0 1px 0 0"><img src="//s.ytimg.com/yts/img/HTML5_1Color_Black-vfl902gVJ.png" style="vertical-align:middle; height:12px; padding:0px""></img></button><button onclick="aspect()" class="yt-uix-button-text" aria-label="Resize" title="Resize">«↔»</button><br><button onclick="deldiv()" class="yt-uix-button-text" aria-label="Remove" title="Remove">X</button><button id="audio_x" class="yt-uix-button-text" aria-label="External audio" title="External audio" style="padding: 0 1px 0 1px; right: 0px" onclick="if (yt6.player1 && yt6.player2 && typeof yt6.player2.load == \'function\') { var audio_x = window.prompt(\'Enter URL of any audio (or video) file across the net to use as background sound. Only plays alongside non-MSE-mode video-only sources.\', document.getElementById(\'no.2\').src); yt6.audiox = document.getElementById(\'no.2\').src = yt6.player2.media.src = audio_x || yt6.linx[yt6.userprefA[0]]; if (!audio_x) { yt6.audiox = null; delete yt6.audiox }; yt6.player1.pause(); yt6.player2.load() };">audio</button></div>'
 
     span.appendChild(remove);
     remove.setAttribute('style','display: inline-block');
@@ -10269,7 +10291,7 @@ function control_panel1() {
     //&#9724;
     //&#8633;
     //&#8703;//
-  }
+  } else var span = document.getElementById('yt-alert-message').getElementsByTagName('span')[0]
 
 
 if (document.getElementById('controls-sp') == null) {
@@ -10307,6 +10329,32 @@ var controls = document.getElementById('controls-sp')
   }
 
   //document.getElementById('remove-sp').parentNode.setAttribute('style','display:inline-block');
+
+
+    var y = document.getElementById('bm8')
+    if (y && y.firstChild) {
+      var z = span.cloneNode(true)
+      removeEL(y, 'mousedown', yt6.clicky ,false);
+      y.innerHTML = ''
+      y.appendChild(z)
+      z = y.firstChild
+      if (z.firstChild) {
+	z.firstChild.setAttribute('id','remove_bak')
+	if (z.firstChild.nextSibling) z.firstChild.nextSibling.setAttribute('id','controls_bak')
+	var z = z.firstChild.getElementsByTagName('button')
+	for(i=0;i<z.length;i++){
+	  if (z[i]) {
+	    z[i].style = 'width: 12px;'
+	    if (i == 1) z[i].innerHTML = '#'
+	    if (i == 2) z[i].innerHTML = 'X'
+	    if (i == 3) z[i].innerHTML = 'A'
+	  //if (i == 0 || i == 3) { z.getElementsByTagName('button')[i].innerHTML = '|' } else z.getElementsByTagName('button')[i].innerHTML = '\\'
+	  }
+	}
+      }
+    }
+    //var z = y.children
+    //for(var i in z){ if (z[i] && typeof z[i].getAttribute == 'function' && z[i].getAttribute('id')) z[i].removeAttribute('id') }
 
   return document.getElementById('controls-sp');
 }//control_panel1
@@ -10394,7 +10442,7 @@ var CtrlS = function (stage,v){
 /* If a button was clicked (uses event delegation)...*/
   yt6.controls_pushed = false
   addEL(controls, 'mouseup',function(e){ yt6.controls_pushed = false }, false)
-  addEL(controls, 'mousedown',function(e){ yt6.controls_pushed = true
+  yt6.clicky = function(e){ yt6.controls_pushed = true
     t = e.target || getTarget(e);
 
     if(t.nodeName.toLowerCase()==='button'){
@@ -10673,7 +10721,11 @@ var CtrlS = function (stage,v){
 
     }//t.nodeName
 
-  },false);//click eventlistener
+  }//clicky
+  addEL(controls, 'mousedown', yt6.clicky ,false);//click eventlistener
+  var y = document.getElementById('bm8')
+  addEL(y, 'mouseup',function(e){ yt6.controls_pushed = false }, false)
+  addEL(y, 'mousedown', yt6.clicky ,false);
 
 }//CtrlS
 
