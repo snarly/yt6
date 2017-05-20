@@ -2389,9 +2389,9 @@ var Sync = function(newState) {
 
 	var bm0 = document.getElementById('bm0')
 	var player2 = document.getElementById('player2')
+	var bn = gc('play yt-uix-button-text');
 
 	if (yt6 && !yt6.x) {
-	  var bn = gc('play yt-uix-button-text');
           if (typeof player().getPlayerState == 'function') {
 	    if (typeof player().getAttribute('flashvars') != 'string') {
 		var stage = gc('html5-video-content')[0];
