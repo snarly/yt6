@@ -6198,7 +6198,7 @@ function mep_run() {
 							  if (z[i+1]) {
 							    var y = z[i+1].children
 							      for(j=0;j<y.length;j++){
-							        if (y[j].getAttribute('href')) y[j].click()
+							        if (y[j].getAttribute('href')) if (typeof y[j].click == 'function') { y[j].click() } else FireEvent( y[j], 'click')
 							      }
 							    };
 							  }
@@ -6323,7 +6323,7 @@ function mep_run() {
 					  }*/
 					});
 					addEL(me, 'loadeddata', function() {//
-					  yt6.retry = 0; yt6.newvideo = false;
+					  yt6.retry = 0; me.loaded = true; yt6.newvideo = false;
 					  var player1_src = document.getElementById('player1').getAttribute('src')
 					  //if (Seek !== 2) {
 					    Seek = 1; //console.log('2loaded')
@@ -6378,7 +6378,7 @@ function mep_run() {
 							  if (z[i+1]) {
 							    var y = z[i+1].children
 							      for(j=0;j<y.length;j++){
-							        if (y[j].getAttribute('href')) y[j].click()
+							        if (y[j].getAttribute('href')) if (typeof y[j].click == 'function') { y[j].click() } else FireEvent( y[j], 'click')
 							      }
 							    };
 							  }
@@ -6483,55 +6483,15 @@ function mep_run() {
 					      } else {
 					          //if (yt6.x) {
 					            Seek = 1;
-						    yt6.player1.pause();// yt6.player1.media.currentTime = me.currentTime
+						    yt6.player1.pause();
+						    if (!(me.loaded && player1.media.loaded)) {
+						      $waitUntil(function(){if(me.loaded && player1.media.loaded) return true},
+						        function(){yt6.player1.media.currentTime = me.currentTime},400,4000)
+						    } else yt6.player1.media.currentTime = me.currentTime;
 					          //}
 					        }
 					    } else me.pause()
 					  }
-					});
-		}});
-} else {
-		$('#player2').mediaelementplayer({
-		  enableKeyboard: false,
-		  enableAutosize: false,
-		  pauseOtherPlayers: false,
-		  autoRewind: false,
-		  features: ['',],
-		  audioWidth: 1, audioHeight: 1,
-		  success: function(me) {  $('#audio-type').html( me.pluginType);
-					addEL(me, 'seeked', function() {
-					  if (Seek == 1) {
-					    Seek = null ;  player1.play()
-					  } else {
-					      if (!me.paused) {
-						player1.setCurrentTime( me.currentTime )
-					      }
-					    }
-					});
-					addEL(me, 'ended', function() {
-					  if (player1.options.loop1) {
-					    Seek = 1; me.currentTime = 0;
-					  } else {
-					      Seek = 3; me.currentTime = 0;
-					      if ((autoplay(false)) && (document.getElementById('player1').currentTime < document.getElementById('player1').duration)) {
-
-					      }
-					    }
-					});
-					addEL(me, 'pause', function() {
-					  if (Seek == 2) { Seek = null };
-					  if (!player1.paused) { player1.pause() }
-					});
-					addEL(me, 'play', function() {
-					  Seek = 2;
-					  if ( (!player1.playing) && ( ((typeof player().getPlayerState != 'function') && (flashvars == null)) || ((yt6.x) && (flashvars != null)) ) )    {
-					  	  player1.play()
-						}
-					});
-					addEL(me, 'loadeddata', function() {
-					  if (Seek !== 2) {
-					    Seek = 0; player1.pause()
-					  } else { }
 					});
 		}});
 }//player2
@@ -6678,6 +6638,7 @@ if (typeof linx[160] === 'string') { linx.splice(132, 1, linx[160])}
           if (qual[i]['t'].indexOf("AAC") === -1) {
             js.title = qual[i]['t'].replace("H.264",""); V[i] = "itag=" + i
           } else {
+	      js.type = 'audio/mp4'
               js.title = qual[i]['t'].replace("DASH",""); A[i] = "itag=" + i
             }
         };
