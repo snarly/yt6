@@ -97,7 +97,7 @@ if (!window.onchange) {
           focus:v, focusin:v, pageshow:v, blur:h, focusout:h, pagehide:h
         };
 
-    evt = evt || window.event; console.log(evt.type)
+    evt = evt || window.event;
     if (evt.type && evt.type.indexOf('visibilitychange') != -1) {
       if (yt6.browser_tab != 'hidden') { yt6.browser_tab = 'hidden' } else yt6.browser_tab = 'visible'
     } else if (evt.type in evtMap) {
@@ -105,7 +105,7 @@ if (!window.onchange) {
 	    } else if (evt.type != 'change') {
 		yt6.browser_tab = this[hidden] ? "hidden" : "visible";
 	      } //else yt6.browser_tab = yt6.browser_tab
-    if (!yt6.browser_tab) yt6.browser_tab = 'visible'; console.log(yt6.browser_tab)
+    if (!yt6.browser_tab) yt6.browser_tab = 'visible';
   }
 
 
@@ -1596,8 +1596,8 @@ function alt_yt_cleanup() {//console.log(player().getAttribute('name') + typeof 
 		var Hb=function(a){return Ja(g.Gb,a)};
 		var g = {}
 		g.Gb=""
-		g.Oe=Hb("Opera");alert(typeof yt.setConfig)
-		yt.setConfig = function (a){Ne(g.Oe,arguments)};alert(typeof yt.setConfig);alert(typeof yt.setConfig)
+		g.Oe=Hb("Opera")
+		yt.setConfig = function (a){Ne(g.Oe,arguments)}
 	      }
 	      eval('window.ytplayer.config = ' + xhr1.responseText.split('yt.setConfig({\'PLAYER_CONFIG\': ')[1].split('});writeEmbed()')[0].split(',\'EXPERIMENT_FLAGS\'')[0].split('\n').join('').split('\r').join('') );
 	      //console.log(ytplayer.config); console.log('args:'+typeof window.ytplayer.config.args)
