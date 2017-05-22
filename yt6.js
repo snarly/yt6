@@ -6482,8 +6482,9 @@ function mep_run() {
 					        player1.play(); //prevents an unwanted video restart
 					      } else {
 					          //if (yt6.x) {
+						    yt6.Seek = 1; yt6.player1.pause(); 
 						    if (!yt6.tilt) {//(me.loaded && player1.media.loaded)) {
-						      $waitUntil(function(){if (me.loaded && !yt6.player1.media.paused) { return true } else { yt6.tilt = 1; yt6.Seek = 1; yt6.player1.pause(); yt6.Seek = 1; yt6.player1.media.currentTime = me.currentTime }},
+						      $waitUntil(function(){if (me.loaded && !yt6.player1.media.paused) { return true } else { yt6.tilt = 1; yt6.player1.media.currentTime = me.currentTime }},
 						        function(){ delete yt6.tilt },400,400*(1+yt6.speed))
 						      
 						    }
