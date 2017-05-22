@@ -6484,10 +6484,10 @@ function mep_run() {
 					          //if (yt6.x) {
 					            Seek = 1;
 						    yt6.player1.pause();
-						    if (!(me.loaded && player1.media.loaded)) {
-						      $waitUntil(function(){if(me.loaded && player1.media.loaded) return true},
+						    //if (!(me.loaded && player1.media.loaded)) {
+						      $waitUntil(function(){ return yt6.player1.media.paused },
 						        function(){yt6.player1.media.currentTime = me.currentTime},400,400*(1+yt6.speed))
-						    } else yt6.player1.media.currentTime = me.currentTime;
+						    //} else yt6.player1.media.currentTime = me.currentTime;
 					          //}
 					        }
 					    } else me.pause()
