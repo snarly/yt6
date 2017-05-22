@@ -6487,7 +6487,7 @@ function mep_run() {
 						    if (!(me.loaded && player1.media.loaded)) {
 						      $waitUntil(function(){if(me.loaded && player1.media.loaded) return true},
 						        function(){if(yt6.player1.media.currentTime != me.currentTime) yt6.player1.media.currentTime = me.currentTime;},400,400)
-						    } else if(yt6.player1.media.currentTime != me.currentTime) yt6.player1.media.currentTime = me.currentTime;
+						    } //else if(yt6.player1.media.currentTime != me.currentTime) yt6.player1.media.currentTime = me.currentTime;
 					          //}
 					        }
 					    } else me.pause()
