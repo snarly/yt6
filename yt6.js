@@ -6493,6 +6493,12 @@ function mep_run() {
 					    } else me.pause()
 					  }
 					});
+					addEL(me, 'playing', function() {
+					  if ( yt6.x && yt6.browser_tab == 'hidden' && yt6.player1.media.paused ) {
+					    yt6.player1.media.currentTime = me.currentTime;
+					    player1.play();
+					  }
+					});
 		}});
 }//player2
 
