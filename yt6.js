@@ -6484,9 +6484,9 @@ function mep_run() {
 					          //if (yt6.x) {
 					            Seek = 1;
 						    yt6.player1.pause();
-						    if (!(me.loaded && player1.media.loaded)) {
+						    if (!(me.loaded && player1.media.loaded) && yt6.player1.media.currentTime < 1) {
 						      $waitUntil(function(){if(me.loaded && player1.media.loaded) return true},
-						        function(){if(yt6.player1.media.currentTime != me.currentTime) yt6.player1.media.currentTime = me.currentTime;},400,400)
+						        function(){ yt6.player1.media.currentTime = me.currentTime },400,1200)
 						    } //else if(yt6.player1.media.currentTime != me.currentTime) yt6.player1.media.currentTime = me.currentTime;
 					          //}
 					        }
