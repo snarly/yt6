@@ -2288,7 +2288,7 @@ function set_controls(){
       } else {
 	  if (!yt6.x) {
 	    var stage = p; v = p
-	    if (p && typeof flashvars == 'object') {
+	    if (p && typeof flashvars == 'object' && flashvars != null) {
 	      for (i=0;i<flashvars.length;i++) {
 	        if (typeof flashvars[i].pauseMedia == 'function') {
 		  if (!flashvars[i].paused) {
