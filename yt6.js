@@ -537,7 +537,7 @@ function FireEvent2( element, event ) {
 
 }
 
-var mouseEvt = document.createEvent("MouseEvents");
+try { var mouseEvt = document.createEvent("MouseEvents") } catch(e) {};
 
 
 
@@ -9909,10 +9909,12 @@ if ((p1 != null) && (yt6.x)){
 	delete yt6.ww //= windowwidth
 	yt6.ytp_style = ytp_style
 
-	mouseEvt.initMouseEvent('DOMMouseScroll',true,true,window,2,0,0,0,0,0,0,0,0,0,null);
-	yt6.ytg.dispatchEvent(mouseEvt)
-	mouseEvt.initMouseEvent('DOMMouseScroll',true,true,window,-2,0,0,0,0,0,0,0,0,0,null);
-	yt6.ytg.dispatchEvent(mouseEvt)
+	try {
+	  mouseEvt.initMouseEvent('DOMMouseScroll',true,true,window,2,0,0,0,0,0,0,0,0,0,null);
+	  yt6.ytg.dispatchEvent(mouseEvt)
+	  mouseEvt.initMouseEvent('DOMMouseScroll',true,true,window,-2,0,0,0,0,0,0,0,0,0,null);
+	  yt6.ytg.dispatchEvent(mouseEvt)
+	} catch(e) {}
 
 	/*if (yt6.size && yt6.size != 'default') {
 	  api.left = -1 * yt6.ytg.style.left.replace('px','') + (windowwidth - w) / 2 + 'px'
