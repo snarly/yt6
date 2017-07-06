@@ -616,7 +616,13 @@ function find_key(rpt){
       for(k=j.length;k>0;k--){
 	if (j[k] == i && j[k+1] == '=') { fcnm = j.substring(k+2,k+4); break }
       }
-    }
+    } else {
+	fcnm = rpt.split('set("signature",')[1]
+	if (fcnm) {
+	  fcnm = fcnm.split('(')[0]
+	  fcnm = fcnm.split("\n").join("").split("\r").join("");
+	}
+      }
   } else {
       fcnm = rpt.split('set("signature",')[1]
       if (fcnm) {
@@ -10672,7 +10678,7 @@ function control_panel1() {
 
     var remove = document.createElement('div');
     remove.id = 'remove-sp';
-    var remove_sp_innerhtml = '<button onclick="switch_players()" class="yt-uix-button-text" aria-label="Switch" title="Switch" style="padding: 0 1px 0 0"><img src="//s.ytimg.com/yts/img/HTML5_1Color_Black-vfl902gVJ.png" style="vertical-align:middle; height:12px; padding:0px""></img></button><button onclick="aspect()" class="yt-uix-button-text" aria-label="Resize" title="Resize">«↔»</button><br><button onclick="var z = window.prompt(\'Are you sure you want to quit?\\n Cancel = Not now;\\n 0 = Just remove program without page refresh;\\n 1 = Refresh page with Classic YouTube Layout;\\n 2 = Refresh page and try to load new YouTube layout \(If your browser supports it\);\\n 3 = Visit page on Gaming domain;\'); if (z && z != 0 && (z == 1 || z == 2 || z == 3)) { if (z == 2) document.cookie=&quot;PREF=f1=50000000&f5=10&f6=1004;path=/;domain=.youtube.com;expires=Session&quot;; if (z == 1) document.cookie=&quot;PREF=f1=50000000&f5=10;path=/;domain=.youtube.com;expires=Session&quot;; if (z == 3) { location.href = window.location.href.replace(\'www.youtube.com\',\'gaming.youtube.com\') } else location.href = window.location.href.replace(\'gaming.youtube.com\',\'www.youtube.com\') } else if (z == 0) deldiv()" class="yt-uix-button-text" aria-label="Remove" title="Remove">X</button><button id="audio_x" class="yt-uix-button-text" aria-label="External audio" title="External audio" style="padding: 0 1px 0 1px; right: 0px" onclick="if (yt6.player1 && yt6.player2 && typeof yt6.player2.load == \'function\') { var audio_x = window.prompt(\'Enter URL of any audio (or video) file across the net to use as background sound. Only plays alongside non-MSE-mode video-only sources.\', document.getElementById(\'no.2\').src); yt6.audiox = document.getElementById(\'no.2\').src = yt6.player2.media.src = audio_x || yt6.linx[yt6.userprefA[0]]; if (!audio_x) { yt6.audiox = null; delete yt6.audiox }; yt6.player1.pause(); yt6.player2.load() };">audio</button></div>'
+    var remove_sp_innerhtml = '<button onclick="switch_players()" class="yt-uix-button-text" aria-label="Switch" title="Switch" style="padding: 0 1px 0 0"><img src="//s.ytimg.com/yts/img/HTML5_1Color_Black-vfl902gVJ.png" style="vertical-align:middle; height:12px; padding:0px""></img></button><button onclick="aspect()" class="yt-uix-button-text" aria-label="Resize" title="Resize">«↔»</button><br><button onclick="var z = window.prompt(\'Are you sure you want to quit?\\n Cancel = Not now;\\n 0 = Just remove program without page refresh;\\n 1 = Refresh page with Classic YouTube Layout;\\n 2 = Refresh page and try to load new YouTube layout \(If your browser supports it\);\\n 3 = Visit page on Gaming subdomain;\'); if (z && z != 0 && (z == 1 || z == 2 || z == 3)) { if (z == 2) document.cookie=&quot;PREF=f1=50000000&f5=10&f6=1004;path=/;domain=.youtube.com;expires=Session&quot;; if (z == 1) document.cookie=&quot;PREF=f1=50000000&f5=10;path=/;domain=.youtube.com;expires=Session&quot;; if (z == 3) { location.href = window.location.href.replace(\'www.youtube.com\',\'gaming.youtube.com\') } else location.href = window.location.href.replace(\'gaming.youtube.com\',\'www.youtube.com\') } else if (z == 0) deldiv()" class="yt-uix-button-text" aria-label="Remove" title="Remove">X</button><button id="audio_x" class="yt-uix-button-text" aria-label="External audio" title="External audio" style="padding: 0 1px 0 1px; right: 0px" onclick="if (yt6.player1 && yt6.player2 && typeof yt6.player2.load == \'function\') { var audio_x = window.prompt(\'Enter URL of any audio (or video) file across the net to use as background sound. Only plays alongside non-MSE-mode video-only sources.\', document.getElementById(\'no.2\').src); yt6.audiox = document.getElementById(\'no.2\').src = yt6.player2.media.src = audio_x || yt6.linx[yt6.userprefA[0]]; if (!audio_x) { yt6.audiox = null; delete yt6.audiox }; yt6.player1.pause(); yt6.player2.load() };">audio</button></div>'
 
     span.appendChild(remove);
     remove.setAttribute('style','display: inline-block');
