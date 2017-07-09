@@ -605,33 +605,34 @@ function find_key(rpt){
   //  var fcnm = rpt.match(/signature=([^(]+)/)[1];
   //  var fcnm = rpt.match(/dashmpd.[^]*signature\/"\+(.|[\s\S].\)\)\;)/)[0];//+ 2ik_1ez&
 
-  var fcnm = rpt.split('dashmpd,')[1]
-  if (fcnm) {
-    fcnm = fcnm.split('));')[0];
-    if (document.location.href.indexOf('/base.js') == document.location.href.length-8 && fcnm.indexOf('&amp;') != -1) fcnm = fcnm.split('&amp;').join('&')
-    var i = fcnm.split('\"/signature/\"\+')[1].split(")")[0].split("\n").join("").split("\r").join("");
-    var j = fcnm.split("&&("+i+"=")[1] || fcnm.split("&amp;&amp;("+i+"=")[1];
-    if (j) { fcnm = j.substring(0,2) } else if (i) {
-      var j = fcnm.split('\"/signature/\"\+')[0]
-      for(k=j.length;k>0;k--){
-	if (j[k] == i && j[k+1] == '=') { fcnm = j.substring(k+2,k+4); break }
-      }
-    } else {
+  function fcnm2() {
 	fcnm = rpt.split('set("signature",')[1]
 	if (fcnm) {
 	  fcnm = fcnm.split('(')[0]
 	  fcnm = fcnm.split("\n").join("").split("\r").join("");
 	}
-      }
-  } else {
-      fcnm = rpt.split('set("signature",')[1]
-      if (fcnm) {
-        fcnm = fcnm.split('(')[0]
-        fcnm = fcnm.split("\n").join("").split("\r").join("");
-      }
-    }
+	return fcnm
+  }
 
-  
+  var fcnm = rpt.split('dashmpd,')[1]
+  if (fcnm) {
+    fcnm = fcnm.split('));')[0];
+    if (document.location.href.indexOf('/base.js') == document.location.href.length-8 && fcnm.indexOf('&amp;') != -1) fcnm = fcnm.split('&amp;').join('&')
+    var i = fcnm.split('\"/signature/\"\+')[1]
+    if (i) {
+      i = i.split(")")[0].split("\n").join("").split("\r").join("");
+      var j = fcnm.split("&&("+i+"=")[1] || fcnm.split("&amp;&amp;("+i+"=")[1];
+      if (j) { fcnm = j.substring(0,2) } else if (i) {
+	var j = fcnm.split('\"/signature/\"\+')[0].split('');
+	for(k=j.length;k>0;k--){
+	  if (j[k] == i && j[k+1] == '=') { fcnm = j[k+2] + j[k+3]; break }//.substring(k+2,k+4); break }
+	}
+
+      } else var fcnm = fcnm2()
+    } else var fcnm = fcnm2()
+  } else var fcnm = fcnm2()
+
+
   function sprintf(nw) {
     var i = 0;
     while (/%s/.test(nw))
