@@ -2369,8 +2369,8 @@ if (typeof jQuery != 'undefined') {
 
 			doAnimation = typeof doAnimation == 'undefined' || doAnimation;
 
-			if (!t.controlsAreVisible || t.options.alwaysShowControls || t.keyboardAction || (yt6 && yt6.x && !t.isFullScreen && document.getElementById('bm0') && $(document.getElementById('bm0')).data('hover')) )
-				return;
+			if (!t.controlsAreVisible || t.options.alwaysShowControls )
+				return;//|| t.keyboardAction || (yt6 && yt6.x && !t.isFullScreen && document.getElementById('bm0') && $(document.getElementById('bm0')).data('hover'))
 
 			if (doAnimation) {
 				// fade out main controls
