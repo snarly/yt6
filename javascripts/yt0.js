@@ -6045,8 +6045,9 @@ function mep_run() {
 						yt6.errcount = yt6.errcount + parseInt(z);
 						yt6.srcbak = null; delete yt6.srcbak;//original format chosen by user
 						yt6.current = null; delete yt6.current;//current test format
-						//console.log('errcount = ' + yt6.errcount)
-						if (gc('yt6-proxy-error') && gc('yt6-proxy-error').length < (1 * proxies.length) && yt6.errcount < (1 + 1 * proxies.length)) {// && !yt6.ytg
+						console.log('errcount = ' + yt6.errcount + ' ' + gc('yt6-proxy-error').length + ' ' + (1 * proxies.length) + ' ' + proxies.length + ' +1 ' + proxies.length + 1 + ' ' + (1 + 1 * proxies.length))
+						//if (gc('yt6-proxy-error') && gc('yt6-proxy-error').length < (1 * proxies.length) && yt6.errcount < (1 + 1 * proxies.length)) {// && !yt6.ytg
+						if (gc('yt6-proxy-error') && gc('yt6-proxy-error').length < proxies.length && yt6.errcount < proxies.length + 1) {// && !yt6.ytg
 							ajax1(true, yt6.ytg);
 							buildObject(window.ytplayer);
 							redo_dl_button(  yt6.args,  yt6.html,  yt6.href);
