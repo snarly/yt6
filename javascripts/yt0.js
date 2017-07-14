@@ -6159,7 +6159,7 @@ function mep_run() {
 					    }*/
 					  } else { yt6.sync_timer = true }
 					  var A = []; A = yt6.A_;
-					  if (typeof A[itag(yt6.player1.media.src)] == 'string' && mep) {
+					  if (typeof A[itag(me.src)] == 'string' && mep) {
 					    var z = getElementsByAttribute(document,'input','name',mep.getAttribute('id') + '_sourcechooser')
 					    for(k=0;k<z.length;k++){
 					      if (z[k] && z[k].nextSibling) {
