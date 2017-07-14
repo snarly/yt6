@@ -5987,7 +5987,7 @@ function mep_run() {
 					  if (yt6.timer == 999999999 || me.src == 'https://www.youtube.com/ptracking') { return void 0 };
 					  //gc('mejs-controls')[0].style = 'display: block; visibility: hidden;'
 					  yt6.player1.media.loaded = false;
-					  FireEvent( mep(), 'mouseover' );
+					  //FireEvent( mep(), 'mouseover' );
 					  if (gc('mejs-clear')[0]) gc('mejs-clear')[0].setAttribute('id','mejs-clear')
 					});
 					addEL(me, 'error', function(e) {
