@@ -6146,7 +6146,7 @@ function mep_run() {
 					});
 					addEL(me, 'loadedmetadata', function() {
 					  if (yt6.timer == 999999999 || me.src == 'https://www.youtube.com/ptracking') { return void 0 };
-					  yt6.retry = 0;
+					  yt6.retry = 0;var mep = document.getElementById(mep_x("mep_"))
 					  //gc('mejs-controls')[0].style = 'display: block; visibility: hidden;'
 					  //console.log(yt6.userprefV[0]+','+yt6.userprefV[1]+','+yt6.userprefV[2])
 					  if (itag(yt6.player1.media.src) && 1 * itag(yt6.player1.media.src) != yt6.userprefV[0]) { yt6.userprefV.unshift(1 * itag(yt6.player1.media.src)); delete yt6.userprefV[20]; }
@@ -6159,15 +6159,15 @@ function mep_run() {
 					    }*/
 					  } else { yt6.sync_timer = true }
 					  var A = []; A = yt6.A_;
-					  if (typeof A[itag(yt6.player1.media.src)] == 'string' && mep()) {
-					    var z = getElementsByAttribute(document,'input','name',mep().getAttribute('id') + '_sourcechooser')
+					  if (typeof A[itag(me.src)] == 'string' && mep) {
+					    var z = getElementsByAttribute(document,'input','name',mep.getAttribute('id') + '_sourcechooser')
 					    for(k=0;k<z.length;k++){
 					      if (z[k] && z[k].nextSibling) {
 					        z[k].nextSibling.setAttribute('style','')
 					        z[k].nextSibling.removeAttribute('style')
 					      }
 					    }
-					    var z = document.getElementById(mep().getAttribute('id') + '_sourcechooser_' + itag(yt6.player1.media.src))
+					    var z = document.getElementById(mep.getAttribute('id') + '_sourcechooser_' + itag(yt6.player1.media.src))
 					    if (z && z.nextSibling) z.nextSibling.setAttribute('style','text-decoration: underline')
 					    if (yt6.player1.media.currentTime != 0) {
 						yt6.ct = yt6.player1.media.currentTime;
@@ -6185,13 +6185,13 @@ function mep_run() {
 					    yt6.audiox = null; delete yt6.audiox; yt6.audio = yt6.player2.media.src = yt6.player1.media.src;
 					  }
 					  if (gc('mejs-clear')[0]) gc('mejs-clear')[0].setAttribute('id','mejs-clear')
-					  if (yt6.fullscreen && mep()) {
+					  if (yt6.fullscreen && mep) {
 					    yt6.player1.media.style.width = '100%';
 					    yt6.player1.media.style.height = '100%';
 					    yt6.player1.media.style.left = '0px';
 					    yt6.player1.media.style.top = '0px';
-					    mep().style.width = '100%';
-					    mep().style.height = '100%';
+					    mep.style.width = '100%';
+					    mep.style.height = '100%';
 					  } else {
 					      if ( (yt6.player1.media.offsetWidth == screen.width) || (yt6.player1.media.offsetHeight == screen.height) ) {
 						//resize_layers( screen.width + 'px', screen.height + 'px' )
