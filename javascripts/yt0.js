@@ -5987,7 +5987,7 @@ function mep_run() {
 					  if (yt6.timer == 999999999 || me.src == 'https://www.youtube.com/ptracking') { return void 0 };
 					  //gc('mejs-controls')[0].style = 'display: block; visibility: hidden;'
 					  yt6.player1.media.loaded = false;
-					  FireEvent( mep(), 'mouseover' );
+					  //FireEvent( mep(), 'mouseover' );
 					  if (gc('mejs-clear')[0]) gc('mejs-clear')[0].setAttribute('id','mejs-clear')
 					});
 					addEL(me, 'error', function(e) {
@@ -6058,16 +6058,16 @@ function mep_run() {
 							  var z = gclass('mejs-overlay-play')//mejs-playpause-button
 							  if (typeof z[0] != 'undefined') z[0].style.display = 'none';//{ z[0].firstChild.click();z[0].firstChild.click(); }
 							};*/
-						} else {
+						} else {console.log('t40')
 						    var t4 = document.getElementById('test-4')
-						    if (t4 != null && t4.innerHTML != ''){
+						    if (t4 != null && t4.innerHTML != ''){console.log('t41')
 						      var dls = document.getElementById('bm3')
 						      if (dls) dls = dls.getElementsByTagName('a')
 						      var z = t4.getElementsByTagName('a');
 						      if (z) var lchk = getElementsByAttribute(document.getElementById('bm3'),'a','name',z[0].getAttribute('name'))[0]
-						      if (z && lchk && z[0].getAttribute('href') != lchk.getAttribute('href').split('&title')[0]){
+						      if (z && lchk && z[0].getAttribute('href') != lchk.getAttribute('href').split('&title')[0]){console.log('t42')
 							for(k=0;k<z.length;k++){
-							  if (z[k] && z[k].name && z[k].href && z[k].href.indexOf('signature=undefined') == -1) {
+							  if (z[k] && z[k].name && z[k].href && z[k].href.indexOf('signature=undefined') == -1) {console.log('t43'+k)
 							    var qq = z[k].innerHTML
 							    if (typeof qq.split(" ")[1] != 'undefined') { var x = " - " + qq.split(" ")[0] + " " + qq.split(" ")[2]; if (typeof qq.split("+")[1] != 'undefined') { var x = x + ' +' + qq.split("+")[1] } else { if (typeof qq.split(" ")[3] != 'undefined') { var x = x + ' ' + qq.split(" ")[3] }} } else var x = '';
 							    yt6.linx[z[k].name] = z[k].href.split('https:').join('').split('http:').join('').split('&amp;').join('&')
@@ -6094,7 +6094,7 @@ function mep_run() {
 							  //}
 
 							};
-						      } else {
+						      } else {console.log('t44')
 							  rewrite_links()
 							}
 						    }
