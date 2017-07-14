@@ -6152,6 +6152,7 @@ function mep_run() {
 					  if (itag(yt6.player1.media.src) && 1 * itag(yt6.player1.media.src) != yt6.userprefV[0]) { yt6.userprefV.unshift(1 * itag(yt6.player1.media.src)); delete yt6.userprefV[20]; }
 					  //console.log(yt6.userprefV[0]+','+yt6.userprefV[1]+','+yt6.userprefV[2])
 					  if (yt6.newvideo) { yt6.newvideo = true;
+					    if (yt6.player1.media.currentTime != 0) yt6.player1.setCurrentTime(0);
 					    if (yt6.x) {
 					      FireEvent( mep(), 'mouseover' );
 					      //FireEvent( mep(), 'mouseleave' );
