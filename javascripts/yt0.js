@@ -6431,7 +6431,7 @@ function mep_run() {
 					});
 					addEL(me, 'seeked', function() {//console.log('1seeked')
 					  if (yt6.timer == 999999999 || me.src == 'https://www.youtube.com/ptracking') { return void 0 };
-					  if (player1.media.currentTime > player1.media.duration) player1.media.currentTime = player1.media.duration;
+					  if (player1.media.currentTime > player1.media.duration) player1.media.currentTime = player2.currentTime = 0;
 					  if ( (typeof AV[itag(yt6.player1.media.src)] !== 'string' && yt6.player1.media.src.replace('&ratebypass=yes','') != player2.src.replace('&ratebypass=yes','')) || yt6.audiox) {
 					    if (yt6.player1.media.paused) {
 					      yt6.player2.setCurrentTime( yt6.player1.media.currentTime )
