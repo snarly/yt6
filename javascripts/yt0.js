@@ -6159,7 +6159,7 @@ function mep_run() {
 					    }*/
 					  } else { yt6.sync_timer = true }
 					  var A = []; A = yt6.A_;
-					  if (typeof A[itag(me.src)] == 'string' && mep) {
+					  if (typeof A[itag(yt6.player1.media.src)] == 'string' && mep) {
 					    var z = getElementsByAttribute(document,'input','name',mep.getAttribute('id') + '_sourcechooser')
 					    for(k=0;k<z.length;k++){
 					      if (z[k] && z[k].nextSibling) {
@@ -6295,7 +6295,7 @@ function mep_run() {
 						    }
 					          };
 					    if (Seek == 3 ) { Seek = null }
-					  } else me.pause();//!yt6.x
+					  } else yt6.player1.pause();//!yt6.x
 					  var z = gc('mejs-currenttime')[0]; if (z) try { z.click(); z.focus() } catch(e){}
 					  if (yt6.speed) player2.playbackRate = me.playbackRate = yt6.speed;
 					  //yt6.player1.hideControls()
@@ -6312,7 +6312,7 @@ function mep_run() {
 					    if (yt6.player1.media.src.replace('&ratebypass=yes','') != player2.src.replace('&ratebypass=yes','')) {
 					      if (Seek == 3) try { yt6.player2.pause() } catch(e) {};
 					      //if (Seek === 0) { me.play() };
-					      if (typeof AV[itag(me.src)] !== 'string' && Seek != 1 && yt6.player1.media.playbackRate == player2.playbackRate) { yt6.player1.setCurrentTime(yt6.player1.media.currentTime) } else player2.playbackRate = yt6.player1.media.playbackRate;
+					      if (typeof AV[itag(yt6.player1.media.src)] !== 'string' && Seek != 1 && yt6.player1.media.playbackRate == player2.playbackRate) { yt6.player1.setCurrentTime(yt6.player1.media.currentTime) } else player2.playbackRate = yt6.player1.media.playbackRate;
 					      try { player2.pause(); yt6.player2.media.currentTime = yt6.player1.media.currentTime; if (me.loaded && player2.loaded && Seek == 0) Seek = null; } catch(e) {}
 					    }
 					  }
@@ -6431,6 +6431,7 @@ function mep_run() {
 					});
 					addEL(me, 'seeked', function() {//console.log('1seeked')
 					  if (yt6.timer == 999999999 || me.src == 'https://www.youtube.com/ptracking') { return void 0 };
+					  if (player1.media.currentTime > player1.media.duration) player1.media.currentTime = player1.media.duration;
 					  if ( (typeof AV[itag(yt6.player1.media.src)] !== 'string' && yt6.player1.media.src.replace('&ratebypass=yes','') != player2.src.replace('&ratebypass=yes','')) || yt6.audiox) {
 					    if (yt6.player1.media.paused) {
 					      yt6.player2.setCurrentTime( yt6.player1.media.currentTime )
@@ -6613,7 +6614,7 @@ function mep_run() {
 						try {
 						  yt6.player2.setSrc('https://www.youtube.com/ptracking');
 						  yt6.player2.load();
-						  yt6.player2.setSrc(me.src2);
+						  yt6.player2.setSrc(yt6.player1.media.src2);
 						  yt6.player2.load();
 						} catch(e){}
 						if (yt6.x) try {
