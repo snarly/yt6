@@ -6227,9 +6227,7 @@ function mep_run() {
 					addEL(me, 'loadeddata', function() {//console.log('1loaded');
 					  if (yt6.timer == 999999999 || me.src == 'https://www.youtube.com/ptracking') { return void 0 };
 					  yt6.player1.media.loaded = true; yt6.sync_timer = 0;
-					  if (yt6.newvideo) {
-					    yt6.newvideo = true;
-					  } else {
+					  if (yt6.newvideo) { yt6.newvideo = true; yt6.player1.setCurrentTime(0); } else {
 					    //if (yt6.ct) me.setCurrentTime(yt6.ct)
 					  };
 					  //gc('mejs-controls')[0].style = 'display: block; visibility: hidden;'
