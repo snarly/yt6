@@ -6150,8 +6150,8 @@ function mep_run() {
 					  //console.log(yt6.userprefV[0]+','+yt6.userprefV[1]+','+yt6.userprefV[2])
 					  if (itag(yt6.player1.media.src) && 1 * itag(yt6.player1.media.src) != yt6.userprefV[0]) { yt6.userprefV.unshift(1 * itag(yt6.player1.media.src)); delete yt6.userprefV[20]; }
 					  //console.log(yt6.userprefV[0]+','+yt6.userprefV[1]+','+yt6.userprefV[2])
-					  if (yt6.newvideo) { yt6.newvideo = true;
-					    if (yt6.player1.media.currentTime != 0) yt6.player1.setCurrentTime(0);
+					  if (yt6.newvideo) { yt6.newvideo = true; console.log('1 ' + yt6.player1.media.currentTime)
+					    if (yt6.player1.media.currentTime != 0) yt6.player1.setCurrentTime(0); console.log('2 ' + yt6.player1.media.currentTime)
 					    if (yt6.x) {
 					      FireEvent( mep(), 'mouseover' );
 					      //FireEvent( mep(), 'mouseleave' );
@@ -6228,7 +6228,7 @@ function mep_run() {
 					  if (yt6.timer == 999999999 || me.src == 'https://www.youtube.com/ptracking') { return void 0 };
 					  yt6.player1.media.loaded = true; yt6.sync_timer = 0;
 					  if (yt6.newvideo) {
-					    yt6.newvideo = true; //yt6.player1.setCurrentTime(0);
+					    yt6.newvideo = true; console.log('3 ' + yt6.player1.media.currentTime) //yt6.player1.setCurrentTime(0);
 					  } else {
 					    //if (yt6.ct) me.setCurrentTime(yt6.ct)
 					  };
