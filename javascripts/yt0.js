@@ -6498,7 +6498,9 @@ function mep_run() {
 					});
 					addEL(me, 'loadeddata', function() { //console.log('2loaded')
 					  if (yt6.timer == 999999999 || me.src == 'https://www.youtube.com/ptracking') { return void 0 };
-					  yt6.retry = 0; me.loaded = 1; yt6.newvideo = false;
+					  yt6.retry = 0; me.loaded = 1;
+					  if (yt6.newvideo && yt6.player1.media.currentTime != 0) yt6.player1.setCurrentTime(0);
+					  yt6.newvideo = false;
 					  var player1_src = document.getElementById('player1').getAttribute('src')
 					  //if (Seek !== 2) {
 					    if (yt6.player2.media.currentTime != player1.currentTime) {
