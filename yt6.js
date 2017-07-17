@@ -6756,7 +6756,7 @@ function mep_run() {
 						  //console.log(Seek+ ' '+yt6.player1.media.currentTime + ' '+ player1.currentTime + ' '+yt6.player2.media.currentTime+' '+player2.currentTime + yt6.player1.media.paused + yt6.player2.media.paused + player2.paused)
 						  if (!(yt6.player1.media.paused)) {
 						    if (yt6.diff != 0) yt6.player2.media.loaded = 1
-						    if (yt6.player2.media.loaded == 1) {
+						    if (yt6.player1.media.loaded) if (yt6.player2.media.loaded == 1) {
 						      yt6.player2.media.loaded = true; player1.play(); //prevents an unwanted video restart
 						    } else { player1.media.play() }
 						  } else {
