@@ -6581,20 +6581,21 @@ function mep_run() {
 					});
 					addEL(me, 'loadeddata', function() {//console.log('2loaded')
 					  if ((yt6 && yt6.timer == 999999999) || me.src == 'https://www.youtube.com/ptracking') { return void 0 };
-					  yt6.retry = 0; me.loaded = 1; yt6.newvideo = false;
+					  yt6.retry = 0; me.loaded = 1
 					  var player1_src = document.getElementById('player1').getAttribute('src')
 					  //if (Seek !== 2) {
 					    if (yt6.player2.media.currentTime != player1.currentTime) {
 					      //Seek = 1;
 					      yt6.player2.media.currentTime = me.currentTime = yt6.ct = player1.media.currentTime;
 					      //yt6.player2.media.currentTime = me.currentTime = yt6.ct;
-					      if (yt6.media != 'AV') {console.log('1')
-						if (!player1.media.paused) { yt6.player2.play(); yt6.player1.play() }
-					      } else console.log('2')
+					      if (yt6.media != 'AV') {
+						if (!player1.media.paused) { yt6.player2.play() }
+					      } else if (yt6.newvideo && yt6.autoplay) yt6.player1.play()
 					    }
 					    //if (Seek == 0) yt6.player1.play()
 					  //} else { }
 					  //Seek = 0;
+					  yt6.newvideo = false
 					});
 					addEL(me, 'seeked', function() {//console.log('2seeked')
 					  if ((yt6 && yt6.timer == 999999999) || me.src == 'https://www.youtube.com/ptracking') { return void 0 };
