@@ -6221,7 +6221,7 @@ function mep_run() {
 					      };
 					  }
 					});
-					addEL(me, 'loadedmetadata', function() {console.log('1loadedmetadata ' + yt6.player2.media.loaded)
+					addEL(me, 'loadedmetadata', function() {//console.log('1loadedmetadata ' + yt6.player2.media.loaded)
 					  if ((yt6 && yt6.timer == 999999999) || me.src == 'https://www.youtube.com/ptracking') { return void 0 };
 					  yt6.retry = 0; var mep = document.getElementById(mep_x("mep_"))
 					  if (typeof yt6.A_V[itag(yt6.player1.media.src)] == 'string') yt6.media = 'AV' 
@@ -6236,7 +6236,7 @@ function mep_run() {
 					      FireEvent( mep(), 'mouseleave' );
 					      try { yt6.player1.showControls(true) } catch(e){}
 					    }*/
-					    if (yt6.player2.media.loaded == 1) if (yt6.player1.media.currentTime != 0) {
+					    if (!yt6.player2.media.loaded || yt6.player2.media.loaded == 1) if (yt6.player1.media.currentTime != 0) {
 						yt6.ct = yt6.player1.media.currentTime;
 						yt6.player1.setCurrentTime(0);
 						try {
