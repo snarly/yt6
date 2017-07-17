@@ -6317,7 +6317,7 @@ function mep_run() {
 					  if (yt6.speed) { player2.playbackRate = me.playbackRate = yt6.speed; if (document.getElementById('displaySpeed')) document.getElementById('displaySpeed').innerHTML = "Speed " + Math.round(yt6.speed * 100) + "%" };
 					  if (gc('mejs-clear')[0]) gc('mejs-clear')[0].setAttribute('id','mejs-clear')
 					  //yt6.newvideo = false;
-					  if (typeof yt6.A_V[itag(yt6.player1.media.src)] == 'string') {
+					  if (typeof yt6.A_V[itag(yt6.player1.media.src)] != 'string') {
 					    if (!yt6.player1.media.paused) Seek = 1;
 					    yt6.player1.pause(); try { yt6.player2.media.currentTime = player2.currentTime = yt6.ct = yt6.player1.media.currentTime } catch(e){}
 					  }
