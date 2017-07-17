@@ -6584,12 +6584,11 @@ function mep_run() {
 					  var player1_src = document.getElementById('player1').getAttribute('src')
 					  //if (Seek !== 2) {
 					    if (yt6.player2.media.currentTime != player1.currentTime) {
-					      Seek = 1;
+					      //Seek = 1;
 					      yt6.player2.media.currentTime = me.currentTime = yt6.ct = player1.media.currentTime;
 					      //yt6.player2.media.currentTime = me.currentTime = yt6.ct;
 					      if (yt6.media != 'AV') {
-						if (!player1.media.paused) { Seek = 1; }
-						yt6.player1.pause();
+						if (!player1.media.paused) { yt6.player2.play() }
 					      }
 					    }
 					    //if (Seek == 0) yt6.player1.play()
