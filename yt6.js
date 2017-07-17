@@ -6588,9 +6588,9 @@ function mep_run() {
 					      //Seek = 1;
 					      yt6.player2.media.currentTime = me.currentTime = yt6.ct = player1.media.currentTime;
 					      //yt6.player2.media.currentTime = me.currentTime = yt6.ct;
-					      if (yt6.media != 'AV') {
-						if (!player1.media.paused) { yt6.player2.play() }
-					      }
+					      if (yt6.media != 'AV') {console.log('1')
+						if (!player1.media.paused) { yt6.player2.play(); yt6.player1.play() }
+					      } else console.log('2')
 					    }
 					    //if (Seek == 0) yt6.player1.play()
 					  //} else { }
