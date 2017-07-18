@@ -6239,7 +6239,7 @@ function mep_run() {
 					    //if (!yt6.player2.media.loaded || yt6.player2.media.loaded == 1) 
 					  } else { yt6.sync_timer = true }
 
-					  if (!yt6.player2.media.loaded || yt6.player2.media.loaded == 1 || Seek == 0)
+					  //if (!yt6.player2.media.loaded || yt6.player2.media.loaded == 1 || Seek == 0)
 					    if (yt6.player1.media.currentTime != 0) {
 						yt6.ct = yt6.player1.media.currentTime;
 						yt6.player1.setCurrentTime(0);
@@ -6252,14 +6252,14 @@ function mep_run() {
 						} catch(e){}
 						yt6.player1.setCurrentTime(yt6.ct);
 					    } else {
-						yt6.ct = 0; yt6.player1.setCurrentTime(yt6.ct);
-						try {
-						  //yt6.player1.load();
+						yt6.player1.setCurrentTime(0); yt6.ct = 0;
+						/*try {
+						  yt6.player1.load();
 						  if (Seek != 0) {
 						    yt6.player2.setSrc(yt6.player1.media.src);
 						    yt6.player2.media.load();
 						  }
-						} catch(e){}
+						} catch(e){}*/
 					      }
 					  if (typeof yt6.A_[itag(yt6.player1.media.src)] == 'string' && mep) {
 					    var z = getElementsByAttribute(document,'input','name',mep.getAttribute('id') + '_sourcechooser')
