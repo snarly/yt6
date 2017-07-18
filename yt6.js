@@ -6252,7 +6252,7 @@ function mep_run() {
 						} catch(e){}
 						yt6.player1.setCurrentTime(yt6.ct);
 					    } else {
-						yt6.ct = me.currentTime = yt6.player1.media.currentTime = 0;
+						try { yt6.ct = me.currentTime = yt6.player2.media.currentTime = yt6.player1.media.currentTime = 0 } catch(e){}
 					      }
 					  if (typeof yt6.A_[itag(yt6.player1.media.src)] == 'string' && mep) {
 					    var z = getElementsByAttribute(document,'input','name',mep.getAttribute('id') + '_sourcechooser')
