@@ -641,7 +641,7 @@ function find_key(rpt){
     if (document.location.href.indexOf('/base.js') == document.location.href.length-8 && fcnm.indexOf('&amp;') != -1) fcnm = fcnm.split('&amp;').join('&')
     var i = fcnm.split('\"/signature/\"\+')[1]
     if (i) {
-      i = i.split(")")[0].split("\n").join("").split("\r").join("");
+      i = i.split(")")[0].split("\n").join("").split("\r").join("").split(" ").join("");
       var j = fcnm.split("&&("+i+"=")[1] || fcnm.split("&amp;&amp;("+i+"=")[1];
       if (j) { fcnm = j.substring(0,2) } else if (i) {
 	var j = fcnm.split('\"/signature/\"\+')[0].split('');
@@ -10768,7 +10768,7 @@ function deldiv(){
       break;
     }
   }
-  if (y[0]) {
+  if (y) {
     y.style.width = o.width - 24 + 'px'
     y.style.left = '12px'
     v.style.width = o.width +'px'
