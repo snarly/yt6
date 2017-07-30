@@ -3099,7 +3099,8 @@ if (start != false){
 
 if (typeof p.getPlayerState != 'function' && typeof p.getAttribute('flashvars') == 'string' && yt6.age.check() ) { //console.log('autoplay8')
 	if (typeof fv == 'string') {
-
+	    p.style.setProperty('width', '0px', x)
+	    p.style.setProperty('height', '0px', x)
 	} else {
 	    p.style.visibility = 'hidden'
 	    //p.style.display = 'none';
