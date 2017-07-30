@@ -6655,7 +6655,7 @@ function mep_run() {
 					    return void 0;
 					  if (player2.duration != player2.currentTime && !(yt6.player1.media.currentTime > player2.duration)) {//ax
 					    if (me.currentTime.toFixed(2) != player1.media.currentTime.toFixed(2) && yt6.x) {// && (1*yt6.retry - 0) < 8
-					      Seek = 1; player1.media.currentTime = me.currentTime;//
+					      player1.media.currentTime = me.currentTime; Seek = 1; //
 					    }
 
 					    if (Seek == 1) {
