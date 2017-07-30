@@ -6654,8 +6654,8 @@ function mep_run() {
 					  if ( (yt6 && yt6.timer == 999999999) || me.src == 'https://www.youtube.com/ptracking' )
 					    return void 0;
 					  if (player2.duration != player2.currentTime && !(yt6.player1.media.currentTime > player2.duration)) {//ax
-					    if (me.currentTime.toFixed(2) != player1.media.currentTime.toFixed(2) && yt6.x && (1*yt6.retry - 0) < 8) {
-					      player1.media.currentTime = me.currentTime;
+					    if (me.currentTime.toFixed(2) != player1.media.currentTime.toFixed(2) && yt6.x) {// && (1*yt6.retry - 0) < 8
+					      player1.media.currentTime = me.currentTime;// Seek = 1;
 					    }
 
 					    if (Seek == 1) {
@@ -6805,7 +6805,7 @@ function mep_run() {
 					      if (yt6.x && !AV[itag(player1_src)]) {
 						if (me.src != player1_src) {
 						  if (!(yt6.player1.media.paused)) {
-						    if (yt6.diff != 0) me.loaded = 1
+						    //if (yt6.diff != 0) me.loaded = 1
 						    if (yt6.player1.media.loaded && me.loaded == 1) {
 						      me.loaded = true; player1.play(); //prevents an unwanted video restart
 						    } else { player1.media.play() }
