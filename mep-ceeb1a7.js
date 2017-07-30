@@ -2389,6 +2389,11 @@ if (typeof jQuery != 'undefined') {
 						.css('visibility','hidden')
 						.css('display','block');
 				});
+
+				t.container.find('.mejs-volume-slider').stop(true, true).fadeOut(200, function() {
+					$(this)
+						.css('display','none');
+				});
 			} else {
 
 				// hide main controls
