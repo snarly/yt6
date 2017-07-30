@@ -6654,8 +6654,8 @@ function mep_run() {
 					  if ( (yt6 && yt6.timer == 999999999) || me.src == 'https://www.youtube.com/ptracking' )
 					    return void 0;
 					  if (player2.duration != player2.currentTime && !(yt6.player1.media.currentTime > player2.duration)) {//ax
-					    if (me.currentTime.toFixed(2) != player1.media.currentTime.toFixed(2)) {
-					      player1.media.currentTime = yt6.ct = me.currentTime
+					    if (me.currentTime.toFixed(2) != player1.media.currentTime.toFixed(2) && yt6.x && (1*yt6.retry - 0) < 8) {
+					      player1.media.currentTime = me.currentTime; Seek = 1;
 					    }
 
 					    if (Seek == 1) {
@@ -10340,10 +10340,11 @@ function switch_players() {
 	p.pauseMedia(); p.parentNode.paused = true
       }
     }
-    if ((p1 != null) && (p1.currentTime != null)) {
-      try { p2.currentTime = p1.currentTime } catch(e) {}
-      p2.playbackRate = p1.playbackRate
-    }
+
+      if (yt6.player1 && yt6.player1.media && yt6.player2 && yt6.player2.media) try {
+	 yt6.player2.media.currentTime = yt6.ct = yt6.player1.media.currentTime
+         yt6.player2.media.playbackRate = yt6.player1.media.playbackRate
+      } catch(e) {}
 
     bm0.style.display = 'block';
     bm0.style.visibility = 'visible';
@@ -10396,15 +10397,12 @@ function switch_players() {
 	  p.pauseMedia(); p.parentNode.paused = true
         }
       }
-      if ((p1 != null) && (p1.currentTime != null)) {
-        try { p2.currentTime = p1.currentTime } catch(e) {}
-        p2.playbackRate = p1.playbackRate
-      }
-      if ( (typeof p.getPlayerState === 'function') && (p2 != null) ) {
-        try { p2.currentTime = p.getCurrentTime() } catch(e) {}
-        p.setPlaybackRate( p2.playbackRate )
-        p2.playbackRate = p.getPlaybackRate()
-      }
+
+      if ( typeof p.getPlayerState == 'function' && yt6.player2 && yt6.player2.media ) try {
+	 yt6.player2.media.currentTime = p.getCurrentTime()
+         p.setPlaybackRate( yt6.player2.media.playbackRate )
+         yt6.player2.media.playbackRate = p.getPlaybackRate()
+      } catch(e) {}
       //window.postMessage("unMute", "*");
     }
 
