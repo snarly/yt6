@@ -950,7 +950,8 @@ function test_4() {
       }
     }
 
-/*
+/* This stuff only works on '17s latest browsers on 64 bit... the old stuff works and is compatible even with IE7/8 on XP
+
 try {
 
 function flatten(src, path, seen) {
@@ -1050,15 +1051,17 @@ ypsi = [];
     for (k=0;k < durl.length;k++) {
       var eurl = durl[k];
       if (eurl.indexOf('itag') != -1) {
-	var nurl = (typeof URL != 'undefined') ? new URL(eurl) : {};//new URLSearchParams(eurl.split('?')[1])
-	if (nurl && nurl.searchParams) {
-	  var usp = nurl.searchParams
-	  usp.set('ratebypass','yes')
-	  if (typeof dsig.next == 'function') usp.set('signature', dsig.next().value);
+	//var nurl = (typeof URL != 'undefined') ? new URL(eurl) : {};
+	//if (nurl && nurl.searchParams) {
+	  //var usp = nurl.searchParams
+	if (typeof URLSearchParams != 'undefined') {
+	  var usp = new URLSearchParams(eurl.split('?')[1])
+	  //usp.set('ratebypass','yes')
+	  //if (typeof dsig.next == 'function') usp.set('signature', dsig.next().value);
 	  var efmt = qual[usp.get('itag')]['t'] || usp.get('itag');
 	  cfmt[usp.get('itag')] =
 	  //`<a href="${eurl}">${efmt}</a>`;
-	    '<a name="' + usp.get('itag') + '" href="' + nurl.href + '">' + efmt + '</a>';
+	    '<a name="' + usp.get('itag') + '" href="' + eurl + '">' + efmt + '</a>';//nurl.href
         } else {
 	    var usp = eurl.split('?')[1];
 	    var efmt = get_quality(usp);
@@ -6472,25 +6475,19 @@ function mep_run() {
 					  }
 					  var bn = gc('play yt-uix-button-text');
 					  if (bn[0]) for(i=0;i<bn.length;i++) bn[i].innerHTML = 'play';
-					  if (player2) {
+					  if (yt6.retry < 8 && player2) {
 					    if (me.src != player2.src) {
 					      if (Seek == 3) try { yt6.player2.pause() } catch(e) {};
 					      //if (Seek === 0) { me.play() };
 					      if (AV[itag(me.src)] && Seek != 1 && me.playbackRate == player2.playbackRate) { yt6.player1.setCurrentTime(me.currentTime) } else player2.playbackRate = me.playbackRate;
 					      try { player2.pause(); player2.currentTime = me.currentTime; if (me.loaded && player2.loaded && Seek == 0) Seek = null; } catch(e) {}
 					    }
-					  }
+					  } else if (Seek == 1) {//on remote desktop without working sound setup forget the audio player -- it just generates errors making it seem like file decoding had failed -- we attempt to play the audio 7 times, on the 8th try, play the video part only
+					      Seek = null; me.play()
+					    }
 					  //if (Seek == 2 || !(yt6.player1.media.paused)) {
 						//try { mep().click(); document.activeElement.blur() } catch(e){}
 					  //}
-					});
-					addEL(me, 'volumechange', function() {//console.log('1volumechange')
-					  if ( (yt6 && yt6.timer == 999999999) || me.src == 'https://www.youtube.com/ptracking' )
-					    return void 0;
-					  if (me.src != player2.src) try {
-					    yt6.player2.setVolume( me.volume )
-					    if (me.muted) { yt6.player2.setMuted(true) } else yt6.player2.setMuted(false)
-					  } catch(e) {}
 					});
 					addEL(me, 'ended', function() {//console.log('1ended')
 					  if ( (yt6 && yt6.timer == 999999999) || me.src == 'https://www.youtube.com/ptracking' )
@@ -6608,6 +6605,14 @@ function mep_run() {
 					    }
 					  }
 					});
+					addEL(me, 'volumechange', function() {//console.log('1volumechange')
+					  if ( (yt6 && yt6.timer == 999999999) || me.src == 'https://www.youtube.com/ptracking' )
+					    return void 0;
+					  if (me.volume != player2.volume) try {
+					    yt6.player2.setVolume( me.volume )
+					    if (me.muted) { yt6.player2.setMuted(true) } else yt6.player2.setMuted(false)
+					  } catch(e) {}
+					});
 			}
 		});//player1
 	if (typeof srcto == 'undefined') {
@@ -6659,6 +6664,7 @@ function mep_run() {
 					  if (player2.duration != player2.currentTime && !(yt6.player1.media.currentTime > player2.duration)) {//ax
 					    if (me.currentTime.toFixed(2) != player1.media.currentTime.toFixed(2) && yt6.x) {// && (1*yt6.retry - 0) < 8
 					      player1.media.currentTime = me.currentTime; Seek = 1;
+					      yt6.player1.showControls(true)
 					    }
 
 					    if (Seek == 1) {
@@ -6809,15 +6815,19 @@ function mep_run() {
 						if (me.src != player1_src) {
 						  if (!(yt6.player1.media.paused)) {
 						    //if (yt6.diff != 0) me.loaded = 1
-						    if (yt6.player1.media.loaded && me.loaded == 1) {
-						      me.loaded = true; player1.play(); //prevents an unwanted video restart
+						    if (yt6.player1.media.loaded && me.loaded == 1) {//prevents an unwanted video restart
+						      me.loaded = true; player1.play(); player1.media.play()
 						    } else { player1.media.play() }
 						  } else {
 						      Seek = 1;
 						        player1.pause(); //Seek = null;
 						        $waitUntil(function(){ if (yt6.newvideo == false) { return true } else {
-							  player2.pause();
-							  player1.media.currentTime = player2.currentTime = me.currentTime = yt6.ct = 0
+							    player2.pause();
+							    try {
+							      player1.media.currentTime = me.currentTime = yt6.player2.media.currentTime = player2.currentTime = yt6.ct = 0
+							    } catch(e) {
+								yt6.player1.media.currentTime = me.currentTime = 0;
+							      }
 							  }},
 						          function(){
 							    yt6.Seek = 1; yt6.player1.media.currentTime = me.currentTime
@@ -6838,6 +6848,19 @@ function mep_run() {
 					    player1.media.currentTime = me.currentTime; yt6.browser_tab = 'visible'
 					    player1.play();
 					  }
+					});
+					addEL(me, 'volumechange', function() {//console.log('2volumechange')
+					  if ( (yt6 && yt6.timer == 999999999) || me.src == 'https://www.youtube.com/ptracking' )
+					    return void 0;
+					  if (me.volume != player1.media.volume) {
+					    var z = gc('mejs-volume-slider')[0]
+					    if (z) z.style.display = 'block'
+					  }
+					  if (me.volume != player1.media.volume) try {
+					    yt6.player1.setVolume( me.volume )
+					    if (me.muted) { yt6.player1.setMuted(true) } else yt6.player1.setMuted(false)
+					  } catch(e) {}
+					  yt6.player1.showControls(true)
 					});
 		}});
 }//player2
