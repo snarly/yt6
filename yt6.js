@@ -6457,6 +6457,11 @@ function mep_run() {
 					    if (Seek == 3 ) { Seek = null }
 					  } else if (!me.paused) me.pause(); //!yt6.x
 					  if (yt6.speed) player2.playbackRate = me.playbackRate = yt6.speed;
+					  if (!me.paused) {
+					    yt6.player1.showControls(true)
+					    yt6.player1.hideControls(true)
+					    try { document.activeElement.blur() } catch(e) {}
+					  }
 					});
 					addEL(me, 'pause', function() {//console.log('1pause ' + Seek)
 					  if ( (yt6 && yt6.timer == 999999999) || me.src == 'https://www.youtube.com/ptracking' )
@@ -6475,11 +6480,9 @@ function mep_run() {
 					      try { player2.pause(); player2.currentTime = me.currentTime; if (me.loaded && player2.loaded && Seek == 0) Seek = null; } catch(e) {}
 					    }
 					  }
-					  if (!me.paused) {//Seek == 2 || 
+					  //if (Seek == 2 || !(yt6.player1.media.paused)) {
 						//try { mep().click(); document.activeElement.blur() } catch(e){}
-					    yt6.player1.showControls(true)
-					    yt6.player1.hideControls(true)
-					  }
+					  //}
 					});
 					addEL(me, 'volumechange', function() {//console.log('1volumechange')
 					  if ( (yt6 && yt6.timer == 999999999) || me.src == 'https://www.youtube.com/ptracking' )
@@ -6655,7 +6658,7 @@ function mep_run() {
 					    return void 0;
 					  if (player2.duration != player2.currentTime && !(yt6.player1.media.currentTime > player2.duration)) {//ax
 					    if (me.currentTime.toFixed(2) != player1.media.currentTime.toFixed(2) && yt6.x) {// && (1*yt6.retry - 0) < 8
-					      player1.media.currentTime = me.currentTime; Seek = 1; //
+					      player1.media.currentTime = me.currentTime;// Seek = 1;
 					    }
 
 					    if (Seek == 1) {
@@ -6819,8 +6822,8 @@ function mep_run() {
 						          function(){
 							    yt6.Seek = 1; yt6.player1.media.currentTime = me.currentTime
 								yt6.Seek = 2;
-								if (player1.media.paused) try { 
-								  mep().click(); document.activeElement.blur()
+								if (player1.media.paused) try { //mep()
+								  yt6.body.focus(); document.activeElement.blur()
 							        } catch(e){}
 							  },500,500);
 						    }
