@@ -6665,7 +6665,8 @@ function mep_run() {
 					    if (me.currentTime.toFixed(2) != player1.media.currentTime.toFixed(2) && yt6.x) {// && (1*yt6.retry - 0) < 8
 					      player1.media.currentTime = me.currentTime; Seek = 1;
 					      yt6.player1.showControls(true)
-					      $.data(yt6.player1.controls, 'hover', false); yt6.player1.options.alwaysShowControls = false
+					      FireEvent( player1.controls, 'mouseover' );
+					      FireEvent( player1.controls, 'mouseleave' );
 					    }
 
 					    if (Seek == 1) {
@@ -6863,7 +6864,8 @@ function mep_run() {
 					    if (me.muted) { yt6.player1.setMuted(true) } else yt6.player1.setMuted(false)
 					  } catch(e) {}
 					  yt6.player1.showControls(true)
-					  $.data(yt6.player1.controls, 'hover', false); yt6.player1.options.alwaysShowControls = false
+					  FireEvent( player1.controls, 'mouseover' );
+					  FireEvent( player1.controls, 'mouseleave' );
 					});
 		}});
 }//player2
