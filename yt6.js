@@ -6443,7 +6443,7 @@ function mep_run() {
 						      function() {
 							if (yt6.sync_timer > 5 && me.loaded) {
 							  yt6.sync_timer = 0
-							} else try { console.log('2')
+							} else try {
 							    me.pause(); Seek = 1; player2.currentTime = me.currentTime; //me.pause();
 						          } catch(e) {}
 						      },250,1250)
@@ -6458,7 +6458,7 @@ function mep_run() {
 						    }*/
 					          };
 					    if (Seek == 3 ) { Seek = null }
-					  } else if (!me.paused) me.pause(); //!yt6.x
+					  } else if (!me.paused) { me.pause(); console.log('2 ' + Seek) } //!yt6.x
 					  if (yt6.speed) player2.playbackRate = me.playbackRate = yt6.speed;
 					  if (!me.paused) {
 					    yt6.player1.showControls(true)
@@ -6789,7 +6789,7 @@ function mep_run() {
 						     if (player() && typeof player().getPlayerState == 'function' && player().getPlayerState() == 1) me.play();//yt6.player2.play()
 						   }
 					});
-					addEL(me, 'pause', function() {console.log('2pause');
+					addEL(me, 'pause', function() {console.log('2pause ' + Seek);
 					  if ( (yt6 && yt6.timer == 999999999) || me.src == 'https://www.youtube.com/ptracking' )
 					    return void 0;
 					  if ( (typeof player().getPlayerState != 'function') || (yt6.x) ) {
