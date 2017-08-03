@@ -6402,7 +6402,7 @@ function mep_run() {
 					    try { yt6.player2.media.currentTime = player2.currentTime = yt6.ct = me.currentTime } catch(e){}
 					  }
 					});
-					addEL(me, 'play', function() {console.log('1play')
+					addEL(me, 'play', function() {//console.log('1play')
 					  if ( (yt6 && yt6.timer == 999999999) || me.src == 'https://www.youtube.com/ptracking' )
 					    return void 0;
 					  if (yt6.x) {
@@ -6417,7 +6417,7 @@ function mep_run() {
 						 (V[itag(me.src)] || me.src.indexOf('itag=278') > -1) 
 						) || (typeof srcto != 'undefined' && Srcto == Audio) ) && (yt6.retry < 8)
 					     )  {
-						  if (player2.paused) { console.log('1'); player2.play() }; 
+						  if (player2.paused) { player2.play() }; 
 						  if (!AV[itag(me.src)] && yt6.browser_tab == 'visible' && player2.duration != player2.currentTime && !(me.currentTime > player2.duration)) {
 						    yt6.diff = Math.abs(parseFloat(parseFloat(me.currentTime) - parseFloat(player2.currentTime)));
 						    if (yt6.diff > parseFloat(0.3) || me.currentTime == 0 )
@@ -6458,7 +6458,7 @@ function mep_run() {
 						    }*/
 					          };
 					    if (Seek == 3 ) { Seek = null }
-					  } else if (!me.paused) { me.pause(); console.log('2 ' + Seek) } //!yt6.x
+					  } else if (!me.paused) me.pause(); //!yt6.x
 					  if (yt6.speed) player2.playbackRate = me.playbackRate = yt6.speed;
 					  if (!me.paused) {
 					    yt6.player1.showControls(true)
@@ -6466,7 +6466,7 @@ function mep_run() {
 					    try { document.activeElement.blur() } catch(e) {}
 					  }
 					});
-					addEL(me, 'pause', function() {console.log('1pause ' + Seek)
+					addEL(me, 'pause', function() {//console.log('1pause ' + Seek)
 					  if ( (yt6 && yt6.timer == 999999999) || me.src == 'https://www.youtube.com/ptracking' )
 					    return void 0;
 					  if (yt6.x) {
@@ -6578,7 +6578,7 @@ function mep_run() {
 					      resync_live();
 					    }
 					});
-					addEL(me, 'playing', function() {console.log('1playing ' + yt6.retry)
+					addEL(me, 'playing', function() {//console.log('1playing ' + yt6.retry)
 					  if ( (yt6 && yt6.timer == 999999999) || me.src == 'https://www.youtube.com/ptracking' )
 					    return void 0;
 					  if (AV[itag(me.src)] && !player2.paused )  {// && Srcto != Audio
@@ -6789,7 +6789,7 @@ function mep_run() {
 						     if (player() && typeof player().getPlayerState == 'function' && player().getPlayerState() == 1) me.play();//yt6.player2.play()
 						   }
 					});
-					addEL(me, 'pause', function() {console.log('2pause ' + Seek);
+					addEL(me, 'pause', function() {//console.log('2pause ' + Seek);
 					  if ( (yt6 && yt6.timer == 999999999) || me.src == 'https://www.youtube.com/ptracking' )
 					    return void 0;
 					  if ( (typeof player().getPlayerState != 'function') || (yt6.x) ) {
@@ -6802,7 +6802,7 @@ function mep_run() {
 					      if ( typeof player().getPlayerState == 'function' && !yt6.x ) try { yt6.player2.pause(); } catch(e){}
 					    }
 					});
-					addEL(me, 'play', function() {console.log('2play')
+					addEL(me, 'play', function() {//console.log('2play')
 					  if ( (yt6 && yt6.timer == 999999999) || me.src == 'https://www.youtube.com/ptracking' || yt6.retry >= 7 )
 					    return void 0;
 
@@ -6841,7 +6841,7 @@ function mep_run() {
 					      }
 					    }
 					});
-					addEL(me, 'playing', function() {console.log('2playing')
+					addEL(me, 'playing', function() {//console.log('2playing')
 					  if ( (yt6 && yt6.timer == 999999999) || me.src == 'https://www.youtube.com/ptracking' )
 					    return void 0;
 					  yt6.retry = 0;
@@ -6849,6 +6849,9 @@ function mep_run() {
 					    player1.media.currentTime = me.currentTime; yt6.browser_tab = 'visible'
 					    player1.play();
 					  }
+					    yt6.player1.showControls(true)
+					    yt6.player1.hideControls(true)
+					    try { document.activeElement.blur() } catch(e) {}
 					});
 					addEL(me, 'volumechange', function() {//console.log('2volumechange')
 					  if ( (yt6 && yt6.timer == 999999999) || me.src == 'https://www.youtube.com/ptracking' )
