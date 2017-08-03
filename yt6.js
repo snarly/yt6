@@ -6665,7 +6665,7 @@ function mep_run() {
 					    if (me.currentTime.toFixed(2) != player1.media.currentTime.toFixed(2) && yt6.x) {// && (1*yt6.retry - 0) < 8
 					      player1.media.currentTime = me.currentTime; Seek = 1;
 					      yt6.player1.showControls(true)
-					      yt6.player1.options.alwaysShowControls = false
+					      //yt6.player1.options.alwaysShowControls = false
 					      if (mep()) {
 					        FireEvent2( mep(), 'mouseover' );
 					        FireEvent2( mep(), 'mouseleave' );
@@ -6682,7 +6682,7 @@ function mep_run() {
 						  function(){ if (yt6.x) { player1.play() } else { yt6.player2.pause() }},250,1250)
 						}
 					      }
-					    } else {console.log('2seeked-b')
+					    } else {//console.log('2seeked-b')
 						Seek = 2
 						/*if ( !me.paused && player1.media.paused && yt6.x ) {
 						  player1.setCurrentTime( me.currentTime )
@@ -6867,7 +6867,7 @@ function mep_run() {
 					    if (me.muted) { yt6.player1.setMuted(true) } else yt6.player1.setMuted(false)
 					  } catch(e) {}
 					  yt6.player1.showControls(true)
-					  yt6.player1.options.alwaysShowControls = false
+					  //yt6.player1.options.alwaysShowControls = false
 					  if (mep()) {
 					    FireEvent2( mep(), 'mouseover' );
 					    FireEvent2( mep(), 'mouseleave' );
