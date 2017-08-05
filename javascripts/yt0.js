@@ -6164,9 +6164,10 @@ function mep_run() {
 					  me.loaded = false;
 					  if (gc('mejs-clear')[0]) gc('mejs-clear')[0].setAttribute('id','mejs-clear')
 					});
-					addEL(me, 'error', function(e) {//console.log('1error')
+					addEL(me, 'error', function(e) {console.log('1error')
 					  if ( (yt6 && yt6.timer == 999999999) || me.src == 'https://www.youtube.com/ptracking' )
 					    return void 0;
+					  console.log(me.networkState)
 					  if (me.networkState == 3) {
 
 					    var sauce = getElementsByAttribute(document,"input","name",mep_x("mep_") + "_sourcechooser");
