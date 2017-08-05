@@ -1322,9 +1322,12 @@ function ajax1(update, ytg){
 
 
 function itag(me_src){
-  if (me_src.indexOf('itag=') > -1) var itagx = me_src.split('itag=')[1].split('&')[0]
-  if (me_src.indexOf('itag/') > -1) var itagx = me_src.split('itag/')[1].split('/')[0]
-  if (itagx) { return itagx } else { return 999 }
+  if (typeof me_src == 'string') {
+    var itagx
+    if (me_src.indexOf('itag=') > -1) itagx = me_src.split('itag=')[1].split('&')[0]
+    if (me_src.indexOf('itag/') > -1) itagx = me_src.split('itag/')[1].split('/')[0]
+    if (itagx) { return itagx } else { return 999 }
+  } else return 999
 }
 
 
