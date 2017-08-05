@@ -6416,17 +6416,13 @@ function mep_run() {
 					  if (yt6.x) {
 					  var bn = gc('play yt-uix-button-text');
 					  if (bn[0]) for(i=0;i<bn.length;i++) bn[i].innerHTML = 'pause';
-					  var A = [], V = [], AV = [];
-					  A = yt6.A_;
-					  V = yt6.V_;
-					  AV = yt6.A_V;
-					  if ( ((!AV[itag(me.src)] &&
-						 !A[itag(me.src)] &&
-						 (V[itag(me.src)] || me.src.indexOf('itag=278') > -1) 
+					  if ( ((!yt6.A_V[itag(me.src)] &&
+						 !yt6.A_[itag(me.src)] &&
+						 (yt6.V_[itag(me.src)] || me.src.indexOf('itag=278') > -1) 
 						) || (typeof srcto != 'undefined' && Srcto == Audio) ) && (yt6.retry < 8)
 					     )  {
 						  if (player2.paused) { player2.play() }; 
-						  if (!AV[itag(me.src)] && yt6.browser_tab == 'visible' && player2.duration != player2.currentTime && !(me.currentTime > player2.duration)) {
+						  if (!yt6.A_V[itag(me.src)] && yt6.browser_tab == 'visible' && player2.duration != player2.currentTime && !(me.currentTime > player2.duration)) {
 						    yt6.diff = Math.abs(parseFloat(parseFloat(me.currentTime) - parseFloat(player2.currentTime)));
 						    if (yt6.diff > parseFloat(0.3) || me.currentTime == 0 )
 						    $waitUntil(//+ parseFloat(yt6.speed/10))
@@ -6458,7 +6454,7 @@ function mep_run() {
 
 						  }
 						} else {
-						    /*if (!AV[itag(me.src)] && Seek != 4) {
+						    /*if (!yt6.A_V[itag(me.src)] && Seek != 4) {
 						      Seek = 4; player2.pause()
 						    };
 						    if (me.src == player2.src) {
@@ -6820,13 +6816,12 @@ function mep_run() {
 					addEL(me, 'play', function() {//console.log('2play')
 					  if ( (yt6 && yt6.timer == 999999999) || me.src == 'https://www.youtube.com/ptracking' || yt6.retry >= 7 )
 					    return void 0;
-					  AV = yt6.A_V;
 					  var player1_src = yt6.player1.media.src;
-					  if (AV[itag(player1_src)] && yt6.x) {
+					  if (yt6.A_V[itag(player1_src)] && yt6.x) {
 					    if (Seek != 4) { Seek = 4; me.pause(); player1.play() } else Seek = 2
 					  } else {
 					      Seek = 2
-					      if (yt6.x && !AV[itag(player1_src)]) {
+					      if (yt6.x && !yt6.A_V[itag(player1_src)]) {
 						if (me.src != player1_src) {
 						  if (!(yt6.player1.media.paused)) {
 						    //if (yt6.diff != 0) me.loaded = 1
