@@ -6416,10 +6416,10 @@ function mep_run() {
 					  if (yt6.x) {
 					  var bn = gc('play yt-uix-button-text');
 					  if (bn[0]) for(i=0;i<bn.length;i++) bn[i].innerHTML = 'pause';
-					  /*var A = [], V = [], AV = [];
+					  var A = [], V = [], AV = [];
 					  A = yt6.A_;
 					  V = yt6.V_;
-					  AV = yt6.A_V;*/
+					  AV = yt6.A_V;
 					  if ( ((!AV[itag(me.src)] &&
 						 !A[itag(me.src)] &&
 						 (V[itag(me.src)] || me.src.indexOf('itag=278') > -1) 
@@ -6457,7 +6457,7 @@ function mep_run() {
 						      },250,1250)
 
 						  }
-						} else {console.log(V + '\n' + V[itag(me.src)] + '\n' + itag(me.src) + '\n' + me.src)
+						} else {console.log(V[242] + '\n' + V[itag(me.src)] + '\n' + itag(me.src) + '\n' + me.src)
 						    /*if (!AV[itag(me.src)] && Seek != 4) {
 						      Seek = 4; player2.pause()
 						    };
