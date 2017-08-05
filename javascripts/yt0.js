@@ -6279,7 +6279,7 @@ function mep_run() {
 					    }
 
 					    //console.log(yt6.retry);
-					    if (yt6.retry < 5) { //typeof V[itag(me.src)] !== 'string'&& 
+					    if (yt6.retry < 5 && document.getElementById('ytassetsjs')) {
 					      sauce[i].removeAttribute('checked'); sauce[i].checked = ''; me.pause()
 					      var dash = document.getElementById(mep_x('mep_') + '_sourcechooser_242')//240p  VP9webm');
 					      if (dash != null && yt6.current != 242) {
