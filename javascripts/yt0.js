@@ -6164,10 +6164,9 @@ function mep_run() {
 					  me.loaded = false;
 					  if (gc('mejs-clear')[0]) gc('mejs-clear')[0].setAttribute('id','mejs-clear')
 					});
-					addEL(me, 'error', function(e) {console.log('1error')
+					addEL(me, 'error', function(e) {//console.log('1error')
 					  if ( (yt6 && yt6.timer == 999999999) || me.src == 'https://www.youtube.com/ptracking' )
 					    return void 0;
-					  console.log(me.networkState)
 					  if (me.networkState == 3) {
 
 					    var sauce = getElementsByAttribute(document,"input","name",mep_x("mep_") + "_sourcechooser");
@@ -6222,7 +6221,12 @@ function mep_run() {
 						yt6.srcbak = null; delete yt6.srcbak;//original format chosen by user
 						yt6.current = null; delete yt6.current;//current test format
 						//console.log('errcount = ' + yt6.errcount + ' ' + gc('yt6-proxy-error').length + ' ' + (1 * proxies.length) + ' ' + proxies.length + ' +1 ' + proxies.length + 1 + ' ' + (1 + 1 * proxies.length))
-						if (gc('yt6-proxy-error') && gc('yt6-proxy-error').length < (1 * proxies.length) && yt6.errcount < (1 + 1 * proxies.length)) {// && !yt6.ytg
+						if ( !document.getElementById('ytassetsjs') ||
+						      ( gc('yt6-proxy-error') &&
+							gc('yt6-proxy-error').length < (1 * proxies.length) &&
+							yt6.errcount < (1 + 1 * proxies.length)
+						      )
+						   ) {// && !yt6.ytg
 						//if (gc('yt6-proxy-error') && gc('yt6-proxy-error').length < proxies.length && yt6.errcount < proxies.length + 1) {// && !yt6.ytg
 							ajax1(true, yt6.ytg);
 							buildObject(window.ytplayer);
