@@ -6457,7 +6457,7 @@ function mep_run() {
 						      },250,1250)
 
 						  }
-						} else {console.log(V[itag(me.src)] + '\n' + itag(me.stc) + '\n' + me.src)
+						} else {console.log(V + '\n' + V[itag(me.src)] + '\n' + itag(me.src) + '\n' + me.src)
 						    /*if (!AV[itag(me.src)] && Seek != 4) {
 						      Seek = 4; player2.pause()
 						    };
