@@ -2529,7 +2529,7 @@ yt6.html5_fail = (player() != null && yt6.tmp &&
 //    if (bm0) { var ffp = gc('forced flashplayer')[0]; console.log('04 ' + bm0.parentNode.id + ffp + yt6.flash_recreation_timer); if (ffp && ffp.parentNode) console.log(ffp.parentNode.id) } else console.log('04 bm0 missing')
 
 	var p3 = document.getElementById('movie_player') || document.getElementById('movie_player1')
-	if (p3 && p3.getAttribute('time')) /*{//self created embedded player already present, just modify it
+	if (p3 && p3.getAttribute('time')) p3.parentNode.removeChild(p3)/*{//self created embedded player already present, just modify it
 //; console.log('1 '+p.nodeName + p.getAttribute('time') + typeof p.getAttribute('flashvars'))
 	  p3.setAttribute('id','movie_player1')
 	  p3.setAttribute('flashvars', flashvars)
