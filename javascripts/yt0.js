@@ -8425,12 +8425,12 @@ yt6.mep_up();
 				      document.getElementById('movie_player_to_dispose').appendChild(p);
 //    if (bm0) { var ffp = gc('forced flashplayer')[0]; console.log('13 ' + bm0.parentNode.id + ffp + yt6.flash_recreation_timer); if (ffp && ffp.parentNode) console.log(ffp.parentNode.id) } else console.log('13 bm0 missing')
 
-				      if (document.getElementById('movie_player1')) document.getElementById('movie_player1').setAttribute('id','movie_player')
+				      /*if (document.getElementById('movie_player1')) document.getElementById('movie_player1').setAttribute('id','movie_player')
 				      if (bm0 && bm0.parentNode.getAttribute('id') == 'movie_player_to_insert') {
 					$waitUntil(function(){ if (document.getElementById('movie_player_to_dispose').children.length > 1) return true },
 					function(){ yt6.api.appendChild(bm0) },300,3000)
 					if (yt6.x) { bm0.style.visibility = 'visible' }// else bm0.style.visibility = 'hidden'
-				      }
+				      }*/
 //    if (bm0) { var ffp = gc('forced flashplayer')[0]; console.log('14 ' + bm0.parentNode.id + ffp + yt6.flash_recreation_timer); if (ffp && ffp.parentNode) console.log(ffp.parentNode.id) } else console.log('14 bm0 missing')
 
 				    },250,10000)
