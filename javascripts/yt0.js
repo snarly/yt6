@@ -8519,7 +8519,7 @@ yt6.mep_up();
 	  function(){
 
 	    buildObject(window.ytplayer);
-	    if (yt6.pre_ad) { mep_reload(); return void 0 }
+	    //if (yt6.pre_ad) { mep_reload(); return void 0 }
 //console.log('2 '+window.ytplayer.config.args.video_id)
 
 	    redo_dl_button(  yt6.args,  yt6.html,  yt6.href);
