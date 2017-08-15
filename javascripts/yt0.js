@@ -3861,7 +3861,10 @@ yt6.mep_renew = function() {
 
 	}
 
-
+	if (bm0 && bm0.parentNode.getAttribute('id') == 'movie_player_to_insert') {
+	  if (yt6.layout != 16 || yt6.ytg) { var z = document.getElementById('player-api) } else var z = document.getElementById('player-container)
+	  z.appendChild(bm0)
+	}
 	yt6.newvideo = true
 
 
