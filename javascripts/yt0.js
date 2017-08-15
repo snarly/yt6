@@ -8519,7 +8519,7 @@ yt6.mep_up();
 	  function(){
 
 	    buildObject(window.ytplayer);
-	    if (yt6.pre_ad) { alert(''); mep_reload(); return void 0 }
+	    if (yt6.pre_ad) { mep_reload(); return void 0 }
 //console.log('2 '+window.ytplayer.config.args.video_id)
 
 	    redo_dl_button(  yt6.args,  yt6.html,  yt6.href);
@@ -8836,7 +8836,7 @@ yt6.body.spfdone = function(e) {
 
 		//console.log('01 - Regular spf page change 12 '+document.title+ yt6.change);
 		try { yt6.player1.pause() } catch(e){};
-
+console.log(typeof z);if (z) console.log(z.getAttribute('id')
 		if (yt6.force_flash && z && z.parentNode == yt6.api) try { document.getElementById('movie_player_to_insert').appendChild(bm0) } catch(e){}
 
 		mep_reload()
