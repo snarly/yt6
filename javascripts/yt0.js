@@ -3861,10 +3861,7 @@ yt6.mep_renew = function() {
 
 	}
 
-	/*if (bm0 && bm0.parentNode.getAttribute('id') == 'movie_player_to_insert') {
-	  if (yt6.layout != 16 || yt6.ytg) { var z = document.getElementById('player-api') } else var z = document.getElementById('player-container')
-	  z.appendChild(bm0)
-	}*/
+
 	yt6.newvideo = true
 
 
@@ -8303,6 +8300,11 @@ yt6.mep_up();
 			  if (z) z.dispatchEvent(spacebar); yt6.player1.play() //console.log('ok'+yt6.x)
 			}
 		  },500,2000)
+
+	if (yt6.force_flash && bm0 && bm0.parentNode.getAttribute('id') == 'movie_player_to_insert') {
+	  if (yt6.layout != 16 || yt6.ytg) { var z = document.getElementById('player-api') } else var z = document.getElementById('player-container')
+	  z.appendChild(bm0)
+	}
 
 	}//playNext
 
