@@ -4667,7 +4667,7 @@ if (rpt != null) {//ajax2
   yt6.audio = (yt6.audiox) ? yt6.audiox : audio//(document.getElementById('player2')) ? document.getElementById('player2').getAttribute('src') : audio
   yt6.args = args
 
-  if (yt6.force_flash && typeof mute_button[0] != 'undefined') { return false } else return true
+  if (yt6.force_flash && mute_button && typeof mute_button[0] != 'undefined') { return false } else return true
 
 }//buildObject
 
