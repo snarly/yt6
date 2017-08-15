@@ -4260,7 +4260,6 @@ if (ytplayer.config.args) {
 		yt6.ad_duration = ads0
 		if (Math.abs(ads - ads0) > 1) {
 		//console.log('Preemptive video ad?')
-		if (yt6.force_flash && typeof yt6.mep_reload == 'function') { yt6.mep_reload(); return void 0; break }
 		try { gc('video-stream html5-main-video')[0].mute() } catch(e) {}
 		var mute_button = gclass('ytp-mute-button')
 		if (typeof mute_button[0] != 'undefined' && yt6.ad_duration != 0 && !(p.isMuted())) {
@@ -4668,6 +4667,7 @@ if (rpt != null) {//ajax2
   yt6.audio = (yt6.audiox) ? yt6.audiox : audio//(document.getElementById('player2')) ? document.getElementById('player2').getAttribute('src') : audio
   yt6.args = args
 
+  if (yt6.force_flash && typeof mute_button[0] != 'undefined') { return false } else return true
 
 }//buildObject
 
@@ -8515,8 +8515,9 @@ yt6.mep_up();
 
 	  function(){
 
-	    buildObject(window.ytplayer);
+	    var z = buildObject(window.ytplayer);
 
+	    if (z) {
 //console.log('2 '+window.ytplayer.config.args.video_id)
 
 	    redo_dl_button(  yt6.args,  yt6.html,  yt6.href);
@@ -8542,6 +8543,8 @@ var bm0 = document.getElementById('bm0')
 	    }*/
 
 	    playNext()
+		    
+	    } else mep_reload()
 
 	  },250,5000)
 
