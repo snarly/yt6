@@ -8838,7 +8838,7 @@ yt6.body.spfdone = function(e) {
 		//console.log('01 - Regular spf page change 12 '+document.title+ yt6.change);
 		try { yt6.player1.pause() } catch(e){};
 
-		if (yt6.force_flash && z.parentNode == yt6.api) try { document.getElementById('movie_player_to_insert').appendChild(bm0) } catch(e){}
+		if (yt6.force_flash && bm0 && (bm0.parentNode.getAttribute('id') == 'player-api' || bm0.parentNode.getAttribute('id') == 'player-container')) try { document.getElementById('movie_player_to_insert').appendChild(bm0) } catch(e){}
 
 		mep_reload()
 
