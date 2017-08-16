@@ -3363,10 +3363,11 @@ if (start != false){
 	     }
 	 } else {console.log('autoplay4')
 
-		if (yt6.force_flash) {
-		  $waitUntil(function(){ var p = yt6.movie_player; if (p && p.nodeName == 'EMBED' && (typeof p.getPlayerState == 'function' && p.getPlayerState() != -1)) { return true } },
+		if (yt6.force_flash) {console.log('flash')
+		  $waitUntil(function(){ var p = yt6.movie_player; console.log(p.getAttribute('id')); if (p && p.nodeName == 'EMBED' && (typeof p.getPlayerState == 'function' && p.getPlayerState() != -1)) { return true } },
 		    function() {
-		      var r = document.getElementById('movie_player_to_dispose');
+		      var bm0 = document.getElementById('bm0')
+		      var r = document.getElementById('movie_player_to_dispose')
 		      while (r && typeof r.stopVideo == 'function' && r.getPlayerState() != -1) try { console.log(r.getPlayerState()); r.stopVideo() } catch(e){}
 
 		      var p = yt6.movie_player
