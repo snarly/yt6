@@ -4907,10 +4907,10 @@ if (document.getElementById("bm1") != null) document.getElementById("bm1").paren
   document.getElementById('bm4').onclick = onclic
 
 
-  if (typeof unescape(args.ttsurl) != 'undefined' || (ytplayer.config.args.player_response && ytplayer.config.args.player_response.indexOf('"captions":{') != -1)) {
+  if (unescape(args.ttsurl) != 'undefined' || (ytplayer.config.args.player_response && ytplayer.config.args.player_response.indexOf('"captions":{') != -1)) {
     bm3.innerHTML = bm3.innerHTML + '<br><br>SubRip/WebVTT subtitles:<br>(On Bookmarklet-URL line, edit the value to "add_subs")<br>'
 
-    if (typeof unescape(args.ttsurl) == 'undefined') {
+    if (unescape(args.ttsurl) == 'undefined') {
 	eval('yt6.ytp_response = ' + ytplayer.config.args.player_response)
 	args.ttsurl = []
 	var z = yt6.ytp_response.captions.playerCaptionsTracklistRenderer.captionTracks
