@@ -3367,7 +3367,7 @@ if (start != false){
 		  $waitUntil(function(){ var p = yt6.movie_player; if (p && p.nodeName == 'EMBED' && (typeof p.getPlayerState == 'function' && p.getPlayerState() != -1)) { return true } },
 		    function() {
 		      var r = document.getElementById('movie_player_to_dispose');
-		      while (r && typeof r.stopVideo == 'function' && r.getPlayerState() != -1) try { r.stopVideo() } catch(e){}
+		      while (r && typeof r.stopVideo == 'function' && r.getPlayerState() != -1) try { console.log(r.getPlayerState()); r.stopVideo() } catch(e){}
 
 		      var p = yt6.movie_player
 		      var s = (p && typeof p.getPlayerState == 'function') ? p.getPlayerState() : 0
@@ -3399,7 +3399,7 @@ if (start != false){
 			    p.style.visibility = 'hidden'
 			    //p.style.display = 'none'
 			    //if (yt6.ytp)  yt6.ytp.style.display = 'none'
-			  //}
+			    }
 			} else {console.log('autoplay7')
 			    yt6.x = false
 			    bm0.style.visibility = 'hidden'
