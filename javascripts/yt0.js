@@ -3370,37 +3370,49 @@ if (start != false){
 		      while (r && typeof r.stopVideo == 'function' && r.getPlayerState() != -1) try { r.stopVideo() } catch(e){}
 
 		      var p = yt6.movie_player
-		      var s = (p) ? p.getPlayerState() : -1
+		      var s = (p && typeof p.getPlayerState == 'function') ? p.getPlayerState() : 0
 
 
 			if (bm0.style.visibility == 'visible' ) {
+			  yt6.x = true
 			  if (s != -1 && s != 2) {console.log('autoplay5')
+			    yt6.x = true
+
+			  //if (typeof fv == 'string') {
+
+			  //} else {
+				//p.style.visibility = 'visible'
+				//if (yt6.layout == 16) p.style.display = 'inline-block'
+				//if (yt6.ytp)  yt6.ytp.style.display = ''
+			    //}
+			  } else {console.log('autoplay6')
+
+				window.postMessage("pauseVideo","*")
+				try { p.pauseVideo() } catch(e){}
+				try { p.postMessage("pauseVideo","*") } catch(e){}
+
+			    }
+			  if (typeof fv == 'string') {
+			    p.style.setProperty('width', '0px', x)
+			    p.style.setProperty('height', '0px', x)
+			  } else {
+			    p.style.visibility = 'hidden'
+			    //p.style.display = 'none'
+			    //if (yt6.ytp)  yt6.ytp.style.display = 'none'
+			  }
+			} else {console.log('autoplay7')
 			    yt6.x = false
 			    bm0.style.visibility = 'hidden'
-			  //if (typeof fv == 'string') {
+			    window.postMessage("pauseVideo","*")
+			    try { p.pauseVideo() } catch(e){}
+			    try { p.postMessage("pauseVideo","*") } catch(e){}
+
 			    var z = yt6.osw
 			    if (z.getAttribute('id') != 'player') {
 			      var z = z.firstChild;
 			    }
 			    p.style.width = ''; p.style.setProperty('width', z.style.width, '')
 			    p.style.height = ''; p.style.setProperty('height', z.style.height, '')
-			  //} else {
-				//p.style.visibility = 'visible'
-				//if (yt6.layout == 16) p.style.display = 'inline-block'
-				//if (yt6.ytp)  yt6.ytp.style.display = ''
-			    //}
-			    /*window.postMessage("playVideo","*")
-			    try { p.playVideo() } catch(e){}
-			    try { p.postMessage("playVideo","*") } catch(e){}*/
-			  } else {console.log('autoplay6')
-				yt6.x = true
-				window.postMessage("pauseVideo","*")
-				try { p.pauseVideo() } catch(e){}
-				try { p.postMessage("pauseVideo","*") } catch(e){}
-
-			    }
-			} else {console.log('autoplay7')
-			    yt6.x = false
 			  }
 			set_controls()
 		    },500,5000)
