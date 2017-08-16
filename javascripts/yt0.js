@@ -3364,7 +3364,7 @@ if (start != false){
 	 } else {console.log('autoplay4')
 
 		if (yt6.force_flash) {
-		  $waitUntil(function(){ var p = yt6.movie_player; console.log(typeof p.getPlayerState); if (p && p.nodeName == 'EMBED' && (typeof p.getPlayerState == 'function' && p.getPlayerState() != -1)) { return true } else console.log(p.getPlayerState()) },
+		  $waitUntil(function(){ var p = yt6.movie_player; if (p && p.nodeName == 'EMBED' && (typeof p.getPlayerState != 'function' || (typeof p.getPlayerState == 'function' && p.getPlayerState() == -1)) ) { return true } else console.log(p.getPlayerState()) },
 		    function() {
 		      var bm0 = document.getElementById('bm0')
 		      var r = document.getElementById('movie_player_to_dispose')
