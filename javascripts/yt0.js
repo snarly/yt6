@@ -3391,7 +3391,7 @@ if (start != false){
 				try { p.pauseVideo() } catch(e){}
 				try { p.postMessage("pauseVideo","*") } catch(e){}
 
-			    }
+			    //}
 			  if (typeof fv == 'string') {
 			    p.style.setProperty('width', '0px', x)
 			    p.style.setProperty('height', '0px', x)
