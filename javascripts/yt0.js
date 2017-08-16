@@ -3375,8 +3375,8 @@ if (start != false){
 
 			if (bm0.style.visibility == 'visible' ) {
 			  yt6.x = true
-			  if (s != -1 && s != 2) {console.log('autoplay5')
-			    yt6.x = true
+			  //if (s != -1 && s != 2) {console.log('autoplay5')
+
 
 			  //if (typeof fv == 'string') {
 
@@ -3385,7 +3385,7 @@ if (start != false){
 				//if (yt6.layout == 16) p.style.display = 'inline-block'
 				//if (yt6.ytp)  yt6.ytp.style.display = ''
 			    //}
-			  } else {console.log('autoplay6')
+			  //} else {console.log('autoplay6')
 
 				window.postMessage("pauseVideo","*")
 				try { p.pauseVideo() } catch(e){}
@@ -3399,7 +3399,7 @@ if (start != false){
 			    p.style.visibility = 'hidden'
 			    //p.style.display = 'none'
 			    //if (yt6.ytp)  yt6.ytp.style.display = 'none'
-			  }
+			  //}
 			} else {console.log('autoplay7')
 			    yt6.x = false
 			    bm0.style.visibility = 'hidden'
