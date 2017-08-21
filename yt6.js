@@ -1096,7 +1096,7 @@ ypsi = [];
 	  //usp.set('ratebypass','yes')
 	  //if (typeof dsig.next == 'function') usp.set('signature', dsig.next().value);
 	  var efmt = qual[usp.get('itag')]
-	  if (efmt) efmt = efmt['t'] || usp.get('itag');
+	  if (efmt) { efmt = efmt['t'] || usp.get('itag') } else efmt = usp.get('itag')
 	  cfmt[usp.get('itag')] =
 	  //`<a href="${eurl}">${efmt}</a>`;
 	    '<a name="' + usp.get('itag') + '" href="' + eurl + '">' + efmt + '</a>';//nurl.href
