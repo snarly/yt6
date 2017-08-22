@@ -3826,7 +3826,7 @@ yt6.mep_renew = function() {
 	      if (autoplay()) {
 		z.click()
 		if (1 * itag != 1 * yt6.userprefV[i]) no_default(itag, 'V')
-		if (typeof yt6.player1.play == 'function' && yt6.x) yt6.player1.load()//play()
+		if (typeof yt6.player1.play == 'function' && yt6.x) yt6.player1.play()
 	      } else {
 		  z.setAttribute('checked','checked'); z.checked = 'true'
 		  yt6.player1.setSrc(yt6.linx[itag])
