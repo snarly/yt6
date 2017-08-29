@@ -683,7 +683,7 @@ function find_key(rpt){
       if (j) { fcnm = j.substring(0,2) } else if (i) {
 	var j = fcnm.split('\"/signature/\"\+')[0].split('');
 	for(k=j.length;k>0;k--){
-	  if (j[k] == i && j[k+1] == '=') { fcnm = j[k+2] + j[k+3]; break }//.substring(k+2,k+4); break }
+	  if (j[k] == i && j[k+1] == '=' && (j[k+2]+j[k+3]+j[k+4]+j[k+5]+j[k+6]).indexOf('.') == -1) { fcnm = j[k+2] + j[k+3]; break }//.substring(k+2,k+4); break }
 	}
 
       } else var fcnm = fcnm2()
