@@ -306,7 +306,15 @@ yt6.userprefA = [171,140]
     303: {'t':'1080p WebM VP9 ^fps','a':'299'},
     308: {'t':'1440p WebM VP9 ^fps','a':'264'},
     313: {'t':'2160p WebM VP9','a':'266'},
-    315: {'t':'2160p WebM VP9 ^fps','a':'266'}
+    315: {'t':'2160p WebM VP9 ^fps','a':'266'},
+    330: {'t':'144p WebM VP9 HDR','a':'132'},
+    331: {'t':'240p WebM VP9 HDR','a':'133'},
+    332: {'t':'360p WebM VP9 HDR','a':'134'},
+    333: {'t':'480p WebM VP9 HDR','a':'135'},
+    334: {'t':'720p WebM VP9 HDR','a':'298'},
+    335: {'t':'1080p WebM VP9 HDR','a':'299'},
+    336: {'t':'1440p WebM VP9 HDR','a':'264'},
+    337: {'t':'2160p WebM VP9 HDR','a':'138'}
   };
 
 
@@ -339,9 +347,10 @@ yt6.userprefA = [171,140]
 
 function get_quality(url) {
 
-  var qs = qr(url);
+  var qs = qr(url), z;
   if (qs == null) return null
-  if (qs.itag) { qs = qual[qs.itag]['t'] || qs.itag } else qs = qs.itag
+  if (qs.itag) z = qual[qs.itag]
+  if (z) { qs = z['t'] || qs.itag } else qs = qs.itag
   return qs
 }
 
@@ -1095,7 +1104,8 @@ ypsi = [];
 	  var usp = new URLSearchParams(eurl.split('?')[1])
 	  //usp.set('ratebypass','yes')
 	  //if (typeof dsig.next == 'function') usp.set('signature', dsig.next().value);
-	  var efmt = qual[usp.get('itag')]
+	  var efmt;
+	  efmt = qual[usp.get('itag')]
 	  if (efmt) { efmt = efmt['t'] || usp.get('itag') } else efmt = usp.get('itag')
 	  cfmt[usp.get('itag')] =
 	  //`<a href="${eurl}">${efmt}</a>`;
@@ -7465,7 +7475,7 @@ if (typeof linx[160] === 'string') { linx.splice(132, 1, linx[160])}
     if (linx[i]) {
       var js = document.createElement('source')
       js.name = i
-      if (typeof qual[i]['t'] != 'undefined') {
+      if (qual[i] && qual[i]['t']) {
         if (i < 103) {
           AV[i] = "itag=" + i
           if (qual[i]['t'].indexOf('WebM') != -1) { js.type = 'video/webm'; js.title = qual[i]['t'].replace("WebM","")} 
