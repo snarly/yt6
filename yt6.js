@@ -587,7 +587,7 @@ function swfbin4(){
     }
   if (yt6.swfbin4) {
     yt6.swfbin4 = yt6.swfbin4.split('"url":"')[1].split('"')[0]
-    yt6.swfbin4 = yt6.swfbin4.split('player-')[1].split('\\')[0]
+    if (yt6.swfbin4) { yt6.swfbin4 = yt6.swfbin4.split('player-')[1].split('\\')[0] } else yt6.swfbin4 = null
   } else yt6.swfbin4 = null
 }
 
