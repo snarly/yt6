@@ -1554,14 +1554,21 @@ function clone(obj) {
 
 function correct_flashvars(a) {//console.log(window.ytplayer.config.args.adaptive_fmts)
 
-  yt6.args = clone(window.ytplayer.config.args)
-  var args = window.ytplayer.config.args
-  var adaptive_fmts = yt6.args.adaptive_fmts // != window.ytplayer.config.args.adaptive_fmts
-  var url_encoded_fmt_stream_map = yt6.args.url_encoded_fmt_stream_map // != window.ytplayer.config.args.url_encoded_fmt_stream_map
-  args.remarketing_url = '';
-  args.afv_ad_tag = '';
-  args.afv_invideo_ad_tag = '';
-  args.dynamic_allocation_ad_tag = '';
+  yt6.args = clone(window.ytplayer.config.args) // backup
+    var args = window.ytplayer.config.args,
+	adaptive_fmts = yt6.args.adaptive_fmts, // != window.ytplayer.config.args.adaptive_fmts
+	url_encoded_fmt_stream_map = yt6.args.url_encoded_fmt_stream_map; // != window.ytplayer.config.args.url_encoded_fmt_stream_map
+  args.remarketing_url = ''
+  args.afv_ad_tag = ''
+  args.afv_invideo_ad_tag = ''
+  args.dynamic_allocation_ad_tag = ''
+  args.web_player_disable_flash_playerproxy = ''
+  args.lightweight_watch_video_swf = ''
+  args.web_player_flash_fallback_killswitch = ''
+
+
+  if (typeof yt6.media_encrypted == 'undefined' || yt6.media_encrypted[0] != args.video_id) { yt6.media_encrypted = [args.video_id, false] }
+
 
   var ft = [args.url_encoded_fmt_stream_map, args.adaptive_fmts]
   for (i in ft) {
@@ -1572,87 +1579,54 @@ function correct_flashvars(a) {//console.log(window.ytplayer.config.args.adaptiv
       for (j in z) {
 	var qs = qr(z[j]); if (qs == null) continue;
 	if (qs.s){
-	  //console.log('A \n' + z[j] )
-	  //z[j] = z[j].replace('videoplayback%3F','videoplayback%3Fsignature%3D' + dc(qs.s) +'%26')
-	  //z[j] = z[j].replace('s='+qs.s, 's=')
-	  //console.log('B \n' + unescape(z[j]))
+	  yt6.media_encrypted = [args.video_id, true]
+	  var sig = dc(qs.s)
 
 	  var regx = new RegExp('s=' + qs.s, 'gm')
+
 	  if (c == 1) {
-	    args.url_encoded_fmt_stream_map = url_encoded_fmt_stream_map.split('s=' + qs.s).join('signature=' + dc(qs.s))
+	    z[j] = z[j].split('s=' + qs.s).join('s=').replace('videoplayback%3F','videoplayback%3Fsignature%3D' + sig +'%26')
+	    url_encoded_fmt_stream_map = z.join(',')
 	  }
-	  if (c == 2) {
-	    adaptive_fmts = adaptive_fmts.split('s=' + qs.s).join('signature=' + dc(qs.s))
+	  if (c == 2 && z[j].indexOf(sig) == -1) {
+	    z[j] = z[j].replace('videoplayback%3F','videoplayback%3Fsignature%3D' + sig +'%26')
+	    z[j] = z[j].replace('s=' + qs.s + '&', 's=&')
+	    adaptive_fmts = z.join(',')
 	  }
-	}
+	} else if (!(yt6.media_encrypted[0] == video_id()[0] && yt6.media_encrypted[1] == true)) yt6.media_encrypted = [args.video_id, false]
       }
     }
   }
-  //window.ytplayer.config.args.url_encoded_fmt_stream_map = url_encoded_fmt_stream_map
-  window.ytplayer.config.args.adaptive_fmts = ''//adaptive_fmts
 
-//console.log(window.ytplayer.config.args.url_encoded_fmt_stream_map +'\n' + window.ytplayer.config.args.adaptive_fmts + '\n')
-//console.log(window.ytplayer.config)
+    window.ytplayer.config.args.url_encoded_fmt_stream_map = url_encoded_fmt_stream_map
+    window.ytplayer.config.args.adaptive_fmts = ''//(yt6.media_encrypted[0] == video_id()[0] && yt6.media_encrypted[1] == true) ? adaptive_fmts : ''; // put an empty string into this variable since flash player can no longer handle adaptive formats (? YouTube may have deliberately crippled its own flash-to-javascript code)
 
-		//
+
+
+		// Start
 
 		function ca(a){var b=typeof a;if("object"==b)if(a){if(a instanceof Array)return"array";if(a instanceof Object)return b;var c=Object.prototype.toString.call(a);if("[object Window]"==c)return"object";if("[object Array]"==c||"number"==typeof a.length&&"undefined"!=typeof a.splice&&"undefined"!=typeof a.propertyIsEnumerable&&!a.propertyIsEnumerable("splice"))return"array";if("[object Function]"==c||"undefined"!=typeof a.call&&"undefined"!=typeof a.propertyIsEnumerable&&!a.propertyIsEnumerable("call"))return"function"}else return"null";
-else if("function"==b&&"undefined"==typeof a.call)return"object";return b}//wa
+else if("function"==b&&"undefined"==typeof a.call)return"object";return b}//named "wa" nowadays
 
 		function wa(a){return(0,window.encodeURIComponent)(String(a))};//g.La
-
 		function da(a){return"array"==ca(a)}//g.xa
-		//g.ya=function(a){var b=wa(a);return"array"==b||"object"==b&&"number"==typeof a.length};
-		//g.za=function(a){return"function"==wa(a)};
+		//function vf(a,b,c){if(da(b))for(var d=0;d<b.length;d++)vf(a,String(b[d]),c);else null!=b&&c.push("&",a,""===b?"":"=",wa(b))};//outdated... encodeURIComponent(String(b)))} //Lg
+		function vf(a,b,c){if(da(b))for(var d=0;d<b.length;d++)vf(a,String(b[d]),c);else null!=b&&c.push(a+(""===b?"":"="+wa(b)))};
+		//function wf(a,b){for(var c in b)vf(c,b[c],a);return a}
+		function wf(a){var b=[],c;for(c in a)vf(c,a[c],b);return b.join("&")};//g.Ng
+		//function xf(a){a=wf([],a);a[0]="";return a.join("")} //probably this one's too old now also --> g.Pg?
 
-		//pb=function(a){if(!g.xa(a))for(var b=a.length-1;0<=b;b--)delete a[b];a.length=0};
-		//Lg=function(a,b,c){if(g.xa(b))for(var d=0;d<b.length;d++)Lg(a,String(b[d]),c);else null!=b&&c.push(a+(""===b?"":"="+g.La(b)))};
-		//Mg=function(a,b){for(var c=[],d=b||0;d<a.length;d+=2)Lg(a[d],a[d+1],c);return c.join("&")};
-		//g.Ng=function(a){var b=[],c;for(c in a)Lg(c,a[c],b);return b.join("&")};
+		//g.Pg needs:
+		function Ig(a){var b=a.indexOf("#");0>b&&(b=a.length);var c=a.indexOf("?");if(0>c||c>b){c=b;var d=""}else d=a.substring(c+1,b);return[a.substr(0,c),d,a.substr(b)]};
+		function Jg(a,b){return b?a?a+"&"+b:b:a};
+		function Kg(a,b){if(!b)return a;var c=Ig(a);c[1]=Jg(c[1],b);return c[0]+(c[1]?"?"+c[1]:"")+c[2]};
+		//g.Pg needs^
+		function xf(a,b){var c=wf(b);return Kg(a,c)};//g.Pg
 
-		function vf(a,b,c){if(da(b))for(var d=0;d<b.length;d++)vf(a,String(b[d]),c);else null!=b&&c.push("&",a,""===b?"":"=",wa(b))};//outdated... encodeURIComponent(String(b)))} //Lg
-
-		function wf(a,b){for(var c in b)vf(c,b[c],a);return a} //Ng or g.Og
-		function xf(a){a=wf([],a);a[0]="";return a.join("")}
-
-
-		//vf <- Mg
-		function vf(a,b,c){if(da(b))for(var d=0;d<b.length;d++)vf(a,String(b[d]),c);else null!=b&&c.push(a+(""===b?"":"="+wa(b)))};//probably this is too old now also
-
-		//vf <- g.zf
-		//function vf(a,b,c,d,e){if(da(b))for(var f=0;f<b.length;f++)vf(a,b[f],c,d,e);else d=g.ya(d)?!!d.capture:!!d,c=sf(c),g.gf(a)?a.Ca(b,c,d,e):a&&(a=g.uf(a))&&(b=of(a,b,c,d,e))&&g.Af(b)};
-
-		//wf <- Ng
-		//function wf(a,b){for(var c=[],d=b||0;d<a.length;d+=2)vf(a[d],a[d+1],c);return c.join("&")};//or
-
-
-		//wf <- g.Og
-		function wf(a){var b=[],c;for(c in a)vf(c,a[c],b);return b.join("&")};
-
-/*
-function Lg(a,b){if(!b)return a;var c=a.indexOf("#");0>c&&(c=a.length);var d=a.indexOf("?");if(0>d||d>c){d=c;var e=""}else e=a.substring(d+1,c);c=[a.substr(0,d),e,a.substr(c)];d=c[1];c[1]=b?d?d+"&"+b:b:d;return c[0]+(c[1]?"?"+c[1]:"")+c[2]};
-//g.Qg
-function xf1(a,b){var c=wf(b);return Lg(a,c)};
-
-
-
-function Ka(a){return(0,window.decodeURIComponent)(a.replace(/\+/g," "))};
-
-function gwa(a){var b=ca(a);return"array"==b||"object"==b&&"number"==typeof a.length};
-
-function tb(a,b){for(var c=1;c<arguments.length;c++){var d=arguments[c];if(gwa(d)){var e=a.length||0,f=d.length||0;a.length=e+f;for(var k=0;k<f;k++)a[e+k]=d[k]}else a.push(d)}};
-
-function gse(a){a=a.split("&");for(var b={},c=0,d=a.length;c<d;c++){var e=a[c].split("=");if(1==e.length&&e[0]||2==e.length){var f=Ka(e[0]||"");e=Ka(e[1]||"");f in b?da(b[f])?tb(b[f],e):b[f]=[b[f],e]:b[f]=e}}return b};
-
-function gaf(a){"?"==a.charAt(0)&&(a=a.substr(1));return gse(a)};
-
-function hf(a){a=a.split(",");return a=a.map(function(a){return gaf(a)})};
-*/
 		// End
 
-//console.log('*\n' + adaptive_fmts +'\n\n\n'+ encodeURIComponent(String(adaptive_fmts)))
 		var b = wf(a)
-		window.ytplayer.config.args.adaptive_fmts = adaptive_fmts
+		if (typeof adaptive_fmts != 'undefined' && window.ytplayer.config.args.adaptive_fmts == '') window.ytplayer.config.args.adaptive_fmts = adaptive_fmts; //write adaptive formats back from backup copy to use with html5 player
 		return b
 
 }
@@ -2062,10 +2036,10 @@ function alt_yt_cleanup() {//console.log(player().getAttribute('name') + typeof 
 	  }
 	}
 	xhr1.send('')
-	if (yt6.oldbrowser) {
+	/*if (yt6.oldbrowser) {
 	  var newin = window.open(protocol() + '//www.youtube.com/embed/' + vid, "w_blank", "width=640,height=360,menubar=yes");
 	  newin.onload = action_setconfig()
-	}
+	}*/
 
 
       } catch(e){
