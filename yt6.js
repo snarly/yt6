@@ -4138,6 +4138,7 @@ function onYouTubeIframeAPIReady() {
 function fix_playlist() {
 
 var playlist = document.getElementById('watch-appbar-playlist') || document.getElementById('playlist') || document.getElementsByTagName('ytg-playlist-panel-renderer')[0]
+if (playlist && !playlist.firstElementChild) playlist = null
 if (playlist && typeof playlist.id == 'string') {
 if (playlist.id.indexOf('watch') == -1) {
   var playlist_scroller = (!yt6.ytg) ? gclass('playlist-items yt-scrollbar-dark style-scope ytd-playlist-panel-renderer')[0] : document.getElementsByTagName('ytg-scroll-pane')[1] ;//has-scroller; // x-scope iron-list-0')[0]
@@ -10469,6 +10470,7 @@ function zip(){
     e.height = h + 'px'
 
     var playlist = document.getElementById('watch-appbar-playlist') || document.getElementById('playlist') || document.getElementById('chat')
+    if (playlist && !playlist.firstElementChild) playlist = null
 
     a.removeAttribute("style")
 
@@ -11126,7 +11128,7 @@ if (a.getAttribute('id') != 'player') { //pre-2016 layout start
     }
 
    //new layout, new preset: player object style left always 0px
-   if (z.id == 'player') { z.style.left = '0px' }
+   if (z.id == 'player') { z.style.left = '0px' }//this ain't good, should be calculated also. maybe one day
 
 }//scaling
 
@@ -12202,6 +12204,7 @@ var CtrlS = function (stage,v){
 
 /* Position video */
   var playlist = document.getElementById('watch-appbar-playlist') || document.getElementById('playlist')
+  if (playlist && !playlist.firstElementChild) playlist = null
   if (bm0 && !bm0.style.width && !bm0.style.height) {
     bm0.style.width = fix_Width()
     bm0.style.height = fix_Height()
