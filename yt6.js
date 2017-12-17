@@ -11670,8 +11670,10 @@ function aspect(a) {
 		      var y = y.split(' ').join('').split('</span>')[0].split('@')[0]
 		      if (y && y.indexOf('x') != -1) {
 		        var w = 1 * y.split('x')[0]
-		        var h = 1 * y.split('x')[1]
-			if (w == 0 && h == 0) {
+		        var h = y.split('x')[1]
+		        if (h && h.indexOf('/') != -1) { h = 1 * h.split('/')[0] } else h = 1 * h
+
+			if (w == 0 && h == 0) {//old
 			  var y = z.innerHTML.split('Dimensions')[1]
 			  if (y) {
 			    var y = y.split('<span>')[1]
@@ -11695,6 +11697,7 @@ function aspect(a) {
 			   ) {
 		          yt6.aspect_ratio = parseFloat(w / h)
 		        } else { yt6.aspect_ratio = yt6.ar }
+
 		      }; //console.log(yt6.aspect_ratio)
 		    }
 	          }
