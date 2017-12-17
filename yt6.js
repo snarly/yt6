@@ -1495,9 +1495,11 @@ function player() {
       if (yt6.api) {
 	var z = yt6.api.children
 	for(var i in z) {
-	  if (z[i].id && (z[i].id == 'video-player' || z[i].id.indexOf('player_uid_') == 0)) {
-	    p = z[i];
-	  }
+	  if (z[i]) try {
+	    if (z[i].id && (z[i].id == 'video-player' || z[i].id.indexOf('player_uid_') == 0)) {
+	      p = z[i];
+	    }
+	  } catch(e){}
 	}
       }
     }
@@ -1603,8 +1605,9 @@ function correct_flashvars(a) {//console.log(window.ytplayer.config.args.adaptiv
 	  var regx = new RegExp('s=' + qs.s, 'gm')
 
 	  if (c == 1) {
-	    z[j] = z[j].split('s=' + qs.s).join('s=').replace('videoplayback%3F','videoplayback%3Fsignature%3D' + sig +'%26')
+	    z[j] = z[j].replace('videoplayback%3F','videoplayback%3Fsignature%3D' + sig +'%26').split('s=' + qs.s).join('s=')
 	    url_encoded_fmt_stream_map = z.join(',')
+	    //this stuff does not work, videos with encrypted signatures after decryption still won't load in flash player
 	  }
 	  if (c == 2 && z[j].indexOf(sig) == -1) {
 	    z[j] = z[j].replace('videoplayback%3F','videoplayback%3Fsignature%3D' + sig +'%26')
@@ -1616,8 +1619,21 @@ function correct_flashvars(a) {//console.log(window.ytplayer.config.args.adaptiv
     }
   }
 
+  //remove "webm" video from the list because flash player can't handle it now
+  if (url_encoded_fmt_stream_map)
+  var uefsm_bak = clone(url_encoded_fmt_stream_map)
+  try {
+    var z = url_encoded_fmt_stream_map.split(',')
+    for(i=0;i<z.length;i++){
+      if (z[i].indexOf('type=video%2Fwebm%3B') != -1) z[i] = '@@@'
+    }
+    z = z.join(',').split(',@@@,').join(',').split(',@@@').join('').split('@@@,').join('')
+    url_encoded_fmt_stream_map = z
+  } catch(e){}
+
+
     window.ytplayer.config.args.url_encoded_fmt_stream_map = url_encoded_fmt_stream_map
-    window.ytplayer.config.args.adaptive_fmts = ''//(yt6.media_encrypted[0] == video_id()[0] && yt6.media_encrypted[1] == true) ? adaptive_fmts : ''; // put an empty string into this variable since flash player can no longer handle adaptive formats (? YouTube may have deliberately crippled its own flash-to-javascript code)
+    window.ytplayer.config.args.adaptive_fmts = ''//(yt6.media_encrypted[0] == video_id()[0] && yt6.media_encrypted[1] == true) ? adaptive_fmts : ''; // put an empty string into this variable since flash player can no longer handle adaptive formats
 
 
 
@@ -1644,7 +1660,11 @@ else if("function"==b&&"undefined"==typeof a.call)return"object";return b}//name
 		// End
 
 		var b = wf(a)
-		if (typeof adaptive_fmts != 'undefined' && window.ytplayer.config.args.adaptive_fmts == '') window.ytplayer.config.args.adaptive_fmts = adaptive_fmts; //write adaptive formats back from backup copy to use with html5 player
+
+		//write adaptive formats back from backup copy to use with html5 player
+		if (typeof adaptive_fmts != 'undefined' && window.ytplayer.config.args.adaptive_fmts == '') window.ytplayer.config.args.adaptive_fmts = adaptive_fmts;
+		if (typeof uefsm_bak != 'undefined') window.ytplayer.config.args.url_encoded_fmt_stream_map = uefsm_bak;
+
 		return b
 
 }
@@ -2552,83 +2572,12 @@ if (yt6.html5_fail) {
 function forceFlashplayerObject(){
 //https://addons.mozilla.org/en-US/firefox/addon/youtube-flash-player/versions/beta
 
+	var fmp = document.getElementById('movie_player')
+	if ( fmp && (fmp.fv_vid == video_id()[0] || video_id()[0] == yt6.vid ) && fmp.fv_done == 1) { return void 0; }
+
+
+//ff addon yt-f-vid-p bit, useless here
 /*
-(function(d,b){
-  //if("complete"===b.readyState)b.location.reload();else{
-	var e=b.createElement("script");
-	e.textContent="("+
-	function(a,c){
-	  function b(a){"flash"===d&&(c.location.href=a.detail.url)}
-	  var d=a.localStorage.getItem("youtubeflashplayer")||"flash";
-	  if("flash"===d){
-	    var e=new MutationObserver(function(a){
-	      a.forEach(function(a){
-		if(null!==a.addedNodes)
-		  for(var b=a.addedNodes.length-1;0<=b;b--)
-		    if("VIDEO"===a.addedNodes[b].nodeName&&a.addedNodes[b].classList.contains("html5-main-video")){
-		      var d=a.addedNodes[b];
-		      try{
-			d.addEventListener("play",function(a){
-			  if(/^https:\/\/www\.youtube\.com\/watch\?(.*&)?v=/.test(c.location.href)&&
-			    (a.originalTarget.pause(),a=d.parentNode.parentNode))
-			  {
-			    var b=c.createElement("iframe");
-			    b.width="100%";
-			    b.height="100%";
-			    b.frameborder="0";
-			    b.setAttribute("allowfullscreen","");*/
-//			    b.src="https://www.youtube.com/embed/"+c.location.href.match(/v=([\w-]+)&*/)[1]+"?autoplay=1";
-/*			    a.textContent="";
-			    a.appendChild(b);
-			    a=c.createElement("style");
-			    a.type="text/css";
-			    a.textContent="#movie_player div{display:none!important}";
-			    c.head.appendChild(a)
-			  }
-			})
-		      }catch(h){}
-		      e.disconnect()
-		    }
-	      })
-	    });
-	    e.observe(c.documentElement,{childList:!0,subtree:!0})
-	  }
-	  c.addEventListener("DOMContentLoaded",function f(){
-	    try{
-	      spf.dispose()
-	    }catch(g){}
-	    c.removeEventListener("DOMContentLoaded",f)
-	  });
-	  a.addEventListener("spfrequest",b);
-	  a.addEventListener("yt-navigate-start",b);
-	  a.addEventListener("message",function(b){
-	    b.data.youtubeflashplayer&&
-	    "player"===b.data.youtubeflashplayer&&
-	    (a.localStorage.setItem("youtubeflashplayer",b.data.player),
-	    b.data.reload&&
-	    !c.hidden&&
-	    c.location.reload())
-	  })
-	}.toString()+")(this, document)";
-	b.documentElement.appendChild(e);*/
-/*	chrome.runtime.sendMessage("youtubeflashplayer:status",function(a){
-	  d.postMessage({youtubeflashplayer:"player",player:"enabled"===a?"flash":"html5",reload:!1},"*")
-	});
-	chrome.runtime.onMessage.addListener(function(a,c,e){
-	  "youtubeflashplayer:flash"===a
-	    ? d.postMessage({youtubeflashplayer:"player",player:"flash",reload:!0},"*")
-	    : "youtubeflashplayer:html5"===a
-	      ? d.postMessage({youtubeflashplayer:"player",player:"html5",reload:!0},
-"*")
-	      : "youtubeflashplayer:reload"===a.message && 
-		b.location.reload()
-	});*/
-//	b.documentElement.setAttribute("youtube-flash-player","")
-  //}
-//})(this,document);
-
-
-
       var Html5toFlash = function(action,session_token,document){
 	var xmlhttp
 	xmlhttp = null
@@ -2661,7 +2610,7 @@ function forceFlashplayerObject(){
 
       var action = 'disable'; //'enable'
       getSessionToken(action,document)
-
+*/
 
 	try {
 	  var xhr
@@ -2739,7 +2688,7 @@ if (yt6.html5_fail) {
     if (!ytplayer.config) {
 
 	ageless_verification()
-	if (yt6.html5_fail) try { document.getElementById('movie_player').setAttribute("flashvars", correct_flashvars(window.ytplayer.config.args)) } catch(e) {}
+	if (yt6.html5_fail) try { fmp.setAttribute("flashvars", correct_flashvars(window.ytplayer.config.args)); fmp.fv_vid = video_id()[0]; fmp.fv_done = 1 } catch(e) {}
 
     } else {
 	if (ytplayer && ytplayer.config) if (!ytplayer.config.args) {
@@ -2749,7 +2698,7 @@ if (yt6.html5_fail) {
 	      ageless_verification()
 	    } else {
 		//if (ytplayer.config.hml5 == false) {
-		  try { document.getElementById('movie_player').setAttribute("flashvars", correct_flashvars(window.ytplayer.config.args)) } catch(e) { }//if (player() == null) { forceFlashplayerObject(); return void 0; } }
+		  try { fmp.setAttribute("flashvars", correct_flashvars(window.ytplayer.config.args)); fmp.fv_vid = video_id()[0]; fmp.fv_done = 1 } catch(e) { }//if (player() == null) { forceFlashplayerObject(); return void 0; } }
 		//} else yt.player.Application.create("player-api", ytplayer.config)
 	      }
 	  }
@@ -2758,7 +2707,7 @@ if (yt6.html5_fail) {
 //    if (bm0) { var ffp = gc('forced flashplayer')[0]; console.log('06 ' + bm0.parentNode.id + ffp + yt6.movie_player.getAttribute('id')); if (ffp && ffp.parentNode) console.log(ffp.parentNode.id) } else console.log('06 bm0 missing')
 
 
-    if (document.getElementById('movie_player') && document.getElementById('movie_player').getAttribute('src') == 'about:blank') yt6.parentNode.removeChild(yt6)
+    if (fmp && fmp.getAttribute('src') == 'about:blank') yt6.parentNode.removeChild(yt6)
 
 
 };// forceFlashplayerObject();
@@ -2822,7 +2771,7 @@ if ( !player() || (player() && typeof player().getPlayerState != 'function' && g
 	    if (!ytplayer.config.args.url_encoded_fmt_stream_map) {
 	      ageless_verification()
 	    } else {
-		//if (ytplayer.config.hml5 == false) {
+		//if (yt6.oldbrowser) //ytplayer.config.hml5 == false) {
 		  try { document.getElementById('movie_player').setAttribute("flashvars", correct_flashvars(window.ytplayer.config.args)) } catch(e) { }//if (player() == null) { forceFlashplayerObject(); return void 0; } }
 		//} else yt.player.Application.create("player-api", ytplayer.config)
 	      }
@@ -3656,9 +3605,11 @@ if (typeof p.getPlayerState != 'function' && typeof p.getAttribute('flashvars') 
 
 }
 
-  if (p.tagName == 'EMBED') { $waitUntil(function(){ var p = player()
 
-	function tryflash() {
+  //			???
+  if (p.tagName == 'EMBED' && p.tagName != 'EMBED') { $waitUntil(function(){ var p = player()
+
+	function tryflash() {console.log('02')
 		var z = document.getElementById('movie_player1')
 		if (!z) {
 		  var z = document.getElementsByClassName('forced flashplayer'); 
@@ -3724,6 +3675,8 @@ if (typeof p.getPlayerState != 'function' && typeof p.getAttribute('flashvars') 
 	  if (yt6.x) try { p.pauseVideo() } catch(e){}
 	  set_controls()
 	},400,4000) } //else if (yt6.force_flash) alert('')
+
+
 
   set_controls()
 
