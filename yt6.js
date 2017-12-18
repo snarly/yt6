@@ -1586,6 +1586,26 @@ function correct_flashvars(a) {//console.log(window.ytplayer.config.args.adaptiv
   args.lightweight_watch_video_swf = ''
   args.web_player_flash_fallback_killswitch = ''
 
+  args.allow_html5_ads = ''
+  args.ppv_remarketing_url = ''
+  args.encoded_ad_safety_reason = ''
+  args.iv_invideo_url = ''
+  args.iv3_module = ''
+  args.ad_device = ''
+  args.iv_load_policy = ''
+  args.iv_allow_in_place_switch = '0'
+  args.ad_preroll = ''
+  args.midroll_prefetch_size = 0
+  args.ad_slots = ''
+  args.ad_flags = ''
+  args.afv = false
+  args.instream = false
+  args.invideo = false
+  args.instream_long = false
+  args.allow_below_the_player_companion = false
+  args.ptk = 'youtube_none'
+
+
 
   if (typeof yt6.media_encrypted == 'undefined' || yt6.media_encrypted[0] != args.video_id) { yt6.media_encrypted = [args.video_id, false] }
 
@@ -1630,6 +1650,21 @@ function correct_flashvars(a) {//console.log(window.ytplayer.config.args.adaptiv
     z = z.join(',').split(',@@@,').join(',').split(',@@@').join('').split('@@@,').join('')
     url_encoded_fmt_stream_map = z
   } catch(e){}
+
+
+  // need to empty at least these two objects to be able to use the crippled flash player for videos with decrypted signatures:
+  // ad3_module
+  // player_response{"captions"}
+  args.ad3_module = ''
+  if (args.player_response) {
+    var z = args.player_response.split(',')
+    for(i=0;i<z.length;i++){
+      if (z[i].indexOf('"captions"') == 0) { z[i] = ''; break }
+    }
+    z = z.join(',').split(',,').join(',')
+    args.player_response = z
+  }
+
 
 
     window.ytplayer.config.args.url_encoded_fmt_stream_map = url_encoded_fmt_stream_map
@@ -3609,7 +3644,7 @@ if (typeof p.getPlayerState != 'function' && typeof p.getAttribute('flashvars') 
   //			???
   if (p.tagName == 'EMBED' && p.tagName != 'EMBED') { $waitUntil(function(){ var p = player()
 
-	function tryflash() {console.log('02')
+	function tryflash() {
 		var z = document.getElementById('movie_player1')
 		if (!z) {
 		  var z = document.getElementsByClassName('forced flashplayer'); 
