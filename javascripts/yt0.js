@@ -705,7 +705,7 @@ function find_key(rpt){
     fcnm = fcnm.split('));')[0]; ;console.log('3 '+fcnm)
     if (document.location.href.indexOf('/base.js') == document.location.href.length-8 && fcnm.indexOf('&amp;') != -1) fcnm = fcnm.split('&amp;').join('&')
     var i = fcnm.split('\"/signature/\"\+')[1]
-    if (i) { ;console.log('3a )
+    if (i) { ;console.log('3a')
       i = i.split(")")[0].split("\n").join("").split("\r").join("").split(" ").join("");
       var j = fcnm.split("&&("+i+"=")[1] || fcnm.split("&amp;&amp;("+i+"=")[1];
       if (j) { fcnm = j.substring(0,2) } else if (i) {
