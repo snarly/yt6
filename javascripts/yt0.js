@@ -699,13 +699,13 @@ function find_key(rpt){
 	return fcnm
   }
 
-  var fcnm = rpt.split('dashmpd,')[1] ;console.log('1 '+fcnm)
-  if (!fcnm) fcnm = rpt.split('.dashmpd')[1] ;console.log('2 '+fcnm) //2018
+  var fcnm = rpt.split('dashmpd,')[1]
+  if (!fcnm) fcnm = rpt.split('.dashmpd')[1]
   if (fcnm) {
-    fcnm = fcnm.split('));')[0]; ;console.log('3 '+fcnm)
+    fcnm = fcnm.split('));')[0];
     if (document.location.href.indexOf('/base.js') == document.location.href.length-8 && fcnm.indexOf('&amp;') != -1) fcnm = fcnm.split('&amp;').join('&')
     var i = fcnm.split('\"/signature/\"\+')[1]
-    if (i) { ;console.log('3a')
+    if (i) {
       i = i.split(")")[0].split("\n").join("").split("\r").join("").split(" ").join("");
       var j = fcnm.split("&&("+i+"=")[1] || fcnm.split("&amp;&amp;("+i+"=")[1];
       if (j) { fcnm = j.substring(0,2) } else if (i) {
@@ -716,8 +716,8 @@ function find_key(rpt){
 
       } else var fcnm = fcnm2()
     } else {//2018 variant
-	var i = fcnm.split('"signature":"sig";')[1] ;console.log('4 '+i)
-	if (i) fcnm = i.split('=')[1].split('(') ;console.log('5 '+fcnm)
+	var i = fcnm.split('"signature":"sig";')[1]
+	if (i) fcnm = i.split('=')[1].split('(')[0]
       }
   } else var fcnm = fcnm2()
 
