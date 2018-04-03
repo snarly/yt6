@@ -11091,7 +11091,7 @@ if (a.getAttribute('id') != 'player') { //pre-2016 layout start
 	    }
 
 	if (yt6.size == 'theater') {
-	  if (w < windowwidth && b.offsetWidth < w && b.offsetWidth >= 1066) { //if this isn't true, a.style.left = '0px'
+	  if (w < windowwidth && w >= b.offsetWidth && b.offsetWidth >= 1066) { //if this isn't true, a.style.left = '0px'
 	    a.style.left = parseFloat(e.marginLeft.replace('px','').replace('-','')) - parseFloat(a.style.left.replace('px','').replace('-','')) + 'px';
 	  } else a.style.left = '0px';
 	}
