@@ -716,7 +716,7 @@ function find_key(rpt){
 
       } else var fcnm = fcnm2()
     } else {//2018 variant
-	var i = fcnm.split('"signature":"sig";')[1]
+	var i = fcnm.split('"signature":"sig"')[1]
 	if (i) fcnm = i.split('=')[1].split('(')[0]
       }
   } else var fcnm = fcnm2()
@@ -7430,7 +7430,7 @@ function mep_run() {
 						if (me.src != player1_src) {
 						  if (!(yt6.player1.media.paused)) {
 						    //if (yt6.diff != 0) me.loaded = 1
-						    if (yt6.player1.media.loaded && typeof me.loaded == 'number') {//prevents an unwanted video restart
+						    if (yt6.player1.media.loaded && typeof me.loaded == 'number' || me.playing >= 2) {//prevents an unwanted video restart
 						      me.loaded = true; player1.play(); player1.media.play()
 						    } else { player1.media.play() }
 						  } else {
