@@ -3849,6 +3849,8 @@ yt6.mep_renew = function() {
 
     //yt6.newvideo = false
 
+
+
     var bp = function() { return gclass("mejs-overlay-play")[0] }
 
 
@@ -3869,6 +3871,12 @@ yt6.mep_renew = function() {
 	z[yt6.txt] = x.split('.')[0]
       }
     }
+
+    yt6.loop.start = 0
+    yt6.loop.end = yt6.media_duration
+    var z = gc('loop-start')[0]; if (z) z.value = '00:00'
+    var z = gc('loop-end')[0]; if (z) z.value = gc('mejs-duration')[0][yt6.txt]
+
 
     var z = document.getElementById('displaySpeed')
     if (z) z.style.color = 'white'
@@ -6731,6 +6739,7 @@ function mep_run() {
 
 		yt6.ct = 0
 		yt6.speed = yt6.speed || 1
+		yt6.loop = {}
 		var Srcto
 		var href = yt6.href
 		var Audio = yt6.audio
@@ -7072,8 +7081,12 @@ function mep_run() {
 					    yt6.player1.hideControls(true)
 					    try { document.activeElement.blur() } catch(e) {}
 					  }
+					  if (player1.options.loop1 && player1.options.alwaysShowControls == false) {
+					    gc('mejs-loop-start')[0].style.visibility = 'hidden'
+					    gc('mejs-loop-end')[0].style.visibility = 'hidden'
+					  }
 					});
-					addEL(me, 'pause', function() {//console.log('1pause ' + Seek)
+					addEL(me, 'pause', function() {//console.log('1pause ' + Seek + ' ' + me.playing )
 					  if ( (yt6 && yt6.timer == 999999999) || me.src == 'https://www.youtube.com/ptracking' )
 					    return void 0;
 					  if (yt6.x) {
@@ -7097,17 +7110,28 @@ function mep_run() {
 						//try { mep().click(); document.activeElement.blur() } catch(e){}
 					  //}
 					});
+					addEL(me, 'timeupdate', function() {
+					  yt6.loop.on = player1.options.loop1
+					  if (yt6.loop.on && me.currentTime >= yt6.loop.end) {
+					    try { yt6.player1.pause(); yt6.player2.pause(); Seek = 1;
+					      yt6.player1.media.currentTime = me.currentTime = yt6.player2.media.currentTime = player2.currentTime = yt6.loop.start
+					    } catch(e) {
+					        yt6.player1.media.currentTime = me.currentTime = yt6.loop.start;
+					      }
+					      if (yt6.A_V[itag(me.src)] || yt6.A_[itag(me.src)]) me.play();
+					  }
+					});
 					addEL(me, 'ended', function() {//console.log('1ended')
 					  if ( (yt6 && yt6.timer == 999999999) || me.src == 'https://www.youtube.com/ptracking' )
 					    return void 0;
 					  if (yt6.player1.media.src.indexOf('source=yt_live_broadcast') == -1) {
 					  if (player1.options.loop1) { 
 					    try { yt6.player1.pause(); yt6.player2.pause(); Seek = 1;
-					      yt6.player1.media.currentTime = me.currentTime = yt6.player2.media.currentTime = player2.currentTime = 0
+					      yt6.player1.media.currentTime = me.currentTime = yt6.player2.media.currentTime = player2.currentTime = yt6.loop.start
 					    } catch(e) {
-					        yt6.player1.media.currentTime = me.currentTime = 0;
-					      };
-					    if (yt6.A_V[itag(me.src)]) me.play();//yt6.player1.play();
+					        yt6.player1.media.currentTime = me.currentTime = yt6.loop.start;
+					      };//enough for looping paired streams in both players, the play command will be executed upon seeking
+					     if (yt6.A_V[itag(me.src)] || yt6.A_[itag(me.src)]) me.play();//for looping singular streams in player1 only
 					  } else {
 					      Seek = 3; me.pause();
 					      if (autoplay(false)) {
@@ -7285,7 +7309,7 @@ function mep_run() {
 					    if (Seek == 1) {
 					      Seek = null; //console.log(me.playing)
 					      if (!yt6.A_V[itag(yt6.player1.media.src)]) {
-						if (!yt6.Seeked2 && me.playing < 2) { me.play(); } //else yt6.Seeked2 = false
+						me.play()//if ((!yt6.Seeked2 && me.playing < 2) || yt6.loop.on) { me.play(); }
 						if (yt6.browser_tab == 'visible') {
 						  $waitUntil(
 						  function(){ if (!me.paused) return true },
@@ -7308,9 +7332,9 @@ function mep_run() {
 					  if (player1.media.src.indexOf('source=yt_live_broadcast') == -1) {
 					  if (player1.options.loop1) { 
 					    try { yt6.player1.pause(); yt6.player2.pause(); Seek = 1;
-					      yt6.player1.media.currentTime = me.currentTime = yt6.player2.media.currentTime = player2.currentTime = 0
+					      yt6.player1.media.currentTime = me.currentTime = yt6.player2.media.currentTime = player2.currentTime = yt6.loop.start
 					    } catch(e) {
-					        yt6.player1.media.currentTime = me.currentTime = 0;
+					        yt6.player1.media.currentTime = me.currentTime = yt6.loop.start;
 					      };
 					  } else {
 					      Seek = 3; me.pause(); player1.pause()
@@ -8300,6 +8324,7 @@ if (!t.sourcechooserButton) {//console.log('error')
 			var 
 				t = this,
 				// create the loop button
+				ls = $(controls).find('.loop-start'),
 				loop = 
 				$('<div class="mejs-button mejs-loop-button ' + ((player.options.loop) ? 'mejs-loop-on' : 'mejs-loop-off') + '">' +
 					'<button type="button" aria-controls="' + t.id + '" title="Toggle Loop" aria-label="Toggle Loop"></button>' +
@@ -8308,13 +8333,166 @@ if (!t.sourcechooserButton) {//console.log('error')
 				.appendTo(controls)
 				// add a click toggle event
 				.click(function() {
-					player.options.loop1 = !player.options.loop1;
+					player.options.loop1 = !player.options.loop1
 					if (player.options.loop1) {
-						loop.removeClass('mejs-loop-off').addClass('mejs-loop-on');
+						loop.removeClass('mejs-loop-off').addClass('mejs-loop-on')
+						$(controls).find('.mejs-loop-start').css('visibility','visible')
+						$(controls).find('.mejs-loop-end').css('visibility','visible')
 					} else {
-						loop.removeClass('mejs-loop-on').addClass('mejs-loop-off');
+						loop.removeClass('mejs-loop-on').addClass('mejs-loop-off')
+						$(controls).find('.mejs-loop-start').css('visibility','hidden')
+						$(controls).find('.mejs-loop-end').css('visibility','hidden')
+					}
+				})
+
+				// hover
+				.hover(function() {
+					if (player.options.loop1) {
+					  $(controls).find('.mejs-loop-start').css('visibility','visible')
+					  $(controls).find('.mejs-loop-end').css('visibility','visible')
+					}
+				}, function() {
+					if (player.options.loop1 && !ls.hasFocus) {
+					  $(controls).find('.mejs-loop-start').css('visibility','hidden')
+					  $(controls).find('.mejs-loop-end').css('visibility','hidden')
 					}
 				});
+
+				$waitUntil(function(){if (gc('mejs-time mejs-currenttime-container')[0]) return true},
+				  function(){
+
+
+				     var ls = $(controls).find('.loop-start')
+				     var le = $(controls).find('.loop-end')
+
+				     yt6.set_loop = function(limit) {
+
+						  var l = $(controls).find('.loop-' + limit),
+						  v = l.val();
+						  if (v) {
+						    if (!isNaN(v)) {
+						      if (v >= 0 && parseFloat(yt6.media_duration) >= v && ((limit == 'start' && parseFloat(yt6.loop.end) >= parseFloat(v)) || (limit == 'end' && parseFloat(v) >= parseFloat(yt6.loop.start) )) ) {
+							yt6.loop[limit] = v
+						        var x = mejs.Utility.secondsToTimeCode(v)
+						      } else var x = l.attr('value')
+						      l.attr('value', x)
+						      l.val(x)
+						    } else if (!isNaN(v.split(':').join('').split('.').join('').split(',').join(''))) {
+							if (!v.split(':')[2]) v = '0:' + v
+							var u = mejs.Utility.timeCodeToSeconds(v)
+							if (u >= 0 && yt6.media_duration >= u  && ((limit == 'start' && parseFloat(yt6.loop.end) >= parseFloat(u)) || (limit == 'end' && parseFloat(u) >= parseFloat(yt6.loop.start) )) ) {
+							  yt6.loop[limit] = u;
+							  var x = mejs.Utility.secondsToTimeCode(u)
+							} else var x = l.attr('value')
+							l.attr('value', x)
+							l.val(x)
+						      } else {
+							  l.val(l.attr('value'))
+							}
+						  }
+				    }
+
+
+
+				    var loopStart =
+				    $('<div class="mejs-loop-start" style="position: absolute; bottom: 30px; visibility: hidden">\
+					<input class="loop-start" value="00:00" style="display: inline-block; height: 13px; text-align: center; font-size: 11px; width: ' + gc('mejs-currenttime')[0].offsetWidth +'px;" onkeyup="if (event.keyCode == 13) yt6.set_loop(\'start\');" aria-label="Set Loop-Start" title="Set Loop-Start">\
+					</input></div>')
+					.appendTo(controls.find('.mejs-currenttime-container')),
+
+				    ls = $(controls).find('.loop-start')
+					.focus(function() {
+						if (player.options.loop1) loopStart.css('visibility','visible');
+						if (!ls.hasFocus) {
+						  ls.hasFocus = true
+						  var v = ls.val()
+						  yt6.set_loop('start')
+						}
+					})
+					.blur(function() {
+						if (ls.hasFocus) {
+						  ls.hasFocus = false
+						  var v = ls.val()
+						  yt6.set_loop('start')
+						}
+					})
+					.hover(function() {
+						if (player.options.loop1) loopStart.css('visibility','visible');
+					}, function() {
+						if (player.options.loop1 && !ls.hasFocus && !loopStart.ctHover) loopStart.css('visibility','hidden');
+					});
+
+					controls.find('.mejs-currenttime-container')
+					.hover(function() {
+						loopStart.ctHover = true
+						if (player.options.loop1) {
+						  loopStart.css('visibility','visible')
+						  $(controls).find('.mejs-loop-end').css('visibility','visible')
+						}
+					}, function() {
+						loopStart.ctHover = false
+						if (player.options.loop1 && !ls.hasFocus) {
+						  loopStart.css('visibility','hidden')
+						  $(controls).find('.mejs-loop-end').css('visibility','hidden')
+						}
+					});
+
+
+
+				    var loopEnd =
+				    $('<div class="mejs-loop-end" style="position: absolute; bottom: 30px; visibility: hidden">\
+					<input class="loop-end" value="' + controls.find('.mejs-duration').html() +'"style="display: inline-block; height: 13px; text-align: center; font-size: 11px; width: ' + gc('mejs-duration')[0].offsetWidth +'px;" onkeyup="if (event.keyCode == 13) yt6.set_loop(\'end\');" aria-label="Set Loop-End" title="Set Loop-End">\
+					</input></div>')
+					.appendTo(controls.find('.mejs-duration-container')),
+
+				    le = $(controls).find('.loop-end')
+					.focus(function() {
+						if (player.options.loop1) loopEnd.css('visibility','visible');
+						if (!le.hasFocus) {
+						  le.hasFocus = true
+						  var v = le.val()
+						  yt6.set_loop('end')
+						}
+					})
+					.blur(function() {
+						if (le.hasFocus) {
+						  le.hasFocus = false
+						  var v = le.val()
+						  yt6.set_loop('end')
+						}
+					})
+					.hover(function() {
+						if (player.options.loop1) {
+						  loopEnd.css('visibility','visible')
+						  loopStart.css('visibility','visible')
+						}
+					}, function() {
+						if (player.options.loop1 && !le.hasFocus && !loopEnd.ctHover) {
+						  loopEnd.css('visibility','hidden')
+						  loopStart.css('visibility','hidden')
+						}
+					});
+
+					controls.find('.mejs-duration-container')
+					.hover(function() {
+						loopEnd.ctHover = true
+						if (player.options.loop1) {
+						  loopEnd.css('visibility','visible')
+						  loopStart.css('visibility','visible')
+						}
+					}, function() {
+						loopEnd.ctHover = false
+						if (player.options.loop1 && !le.hasFocus) {
+						  loopEnd.css('visibility','hidden')
+						  loopStart.css('visibility','hidden')
+						}
+					});
+
+
+
+				  })//,500,15000
+
+
 		}
 	});
 	
