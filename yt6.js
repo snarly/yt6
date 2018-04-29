@@ -11018,7 +11018,7 @@ if (a.getAttribute('id') != 'player') { //pre-2016 layout start
 		        l.firstElementChild.style.marginTop = ''; l.firstElementChild.removeAttribute('style')
 		      } else {
 			  a.parentNode.style.top = -1 * (h + MC) + 'px'
-			  l.style.marginTop = yt6.wna.style.marginTop = -1 * (g - h + MC) + 'px'
+			  l.style.marginTop = yt6.wna.style.marginTop = -1 * (h - g + MC) + 'px'
 			  //l.style.marginTop = -1 * (h + 2) + 'px'
 			  yt6.wna.style.marginTop = yh + 'px'
 			  yt6.wsb.style.top = -1 * MC + 'px'
