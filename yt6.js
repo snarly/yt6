@@ -2276,8 +2276,12 @@ function alt_yt_cleanup() {//console.log(player().getAttribute('name') + typeof 
 				}
 				yt6.change = yt6.block
 			      } else if (yt6.layout == 12 && player().getAttribute('id').indexOf('player_uid_') == 0) {
-				  //if (document.getElementById('bm0') && document.getElementById('bm0').parentNode.getAttribute('id') == 'movie_player_to_insert') yt6.api.appendChild(document.getElementById('bm0'))
+
 				  player().setAttribute('id','movie_player')
+				  if (document.getElementById('bm0') && document.getElementById('bm0').parentNode.getAttribute('id') == 'movie_player_to_insert') {
+				    yt6.api.appendChild(document.getElementById('bm0'))
+				    if (yt6.x) { switch_players(); switch_players(); if (autoplay(true)) yt6.player1.play() }
+				  }
 				  //yt6.mep_reload()
 				}
 		            }
@@ -7309,7 +7313,7 @@ function mep_run() {
 					    if (Seek == 1) {
 					      Seek = null; //console.log(me.playing)
 					      if (!yt6.A_V[itag(yt6.player1.media.src)]) {
-						me.play()//if ((!yt6.Seeked2 && me.playing < 2) || yt6.loop.on) { me.play(); }
+						if ((!yt6.Seeked2 && me.playing < 2) || yt6.loop.on && Seek != 1) { me.play(); }
 						if (yt6.browser_tab == 'visible') {
 						  $waitUntil(
 						  function(){ if (!me.paused) return true },
@@ -8989,7 +8993,7 @@ var bm0 = document.getElementById('bm0')
 		  if (z != video_id()[0]) { alert(z +' '+video_id()[0]); p.setAttribute(p.getAttribute('src').replace(z, video_id()[0])) }
 		}
 	    }*/
-
+if (yt6.age.check()) document.getElementById('movie_player_to_insert').appendChild(bm0)
 	    playNext()
 
 	  },250,5000)
@@ -10873,7 +10877,7 @@ if (a.getAttribute('id') != 'player') { //pre-2016 layout start
 //pre-2016 layout end
 } else { //2016 layout start
 //console.log('2016 layout')
-    var MC = (navigator.userAgent.indexOf('Chrome') != -1 || browserName == 'Chrome' || browserName == 'Opera' ) ? 2 : 3  //MC = chrome-based: 2px, mozilla-based: 3px
+    var MC = ((browserName != 'Firefox' && browserName != 'Edge') || browserName == 'Chrome' || browserName == 'Opera') ? 2 : 3  //MC = chrome-based: 2px, mozilla-based: 3px
     var yh = -1 * ytp_style.height.replace('px','').split('"').join('') - MC
     var a = document.getElementById('player-container')
 
