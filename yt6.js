@@ -8993,7 +8993,7 @@ var bm0 = document.getElementById('bm0')
 		  if (z != video_id()[0]) { alert(z +' '+video_id()[0]); p.setAttribute(p.getAttribute('src').replace(z, video_id()[0])) }
 		}
 	    }*/
-if (yt6.age.check()) document.getElementById('movie_player_to_insert').appendChild(bm0)
+	    if (yt6.layout == 12 && yt6.age.check()) document.getElementById('movie_player_to_insert').appendChild(bm0)
 	    playNext()
 
 	  },250,5000)
