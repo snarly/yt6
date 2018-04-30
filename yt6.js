@@ -9656,7 +9656,7 @@ if (yt6 != null) if (yt6.loaded) {
 	if (watch) watch = watch.getAttribute('class');
 	if (typeof watch == 'string' && watch.indexOf('watch') == -1) watch = null
 
-	if (window.ytplayer.config && ytplayer.config.html5 == false && player()) {
+	if (window.ytplayer && window.ytplayer.config && ytplayer.config.html5 == false && player()) {
 	  var flashvars = player().getAttribute('flashvars')
 	} else var flashvars = null;
 
