@@ -10879,7 +10879,7 @@ if (a.getAttribute('id') != 'player') { //pre-2016 layout start
 //console.log('2016 layout')
     var MC = ((browserName != 'Firefox' && browserName != 'Edge') || browserName == 'Chrome' || browserName == 'Opera') ? 2 : 3  //MC = chrome-based: 2px, mozilla-based: 3px
     var yh = -1 * ytp_style.height.replace('px','').split('"').join('') - MC
-    if (browserName == 'EDGE') { var g = 2 } else var g = 0;
+    if (browserName == 'Edge') { var g = 1 } else var g = 0;
     var a = document.getElementById('player-container')
 
     if (wide_view()) {//YouTube theatre view mode
