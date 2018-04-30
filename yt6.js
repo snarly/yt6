@@ -3980,6 +3980,7 @@ function getReferenceObjects() {
   yt6.wsb = document.getElementById('watch7-sidebar') || document.getElementById('related') || document.getElementById('sidebar') || document.getElementsByTagName('ytg-watch-sidebar')[0]
   yt6.wsa = document.getElementById('watch7-sidebar-ads') || document.getElementById('player-ads')
   yt6.wna = document.getElementById('watch-header') //|| document.getElementById('alerts')
+  yt6.top = document.getElementById('top') || document.getElementById('content-layer')
   if (yt6.wna && yt6.wna.getAttribute('id') == 'watch-header') yt6.wna = document.getElementById('watch7-notification-area')
 
 
@@ -4017,7 +4018,6 @@ function getReferenceObjects() {
 	  if (l[i].getAttribute('id') == 'alerts') yt6.wna = l[i]
 	  if (l[i].getAttribute('id') == 'info' && !yt6.ytg) yt6.inf = l[i]
 	  if (yt6.con && yt6.man && yt6.wna && (!yt6.ytg && yt6.inf)) { var l = null; break }
-	  yt6.top = document.getElementById('top')
 	}
 
 	if (yt6.osw.getAttribute('id') == 'player' && yt6.osw.parentNode.getAttribute('id') == null) {
@@ -11101,7 +11101,7 @@ if (a.getAttribute('id') != 'player') { //pre-2016 layout start
 //pre-2016 layout end
 } else { //2016 layout start
 //console.log('2016 layout')
-    var MC = (osName == 'Linux' && (browserName == 'Chrome' || browserName == 'Opera') ? 2 : 3  //MC = chrome-based: 2px, mozilla-based: 3px
+    var MC = (osName == 'Linux' && (browserName == 'Chrome' || browserName == 'Opera')) ? 2 : 3  //MC = chrome-based: 2px, mozilla-based: 3px
     var yh = -1 * ytp_style.height.replace('px','').split('"').join('') - MC
     var a = document.getElementById('player-container')
 
