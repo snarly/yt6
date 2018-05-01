@@ -11101,8 +11101,9 @@ if (a.getAttribute('id') != 'player') { //pre-2016 layout start
 //pre-2016 layout end
 } else { //2016 layout start
 //console.log('2016 layout')
-    var MC = (osName == 'Linux' && (browserName == 'Chrome' || browserName == 'Opera')) ? 2 : 3  //MC = chrome-based: 2px, mozilla-based: 3px
+    var MC = ((browserName != 'Firefox' && browserName != 'Edge') || browserName == 'Chrome' || browserName == 'Opera') ? 2 : 3 //MC = chrome-based: 2px, mozilla-based: 3px
     var yh = -1 * ytp_style.height.replace('px','').split('"').join('') - MC
+    if (browserName == 'Edge') { var g = 1 } else var g = 0;
     var a = document.getElementById('player-container')
 
     if (wide_view()) {//YouTube theatre view mode
@@ -11241,7 +11242,7 @@ if (a.getAttribute('id') != 'player') { //pre-2016 layout start
 		        l.firstElementChild.style.marginTop = ''; l.firstElementChild.removeAttribute('style')
 		      } else {
 			  a.parentNode.style.top = -1 * (h + MC) + 'px'
-			  l.style.marginTop = yt6.wna.style.marginTop = -1 * (h + MC) + 'px'
+			  l.style.marginTop = yt6.wna.style.marginTop = -1 * (h + MC - g) + 'px';//-g
 			  //l.style.marginTop = -1 * (h + 2) + 'px'
 			  yt6.wna.style.marginTop = yh + 'px'
 			  yt6.wsb.style.top = -1 * MC + 'px'
@@ -11312,7 +11313,7 @@ if (a.getAttribute('id') != 'player') { //pre-2016 layout start
 			      if (windowwidth + getScrollbarWidth() >= 1000) { var x = MC } else var x = 0 //MC
 			      a.parentNode.style.top = -1 * (h + x) + 'px'
 			      yt6.wna.style.marginTop = -1 * h + 'px'
-			      l.style.marginTop = yh - x + 'px'
+			      l.style.marginTop = yh - x + g + 'px';//+g
 			      if (playlist) playlist.style.top = -1 * (h + yh + x) + 'px'
 			      if (yt6.wsb) yt6.wsb.style.top = ''
 			    } else {//console.log('202b')
