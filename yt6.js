@@ -11312,7 +11312,7 @@ if (a.getAttribute('id') != 'player') { //pre-2016 layout start
 			      if (windowwidth + getScrollbarWidth() >= 1000) { var x = MC } else var x = 0 //MC
 			      a.parentNode.style.top = -1 * (h + x) + 'px'
 			      yt6.wna.style.marginTop = -1 * h + 'px'
-			      l.style.marginTop = yh + x + 'px'
+			      l.style.marginTop = yh - x + 'px'
 			      if (playlist) playlist.style.top = -1 * (h + yh + x) + 'px'
 			      if (yt6.wsb) yt6.wsb.style.top = ''
 			    } else {//console.log('202b')
