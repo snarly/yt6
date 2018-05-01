@@ -11101,7 +11101,7 @@ if (a.getAttribute('id') != 'player') { //pre-2016 layout start
 //pre-2016 layout end
 } else { //2016 layout start
 //console.log('2016 layout')
-    var MC = ((browserName != 'Firefox' && browserName != 'Edge') || browserName == 'Chrome' || browserName == 'Opera') ? 2 : 3 //MC = chrome-based: 2px, mozilla-based: 3px
+    var MC = (!(osName == 'Linux' && (browserName == 'Chrome' || browserName == 'Opera')) || osName == 'Windows') ? 3 : 2 //MC = chrome-based: 2px, mozilla-based: 3px
     var yh = -1 * ytp_style.height.replace('px','').split('"').join('') - MC
     if (browserName == 'Edge') { var g = 1 } else var g = 0;
     var a = document.getElementById('player-container')
