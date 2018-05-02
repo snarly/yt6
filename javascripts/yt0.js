@@ -648,45 +648,6 @@ return encodeURIComponent('https:' + def + sig)
 
 
 
-
-
-function clone(obj) {
-    var copy
-
-    // Handle the 3 simple types, and null or undefined
-    if (null == obj || "object" != typeof obj) return obj
-
-    // Handle Date
-    if (obj instanceof Date) {
-        copy = new Date()
-        copy.setTime(obj.getTime())
-        return copy
-    }
-
-    // Handle Array
-    if (obj instanceof Array) {
-        copy = []
-        for (var i = 0, len = obj.length; i < len; i++) {
-            copy[i] = clone(obj[i])
-        }
-        return copy
-    }
-
-    // Handle Object
-    if (obj instanceof Object) {
-        copy = {}
-        for (var attr in obj) {
-            if (obj.hasOwnProperty(attr)) copy[attr] = clone(obj[attr])
-        }
-        return copy
-    }
-
-    alert("Unable to copy obj! Its type isn't supported.")
-}
-
-window.setTimeout2 = clone(window.setTimeout)
-
-
 /// $waitUntil
 ///      waits until a certain function returns true and then executes a code. checks the function periodically
 /// parameters
@@ -713,7 +674,7 @@ function $waitUntil(check,onComplete,delay,timeout) {
       if (typeof onComplete == 'function') onComplete()
   },delay)
   // if after timeout milliseconds function doesn't return true, abort
-  if (timeout) timeoutPointer=window.setTimeout2(function () {
+  if (timeout) timeoutPointer=setTimeout(function () {
       clearInterval(intervalPointer)
   },timeout)
 }
@@ -1261,7 +1222,7 @@ yt6.tmp = ""+
 "function flatten(src, path, seen) {\
   var path = path || [], seen = seen || new Map();\
   var key, value, oc, pt;\
-  for (let [key,value] of Object.entries(src)) {/*console.log(key +' '+value)*/\
+  for (let [key,value] of Object.entries(src)) { /*if (key && value) console.log(key + ' === ' + typeof value + ' === ' + value)*/;\
     if (typeof value == 'object' && value != null) {\
       if (!seen.has(value)) {\
         seen.set(value, path);\
@@ -1271,22 +1232,22 @@ yt6.tmp = ""+
   }\
   if (!path.length) {\
     var op = {};\
-    for (let [oc,pt] of seen) {\
-      Object.keys(oc).filter(x => typeof oc[x] == 'string')\
-      .forEach(x => op[[...pt, x]] = oc[x]);\
+    for (let [oc,pt] of seen) {/*if (oc && oc[0] && typeof oc[0] == 'function') continue*/;\
+      var a = Object.keys(oc).filter(x => typeof oc[x] == 'string');\
+      a.forEach(x => op[[...pt, x]] = oc[x]);\
     };\
     return op;\
   }"+
-"}"; eval(yt6.tmp)
+"}"; console.log('1');eval(yt6.tmp); console.log('2');
 
 var ypsi = flatten(ytPubsubPubsubInstance);
-
+console.log('3');
 yt6.tmp = "function durl0() {"+
 "var durl = Object.values(ypsi).filter(\
   x => x.includes('videoplayback?') && !x.includes('range=')\
 );\
 return durl }"; eval(yt6.tmp)
-
+console.log('4');
 var durl = durl0()
 
 yt6.tmp = "function dsig0() {"+
@@ -1294,14 +1255,14 @@ yt6.tmp = "function dsig0() {"+
   Object.keys(ypsi).filter(x => x.includes(',signature')).map(x => ypsi[x])\
 ).values();\
 return dsig }"; eval(yt6.tmp)
-
+console.log('5');
 var dsig = dsig0()
 
 yt6.tmp = "function vqua0() {"+
 "var vqua = Object.keys(ypsi).filter(x => x.includes(',qualityLabel'))\
   .map(x => ypsi[x])[Symbol.iterator]();\
 return vqua }"; eval(yt6.tmp)
-
+console.log('6');
 var vqua = vqua0()
 
 ypsi = [];
@@ -1827,6 +1788,42 @@ function reload_flashplayer(first){
 
 }
 
+
+
+
+function clone(obj) {
+    var copy
+
+    // Handle the 3 simple types, and null or undefined
+    if (null == obj || "object" != typeof obj) return obj
+
+    // Handle Date
+    if (obj instanceof Date) {
+        copy = new Date()
+        copy.setTime(obj.getTime())
+        return copy
+    }
+
+    // Handle Array
+    if (obj instanceof Array) {
+        copy = []
+        for (var i = 0, len = obj.length; i < len; i++) {
+            copy[i] = clone(obj[i])
+        }
+        return copy
+    }
+
+    // Handle Object
+    if (obj instanceof Object) {
+        copy = {}
+        for (var attr in obj) {
+            if (obj.hasOwnProperty(attr)) copy[attr] = clone(obj[attr])
+        }
+        return copy
+    }
+
+    alert("Unable to copy obj! Its type isn't supported.")
+}
 
 
 function correct_flashvars(a) {//console.log(window.ytplayer.config.args.adaptive_fmts)
