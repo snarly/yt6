@@ -899,7 +899,6 @@ function onDownload(x) {
 
 function find_key(rpt){
 
-
   var rpt = rpt.replace(/(\r\n|\n|\r)/gm," ").split('<BR>').join('')
   if (rpt.indexOf("function fcnm(") != -1) {
     rpt = rpt.replace('<html>','').replace('<body>','').replace('<pre>','');
@@ -919,7 +918,7 @@ function find_key(rpt){
 	}
 	return fcnm
   }
-console.log('01')
+
   var fcnm = rpt.split('dashmpd,')[1]
   if (!fcnm) fcnm = rpt.split('.dashmpd')[1]
   if (fcnm) {
@@ -936,11 +935,11 @@ console.log('01')
 	}
 
       } else var fcnm = fcnm2()
-    } else {console.log('02')//2018 variant
+    } else {//2018 variant
 	var i = fcnm.split('"signature":"sig"')[1]
 	if (i) fcnm = i.split('=')[1].split('(')[0]
       }
-  } else {console.log('03'); var fcnm = fcnm2() }
+  } else var fcnm = fcnm2()
 
 
   function sprintf(nw) {
@@ -996,9 +995,9 @@ console.log('01')
 
   var fcnm = 'function fcnm(' + fs2.split("(")[1].split(")")[0] + '){ ' + decrypt0 + '; ' + fs2.split(f2+".").join("dekrypt0.").split(f2+"['").join("dekrypt0['").split(f2+"[\"").join("dekrypt0['").split("\"").join("'").split("){")[1]
   var fcnm = "function " + fcnm.split("function ")[1]
-console.log('04')
+
   eval(fcnm)
-console.log('05')
+
   //document.getElementById('ytassetsjs').fcnm = fcnm
   //try { if (document.getElementById('ytassetsjs') != null) document.getElementById('ytassetsjs').innerHTML = fcnm } catch(e) {}
   return fcnm
@@ -1179,7 +1178,7 @@ var xhr2 = new XMLHttpRequest();
 
 function test_4() {
 
-  if (yt && yt.player) { //console.log('Get links without xhr call...')
+  if (yt && yt.player) { console.log('Get links without xhr call...')
 
     var z = document.getElementById('test-4')
 
@@ -1207,7 +1206,7 @@ function test_4() {
     //yt6.error = ''
 
   if (yt.player.Application && typeof Object.entries == 'undefined' && document.getElementById('player-api') || document.getElementById('player-container')) {
-
+console.log('1')
     try { var ypa = yt.player.Application.create('test-4', ytplayer.config);
         /*for (var attr in ypa) {
             if (ypa.hasOwnProperty(attr)) console.log(attr + ' ' + ypa[attr])
@@ -1215,7 +1214,7 @@ function test_4() {
 	ypa.dispose();
     } catch(e) { yt6.error = '  \n  ' }
 
-  } else {
+  } else {console.log('2')
 
 
 try {// This stuff only works on modern browsers/mobile devices, and will cause old javascript interpreters to fail, hence stringify
@@ -1243,7 +1242,7 @@ yt6.tmp = ""+
 "}"; eval(yt6.tmp)
 
 var ypsi = flatten(ytPubsubPubsubInstance);
-
+console.log('3')
 yt6.tmp = "function durl0() {"+
 "var durl = Object.values(ypsi).filter(\
   x => x.includes('videoplayback?') && !x.includes('range=')\
@@ -1251,7 +1250,7 @@ yt6.tmp = "function durl0() {"+
 return durl }"; eval(yt6.tmp)
 
 var durl = durl0()
-
+console.log('4')
 yt6.tmp = "function dsig0() {"+
 "var dsig = new Set(\
   Object.keys(ypsi).filter(x => x.includes(',signature')).map(x => ypsi[x])\
@@ -1266,7 +1265,7 @@ yt6.tmp = "function vqua0() {"+
 return vqua }"; eval(yt6.tmp)
 
 var vqua = vqua0()
-
+console.log('5')
 ypsi = [];
 
 yt6.tmp = null
@@ -1412,13 +1411,13 @@ yt6.tmp = null
 
 
 
-function ajax1(update, ytg){console.log('00')
+function ajax1(update, ytg){
 
 
   test_4()
 
 
-  function yt_assets(xhr) {
+  function yt_assets(xhr) { console.log('6')
 
 	    var px = yt6.px.replace('/https:','');
 
@@ -1480,14 +1479,14 @@ function ajax1(update, ytg){console.log('00')
 	  proxiez.splice(0,0,'//www.youtube.com'); //if (!(yt6.oldbrowser && z && z.indexOf('%26false') > -1)) {  } else { hand_axe(); return void 0 }
       xhr.done = false;
 
-      for (i=0;i<proxiez.length;i++){
+      for (i=0;i<proxiez.length;i++){console.log('00 '+i)
 	if (ytassetsjs != null && ytassetsjs.name && ytassetsjs.innerHTML.indexOf('var ') != -1) { //console.log('0');
 	  return [ytassetsjs.name.split('/https')[0], ytassetsjs.innerHTML];
 	  break
 	};
 	if (gc('ytassetsjs-0')[proxies.length-1]) {
 	  var z = gc('ytassetsjs-0')
-	    for (j=0;j<z.length;j++) {
+	    for (j=0;j<z.length;j++) {console.log('00 '+j)
 	      if (z[j].innerHTML.indexOf("function(){") != -1 || z[j].innerHTML.indexOf("function fcnm(") != -1) {
 		if (ytassetsjs != null) ytassetsjs.parentNode.removeChild(ytassetsjs)
 		z[j].setAttribute('id','ytassetsjs')
@@ -1541,12 +1540,13 @@ function ajax1(update, ytg){console.log('00')
 	  xhr.open('get', px + base_js, false);
 	  xhr.onreadystatechange = function() {
 	    if (xhr.readyState == 4 && xhr.status == 200 && !xhr.done) {
-
+console.log('8')
 	      yt_assets(xhr)
 
 	    }
 	  }//onreadystatechange
-	  xhr.send('');
+console.log('7')
+	  xhr.send('');console.log('?')
 	} catch (e) {
 	    yt6.error = e;
 	    if (typeof xhr.responseText != 'unknown') {
@@ -1584,8 +1584,8 @@ function ajax1(update, ytg){console.log('00')
       ytassetsjs.id = 'ytassetsjs-0'
       ytassetsjs.setAttribute('class', 'ytassetsjs-0')
     }
-console.log('07')
-    var spx = setProxy();console.log('08')
+
+    var spx = setProxy();
 //hand_axe()
 
     if (typeof spx == 'undefined') {
