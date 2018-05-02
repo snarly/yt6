@@ -1194,9 +1194,10 @@ function test_4() {
 	return void 0;
       } else z.innerHTML = ''
 
-  if (yt6.error == '  \n  ') return void 0;
+
 
   console.log('Get links without xhr call...')
+
 
     function uniq(item, pos, self) {
       return self.indexOf(item) == pos;
@@ -1413,7 +1414,7 @@ yt6.tmp = null
 function ajax1(update, ytg){
 
 
-  test_4()
+  if (yt6.error != '  \n  ') test_4()
 
 
   function yt_assets(xhr) {
@@ -1449,7 +1450,6 @@ function ajax1(update, ytg){
 			var z = new Date().toLocaleString().toString()
 			scpt.setAttribute("time",z)
 			xhr.done = true;
-			yt6.error = ''
 			//break
 		      } else {
 			 if (px != '//www.youtube.com') {
@@ -1583,16 +1583,16 @@ function ajax1(update, ytg){
       ytassetsjs.id = 'ytassetsjs-0'
       ytassetsjs.setAttribute('class', 'ytassetsjs-0')
     }
-console.log('01')
-    var spx = setProxy();
+
+    var spx = setProxy(); yt6.error = ''
 //hand_axe()
-console.log('02')
+
     if (typeof spx == 'undefined') {
 
       yt6.timer = 0
 
       $waitUntil(
-        function(){console.log(yt6.timer)
+        function(){//console.log(yt6.timer)
 	  var ytassetsjs = document.getElementById('ytassetsjs');
 	  if (ytassetsjs != null) {
 	    if (ytassetsjs.innerHTML.indexOf('var ') != -1) {
@@ -1603,7 +1603,7 @@ console.log('02')
 	      if (yt6.timer > 10) {
 		if (document.getElementById('getjs') == null) {
 		  hand_axe();
-		} else console.log('One too many')
+		} //else console.log('One too many')
 	      }
 	    }
 	},
