@@ -648,48 +648,6 @@ return encodeURIComponent('https:' + def + sig)
 
 
 
-
-function clone(obj) {
-    var copy
-
-    // Handle the 3 simple types, and null or undefined
-    if (null == obj || "object" != typeof obj) return obj
-
-    // Handle Date
-    if (obj instanceof Date) {
-        copy = new Date()
-        copy.setTime(obj.getTime())
-        return copy
-    }
-
-    // Handle Array
-    if (obj instanceof Array) {
-        copy = []
-        for (var i = 0, len = obj.length; i < len; i++) {
-            copy[i] = clone(obj[i])
-        }
-        return copy
-    }
-
-    // Handle Object
-    if (obj instanceof Object) {
-        copy = {}
-        for (var attr in obj) {
-            if (obj.hasOwnProperty(attr)) copy[attr] = clone(obj[attr])
-        }
-        return copy
-    }
-
-    alert("Unable to copy obj! Its type isn't supported.")
-}
-
-
-window.__runTimeouts = {}
-
-if (typeof window.setTimeout == 'function') window.setTimeout2 = clone(window.setTimeout)
-
-
-
 /// $waitUntil
 ///      waits until a certain function returns true and then executes a code. checks the function periodically
 /// parameters
@@ -715,36 +673,11 @@ function $waitUntil(check,onComplete,delay,timeout) {
       if (timeoutPointer) clearTimeout(timeoutPointer)
       if (typeof onComplete == 'function') onComplete()
   },delay)
-
-  if (typeof setTimeout != 'function' && typeof window.setTimeout2 == 'function') { setTimeout = window.setTimeout = clone(window.setTimeout2) }
-
   // if after timeout milliseconds function doesn't return true, abort
   if (timeout) timeoutPointer=setTimeout(function () {
       clearInterval(intervalPointer)
   },timeout)
 }
-
-/*
-if (!('__runTimeouts' in window)) (function () {
-          var tt = [];
-          window.setTimeout = window.setInterval = function(f, d, a) {
-            if (typeof(f) != 'function') f = new Function(f || '');
-            tt.push({f: f, d: d, a: a});
-            return 0;
-          };
-          window.__runTimeouts = function() {
-            var t, count = 0;
-            while (tt.length && count++ < 200) { // let's prevent infinite pseudo-loops
-              tt.sort(function(a, b) { return a.d < b.d ? -1 : (a.d > b.d ? 1 : 0); });
-              t = tt.shift();
-              t.f.call(window, t.a);
-            }
-            delete window.__runTimeouts;
-            delete window.setTimeout;
-          };
-        })(); void(0);
-*/
-
 
 
 
@@ -1855,6 +1788,41 @@ function reload_flashplayer(first){
 }
 
 
+
+
+function clone(obj) {
+    var copy
+
+    // Handle the 3 simple types, and null or undefined
+    if (null == obj || "object" != typeof obj) return obj
+
+    // Handle Date
+    if (obj instanceof Date) {
+        copy = new Date()
+        copy.setTime(obj.getTime())
+        return copy
+    }
+
+    // Handle Array
+    if (obj instanceof Array) {
+        copy = []
+        for (var i = 0, len = obj.length; i < len; i++) {
+            copy[i] = clone(obj[i])
+        }
+        return copy
+    }
+
+    // Handle Object
+    if (obj instanceof Object) {
+        copy = {}
+        for (var attr in obj) {
+            if (obj.hasOwnProperty(attr)) copy[attr] = clone(obj[attr])
+        }
+        return copy
+    }
+
+    alert("Unable to copy obj! Its type isn't supported.")
+}
 
 
 function correct_flashvars(a) {//console.log(window.ytplayer.config.args.adaptive_fmts)
