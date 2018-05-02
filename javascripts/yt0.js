@@ -1204,8 +1204,8 @@ function test_4() {
     }
 
     //yt6.error = ''
-
-  if (yt.player.Application && typeof Object.entries == 'undefined' && document.getElementById('player-api') || document.getElementById('player-container')) {
+console.log(typeof Object + typeof Object.values + typeof Object.entries)
+  if (yt.player.Application && yt6.error != '  \n  ' && typeof Object.entries == 'undefined' && document.getElementById('player-api') || document.getElementById('player-container')) {
 console.log('1')
     try { var ypa = yt.player.Application.create('test-4', ytplayer.config);
         /*for (var attr in ypa) {
