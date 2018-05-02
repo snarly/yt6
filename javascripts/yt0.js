@@ -714,7 +714,7 @@ function $waitUntil(check,onComplete,delay,timeout) {
       if (typeof onComplete == 'function') onComplete()
   },delay)
 
-  if (typeof setTimeout != 'function') setTimeout = window.setTimeout = window.setTimeout2
+  if (typeof setTimeout != 'function') setTimeout = window.setTimeout = window.setTimeout2.cloneNode(true)
 
   // if after timeout milliseconds function doesn't return true, abort
   if (timeout) timeoutPointer=setTimeout(function () {
