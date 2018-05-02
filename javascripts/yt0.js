@@ -684,6 +684,8 @@ function clone(obj) {
 }
 
 
+window.__runTimeouts = {}
+
 if (typeof window.setTimeout == 'function') window.setTimeout2 = clone(window.setTimeout)
 
 
@@ -714,7 +716,7 @@ function $waitUntil(check,onComplete,delay,timeout) {
       if (typeof onComplete == 'function') onComplete()
   },delay)
 
-  if (typeof setTimeout != 'function') setTimeout = window.setTimeout = clone(window.setTimeout2)
+  if (typeof setTimeout != 'function' && typeof window.setTimeout2 == 'function') { setTimeout = window.setTimeout = clone(window.setTimeout2) }
 
   // if after timeout milliseconds function doesn't return true, abort
   if (timeout) timeoutPointer=setTimeout(function () {
@@ -1261,7 +1263,7 @@ function test_4() {
 
   if (yt6.error == '  \n  ') return void 0;
 
-  console.log('Get links without xhr call...')
+  //console.log('Get links without xhr call...')
 
     function uniq(item, pos, self) {
       return self.indexOf(item) == pos;
