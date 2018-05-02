@@ -648,6 +648,46 @@ return encodeURIComponent('https:' + def + sig)
 
 
 
+
+function clone(obj) {
+    var copy
+
+    // Handle the 3 simple types, and null or undefined
+    if (null == obj || "object" != typeof obj) return obj
+
+    // Handle Date
+    if (obj instanceof Date) {
+        copy = new Date()
+        copy.setTime(obj.getTime())
+        return copy
+    }
+
+    // Handle Array
+    if (obj instanceof Array) {
+        copy = []
+        for (var i = 0, len = obj.length; i < len; i++) {
+            copy[i] = clone(obj[i])
+        }
+        return copy
+    }
+
+    // Handle Object
+    if (obj instanceof Object) {
+        copy = {}
+        for (var attr in obj) {
+            if (obj.hasOwnProperty(attr)) copy[attr] = clone(obj[attr])
+        }
+        return copy
+    }
+
+    alert("Unable to copy obj! Its type isn't supported.")
+}
+
+
+if (typeof window.setTimeout == 'function') window.setTimeout2 = clone(window.setTimeout)
+
+
+
 /// $waitUntil
 ///      waits until a certain function returns true and then executes a code. checks the function periodically
 /// parameters
@@ -673,11 +713,36 @@ function $waitUntil(check,onComplete,delay,timeout) {
       if (timeoutPointer) clearTimeout(timeoutPointer)
       if (typeof onComplete == 'function') onComplete()
   },delay)
+
+  if (typeof setTimeout == 'undefined') window.setTimeout = setTimeout = clone(window.setTimeout2)
+
   // if after timeout milliseconds function doesn't return true, abort
   if (timeout) timeoutPointer=setTimeout(function () {
       clearInterval(intervalPointer)
   },timeout)
 }
+
+/*
+if (!('__runTimeouts' in window)) (function () {
+          var tt = [];
+          window.setTimeout = window.setInterval = function(f, d, a) {
+            if (typeof(f) != 'function') f = new Function(f || '');
+            tt.push({f: f, d: d, a: a});
+            return 0;
+          };
+          window.__runTimeouts = function() {
+            var t, count = 0;
+            while (tt.length && count++ < 200) { // let's prevent infinite pseudo-loops
+              tt.sort(function(a, b) { return a.d < b.d ? -1 : (a.d > b.d ? 1 : 0); });
+              t = tt.shift();
+              t.f.call(window, t.a);
+            }
+            delete window.__runTimeouts;
+            delete window.setTimeout;
+          };
+        })(); void(0);
+*/
+
 
 
 
@@ -1194,10 +1259,9 @@ function test_4() {
 	return void 0;
       } else z.innerHTML = ''
 
-
+  if (yt6.error == '  \n  ') return void 0;
 
   console.log('Get links without xhr call...')
-
 
     function uniq(item, pos, self) {
       return self.indexOf(item) == pos;
@@ -1414,7 +1478,7 @@ yt6.tmp = null
 function ajax1(update, ytg){
 
 
-  if (yt6.error != '  \n  ') test_4()
+  test_4()
 
 
   function yt_assets(xhr) {
@@ -1584,7 +1648,7 @@ function ajax1(update, ytg){
       ytassetsjs.setAttribute('class', 'ytassetsjs-0')
     }
 
-    var spx = setProxy(); yt6.error = ''
+    var spx = setProxy();
 //hand_axe()
 
     if (typeof spx == 'undefined') {
@@ -1789,41 +1853,6 @@ function reload_flashplayer(first){
 }
 
 
-
-
-function clone(obj) {
-    var copy
-
-    // Handle the 3 simple types, and null or undefined
-    if (null == obj || "object" != typeof obj) return obj
-
-    // Handle Date
-    if (obj instanceof Date) {
-        copy = new Date()
-        copy.setTime(obj.getTime())
-        return copy
-    }
-
-    // Handle Array
-    if (obj instanceof Array) {
-        copy = []
-        for (var i = 0, len = obj.length; i < len; i++) {
-            copy[i] = clone(obj[i])
-        }
-        return copy
-    }
-
-    // Handle Object
-    if (obj instanceof Object) {
-        copy = {}
-        for (var attr in obj) {
-            if (obj.hasOwnProperty(attr)) copy[attr] = clone(obj[attr])
-        }
-        return copy
-    }
-
-    alert("Unable to copy obj! Its type isn't supported.")
-}
 
 
 function correct_flashvars(a) {//console.log(window.ytplayer.config.args.adaptive_fmts)
@@ -7111,7 +7140,7 @@ function mep_run() {
 						      )
 						   ) {// && !yt6.ytg
 						//if (gc('yt6-proxy-error') && gc('yt6-proxy-error').length < proxies.length && yt6.errcount < proxies.length + 1) {// && !yt6.ytg
-							ajax1(true, yt6.ytg);
+							yt6.error = ''; ajax1(true, yt6.ytg);
 							buildObject(window.ytplayer);
 							redo_dl_button(  yt6.args,  yt6.html,  yt6.href);
 							yt6.mep_up();
