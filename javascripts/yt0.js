@@ -12613,8 +12613,7 @@ var controls = document.getElementById('controls-sp')
     controls.innerHTML =  '<button class="play yt-uix-button-text" style="display: inline-block; width: 46px; text-align:left">play</button>'+
   			    '<div style="display: inline-block; position: ' + divpos + '">'+
 			    '<button class="previous yt-uix-button-text" style="padding: 0 4px 0 4px; right: 0px">prev</button>'+
-			    '<button class="next yt-uix-button-text" style="padding: 0 4px 0 4px; right: 0px">next</button>'+
-			    '<button class="yt-uix-button-text"></button><button class="yt-uix-button-text"></button><button class="yt-uix-button-text"></button><button class="yt-uix-button-text"></button><button class="yt-uix-button-text"></button><button class="yt-uix-button-text"></button></div>'+
+			    '<button class="next yt-uix-button-text" style="padding: 0 4px 0 4px; right: 0px">next</button></div>'+
                           '<div id="change">' +
                             '<button class="reset yt-uix-button-text" style="width:40px; text-align:left">reset</button>' +
                             '<button class="zoomin yt-uix-button-text" aria-label="Zoom in" title="Zoom in">+</button>' +
