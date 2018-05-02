@@ -898,6 +898,7 @@ function onDownload(x) {
 
 
 function find_key(rpt){
+
   var rpt = rpt.replace(/(\r\n|\n|\r)/gm," ").split('<BR>').join('')
   if (rpt.indexOf("function fcnm(") != -1) {
     rpt = rpt.replace('<html>','').replace('<body>','').replace('<pre>','');
@@ -1177,7 +1178,8 @@ var xhr2 = new XMLHttpRequest();
 
 function test_4() {
 
-  if (yt && yt.player) { //console.log('Get links without xhr call...')
+
+  if (yt && yt.player) {
 
     var z = document.getElementById('test-4')
 
@@ -1191,12 +1193,10 @@ function test_4() {
 	z.removeAttribute('name')
 	return void 0;
       } else z.innerHTML = ''
-/*
-	  var test = document.createElement("script");
-	  test.type = "text/javascript";
-	  test.id = "test";
-	  yt6.body.appendChild(test);
-*/
+
+  if (yt6.error == '  \n  ') return void 0;
+
+  //console.log('Get links without xhr call...')
 
     function uniq(item, pos, self) {
       return self.indexOf(item) == pos;
@@ -1204,7 +1204,7 @@ function test_4() {
 
     //yt6.error = ''
 
-  if (yt.player.Application && typeof Object.entries == 'undefined' && document.getElementById('player-api') || document.getElementById('player-container')) {
+  if ( yt.player.Application && typeof Object.entries == 'undefined' && (document.getElementById('player-api') || document.getElementById('player-container')) ) {
 
     try { var ypa = yt.player.Application.create('test-4', ytplayer.config);
         /*for (var attr in ypa) {
@@ -1222,7 +1222,7 @@ yt6.tmp = ""+
 "function flatten(src, path, seen) {\
   var path = path || [], seen = seen || new Map();\
   var key, value, oc, pt;\
-  for (let [key,value] of Object.entries(src)) {/*console.log(key +' '+value)*/\
+  for (let [key,value] of Object.entries(src)) { /*if (key && value) console.log(key + ' === ' + typeof value + ' === ' + value)*/;\
     if (typeof value == 'object' && value != null) {\
       if (!seen.has(value)) {\
         seen.set(value, path);\
@@ -7110,7 +7110,7 @@ function mep_run() {
 						      )
 						   ) {// && !yt6.ytg
 						//if (gc('yt6-proxy-error') && gc('yt6-proxy-error').length < proxies.length && yt6.errcount < proxies.length + 1) {// && !yt6.ytg
-							ajax1(true, yt6.ytg);
+							yt6.error = ''; ajax1(true, yt6.ytg);
 							buildObject(window.ytplayer);
 							redo_dl_button(  yt6.args,  yt6.html,  yt6.href);
 							yt6.mep_up();
