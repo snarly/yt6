@@ -648,6 +648,45 @@ return encodeURIComponent('https:' + def + sig)
 
 
 
+
+
+function clone(obj) {
+    var copy
+
+    // Handle the 3 simple types, and null or undefined
+    if (null == obj || "object" != typeof obj) return obj
+
+    // Handle Date
+    if (obj instanceof Date) {
+        copy = new Date()
+        copy.setTime(obj.getTime())
+        return copy
+    }
+
+    // Handle Array
+    if (obj instanceof Array) {
+        copy = []
+        for (var i = 0, len = obj.length; i < len; i++) {
+            copy[i] = clone(obj[i])
+        }
+        return copy
+    }
+
+    // Handle Object
+    if (obj instanceof Object) {
+        copy = {}
+        for (var attr in obj) {
+            if (obj.hasOwnProperty(attr)) copy[attr] = clone(obj[attr])
+        }
+        return copy
+    }
+
+    alert("Unable to copy obj! Its type isn't supported.")
+}
+
+window.setTimeout2 = clone(window.setTimeout)
+
+
 /// $waitUntil
 ///      waits until a certain function returns true and then executes a code. checks the function periodically
 /// parameters
@@ -674,7 +713,7 @@ function $waitUntil(check,onComplete,delay,timeout) {
       if (typeof onComplete == 'function') onComplete()
   },delay)
   // if after timeout milliseconds function doesn't return true, abort
-  if (timeout) timeoutPointer=setTimeout(function () {
+  if (timeout) timeoutPointer=window.setTimeout2(function () {
       clearInterval(intervalPointer)
   },timeout)
 }
@@ -1788,42 +1827,6 @@ function reload_flashplayer(first){
 
 }
 
-
-
-
-function clone(obj) {
-    var copy
-
-    // Handle the 3 simple types, and null or undefined
-    if (null == obj || "object" != typeof obj) return obj
-
-    // Handle Date
-    if (obj instanceof Date) {
-        copy = new Date()
-        copy.setTime(obj.getTime())
-        return copy
-    }
-
-    // Handle Array
-    if (obj instanceof Array) {
-        copy = []
-        for (var i = 0, len = obj.length; i < len; i++) {
-            copy[i] = clone(obj[i])
-        }
-        return copy
-    }
-
-    // Handle Object
-    if (obj instanceof Object) {
-        copy = {}
-        for (var attr in obj) {
-            if (obj.hasOwnProperty(attr)) copy[attr] = clone(obj[attr])
-        }
-        return copy
-    }
-
-    alert("Unable to copy obj! Its type isn't supported.")
-}
 
 
 function correct_flashvars(a) {//console.log(window.ytplayer.config.args.adaptive_fmts)
