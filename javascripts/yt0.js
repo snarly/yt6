@@ -1232,22 +1232,22 @@ yt6.tmp = ""+
   }\
   if (!path.length) {\
     var op = {};\
-    for (let [oc,pt] of seen) {/*if (oc && oc[0] && typeof oc[0] == 'function') continue*/;\
-      var a = Object.keys(oc).filter(x => typeof oc[x] == 'string');\
-      a.forEach(x => op[[...pt, x]] = oc[x]);\
+    for (let [oc,pt] of seen) {\
+      Object.keys(oc).filter(x => typeof oc[x] == 'string')\
+      .forEach(x => op[[...pt, x]] = oc[x]);\
     };\
     return op;\
   }"+
-"}"; console.log('1');eval(yt6.tmp); console.log('2');
+"}"; eval(yt6.tmp)
 
 var ypsi = flatten(ytPubsubPubsubInstance);
-console.log('3');
+
 yt6.tmp = "function durl0() {"+
 "var durl = Object.values(ypsi).filter(\
   x => x.includes('videoplayback?') && !x.includes('range=')\
 );\
 return durl }"; eval(yt6.tmp)
-console.log('4');
+
 var durl = durl0()
 
 yt6.tmp = "function dsig0() {"+
@@ -1255,14 +1255,14 @@ yt6.tmp = "function dsig0() {"+
   Object.keys(ypsi).filter(x => x.includes(',signature')).map(x => ypsi[x])\
 ).values();\
 return dsig }"; eval(yt6.tmp)
-console.log('5');
+
 var dsig = dsig0()
 
 yt6.tmp = "function vqua0() {"+
 "var vqua = Object.keys(ypsi).filter(x => x.includes(',qualityLabel'))\
   .map(x => ypsi[x])[Symbol.iterator]();\
 return vqua }"; eval(yt6.tmp)
-console.log('6');
+
 var vqua = vqua0()
 
 ypsi = [];
@@ -1583,16 +1583,16 @@ function ajax1(update, ytg){
       ytassetsjs.id = 'ytassetsjs-0'
       ytassetsjs.setAttribute('class', 'ytassetsjs-0')
     }
-
+console.log('01')
     var spx = setProxy();
 //hand_axe()
-
+console.log('02')
     if (typeof spx == 'undefined') {
 
       yt6.timer = 0
 
       $waitUntil(
-        function(){//console.log(yt6.timer)
+        function(){console.log(yt6.timer)
 	  var ytassetsjs = document.getElementById('ytassetsjs');
 	  if (ytassetsjs != null) {
 	    if (ytassetsjs.innerHTML.indexOf('var ') != -1) {
@@ -1603,7 +1603,7 @@ function ajax1(update, ytg){
 	      if (yt6.timer > 10) {
 		if (document.getElementById('getjs') == null) {
 		  hand_axe();
-		} //else console.log('One too many')
+		} else console.log('One too many')
 	      }
 	    }
 	},
