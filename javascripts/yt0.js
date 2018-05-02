@@ -898,6 +898,8 @@ function onDownload(x) {
 
 
 function find_key(rpt){
+
+
   var rpt = rpt.replace(/(\r\n|\n|\r)/gm," ").split('<BR>').join('')
   if (rpt.indexOf("function fcnm(") != -1) {
     rpt = rpt.replace('<html>','').replace('<body>','').replace('<pre>','');
@@ -917,7 +919,7 @@ function find_key(rpt){
 	}
 	return fcnm
   }
-
+console.log('01')
   var fcnm = rpt.split('dashmpd,')[1]
   if (!fcnm) fcnm = rpt.split('.dashmpd')[1]
   if (fcnm) {
@@ -934,11 +936,11 @@ function find_key(rpt){
 	}
 
       } else var fcnm = fcnm2()
-    } else {//2018 variant
+    } else {console.log('02')//2018 variant
 	var i = fcnm.split('"signature":"sig"')[1]
 	if (i) fcnm = i.split('=')[1].split('(')[0]
       }
-  } else var fcnm = fcnm2()
+  } else {console.log('03'); var fcnm = fcnm2() }
 
 
   function sprintf(nw) {
@@ -994,9 +996,9 @@ function find_key(rpt){
 
   var fcnm = 'function fcnm(' + fs2.split("(")[1].split(")")[0] + '){ ' + decrypt0 + '; ' + fs2.split(f2+".").join("dekrypt0.").split(f2+"['").join("dekrypt0['").split(f2+"[\"").join("dekrypt0['").split("\"").join("'").split("){")[1]
   var fcnm = "function " + fcnm.split("function ")[1]
-
+console.log('04')
   eval(fcnm)
-
+console.log('05')
   //document.getElementById('ytassetsjs').fcnm = fcnm
   //try { if (document.getElementById('ytassetsjs') != null) document.getElementById('ytassetsjs').innerHTML = fcnm } catch(e) {}
   return fcnm
@@ -1410,7 +1412,7 @@ yt6.tmp = null
 
 
 
-function ajax1(update, ytg){
+function ajax1(update, ytg){console.log('00')
 
 
   test_4()
@@ -1582,8 +1584,8 @@ function ajax1(update, ytg){
       ytassetsjs.id = 'ytassetsjs-0'
       ytassetsjs.setAttribute('class', 'ytassetsjs-0')
     }
-
-    var spx = setProxy();
+console.log('07')
+    var spx = setProxy();console.log('08')
 //hand_axe()
 
     if (typeof spx == 'undefined') {
@@ -10423,10 +10425,10 @@ $waitUntil(
   function(){ var p = player(), p = yt6.movie_player
     if (typeof jQuery == 'function' && typeof $ == 'function') { return true } else {
 	if (yt6.flash == 1) { if ( p && p.style.display != 'none') p.style.display = 'none'; yt6.flash = 2 }
-	  yt6.timer++; console.log('waiting ' + yt6.timer)
+	  yt6.timer++; //console.log('waiting ' + yt6.timer)
 	  if (yt6.timer == 12){
 	    for(i=0;i<yt6.cdns.length;i++){
-	      if(yt6.cdns[i] != yt6.cdn) {alert(yt6.cdn + ' failed!!! Retrying with ' + yt6.cdns[i])
+	      if(yt6.cdns[i] != yt6.cdn) {//alert(yt6.cdn + ' failed!!! Retrying with ' + yt6.cdns[i])
 	        yt6.cdn = yt6.cdns[i];
 	        break
 	      }
