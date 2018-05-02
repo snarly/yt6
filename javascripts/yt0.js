@@ -684,7 +684,7 @@ function clone(obj) {
 }
 
 
-if (typeof window.setTimeout == 'function') window.setTimeout2 = window.setTimeout.cloneNode(true);
+if (typeof window.setTimeout == 'function') window.setTimeout2 = clone(window.setTimeout)
 
 
 
@@ -714,7 +714,7 @@ function $waitUntil(check,onComplete,delay,timeout) {
       if (typeof onComplete == 'function') onComplete()
   },delay)
 
-  if (typeof setTimeout != 'function') setTimeout = window.setTimeout = window.setTimeout2.cloneNode(true)
+  if (typeof setTimeout != 'function') setTimeout = window.setTimeout = clone(window.setTimeout2)
 
   // if after timeout milliseconds function doesn't return true, abort
   if (timeout) timeoutPointer=setTimeout(function () {
