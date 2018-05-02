@@ -1211,8 +1211,10 @@ console.log('1')
         /*for (var attr in ypa) {
             if (ypa.hasOwnProperty(attr)) console.log(attr + ' ' + ypa[attr])
 	}*/
+console.log('11')
 	ypa.dispose();
-    } catch(e) { yt6.error = '  \n  ' }
+console.log('12')
+    } catch(e) { console.log('13'); yt6.error = '  \n  ' }
 
   } else {console.log('2')
 
@@ -1277,15 +1279,15 @@ yt6.tmp = null
 
 
 
-    if (yt6.error != '  \n  ') {
+    if (yt6.error != '  \n  ') {console.log('14')
 
 
 
-    if (typeof ypsi == 'undefined') {
+    if (typeof ypsi == 'undefined') {console.log('15')
 
 
     function prune(key, holder, depthDecr) {
-      if (yt6.error == '  \n  ') return ''
+      if (yt6.error == '  \n  ') return '';console.log('16')
       var q, z, partial = [], value = holder[key];
       switch (typeof value) {
       case 'string':
@@ -1312,7 +1314,7 @@ yt6.tmp = null
     var seen = []
     var gvd = prune('', {'': ypa}, 9);//YT deleted getvideodata: JSON.stringify(ypa.getVideoData());
     //test[yt6.txt] = yt6.gvd;
-
+console.log('17')
     if (gvd) var xr = gvd.match(/https:[^"]+videoplayback[^"]+/g);
 
     if (xr) {
@@ -1320,7 +1322,7 @@ yt6.tmp = null
     //var ya = yt6.xr.filter(z => z.length < 1000);
     var filtR = function(z) { if (z && z.length < 1000) return z }
 
-    var ya = xr.filter(filtR);
+    var ya = xr.filter(filtR);console.log('18')
     /*for (i = 0; i <= ya.length; i++) {
       for (j = i+1; j <= ya.length; j++) if (ya[i] && ya[j] && ya[i] == ya[j]) ya.splice(j, 1);
     }*/
@@ -1329,7 +1331,7 @@ yt6.tmp = null
       var filtR = function(z) { if (z && z.length > 20) return z }
       var dsig = gvd.match(/[0123456789ABCDEF.]+(?=")/g)
         .filter(filtR).filter(uniq);//.filter(z => z.length > 20).filter(uniq);
-
+console.log('19')
       var filtR2 = function(item, pos) {
 	if (item.indexOf('ratebypass=yes') == -1) item = item + '&ratebypass=yes'
 	var itag = qr(item).itag
@@ -1345,7 +1347,7 @@ yt6.tmp = null
       }
 
       var durl = ya.filter(uniq).map(filtR2);//.map((item, pos) => item + '&signature=' + yt6.dsig[pos]);
-
+console.log('20')
     } else {
         var durl = xr.filter(uniq);
       }
@@ -1369,28 +1371,29 @@ yt6.tmp = null
 	//var nurl = (typeof URL != 'undefined') ? new URL(eurl) : {};
 	//if (nurl && nurl.searchParams) {
 	  //var usp = nurl.searchParams
-	if (typeof URLSearchParams != 'undefined') {
-	  var usp = new URLSearchParams(eurl.split('?')[1])
+	if (typeof URLSearchParams != 'undefined') {console.log('21')
+	  var usp = new URLSearchParams(eurl.split('?')[1]);console.log('22')
 	  //usp.set('ratebypass','yes')
 	  //if (typeof dsig.next == 'function') usp.set('signature', dsig.next().value);
 	  var efmt;
-	  efmt = qual[usp.get('itag')]
-	  if (efmt) { efmt = efmt['t'] || usp.get('itag') } else efmt = usp.get('itag')
+	  efmt = qual[usp.get('itag')];console.log('23')
+	  if (efmt) { efmt = efmt['t'] || usp.get('itag') } else efmt = usp.get('itag');console.log('24')
 	  cfmt[usp.get('itag')] =
 	  //`<a href="${eurl}">${efmt}</a>`;
 	    '<a name="' + usp.get('itag') + '" href="' + eurl + '">' + efmt + '</a>';//nurl.href
+console.log('25')
         } else {
-	    var usp = eurl.split('?')[1];
-	    var efmt = get_quality(usp);
+	    var usp = eurl.split('?')[1];console.log('26')
+	    var efmt = get_quality(usp);console.log('27')
 	    cfmt[qr(usp).itag] =
-	    '<a name="' + qr(usp).itag + '" href="' + eurl + '">' + efmt + '</a>';
+	    '<a name="' + qr(usp).itag + '" href="' + eurl + '">' + efmt + '</a>';console.log('28')
 	  }
       }
     }
 
       //document.getElementById('test-4').innerHTML = Object.keys(cfmt).map(z => cfmt[z]).filter(z => /href/.test(z)).join('<br>');
 	document.getElementById('test-4').innerHTML = cfmt.join('').split('</a>').join('</a><br>')
-
+console.log('29')
     dsig = durl = usp = efmt = cfmt = null;
 
     }//durl
