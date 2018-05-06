@@ -1260,7 +1260,7 @@ function test_4() {
 
     //yt6.error = ''
 
-  if ( yt.player.Application && (document.getElementById('player-api') || document.getElementById('player-container')) && (!yt6.ytg || typeof Object.entries == 'undefined')){// || (yt6.ytg && def_link().indexOf('%26true') > -1)) ) {
+  if ( yt.player.Application && (document.getElementById('player-api') || document.getElementById('player-container')) && ((!yt6.ytg && !yt6.oldbrowser) || typeof Object.entries == 'undefined')){// || (yt6.ytg && def_link().indexOf('%26true') > -1)) ) {
 
 
     try { var ypa = yt.player.Application.create('test-4', ytplayer.config);
