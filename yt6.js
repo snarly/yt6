@@ -1181,6 +1181,8 @@ var xhr2 = new XMLHttpRequest();
 // var arr = Object.keys(durl).map(function (key) { return durl[key]; }); // puts object values into an array
 // same with ES6 arrow function: Object.keys(obj).map(key => obj[key])
 // ES7: Object.values(obj)
+if (!yt6.oldbrowser) {
+
 yt6.tmp = ""+
 "yt6.flatten = function(src, path, seen) {\
   var path = path || [], seen = seen || new Map();\
@@ -1224,6 +1226,8 @@ yt6.tmp = "yt6.vqua = function(ypsi) {"+
 return vqua }"; eval(yt6.tmp)
 
 yt6.tmp = null
+
+}
 
 
 
