@@ -1082,7 +1082,7 @@ yt6.feedback = function(fcnm) {
 		      }
 		  }
 
-			  //document.getElementById(\'bm6\').parentNode.removeChild(document.getElementById(\'bm6\'));\
+			  //document.getElementById(\'bm10\').parentNode.removeChild(document.getElementById(\'bm10\'));\
 			  //if (document.getElementById(\'bm1\') != null) {\
 			    //if (document.getElementById(\'bm1\').newWindow) document.getElementById(\'bm1\').newWindow.close();\
 			    //document.getElementById(\'bm1\').parentNode.removeChild(document.getElementById(\'bm1\'));\
@@ -1091,7 +1091,7 @@ yt6.feedback = function(fcnm) {
 }
 
 		    var bm1 = document.createElement('span')
-		    bm1.id = 'bm6'
+		    bm1.id = 'bm10'
 		    bm1.innerHTML = '<span><textarea id="setjs" value="" maxlength="2097152" rows="1" cols="15" style="height: 20px; border: solid;" onkeyup="if (event.keyCode == 13) {\
 			if (document.getElementById(\'setjs\').value.indexOf(\'function()\') != -1 || document.getElementById(\'setjs\').value.indexOf(\'function fcnm(\') != -1) {\
 			  if (document.getElementById(\'controls-sp\') != null) document.getElementById(\'controls-sp\').innerHTML = \'OK, Processing...\';\
@@ -1176,6 +1176,59 @@ yt6.recharge()
 var xhr2 = new XMLHttpRequest();
 
 
+
+// This stuff only works on modern browsers/mobile devices, and will cause old javascript interpreters to fail, hence stringify
+// var arr = Object.keys(durl).map(function (key) { return durl[key]; }); // puts object values into an array
+// same with ES6 arrow function: Object.keys(obj).map(key => obj[key])
+// ES7: Object.values(obj)
+yt6.tmp = ""+
+"yt6.flatten = function(src, path, seen) {\
+  var path = path || [], seen = seen || new Map();\
+  var key, value, oc, pt;\
+  if (src.constructor && src.constructor.name != 'Symbol') \
+  try {\
+  for (let [key,value] of Object.entries(src)) { /*if (key && value) console.log(key + ' === ' + typeof value + ' === ' + value)*/;\
+    if (typeof value == 'object' && value != null) {\
+      if (!seen.has(value)) {\
+        seen.set(value, path);\
+        yt6.flatten(value, [...path, key], seen);\
+      }\
+    }\
+  };\
+  } catch(e) {/*console.log(e)*/};\
+  if (!path.length) {\
+    var op = {};\
+    for (let [oc,pt] of seen) {\
+      Object.keys(oc).filter(x => typeof oc[x] == 'string')\
+      .forEach(x => op[[...pt, x]] = oc[x]);\
+    };\
+    return op;\
+  }"+
+"}"; eval(yt6.tmp)
+
+yt6.tmp = "yt6.durl = function(ypsi) {"+
+"var durl = Object.values(ypsi).filter(\
+  x => x.includes('videoplayback?') && !x.includes('range=')\
+);\
+return durl }"; eval(yt6.tmp)
+
+yt6.tmp = "yt6.dsig = function(ypsi) {"+
+"var dsig = new Set(\
+  Object.keys(ypsi).filter(x => x.includes(',signature')).map(x => ypsi[x])\
+).values();\
+return dsig }"; eval(yt6.tmp)
+
+yt6.tmp = "yt6.vqua = function(ypsi) {"+
+"var vqua = Object.keys(ypsi).filter(x => x.includes(',qualityLabel'))\
+  .map(x => ypsi[x])[Symbol.iterator]();\
+return vqua }"; eval(yt6.tmp)
+
+yt6.tmp = null
+
+
+
+
+
 function test_4() {
 
 
@@ -1189,10 +1242,13 @@ function test_4() {
       yt6.appendChild(z)
       z.setAttribute('style','display: none'); z.style.display = 'none';
       z.setAttribute('name','test-4')
-    } else if (z.getAttribute('name')) {
+    } else { /*if (z.getAttribute('name')) { console.log('test again')
 	z.removeAttribute('name')
-	return void 0;
-      } else z.innerHTML = ''
+	test_4(); return void 0;
+      } else { console.log('empty')
+	  z.setAttribute('name', document.title)*/
+	  z.innerHTML = ''
+	}
 
   if (yt6.error == '  \n  ') return void 0;
 
@@ -1204,7 +1260,8 @@ function test_4() {
 
     //yt6.error = ''
 
-  if ( yt.player.Application && typeof Object.entries == 'undefined' && (document.getElementById('player-api') || document.getElementById('player-container')) ) {
+  if ( yt.player.Application && (document.getElementById('player-api') || document.getElementById('player-container')) && (!yt6.ytg || typeof Object.entries == 'undefined')){// || (yt6.ytg && def_link().indexOf('%26true') > -1)) ) {
+
 
     try { var ypa = yt.player.Application.create('test-4', ytplayer.config);
         /*for (var attr in ypa) {
@@ -1213,63 +1270,21 @@ function test_4() {
 	ypa.dispose();
     } catch(e) { yt6.error = '  \n  ' }
 
-  } else {
+  } else if (typeof Object.entries != 'undefined') {
 
 
-try {// This stuff only works on modern browsers/mobile devices, and will cause old javascript interpreters to fail, hence stringify
+      try {
 
-yt6.tmp = ""+
-"function flatten(src, path, seen) {\
-  var path = path || [], seen = seen || new Map();\
-  var key, value, oc, pt;\
-  for (let [key,value] of Object.entries(src)) { /*if (key && value) console.log(key + ' === ' + typeof value + ' === ' + value)*/;\
-    if (typeof value == 'object' && value != null) {\
-      if (!seen.has(value)) {\
-        seen.set(value, path);\
-        flatten(value, [...path, key], seen);\
-      }\
-    }\
-  }\
-  if (!path.length) {\
-    var op = {};\
-    for (let [oc,pt] of seen) {\
-      Object.keys(oc).filter(x => typeof oc[x] == 'string')\
-      .forEach(x => op[[...pt, x]] = oc[x]);\
-    };\
-    return op;\
-  }"+
-"}"; eval(yt6.tmp)
+	var a = document.getElementById('bm3'); if (a) a.innerHTML = ''; //would interfere with the content of ytPubsubPubsubInstance
 
-var ypsi = flatten(ytPubsubPubsubInstance);
+	var ypsi = yt6.flatten(ytPubsubPubsubInstance); //console.log(ypsi)
+	var durl = yt6.durl(ypsi); //console.log(durl.length)
+	var dsig = yt6.dsig(ypsi); //unused
+	var vqua = yt6.vqua(ypsi); //unused
 
-yt6.tmp = "function durl0() {"+
-"var durl = Object.values(ypsi).filter(\
-  x => x.includes('videoplayback?') && !x.includes('range=')\
-);\
-return durl }"; eval(yt6.tmp)
+	ypsi = [];
 
-var durl = durl0()
-
-yt6.tmp = "function dsig0() {"+
-"var dsig = new Set(\
-  Object.keys(ypsi).filter(x => x.includes(',signature')).map(x => ypsi[x])\
-).values();\
-return dsig }"; eval(yt6.tmp)
-
-var dsig = dsig0()
-
-yt6.tmp = "function vqua0() {"+
-"var vqua = Object.keys(ypsi).filter(x => x.includes(',qualityLabel'))\
-  .map(x => ypsi[x])[Symbol.iterator]();\
-return vqua }"; eval(yt6.tmp)
-
-var vqua = vqua0()
-
-ypsi = [];
-
-yt6.tmp = null
-
-} catch(e) { yt6.error = '  \n  ' }
+      } catch(e) { yt6.error = '  \n  ' }
 
 
   }
@@ -1295,8 +1310,9 @@ yt6.tmp = null
         seen.push(value);
         for (q in value)
           if (Object.prototype.hasOwnProperty.call(value, q)) {
-	    try { z = prune(q, value, depthDecr - 1); }
-	      catch(e){ //ur browser's too old for this shit
+	    try {
+	      z = prune(q, value, depthDecr - 1);
+	    } catch(e){ //ur browser's too old for this shit
 	        yt6.error = '  \n  ';
 		break
 	      }
@@ -1369,11 +1385,11 @@ yt6.tmp = null
 	//if (nurl && nurl.searchParams) {
 	  //var usp = nurl.searchParams
 	if (typeof URLSearchParams != 'undefined') {
-	  var usp = new URLSearchParams(eurl.split('?')[1])
+	  var usp = new URLSearchParams(eurl.split('?')[1]);
 	  //usp.set('ratebypass','yes')
 	  //if (typeof dsig.next == 'function') usp.set('signature', dsig.next().value);
 	  var efmt;
-	  efmt = qual[usp.get('itag')]
+	  efmt = qual[usp.get('itag')];
 	  if (efmt) { efmt = efmt['t'] || usp.get('itag') } else efmt = usp.get('itag')
 	  cfmt[usp.get('itag')] =
 	  //`<a href="${eurl}">${efmt}</a>`;
@@ -3713,12 +3729,12 @@ if (autoplay != null) {
     } else {
 	var autoplay2 = gclass('style-scope ytd-playlist-panel-renderer style-grey-text')//'flex style-scope ytd-playlist-panel-renderer'// x-scope ytd-menu-renderer-0
 //console.log(autoplay2 +' '+ yt6.autoplay)
-	if (autoplay2[0] && !autoplay2[0].hasAttribute('hidden')) {
+	if ((autoplay2 && autoplay2[0]) && !autoplay2[0].hasAttribute('hidden')) {
 	  yt6.autoplay = true; //console.log('mix')
 	} else {
 	    yt6.autoplay = false; //console.log('none')
 	  }
-	//if (!(autoplay2[0] && autoplay2[0].hasAttribute('hidden'))) { delete autoplay2[0]; if (!autoplay[0] && yt6.autoplay != true) yt6.autoplay = false }
+	//if (!((autoplay2 && autoplay2[0]) && autoplay2[0].hasAttribute('hidden'))) { delete autoplay2[0]; if (!autoplay[0] && yt6.autoplay != true) yt6.autoplay = false }
     }
 
   }
@@ -3775,7 +3791,7 @@ function select_player(){
 
 if (start != false){
 
-  if (start) if ((yt6.autoplay || autoplay2[0]) && yt6.player1 && typeof yt6.player2.load == 'function') yt6.player1.load()
+  if (start) if ((yt6.autoplay || (autoplay2 && autoplay2[0])) && yt6.player1 && typeof yt6.player2.load == 'function') yt6.player1.load()
   if ( (navigator.userAgent.match(/Edge\/\d+/) != null || navigator.userAgent.match(/MSIE /) != null || navigator.userAgent.match(/Trident\//) != null) && yt6.player2 && typeof yt6.player2.load == 'function' ) yt6.player2.load()
 
 
@@ -3790,7 +3806,7 @@ if (start != false){
 	    if (yt6.layout == 16) p.style.display = 'inline-block'
 	    //if (yt6.ytp)  yt6.ytp.style.display = ''
 	  }
-	if ((yt6.autoplay || autoplay2[0]) && typeof p.playMedia == 'function' && start) { //console.log('autoplay2')
+	if ((yt6.autoplay || (autoplay2 && autoplay2[0])) && typeof p.playMedia == 'function' && start) { //console.log('autoplay2')
 	  p.playMedia(); document.getElementById('movie_player').paused = false
 	}
 
@@ -3880,7 +3896,7 @@ if (start != false){
 		}
 
 
-		if ((yt6.autoplay || (autoplay2 && autoplay2[0])) && start)
+		if ((yt6.autoplay || (autoplay2 && (autoplay2 && autoplay2[0]))) && start)
 		  $waitUntil(function(){
 		    if (yt6.sync_timer == true && yt6.player1 && typeof yt6.player1.play == 'function') return true },
 		    function() { yt6.player1.play() },
@@ -3903,7 +3919,7 @@ if (typeof p.getPlayerState != 'function' && typeof p.getAttribute('flashvars') 
 	  yt6.size = 'default'
 	  resize_layers(yt6.w, yt6.h, true)
 	}
-	$waitUntil(function(){//(yt6.autoplay || autoplay2[0]
+	$waitUntil(function(){//(yt6.autoplay || (autoplay2 && autoplay2[0])
 	  //if (yt6.sync_timer == true && yt6.player1 && typeof yt6.player1.play == 'function') return true },
 	  if (player() && typeof player().getPlayerState == 'function') return true },
 	    function(){ if (document.getElementById('bm0') && document.getElementById('bm0').style.visibility == 'visible') {
@@ -4573,7 +4589,6 @@ if (playlist.id.indexOf('watch') == -1) {
 function buildObject(ytplayer){
 
 
-  test_4()
 
   getReferenceObjects()
 
@@ -4691,6 +4706,9 @@ function rewrite_ytplayer(node_value, s, sig){
 
 //  if ((tts_url) && (tts_url.split('"')[2] == ',')) tts_url = tts_url.split('"')[1].split('\\/').join('/').split('\\u0026').join('&')
 
+
+  test_4()
+
 if (ytplayer.config.args) {
 
   var x = ''
@@ -4749,7 +4767,21 @@ if (ytplayer.config.args) {
   var html = [new Date().toLocaleString(),
     'Click to switch streams in both native (HTML5) and alternative player. Right click & "Save as" to download.<br>'
   ];//document.getElementById('early-body').innerHTML = ''
+
+
+  var t4 = document.getElementById('test-4')
+  if (args.url_encoded_fmt_stream_map == undefined && args.adaptive_fmts == undefined && t4 && t4.firstElementChild) {
+    args.adaptive_fmts = ''; args.url_encoded_fmt_stream_map = ' '
+    var z = t4.getElementsByTagName('A')
+    for (i=0;i<z.length;i++) {
+      args.adaptive_fmts = args.adaptive_fmts + 'itag=' + z[i].getAttribute('name') + '&url=' + escape(z[i].getAttribute('href'))
+      if (i<z.length-1) args.adaptive_fmts = args.adaptive_fmts + ','
+    }
+  }
+
+
   var ft = [args.url_encoded_fmt_stream_map, args.adaptive_fmts]
+
   for (i in ft) {
     if (typeof ft[i] == 'string') {
       var z = ft ? ft[i].split(',') : ''
@@ -4815,11 +4847,12 @@ if (ytplayer.config.args) {
 	  }
 	}
         if (qs.itag !== '278') { linx[qs.itag] = href } else { linx[241] = href }
-        if (qq.indexOf('360p WebM VP8') != -1) { }//var webm = 'https:' + href };
 	if (!yt6.audiox) {
-          if ( (qq.indexOf('WebM Vorbis') != -1) && (navigator.userAgent.match(/Edge\/\d+/) == null && navigator.userAgent.match(/MSIE /) == null && navigator.userAgent.match(/Trident\//) == null) ) { var audio = 'https:' + href }//.replace('&ratebypass=yes','') }
-        //if (qq.indexOf('160k WebM Opus') != -1) { var audio = 'https:' + href }
-	  if ( (qq.indexOf('DASH AAC') != -1) && (audio == undefined || navigator.userAgent.match(/Edge\/\d+/) != null || navigator.userAgent.match(/MSIE /) != null || navigator.userAgent.match(/Trident\//) != null) ) { var audio = 'https:' + href }
+	  if ((browserName != 'IE' && browserName != 'Edge') || typeof audio != 'undefined') {
+	    if (args.url_encoded_fmt_stream_map != ' ') {
+	      if (qq.indexOf('WebM Vorbis') != -1) var audio = 'https:' + href
+	    } else if (qq.indexOf('160k WebM Opus') != -1) { var audio = 'https:' + href; yt6.userprefA.splice(0,0,251) }
+	  } else if ( qq.indexOf('DASH AAC')) var audio = 'https:' + href
 	} else var audio = yt6.audiox
         //var fn = (args.title + '-' + qq).toLowerCase()
         //         .replace(/[!"&'().:[\]|]/g,'')
@@ -4962,7 +4995,7 @@ if (ytplayer.config.args) {
 '		return false;';
 
 
-	    var a = (typeof href.split("itag=")[1] != "undefined") ? 1 * href.split("itag=")[1].split("&")[0] : 1 * href.split("itag/")[1].split("/")[0]
+	    var a = (typeof href.split("itag=")[1] != "undefined") ? 1 * href.split("itag=")[1].split("&")[0] : ((typeof href.split("itag/")[1] != 'undefined') ? 1 * href.split("itag/")[1].split("/")[0] : 171);
 	    if (typeof a == 'number') onclic = onclic.replace(';;;;',';'+
 '			if ((yt6.player2 && typeof yt6.player2.load == "function")'+
 '			    && (typeof yt6.A_[' + a + '] == "string")) {'+
@@ -5099,10 +5132,10 @@ if (rpt != null) {//ajax2
 	if ((qual[b]) && (b != 278)) {
 	  if ((xhr.responseText.indexOf('Representation id="'+b+'"') > -1) && (typeof linx[b] == 'undefined')) {
 	    href = getElementsByAttribute(parseXml(xhr.responseText),"Representation","id",b)[0][yt6.txt].replace('http:', '').replace('https:', '')
-	    if (b == '172') { var audio = 'https:' + href }
+	    //if (b == '172') { var audio = 'https:' + href }
 	    //if (b == '141') { if (typeof audio == 'undefined') { var audio = 'https:' + href }}
 	    var qq = get_quality(href)
-	    if ((qq.indexOf('DASH AAC') != -1) && (audio == undefined)) { var audio = 'https:' + href }
+	    //if ((qq.indexOf('DASH AAC') != -1) && (audio == undefined)) { var audio = 'https:' + href }
 	    HTMLPush()
 	    linx[b] = href
 	  }
@@ -5445,6 +5478,7 @@ if (document.getElementById("bm1") != null) document.getElementById("bm1").paren
     }
   }
 
+  var z = document.getElementById('bm10'); if (z) z.parentNode.removeChild(z)
 
 }//redo
 
@@ -10595,7 +10629,7 @@ function resize_layers(w,h,me_aspect){
   if (document.getElementById('aspect')) {
 	var c = 1 * document.getElementById('yt-alert-message').offsetWidth
 	var d = 1 * document.getElementById('aspect').firstChild.offsetWidth
-	var e = 1 * document.getElementById('remove-sp').parentNode.offsetWidth
+	try { var e = 1 * document.getElementById('remove-sp').parentNode.offsetWidth } catch(e){ var e = 241 }
 	var z = document.getElementById('aspect')
 	z.setAttribute('style','display: inline-block; vertical-align: top; color:#333; background: #FFFFFF; opacity: 0.9; position: relative; left:' + parseFloat(c - d - e) + 'px;')
 	var z = z.style
@@ -12409,7 +12443,7 @@ function deldiv(){
   removeEL(document.getElementById('movie_player'), "onStateChange", Sync, false);
   removeEL(document.getElementById('movie_player'), "onPlaybackQualityChange", Mqch, false);
 
-  var z = [ 'controls-sp','aspect','bm6','bm3','bm1','bm0','theater-left' ]
+  var z = [ 'controls-sp','aspect','bm10','bm3','bm1','bm0','theater-left' ]
   for(i=0;i<z.length;i++){
     var y = document.getElementById(z[i])
     if (y) y.parentNode.removeChild(y)
