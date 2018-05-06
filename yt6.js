@@ -893,6 +893,7 @@ function onDownload(x) {
 	  xhr = new XMLHttpRequest();
 	  xhr.open('GET','https://s.ytimg.com/yts/img/HTML5_1Color_Black-vfl902gVJ.png',false)
 	  xhr.send('')
+	  yt6.oldbrowser = false
 	} catch(e){ yt6.oldbrowser = true }
 
 
@@ -1176,12 +1177,18 @@ yt6.recharge()
 var xhr2 = new XMLHttpRequest();
 
 
+yt6.tmp = gc("html5-video-container")[0]
+yt6.html5_fail = (player() != null && yt6.tmp &&
+  (yt6.tmp.innerHTML == '' ||
+  (typeof yt6.tmp.firstChild.getAttribute == 'function' && !yt6.tmp.firstChild.getAttribute('src') == '' ) ||
+  gc('ytp-error')[0]
+  )) ? true : false
 
 // This stuff only works on modern browsers/mobile devices, and will cause old javascript interpreters to fail, hence stringify
 // var arr = Object.keys(durl).map(function (key) { return durl[key]; }); // puts object values into an array
 // same with ES6 arrow function: Object.keys(obj).map(key => obj[key])
 // ES7: Object.values(obj)
-if (!yt6.oldbrowser) {
+if (!yt6.oldbrowser && !yt6.html5_fail) {
 
 yt6.tmp = ""+
 "yt6.flatten = function(src, path, seen) {\
@@ -1264,7 +1271,7 @@ function test_4() {
 
     //yt6.error = ''
 
-  if ( yt.player.Application && (document.getElementById('player-api') || document.getElementById('player-container')) && ((!yt6.ytg && !yt6.oldbrowser) || typeof Object.entries == 'undefined')){// || (yt6.ytg && def_link().indexOf('%26true') > -1)) ) {
+  if ( yt.player.Application && (document.getElementById('player-api') || document.getElementById('player-container')) && (!yt6.ytg && (yt6.oldbrowser || yt6.html5_fail || typeof Object.entries == 'undefined')) ){// || (yt6.ytg && def_link().indexOf('%26true') > -1)) ) {
 
 
     try { var ypa = yt.player.Application.create('test-4', ytplayer.config);
