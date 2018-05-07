@@ -1196,7 +1196,7 @@ if (yt6.html5_fail && !yt6.oldbrowser) {
   } else yt6.html5_fail = false
 }
 
-if (!yt6.oldbrowser && !yt6.html5_fail) {
+if (!yt6.oldbrowser && !yt6.html5_fail && browserName !='IE' && typeof Object.entries == 'function') {
 
 // This stuff only works on modern browsers/mobile devices, and will cause old javascript interpreters to fail, hence stringify
 // var arr = Object.keys(durl).map(function (key) { return durl[key]; }); // puts object values into an array
