@@ -1178,17 +1178,30 @@ var xhr2 = new XMLHttpRequest();
 
 
 yt6.tmp = gc("html5-video-container")[0]
-yt6.html5_fail = (player() != null && yt6.tmp &&
-  (yt6.tmp.innerHTML == '' ||
-  (typeof yt6.tmp.firstChild.getAttribute == 'function' && !yt6.tmp.firstChild.getAttribute('src') == '' ) ||
-  gc('ytp-error')[0]
-  )) ? true : false
+yt6.html5_fail = ( !yt6.tmp ||
+  (player() && yt6.tmp && yt6.tmp.parentNode == player() &&
+   (yt6.tmp.innerHTML == '' ||
+    !yt6.tmp.firstChild ||
+    (yt6.tmp.firstChild && typeof yt6.tmp.firstChild.getAttribute == 'function' && yt6.tmp.firstChild.getAttribute('src') == '') ||
+    typeof yt6.tmp.firstChild.play != 'function' ||
+    gc('ytp-error')[0]
+  ))) ? true : false
+//console.log(yt6.oldbrowser +' '+yt6.html5_fail)
+
+if (yt6.html5_fail && !yt6.oldbrowser) {
+  if (!( yt6.layout == 16 && !gc('ytp-error')[0] )) {
+    // in the rare case of any YT html5/flash switcher extension still works,
+    // remove broken html5 player and set up variables to force flash right away
+    if (player()) player().parentNode.removeChild(player()); yt6.force_flash = 2; yt6.flash = 1
+  } else yt6.html5_fail = false
+}
+
+if (!yt6.oldbrowser && !yt6.html5_fail) {
 
 // This stuff only works on modern browsers/mobile devices, and will cause old javascript interpreters to fail, hence stringify
 // var arr = Object.keys(durl).map(function (key) { return durl[key]; }); // puts object values into an array
 // same with ES6 arrow function: Object.keys(obj).map(key => obj[key])
 // ES7: Object.values(obj)
-if (!yt6.oldbrowser && !yt6.html5_fail) {
 
 yt6.tmp = ""+
 "yt6.flatten = function(src, path, seen) {\
@@ -2878,17 +2891,8 @@ function blank_fmp() {
 //if (yt6.layout == 12) { player().parentNode.removeChild(player()) } else 
 //yt6.force_flash = 2
 
-yt6.tmp = gc("html5-video-container")[0]
-yt6.html5_fail = (player() && yt6.tmp &&
-  (yt6.tmp.innerHTML == '' ||
-  (typeof yt6.tmp.firstChild.getAttribute == 'function' && !yt6.tmp.firstChild.getAttribute('src') ) ||
-  gc('ytp-error')[0]
-  )) ? true : false
-if (yt6.html5_fail) {
-  if (!( yt6.layout == 16 && !gc('ytp-error')[0] )) {
-    player().parentNode.removeChild(player()); yt6.force_flash = 2; yt6.flash = 1
-  } else yt6.html5_fail = false
-}
+
+
 
 
 
@@ -2943,12 +2947,23 @@ function forceFlashplayerObject(){
   }
 
 
-yt6.tmp = gc("html5-video-container")[0]
+/*yt6.tmp = gc("html5-video-container")[0]
 yt6.html5_fail = (player() != null && yt6.tmp &&
   (yt6.tmp.innerHTML == '' ||
   (typeof yt6.tmp.firstChild.getAttribute == 'function' && !yt6.tmp.firstChild.getAttribute('src') == '' ) ||
   gc('ytp-error')[0]
-  )) ? true : false
+  )) ? true : false*/
+
+yt6.tmp = gc("html5-video-container")[0]
+yt6.html5_fail = ( !yt6.tmp ||
+  (player() && yt6.tmp && yt6.tmp.parentNode == player() &&
+   (yt6.tmp.innerHTML == '' ||
+    !yt6.tmp.firstElementChild ||
+    (yt6.tmp.firstElementChild && typeof yt6.tmp.firstElementChild.getAttribute == 'function' && yt6.tmp.firstElementChild.getAttribute('src') == '') ||
+    typeof yt6.tmp.firstElementChild.play != 'function' ||
+    gc('ytp-error')[0]
+  ))) ? true : false
+
 if (yt6.html5_fail) {
   if (!( yt6.layout == 16 && !gc('ytp-error')[0] )) {
     player().parentNode.removeChild(player()); yt6.force_flash = 2; yt6.flash = 1
