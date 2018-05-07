@@ -2958,9 +2958,9 @@ yt6.tmp = gc("html5-video-container")[0]
 yt6.html5_fail = ( !yt6.tmp ||
   (player() && yt6.tmp && yt6.tmp.parentNode == player() &&
    (yt6.tmp.innerHTML == '' ||
-    !yt6.tmp.firstElementChild ||
-    (yt6.tmp.firstElementChild && typeof yt6.tmp.firstElementChild.getAttribute == 'function' && yt6.tmp.firstElementChild.getAttribute('src') == '') ||
-    typeof yt6.tmp.firstElementChild.play != 'function' ||
+    !yt6.tmp.firstChild ||
+    (yt6.tmp.firstChild && typeof yt6.tmp.firstChild.getAttribute == 'function' && yt6.tmp.firstChild.getAttribute('src') == '') ||
+    typeof yt6.tmp.firstChild.play != 'function' ||
     gc('ytp-error')[0]
   ))) ? true : false
 
