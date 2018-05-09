@@ -5,7 +5,7 @@ var yt6 = window.document.getElementById('snarls_player')
     if (yt6.body.textContent) {
       yt6.txt = 'textContent'
     } else yt6.txt = 'innerText'
-    if (yt6.body.getAttribute('id') == 'body') { yt6.layout = 12 } else yt.layout = 16
+    if (yt6.body.getAttribute('id') == 'body') { yt6.layout = 12 } else yt6.layout = 16
   }
 
 
