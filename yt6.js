@@ -13537,8 +13537,11 @@ var CtrlS = function (stage,v){
 	  //if (yt6.movie_player.tagName == 'OBJECT') yt6.movie_player.setAttribute('class','forced flashplayer')
         }
       } else {
-	  var z = document.getElementById('player-container').getElementsByTagName('OBJECT')[0]
-	  if (z && z.getAttribute('name') == 'me_flash') { z.parentNode.removeChild(z); set_controls() }
+	  var z = document.getElementById('player-container')
+	  if (z) {
+	    z = z.getElementsByTagName('OBJECT')[0]
+	    if (z && z.getAttribute('name') == 'me_flash') { z.parentNode.removeChild(z); set_controls() }
+	  }
 	}
     } else if (yt6.movie_player.tagName == 'DIV') yt6.movie_player.style[prop] = ''
   } else if (!player()) {
