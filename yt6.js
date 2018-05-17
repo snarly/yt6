@@ -11596,6 +11596,13 @@ if (a.getAttribute('id') != 'player') { //pre-2016 layout start
 	  a.parentNode.style.top = -1 * h + 'px'
 	  l.style.setProperty('margin-top', -1 * (h + 322) + 'px','')
 	} else l.style.setProperty('margin-top','-322px','')
+
+	if (!playlist && windowwidth + getScrollbarWidth() >= 882) {
+	  yt6.inf.style = ''
+	  yt6.wna.style = ''
+	  l.style.marginTop = -1 * (h + 16) + 'px'
+	}
+
       } else {
 	  a.parentNode.style.top = '0px'
 	}
@@ -11783,6 +11790,10 @@ if (a.getAttribute('id') != 'player') { //pre-2016 layout start
 			  if (!yt6.ytg) yt6.inf.style.marginTop = '322px'
 			}
 
+
+			if (windowwidth >= 657 && windowwidth < 688) {
+			  l.style.marginTop = -1 * h + 'px'
+			}
 
 
 	} else {//(no aspect changer c) //console.log('s-24');
