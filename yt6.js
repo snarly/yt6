@@ -10027,9 +10027,10 @@ addEL(window, 'spfdone', yt6.body.spfdone, false);
 	var bm0 = document.getElementById('bm0')
 
 
-	var ads0 = gc('ytp-time-duration')[0][yt6.txt]
+	var ads0 = gc('ytp-time-duration')[0]
+	if (ads0) ads0 = ads0[yt6.txt]
 	//console.log(ads0+' '+yt6.previous_media_duration)
-	  if (ads0 != '0:00' && !yt6.force_flash) {
+	  if (ads0 && ads0 != '0:00' && !yt6.force_flash) {
 
 	      var ads0 = ads0.split(':')
 
@@ -10059,6 +10060,7 @@ addEL(window, 'spfdone', yt6.body.spfdone, false);
 		      try { p.unMute(); v_element.unMute() } catch(e) {}
 		      yt6.ad_muted = false
 		      delete yt6.ad_
+		      if (bm0) resize_layers(bm0.style.width, bm0.style.height)
 		    }
 		  }
 
