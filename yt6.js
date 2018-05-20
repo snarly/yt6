@@ -10029,7 +10029,7 @@ addEL(window, 'spfdone', yt6.body.spfdone, false);
 
 	var ads0 = gc('ytp-time-duration')[0][yt6.txt]
 	//console.log(ads0+' '+yt6.previous_media_duration)
-	  if (ads0 != '0:00') {
+	  if (ads0 != '0:00' && !yt6.force_flash) {
 
 	      var ads0 = ads0.split(':')
 
