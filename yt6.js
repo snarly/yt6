@@ -2975,7 +2975,7 @@ function me_flash_up(file, ib){
 	    var x = z.childNodes[i]
 	    if (x && typeof x.getAttribute == 'function' && (x.getAttribute('id') == 'movie_player1' || (!p && x.getAttribute('id') == 'movie_player')) ) {
 		if (yt6.layout != 16 || yt6.ytg) {
-		  yt6.api = document.getElementById('player-api')
+		  yt6.api = bc = document.getElementById('player-api')
 		} else { yt6.api = document.getElementById('ytd-player') || document.getElementById('player-container'), bc = document.getElementById('player-container') }
 		x.style.display = ''
 		if (bm0) bc.appendChild(bm0)
