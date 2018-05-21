@@ -13718,13 +13718,13 @@ var CtrlS = function (stage,v){
 	      p.style.left = '0px'
 	      p.style.top = '0px'
 	      p.style.width = z.style.width
-	      p.style.height = z.style.height
+	      p.style.height = (z.style.height != '0px') ? z.style.height : bm0.style.height
 	      p.style.visibility = (bm0.style.visibility == 'hidden') ? 'visible' : 'hidden'
 	      if (yt6.layout == 16) p.style.display = 'inline-block'; var display = player().style.display;
 	      p.style.opacity = opacity || '1'
 	      zoom = 1; rotate = 0
 	      if (browserName != 'Safari') {
-	        p.setAttribute('style','top: 0px; left: 0px; width: ' + z.style.width + '; height: ' + z.style.height + '; visibility: visible; opacity: '+opacity); if (display != '') p.setAttribute('style', p.getAttribute('style') + '; display: ' + display);
+	        p.setAttribute('style','top: 0px; left: 0px; width: ' + z.style.width + '; height: ' + ((z.style.height != '0px') ? z.style.height : bm0.style.height) + '; visibility: visible; opacity: '+opacity); if (display != '') p.setAttribute('style', p.getAttribute('style') + '; display: ' + display);
 	      } else {
 	          v.style[prop]='rotate('+rotate+'deg) scale('+zoom+')';
 		  if (me_flash[0] && !me_flash_[0]) me_flash[0].style[prop]='rotate('+rotate+'deg) scale('+zoom+')';
