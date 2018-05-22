@@ -7679,6 +7679,7 @@ function mep_run() {
 					addEL(me, 'pause', function() {//console.log('1pause ' + Seek + ' ' + me.playing )
 					  if ( (yt6 && yt6.timer == 999999999) || me.src == 'https://www.youtube.com/ptracking' )
 					    return void 0;
+					  if (yt6.browser_tab == 'hidden' && (Seek != 3 || (Seek == 3 && player1.options.loop1)) ) { yt6.Seeked2 = true; me.play(); return void 0 }
 					  if (yt6.x) {
 					    var bn = gc('mejs-overlay mejs-layer mejs-overlay-play')[0]
 					    if (bn) bn.style.visibility = 'visible';
@@ -7807,6 +7808,7 @@ function mep_run() {
 					addEL(me, 'seeked', function() {//console.log('1seeked')
 					  if ( (yt6 && yt6.timer == 999999999) || me.src == 'https://www.youtube.com/ptracking' )
 					    return void 0;
+					  if (yt6.browser_tab == 'hidden' && (Seek != 3 || (Seek == 3 && player1.options.loop1)) ) { Seek = 1; me.play(); }
 					  if (me.currentTime > me.duration) player1.media.currentTime = me.currentTime = player2.currentTime = 0;
 					  if ( (!yt6.A_V[itag(me.src)] && me.src != player2.src) || yt6.audiox) {
 					    if (me.paused) {
@@ -11061,10 +11063,10 @@ function resize_layers(w,h,me_aspect){
 	var d = 1 * document.getElementById('aspect').firstChild.offsetWidth
 	try { var e = 1 * document.getElementById('remove-sp').parentNode.offsetWidth } catch(e){ var e = 241 }
 	var z = document.getElementById('aspect')
-	z.setAttribute('style','display: inline-block; vertical-align: top; color:#333; background: #FFFFFF; opacity: 0.9; position: relative; left:' + parseFloat(c - d - e) + 'px;')
+	z.setAttribute('style','display: inline-block; vertical-align: top; color:#333; background: #FFFFFF; opacity: 0.9; position: relative; left:' + parseFloat(c - d - e - 1) + 'px;')
 	var z = z.style
 	if (z.display != 'inline-block') {
-	  z.display = 'inline-block'; z.verticalAlign = 'top'; z.color = '#333'; z.background = '#FFFFFF'; z.opacity = '0.9'; z.position = 'relative';  z.left = parseFloat(c - d - e) + 'px'; //z.maxWidth = '200px'
+	  z.display = 'inline-block'; z.verticalAlign = 'top'; z.color = '#333'; z.background = '#FFFFFF'; z.opacity = '0.9'; z.position = 'relative';  z.left = parseFloat(c - d - e - 1) + 'px'; //z.maxWidth = '200px'
 	}
 	if (yt6.ytg) z.float = 'right'
 	document.getElementById('yt-alert-message').style.width = '0%'
@@ -13269,7 +13271,7 @@ var controls = document.getElementById('controls-sp')
   			    '<div style="display: inline-block; position: ' + divpos + '">'+
 			    '<button class="previous snarl-button yt-uix-button-text" style="padding: 0 4px 0 4px; right: 0px">prev</button>'+
 			    '<button class="next snarl-button yt-uix-button-text" style="padding: 0 4px 0 4px; right: 0px">next</button></div>'+
-                          '<div id="change">' +
+                          '<div id="change" style="display: flex">' +
                             '<button class="reset snarl-button yt-uix-button-text" style="width:40px; text-align:left">reset</button>' +
                             '<button class="zoomin snarl-button yt-uix-button-text" aria-label="Zoom in" title="Zoom in">+</button>' +
                             '<button class="zoomout snarl-button yt-uix-button-text" aria-label="Zoom out" title="Zoom out">-</button>' +
