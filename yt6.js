@@ -11856,7 +11856,7 @@ if (a.getAttribute('id') != 'player') { //pre-2016 layout start
 	     a.style.left = '0px'
 	     yt6.wna.style.marginTop = ''; //yt6.wna.removeAttribute('style')
 
-	      if (b.offsetWidth < w) { console.log('wider than base')
+	      if (b.offsetWidth < w) { //console.log('wider than base')
 		if ( parseFloat(1 * e.marginLeft.replace('px','')) + b.offsetWidth - w > 0 ) {//console.log('s-191 ' + b.offsetWidth + '  '+ w + ' ' + windowwidth +' '+ l.offsetWidth); console.log(parseFloat(e.marginLeft.replace('px','').replace('-','')))
 		  e.width = api.left = parseFloat(e.marginLeft.replace('px','').replace('-','')) + l.offsetWidth - w + 'px'
 		  l.style.marginTop = yh + 'px'
