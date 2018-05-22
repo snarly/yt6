@@ -11762,10 +11762,15 @@ if (a.getAttribute('id') != 'player') { //pre-2016 layout start
           }
 
 	  if (windowwidth + getScrollbarWidth() < 1000 && yt6.wsb) yt6.wsb.style.top = ''
+	      yt6.wsb.style.top = ''; yt6.wsb.removeAttribute('style')
 
-
-	  yt6.wna.style.marginTop = '346px'
-	  if (playlist) playlist.style.marginTop = '346px'
+	  if (playlist) {
+	    playlist.style.marginTop = '346px'
+	    yt6.wna.style.marginTop = '346px'
+	  } else {
+	      yt6.wna.removeAttribute('style')
+	      l.style.marginTop = ''; l.removeAttribute('style')
+	    }
 
 	  e.left = ''
 	  //a.style.setProperty('width', windowwidth - 1 * e.width.replace('px','') + 'px','') //tr
@@ -11803,7 +11808,9 @@ if (a.getAttribute('id') != 'player') { //pre-2016 layout start
 	if (!playlist && windowwidth + getScrollbarWidth() >= 882) {
 	  yt6.inf.style = ''
 	  yt6.wna.style = ''
-	  l.style.marginTop = -1 * (h + 16) + 'px'
+	  if (windowwidth >= w) {
+	    l.style.marginTop = -1 * (h + 16) + 'px'
+	  } else l.style.marginTop = ''
 	}
 
       } else {
@@ -11849,7 +11856,7 @@ if (a.getAttribute('id') != 'player') { //pre-2016 layout start
 	     a.style.left = '0px'
 	     yt6.wna.style.marginTop = ''; //yt6.wna.removeAttribute('style')
 
-	      if (b.offsetWidth < w) { //console.log('wider than base')
+	      if (b.offsetWidth < w) { console.log('wider than base')
 		if ( parseFloat(1 * e.marginLeft.replace('px','')) + b.offsetWidth - w > 0 ) {//console.log('s-191 ' + b.offsetWidth + '  '+ w + ' ' + windowwidth +' '+ l.offsetWidth); console.log(parseFloat(e.marginLeft.replace('px','').replace('-','')))
 		  e.width = api.left = parseFloat(e.marginLeft.replace('px','').replace('-','')) + l.offsetWidth - w + 'px'
 		  l.style.marginTop = yh + 'px'
@@ -11908,7 +11915,12 @@ if (a.getAttribute('id') != 'player') { //pre-2016 layout start
 			    a.style.left = api.left = e.marginLeft
 			  }*/
 
-			  if (playlist) playlist.style.marginTop = -1 * (yh + MC) + 'px'
+			  if (playlist) {
+			    playlist.style.marginTop = -1 * (yh + MC) + 'px'
+			  } else {
+			      if (yt6.wsb) yt6.wsb.style.top = (windowwidth < 1000) ? '' : -1 * (yh + MC) + 'px'
+			      l.style.marginTop = ''; l.removeAttribute('style')
+			    }
 		}
 
 
@@ -12049,7 +12061,7 @@ if (a.getAttribute('id') != 'player') { //pre-2016 layout start
 	  }
 
 
-	//still default view but tiny in size
+	//still default view but tiny in size (theater mode changes back to default too when browser window shrinks the player this small)
 	if (windowwidth < 657) { //console.log('tiny')
 	  if (playlist) {
 	    playlist.style.marginTop = '48px'
@@ -12118,6 +12130,9 @@ if (a.getAttribute('id') != 'player') { //pre-2016 layout start
 
 	  }
 
+			if (windowwidth + getScrollbarWidth() >= 657 && windowwidth + getScrollbarWidth() < 688) {
+			  if (c) { l.style.marginTop = -1 * h + 'px' } else l.style.marginTop = ''
+			}
 
 	  e.left = ''
 	  if ((c) || (windowwidth < 657)) {
