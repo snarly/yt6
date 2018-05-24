@@ -3827,7 +3827,7 @@ function autoplay(start, ytx) {
 
 
 var p = player(); if (!p) return void 0
-if (yt6.layout == '16') {
+if (yt6.layout == 16) {
   var z = document.getElementsByTagName('YTD-WATCH')[0]
   if (z && z.hasAttribute('hidden')) return false
 }
