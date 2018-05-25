@@ -4616,7 +4616,7 @@ yt6.mep_renew = function() {
 	    yt6.me_flash_source = null
 	    if (find && z) { yt6.me_flash_source = z
 	      if (autoplay()) {
-		//z.click()
+		z.click()
 		if (1 * itag != 1 * yt6.userprefV[i]) no_default(itag, 'V')
 		if (typeof yt6.player1.play == 'function' && yt6.x) yt6.player1.play(); //autoplay trigger
 	      } else {
