@@ -4616,7 +4616,7 @@ yt6.mep_renew = function() {
 	    yt6.me_flash_source = null
 	    if (find && z) { yt6.me_flash_source = z
 	      if (autoplay()) {
-		z.click()
+		//z.click()
 		if (1 * itag != 1 * yt6.userprefV[i]) no_default(itag, 'V')
 		if (typeof yt6.player1.play == 'function' && yt6.x) yt6.player1.play(); //autoplay trigger
 	      } else {
@@ -7938,7 +7938,7 @@ function mep_run() {
 					      yt6.player2.media.currentTime = me.currentTime = yt6.ct = player1.media.currentTime;
 					      //yt6.player2.media.currentTime = me.currentTime = yt6.ct;
 					      if (!yt6.A_V[itag(player1_src)]) {
-						//if (!player1.media.paused) { yt6.player2.play() }
+						if (!player1.media.paused) { yt6.player2.play() }
 					      } //else if (yt6.newvideo && yt6.autoplay) yt6.player1.play()
 					    }
 					  if (yt6.player1.media.loaded) yt6.newvideo = false
