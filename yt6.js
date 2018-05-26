@@ -9783,13 +9783,16 @@ if (typeof Polymer != 'undefined') {
  	$waitUntil(function() {
 	  var a = document.getElementById('bm0');
 	  var b = gc('mejs-controls')[0];
-	  var c = yt6.movie_player, cf; //player(), c = 
-	  if (c) {
-	    if (c.tagName == 'EMBED' || c.tagName == 'OBJECT') {
-	      try { cf = typeof c.getPlayerState } catch(e) { cf = null }
-	    } else cf = typeof c.getPlayerState
+	  var p = yt6.movie_player, c, cf; //player(), c = 
+	  if (p) {
+	    try { cf = typeof p.getPlayerState } catch(e) { cf = null }
+	    /*if (cf) {  
+	      if (p.tagName == 'EMBED' || p.tagName == 'OBJECT') {
+	        try { cf = typeof p.getPlayerState } catch(e) { cf = null }
+	      } else cf = typeof p.getPlayerState
+	    }*/
 	    if (cf) c = (cf == 'function') ? c.getPlayerState() : null;
-	    if (a && a.style.visibility == 'visible' && c && c > 2 && player()) player().pauseVideo();
+	    if (a && a.style.visibility == 'visible' && c && c > 2 && p) p.pauseVideo();
 	    //if (a && a.style.visibility == 'hidden' && b) b.style.visibility = 'hidden';
 	    if (yt6.sync_timer == true) return true
 	  }
