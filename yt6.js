@@ -7845,7 +7845,8 @@ function mep_run() {
 
 						          if (!yt6.ytg) {
 							    if (!yt6.shuffle) {
-							      if (browserName == 'Edge') { nextOn() } else try { mp.seekTo(mp.getDuration()+1) || zi.click() } catch(e) { nextOn() }
+							      //if (browserName == 'Edge') { nextOn() } else
+							      try { mp.seekTo(mp.getDuration()+1) } catch(e) { nextOn() }
 							    } else {
 
 							        try {
@@ -8052,7 +8053,8 @@ function mep_run() {
 
 						          if (!yt6.ytg) {
 							    if (!yt6.shuffle) {
-							      if (browserName == 'Edge') { nextOn() } else try { mp.seekTo(mp.getDuration()+1) || zi.click() } catch(e) { nextOn() }
+							      //if (browserName == 'Edge') { nextOn() } else
+							      try { mp.seekTo(mp.getDuration()+1) } catch(e) { nextOn() }
 							    } else {
 
 							        try {
