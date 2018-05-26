@@ -9783,7 +9783,7 @@ if (typeof Polymer != 'undefined') {
  	$waitUntil(function() {
 	  var a = document.getElementById('bm0');
 	  var b = gc('mejs-controls')[0];
-	  var c = (!yt6.navigation) ? player() : yt6.movie_player, c = yt6.movie_player, cf;
+	  var c = yt6.movie_player, cf; //player(), c = 
 	  if (c) {
 	    if (c.tagName == 'EMBED' || c.tagName == 'OBJECT') {
 	      try { cf = typeof c.getPlayerState } catch(e) { cf = null }
@@ -13390,7 +13390,7 @@ var controls = document.getElementById('controls-sp')
   			    '<div style="display: inline-block; position: ' + divpos + '">'+
 			    '<button class="previous snarl-button yt-uix-button-text" style="padding: 0 4px 0 4px; right: 0px">prev</button>'+
 			    '<button class="next snarl-button yt-uix-button-text" style="padding: 0 4px 0 4px; right: 0px">next</button></div>'+
-                          '<div id="change" style="display: flex">' +
+                          '<div id="change" style="display: block">' +
                             '<button class="reset snarl-button yt-uix-button-text" style="width:40px; text-align:left">reset</button>' +
                             '<button class="zoomin snarl-button yt-uix-button-text" aria-label="Zoom in" title="Zoom in">+</button>' +
                             '<button class="zoomout snarl-button yt-uix-button-text" aria-label="Zoom out" title="Zoom out">-</button>' +
