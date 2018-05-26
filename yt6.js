@@ -7690,7 +7690,7 @@ function mep_run() {
 					    try { yt6.player2.media.currentTime = player2.currentTime = yt6.ct = me.currentTime } catch(e){}
 					  }
 					});
-					addEL(me, 'play', function() {//console.log(yt6.retry)
+					addEL(me, 'play', function() {//console.log('1play')
 					  if ( (yt6 && yt6.timer == 999999999) || me.src == 'https://www.youtube.com/ptracking' )
 					    return void 0;
 					  if (yt6.x) {
