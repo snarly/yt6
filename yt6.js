@@ -9791,7 +9791,7 @@ if (typeof Polymer != 'undefined') {
 	        try { cf = typeof p.getPlayerState } catch(e) { cf = null }
 	      } else cf = typeof p.getPlayerState
 	    }*/
-	    if (cf) c = (cf == 'function') ? c.getPlayerState() : null;
+	    if (cf) c = (cf == 'function') ? p.getPlayerState() : null;
 	    if (a && a.style.visibility == 'visible' && c && c > 2 && p) p.pauseVideo();
 	    //if (a && a.style.visibility == 'hidden' && b) b.style.visibility = 'hidden';
 	    if (yt6.sync_timer == true) return true
