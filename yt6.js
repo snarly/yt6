@@ -9783,7 +9783,7 @@ if (typeof Polymer != 'undefined') {
  	$waitUntil(function() {
 	  var a = document.getElementById('bm0');
 	  var b = gc('mejs-controls')[0];
-	  var c = player(), c = yt6.movie_player, cf;
+	  var c = (!yt6.navigation) ? player() : yt6.movie_player, c = yt6.movie_player, cf;
 	  if (c) {
 	    if (c.tagName == 'EMBED' || c.tagName == 'OBJECT') {
 	      try { cf = typeof c.getPlayerState } catch(e) { cf = null }
