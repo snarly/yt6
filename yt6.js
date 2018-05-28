@@ -5440,15 +5440,15 @@ if (ytplayer.config.args) {
             if (qq.indexOf("fps") != -1) y = y + 1;
 	    var z = 1 * ( y - 1 * qq.length - 0 - 3*Math.floor((1 * qq.length/18) - 0) ); //console.log('Array '+ z + typeof z)
             if (typeof z == 'number' && z > 0 && qq.indexOf('+') == -1) {
-              if (x.indexOf('p ') != -1) sizeq = ' title="Video" aria-label="Video"'
-              if (x.indexOf('k ') != -1) sizeq = ' title="Audio" aria-label="Audio"'
+              //if (x.indexOf('p ') != -1) sizeq = ' title="Video" aria-label="Video"'
+              //if (x.indexOf('k ') != -1) sizeq = ' title="Audio" aria-label="Audio"'
               size = Array(z).join(".") + size; //Bit shift by 0 which is equivalent to division by 1
             } else {
                 sizeq = ' title="' + size + ' AV" aria-label="' + size +' AV" '; size = '';
               }
           } else { size = '';
-              if (x.indexOf('p ') != -1) sizeq = ' title="Video" aria-label="Video"'
-              if (x.indexOf('k ') != -1) sizeq = ' title="Audio" aria-label="Audio"'
+              //if (x.indexOf('p ') != -1) sizeq = ' title="Video" aria-label="Video"'
+              //if (x.indexOf('k ') != -1) sizeq = ' title="Audio" aria-label="Audio"'
             } 
 
 
@@ -11423,10 +11423,12 @@ if (f != null) {
   var h = 1 * h.replace('px','')
 
   var flashvars = player().getAttribute('flashvars')
-
+  var chat = document.getElementsByTagName('ytd-live-chat-frame')[0] || document.getElementById('chat')
   var p1 = document.getElementById('player1')
 
   var ytp_class = p.getAttribute('class')
+
+
 
 if (!yt6.fullscreen || yt6.fullscreen == false || (ytp_class && ytp_class.indexOf('ytp-fullscreen') == -1)) {//scaling
 
@@ -12102,6 +12104,8 @@ if (a.getAttribute('id') != 'player') { //pre-2016 layout start
 			  }*/
 		  }
 
+		  if (yt6.wsb && chat) yt6.wsb.style.top = (windowwidth + yt6.sb < 1000) ? '' : -1 * (yh + MC) + 'px'
+
 	     }// 20
 
 
@@ -12571,7 +12575,7 @@ if ((p1 != null) && (yt6.x)){
   }
 
 
-  var chat = document.getElementsByTagName('ytd-live-chat-frame')[0] || document.getElementById('chat')
+
   if (chat) if (yt6.layout == 12 || yt6.ytg) {
     if (chat && playlist) chat.style.top = playlist.style.marginTop
   } else {
