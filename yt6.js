@@ -9372,8 +9372,8 @@ if (!t.sourcechooserButton) {//console.log('error')
 						  v = l.val();
 						  if (v) {
 						    if (!isNaN(v)) {
-						      if (v >= 0 && ((limit == 'start' && parseFloat(yt6.loop.end) >= parseFloat(v)) || (limit == 'end' && parseFloat(v) >= parseFloat(yt6.loop.start) )) ) {
-							if (parseFloat(v) > parseFloat(yt6.media_duration)) v = yt6.media_duration
+						      if (v >= 0 && ((limit == 'start' && parseFloat(yt6.loop.end) - parseFloat(v) > 1) || (limit == 'end' && parseFloat(v) - parseFloat(yt6.loop.start) > 1) )) {
+							if (parseFloat(v) > parseFloat(yt6.media_duration)) v = parseFloat(yt6.media_duration)
 							yt6.loop[limit] = v
 						        var x = mejs.Utility.secondsToTimeCode(v)
 						      } else var x = l.attr('value')
@@ -9383,7 +9383,7 @@ if (!t.sourcechooserButton) {//console.log('error')
 							if (!v.split(':')[2]) v = '0:' + v
 							var u = mejs.Utility.timeCodeToSeconds(v)
 							if (u >= 0 && ((limit == 'start' && parseFloat(yt6.loop.end) >= parseFloat(u)) || (limit == 'end' && parseFloat(u) >= parseFloat(yt6.loop.start) )) ) {
-							  if (parseFloat(u) > parseFloat(yt6.media_duration)) u = yt6.media_duration
+							  if (parseFloat(u) > parseFloat(yt6.media_duration)) u = parseFloat(yt6.media_duration)
 							  yt6.loop[limit] = u;
 							  var x = mejs.Utility.secondsToTimeCode(u)
 							} else var x = l.attr('value')
@@ -9399,7 +9399,7 @@ if (!t.sourcechooserButton) {//console.log('error')
 
 				    var loopStart =
 				    $('<div class="mejs-loop-start" style="position: absolute; bottom: 30px; visibility: hidden">\
-					<input class="loop-start" value="00:00" style="display: inline-block; height: 44%; padding: 11%; text-align: center; font-size: 11px; width: ' + gc('mejs-currenttime')[0].offsetWidth +'px;" onkeyup="if (event.keyCode == 13) yt6.set_loop(\'start\');" aria-label="Set Loop-Start" title="Set Loop-Start">\
+					<input class="loop-start" value="00:00" style="display: inline-block; height: 44%; padding: 3px 0px 3px 0px; text-align: center; font-size: 11px; width: ' + gc('mejs-currenttime')[0].offsetWidth +'px;" onkeyup="if (event.keyCode == 13) yt6.set_loop(\'start\');" aria-label="Set Loop-Start" title="Set Loop-Start">\
 					</input></div>')
 					.appendTo(controls.find('.mejs-currenttime-container')),
 
@@ -9444,7 +9444,7 @@ if (!t.sourcechooserButton) {//console.log('error')
 
 				    var loopEnd =
 				    $('<div class="mejs-loop-end" style="position: absolute; bottom: 30px; visibility: hidden">\
-					<input class="loop-end" value="' + controls.find('.mejs-duration').html() +'"style="display: inline-block;  height: 44%; padding: 11%; text-align: center; font-size: 11px; width: ' + gc('mejs-duration')[0].offsetWidth +'px;" onkeyup="if (event.keyCode == 13) yt6.set_loop(\'end\');" aria-label="Set Loop-End" title="Set Loop-End">\
+					<input class="loop-end" value="' + controls.find('.mejs-duration').html() +'"style="display: inline-block;  height: 44%; padding: 3px 0px 3px 0px; text-align: center; font-size: 11px; width: ' + gc('mejs-duration')[0].offsetWidth +'px;" onkeyup="if (event.keyCode == 13) yt6.set_loop(\'end\');" aria-label="Set Loop-End" title="Set Loop-End">\
 					</input></div>')
 					.appendTo(controls.find('.mejs-duration-container')),
 
