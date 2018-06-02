@@ -8093,7 +8093,7 @@ function mep_run() {
 
 						          yt6.navigation = true
 
-
+							if (yt6.force_flash && yt6.shuffle) {
 						          function nextOn() {
 							    yt6.mp = mp
 							    $waitUntil(function(){ var mp = yt6.mp; var a = mp.getPlayerState(); //console.log(a);
@@ -8115,7 +8115,11 @@ function mep_run() {
 							    //yt6.player1.pause(); yt6.player1.media.currentTime = yt6.player2.media.currentTime = 0; yt6.player1.pause()
 							    },50,3000)
 							  }
+							} else {
 
+						            function nextOn() { if (mp.getAttribute('class') != 'forced flashplayer') { mp.playVideoAt(yt6.pl_index+1) || mp.nextVideo(); if (yt6.pl_index < mp.getPlaylistIndex()) zi.click() } else try { zi.click() } catch(e){ yt6.navigation = false } }
+
+							  }
 
 
 						          if (!yt6.ytg) {
@@ -8348,26 +8352,81 @@ function mep_run() {
 							      } else {
 								  var mp = yt6.original = getElementsByAttribute(yt6,'div','name','original')[0]
 								  if (!mp) { mp = yt6.original = getElementsByAttribute(yt6,'div','id','movie_player')[0]; mp.setAttribute('name','original'); mp.removeAttribute('flashvars') }
-								}//console.log(yt6.shuffle + mp.tagName)
+								}
 
 						          yt6.navigation = true
 
-						          function nextOn() { if (mp.getAttribute('class') != 'forced flashplayer') { mp.playVideoAt(yt6.pl_index+1) || mp.nextVideo(); if (yt6.pl_index < mp.getPlaylistIndex()) zi.click() } else try { zi.click() } catch(e){ yt6.navigation = false } }
+							if (yt6.force_flash && yt6.shuffle) {
+						          function nextOn() {
+							    yt6.mp = mp
+							    $waitUntil(function(){ var mp = yt6.mp; var a = mp.getPlayerState(); //console.log(a);
+								if (a != 3 && a != -1) { return true } else { mp.stopping = false; FireEvent2(mp, 'mouseup');
+								try { mp.seekTo(mp.getDuration()); } catch(e){};
+								//console.log(mp.getCurrentTime());
+								yt6.navigation = false }
+							      },
+							      function(){var mp = yt6.mp; yt6.navigation = true; //console.log(mp.getPlayerState())
+								try { 
+								  if (!yt6.ad_muted) mp.mute(); mp.playVideo(); if (!yt6.ad_muted) mp.unMute();
+								  try { mp.playVideoAt(yt6.pl_index+1); } catch(e) {
+								    //console.log(e)
+								  }
+								  if (yt6.pl_index < mp.getPlaylistIndex()) try { //console.log('? ' + mp.getCurrentTime() +' '+mp.getDuration());								  
+								    if (!yt6.ad_muted) mp.mute(); mp.playVideo(); if (!yt6.ad_muted) mp.unMute();
+								  } catch(e){ try { yt6.pl_next.click() } catch(e) { yt6.navigation = false } }
+								} catch(e) { try { yt6.pl_next.click() } catch(e) { yt6.navigation = false } }
+							    //yt6.player1.pause(); yt6.player1.media.currentTime = yt6.player2.media.currentTime = 0; yt6.player1.pause()
+							    },50,3000)
+							  }
+							} else {
+
+						            function nextOn() { if (mp.getAttribute('class') != 'forced flashplayer') { mp.playVideoAt(yt6.pl_index+1) || mp.nextVideo(); if (yt6.pl_index < mp.getPlaylistIndex()) zi.click() } else try { zi.click() } catch(e){ yt6.navigation = false } }
+
+							  }
+
 
 						          if (!yt6.ytg) {
 							    if (!yt6.shuffle) {
 							      //if (browserName == 'Edge') { nextOn() } else
-							      try { mp.seekTo(mp.getDuration()+1); mp.playVideo(); if (mp.getCurrentTime().toString() == '1') nextOn() } catch(e) { nextOn() }
+							      try {
+
+								if (!yt6.pre_ad) { mp.stopping = false; FireEvent2(mp, 'mouseup');
+								  try { mp.seekTo(mp.getDuration()); } catch(e) {}
+								  if (!yt6.ad_muted) mp.mute(); mp.playVideo(); if (!yt6.ad_muted) mp.unMute();
+								  if (mp.getCurrentTime().toString() == '0') nextOn()
+								} else try { yt6.pl_next.click() } catch(e) { yt6.navigation = false }
+
+							      } catch(e) { nextOn() }
+
 							    } else {
 
 							        try {
-								  mp.pauseVideo(); mp.seekTo(mp.getDuration()-0.3); mp.playVideo(); if (mp.getCurrentTime().toString() == '-0.3') { mp.playVideoAt(yt6.pl_index+1) || mp.previousVideo(); yt6.player1.pause(); yt6.player1.media.currentTime = yt6.player2.media.currentTime = 0 } else mp.seekTo(mp.getDuration()+0.3); 
+								  if (!yt6.pre_ad) { mp.pauseVideo(); mp.stopping = false; FireEvent2(mp, 'mouseup');
+								    try { mp.seekTo(mp.getDuration()) } catch(e) {}
+								    if (mp.getCurrentTime().toString() == '0') {
+								      nextOn()//mp.playVideoAt(yt6.pl_index+1) || mp.previousVideo()
+								    } else { //console.log('?');
+									try { mp.seekTo(mp.getDuration()) } catch(e) {}
+									if (!yt6.ad_muted) mp.mute(); mp.playVideo(); if (!yt6.ad_muted) mp.unMute();
+								      }
+								  } else nextOn(); //zi.click();
+
+								  //yt6.player1.pause(); yt6.player1.media.currentTime = yt6.player2.media.currentTime = 0; yt6.player1.pause(); 
+
 								} catch(e) { nextOn() }
 
 							      }
 
 							  } else {
-							      if (browserName == 'Edge') { try { z[i+1].firstChild.click() } catch(e) { yt6.navigation = false } } else try { mp.seekTo(mp.getDuration()+1) || z[i+1].firstChild.click() } catch(e) { try { z[i+1].firstChild.click() } catch(e) { yt6.navigation = false } }
+							      if (browserName == 'Edge') {
+								try { z[i+1].firstChild.click() } catch(e) { yt6.navigation = false }
+							      } else {
+								  try {
+								    if (!yt6.pre_ad) {
+								      mp.seekTo(mp.getDuration()+1) || z[i+1].firstChild.click()
+								    } else z[i+1].firstChild.click()
+								  } catch(e) { try { z[i+1].firstChild.click() } catch(e) { yt6.navigation = false } }
+								}
 							    }
  
 							} else {
@@ -10479,7 +10538,7 @@ addEL(window, 'spfdone', yt6.body.spfdone, false);
 
 	if (typeof ivo == 'undefined') var ivo = ''
 
-	if (ivo.indexOf(yt6.vid) == -1 || ivo.indexOf('$done') == -1 && p.tagName == 'DIV') {
+	if (!yt6.x && ivo.indexOf(yt6.vid) == -1 || ivo.indexOf('$done') == -1 && p.tagName == 'DIV') {
 	  for (i=48;i<58;i++) { //0-9
 	    var ads = document.getElementById('invideo-overlay:'+String.fromCharCode(i)); if (ads) ads.style.display = 'none'
 	  }
