@@ -10477,7 +10477,7 @@ addEL(window, 'spfdone', yt6.body.spfdone, false);
 	if (yt6.wsa && yt6.wsa.style.display != 'none') { yt6.wsa.style.display = 'none' };
 
 
-	if (typeof ivo == 'undefined') ivo = ''
+	if (typeof ivo == 'undefined') var ivo = ''
 
 	if (ivo.indexOf(yt6.vid) == -1 || ivo.indexOf('$done') == -1 && p.tagName == 'DIV') {
 	  for (i=48;i<58;i++) { //0-9
