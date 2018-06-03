@@ -5114,7 +5114,7 @@ if (playlist.id.indexOf('watch') == -1) {
 			  playlist_scroller.scrollTop = (curIndex - refIndex) * 64
 			  //console.log(curIndex + ' ' + player().getPlaylistIndex() + ' '+ yt6.pl_i + typeof yt6.pl_i)
 			  //console.log(playlist_scroller[0].scrollTop)
-			  pl_item(yt6.pl_previous)
+			  pl_item()
 			  break
 			}
 		      }
