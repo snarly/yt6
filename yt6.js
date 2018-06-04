@@ -11269,7 +11269,7 @@ if (yt6.force_flash) {
 	      if (yt6.ytg) { //console.log('05 - args')
 		//ageless_verification();
 		//yt6.timer = 0;
-		mep_reload(); yt6.age.check(); //if (ytplayer.config.args.status == 'ok' && yt6.block && yt6.block.replace(/(\r\n|\n|\r)/gm," ").split(' ').join('') == '') { alt_yt() }
+		mep_reload(); yt6.age.check(); if (ytplayer.config.args.status == 'ok' && yt6.block && yt6.block.replace(/(\r\n|\n|\r)/gm," ").split(' ').join('') == '') { alt_yt() }
 	      }
 	      if ((bm0 == null) && (p != null) && (p.getAttribute('class') != null)) {
 		if (window.ytplayer.config == null) { gc('clear')[0].setAttribute('id','ytp-conf-null'); };
