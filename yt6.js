@@ -6079,7 +6079,7 @@ if (document.getElementById("bm1") != null) document.getElementById("bm1").paren
   html.push(
    '<br><b>' + title + '</b>' +
    '<br>Links will expire on <br>' + expire_date()[1] +
-   '<br><br><div id="bm7" style="inline-block">Preferred format -- (in case ' + browserName + ' is struggling playing back one):<br>'+
+   '<br><br><div id="bm7" style="inline-block">Preferred format -- (in case ' + browserName + ' is having trouble playing back one):<br>'+
    '<input type="radio" class="preferred-format all" onclick="yt6.select_fmt(\'all\')">Any</input>'+
    '<input type="radio" class="preferred-format webm" onclick="yt6.select_fmt(\'webm\')">WebM</input>'+
    '<input type="radio" class="preferred-format h264" onclick="yt6.select_fmt(\'h264\')">DASH/MP4</input>'+
