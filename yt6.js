@@ -470,7 +470,7 @@ function qr(sr) {
 }
 
 
-yt6.userprefV = [243,134,43,18]
+yt6.userprefV = [43,18]
 yt6.userprefA = [171,140]
 
   var qual = {
@@ -560,8 +560,8 @@ yt6.userprefA = [171,140]
   yt6.fmts_fallback.V = {};
   yt6.fmts_fallback.A = {};
   yt6.fmts_fallback.V3D = {};
-  yt6.fmts_fallback.V.webm = [,,272,315,,313,308,,271,303,,46,,170,248,,302,,45,,247,,44,,,219,218,168,246,245,244,,43,,243,,242,,278,,241,18,251,171,140]
-  yt6.fmts_fallback.V.h264 = [138,38,,,266,,,264,,,299,,37,,,137,,298,,22,,136,,78,59,,,,,,,135,,18,,134,,133,,132,,160,43,140,251,171]
+  yt6.fmts_fallback.V.webm = [,,272,315,,313,308,,271,303,,46,,170,248,,302,,45,,247,,44,,,219,218,168,246,245,244,,43,,243,,242,,278,,241,18]
+  yt6.fmts_fallback.V.h264 = [138,38,,,266,,,264,,,299,,37,,,137,,298,,22,,136,,78,59,,,,,,,135,,18,,134,,133,,132,,160,43]
   yt6.fmts_fallback.A.webm = [,,,251,172,171,,250,249,140]
   yt6.fmts_fallback.A.aac = [258,256,141,,,,140,,,139,171]
   yt6.fmts_fallback.V3D.h264 = [85,,84,,,82,83]
@@ -1386,12 +1386,12 @@ function test_4() {
 			      for (j=0;j<yt6.userprefV.length;j++){
 				if (yt6.userprefV[j] == v) added = true
 			      };
-			      if (!added) yt6.userprefV.splice(0,0,v); //console.log(yt6.userprefV)
+			      if (!added) yt6.userprefV.push(v); //yt6.userprefV.splice(0,0,v); //console.log(yt6.userprefV)
 			    } else if ((z.indexOf('itag='+a) > -1 || z.indexOf('itag/'+a) > -1) && (z.indexOf('mime=audio') > -1 || z.indexOf('mime/audio') > -1)) {
 				for (j=0;j<yt6.userprefA.length;j++){
 				  if (yt6.userprefA[j] == a) added = true
 				};
-				if (!added) yt6.userprefA.splice(0,0,a) //;console.log(yt6.userprefA)
+				if (!added) yt6.userprefA.push(a); //yt6.userprefA.splice(0,0,a) //;console.log(yt6.userprefA)
 			      }
 			  }
 			}
@@ -6079,7 +6079,7 @@ if (document.getElementById("bm1") != null) document.getElementById("bm1").paren
   html.push(
    '<br><b>' + title + '</b>' +
    '<br>Links will expire on <br>' + expire_date()[1] +
-   '<br><br><div id="bm7" style="inline-block">Preferred format:<br>'+
+   '<br><br><div id="bm7" style="inline-block">Preferred format -- (in case ' + browserName + ' is struggling playing back one):<br>'+
    '<input type="radio" class="preferred-format all" onclick="yt6.select_fmt(\'all\')">Any</input>'+
    '<input type="radio" class="preferred-format webm" onclick="yt6.select_fmt(\'webm\')">WebM</input>'+
    '<input type="radio" class="preferred-format h264" onclick="yt6.select_fmt(\'h264\')">DASH/MP4</input>'+
