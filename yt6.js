@@ -2207,6 +2207,18 @@ if (!document.getElementById('video-hide')) {
 	  xhr2.send('')
 	}
 
+	/*if (yt6.layout == 16) {
+	  var z = document.getElementById('ytd-player')
+	  if (!z || (z && !z.tagName != 'ytd-player') ){
+	    var z = document.createElement('ytd-player')
+	    z.id = 'ytd-player'
+	    document.getElementById('player-container').appendChild(z)
+	    z.setAttribute('class','style-scope ytd-watch')
+	    z.setAttribute('disable-upgrade','')
+	    z.setAttribute('hidden','')
+	  }
+	}*/
+
 	var a = document.getElementById('page') || document.getElementById('mainContainer');
 	// !!! New YouTube Layout! !!! (2016-07-10)
 	if (!document.getElementById('content') && yt6.layout == 12) {
@@ -3099,7 +3111,7 @@ function me_flash_up(file, ib){
 		  bc = document.getElementById('player-api')
 		  } else {
 		      bc = document.getElementById('player-container')
-		      yt6.api = document.getElementById('ytd-player') || bc
+		      yt6.api = document.getElementsByTagName('ytd-player')[0] || bc
 		    }
 		  bc.insertBefore(bm0, bc.firstChild)
 		}
@@ -3169,7 +3181,7 @@ function me_flash_up(file, ib){
 	} else	{
 		if (yt6.layout != 16 || yt6.ytg) {
 		  yt6.api = document.getElementById('player-api')
-		} else yt6.api = document.getElementById('ytd-player') || document.getElementById('player-container')
+		} else yt6.api = document.getElementsByTagName('ytd-player')[0] || document.getElementById('player-container')
 		if (p) yt6.api.insertBefore(p, yt6.api.firstChild)//if not deleted, place original player back
 	  }
     if (hide && p3 && p3.getAttribute('time')) {
@@ -3186,7 +3198,7 @@ function me_flash_up(file, ib){
 	    if (x && typeof x.getAttribute == 'function' && (x.getAttribute('id') == 'movie_player1' || (!p && x.getAttribute('id') == 'movie_player')) ) {
 		if (yt6.layout != 16 || yt6.ytg) {
 		  yt6.api = bc = document.getElementById('player-api')
-		} else { yt6.api = document.getElementById('ytd-player') || document.getElementById('player-container'), bc = document.getElementById('player-container') }
+		} else { yt6.api = document.getElementsByTagName('ytd-player')[0] || document.getElementById('player-container'), bc = document.getElementById('player-container') }
 		x.style.display = ''
 		if (bm0) bc.appendChild(bm0)
 		yt6.api.insertBefore(x, yt6.api.firstChild)
@@ -3195,7 +3207,10 @@ function me_flash_up(file, ib){
 		if (bm0 && (document.getElementById('movie_player1') || (p && p.parentNode.getAttribute('id') != 'player-api' && p.parentNode.getAttribute('id') != 'ytd-player' && p.parentNode.getAttribute('id') != 'player-container')) ) {
 		  if (yt6.layout != 16 || yt6.ytg) {
 		  document.getElementById('player-api').appendChild(bm0)
-		  } else { bc = document.getElementById('ytd-player') || document.getElementById('player-container'); bc.appendChild(bm0) }
+		  } else {
+			  bc = document.getElementsByTagName('ytd-player')[0] || document.getElementById('player-container')
+			  bc.appendChild(bm0)
+			}
 		}
 	      }
 
@@ -3431,7 +3446,7 @@ function back2html5() {
 				  var bc = document.getElementById('player-api')
 				  bc.insertBefore(bm0, bc.firstChild)
 				} else {
-				    var bc = document.getElementById('ytd-player') || document.getElementById('player-container')
+				    var bc = document.getElementsByTagName('ytd-player')[0] || document.getElementById('player-container')
 				    document.getElementById('player-container').insertBefore(bm0, document.getElementById('player-container').firstChild)
 				  }
 
@@ -9242,7 +9257,7 @@ for(i = 0;i<z.length-1;i++){
   var z = gc('yt-consent yt-consent-banner clearfix')
   if (typeof z[0] != 'undefined') { z[0].setAttribute('style','display: none'); z[0].style.display = 'none' }
 
-  var z = document.getElementById('ytd-player')
+  var z = document.getElementsByTagName('ytd-player')[0]
   if (z) { z.setAttribute('style','height: auto'); z.style.height = 'auto' }
 
 
@@ -9294,7 +9309,7 @@ if (z) z.style.display = 'none'
     if (api_id != 'player-api' && api_id != 'player-container') {
       if (yt6.layout != 16) {
 	yt6.api = document.getElementById('player-api')
-      } else yt6.api = document.getElementById('ytd-player') || document.getElementById('player-container')
+      } else yt6.api = document.getElementsByTagName('ytd-player')[0] || document.getElementById('player-container')
     }
 
     if (yt6.layout != 16) {
@@ -10165,9 +10180,9 @@ if (!t.sourcechooserButton) {//console.log('error')
 		  if (yt6.movie_player.tagName == 'DIV')
 		  try { console.log('try')
 		    yt6.movie_player.style['transform'] = 'none'
-			/*if (yt6.layout == 16 && document.getElementById('ytd-player')) {
+			/*if (yt6.layout == 16 && document.getElementsByTagName('ytd-player')[0]) {
 			  if (document.getElementById('movie_player') != yt6.movie_player) {
-			    document.getElementById('ytd-player').insertBefore(yt6.movie_player, document.getElementById('ytd-player').firstChild)
+			    document.getElementsByTagName('ytd-player')[0].insertBefore(yt6.movie_player, document.getElementsByTagName('ytd-player')[0].firstChild)
 			    //var p = player(), p = yt6.movie_player
 			  }
 			}
@@ -13062,7 +13077,7 @@ function switch_players() {
 	if (p1) {
 	  if (yt6.layout == 12 || yt6.ytg) {
 	    yt6.api = document.getElementById('player-api')
-	  } else yt6.api = document.getElementById('ytd-player') || document.getElementById('player-container')
+	  } else yt6.api = document.getElementsByTagName('ytd-player')[0] || document.getElementById('player-container')
 
 	  if (p) document.getElementById('movie_player_to_dispose').appendChild(p)
 	  yt6.api.insertBefore(p1, yt6.api.firstChild)
@@ -13323,7 +13338,7 @@ function aspect(a) {
     if (bm0 && bm0.parentNode.getAttribute('id') == 'movie_player_to_insert') {
       if (yt6.layout != 16 || yt6.ytg) {
         bc = document.getElementById('player-api')
-      } else bc = document.getElementById('ytd-player') || document.getElementById('player-container')
+      } else bc = document.getElementsByTagName('ytd-player')[0] || document.getElementById('player-container')
       bc.appendChild(bm0)
     }
     /*var p = document.getElementById('movie_player_to_insert').firstChild
