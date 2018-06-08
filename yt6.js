@@ -560,10 +560,10 @@ yt6.userprefA = [171,140]
   yt6.fmts_fallback.V = {};
   yt6.fmts_fallback.A = {};
   yt6.fmts_fallback.V3D = {};
-  yt6.fmts_fallback.V.webm = [,,272,315,,313,308,,271,303,,46,,170,248,,302,,45,,247,,44,,,219,218,168,246,245,244,,43,,243,,242,,278,,241,18]
-  yt6.fmts_fallback.V.h264 = [138,38,,,266,,,264,,,299,,37,,,137,,298,,22,,136,,78,59,,,,,,,135,,18,,134,,133,,132,,160,43]
-  yt6.fmts_fallback.A.webm = [,,,251,172,171,,250,249,140]
-  yt6.fmts_fallback.A.aac = [258,256,141,,,,140,,,139,171]
+  yt6.fmts_fallback.V.webm = [,,272,315,,313,308,,271,303,,46,,170,248,,302,,45,,247,,44,,,219,218,168,246,245,244,,43,,243,,242,,278,,241,,43,,18,,22,,,,,251,172,171,,250,249,,258,256,141,140,139]
+  yt6.fmts_fallback.V.h264 = [138,38,,,266,,,264,,,299,,37,,,137,,298,,22,,136,,78,59,,,,,,,135,,18,,134,,133,,132,,160,,18,,43,,22,258,256,141,,,,140,,,139,,,,,,251,172,171,250,249]
+  yt6.fmts_fallback.A.webm = [,,,251,172,171,,250,249,,258,256,141,140,139]
+  yt6.fmts_fallback.A.aac = [258,256,141,,,,140,,,139,251,172,171,250,249]
   yt6.fmts_fallback.V3D.h264 = [85,,84,,,82,83]
   yt6.fmts_fallback.V3D.webm = [,102,,101,100]
   yt6.fmts_fallback.other = [35,34,6,5,36,17,13]
@@ -4446,8 +4446,11 @@ if (start != false){
 		if ((yt6.autoplay || (autoplay2 && (autoplay2 && autoplay2[0]))) && start)
 		  $waitUntil(function(){
 		    if (yt6.sync_timer == true && yt6.player1 && typeof yt6.player1.play == 'function') return true },
-		    function() { yt6.player1.play() },
-		    100,1000)
+		    function() {
+			if (!yt6.player1.media.loaded) yt6.player1.load();
+			if (yt6.player1.media.paused) yt6.player1.play()
+			if (!yt6.player2.media.loaded) { yt6.player2.load(); yt6.player2.play() }
+		    },100,1000)
 	   }
 
 }
@@ -5953,8 +5956,8 @@ if (rpt != null) {//ajax2
     if (html[j] && (html[j].indexOf('href="https:undefined"') != -1) || html[j].indexOf('name="undefined"') != -1) html.splice(j,1)
   }
 
-  delete yt6.qr
-  delete yt6.qa
+  yt6.qr = {}; try { delete yt6.qr } catch(e) { yt6.qr = undefined }
+  yt6.qa = {}; try { delete yt6.qa } catch(e) { yt6.qa = undefined }
 
 
   var w_init = document.getElementById('player-api').offsetWidth + 'px'
@@ -6099,7 +6102,7 @@ if (document.getElementById("bm1") != null) document.getElementById("bm1").paren
   html.push(
    '<br><b>' + title + '</b>' +
    '<br>Links will expire on <br>' + expire_date()[1] +
-   '<br><br><div id="bm7" style="inline-block">Preferred format -- (in case ' + browserName + ' is having trouble playing back one):<br>'+
+   '<br><br><div id="bm7" style="inline-block">Preferred format -- (in case ' + browserName + ' is having trouble playing one back):<br>'+
    '<input type="radio" class="preferred-format all" onclick="yt6.select_fmt(\'all\')">Any</input>'+
    '<input type="radio" class="preferred-format webm" onclick="yt6.select_fmt(\'webm\')">WebM</input>'+
    '<input type="radio" class="preferred-format h264" onclick="yt6.select_fmt(\'h264\')">DASH/MP4</input>'+
@@ -7879,7 +7882,7 @@ function mep_run() {
 					      }
 					    }
 
-					    if (!yt6.current) yt6.srcbak = yt6.userprefV[0]
+					    //if (!yt6.current) yt6.srcbak = yt6.userprefV[0]
 
 
 					    function rewrite_links() {
@@ -7900,7 +7903,7 @@ function mep_run() {
 						  }
 
 						yt6.errcount = 0
-						if (autoplay(false)) autoplay(true)
+						//if (autoplay(false)) autoplay(true)
 					    }
 
 					    function decryption_failure(){
@@ -7977,9 +7980,28 @@ function mep_run() {
 					    }
 
 					    //console.log(yt6.retry);
-					    if (yt6.retry < 5 && document.getElementById('ytassetsjs')) {
+					    if (yt6.retry < 64 && document.getElementById('ytassetsjs')) {
 					      if (sauce[i]) { sauce[i].removeAttribute('checked'); sauce[i].checked = '' }; me.pause()
-					      var dash = document.getElementById(mep_x('mep_') + '_sourcechooser_242')//240p  VP9webm');
+					      for(j=0;j<yt6.fmts_fallback.V[yt6.prefer_fmt].length;j++){
+						if (yt6.fmts_fallback.V[yt6.prefer_fmt][j] == yt6.userprefV[0]) {
+						  for(k=j+yt6.retry;k<yt6.fmts_fallback.V[yt6.prefer_fmt].length;k++){
+						  var index = yt6.fmts_fallback.V[yt6.prefer_fmt][k]
+						  var dash = document.getElementById(mep_x('mep_') + '_sourcechooser_' + index)
+						  if (index && dash) { yt6.srcbak = index; break } else index = null
+						}
+						break;
+					      }
+					    }
+
+					      if (dash && index) {
+						no_default(index, 'V'); yt6.retry++
+						dash.setAttribute('checked','checked'); dash.checked = 'true'
+						player1.setSrc(yt6.linx[index])
+						player1.load();
+						if (autoplay(true) && me.paused) player1.play();
+					      } else decryption_failure()
+
+/*					      var dash = document.getElementById(mep_x('mep_') + '_sourcechooser_242')//240p  VP9webm');
 					      if (dash != null && yt6.current != 242) {
 						if (yt6.srcbak != 242) no_default(242, 'V'); yt6.retry++
 						dash.setAttribute('checked','checked'); dash.checked = 'true'
@@ -8009,7 +8031,7 @@ function mep_run() {
 						      }
 						  } else { decryption_failure(); }
 
-						}
+						}*/
 					    } else {
 						decryption_failure(); //console.log(yt6.errcount +' '+ (1 + 1*proxies.length))
 						if (yt6.ytg && !(yt6.errcount < (1 + 1 * proxies.length)) && autoplay(false)) {//me.src = ''; 
@@ -8021,7 +8043,7 @@ function mep_run() {
 					addEL(me, 'loadedmetadata', function() {//console.log('1loadedmetadata ' + yt6.player2.media.loaded)
 					  if ( (yt6 && yt6.timer == 999999999) || me.src == 'https://www.youtube.com/ptracking' )
 					    return void 0;
-					  yt6.retry = 0;
+					  yt6.retry = 0; if (yt6.srcbak) { delete yt6.srcbak }
 					  var mep = document.getElementById(mep_x("mep_"))
 
 
@@ -8134,7 +8156,7 @@ function mep_run() {
 						    $waitUntil(//+ parseFloat(yt6.speed/10))
 						      function() {
 							yt6.diff = Math.abs(parseFloat(parseFloat(me.currentTime) - parseFloat(player2.currentTime))); //console.log(yt6.diff);console.log(yt6.sync_timer);
-						        if (yt6.diff > parseFloat(0.3) && yt6.sync_timer < 8) { return true }
+						        if (yt6.diff > parseFloat(0.3) && yt6.sync_timer < 8 || !yt6.V_[itag(me.src)]) { return true }
 							  else {//console.log(yt6.diff)
 							    if (yt6.newvideo) {
 							      if (typeof yt6.player2.media.setCurrentTime == 'function' || (navigator.userAgent.match(/Edge\/\d+/) != null || navigator.userAgent.match(/MSIE /) != null || navigator.userAgent.match(/Trident\//) != null)) {
@@ -8154,12 +8176,14 @@ function mep_run() {
 							if (yt6.sync_timer > 5 && me.loaded) {
 							  yt6.sync_timer = 0
 							} else try {
-							    me.pause(); Seek = 1; player2.currentTime = me.currentTime; //me.pause();
+							    if (yt6.V_[itag(me.src)]) { me.pause(); Seek = 1; player2.currentTime = me.currentTime; //me.pause();
+							    } else me.play()
 						          } catch(e) {}
 						      },250,1250)
 
 						  }
 						} else {
+						    if (yt6.autoplay && me.currentTime < 3 && yt6.speed > 1.7) me.play()
 						    /*if (!yt6.A_V[itag(me.src)] && Seek != 4) {
 						      Seek = 4; player2.pause()
 						    };
@@ -8275,12 +8299,12 @@ function mep_run() {
 
 						          yt6.navigation = true
 
-						          function nextOn() { if (!yt6.pre_ad) { mp.playVideoAt(yt6.pl_index+1) || mp.nextVideo(); if (yt6.pl_index < mp.getPlaylistIndex()) zi.click() } else try { zi.click() } catch(e){ yt6.navigation = false } }
+						          function nextOn() { if (!yt6.pre_ad) { mp.playVideoAt(yt6.pl_index+1) || mp.nextVideo(); if (yt6.pl_index < mp.getPlaylistIndex()) zi.click() } else zi.click() }
 
 						          if (!yt6.ytg) {
 							    if (!yt6.shuffle) {
-							      var a = mp.getCurrentTime()
-							      try { mp.seekTo(mp.getDuration()); mp.playVideo(); if (mp.getCurrentTime() == a) { nextOn() } else zi.click() } catch(e) { nextOn() }
+							      //var a = mp.getCurrentTime(); mp.seekTo(mp.getDuration()); mp.playVideo(); if (mp.getCurrentTime() == a) {  } else zi.click()
+							      try { nextOn() } catch(e) { try { zi.click() } catch(e){ yt6.navigation = false } }
 							    } else {
 
 								if (mp == yt6.movie_player) {
@@ -8290,7 +8314,7 @@ function mep_run() {
 								    }
 								    mp.pauseVideo(); mp.seekTo(mp.getDuration()); //console.log(mp.getCurrentTime() +' '+a);
 								    if (mp.getCurrentTime() == a) { mp.playVideoAt(yt6.pl_index+1) || mp.previousVideo()  } else { mp.seekTo(mp.getDuration()); mp.playVideö() }
-								  } catch(e) { nextOn() }
+								  } catch(e) { try { nextOn() } catch(e) { try { zi.click() } catch(e){ yt6.navigation = false } } }
 								} else {
 								    try {
 									$waitUntil(function(){
@@ -8498,12 +8522,12 @@ function mep_run() {
 
 						          yt6.navigation = true
 
-						          function nextOn() { if (!yt6.pre_ad) { mp.playVideoAt(yt6.pl_index+1) || mp.nextVideo(); if (yt6.pl_index < mp.getPlaylistIndex()) zi.click() } else try { zi.click() } catch(e){ yt6.navigation = false } }
+						          function nextOn() { if (!yt6.pre_ad) { mp.playVideoAt(yt6.pl_index+1) || mp.nextVideo(); if (yt6.pl_index < mp.getPlaylistIndex()) zi.click() } else zi.click() }
 
 						          if (!yt6.ytg) {
 							    if (!yt6.shuffle) {
-							      var a = mp.getCurrentTime()
-							      try { mp.seekTo(mp.getDuration()); mp.playVideo(); if (mp.getCurrentTime() == a) nextOn() } catch(e) { nextOn() }
+							      //var a = mp.getCurrentTime(); mp.seekTo(mp.getDuration()); mp.playVideo(); if (mp.getCurrentTime() == a) {  } else zi.click()
+							      try { nextOn() } catch(e) { try { zi.click() } catch(e){ yt6.navigation = false } }
 							    } else {
 
 								if (mp == yt6.movie_player) {
@@ -8513,7 +8537,7 @@ function mep_run() {
 								    }
 								    mp.pauseVideo(); mp.seekTo(mp.getDuration()); //console.log(mp.getCurrentTime() +' '+a);
 								    if (mp.getCurrentTime() == a) { mp.playVideoAt(yt6.pl_index+1) || mp.previousVideo()  } else { mp.seekTo(mp.getDuration()); mp.playVideö() }
-								  } catch(e) { nextOn() }
+								  } catch(e) { try { nextOn() } catch(e) { try { zi.click() } catch(e){ yt6.navigation = false } } }
 								} else {
 								    try {
 									$waitUntil(function(){
