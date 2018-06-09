@@ -6186,7 +6186,7 @@ if (document.getElementById("bm1") != null) document.getElementById("bm1").paren
     } else {
 	var bc = yt6.osw.parentNode; //document.getElementById('primary')
 	if (!bc || (bc && (bc.tagName != 'DIV' || (bc.getAttribute('id') != 'primary') )) ) bc = document.getElementById('content-layer') || document.getElementById('top')
-	if (bc) { console.log(bc.id + '"' + bc.parentNode.id + '"' + yt6.osw.parentNode.id)
+	if (bc) { //console.log(bc.id + '"' + bc.parentNode.id + '"' + yt6.osw.parentNode.id)
 	  bc.insertBefore(dw, yt6.osw)
 	}
       }
