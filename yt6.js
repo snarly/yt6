@@ -8313,7 +8313,7 @@ function mep_run() {
 								      a = mp.getCurrentTime(); b = mp.getPlayerState(); if (b == 5) { mp.stopping = false; FireEvent2(mp, 'mouseup'); }
 								    }
 								    mp.pauseVideo(); mp.seekTo(mp.getDuration()); //console.log(mp.getCurrentTime() +' '+a);
-								    if (mp.getCurrentTime() == a) { mp.playVideoAt(yt6.pl_index+1) || mp.previousVideo()  } else { mp.seekTo(mp.getDuration()); mp.playVideö() }
+								    if (mp.getCurrentTime() == a) { mp.playVideoAt(yt6.pl_index+1) || mp.previousVideo()  } else { mp.seekTo(mp.getDuration()); mp.playVideo() }
 								  } catch(e) { try { nextOn() } catch(e) { try { zi.click() } catch(e){ yt6.navigation = false } } }
 								} else {
 								    try {
@@ -8536,7 +8536,7 @@ function mep_run() {
 								      a = mp.getCurrentTime(); b = mp.getPlayerState(); if (b == 5) { mp.stopping = false; FireEvent2(mp, 'mouseup'); }
 								    }
 								    mp.pauseVideo(); mp.seekTo(mp.getDuration()); //console.log(mp.getCurrentTime() +' '+a);
-								    if (mp.getCurrentTime() == a) { mp.playVideoAt(yt6.pl_index+1) || mp.previousVideo()  } else { mp.seekTo(mp.getDuration()); mp.playVideö() }
+								    if (mp.getCurrentTime() == a) { mp.playVideoAt(yt6.pl_index+1) || mp.previousVideo()  } else { mp.seekTo(mp.getDuration()); mp.playVideo() }
 								  } catch(e) { try { nextOn() } catch(e) { try { zi.click() } catch(e){ yt6.navigation = false } } }
 								} else {
 								    try {
