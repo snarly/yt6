@@ -8298,12 +8298,12 @@ function mep_run() {
 								}//console.log(yt6.shuffle + mp.tagName)
 
 						          yt6.navigation = true
-
-						          function nextOn() { if (!yt6.pre_ad) { mp.playVideoAt(yt6.pl_index+1) || mp.nextVideo(); if (yt6.pl_index < mp.getPlaylistIndex()) zi.click() } else zi.click() }
+												//mp.playVideoAt(yt6.pl_index+1) || mp.nextVideo()
+						          function nextOn() { if (!yt6.pre_ad) { var a = mp.getCurrentTime(); mp.seekTo(mp.getDuration()); mp.playVideo(); if (mp.getCurrentTime() == a) { } else zi.click(); if (yt6.pl_index < mp.getPlaylistIndex()) { zi.click() } } else { zi.click() } }
 
 						          if (!yt6.ytg) {
 							    if (!yt6.shuffle) {
-							      //var a = mp.getCurrentTime(); mp.seekTo(mp.getDuration()); mp.playVideo(); if (mp.getCurrentTime() == a) {  } else zi.click()
+
 							      try { nextOn() } catch(e) { try { zi.click() } catch(e){ yt6.navigation = false } }
 							    } else {
 
