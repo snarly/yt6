@@ -6184,9 +6184,9 @@ if (document.getElementById("bm1") != null) document.getElementById("bm1").paren
     if (document.getElementById('body-container') != null) {
       document.getElementById('body-container').appendChild(dw)
     } else {
-	var bc = document.getElementById('primary')
-	if (!bc || (bc && (bc.tagName != 'DIV' || (yt6.osw && yt6.osw.parentNode != bc) )) ) bc = document.getElementById('content-layer') || document.getElementById('top')
-	if (bc) { //console.log(bc.id + '"' + bc.parentNode.id + '"' + yt6.osw.parentNode.id)
+	var bc = yt6.osw.parentNode; //document.getElementById('primary')
+	if (!bc || (bc && (bc.tagName != 'DIV' || (bc.getAttribute('id') != 'primary') )) ) bc = document.getElementById('content-layer') || document.getElementById('top')
+	if (bc) { console.log(bc.id + '"' + bc.parentNode.id + '"' + yt6.osw.parentNode.id)
 	  bc.insertBefore(dw, yt6.osw)
 	}
       }
