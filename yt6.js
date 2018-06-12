@@ -11467,7 +11467,7 @@ if (yt6.force_flash) {
 		  }
 	      );
 		yt6.args = window.ytplayer.config.args;
-                console.log('?');//autoplay(true); set_controls();
+                autoplay(true); set_controls();
 
 	    }
 	  }
@@ -11706,7 +11706,7 @@ if (yt6.size != yt6.prev_size) {
 }
 
   var z = gc('mejs-time-buffering')[0]
-  if (z) z.setAttribute('class','mejs-time-bufferin')
+  if (z && browserName != 'Edge') z.setAttribute('class','mejs-time-bufferin')
   var z = gc('mejs-offscreen')[0]
   if (z && z.getAttribute('style') != 'display: none;') z.setAttribute('style','display: none;')
 
