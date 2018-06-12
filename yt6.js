@@ -8241,7 +8241,7 @@ function mep_run() {
 					  //}
 					});
 					addEL(me, 'timeupdate', function() {
-					  if (yt6.x && browserName != 'Edge') {
+					  if (yt6.x) {
 					    if (!(me.currentTime == 0 && yt6.ct != 0)) {
 					      yt6.ct = me.currentTime
 					    } else {
@@ -10643,7 +10643,7 @@ addEL(window, 'spfdone', yt6.body.spfdone, false);
 		    if (typeof p.isMuted == 'function' && p.isMuted() && yt6.ad_muted) {
 		      try { p.unMute(); v_element.unMute() } catch(e) {}
 		      yt6.ad_muted = false
-		      delete yt6.ad_
+		      delete yt6.ad_; console.log('? '+Math.abs(yt6.previous_media_duration - ads0))
 		      if (bm0) resize_layers(bm0.style.width, bm0.style.height)
 		    }
 		  }
