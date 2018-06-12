@@ -1660,7 +1660,7 @@ function ajax1(update, ytg){
 
 	try {
 
-	  if (yt6.ytg && window.location.href.indexOf('//gaming.youtube.com') != -1) {
+	  /*if (yt6.ytg && window.location.href.indexOf('//gaming.youtube.com') != -1) {
 	    xhr.open('get', window.location.href.replace('https://gaming.youtube.com','https://allow-any-origin.appspot.com/https://www.youtube.com'), false);
 	    xhr.onreadystatechange = function() {
 	      if (xhr.readyState == 4 && xhr.status == 200 && xhr.responseText) {
@@ -1675,7 +1675,7 @@ function ajax1(update, ytg){
 	      }
 	    }
             xhr.send('');
-	  }
+	  }*/
 
 
 
@@ -4930,7 +4930,7 @@ yt6.mep_renew = function() {
 	    }
 	  }
 
-	  if (yt6.ytg && yt6.encrypted) var index = 0
+	  //if (yt6.ytg && yt6.encrypted) var index = 0
 
 	  //We really should have found it by now...
 	  for(j=index;j<fmt_pool.length;j++){
@@ -14125,7 +14125,7 @@ var CtrlS = function (stage,v){
 	    try { yt6.navigation = true
 	    if ((!yt6.shuffle && !yt6.ytg) || yt6.layout == 12) { try { yt6.pl_next.click() } catch(e) { mp.nextVideo() } } else {
 		if (p == mp) {
-		  mp.playVideoAt(yt6.pl_index+1) || mp.nextVideo();
+		  if (!yt6.ytg || yt6.pre_ad) { mp.playVideoAt(yt6.pl_index+1) || mp.nextVideo(); } else try { mp.seekTo(mp.getDuration()); mp.playVideo()} catch(e) { mp.nextVideo()}
 		} else {
 		    try {
 		      $waitUntil(function(){if (location.href.indexOf(yt6.vid) == -1) { return true } else {
@@ -14150,7 +14150,7 @@ var CtrlS = function (stage,v){
 	    if (p && typeof p.playVideoAt == 'function' && p.getAttribute('class') != 'forced flashplayer') { var mp = p }
 	    else { var mp = yt6.original = getElementsByAttribute(yt6,'div','name','original')[0] }
 	    try { yt6.navigation = true
-	    if (yt6.layout == 12 && !yt6.ytg) { try { yt6.pl_previous.click() } catch(e){ mp.playVideoAt(yt6.pl_index-1) || mp.previousVideo() } } else {
+	    if (yt6.layout == 12 || yt6.ytg) { try { yt6.pl_previous.click() } catch(e){ mp.playVideoAt(yt6.pl_index-1) || mp.previousVideo() } } else {
 	      var a = 5; if (typeof mp.getPlayerState == 'function') a = mp.getPlayerState(); if (a == -1) mp.pauseVideo()
 	      if (p == mp && !yt6.pre_ad) { mp.playVideoAt(yt6.pl_index-1) || mp.previousVideo() } else {//console.log('? '+yt6.pl_previous)
 		if (!yt6.shuffle) { try { mp.playVideoAt(yt6.pl_index-1) || mp.previousVideo() } catch(e) { yt6.pl_previous.click() } } else
