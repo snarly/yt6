@@ -3998,7 +3998,7 @@ if (player()) {
 	var bm0 = document.getElementById('bm0')
 	var player2 = document.getElementById('player2')
 	var player1 = document.getElementById('player1')
-	var bn = gc('play snarl-button yt-uix-button-text')
+	var bn = gc('play snarl-button yt-uix-button-text')[0]
 
 	if (yt6 && !yt6.x) {
           if (player() && typeof player().getPlayerState == 'function') {
@@ -4047,7 +4047,7 @@ if (player()) {
 	} else if (yt6 && yt6.x && newState == -1) try { player().pauseVideo() } catch(e) {}
 
 	if (newState == 1) {
-	  if (bn[0]) for(i=0;i<bn.length;i++) bn[i].innerHTML = 'pause'
+	  if (bn) { bn.innerHTML = 'pause'; try { gc('play snarl-button yt-uix-button-text')[1].innerHTML = 'pause' } catch(e) {} }//for(i=0;i<bn.length;i++) bn[i].innerHTML = 'pause'
 	} else if (yt6.movie_player && yt6.movie_player.parentNode.getAttribute('id') == 'movie_player_to_dispose') { removeEL(player(), "onStateChange", Sync, false) }
 
   }
@@ -8143,8 +8143,8 @@ function mep_run() {
 					  if ( (yt6 && yt6.timer == 999999999) || me.src == 'https://www.youtube.com/ptracking' )
 					    return void 0;
 					  if (yt6.x) {
-					  var bn = gc('play yt-uix-button-text');
-					  if (bn[0]) for(i=0;i<bn.length;i++) bn[i].innerHTML = 'pause';
+					  var bn = gc('play snarl-button yt-uix-button-text')[0];
+					  if (bn) { bn.innerHTML = 'pause'; try { gc('play snarl-button yt-uix-button-text')[1].innerHTML = 'pause' } catch(e) {} }//for(i=0;i<bn.length;i++) bn[i].innerHTML = 'pause';
 					  if ( ((!yt6.A_V[itag(me.src)] &&
 						 !yt6.A_[itag(me.src)] &&
 						 (yt6.V_[itag(me.src)] || me.src.indexOf('itag=278') > -1) 
@@ -8224,8 +8224,8 @@ function mep_run() {
 					    if (bn) bn.style.visibility = 'visible';
 					    if (yt6.Seeked2) { yt6.Seeked2 = false; if (Seek == 1 && yt6.sync_maybe_clear != true && player2.paused) Seek = 2; }
 					  }
-					  var bn = gc('play yt-uix-button-text');
-					  if (bn[0]) for(i=0;i<bn.length;i++) bn[i].innerHTML = 'play';
+					  var bn = gc('play snarl-button yt-uix-button-text')[0];
+					  if (bn) { bn.innerHTML = 'play'; try { gc('play snarl-button yt-uix-button-text')[1].innerHTML = 'play' } catch(e) {} }//for(i=0;i<bn.length;i++) bn[i].innerHTML = 'play';
 					  if (yt6.retry < 8 && player2) {
 					    if (me.src != player2.src) {
 					      if (Seek == 3) try { yt6.player2.pause() } catch(e) {};
@@ -10917,7 +10917,7 @@ if (p != null) {
         document.getElementById('player1').style.height = '100%'
       }
     } else {
-	if (yt6.ytpstyle) {console.log('1')
+	if (yt6.ytpstyle) {
 	  resize_layers(yt6.osw.style.width, yt6.osw.style.height)
 	  delete yt6.ytpstyle
 	}
@@ -11092,7 +11092,7 @@ if (p.getAttribute('class') && p.getAttribute('class').indexOf('ytp-fullscreen')
 
 	if (yt6.mode != wide_view()) {
  //console.log(yt6.size + ' autoscale mode ' + wide_view() + ' '+ yt6.w +' '+ yt6.h ); 
-	  if (bestfit()) {console.log('2')
+	  if (bestfit()) {
 	    if (bm0 && document.getElementById('aspect')) {
 	     resize_layers(document.getElementById('a_width').value + 'px', document.getElementById('a_height').value + 'px', false)
 	    } else resize_layers(yt6.w, yt6.h);
@@ -11277,7 +11277,7 @@ if (yt6.force_flash) {
 	  //works only for browser-level navigation, not for flashplayer "previous/next"
 	  if (window.ytplayer && window.ytplayer.config && window.ytplayer.config.args && window.ytplayer.config.args.video_id) {
 
-	    console.log('!!!'+strPrevHash + yt6.strHash + window.location.hash + yt6.strLocation + window.location.href)
+	    //console.log('!!!'+strPrevHash + yt6.strHash + window.location.hash + yt6.strLocation + window.location.href)
 
 	    // Store the new and previous locations.
 	    strPrevLocation = (yt6.strLocation) ? yt6.strLocation:"";
@@ -13905,8 +13905,8 @@ function control_panel1() {
     delete js;
   }
 
-  var controls = getElementsByAttribute(z,'div','id','controls-sp');
-  if (controls != null) for(i=0;i<controls.length;i++) { if (controls[i]) controls[i].parentNode.removeChild(controls[i]) }
+  var controls = document.getElementById('controls-sp')//getElementsByAttribute(z,'div','id','controls-sp');
+  if (controls != null) controls.parentNode.removeChild(controls) //for(i=0;i<controls.length;i++) { if (controls[i]) controls[i].parentNode.removeChild(controls[i]) }
 
   if (document.getElementById('remove-sp') == null) {
 
@@ -14093,7 +14093,7 @@ var CtrlS = function (stage,v){
     bm0.style.height = fix_Height()
     v.style.left = '0px'
     v.style.top = '0px'
-  };console.log('3')
+  }
   if (bm0) resize_layers( bm0.style.width, bm0.style.height, false )
 
 
@@ -14169,16 +14169,16 @@ var CtrlS = function (stage,v){
 
 /* Toggle play functionality and button label */    
 	case 'play snarl-button yt-uix-button-text':
-        var bn = gc('play snarl-button yt-uix-button-text')
+        var bn = gc('play snarl-button yt-uix-button-text')[0]
 	if ( v && (v != stage || (v.getAttribute('name') != null && v.getAttribute('name').indexOf('me_flash') > -1))) {
 	  if ((v.parentNode.paused == true) || (v.paused == true)){
 	    if (typeof v.play == 'function') try { v.play() } catch(e) {}
 	    if (typeof v.playMedia == 'function') try { v.playMedia(); v.parentNode.paused = false } catch(e) {}
-	    if (bn[0]) for(i=0;i<bn.length;i++) bn[i].innerHTML = 'pause'
+	    if (bn) { bn.innerHTML = 'pause'; try { gc('play snarl-button yt-uix-button-text')[1].innerHTML = 'pause' } catch(e) {} }//for(i=0;i<bn.length;i++) bn[i].innerHTML = 'pause'
           } else {
             if (typeof v.pause == 'function') try { v.pause() } catch(e) {}
             if (typeof v.pauseMedia == 'function') try { v.pauseMedia(); v.parentNode.paused = true } catch(e) {}
-            if (bn[0]) for(i=0;i<bn.length;i++) bn[i].innerHTML = 'play'
+            if (bn) { bn.innerHTML = 'play'; try { gc('play snarl-button yt-uix-button-text')[1].innerHTML = 'play' } catch(e) {} }//for(i=0;i<bn.length;i++) bn[i].innerHTML = 'play'
           }
 	  if (!yt6.x && p && p.tagName != 'OBJECT' && typeof p.getPlayerState == 'function' && p.getPlayerState() > 2) try { p.playVideo(); p.playVideo() } catch(e) {}
 	} else {
