@@ -4558,7 +4558,7 @@ if (typeof p.getPlayerState != 'function' && typeof p.tagName == 'EMBED' && yt6.
 
 
 
-  set_controls()
+  if (start != false) set_controls()
 
 
   if ( (yt6.autoplay || (autoplay2 && autoplay2[0]) )
@@ -8000,7 +8000,7 @@ function mep_run() {
 						dash.setAttribute('checked','checked'); dash.checked = 'true'
 						player1.setSrc(yt6.linx[index])
 						player1.load();
-						if (autoplay(true) && me.paused) player1.play();
+						if (autoplay(false) && me.paused) player1.play();
 					      } else decryption_failure()
 
 /*					      var dash = document.getElementById(mep_x('mep_') + '_sourcechooser_242')//240p  VP9webm');
@@ -8009,7 +8009,7 @@ function mep_run() {
 						dash.setAttribute('checked','checked'); dash.checked = 'true'
 						player1.setSrc(yt6.linx[242]);
 						//player1.load();
-						if (autoplay(true) && me.paused) player1.play();
+						if (autoplay(false) && me.paused) player1.play();
 					      } else {
 						  var dash = document.getElementById(mep_x('mep_') + '_sourcechooser_133')//240p DASH mp4');
 						  if (dash != null && yt6.current != 133) {
@@ -8018,7 +8018,7 @@ function mep_run() {
 						      dash.setAttribute('checked','checked'); dash.checked = 'true'
 						      player1.setSrc(yt6.linx[133]);
 						      //player1.load();
-						      if (autoplay(true) && me.paused) player1.play();
+						      if (autoplay(false) && me.paused) player1.play();
 						    } else {//"otf" links
 							var dash = document.getElementById(mep_x('mep_') + '_sourcechooser_134')//360p DASH mp4');
 							if (dash != null && yt6.current != 134) {
@@ -8026,7 +8026,7 @@ function mep_run() {
 							  dash.setAttribute('checked','checked'); dash.checked = 'true'
 							  player1.setSrc(yt6.linx[134]);
 							  //player1.load();
-							  if (autoplay(true) && me.paused) player1.play();
+							  if (autoplay(false) && me.paused) player1.play();
 							} else {
 							    decryption_failure();
 							  }
@@ -11467,7 +11467,7 @@ if (yt6.force_flash) {
 		  }
 	      );
 		yt6.args = window.ytplayer.config.args;
-                autoplay(true); set_controls();
+                console.log('?');//autoplay(true); set_controls();
 
 	    }
 	  }
