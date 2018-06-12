@@ -10643,7 +10643,7 @@ addEL(window, 'spfdone', yt6.body.spfdone, false);
 		    if (typeof p.isMuted == 'function' && p.isMuted() && yt6.ad_muted) {
 		      try { p.unMute(); v_element.unMute() } catch(e) {}
 		      yt6.ad_muted = false
-		      delete yt6.ad_; console.log('? '+Math.abs(yt6.previous_media_duration - ads0))
+		      delete yt6.ad_
 		      if (bm0) resize_layers(bm0.style.width, bm0.style.height)
 		    }
 		  }
@@ -10917,7 +10917,7 @@ if (p != null) {
         document.getElementById('player1').style.height = '100%'
       }
     } else {
-	if (yt6.ytpstyle) {
+	if (yt6.ytpstyle) {console.log('1')
 	  resize_layers(yt6.osw.style.width, yt6.osw.style.height)
 	  delete yt6.ytpstyle
 	}
@@ -11092,7 +11092,7 @@ if (p.getAttribute('class') && p.getAttribute('class').indexOf('ytp-fullscreen')
 
 	if (yt6.mode != wide_view()) {
  //console.log(yt6.size + ' autoscale mode ' + wide_view() + ' '+ yt6.w +' '+ yt6.h ); 
-	  if (bestfit()) {
+	  if (bestfit()) {console.log('2')
 	    if (bm0 && document.getElementById('aspect')) {
 	     resize_layers(document.getElementById('a_width').value + 'px', document.getElementById('a_height').value + 'px', false)
 	    } else resize_layers(yt6.w, yt6.h);
@@ -11277,7 +11277,7 @@ if (yt6.force_flash) {
 	  //works only for browser-level navigation, not for flashplayer "previous/next"
 	  if (window.ytplayer && window.ytplayer.config && window.ytplayer.config.args && window.ytplayer.config.args.video_id) {
 
-	    //console.log('!!!'+strPrevHash + yt6.strHash + window.location.hash + yt6.strLocation + window.location.href)
+	    console.log('!!!'+strPrevHash + yt6.strHash + window.location.hash + yt6.strLocation + window.location.href)
 
 	    // Store the new and previous locations.
 	    strPrevLocation = (yt6.strLocation) ? yt6.strLocation:"";
@@ -14093,7 +14093,7 @@ var CtrlS = function (stage,v){
     bm0.style.height = fix_Height()
     v.style.left = '0px'
     v.style.top = '0px'
-  }
+  };console.log('3')
   if (bm0) resize_layers( bm0.style.width, bm0.style.height, false )
 
 
