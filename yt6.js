@@ -1660,7 +1660,7 @@ function ajax1(update, ytg){
 
 	try {
 
-	  if (ytg && window.location.href.indexOf('//gaming.youtube.com') != -1) {
+	  if (yt6.ytg && window.location.href.indexOf('//gaming.youtube.com') != -1) {
 	    xhr.open('get', window.location.href.replace('https://gaming.youtube.com','https://allow-any-origin.appspot.com/https://www.youtube.com'), false);
 	    xhr.onreadystatechange = function() {
 	      if (xhr.readyState == 4 && xhr.status == 200 && xhr.responseText) {
@@ -4930,6 +4930,7 @@ yt6.mep_renew = function() {
 	    }
 	  }
 
+	  if (yt6.ytg && yt6.encrypted) var index = 0
 
 	  //We really should have found it by now...
 	  for(j=index;j<fmt_pool.length;j++){
@@ -7984,6 +7985,7 @@ function mep_run() {
 					      if (sauce[i]) { sauce[i].removeAttribute('checked'); sauce[i].checked = '' }; me.pause()
 					      for(j=0;j<yt6.fmts_fallback.V[yt6.prefer_fmt].length;j++){
 						if (yt6.fmts_fallback.V[yt6.prefer_fmt][j] == yt6.userprefV[0]) {
+						  //var k = (yt6.ytg) ? 0 : (j+yt6.retry)
 						  for(k=j+yt6.retry;k<yt6.fmts_fallback.V[yt6.prefer_fmt].length;k++){
 						  var index = yt6.fmts_fallback.V[yt6.prefer_fmt][k]
 						  var dash = document.getElementById(mep_x('mep_') + '_sourcechooser_' + index)
@@ -8175,10 +8177,18 @@ function mep_run() {
 						      function() {
 							if (yt6.sync_timer > 5 && me.loaded) {
 							  yt6.sync_timer = 0
-							} else try {
-							    if (yt6.V_[itag(me.src)]) { me.pause(); Seek = 1; player2.currentTime = me.currentTime; //me.pause();
-							    } else me.play()
-						          } catch(e) {}
+							} else try {//if (yt6.V_[itag(me.src)]) {
+							    me.pause(); Seek = 1; player2.currentTime = me.currentTime; //me.pause();
+							    //} else {
+								//    me.play()
+								    $waitUntil(
+								      function(){if (yt6.Seek != 1 && yt6.player1.media.paused) return true
+								      },
+								      function() {
+								        yt6.player1.play();//console.log('play')
+								      },200,200)
+								    //}
+							          } catch(e) {}
 						      },250,1250)
 
 						  }
