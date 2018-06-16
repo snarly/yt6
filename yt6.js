@@ -10771,12 +10771,13 @@ if (yt6 != null) if (yt6.loaded) {
 
 	no_cards()
 
-	var watch = gc('mejs-poster mejs-layer')
-	if ((typeof watch[0] != 'undefined') && (1*watch[0].getAttribute('style').indexOf('("') > -1)) {
-	  watch[0].setAttribute('style', watch[0].getAttribute('style').split('("').join("('").split('")').join("')"));
+	var watch = gc('mejs-poster mejs-layer')[0]
+	if (watch && watch.getAttribute('style') && 1*watch.getAttribute('style').indexOf('("') > -1) {
+	  watch.setAttribute('style', watch.getAttribute('style').split('("').join("('").split('")').join("')"));
 	}
 
-	var autoscale = document.getElementById('placeholder-player') || document.getElementById('player-api').parentNode;
+	var autoscale = document.getElementById('placeholder-player') || document.getElementById('player-container') || document.getElementById('player-api').parentNode;
+
 	var watch = document.getElementById('page') || document.getElementById('mainContainer') || document.getElementsByTagName('ytg-watch-footer')[0];
 	if (watch) watch = watch.getAttribute('class');
 	if (typeof watch == 'string' && watch.indexOf('watch') == -1) watch = null
@@ -12464,11 +12465,13 @@ if (a.getAttribute('id') != 'player') { //pre-2016 layout start
 		        l.firstElementChild.style.marginTop = ''; l.firstElementChild.removeAttribute('style')
 		      } else {
 			  a.parentNode.style.top = -1 * (h + MC) + 'px'
-			  l.style.marginTop = yt6.wna.style.marginTop = -1 * (h + MC - g) + 'px';//-g
+			  l.style.marginTop = -1 * (h + MC - g) + 'px';//-g yt6.wna.style.marginTop = 
 			  //l.style.marginTop = -1 * (h + 2) + 'px'
-			  yt6.wna.style.marginTop = yh + 'px'
+			  if (windowheight >= h) { 
+			    yt6.wna.style.marginTop = yh + 'px'
+			    if (playlist) playlist.style.marginTop = -1 * MC + 'px'
+			  } else l.firstElementChild.style.marginTop = yh + 'px'
 			  yt6.wsb.style.top = -1 * MC + 'px'
-			  if (playlist) playlist.style.marginTop = -1 * MC + 'px'
 			}
 		    }
 		  }
@@ -12635,7 +12638,7 @@ if (a.getAttribute('id') != 'player') { //pre-2016 layout start
 		var yh = -1 * y.height.replace('px','').split('"').join('') - MC
 		l.setAttribute('style','margin-top: ' + yh + 'px')
 		if (l.offsetWidth >= 1066) {
-		  l.firstElementChild.setAttribute('style','margin-top: ' + yh + 'px')
+		  l.firstElementChild.setAttribute('style','margin-top: ' + (yh + g) 'px')
 		  if (yt6.wna != null) yt6.wna.style.marginTop = ''
 		  if (!yt6.ytg) yt6.inf.style.marginTop = ''
 	          if (playlist) playlist.style.marginTop = ''
