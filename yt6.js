@@ -12638,7 +12638,7 @@ if (a.getAttribute('id') != 'player') { //pre-2016 layout start
 		var yh = -1 * y.height.replace('px','').split('"').join('') - MC
 		l.setAttribute('style','margin-top: ' + yh + 'px')
 		if (l.offsetWidth >= 1066) {
-		  l.firstElementChild.setAttribute('style','margin-top: ' + (yh + g) 'px')
+		  l.firstElementChild.setAttribute('style','margin-top: ' + (yh + g) + 'px')
 		  if (yt6.wna != null) yt6.wna.style.marginTop = ''
 		  if (!yt6.ytg) yt6.inf.style.marginTop = ''
 	          if (playlist) playlist.style.marginTop = ''
