@@ -12467,10 +12467,12 @@ if (a.getAttribute('id') != 'player') { //pre-2016 layout start
 			  a.parentNode.style.top = -1 * (h + MC) + 'px'
 			  l.style.marginTop = -1 * (h + MC - g) + 'px';//-g yt6.wna.style.marginTop = 
 			  //l.style.marginTop = -1 * (h + 2) + 'px'
-			  if (windowheight >= h) { 
+			  if (Math.abs(yh) >= h) { 
 			    yt6.wna.style.marginTop = yh + 'px'
 			    if (playlist) playlist.style.marginTop = -1 * MC + 'px'
-			  } else l.firstElementChild.style.marginTop = yh + 'px'
+			  } else {
+			      l.firstElementChild.style.marginTop = yh + 'px'
+			    }
 			  yt6.wsb.style.top = -1 * MC + 'px'
 			}
 		    }
