@@ -10445,7 +10445,7 @@ yt6.body.spfdone = function(e) {
   if (z && z[yt6.txt] && z[yt6.txt].replace(/(\r\n|\n|\r)/gm," ").split(' ').join('') != '') {
 
     var e = ''  
-    if (p && typeof p.getVideoEmbedCode == 'function') e = p.getVideoEmbedCode()
+    if (p) if (typeof p.getVideoEmbedCode == 'function') { try { p.loadVideoById(video_id()[0], 0, 'small'); e = p.getPlaybackQuality(); if (e == 'unknown') e = p.getVideoEmbedCode() } catch(e){} } else e = video_id()[0]
     if (document.getElementById('watch7-player-age-gate-content') && e.indexOf(video_id()[0]) > -1) {
 
 	ageless_verification()
@@ -13357,7 +13357,7 @@ function switch_players() {
   no_cards()
 
   if (yt6.size == 'media') aspect('media')
-  gc('play snarl-button yt-uix-button-text')[0].innerHTML = 'play'
+  var z = gc('play snarl-button yt-uix-button-text')[0]; if (z) { z.innerHTML = 'play'; try { gc('play snarl-button yt-uix-button-text')[1].innerHTML = 'play' } catch(e) {} }
   set_controls()
 
 }
