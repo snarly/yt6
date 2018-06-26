@@ -2621,6 +2621,8 @@ function alt_yt_cleanup() {//console.log(player().getAttribute('name') + typeof 
 }
 
 
+
+
   function ageless_verification() {
 
     var bm0 = document.getElementById('bm0')
@@ -2694,16 +2696,18 @@ function alt_yt_cleanup() {//console.log(player().getAttribute('name') + typeof 
 	    if (z && z[0] != 'title' && (ytplayer.config.args[z[0]] == undefined || z[0] == 'video_id')) {
 	      window.ytplayer.config.args[z[0]] = z[1];
 	      if ( (z[0] != 'adaptive_fmts') && (z[0] != 'url_encoded_fmt_stream_map') && (z[0] != 'remarketing_url') && (z[0] != 'videostats_playback_base_url') && (z[0] != 'dashmpd') && (z[0] != 'afv_ad_tag') && (z[0] != 'afv_invideo_ad_tag') && (z[0] != 'dynamic_allocation_ad_tag') ){
-		window.ytplayer.config.args[z[0]] = window.ytplayer.config.args[z[0]].split('%26').join('&').split('%25').join('%')
-		window.ytplayer.config.args[z[0]] = unescape(window.ytplayer.config.args[z[0]]);
-		if (window.ytplayer.config.args[z[0]].indexOf('://') > -1) window.ytplayer.config.args[z[0]] = window.ytplayer.config.args[z[0]].split('/').join('\\/')
+		window.ytplayer.config.args[z[0]] = z[1].split('%26').join('&').split('%25').join('%')
+		window.ytplayer.config.args[z[0]] = unescape(z[1]);
+		if (window.ytplayer.config.args[z[0]].indexOf('://') > -1) window.ytplayer.config.args[z[0]] = z[1].split('/').join('\\/')
 	      } else {
-		  window.ytplayer.config.args[z[0]] = window.ytplayer.config.args[z[0]].split('%26').join('&').split('%3D').join('=').split('%2C%2B').join(',+').split('%2C').join(',').split(',+').join('%2C+')
-		  if (z[0] == 'dashmpd') { window.ytplayer.config.args[z[0]] = window.ytplayer.config.args[z[0]].split('%3A').join(':').split('%2F').join('\\/') }
+		  window.ytplayer.config.args[z[0]] = z[1].split('%26').join('&').split('%3D').join('=').split('%2C%2B').join(',+').split('%2C').join(',').split(',+').join('%2C+')
+		  if (z[0] == 'dashmpd') { window.ytplayer.config.args[z[0]] = z[1].split('%3A').join(':').split('%2F').join('\\/') }
 		    window.ytplayer.config.args[z[0]] = window.ytplayer.config.args[z[0]].split('%25').join('%')
 		}
 	      //console.log(z[0] + ' = ' + window.ytplayer.config.args[z[0]])
-	    }
+	    } else if (z && z[0] == 'title') {
+		window.ytplayer.config.args.title = unicodeToChar(unescape(decodeURIComponent(z[1])))//.split('+').join(' ')
+	      }
 	  }
 
 
@@ -4995,6 +4999,10 @@ yt6.mep_renew = function() {
 	    for (j=0;j<yt6.fmts_fallback.V.length;j++) { if (yt6.fmts_fallback.V[j] == itagx) { var found = true; no_default(itagx, 'V'); break } }
 	  }
 	}
+
+	if (yt6.prefer_fmt == 'all') {
+	  var x = 'all'
+	} else var x = (yt6.prefer_fmt == 'h264') ? 'aac' : 'webm'
 
 
 	  for(i=0;i<yt6.userprefA.length;i++){
