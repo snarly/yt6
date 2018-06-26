@@ -2706,7 +2706,7 @@ function alt_yt_cleanup() {//console.log(player().getAttribute('name') + typeof 
 		}
 	      //console.log(z[0] + ' = ' + window.ytplayer.config.args[z[0]])
 	    } else if (z && z[0] == 'title') {
-		window.ytplayer.config.args.title = unescape(decodeURIComponent(z[1]))
+		window.ytplayer.config.args.title = unescape(decodeURIComponent(z[1]).split('+').join(' '))
 	      }
 	  }
 
