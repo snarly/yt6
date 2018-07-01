@@ -6117,7 +6117,14 @@ if (rpt != null) {//ajax2
 function redo_dl_button(args,html,href) {
 
 
-if (document.getElementById("bm1") != null) document.getElementById("bm1").parentNode.removeChild(document.getElementById("bm1"))
+if (document.getElementById("bm1") != null) {
+  var y = document.getElementById('bm8')
+  if (y) {
+    try { removeEL(y, 'mouseup',function(e){ yt6.controls_pushed = false }, false) } catch(e){}
+    try { removeEL(y, 'mousedown', yt6.clicky ,false) } catch(e){}
+  }
+  document.getElementById("bm1").parentNode.removeChild(document.getElementById("bm1"))
+}
 
   var dw = document.createElement('span')
   dw.id = 'bm1'
@@ -14049,7 +14056,11 @@ function control_panel1() {
   }
 
   var controls = document.getElementById('controls-sp')//getElementsByAttribute(z,'div','id','controls-sp');
-  if (controls != null) controls.parentNode.removeChild(controls) //for(i=0;i<controls.length;i++) { if (controls[i]) controls[i].parentNode.removeChild(controls[i]) }
+  if (controls != null) {
+    try { removeEL(controls, 'mouseup',function(e){ yt6.controls_pushed = false }, false) } catch(e){}
+    try { removeEL(controls, 'mousedown', yt6.clicky ,false) } catch(e){}
+    controls.parentNode.removeChild(controls) //for(i=0;i<controls.length;i++) { if (controls[i]) controls[i].parentNode.removeChild(controls[i]) }
+  }
 
   if (document.getElementById('remove-sp') == null) {
 
