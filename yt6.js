@@ -5034,9 +5034,9 @@ yt6.mep_renew = function() {
 	  }
 	}
 
-	if (yt6.prefer_fmt == 'all') {
+	/*if (yt6.prefer_fmt == 'all') {
 	  var x = 'all'
-	} else var x = (yt6.prefer_fmt == 'h264') ? 'aac' : 'webm'
+	} else var x = (yt6.prefer_fmt == 'h264') ? 'aac' : 'webm'*/
 
 
 	  for(i=0;i<yt6.userprefA.length;i++){
