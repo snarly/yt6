@@ -5034,9 +5034,6 @@ yt6.mep_renew = function() {
 	  }
 	}
 
-	/*if (yt6.prefer_fmt == 'all') {
-	  var x = 'all'
-	} else var x = (yt6.prefer_fmt == 'h264') ? 'aac' : 'webm'*/
 
 
 	  for(i=0;i<yt6.userprefA.length;i++){
@@ -6266,7 +6263,7 @@ if (document.getElementById("bm1") != null) {
       document.getElementById('body-container').appendChild(dw)
     } else {
 	var bc = yt6.osw.parentNode; //document.getElementById('primary')
-	if (!bc || (bc && (bc.tagName != 'DIV' || (bc.getAttribute('id') != 'primary') )) ) bc = document.getElementById('content-layer') || document.getElementById('top')
+	if (!bc || (bc && (bc.tagName != 'DIV' || (bc.getAttribute('id') != 'primary') )) ) bc = document.getElementById('primary-inner') || document.getElementById('content-layer') || document.getElementById('top')
 	if (bc) { //console.log(bc.id + '"' + bc.parentNode.id + '"' + yt6.osw.parentNode.id)
 	  bc.insertBefore(dw, yt6.osw)
 	}
@@ -10109,6 +10106,7 @@ if (!t.sourcechooserButton) {//console.log('error')
 
 	var mep_reload = yt6.mep_reload = function(){
 
+		yt6.Seeked2 = false
 		yt6.navigation = true
 		yt6.mep = 'reload'
 		if (yt6.newin) delete yt6.newin
@@ -10887,7 +10885,7 @@ if (yt6 != null) if (yt6.loaded) {
 	  watch.setAttribute('style', watch.getAttribute('style').split('("').join("('").split('")').join("')"));
 	}
 
-	var autoscale = document.getElementById('placeholder-player') || document.getElementById('player-container') || document.getElementById('player-api').parentNode;
+	var autoscale = document.getElementById('placeholder-player') || document.getElementById('player-api').parentNode;// || document.getElementById('player-container')
 
 	var watch = document.getElementById('page') || document.getElementById('mainContainer') || document.getElementsByTagName('ytg-watch-footer')[0];
 	if (watch) watch = watch.getAttribute('class');
@@ -12095,9 +12093,9 @@ if (!yt6.fullscreen || yt6.fullscreen == false || (ytp_class && ytp_class.indexO
 	        )
 	      )
 	   ) {
-	  p1.style.width = Math.round((h - hdiff) * yt6.aspect_ratio) + 'px'
+	  p1.style.width = ((h - hdiff) * yt6.aspect_ratio) + 'px'
 	  p1.style.height = Math.round(h - hdiff) + 'px'
-	  p1.style.left = Math.round( (w - p1.style.width.replace('px','')) / 2) + 'px'
+	  p1.style.left = ( (w - p1.style.width.replace('px','')) / 2) + 'px'
 //console.log( '2: ' + p1.style.top + p1.style.left + p1.style.width + p1.style.height + typeof yt6.player1.play);//normal html5
 	} else {
 	    p1.style.width = w + 'px'
@@ -12114,8 +12112,8 @@ if (!yt6.fullscreen || yt6.fullscreen == false || (ytp_class && ytp_class.indexO
     if ( ( ((1 * p1.style.height.replace('px','')) < windowheight ) || (w < (1 * p1.style.width.replace('px',''))) ) && (mep != null) ){//|| (!((1 * p1.style.height.replace('px','')) > windowheight )) ) {
 	    p1.style.width = w + 'px'
 	    p1.style.height = Math.round( w / yt6.aspect_ratio ) - hdiff + 'px'
-	    p1.style.top = Math.round( (h - p1.style.height.replace('px','')) / 2 - (hdiff / 2) ) + 'px'
-	    p1.style.left = Math.round( (w - (p1.style.height.replace('px','') * yt6.aspect_ratio)) / 2) + 'px'
+	    p1.style.top = ( (h - p1.style.height.replace('px','')) / 2 - (hdiff / 2) ) + 'px'
+	    p1.style.left = ( (w - (p1.style.height.replace('px','') * yt6.aspect_ratio)) / 2) + 'px'
 //console.log( '4: ' + p1.style.top + p1.style.left + p1.style.width + p1.style.height)
 
 
@@ -12192,8 +12190,8 @@ function zip(){
     {//console.log( 'refine')
 	p1.style.width = document.getElementById('player1').width + 'px'
 	p1.style.height = document.getElementById('player1').height + 'px'
-	p1.style.top = Math.round( (h - p1.style.height.replace('px','')) / 2 - (hdiff / 2) ) + 'px'
-	p1.style.left = Math.round( (w - (p1.style.height.replace('px','') * yt6.aspect_ratio)) / 2) + 'px'
+	p1.style.top = ( (h - p1.style.height.replace('px','')) / 2 - (hdiff / 2) ) + 'px'
+	p1.style.left = ( (w - (p1.style.height.replace('px','') * yt6.aspect_ratio)) / 2) + 'px'
 //      if (Math.abs(p1.style.width.replace('px','') - Math.floor(p1.style.width.replace('px','') / 2) * 2) < Math.abs(p1.style.width.replace('px','') - Math.ceil(p1.style.width.replace('px','') / 2) * 2)) { p1.style.width = Math.floor(p1.style.width.replace('px','') / 2) * 2 + 2 + 'px' } else { p1.style.width = Math.ceil(p1.style.width.replace('px','') / 2) * 2 + 'px' }
 //      if (Math.abs(p1.style.height.replace('px','') - Math.floor(p1.style.height.replace('px','') / 2) * 2) < Math.abs(p1.style.height.replace('px','') - Math.ceil(p1.style.height.replace('px','') / 2) * 2)) { p1.style.height = Math.floor(p1.style.height.replace('px','') / 2) * 2 + 2 + 'px' } else { p1.style.height = Math.ceil(p1.style.height.replace('px','') / 2) * 2 + 'px' }
       if (c) { document.getElementById('a_width').value = bm0.style.width.replace('px',''); document.getElementById('a_height').value = bm0.style.height.replace('px','') }
@@ -13177,9 +13175,12 @@ if ((p1 != null) && (yt6.x)){
 	      yt6.top.insertBefore(yt6.tbg, yt6.top.firstChild)
 	      yt6.osw.removeAttribute('hidden')
 	      yt6.wna.style = ''; yt6.wna.removeAttribute('style')
-	      if (!c) {
-	        e.display = 'none'
+
+	      if (flexyleft) {
+		a.style.left = parseFloat(a.style.left.replace('px','')) - flexyleft + 'px'
+		e.marginTop = ''
 	      }
+
 		//console.log(1 * e.marginLeft.replace('px','') + 1 * e.width.replace('px','') + 1 * w); console.log(l.offsetWidth + ' ' + b.offsetWidth)
 		  if (l.offsetWidth >= w) {
 		    if(1 * e.marginLeft.replace('px','') + 1 * e.width.replace('px','') + 1 * w >= l.offsetWidth ) {
@@ -13189,21 +13190,26 @@ if ((p1 != null) && (yt6.x)){
 		    }
 		  } else {
 		      e.height = '0px'
-		      yt6.osw.style.left = windowwidth - w + 'px'
+		      yt6.osw.style.left = -1 * a.style.left.replace('px','') / 2 + 'px'//windowwidth - w + 'px'
 		    }; //console.log(l.offsetWidth +' '+w)
 
-	      if (flexyleft) {
-		a.style.left = parseFloat(a.style.left.replace('px','')) - flexyleft + 'px'
-		e.marginTop = ''
-	      }
+	      if (!c) {
+	        e.display = 'none'
+		e.position = ''
+	      } else {
+		  e.position = 'absolute'
+		  e.width = '100%'
+		}
+
 	    } else {
 	        ptc.insertBefore(yt6.tbg, ptc.firstChild)
-	        yt6.wna.style = ''; yt6.wna.removeAttribute('style')
+	        yt6.wna.style.marginTop = '16px'//yt6.wna.style = ''; yt6.wna.removeAttribute('style')
 	        yt6.osw.style.height = yt6.osw.offsetHeight + 'px'
 	        yt6.osw.style.marginTop = -1 * yt6.osw.offsetHeight + 'px'
 	        if (playlist) playlist.removeAttribute('style')
 	        if (!yt6.x && !c && p && p.style.width == 'auto') p.style.width = yt6.osw.style.width = windowwidth + 'px'
 	        if (windowwidth >= 657 && (yt6.x || yt6.force_flash)) yt6.osw.setAttribute('hidden','')
+		
 	      }
 
 	if (windowwidth + yt6.sb < 1000) ptc.style.top = ''
@@ -13471,38 +13477,38 @@ function nop(){//    } else {
     if (document.getElementById('bm0').getAttribute('id') == gc('html5-video-content')[0].getAttribute('id')) var yt = v.style
     //console.log(v.style.height + ' '+bm0.height);console.log( 1 * bm0.height.replace('px','') - hdiff - v.style.height.replace('px','') - 0 )
     var x = Math.abs(1 * bm0.height.replace('px','') - hdiff - v.style.height.replace('px','') - 0)
-    if ( (1 * bm0.width.replace('px','')) < Math.round((bm0.height.replace('px','') - hdiff) * yt6.aspect_ratio )) {
+    if ( (1 * bm0.width.replace('px','')) < ((bm0.height.replace('px','') - hdiff) * yt6.aspect_ratio )) {
 	v.style.width = yt.width = bm0.width
 	if (x > 0 && x < 1) {
 	  yt.height = v.style.height
 	} else v.style.height = yt.height = bm0.width.replace('px','') / yt6.aspect_ratio - 0 + 'px'
 	v.style.left = yt.left = '0px'
-	v.style.top = yt.top = Math.round((( 1 * bm0.height.replace('px','') - yt.height.replace('px','') ) / 2) - (hdiff / 2)) + 'px'
+	v.style.top = yt.top = ((( 1 * bm0.height.replace('px','') - yt.height.replace('px','') ) / 2) - (hdiff / 2)) + 'px'
 	if (webgl) {
-	  if (!( (1 * bm0.height.replace('px','')) < Math.round(bm0.width.replace('px','') / (webgl.width / webgl.height)) )) {
+	  if (!( (1 * bm0.height.replace('px','')) < (bm0.width.replace('px','') / (webgl.width / webgl.height)) )) {
  	    webgl.style.width = bm0.width
 	    webgl.style.height = Math.round(bm0.width.replace('px','') / (webgl.width / webgl.height)) + 'px'
 	    webgl.parentNode.style.left = '0px'
 	    webgl.parentNode.style.top = Math.round(yt.top.replace('px','') - ((1 * webgl.style.height.replace('px','') - 1 * yt.height.replace('px','')) / 2)) + 'px'
 	  } else {
 		webgl.style.height = 1 * bm0.height.replace('px','') - hdiff + 'px'
-		webgl.style.width = Math.round((bm0.height.replace('px','') - hdiff) * (webgl.width / webgl.height)) + 'px'
+		webgl.style.width = ((bm0.height.replace('px','') - hdiff) * (webgl.width / webgl.height)) + 'px'
 		webgl.parentNode.style.left = Math.round((bm0.width.replace('px','') - webgl.style.width.replace('px','') ) / 2) + 'px';
 		webgl.parentNode.style.top = Math.round(yt.top.replace('px','') - ((1 * webgl.style.height.replace('px','') - 1 * yt.height.replace('px','')) / 2)) + 'px'
 	    }
 	}
     } else {
-	v.style.width = yt.width = Math.round((bm0.height.replace('px','') - hdiff) * yt6.aspect_ratio ) + 'px'
+	v.style.width = yt.width = ((bm0.height.replace('px','') - hdiff) * yt6.aspect_ratio ) + 'px'
 	if (x > 0 && x < 1) {
 	  yt.height = v.style.height
 	} else v.style.height = yt.height = (1 * bm0.height.replace('px','') - hdiff) + 'px'
-	v.style.left = yt.left = Math.round((bm0.width.replace('px','') - yt.width.replace('px','') ) / 2) + 'px'
+	v.style.left = yt.left = ((bm0.width.replace('px','') - yt.width.replace('px','') ) / 2) + 'px'
 	v.style.top = yt.top = '0px'
 	if (webgl) {
 	  webgl.style.height = 1 * bm0.height.replace('px','') - hdiff + 'px'
-	  webgl.style.width = Math.round((bm0.height.replace('px','') - hdiff) * (webgl.width / webgl.height)) + 'px'
-	  webgl.parentNode.style.left = Math.round((bm0.width.replace('px','') - webgl.style.width.replace('px','') ) / 2) + 'px'
-	  webgl.parentNode.style.top = Math.round(yt.top.replace('px','') - ((1 * webgl.style.height.replace('px','') - 1 * yt.height.replace('px','')) / 2)) + 'px'
+	  webgl.style.width = ((bm0.height.replace('px','') - hdiff) * (webgl.width / webgl.height)) + 'px'
+	  webgl.parentNode.style.left = ((bm0.width.replace('px','') - webgl.style.width.replace('px','') ) / 2) + 'px'
+	  webgl.parentNode.style.top = (yt.top.replace('px','') - ((1 * webgl.style.height.replace('px','') - 1 * yt.height.replace('px','')) / 2)) + 'px'
 	}
       }
   var properties = ['transform', 'WebkitTransform', 'MozTransform', 'msTransform', 'OTransform']
