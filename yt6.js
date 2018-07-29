@@ -1245,7 +1245,7 @@ if (yt6.html5_fail && !yt6.oldbrowser) {
   } else yt6.html5_fail = false
 }
 
-if (!yt6.oldbrowser && !yt6.html5_fail && browserName !='IE' && typeof Object.entries == 'function') {
+if (!yt6.oldbrowser && !yt6.html5_fail && browserName !='IE' && typeof Object.entries == 'function' && Object.entries.toString().indexOf('[native code]') != -1) {
 
 // This stuff only works on modern browsers/mobile devices, and will cause old javascript interpreters to fail, hence stringify
 // var arr = Object.keys(durl).map(function (key) { return durl[key]; }); // puts object values into an array
@@ -1356,7 +1356,7 @@ function test_4() {
     } catch(e) { ypsi = undefined }
 
 
-    if ( yt.player.Application && (document.getElementById('player-api') || document.getElementById('player-container')) && (!yt6.ytg && (yt6.oldbrowser || yt6.html5_fail || typeof Object.entries == 'undefined' || typeof yt6.flatten == 'undefined' || typeof ypsi == 'undefined') ) ) {
+    if ( yt.player.Application && (document.getElementById('player-api') || document.getElementById('player-container')) && (!yt6.ytg && (yt6.oldbrowser || yt6.html5_fail || typeof Object.entries == 'undefined' || (typeof Object.entries == 'function' && Object.entries.toString().indexOf('[native code]') == -1) || typeof yt6.flatten == 'undefined' || typeof ypsi == 'undefined') ) ) {
 
 
       try { var ypa = yt.player.Application.create('test-4', ytplayer.config);
@@ -1366,7 +1366,7 @@ function test_4() {
 	ypa.dispose();
       } catch(e) { yt6.error = '  \n  ' }
 
-    } else if (typeof Object.entries != 'undefined') {
+    } else if (typeof Object.entries == 'function' && Object.entries.toString().indexOf('[native code]') != -1) {
 
 
       try {
@@ -8219,6 +8219,7 @@ function mep_run() {
 					    if (!me.paused) { Seek = 1 }//; yt6.player1.pause();
 					    try { yt6.player2.media.currentTime = player2.currentTime = yt6.ct = me.currentTime } catch(e){}
 					  }
+					  if (!player2.paused) me.play()
 					});
 					addEL(me, 'play', function() {//console.log('1play')
 					  if ( (yt6 && yt6.timer == 999999999) || me.src == 'https://www.youtube.com/ptracking' )
@@ -8305,7 +8306,7 @@ function mep_run() {
 					  if (yt6.x) {
 					    var bn = gc('mejs-overlay mejs-layer mejs-overlay-play')[0]
 					    if (bn) bn.style.visibility = 'visible';
-					    if (yt6.Seeked2) { yt6.Seeked2 = false; if (Seek == 1 && yt6.sync_maybe_clear != true && player2.paused) Seek = 2; }
+					    if (Seek == 2) { yt6.Seeked2 = false; if (Seek == 1 && yt6.sync_maybe_clear != true && player2.paused) Seek = null; }
 					  }
 					  var bn = gc('play snarl-button yt-uix-button-text')[0];
 					  if (bn) { bn.innerHTML = 'play'; try { gc('play snarl-button yt-uix-button-text')[1].innerHTML = 'play' } catch(e) {} }//for(i=0;i<bn.length;i++) bn[i].innerHTML = 'play';
@@ -8316,7 +8317,7 @@ function mep_run() {
 					      if (yt6.A_V[itag(me.src)] && Seek != 1 && me.playbackRate == player2.playbackRate) { yt6.player1.setCurrentTime(me.currentTime) } else player2.playbackRate = me.playbackRate;
 					      try { player2.pause(); player2.currentTime = me.currentTime; if (me.loaded && player2.loaded && Seek == 0) Seek = null; } catch(e) {}
 					    }
-					  } else if (Seek == 1) {//on remote desktop without working sound setup forget the audio player -- it just generates errors making it seem like file decoding had failed -- we attempt to play the audio 7 times, on the 8th try, play the video part only
+					  } else if (Seek == 1) {//without working sound setup on a remote desktop forget the audio player -- it just generates errors making it seem like file decoding had failed -- we attempt to play the audio 7 times, on the 8th try play the video part only
 					      Seek = null; me.play()
 					    }
 					  //if (Seek == 2 || !(yt6.player1.media.paused)) {
@@ -8461,16 +8462,16 @@ function mep_run() {
 					      resync_live();
 					    }
 					});
-					addEL(me, 'playing', function() {//console.log('1playing ' + yt6.diff)
+					addEL(me, 'playing', function() {//console.log('1playing '+ Seek +' '+ player1.media.playing +' '+ player2.playing)
 					  if ( (yt6 && yt6.timer == 999999999) || me.src == 'https://www.youtube.com/ptracking' )
 					    return void 0;
 					  if (me.playing == player2.playing) { player2.playing = 0 } else me.playing = player2.playing;
 					  if (yt6.A_V[itag(me.src)] && !player2.paused )  {// && Srcto != Audio
 					    player2.pause()
 					  }
-					  if (yt6.sync_maybe_clear == true && Seek == 1 && parseInt(yt6.diff) < parseInt(0.3)) { Seek = null; delete yt6.sync_maybe_clear }
+					  if (Seek == 1 && parseInt(yt6.diff) < parseInt(0.3)) { Seek = null; delete yt6.sync_maybe_clear }//yt6.sync_maybe_clear == true && 
 					});
-					addEL(me, 'seeked', function() {//console.log('1seeked')
+					addEL(me, 'seeked', function() {//console.log('1seeked '+ Seek +' '+ player1.media.playing +' '+ player2.playing)
 					  if ( (yt6 && yt6.timer == 999999999) || me.src == 'https://www.youtube.com/ptracking' )
 					    return void 0;
 					  if (yt6.speed) { player2.playbackRate = me.playbackRate = yt6.speed; }
@@ -8480,8 +8481,9 @@ function mep_run() {
 					    if (me.paused) {
 					      yt6.player2.setCurrentTime( me.currentTime )
 					    } else {
-					        if (Seek != 3 && Seek != 0) {
+					        if (Seek != 3 && Seek != 0) {// && player2.playing == me.playing
 						  Seek = 1; //case of seeking without hitting pause
+						  if (yt6.Seeked2 && !yt6.oldbrowser) yt6.Seeked2 = false
 						};
 					        //if (yt6.audiox) { player2.currentTime = me.currentTime; }
 					      };
@@ -8545,24 +8547,28 @@ function mep_run() {
 					    }
 					  if (yt6.player1.media.loaded) yt6.newvideo = false
 					});
-					addEL(me, 'seeked', function() {//console.log('2seeked')
+					addEL(me, 'seeked', function() {//console.log('2seeked '+ Seek +' '+ player1.media.playing +' '+ player2.playing)
 					  if ( (yt6 && yt6.timer == 999999999) || me.src == 'https://www.youtube.com/ptracking' )
 					    return void 0;
-					  if (player2.duration != player2.currentTime && !(yt6.player1.media.currentTime > player2.duration)) {//ax
-					    if (me.currentTime.toFixed(2) != player1.media.currentTime.toFixed(2) && yt6.x) {// && (1*yt6.retry - 0) < 8
+					  if (player2.duration > player2.currentTime && !(yt6.player1.media.currentTime > player2.duration)) {//ax
+if (!player1.media.paused) yt6.Seeked2 = false
+					    me.p = null
+					    if (yt6.x && me.currentTime.toFixed(2) != player1.media.currentTime.toFixed(2)) {// && (1*yt6.retry - 0) < 8
 					      player1.media.currentTime = me.currentTime; Seek = 1;
 					      yt6.player1.showControls(true)
 					      //yt6.player1.options.alwaysShowControls = false
-					      if (mep()) {
-					        FireEvent2( mep(), 'mouseover' );
-					        FireEvent2( mep(), 'mouseleave' );
+					      me.p = mep()
+					      if (me.p) {
+					        FireEvent2( me.p, 'mouseover' );
+					        FireEvent2( me.p, 'mouseleave' );
 					      }
 					    }
 
 					    if (Seek == 1) {
 					      Seek = 2; //console.log(me.playing)
+					      if ((yt6.newvideo || !yt6.Seeked2) && !yt6.oldbrowser) { me.pause() }//; Seek = null
 					      if (!yt6.A_V[itag(yt6.player1.media.src)]) {
-						me.play();//if ((!yt6.Seeked2 && me.playing < 2) || yt6.loop.on && Seek != 1) { me.play(); }
+						if ((me.paused && (!yt6.Seeked2 || (player1.options.loop1 && yt6.loop.start >= me.currentTime))) || yt6.oldbrowser) me.play();
 						if (yt6.browser_tab == 'visible') {
 						  $waitUntil(
 						  function(){ if (!me.paused) return true },
@@ -8710,17 +8716,18 @@ function mep_run() {
 						     if (player() && typeof player().getPlayerState == 'function' && player().getPlayerState() == 1) me.play();//yt6.player2.play()
 						   }
 					});
-					addEL(me, 'pause', function() {//console.log('2pause ' + Seek);
+					addEL(me, 'pause', function() {//console.log('2pause '+ Seek +' '+ player1.media.playing +' '+ player2.playing)
 					  if ( (yt6 && yt6.timer == 999999999) || me.src == 'https://www.youtube.com/ptracking' )
 					    return void 0;
-					  if (player()) if (typeof player().getPlayerState != 'function' || yt6.x ) {
-					  //console.log(Seek+ ' '+yt6.player1.media.currentTime + ' '+ player1.currentTime + ' '+yt6.player2.media.currentTime+' '+player2.currentTime)
+					  if (player()) if (typeof yt6.movie_player.getPlayerState != 'function' || yt6.x ) {
 					    if (yt6.player2.media.currentTime != player2.currentTime) { player2.pause(); }
 					    if (!player1.media.paused) try { yt6.player2.pause() } catch(e) {}
 					    if (Seek == 4) { player1.play() } else player1.pause(); 
-					    if (Seek == 2 && player2.duration != player2.currentTime && !(yt6.player1.media.currentTime > player2.duration)) { Seek = null };
+					    if (Seek == 2 && player2.duration != player2.currentTime && !(yt6.player1.media.currentTime > player2.duration)) {
+					      if (!player1.media.paused) { Seek = 1 } else Seek = null
+					    };
  					  } else {
-					      if ( typeof player().getPlayerState == 'function' && !yt6.x ) try { yt6.player2.pause(); } catch(e){}
+					      if ( typeof yt6.movie_player.getPlayerState == 'function' && !yt6.x ) try { yt6.player2.pause(); } catch(e){}
 					    }
 					});
 					addEL(me, 'play', function() {//console.log('2play')
