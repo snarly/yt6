@@ -4696,6 +4696,7 @@ function getReferenceObjects() {
 	  if (l[i].getAttribute('id') == 'main') yt6.man = l[i]
 	  if (l[i].getAttribute('id') == 'alerts') yt6.wna = l[i]
 	  if (l[i].getAttribute('id') == 'info' && !yt6.ytg) yt6.inf = l[i]
+	  if (l[i].getAttribute('id') == 'miniplayer-bar') { yt6.mpb = l[i].firstChild }
 	  if (yt6.con && yt6.man && yt6.wna && (!yt6.ytg && yt6.inf)) { var l = null; break }
 	}
 
@@ -10134,6 +10135,13 @@ if (!t.sourcechooserButton) {//console.log('error')
 
 		var bm0 = document.getElementById('bm0')
 
+		if (yt6.layout == 16) if (bm0 && bm0.parentNode.parentNode.tagName.indexOf('MINIPLAYER-BAR') > -1) try {
+		  document.getElementById('player-container').appendChild(bm0)
+		  yt6.man.insertBefore(document.getElementById('alerts'), yt6.inf.previousSibling.previousSibling)
+		} catch(e){}
+
+
+
 		if (yt6.flash != 0) {
 		if (yt6.force_flash) {
 
@@ -11050,8 +11058,20 @@ if (p != null) {
 
   if ((wide_view() || document.getElementById('aspect') != null) && yt6.tbg) {
     if (yt6.size && yt6.size != 'default') { if (yt6.tbg.style.backgroundColor != 'rgb(16, 16, 16)') yt6.tbg.style.backgroundColor = 'rgb(16, 16, 16)' } else if (yt6.tbg.style.backgroundColor != 'black') yt6.tbg.style.backgroundColor = 'black';
-  } else {
-      if (!yt6.size || yt6.size == 'default') if (yt6.tbg.style.backgroundColor != 'transparent') yt6.tbg.style.backgroundColor = 'transparent'
+  } else if (!yt6.size || yt6.size == 'default') {
+		if (yt6.tbg.style.backgroundColor != 'transparent') yt6.tbg.style.backgroundColor = 'transparent'
+		if (yt6.flexy) {
+		    yt6.osw.style = ''
+		    if (typeof yt6.w.replace == 'function') {
+		      if (yt6.api.parentNode.offsetWidth != 1 * yt6.w.replace('px','') || yt6.api.parentNode.offsetHeight != 1 * yt6.h.replace('px','')) {
+			//console.log('? '+yt6.api.parentNode.offsetWidth + ' ' + yt6.api.parentNode.offsetHeight)
+			yt6.w = yt6.api.parentNode.offsetWidth + 'px'
+			yt6.h = yt6.api.parentNode.offsetHeight + 'px'
+			resize_layers(yt6.w, yt6.h, true) // flexible player auto-rescaling occurs here
+		      }
+		    }
+		}
+
     }
 
 
@@ -11369,6 +11389,29 @@ if (yt6.force_flash) {
         } else { x.stopping++ }
     }
   }
+}
+
+
+if (yt6.layout == 16 && yt6.mpb && yt6.ytg) {
+
+
+    var on = false
+    if (yt6.mpb.hasAttribute('active')) {
+      if (bm0 && bm0.parentNode != document.getElementsByTagName('ytd-player')[0].parentNode) try {
+	on = (!yt6.player1.media.paused) ? true : false
+	document.getElementsByTagName('ytd-player')[0].parentNode.appendChild(bm0)
+	document.getElementsByTagName('ytd-player')[0].parentNode.appendChild(document.getElementById('alerts'))
+      } catch(e){}
+      if (yt6.x) { if (yt6.wna.style.marginTop != bm0.style.height) yt6.wna.style.marginTop = bm0.style.height } else yt6.wna.style.marginTop = ''
+      yt6.wna.style.minWidth = '426px'
+    } else if (bm0 && bm0.parentNode.parentNode.tagName.indexOf('MINIPLAYER-BAR') > -1) try {
+	on = (!yt6.player1.media.paused) ? true : false
+	document.getElementById('player-container').appendChild(bm0)
+	yt6.man.insertBefore(document.getElementById('alerts'), yt6.inf.previousSibling.previousSibling)
+	resize_layers(bm0.style.width, bm0.style.height)
+      } catch(e){}
+   if (on) try { yt6.player1.play() } catch(e){}
+
 }
 
 
@@ -11962,7 +12005,7 @@ if (f != null) {
 }*/
 
   if (typeof JSON != 'undefined') {
-    yy = {}
+    var yy = {}
     yy.width = JSON.stringify(y.width)
     yy.height = JSON.stringify(y.height)
     yy.left = JSON.stringify(y.left)
@@ -12114,9 +12157,9 @@ if (!yt6.fullscreen || yt6.fullscreen == false || (ytp_class && ytp_class.indexO
 	p1.style.top = '0px'
 
 
-  if ( (w < (1 * p1.style.width.replace('px',''))) || ( (windowheight < (1 * p1.style.height.replace('px',''))) && (yt6.size == 'theater') ) ) {
+  if ( (w < (1 * p1.style.width.replace('px',''))) || ( (windowheight < (1 * p1.style.height.replace('px',''))) && (yt6.size == 'theater' || yt6.flexy) ) ) {
 
-    if ( ( ((1 * p1.style.height.replace('px','')) < windowheight ) || (w < (1 * p1.style.width.replace('px',''))) ) && (mep != null) ){//|| (!((1 * p1.style.height.replace('px','')) > windowheight )) ) {
+    if ( ( ((1 * p1.style.height.replace('px','')) < windowheight ) || (w < (1 * p1.style.width.replace('px',''))) || yt6.flexy ) && (mep != null) ){//|| (!((1 * p1.style.height.replace('px','')) > windowheight )) ) {
 	    p1.style.width = w + 'px'
 	    p1.style.height = Math.round( w / yt6.aspect_ratio ) - hdiff + 'px'
 	    p1.style.top = ( (h - p1.style.height.replace('px','')) / 2 - (hdiff / 2) ) + 'px'
@@ -12244,7 +12287,7 @@ function zip(){
     a.style.backgroundColor = 'transparent'
     a.style.minHeight = '0px'
     a.style.maxHeight = '9999px'
-    a.style.display = 'inline-block'
+    a.style.display = (!yt6.flexy) ? 'inline-block' : ''
 
     if (a.getAttribute('id') == 'player' && !yt6.ytg) {
 	var l = yt6.con
@@ -12833,7 +12876,7 @@ if (a.getAttribute('id') != 'player') { //pre-2016 layout start
 	  }
 
 
-	//still default view but tiny in size (theater mode changes back to default too when browser window shrinks the player this small)
+	//still default view but tiny in size (theater mode changes back to default when browser window shrinks the player this small)
 	if (windowwidth + yt6.sb < 657) { //console.log('tiny')
 	  if (playlist) {
 	    playlist.style.marginTop = '48px'
@@ -13594,10 +13637,10 @@ function aspect(a) {
 
 //alert(a + ' ' + windowwidth + ' ' + playerwidth + bm0.style.width + bm0.style.height + Math.round(1*((windowheight / 100 >>0) * 80) * yt6.me_aspect) +  'px '+ bm0.style.height + ' ' + Math.round((windowheight / 100 >>0) * 80) + 'px' + Math.round(playerwidth / yt6.aspect_ratio) + 'px')
 
-  if ( yt6.size == 'custom' || a == 'media' ||
+  if ( yt6.size == 'custom' || a == 'media' || yt6.navigation ||
        (
-	a != 'default' && !(yt6.size == 'theater' && yt6.flexy) &&
-	 ( (!((1*bm0.style.height.replace('px','') == Math.round((windowheight / 100 >>0) * 80)) && (1*bm0.style.width.replace('px','') == Math.round(2+((windowheight / 100 >>0) * 80) * yt6.me_aspect)) && (yt6.size == 'theater') )) || yt6.size != 'theater'
+	a != 'default' && //!(yt6.size == 'theater' && yt6.flexy) &&
+	 ( (!((1*bm0.style.height.replace('px','') == Math.round((windowheight / 100 >>0) * 80)) && (1*bm0.style.width.replace('px','') == Math.round(2+((windowheight / 100 >>0) * 80) * yt6.me_aspect)) && (yt6.size == 'theater') )) //|| yt6.size != 'theater'
 	 ) &&
 	 ( ((webgl) && (  (bm0.style.height != Math.round(playerwidth / parseFloat(webgl.width / webgl.height)) + 'px') || (!dw)  )) ||
 	   ((!webgl) && (  (bm0.style.height != Math.round(playerwidth / yt6.aspect_ratio) + 'px') || (!dw)  )) ||
@@ -14104,7 +14147,7 @@ function control_panel1() {
 
     var remove = document.createElement('div');
     remove.id = 'remove-sp';
-    var remove_sp_innerhtml = '<button onclick="switch_players()" class="snarl-button yt-uix-button-text" aria-label="Switch" title="Switch" style="width: 14px; height: 22px; padding: 0 1px 0 0"><img src="//s.ytimg.com/yts/img/HTML5_1Color_Black-vfl902gVJ.png" style="vertical-align:middle; height:12px; padding:0px""></img></button><button onclick="aspect()" class="snarl-button yt-uix-button-text" aria-label="Resize" title="Resize">«↔»</button><br><button onclick="var z = window.prompt(\'Are you sure you want to quit? \(Exit options: 0-3\)\\n Cancel = Not now;\\n 0 = Remove script without page refresh;\\n 1 = Refresh page with classic layout;\\n 2 = Refresh page with new layout \(if supported\);\\n 3 = Visit page on Gaming subdomain;\', \'0\'); if (z && z != 0 && (z == 1 || z == 2 || z == 3)) { if (z == 2) document.cookie=&quot;PREF=f1=50000000&f5=10&f6=1004;path=/;domain=.youtube.com;expires=Session&quot;; if (z == 1) document.cookie=&quot;PREF=f1=50000000&f5=10&f6=8;path=/;domain=.youtube.com;expires=Session&quot;; if (z == 3) { location.href = window.location.href.replace(\'www.youtube.com\',\'gaming.youtube.com\') } else location.href = window.location.href.replace(\'gaming.youtube.com\',\'www.youtube.com\') } else if (z == 0) deldiv()" class="snarl-button yt-uix-button-text" aria-label="Remove" title="Remove">X</button><button id="audio_x" class="snarl-button yt-uix-button-text" aria-label="External audio" title="External audio" style="padding: 0 1px 0 1px; right: 0px" onclick="if (yt6.player1 && yt6.player2 && typeof yt6.player2.load == \'function\') { var audio_x = window.prompt(\'Enter URL of any audio (or video) file across the net to use as background sound. Only plays alongside non-MSE-mode video-only sources.\', document.getElementById(\'no.2\').src); yt6.audiox = document.getElementById(\'no.2\').src = yt6.player2.media.src = audio_x || yt6.linx[yt6.userprefA[0]]; if (!audio_x) { yt6.audiox = null; delete yt6.audiox }; yt6.player1.pause(); yt6.player2.load() };">audio</button></div>'
+    var remove_sp_innerhtml = '<button onclick="switch_players()" class="snarl-button yt-uix-button-text" aria-label="Switch" title="Switch" style="width: 22px; height: 22px; padding: 0 1px 0 0"><img src="//s.ytimg.com/yts/img/HTML5_1Color_Black-vfl902gVJ.png" style="vertical-align:middle; height:12px; padding:0px""></img></button><button onclick="aspect()" class="snarl-button yt-uix-button-text" style="width: 30px" aria-label="Resize" title="Resize">«↔»</button><br><button style="width: 22px" onclick="var z = window.prompt(\'Are you sure you want to quit? \(Exit options: 0-3\)\\n Cancel = Not now;\\n 0 = Remove script without page refresh;\\n 1 = Refresh page with classic layout;\\n 2 = Refresh page with new layout \(if supported\);\\n 3 = Visit page on Gaming subdomain;\', \'0\'); if (z && z != 0 && (z == 1 || z == 2 || z == 3)) { if (z == 2) document.cookie=&quot;PREF=f1=50000000&f5=10&f6=1004;path=/;domain=.youtube.com;expires=Session&quot;; if (z == 1) document.cookie=&quot;PREF=f1=50000000&f5=10&f6=8;path=/;domain=.youtube.com;expires=Session&quot;; if (z == 3) { location.href = window.location.href.replace(\'www.youtube.com\',\'gaming.youtube.com\') } else location.href = window.location.href.replace(\'gaming.youtube.com\',\'www.youtube.com\') } else if (z == 0) deldiv()" class="snarl-button yt-uix-button-text" aria-label="Remove" title="Remove">X</button><button id="audio_x" class="snarl-button yt-uix-button-text" aria-label="External audio" title="External audio" style="padding: 0 1px 0 1px; right: 0px" onclick="if (yt6.player1 && yt6.player2 && typeof yt6.player2.load == \'function\') { var audio_x = window.prompt(\'Enter URL of any audio (or video) file across the net to use as background sound. Only plays alongside non-MSE-mode video-only sources.\', document.getElementById(\'no.2\').src); yt6.audiox = document.getElementById(\'no.2\').src = yt6.player2.media.src = audio_x || yt6.linx[yt6.userprefA[0]]; if (!audio_x) { yt6.audiox = null; delete yt6.audiox }; yt6.player1.pause(); yt6.player2.load() };">audio</button></div>'
 
     span.appendChild(remove);
     remove.setAttribute('style','display: inline-block');
