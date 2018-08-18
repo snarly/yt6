@@ -12608,7 +12608,7 @@ if (a.getAttribute('id') != 'player') { //pre-2016 layout start
 
 	    masthead.setAttribute('style','--ytd-masthead-height:40px')
 	    e.marginTop = '16px'; 
-	    if (yt6.x || (windowwidth + yt6.sb >= 1000 && ((p && p.getAttribute('class') == 'forced flashplayer') || !c) ) ) {
+	    if (yt6.x || (windowwidth + yt6.sb >= 1000 && ((p && p.getAttribute('class') == 'forced flashplayer')) ) ) {
 	      var mc = 16 - MC //(c) ? 16 : 0
 	      a.style.marginTop = '16px'
 	    } else var mc = 0
@@ -12689,8 +12689,10 @@ if (a.getAttribute('id') != 'player') { //pre-2016 layout start
 		  }
 		  if (chat) { chat.style = ''; chat.removeAttribute('style') }
 	      } else {//console.log('not wider than base  s-193 ' + b.offsetWidth + '  '+ w + ' ' + windowwidth +' '+ l.offsetWidth)
+		  //t-left too wide, minimal correction needed (-2.5)
+		  e.marginLeft = e.marginLeft.replace('px','') - 2.5 + 'px'
 		  if (Math.ceil(l.offsetWidth/854) == 1) { a.parentNode.style.top = -1 * h + 'px'; } else { a.parentNode.style.top = (yt6.flex) ? '0px' : '' }
-		  if (w < l.offsetWidth) {
+		  if (l.offsetWidth >= w) {
 		    e.width = api.left = (windowwidth - w) / 2 + 'px'
 		  } else {
 		      e.width = api.left = parseFloat(e.marginLeft.replace('px','').replace('-','')) - w + l.offsetWidth + 'px'
@@ -13200,14 +13202,14 @@ if ((p1 != null) && (yt6.x)){
 
       if (document.getElementById('secondary')) {
 
-	var eleft = (windowwidth - yt6.top.offsetWidth - document.getElementById('secondary').offsetWidth) / 2 + yt6.sb
+	var eleft = (windowwidth - yt6.top.offsetWidth - document.getElementById('secondary').offsetWidth + 24) / 2
 	e.marginLeft = -1 * eleft + 'px'
 	e.width = (yt6.top.offsetWidth - w) + 'px'
 
 	if (yt6.size == 'media' || yt6.size == 'theater') {
 	  //console.log(e.width); console.log(yt6.inf.offsetWidth); console.log(parseFloat(e.width.replace('px','')) + 1 * w); 
 	  //console.log(flexyleft)
-	  if (parseFloat(e.width.replace('px','')) + 1 * w >= yt6.inf.offsetWidth) { //console.log('B')
+	  /*if (parseFloat(e.width.replace('px','')) + 1 * w >= yt6.inf.offsetWidth) { //console.log('B')
 	    var x = (yt6.inf.offsetWidth - w)
 	    if (parseFloat(e.width.replace('px','')) + 1 * w >= yt6.top.offsetWidth) { //console.log('C')
 	      var x = (yt6.top.offsetWidth - w)
@@ -13217,7 +13219,7 @@ if ((p1 != null) && (yt6.x)){
 	    }
 	  } else { //console.log('A')
 	      var x = e.width.replace('px','')
-	    }; //console.log(x)
+	    }; //console.log(x)*/
 
 	  //e.width = x + 'px'
 	  //if (yt6.size == 'theater') a.parentNode.removeAttribute('style')
@@ -13228,6 +13230,8 @@ if ((p1 != null) && (yt6.x)){
 	    a.style.left = (windowwidth - w) / 2 + 'px'
 	    if (!yt6.x) { a.style.top = yt6.api.style.top = '16px' }
 	  } else {
+		  yt6.osw.style.left = (windowwidth - 2*eleft - w) / 2 + 'px'
+		  a.style.left = '0px'		  
 	      a.style.top = yt6.api.style.top = ''
 	      if (!playlist) document.getElementById('secondary').style.marginTop = h + 'px'
 	    }
@@ -13249,12 +13253,13 @@ if ((p1 != null) && (yt6.x)){
 	      yt6.wna.style = ''; yt6.wna.removeAttribute('style')
 
 	      if (flexyleft) {
-		a.style.left = parseFloat(a.style.left.replace('px','')) - flexyleft + 'px'
+		//a.style.left = parseFloat(a.style.left.replace('px','')) - flexyleft + 'px'
+		e.marginLeft = -1 * eleft + 'px'
 		e.marginTop = ''
 	      }
 
 		//console.log(1 * e.marginLeft.replace('px','') + 1 * e.width.replace('px','') + 1 * w); console.log(l.offsetWidth + ' ' + b.offsetWidth)
-		  if (l.offsetWidth >= w) {
+		  /*if (l.offsetWidth >= w) {
 		    if(1 * e.marginLeft.replace('px','') + 1 * e.width.replace('px','') + 1 * w >= l.offsetWidth ) {
 			  //console.log(e.marginLeft)
 			  var x = 1 * e.marginLeft.replace('px','') + 1 * e.width.replace('px','') + 1 * w
@@ -13263,7 +13268,7 @@ if ((p1 != null) && (yt6.x)){
 		  } else {
 		      e.height = '0px'
 		      yt6.osw.style.left = -1 * a.style.left.replace('px','') / 2 + 'px'//windowwidth - w + 'px'
-		    }; //console.log(l.offsetWidth +' '+w)
+		    }; //console.log(l.offsetWidth +' '+w)*/
 
 	      if (!c) {
 	        e.display = 'none'
@@ -13274,6 +13279,7 @@ if ((p1 != null) && (yt6.x)){
 		}
 
 	    } else {
+	        e.marginLeft = '0px'
 	        ptc.insertBefore(yt6.tbg, ptc.firstChild)
 	        yt6.wna.style.marginTop = '16px'//yt6.wna.style = ''; yt6.wna.removeAttribute('style')
 	        yt6.osw.style.height = yt6.osw.offsetHeight + 'px'
