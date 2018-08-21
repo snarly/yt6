@@ -13257,7 +13257,7 @@ if (yt6.flexy) {
 	var eleft = (windowwidth - base + 24) / 2
 	e.marginLeft = -1 * eleft + 'px'
 	e.width = windowwidth + 'px'//(yt6.top.offsetWidth - w) + 'px'
-	a.style.left = ''
+
 
 	if (c) {
 
@@ -13280,12 +13280,20 @@ if (yt6.flexy) {
 	    if (yt6.x && w >= windowwidth) a.style.left = '0px'
 
 	  } else {
+
+	      a.style.left = ''
 	      yt6.osw.style.left = x + 'px'
 
-	      if (w >= windowwidth) {//console.log('? '+ windowwidth + ' '+w +' '+yt6.osw.style.left)
+	      if (w >= windowwidth || ( !(w >= windowwidth) && (w/yt6.aspect_ratio >= windowheight)) ) {
 
 	        //if (windowwidth + yt6.sb < 1000) yt6.osw.style.left = -1 * yt6.osw.style.left.replace('px','') + 'px'
-		yt6.osw.style.left = x + (w - windowwidth) / 2 + 'px' 
+
+		if (h > a.parentNode.offsetHeight && h > h * yt6.aspect_ratio && !(w > w / yt6.aspect_ratio)) {
+		  var y = (h - a.parentNode.offsetHeight) * yt6.aspect_ratio / 2
+		  yt6.osw.style.left = (x + y) + 'px'
+		} else if (w >= windowwidth) { 
+		    yt6.osw.style.left = x + ((w - windowwidth) / 2) + 'px' 
+		  }
 		if (windowwidth + yt6.sb < 657) yt6.osw.style.left = '-24px'
 	      } //else console.log('! '+ windowwidth + ' '+w +' '+yt6.osw.style.left)
 
@@ -13303,7 +13311,7 @@ if (yt6.flexy) {
 	    yt6.api.style.top = ''
 
 	    var y = (yt6.inf.offsetWidth - a.parentNode.offsetWidth) / 2
-	    yt6.osw.style.left = (y > 0) ? y + 'px' : '';
+	    a.style.left = (y > 0) ? y + 'px' : '';
 	  }
       }
 
