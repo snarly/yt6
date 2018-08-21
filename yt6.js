@@ -827,10 +827,10 @@ function FireEvent2( element, event ) {
 }
 
 
-if (typeof HTMLElement.prototype.click == 'undefined')
-HTMLElement.prototype.click = function(){
-  try { window._spf_state['history-callback'](this.href) } catch(e){ FireEvent2(this, 'click') }
-}
+if (typeof HTMLElement != 'undefined' && typeof HTMLElement.prototype.click == 'undefined')
+  HTMLElement.prototype.click = function(){
+    try { window._spf_state['history-callback'](this.href) } catch(e){ FireEvent2(this, 'click') }
+  }
 
 
 try { var mouseEvt = document.createEvent("MouseEvents") } catch(e) {}
@@ -13257,6 +13257,7 @@ if (yt6.flexy) {
 	var eleft = (windowwidth - base + 24) / 2
 	e.marginLeft = -1 * eleft + 'px'
 	e.width = windowwidth + 'px'//(yt6.top.offsetWidth - w) + 'px'
+	a.style.left = ''
 
 	if (c) {
 
@@ -13270,37 +13271,27 @@ if (yt6.flexy) {
 	      }
 	  }
 
+	  var x = (windowwidth - 2 * eleft - w) / 2;
+	  var x = (a.parentNode.offsetWidth >= w) ? x : x - ((w - a.parentNode.offsetWidth) / 2) //a.parentNode == player-container-inner
+
 	  if (yt6.wide) {
 
 	    a.style.left = (windowwidth - w) / 2 + 'px'
-	    //if (!yt6.x) { a.style.top = yt6.api.style.top = '16px' }
+	    if (yt6.x && w >= windowwidth) a.style.left = '0px'
 
 	  } else {
-
-	      var x = (windowwidth - 2 * eleft - w) / 2;
-	      var x = (a.parentNode.offsetWidth >= w) ? x : x - ((w - a.parentNode.offsetWidth) / 2)
 	      yt6.osw.style.left = x + 'px'
-		//(l.offsetWidth >= w) ? x + 'px' : a.style.left.replace('px','') - (h * yt6.aspect_ratio - l.offsetWidth) / 2 + 2*eleft + 'px';
-
-	        //a.style.left.replace('px','') - eleft - (h * yt6.aspect_ratio - l.offsetWidth) / 2 + 'px';
-		//x - (w - (h * yt6.aspect_ratio)) / 2 + 'px';//(yt6.aspect_ratio >= w/h) ? x + 'px' : 
-
-	      //yt6.osw.style.left = x - eleft + 'px'
-	      a.style.left = (l.offsetWidth >= w) ? '' : ''//(l.offsetWidth - w) / 2 + 'px'//- (w - (h * yt6.aspect_ratio)) / 2 + 'px'
 
 	      if (w >= windowwidth) {//console.log('? '+ windowwidth + ' '+w +' '+yt6.osw.style.left)
 
-		//yt6.osw.style.left = a.style.left.replace('px','') - (h * yt6.aspect_ratio - l.offsetWidth) / 2 + 2*eleft + 'px'
-		a.style.left = ''
 	        //if (windowwidth + yt6.sb < 1000) yt6.osw.style.left = -1 * yt6.osw.style.left.replace('px','') + 'px'
 		yt6.osw.style.left = x + (w - windowwidth) / 2 + 'px' 
 		if (windowwidth + yt6.sb < 657) yt6.osw.style.left = '-24px'
 	      } //else console.log('! '+ windowwidth + ' '+w +' '+yt6.osw.style.left)
 
-
-	      //a.style.top = yt6.api.style.top = (l.offsetWidth >= w) ? '' : '0px'
 	      if (!playlist) yt6.wsb.style.marginTop = h + 'px'
 	    }
+
 
 	} else {
 	    //e.marginLeft = 2 * flexyleft + w + 'px'
@@ -13310,8 +13301,9 @@ if (yt6.flexy) {
 		yt6.wsb.removeAttribute('style')
 	      }
 	    yt6.api.style.top = ''
+
 	    var y = (yt6.inf.offsetWidth - a.parentNode.offsetWidth) / 2
-	    a.style.left = (y > 0) ? y + 'px' : ''; //player-container-inner
+	    yt6.osw.style.left = (y > 0) ? y + 'px' : '';
 	  }
       }
 
@@ -13409,8 +13401,10 @@ if ((p1 != null) && (yt6.x)){
 	  var y = z[i].style.display
 	  z[i].style.width = x.width.replace('%','px')
 	  z[i].style.height = x.height.replace('%','px')
-	  z[i].style.left = ((p1.style.width != '100%') && (p1.style.height != '100%')) ? (w - x.width.replace('px','')) / 2 + 'px' : (screen.width - x.width.replace('px','')) / 2 + 'px'
-	  z[i].style.top = ((p1.style.width != '100%') && (p1.style.height != '100%')) ? (h - hdiff -x.height.replace('px','')) / 2 + 'px' : (screen.height - x.height.replace('px','')) / 2 + 'px'
+	  try {
+	    z[i].style.left = ((p1.style.width != '100%') && (p1.style.height != '100%')) ? (w - x.width.replace('px','')) / 2 + 'px' : (screen.width - x.width.replace('px','')) / 2 + 'px'
+	    z[i].style.top = ((p1.style.width != '100%') && (p1.style.height != '100%')) ? (h - hdiff -x.height.replace('px','')) / 2 + 'px' : (screen.height - x.height.replace('px','')) / 2 + 'px'
+	  } catch(e) {}
 	  z[i].style.display = y
         }
       }
