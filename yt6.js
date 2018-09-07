@@ -845,6 +845,7 @@ try { var mouseEvt = document.createEvent("MouseEvents") } catch(e) {}
   };
 
 
+
 yt6.cdn_ = function(){
   yt6.cdns = ['//cdn.rawgit.com/','//rawcdn.githack.com/']
   yt6.cdn = shuffle(yt6.cdns)[0]
@@ -999,11 +1000,16 @@ function find_key(rpt){
       nw = nw.replace('%s', arguments[++i])
     return nw;
   }
-  var fs = new RegExp(    sprintf('function %s[^}]+}[^}]+}', fcnm.replace('$', '\\$'))  ); if (rpt.match(fs) == null) {
-  var fs = new RegExp(    sprintf('var %s=function[^}]+};', fcnm.replace('$', '\\$'))  ); if (rpt.match(fs) == null) {
-  var fs = new RegExp(    sprintf('\\W+%s=function[^}]+}', fcnm.replace('$', '\\$'))  );//console.log('fs='+rpt.match(fs))
-  }
-  };//console.log(fs)
+
+  try {
+    var fs = new RegExp(    sprintf('function %s[^}]+}[^}]+}', fcnm.replace('$', '\\$'))  ); if (rpt.match(fs) == null) {
+      var fs = new RegExp(    sprintf('var %s=function[^}]+};', fcnm.replace('$', '\\$'))  ); if (rpt.match(fs) == null) {
+        var fs = new RegExp(    sprintf('\\W+%s=function[^}]+}', fcnm.replace('$', '\\$'))  );//console.log('fs='+rpt.match(fs))
+     }
+    };//console.log(fs)
+  } catch(e) {
+      var fs = null
+    }
   //var fs = new RegExp('function ' + fcnm.replace('\$','\\$') + '[^}]+}[^}]+}');
 
   function fcobj(){
@@ -1031,21 +1037,26 @@ function find_key(rpt){
     return [mch,zzz]
   }//fcobj
 
-  var f1 = fcobj()[0]
-  var f2 = fcobj()[1]
-  
-  var decrypt0 = rpt.match(f1)[0].split(" " + f2 + "=").join(" dekrypt0=")
-  if (rpt.match(fs)[0] && rpt.match(fs)[0].split(';')[0] && rpt.match(fs)[0].split(';')[0].indexOf('function') == -1 && rpt.match(fs)[0].split(';')[1].indexOf('function') != -1) {
-    var fs0 = (rpt.match(fs)[0].match(/;/g) || []).length;
-    var fs1 = rpt.match(fs)[0].split(';')
-    var fs2 = ''
-    for(i=1;i<fs0+1;i++){
-      var fs2 = fs2 + fs1[i] + ';'
-    }
-  } else fs2 = rpt.match(fs)[0]
+  if (fs) {
 
-  var fcnm = 'function fcnm(' + fs2.split("(")[1].split(")")[0] + '){ ' + decrypt0 + '; ' + fs2.split(f2+".").join("dekrypt0.").split(f2+"['").join("dekrypt0['").split(f2+"[\"").join("dekrypt0['").split("\"").join("'").split("){")[1]
-  var fcnm = "function " + fcnm.split("function ")[1]
+    var f1 = fcobj()[0]
+    var f2 = fcobj()[1]
+  
+    var decrypt0 = rpt.match(f1)[0].split(" " + f2 + "=").join(" dekrypt0=")
+    if (rpt.match(fs)[0] && rpt.match(fs)[0].split(';')[0] && rpt.match(fs)[0].split(';')[0].indexOf('function') == -1 && rpt.match(fs)[0].split(';')[1].indexOf('function') != -1) {
+      var fs0 = (rpt.match(fs)[0].match(/;/g) || []).length;
+      var fs1 = rpt.match(fs)[0].split(';')
+      var fs2 = ''
+      for(i=1;i<fs0+1;i++){
+        var fs2 = fs2 + fs1[i] + ';'
+      }
+    } else fs2 = rpt.match(fs)[0]
+
+    var fcnm = 'function fcnm(' + fs2.split("(")[1].split(")")[0] + '){ ' + decrypt0 + '; ' + fs2.split(f2+".").join("dekrypt0.").split(f2+"['").join("dekrypt0['").split(f2+"[\"").join("dekrypt0['").split("\"").join("'").split("){")[1]
+    var fcnm = "function " + fcnm.split("function ")[1]
+
+  } else var fcnm = "function fcnm(a) { yt6.dummy = true; return a; /* Yeah, sorry, folks. After nearly 5 years, on Sep 7 2018 they have fundamentally changed the signature decryption procedure, thus access to most copyrighted content will be limited for now. It may take a whole lot of time and effort for me to figure this one out. One tip: Currently you may only get the formats of such videos which (1) YT allowed you to select, (2) you actually selected previously on the original YT player AND (3) also started to play back before you would load the bookmarklet. So always refresh the page and choose your desired resolution(s) you wish to download beforehand. */\
+    };"
 
   eval(fcnm)
 
@@ -1261,7 +1272,7 @@ yt6.tmp = ""+
 "yt6.flatten = function(src, path, seen) {\
   var path = path || [], seen = seen || new Map(), c = src.constructor, cts = (c) ? c.toString() : '';\
   var key, value, oc, pt;\
-  if (c && c.name != 'Symbol' && cts.indexOf('function Window()') != 0 && cts.indexOf('function(){return') != 0 && cts.indexOf('function HTMLIframeElement()') != 0 && cts.indexOf('function Object()') != 0 ) \
+  if (c && c.name != 'Symbol' && cts.indexOf('function Window()') != 0 && cts.indexOf('function(){return') != 0 && cts.indexOf('function HTMLIframeElement()') != 0 && (cts.indexOf('function Object()') != 0 || yt6.dummy) ) \
   try {\
   for (let [key,value] of Object.entries(src)) { /*if (key && value) console.log(key + ' === ' + typeof value + ' === ' + value)*/;\
     if (typeof value == 'object' && value != null && path.indexOf('yt6') == -1) {\
@@ -5646,8 +5657,9 @@ if (ytplayer.config && ytplayer.config.args) {
   test_4()
 
   var t4 = document.getElementById('test-4')
-  if (!args.url_encoded_fmt_stream_map && !args.adaptive_fmts && t4 && t4.lastChild) {
-    args.adaptive_fmts = ''; args.url_encoded_fmt_stream_map = ' '
+  if (((yt6.encrypted && yt6.dummy) || (!args.url_encoded_fmt_stream_map && !args.adaptive_fmts)) && t4 && t4.lastChild) {
+    if (!yt6.dummy) { }
+      args.adaptive_fmts = ''; args.url_encoded_fmt_stream_map = ' '
     var z = t4.getElementsByTagName('A')
     for (i=0;i<z.length;i++) {
       args.adaptive_fmts = args.adaptive_fmts + 'itag=' + z[i].getAttribute('name') + '&url=' + escape(z[i].getAttribute('href'))
