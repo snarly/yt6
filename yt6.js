@@ -989,9 +989,15 @@ function find_key(rpt){
       } else var fcnm = fcnm2()
     } else {//2018 variant
 	var i = fcnm.split('"signature":"sig"')[1]
-	if (i) fcnm = i.split('=')[1].split('(')[0]
+	if (i) { fcnm = i.split('=')[1].split('(')[0]
+	} else {//2018/09
+	    //(\w+)\s*=\s*function\((\w+)\){\s*\2=\s*\2\.split\(""\)\s*;
+	    fcnm = rpt.split('=function(a){a=a.split("")')[0]; fcnm = (fcnm) ? fcnm.substr(fcnm.length-2, 3) : null
+	  }
       }
-  } else var fcnm = fcnm2()
+  } else {
+      var fcnm = fcnm2();
+    }
 
 
   function sprintf(nw) {
@@ -1002,18 +1008,29 @@ function find_key(rpt){
   }
 
   try {
-    var fs = new RegExp(    sprintf('function %s[^}]+}[^}]+}', fcnm.replace('$', '\\$'))  ); if (rpt.match(fs) == null) {
-      var fs = new RegExp(    sprintf('var %s=function[^}]+};', fcnm.replace('$', '\\$'))  ); if (rpt.match(fs) == null) {
-        var fs = new RegExp(    sprintf('\\W+%s=function[^}]+}', fcnm.replace('$', '\\$'))  );//console.log('fs='+rpt.match(fs))
-     }
-    };//console.log(fs)
+
+      var fs = new RegExp(    sprintf('function %s[^}]+}[^}]+}', fcnm.replace('$', '\\$'))  );
+      if (rpt.match(fs) == null) {
+	var fs = new RegExp(    sprintf('var %s=function[^}]+};', fcnm.replace('$', '\\$'))  );
+	if (rpt.match(fs) == null) {
+	  var fs = new RegExp(    sprintf('\\W+%s=function[^}]+}', fcnm.replace('$', '\\$'))  );//console.log('fs='+rpt.match(fs))
+	}
+      }
+
+    //var fs = new RegExp('function ' + fcnm.replace('\$','\\$') + '[^}]+}[^}]+}');
+    //console.log(fs)
+    var fs = rpt.match(fs)[0] //old
+
   } catch(e) {
-      var fs = null
+
+      if (!fcnm) { var fcnm = rpt.split('=function(a){a=a.split("")')[0]; fcnm = (fcnm) ? fcnm.substr(fcnm.length-2, 3) : null }
+      var fs = fcnm + '=function(a){a=a.split("")'; fs = fs + rpt.split(fs)[1].split('};')[0];
+
     }
-  //var fs = new RegExp('function ' + fcnm.replace('\$','\\$') + '[^}]+}[^}]+}');
+
 
   function fcobj(){
-    var mch = rpt.match(fs)[0];  mch = mch.split('');
+    var mch = fs; mch = mch.split('');
     for (j=0;j<mch.length;j++) {
       if (mch[j] === "$") {
         mch[j]="\\$"
@@ -1033,7 +1050,7 @@ function find_key(rpt){
         var zzy = zzx
       }
     }
-    var mch = new RegExp('var ' + zzz + '[^}]+}[^}]+}[^}]+}};');
+    var mch = new RegExp('var ' + zzz + '[^}]+}[^}]+}[^}]+}};');//console.log(mch)
     return [mch,zzz]
   }//fcobj
 
@@ -1043,17 +1060,17 @@ function find_key(rpt){
     var f2 = fcobj()[1]
   
     var decrypt0 = rpt.match(f1)[0].split(" " + f2 + "=").join(" dekrypt0=")
-    if (rpt.match(fs)[0] && rpt.match(fs)[0].split(';')[0] && rpt.match(fs)[0].split(';')[0].indexOf('function') == -1 && rpt.match(fs)[0].split(';')[1].indexOf('function') != -1) {
-      var fs0 = (rpt.match(fs)[0].match(/;/g) || []).length;
-      var fs1 = rpt.match(fs)[0].split(';')
+    if (fs && fs.split(';')[0] && fs.split(';')[0].indexOf('function') == -1 && fs.split(';')[1].indexOf('function') != -1) {
+      var fs0 = (fs.match(/;/g) || []).length;
+      var fs1 = fs.split(';')
       var fs2 = ''
       for(i=1;i<fs0+1;i++){
         var fs2 = fs2 + fs1[i] + ';'
       }
-    } else fs2 = rpt.match(fs)[0]
+    } else fs2 = fs
 
     var fcnm = 'function fcnm(' + fs2.split("(")[1].split(")")[0] + '){ ' + decrypt0 + '; ' + fs2.split(f2+".").join("dekrypt0.").split(f2+"['").join("dekrypt0['").split(f2+"[\"").join("dekrypt0['").split("\"").join("'").split("){")[1]
-    var fcnm = "function " + fcnm.split("function ")[1]
+    var fcnm = "function " + fcnm.split("function ")[1]; //console.log(fcnm)
 
   } else var fcnm = "function fcnm(a) { yt6.dummy = true; return a; /* Yeah, sorry, folks. After nearly 5 years, on Sep 7 2018 they have fundamentally changed the signature decryption procedure, thus access to most copyrighted content will be limited for now. It may take a whole lot of time and effort for me to figure this one out. One tip: Currently you may only get the formats of such videos which (1) YT allowed you to select, (2) you actually selected previously on the original YT player AND (3) also started to play back before you would load the bookmarklet. So always refresh the page and choose your desired resolution(s) you wish to download beforehand. */\
     };"
@@ -13489,8 +13506,8 @@ if ((p1 != null) && (yt6.x)){
   if (poster && poster_img && typeof poster_img.naturalWidth == 'number') {
     var x = (poster_img.naturalWidth / poster_img.naturalHeight)
     var y = (poster_img.naturalHeight / poster_img.naturalWidth)
-    //console.log([x , (1 * p1.style.width.replace('px','') / p1.style.height.replace('px','')) , 16/9 , (1 * p1.style.height.replace('px','') / p1.style.width.replace('px','')) , 9/16])
-    if ((h/w - 3/4) > parseFloat(0.2)) {
+    //console.log([x , y, (1 * p1.style.width.replace('px','') / p1.style.height.replace('px','')) , 16/9 , (1 * p1.style.height.replace('px','') / p1.style.width.replace('px','')) , 9/16 , w/h])
+    if ((h/w - 3/4) > parseFloat(0.2) || Math.abs(x - (1 * p1.style.width.replace('px','') / p1.style.height.replace('px',''))) < parseFloat(0.2) ) {
       poster.style.width = x * h + 'px'
       poster.style.height = bm0.style.height
       poster.style.marginTop = ''
