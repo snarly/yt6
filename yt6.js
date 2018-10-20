@@ -5182,7 +5182,7 @@ yt6.pl_next = null; delete yt6.pl_next
   var z = document.getElementById('playlist') || document.getElementsByTagName('ytg-playlist-panel-renderer')[0]
     if ((z && z.style.display != 'none' && !z.hasAttribute('hidden')) || (z && yt6.ytg)) {
       if (!yt6.ytg) {
-	var z =  document.getElementsByTagName('YTD-PLAYLIST-PANEL-VIDEO-RENDERER')
+	var z =  document.getElementsByTagName('YTD-PLAYLIST-PANEL-SUPPORTED-ITEMS') //('YTD-PLAYLIST-PANEL-VIDEO-RENDERER')
       } else {
 	  var z = document.getElementsByTagName('YTG-PLAYLIST-PANEL-VIDEO-RENDERER')// || gc('style-scope ytg-playlist-panel-video-renderer x-scope ytg-nav-endpoint-5')
 	  //if (z && z.tagName != 'DIV') z = z.parentNode.children
@@ -11357,7 +11357,7 @@ if (yt6.force_flash || (p.tagName == 'EMBED' && p.getAttribute('class') == 'forc
 						  } else {
 						    var z = document.getElementById('playlist') || gc('style-scope ytg-playlist-panel-renderer')[0]
 						    if ((z && z.style.display != 'none') || (z && yt6.ytg)) {
-						      var z = (!yt6.ytg) ? document.getElementsByTagName('YTD-PLAYLIST-PANEL-VIDEO-RENDERER') : gc('style-scope ytg-playlist-panel-video-renderer x-scope ytg-nav-endpoint-5')
+						      var z = (!yt6.ytg) ? document.getElementsByTagName('YTD-PLAYLIST-PANEL-SUPPORTED-ITEMS') : gc('style-scope ytg-playlist-panel-video-renderer x-scope ytg-nav-endpoint-5')
 						      if (z && z[0]) {
 							var mix = gclass('flex style-scope ytd-playlist-panel-renderer x-scope ytd-menu-renderer-0')
 							for(i=0;i<z.length;i++) if (z[i]) {
