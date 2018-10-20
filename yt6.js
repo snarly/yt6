@@ -551,7 +551,13 @@ yt6.userprefA = [171,140]
     334: {'t':'720p WebM VP9 HDR','a':'298'},
     335: {'t':'1080p WebM VP9 HDR','a':'299'},
     336: {'t':'1440p WebM VP9 HDR','a':'264'},
-    337: {'t':'2160p WebM VP9 HDR','a':'138'}
+    337: {'t':'2160p WebM VP9 HDR','a':'138'},
+    394: {'t':'144p DASH AC1','a':'278'},
+    395: {'t':'240p DASH AC1','a':'242'},
+    396: {'t':'360p DASH AC1','a':'243'},
+    397: {'t':'480p DASH AC1','a':'244'},
+    398: {'t':'720p DASH AC1','a':'247'},
+    399: {'t':'1080p DASH AC1','a':'248'}
   };
 
 
@@ -1072,7 +1078,7 @@ function find_key(rpt){
     var fcnm = 'function fcnm(' + fs2.split("(")[1].split(")")[0] + '){ ' + decrypt0 + '; ' + fs2.split(f2+".").join("dekrypt0.").split(f2+"['").join("dekrypt0['").split(f2+"[\"").join("dekrypt0['").split("\"").join("'").split("){")[1]
     var fcnm = "function " + fcnm.split("function ")[1]; //console.log(fcnm)
 
-  } else var fcnm = "function fcnm(a) { yt6.dummy = true; return a; /* Yeah, sorry, folks. After nearly 5 years, on Sep 7 2018 they have fundamentally changed the signature decryption procedure, thus access to most copyrighted content will be limited for now. It may take a whole lot of time and effort for me to figure this one out. One tip: Currently you may only get the formats of such videos which (1) YT allowed you to select, (2) you actually selected previously on the original YT player AND (3) also started to play back before you would load the bookmarklet. So always refresh the page and choose your desired resolution(s) you wish to download beforehand. */\
+  } else var fcnm = "function fcnm(a) { yt6.dummy = true; return a; /* Yeah, sorry, folks. Looks like they have fundamentally changed the signature decryption procedure, thus access to most copyrighted content will be limited for now. It may take some time and effort to figure this one out. One tip: Currently you may only get the formats of such videos which (1) YT allows you to select, (2) you manually selected on the original YT player's current video AND (3) also started playing back those selected formats before you would load the bookmarklet. So always refresh the page and choose your desired resolution(s) beforehand which you wish to download. */\
     };"
 
   eval(fcnm)
@@ -4732,6 +4738,9 @@ function getReferenceObjects() {
 	  if (yt6.con && yt6.man && yt6.wna && (!yt6.ytg && yt6.inf)) { var l = null; break }
 	}
 
+	var l = document.getElementsByTagName('YTD-MINIPLAYER')[0]
+	if (l) yt6.mpb = l
+
 	var z = document.getElementsByTagName('ytd-watch-flexy')[0] || document.getElementsByTagName('ytd-watch')[0]
 
 	if (z && (z.hasAttribute('flexy_') || z.hasAttribute('is-currently-flexible_') || z.hasAttribute('flexy-fit-to-video_'))
@@ -6304,6 +6313,8 @@ if (document.getElementById("bm1") != null) {
 	if (bc) { //console.log(bc.id + '"' + bc.parentNode.id + '"' + yt6.osw.parentNode.id)
 	  bc.insertBefore(dw, yt6.osw)
 	}
+	  bc = document.getElementsByTagName('YTD-PAGE-MANAGER')[0];
+	  if (bc) bc.parentNode.insertBefore(dw, bc);
       }
   }
 
@@ -10768,7 +10779,7 @@ addEL(window, 'spfdone', yt6.body.spfdone, false);
 
 	wide_view()
 
-	if (!yt6.navigation && !yt6.live && p) { //check for in-video ad
+	if (!yt6.navigation && !yt6.live && p && !(yt6.mpb && yt6.mpb.hasAttribute('active')) ) { //check for in-video ad
 
 	  var ads0 = gc('ytp-time-duration')[0]
 	  if (ads0) ads0 = ads0[yt6.txt]
@@ -11439,20 +11450,26 @@ if (yt6.layout == 16 && yt6.mpb && !yt6.ytg) {
 
     var on = false
     if (yt6.mpb.hasAttribute('active')) {
-      if (bm0 && bm0.parentNode != document.getElementsByTagName('ytd-player')[0].parentNode) try {
-	on = (!yt6.player1.media.paused) ? true : false
-	document.getElementsByTagName('ytd-player')[0].parentNode.appendChild(bm0)
-	document.getElementsByTagName('ytd-player')[0].parentNode.appendChild(document.getElementById('yt-alert-message'))
-      } catch(e){}
+      if (bm0 && yt6.movie_player && bm0.parentNode != yt6.movie_player.parentNode ) //(bm0.parentNode != document.getElementsByTagName('ytd-player')[0].parentNode || (bm0.parentNode == document.getElementsByTagName('ytd-player')[0].parentNode && )
+	try {
+	  on = (!yt6.player1.media.paused) ? true : false
+	  //document.getElementsByTagName('ytd-player')[0].parentNode.appendChild(bm0)
+	  //document.getElementsByTagName('ytd-player')[0].parentNode.appendChild(document.getElementById('yt-alert-message'))
+	  yt6.movie_player.parentNode.appendChild(bm0)
+	  yt6.movie_player.parentNode.appendChild(document.getElementById('yt-alert-message'))
+        } catch(e){}
       if (yt6.x) { if (yt6.wna.style.marginTop != bm0.style.height) yt6.wna.style.marginTop = bm0.style.height } else yt6.wna.style.marginTop = ''
       yt6.wna.style.minWidth = '426px'
-    } else if (bm0 && bm0.parentNode.parentNode.tagName.indexOf('MINIPLAYER-BAR') > -1) try {
-	on = (!yt6.player1.media.paused) ? true : false
-	document.getElementById('player-container').appendChild(bm0)
-	//yt6.man.insertBefore(yt6.wna, yt6.inf.previousSibling.previousSibling)
-	yt6.wna.appendChild(document.getElementById('yt-alert-message'))
-	resize_layers(bm0.style.width, bm0.style.height)
-      } catch(e){}
+    } else {
+	if (bm0 && bm0.parentNode.getAttribute('class').indexOf('miniplayer') > -1) //bm0.parentNode.parentNode.tagName.indexOf('MINIPLAYER') > -1 || 
+	  try {
+	    on = (!yt6.player1.media.paused) ? true : false
+	    document.getElementById('player-container').appendChild(bm0)
+	    //yt6.man.insertBefore(yt6.wna, yt6.inf.previousSibling.previousSibling)
+	    yt6.wna.appendChild(document.getElementById('yt-alert-message'))
+	    resize_layers(bm0.style.width, bm0.style.height)
+          } catch(e){}
+      }
    if (on) try { yt6.player1.play() } catch(e){}
 
 }
