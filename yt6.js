@@ -11491,7 +11491,9 @@ if (yt6.flexy && yt6.pls) {
 	if (yt6.spf == true) { yt6.spf = true } else { yt6.spf = false
 
 	// Check to see if the location has changed.
-	if ( yt6.title != document.title || yt6.strLocation != window.location.href || watch == null ) {
+	if ( yt6.title != document.title || yt6.strLocation != window.location.href || watch == null )
+	 if ((window.ytplayer && window.ytplayer.config) && !(yt6.mpb && yt6.mpb.hasAttribute('active')) ) {
+
 	  if (window.ytplayer.config == null) { gc('clear')[0].setAttribute('id','ytp-conf-null'); };
 //	if ((document.getElementById('placeholder-player') != null) && (bm0 != null) && (bm0.style.width != fix_Width()) ) aspect(yt6.size)
 
@@ -11689,8 +11691,9 @@ if (yt6.flexy && yt6.pls) {
 
 
 	} else {//location change
-	    if (window.ytplayer.config == null) { window.ytplayer.config = {}; window.ytplayer.config.args = {} }
-	    if (yt6.args != window.ytplayer.config.args) {
+	    if (!window.ytplayer) window.ytplayer = {}
+	    if (!window.ytplayer.config) { window.ytplayer.config = {}; window.ytplayer.config.args = {} }
+	    if (window.ytplayer.config.args && yt6.args != window.ytplayer.config.args) {
 	        $( window.location ).trigger( "change",
 		  {
 		    currentHref: yt6.strLocation,
@@ -11707,7 +11710,7 @@ if (yt6.flexy && yt6.pls) {
 //console.log(yt6.title + document.title + '!!'+ yt6.change + '!!');
 
         if (window.location.href.indexOf('v=' + yt6.change) == -1 && window.location.href.indexOf('v/' + yt6.change) == -1) {
-	  if (document.title != 'YouTube' || yt6.title != window.ytplayer.config.args.title) {
+	  if (document.title != 'YouTube' || (window.ytplayer && window.ytplayer.config && window.ytplayer.config.args && yt6.title != window.ytplayer.config.args.title) ) {
 	    if (typeof yt6.title == 'undefined' || yt6.title != document.title || yt6.strLocation != window.location.href) {
 	      yt6.title = document.title
               if (yt6.layout == 16 && document.title == 'YouTube' && gc('title style-scope ytd-video-primary-info-renderer')[0]) yt6.title = gc('title style-scope ytd-video-primary-info-renderer')[0][yt6.txt]
