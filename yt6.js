@@ -11137,8 +11137,9 @@ if (yt6.mpb && yt6.mpb.tagName == 'YTD-MINIPLAYER') {
 		    } else yt6.osw.style = ''; //important
 
 		    if (yt6.w && typeof yt6.w.replace == 'function') {
-		      if (yt6.api.parentNode.offsetWidth != 1 * yt6.w.replace('px','') || Math.abs(yt6.api.parentNode.offsetHeight - 1 * yt6.h.replace('px','')) > 10 ) { // player height tends to not be exact in Chrome, need some redundancy with the check here, say 10px
-			//console.log('? '+yt6.api.parentNode.offsetWidth + ' ' + yt6.w.replace('px','') +' ? ' + yt6.api.parentNode.offsetHeight +' '+ yt6.h.replace('px','') + ' '+ yt6.w.replace('px','') / yt6.aspect_ratio + ' '+document.getElementById('yt-alert-message').parentNode.id)
+		      var z = document.getElementById('player-conatainer-inner')
+		      if (yt6.api.parentNode.offsetWidth != 1 * yt6.w.replace('px','') || (z && Math.abs(z.offsetHeight - 1 * yt6.h.replace('px','')) > 10 )) { // player height tends to not be exact in Chrome, need some redundancy with the check here, say 10px
+			//console.log('? '+yt6.api.parentNode.offsetWidth + ' ' + yt6.w.replace('px','') +' ? ' + yt6.api.parentNode.offsetHeight +' '+ yt6.h.replace('px','') + ' '+ yt6.w.replace('px','') / yt6.aspect_ratio + ' '+yt6.api.parentNode.id + yt6.api.id + document.getElementById('yt-alert-message').parentNode.id)
 			yt6.w = yt6.api.parentNode.offsetWidth + 'px'
 			yt6.h = (!(yt6.mpb && yt6.mpb.hasAttribute('active'))) ? yt6.w.replace('px','') / yt6.aspect_ratio + 'px' : yt6.w.replace('px','') / (16/9) + 'px' //yt6.api.parentNode.offsetHeight + 'px'
 			resize_layers(yt6.w, yt6.h, true) // flexible player auto-rescaling occurs here
