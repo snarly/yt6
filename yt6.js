@@ -13544,11 +13544,13 @@ if ((p1 != null) && (yt6.x)){
   if ((z != null) && (z[0] != null)) {
     if ( typeof z === 'object') { 
       z[0].setAttribute("style",bm0.style.width);
-      z[0].style.fontSize = 0.9 + (h / 32.5) + (407 / h) + "px"
+      var y = gc('captions-text')
+      for(i=0;i<y.length;y++) if (y[i] && y[i].parentNode.getAttribute('id') && y[i].parentNode.getAttribute('id').indexOf('caption-window') == 0 && y[i].firstChild.style && y[i].firstChild.style.fontSize) { y = y[i].firstChild.style.fontSize; break }
+      z[0].style.fontSize = (typeof y == 'string') ? y : 0.9 + (h / 32.5) + (407 / h) + "px";
       if (1 * z[0].style.fontSize.replace("px","") < 9.5) z[0].style.fontSize = "9.5px"
       if (1 * z[0].style.fontSize.replace("px","") > 23.5) z[0].style.fontSize = "23.5px"
     }
-    z[0].parentNode.parentNode.style.zIndex = 1;//mejs-captions-layer
+    z[0].parentNode.parentNode.style.zIndex = 0//1;//mejs-captions-layer
   }
 
   var x = [gc('mejs-sourcechooser-selector'), gc('mejs-captions-selector'), gc('mejs-speed-selector')]
