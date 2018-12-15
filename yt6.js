@@ -1295,7 +1295,7 @@ yt6.tmp = ""+
 "yt6.flatten = function(src, path, seen) {\
   var path = path || [], seen = seen || new Map(), c = src.constructor, cts = (c) ? c.toString() : '';\
   var key, value, oc, pt;\
-  if (c && c.name != 'Symbol' && cts.indexOf('function Window()') != 0 && cts.indexOf('function(){return') != 0 && cts.indexOf('function HTMLIframeElement()') != 0 && (cts.indexOf('function Object()') != 0 || yt6.dummy) ) \
+  if (c && c.name != 'Symbol' && cts.indexOf('function Window()') != 0 && cts.indexOf('function(){return') != 0 && cts.indexOf('function HTMLIframeElement()') != 0 /*&& (cts.indexOf('function Object()') != 0 || yt6.dummy)*/ ) \
   try {\
   for (let [key,value] of Object.entries(src)) { /*if (key && value) console.log(key + ' === ' + typeof value + ' === ' + value)*/;\
     if (typeof value == 'object' && value != null && path.indexOf('yt6') == -1) {\
@@ -10895,6 +10895,9 @@ addEL(window, 'spfdone', yt6.body.spfdone, false);
 	if (!yt6.x && ivo.indexOf(yt6.vid) == -1 || ivo.indexOf('$done') == -1 && p.tagName == 'DIV') {
 	  for (i=48;i<58;i++) { //0-9
 	    var ads = document.getElementById('invideo-overlay:'+String.fromCharCode(i)); if (ads) ads.style.display = 'none'
+	    for (j=48;j<58;j++) { //0-9
+	      var ads = document.getElementById('invideo-overlay:'+String.fromCharCode(i)+String.fromCharCode(j)); if (ads) ads.style.display = 'none'
+	    }
 	  }
 	  for (i=65;i<91;i++) { //A-Z
 	    var ads = document.getElementById('invideo-overlay:'+String.fromCharCode(i)); if (ads) ads.style.display = 'none'
@@ -11179,12 +11182,12 @@ if (yt6.mpb && yt6.mpb.tagName == 'YTD-MINIPLAYER') {
 		    } else yt6.osw.style = ''; //important
 
 		    if (yt6.w && typeof yt6.w.replace == 'function') {
-		      var z = document.getElementById('player-conatainer-inner')
-		      if (yt6.api.parentNode.offsetWidth != 1 * yt6.w.replace('px','') || (z && Math.abs(z.offsetHeight - 1 * yt6.h.replace('px','')) > 10 )) { // player height tends to not be exact in Chrome, need some redundancy with the check here, say 10px
+		      var z = document.getElementById('player-container-inner')
+		      if (yt6.api.parentNode.offsetWidth != 1 * yt6.w.replace('px','') || (!yt6.wide && z && Math.abs(z.offsetHeight - 1 * yt6.h.replace('px','')) > 10 )) { // player height tends to not be exact in Chrome, need some redundancy with the check here, say 10px
 			//console.log('? '+yt6.api.parentNode.offsetWidth + ' ' + yt6.w.replace('px','') +' ? ' + yt6.api.parentNode.offsetHeight +' '+ yt6.h.replace('px','') + ' '+ yt6.w.replace('px','') / yt6.aspect_ratio + ' '+yt6.api.parentNode.id + yt6.api.id + document.getElementById('yt-alert-message').parentNode.id)
 			yt6.w = yt6.api.parentNode.offsetWidth + 'px'
 			yt6.h = (!(yt6.mpb && yt6.mpb.hasAttribute('active'))) ? yt6.w.replace('px','') / yt6.aspect_ratio + 'px' : yt6.w.replace('px','') / (16/9) + 'px' //yt6.api.parentNode.offsetHeight + 'px'
-			resize_layers(yt6.w, yt6.h, true) // flexible player auto-rescaling occurs here
+			resize_layers(yt6.w, yt6.h, true) ;//console.log('flexible player dynamic rescaling occurs here')
 
 		      }
 		    }
@@ -13375,8 +13378,12 @@ if (yt6.flexy) {
 
       if (yt6.wsb) {
 
-	var base = yt6.top.offsetWidth + 1 * yt6.wsb.offsetWidth - 0
-	var eleft = (windowwidth < (base + 24)) ? 24 : (windowwidth - base + 24) / 2;// console.log(windowwidth +' '+base+' '+eleft)
+	if (!yt6.wide && yt6.top.getAttribute('id') == 'columns') {
+	  var l = gc('style-scope ytd-watch-flexy')
+	  if (l[0]) for (i=0;i<l.length;i++) if (l[i].getAttribute('id') == 'primary') { var base = l[i]; break }
+	} else base = yt6.top
+	var base = base.offsetWidth + 1 * yt6.wsb.offsetWidth - 0
+	var eleft = (windowwidth < (base + 24)) ? 24 : (windowwidth - base + 24) / 2; //console.log(windowwidth +' '+base+' '+eleft)
 	e.marginLeft = -1 * eleft + 'px'
 	e.width = windowwidth + 'px'//(yt6.top.offsetWidth - w) + 'px'
 
@@ -13410,13 +13417,14 @@ if (yt6.flexy) {
 
 	        //if (windowwidth + yt6.sb < 1000) yt6.osw.style.left = -1 * yt6.osw.style.left.replace('px','') + 'px'
 
-		if (h > a.parentNode.offsetHeight && h > h * yt6.aspect_ratio && !(w > w / yt6.aspect_ratio)) {
+		if (h > a.parentNode.offsetHeight) {// && h > h * yt6.aspect_ratio && !(w > w / yt6.aspect_ratio)
 		  var y = (h - a.parentNode.offsetHeight) * yt6.aspect_ratio / 2
-		  yt6.osw.style.left = (x + y) + 'px'
+		  yt6.osw.style.left = -1 * y - 24 + 'px' //(x + y) + 'px'
 		} else if (w >= windowwidth) { 
-		    yt6.osw.style.left = x + ((w - windowwidth) / 2) + 'px' 
-		  }
+		    yt6.osw.style.left = x + ((w - windowwidth) / 2) + 'px'
 		if (windowwidth + yt6.sb < 657) yt6.osw.style.left = '-24px'
+		  }
+
 	      } //else console.log('! '+ windowwidth + ' '+w +' '+yt6.osw.style.left)
 
 	      if (!playlist) yt6.wsb.style.marginTop = h + 'px'
@@ -13445,7 +13453,7 @@ if (yt6.flexy) {
 
 	      //if (flexyleft) {
 		//a.style.left = parseFloat(a.style.left.replace('px','')) - flexyleft + 'px'
-		e.marginLeft = -1 * eleft + 'px'
+		e.marginLeft = '0px' //-1 * eleft + 'px'
 		e.marginTop = ''
 	      //}
 
@@ -14250,6 +14258,11 @@ function deldiv(){
     }
   }
 
+  if (yt6.layout == 16 && yt6.api && yt6.api.getAttribute('id') == 'ytd-player' && !yt6.api.hasAttribute('hidden')) {//yt6.movie_player.parentNode.getAttribute('id') == 'ytd-player')
+    if (yt6.api.firstElementChild != yt6.movie_player && yt6.api.firstElementChild.id == 'container') {
+      try { yt6.api.firstElementChild.appendChild(yt6.movie_player) } catch(e) { yt6.api.parentNode.appendChild(yt6.movie_player) }
+    } else yt6.api.parentNode.appendChild(yt6.movie_player)
+  }
 
   var z = gc('forced flashplayer')[0]
   if (z && (!yt6.oldbrowser && !yt6.html5_fail) && yt6.original) {
