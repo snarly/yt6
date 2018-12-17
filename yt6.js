@@ -396,9 +396,10 @@ if (!window.onchange) {
 }//window.onchange
 
 
-if ((document.getElementById(mep_x("google_ads_frame")) != null) && (typeof fnCheckLocation != 'number')) {
+if (typeof fnCheckLocation != 'number') { //document.getElementById(mep_x("google_ads_frame")) != null &&
 var noads = setInterval(function(){
   var ads = gc('videoAdUiSkipButton')[0]; if (ads) { ads.click();ads.setAttribute("class","videoAdUiSkipButton") }
+  var ads = gc('ytp-ad-skip-ad-slot')[0]; if (ads) { ads.click();ads.setAttribute("class","ytp-ad-skip-ad-slot") }
   var ads = gc('ad-container ad-container-single-media-element-annotations ad-overlay')[0]; if (ads) { ads.style.display = 'none' }
   var ads = gc("video-ads html5-stop-propagation")[0]; if (ads) { ads.parentNode.removeChild(ads) };
   var ads = document.getElementById("google_companion_ad_div"); if (ads) { ads.parentNode.removeChild(ads) };
@@ -6525,7 +6526,7 @@ var jq0 = function()
 "}"+
 
 ".snarl-button {"+
-"	height: 22px;"+
+//"	height: 22px;"+ // did not fix frequent tor-browser glitch (vertically stretched buttons)
 "	display:inline-block;"+
 "	max-height:30px;"+
 "	border:solid 1px transparent;"+
@@ -10883,6 +10884,7 @@ addEL(window, 'spfdone', yt6.body.spfdone, false);
 	}
 
 	var ads = gc('videoAdUiSkipButton')[0]; if (ads && !yt6.x) { ads.click(); ads.setAttribute("class","videoAdUiSkipButton") }
+	var ads = gc('ytp-ad-skip-ad-slot')[0]; if (ads && !yt6.x) { var ads = gc('ytp-ad-skip-button ytp-button')[0]; ads.click() }
 	var ads = gc('ad-container ad-container-single-media-element-annotations ad-overlay')[0]; if (ads) { ads.style.display = 'none' }
 	var ads = gc("video-ads html5-stop-propagation")[0]; if (ads) { ads.parentNode.removeChild(ads) };
 	var ads = document.getElementById("google_companion_ad_div"); if (ads) { ads.parentNode.removeChild(ads) };
@@ -10892,18 +10894,30 @@ addEL(window, 'spfdone', yt6.body.spfdone, false);
 
 	if (typeof ivo == 'undefined') var ivo = ''
 
-	if (!yt6.x && ivo.indexOf(yt6.vid) == -1 || ivo.indexOf('$done') == -1 && p.tagName == 'DIV') {
+	if (!yt6.x && ivo.indexOf(yt6.vid + '$done') == -1 && p.tagName == 'DIV') {
 	  for (i=48;i<58;i++) { //0-9
-	    var ads = document.getElementById('invideo-overlay:'+String.fromCharCode(i)); if (ads) ads.style.display = 'none'
-	    for (j=48;j<58;j++) { //0-9
+	    function adbox_begone1(i) {
+	      var ads = document.getElementById('invideo-overlay:'+String.fromCharCode(i)); if (ads) ads.style.display = 'none'
+	    }
+	    function adbox_begone2(i, j) {
 	      var ads = document.getElementById('invideo-overlay:'+String.fromCharCode(i)+String.fromCharCode(j)); if (ads) ads.style.display = 'none'
+	    }
+	    adbox_begone1(i)
+	    for (j=48;j<58;j++) { //0-9
+	      adbox_begone2(i, j)
+	    }
+	    for (j=65;j<91;j++) { //A-Z
+	      adbox_begone2(i, j)
+	    }
+	    for (j=97;j<123;j++) { //a-z
+	      adbox_begone2(i, j)
 	    }
 	  }
 	  for (i=65;i<91;i++) { //A-Z
-	    var ads = document.getElementById('invideo-overlay:'+String.fromCharCode(i)); if (ads) ads.style.display = 'none'
+	    adbox_begone1(i)
 	  }
 	  for (i=97;i<123;i++) { //a-z
-	    var ads = document.getElementById('invideo-overlay:'+String.fromCharCode(i)); if (ads) ads.style.display = 'none'
+	    adbox_begone1(i)
 	  }
 	  var ivo = yt6.vid + '$done'
 	}
@@ -11181,11 +11195,13 @@ if (yt6.mpb && yt6.mpb.tagName == 'YTD-MINIPLAYER') {
 		      yt6.osw.setAttribute('style', 'height: ' + Math.min(yt6.api.parentNode.offsetHeight, bm0.offsetHeight) + 'px; left: ' + yt6.osw.style.left + '; top: ' + yt6.osw.style.top)
 		    } else yt6.osw.style = ''; //important
 
-		    if (yt6.w && typeof yt6.w.replace == 'function') {
+		    if (yt6.wide) yt6.ww = parseInt(window.innerWidth || document.documentElement.clientWidth || yt6.body.clientWidth) - yt6.sb
+		    if (yt6.w && !(yt6.wide && yt6.w == yt6.ww + 'px') && !(yt6.mpb && yt6.mpb.hasAttribute('active') && yt6.w == p.parentNode.offsetWidth + 'px') && typeof yt6.w.replace == 'function') {
 		      var z = document.getElementById('player-container-inner')
 		      if (z.offsetWidth != 1 * yt6.w.replace('px','') || (!yt6.wide && z && Math.abs(z.offsetHeight - 1 * yt6.h.replace('px','')) > 10 )) { // player height tends to not be exact in Chrome, need some redundancy with the check here, say 10px
 			//console.log('? '+z.offsetWidth + ' ' + yt6.w.replace('px','') +' ? ' + z.offsetHeight +' '+ yt6.h.replace('px','') + ' '+ yt6.w.replace('px','') / yt6.aspect_ratio + ' '+yt6.api.parentNode.id + yt6.api.id + document.getElementById('yt-alert-message').parentNode.id)
-			yt6.w = z.offsetWidth + 'px'
+			yt6.w = (z.offsetWidth || yt6.ww) + 'px';
+			if (yt6.mpb && yt6.mpb.hasAttribute('active')) yt6.w = p.parentNode.offsetWidth + 'px'
 			yt6.h = (!(yt6.mpb && yt6.mpb.hasAttribute('active'))) ? yt6.w.replace('px','') / yt6.aspect_ratio + 'px' : yt6.w.replace('px','') / (16/9) + 'px' //yt6.api.parentNode.offsetHeight + 'px'
 			if (1 * yt6.h.replace('px','') - 0 > yt6.wh) {
 			  yt6.h = yt6.wh + 'px'
@@ -13074,8 +13090,11 @@ if (yt6.flexy) {
     if (playlist) {
 	playlist.firstChild.insertBefore(document.getElementById('yt-alert-message'), playlist.firstChild.firstChild)
 	playlist.style.marginTop = '0px'
-	yt6.con.style.marginTop = '-24px'
-    } else yt6.con.style.marginTop = ''
+	yt6.con.style.marginTop = (w == windowwidth && w + yt6.sb > 801) ? h + 'px' : ''//'-24px'
+    } else {
+	yt6.con.style.marginTop = ''
+	if (w == windowwidth && w > 743) yt6.wna.style.marginTop = ''
+      }
 
       if ((windowwidth + yt6.sb) >= 657) {
 	//yt6.wna.style.marginTop = '-361px' //'-427px'
@@ -13464,8 +13483,9 @@ if (yt6.flexy) {
 
 	      //if (flexyleft) {
 		//a.style.left = parseFloat(a.style.left.replace('px','')) - flexyleft + 'px'
-		e.marginLeft = '0px' //-1 * eleft + 'px'
-		e.marginTop = ''
+		if (playlist && windowwidth >= 1000 && (windowwidth < (base + 24)) ) { e.marginLeft = -24 + 1 * (windowwidth - base) + 'px' } else
+		  e.marginLeft = '0px' //-1 * eleft + 'px'
+		e.marginTop = '';
 	      //}
 
 		//console.log(1 * e.marginLeft.replace('px','') + 1 * e.width.replace('px','') + 1 * w); console.log(l.offsetWidth + ' ' + b.offsetWidth)
