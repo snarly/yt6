@@ -6527,8 +6527,8 @@ var jq0 = function()
 
 ".snarl-button {"+
 //"	height: 22px;"+ // did not fix frequent tor-browser glitch (vertically stretched buttons)
+//"	max-height:30px;"+
 "	display:inline-block;"+
-"	max-height:30px;"+
 "	border:solid 1px transparent;"+
 "	outline:0;"+
 "	text-decoration:none;"+
