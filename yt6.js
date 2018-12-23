@@ -13090,7 +13090,7 @@ if (yt6.flexy) {
     if (playlist) {
 	playlist.firstChild.insertBefore(document.getElementById('yt-alert-message'), playlist.firstChild.firstChild)
 	playlist.style.marginTop = '0px'
-	yt6.con.style.marginTop = (w == windowwidth && w + yt6.sb > 801) ? h + 'px' : ''//'-24px'
+	yt6.con.style.marginTop = (w == windowwidth && w + yt6.sb > 723) ? h + 'px' : ''//'-24px'
     } else {
 	yt6.con.style.marginTop = ''
 	if (w == windowwidth && w > 743) yt6.wna.style.marginTop = ''
