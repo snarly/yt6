@@ -11219,8 +11219,9 @@ if (yt6.mpb && yt6.mpb.tagName == 'YTD-MINIPLAYER') {
 		  }
 
 		  if (yt6.size == 'default') {
-		    if (!(yt6.mpb && yt6.mpb.hasAttribute('active'))) {
-		      yt6.osw.setAttribute('style', 'height: ' + Math.min(yt6.api.parentNode.offsetHeight, bm0.offsetHeight) + 'px; left: ' + yt6.osw.style.left + '; top: ' + yt6.osw.style.top)
+		    if ((yt6.mpb && yt6.mpb.hasAttribute('active'))) {
+		      var z = (yt6.osw.style.top) ? '; top: ' + yt6.osw.style.top : ''
+		      yt6.osw.setAttribute('style', 'height: ' + Math.min(yt6.api.parentNode.parentNode.offsetHeight, bm0.offsetHeight) + 'px; left: ' + yt6.osw.style.left + z); //console.log(yt6.osw.style.height +' '+ yt6.api.parentNode.parentNode.id +' '+ yt6.api.parentNode.parentNode.offsetHeight +' '+ bm0.offsetHeight)
 		    } else yt6.osw.style = ''; //important
 
 		    yt6.ww = parseInt(window.innerWidth || document.documentElement.clientWidth || yt6.body.clientWidth) - yt6.sb
@@ -11229,7 +11230,7 @@ if (yt6.mpb && yt6.mpb.tagName == 'YTD-MINIPLAYER') {
 		    }
 
 		    if (yt6.w && !(yt6.wide && yt6.w == yt6.ww + 'px') && !(yt6.mpb && yt6.mpb.hasAttribute('active') && yt6.w == p.parentNode.offsetWidth + 'px') && typeof yt6.w.replace == 'function') {
-		      var z = document.getElementById('player-container-inner')
+		      var z = !(yt6.mpb && yt6.mpb.hasAttribute('active')) ? document.getElementById('player-container-inner') : yt6.api.parentNode.parentNode
 		      if (z) { //console.log((z.offsetWidth / z.offsetHeight).toFixed(9) +' '+ (yt6.w.replace('px','') / yt6.h.replace('px','')).toFixed(9) )
 		      if (yt6.wide && ((z.offsetWidth != 1 * yt6.w.replace('px','') && p.style.left != '0px') || (z.offsetHeight == 0 && yt6.h.replace('px','') != yt6.w.replace('px','') / yt6.aspect_ratio)) || (!yt6.wide && ((z.offsetWidth != 1 * yt6.w.replace('px','') && (z.offsetWidth / z.offsetHeight).toFixed(9) != (yt6.w.replace('px','') / yt6.h.replace('px','')).toFixed(9)  ) || Math.abs(z.offsetHeight - 1 * yt6.h.replace('px','')) > 30 )) ) { // player height tends to not be exact in Chrome, need some redundancy with the check here, say 10px
 			//console.log((z.offsetWidth / z.offsetHeight).toFixed(9) +' '+ (yt6.w.replace('px','') / yt6.h.replace('px','')).toFixed(9) + ' ? '+z.offsetWidth + ' ' + yt6.w.replace('px','') +' ? ' + z.offsetHeight +' '+ yt6.h.replace('px','') + ' '+ yt6.w.replace('px','') / yt6.aspect_ratio + ' '+yt6.api.parentNode.id + yt6.api.id + document.getElementById('yt-alert-message').parentNode.id)
@@ -12090,7 +12091,7 @@ function resize_layers(w,h,me_aspect){
 
   var windowwidth = parseInt(window.innerWidth || document.documentElement.clientWidth || yt6.body.clientWidth) - yt6.sb;// - 1
   var windowheight = parseInt(window.innerHeight || document.documentElement.clientHeight || yt6.body.clientHeight)
-  windowheight = yt6.wh = (yt6.size != 'default') ? Math.round((windowheight / 100 >>0) * 80) : windowheight
+  windowheight = yt6.wh = (yt6.size != 'default' || (yt6.size == 'default' && yt6.mpb && yt6.mpb.hasAttribute('active'))) ? Math.round((windowheight / 100 >>0) * 80) : windowheight
 
   if (document.getElementById('aspect')) {
 	document.getElementById('yt-alert-message').style.width = '100%'
@@ -14061,7 +14062,7 @@ function aspect(a) {
 	var pa = document.getElementById('player-area'); if (!bm0.ytg_oh && pa) bm0.ytg_oh = pa.style.height
 	var sb = document.getElementById('sidebar') || document.getElementsByTagName('ytg-watch-sidebar')[0]
     }
-    var playerwidth = (!yt6.size != 'default') ? Math.min( Math.round(((windowheight / 100 >>0) * 80) * yt6.aspect_ratio), windowwidth) : Math.min( Math.round(windowheight * yt6.aspect_ratio), windowwidth)
+    var playerwidth = (yt6.size != 'default' || (yt6.size == 'default' && yt6.mpb && yt6.mpb.hasAttribute('active'))) ? Math.min( Math.round(((windowheight / 100 >>0) * 80) * yt6.aspect_ratio), windowwidth) : Math.min( Math.round(windowheight * yt6.aspect_ratio), windowwidth)
   //} else {console.log('t2 '+windowwidth + ' '+ Math.round(((windowheight / 100 >>0) * 80) * yt6.aspect_ratio))
       //var playerwidth = Math.min( Math.round(((windowheight / 100 >>0) * 80) * yt6.aspect_ratio), windowwidth)
     //}
@@ -14238,7 +14239,7 @@ function aspect(a) {
 	var x = window.pageXOffset || (document.documentElement || document.body.parentNode || document.body).scrollLeft
 	var y = window.pageYOffset || (document.documentElement || document.body.parentNode || document.body).scrollTop
 	var windowheight = parseInt(window.innerHeight || document.documentElement.clientHeight || yt6.body.clientHeight)
-        windowheight = yt6.wh = (yt6.size != 'default') ? Math.round((windowheight / 100 >>0) * 80) : Math.round(windowheight)
+        windowheight = yt6.wh = (yt6.size != 'default' || (yt6.size == 'default' && yt6.mpb && yt6.mpb.hasAttribute('active'))) ? Math.round((windowheight / 100 >>0) * 80) : Math.round(windowheight)
         var windowwidth = parseInt(window.innerWidth || document.documentElement.clientWidth || yt6.body.clientWidth)
 
 
