@@ -12091,7 +12091,8 @@ function resize_layers(w,h,me_aspect){
 
   var windowwidth = parseInt(window.innerWidth || document.documentElement.clientWidth || yt6.body.clientWidth) - yt6.sb;// - 1
   var windowheight = parseInt(window.innerHeight || document.documentElement.clientHeight || yt6.body.clientHeight)
-  windowheight = yt6.wh = (yt6.size != 'default' || (yt6.size == 'default' && yt6.mpb && yt6.mpb.hasAttribute('active'))) ? Math.round((windowheight / 100 >>0) * 80) : windowheight
+  windowheight = yt6.wh = (yt6.size != 'default') ? Math.round((windowheight / 100 >>0) * 80) : windowheight
+  if (yt6.size == 'default' && yt6.mpb && yt6.mpb.hasAttribute('active')) windowheight = Math.min(yt6.api.parentNode.parentNode.offsetHeight, bm0.offsetHeight)
 
   if (document.getElementById('aspect')) {
 	document.getElementById('yt-alert-message').style.width = '100%'
@@ -14062,7 +14063,8 @@ function aspect(a) {
 	var pa = document.getElementById('player-area'); if (!bm0.ytg_oh && pa) bm0.ytg_oh = pa.style.height
 	var sb = document.getElementById('sidebar') || document.getElementsByTagName('ytg-watch-sidebar')[0]
     }
-    var playerwidth = (yt6.size != 'default' || (yt6.size == 'default' && yt6.mpb && yt6.mpb.hasAttribute('active'))) ? Math.min( Math.round(((windowheight / 100 >>0) * 80) * yt6.aspect_ratio), windowwidth) : Math.min( Math.round(windowheight * yt6.aspect_ratio), windowwidth)
+    var playerwidth = (yt6.size != 'default') ? Math.min( Math.round(((windowheight / 100 >>0) * 80) * yt6.aspect_ratio), windowwidth) : Math.min( Math.round(windowheight * yt6.aspect_ratio), windowwidth)
+	if (yt6.size == 'default' && yt6.mpb && yt6.mpb.hasAttribute('active')) playerwidth = Math.min(yt6.api.parentNode.parentNode.offsetWidth, bm0.offsetWidth)
   //} else {console.log('t2 '+windowwidth + ' '+ Math.round(((windowheight / 100 >>0) * 80) * yt6.aspect_ratio))
       //var playerwidth = Math.min( Math.round(((windowheight / 100 >>0) * 80) * yt6.aspect_ratio), windowwidth)
     //}
@@ -14239,7 +14241,8 @@ function aspect(a) {
 	var x = window.pageXOffset || (document.documentElement || document.body.parentNode || document.body).scrollLeft
 	var y = window.pageYOffset || (document.documentElement || document.body.parentNode || document.body).scrollTop
 	var windowheight = parseInt(window.innerHeight || document.documentElement.clientHeight || yt6.body.clientHeight)
-        windowheight = yt6.wh = (yt6.size != 'default' || (yt6.size == 'default' && yt6.mpb && yt6.mpb.hasAttribute('active'))) ? Math.round((windowheight / 100 >>0) * 80) : Math.round(windowheight)
+        windowheight = yt6.wh = (yt6.size != 'default') ? Math.round((windowheight / 100 >>0) * 80) : Math.round(windowheight)
+    if (yt6.size == 'default' && yt6.mpb && yt6.mpb.hasAttribute('active')) windowheight = Math.min(yt6.api.parentNode.parentNode.offsetHeight, bm0.offsetHeight)
         var windowwidth = parseInt(window.innerWidth || document.documentElement.clientWidth || yt6.body.clientWidth)
 
 
