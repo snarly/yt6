@@ -11149,7 +11149,7 @@ function nop(){		var z = gc('video-stream html5-main-video')[0]
 
 if (p != null) {
 
-  yt6.ytp_api = (yt6.api.id == 'container') ? yt6.api.parentNode.parentNode : yt6.api
+  yt6.ytp_api = (yt6.layout == 16 && yt6.api.id == 'container') ? yt6.api.parentNode.parentNode : yt6.api
 
   var z = p.getAttribute('class');
   if (typeof z == 'string') {
@@ -11175,14 +11175,20 @@ if (p != null) {
       if (yt6.ytp_fullscreen && yt6.ytp_api.parentNode.id == 'player-theater-container')
       try {
         document.getElementById('player-container').style.setProperty('max-height', '', '') //yt6.ytp_api.parentNode.offsetHeight - yt6.ytp_marginTop + 'px','');
-        yt6.tbg.style.display = 'none';
+        yt6.tbg.style.display = 'none'
+	if (yt6.wna) {
+	  yt6.wna.style.marginTop = '0px'// (1 * yt6.wna.style.marginTop.replace('px','') + yt6.ytp_marginTop + 8) + 'px';console.log('2 '+yt6.wna.style.marginTop)
+	}
         document.getElementById('player-theater-container').style.top = ''
+        document.getElementById('player-theater-container').style.maxHeight = ''
+        document.getElementById('player-theater-container').style.minHeight = ''
       } catch(e){}
 
     } else { // yt fullscreen off
 	if (yt6.ytp_fullscreen) {
 	  resize_layers(yt6.osw.style.width, yt6.osw.style.height)
 	  yt6.ytp_fullscreen = false
+	  yt6.wna.name = ''
 	}
       }
   } else {
@@ -11234,9 +11240,9 @@ if (yt6.mpb && yt6.mpb.tagName == 'YTD-MINIPLAYER') {
 		  }
 
 		  if (yt6.size == 'default') {
-		    if ((yt6.mpb && yt6.mpb.hasAttribute('active'))) {
+		    if (!(yt6.mpb && yt6.mpb.hasAttribute('active'))) {
 		      var z = (yt6.osw.style.top) ? '; top: ' + yt6.osw.style.top : ''
-		      yt6.osw.setAttribute('style', 'height: ' + Math.min(yt6.api.parentNode.parentNode.offsetHeight, bm0.offsetHeight) + 'px; left: ' + yt6.osw.style.left + z); //console.log(yt6.osw.style.height +' '+ yt6.api.parentNode.parentNode.id +' '+ yt6.api.parentNode.parentNode.offsetHeight +' '+ bm0.offsetHeight)
+		      yt6.osw.setAttribute('style', 'height: ' + Math.min(yt6.api.parentNode.offsetHeight, bm0.offsetHeight) + 'px; left: ' + yt6.osw.style.left + z); //console.log(yt6.osw.style.height +' '+ yt6.api.parentNode.parentNode.id +' '+ yt6.api.parentNode.parentNode.offsetHeight +' '+ bm0.offsetHeight)
 		    } else yt6.osw.style = ''; //important
 
 		    yt6.ww = parseInt(window.innerWidth || document.documentElement.clientWidth || yt6.body.clientWidth) - yt6.sb
@@ -11278,7 +11284,7 @@ if (yt6.mpb && yt6.mpb.tagName == 'YTD-MINIPLAYER') {
 		}
 
 	var z = document.getElementsByTagName('ytd-player')[0]
-	if (z) { z.style.height = (yt6.x) ? yt6.h : z.parentNode.offsetHeight + 'px' }//: 'auto'
+	if (z) { z.style.height = !(yt6.fullscreen || yt6.ytp_fullscreen) ? yt6.h : z.parentNode.parentNode.offsetHeight + 'px' }//: 'auto'
 
 	var z = document.getElementById('toast')
 	if (z && z.tagName == 'PAPER-TOAST' && z.getAttribute('class') && z.getAttribute('class').indexOf('click-through-this') == -1) { z.setAttribute('class', z.getAttribute('class') + ' click-through-this'); }
@@ -12206,7 +12212,7 @@ function nop(){//    } else {
       var b = yt6.top//document.getElementById('top') || document.getElementById('content-layer')
       b.style.setProperty('margin-top','',''); b.removeAttribute('style');// = '0px'
       yt6.tbg.style.setProperty('margin-bottom','','')
-      yt6.tbg.style.setProperty('display','inline-block','')
+      if (!(yt6.fullscreen || yt6.ytp_fullscreen)) yt6.tbg.style.setProperty('display','inline-block','')
       if (!yt6.ytg) { yt6.inf.style.setProperty('marginTop','',''); yt6.inf.removeAttribute('style') }
     }
   var c = document.getElementById('aspect')
@@ -13697,21 +13703,26 @@ if ((p1 != null) && (yt6.x)){
   //if (!flexyleft && p1) flexyleft = 1 * p1.style.left.replace('px','')
 
   if (mep) var poster = gc('mejs-poster mejs-layer')[0] || getElementsByAttribute(mep,'div','class','mejs-poster mejs-layer')[0]
-  if (poster) var poster_img = poster.getElementsByTagName('img')[0]
-  if (poster && poster_img && typeof poster_img.naturalWidth == 'number') {
-    var x = (poster_img.naturalWidth / poster_img.naturalHeight)
-    var y = (poster_img.naturalHeight / poster_img.naturalWidth)
-    //console.log([x , y, (1 * p1.style.width.replace('px','') / p1.style.height.replace('px','')) , 16/9 , (1 * p1.style.height.replace('px','') / p1.style.width.replace('px','')) , 9/16 , w/h])
-    if ((h/w - 3/4) > parseFloat(0.2) || Math.abs(x - (1 * p1.style.width.replace('px','') / p1.style.height.replace('px',''))) < parseFloat(0.2) ) {
-      poster.style.width = x * h + 'px'
-      poster.style.height = bm0.style.height
-      poster.style.marginTop = ''
-      poster.style.marginLeft = (w - 1 * poster.style.width.replace('px','')) / 2 + 'px'
-    } else {
-	poster.style.width = Math.abs(Math.abs(x - (w / h)) - parseFloat(24/10 - 4/3).toFixed(2) < parseFloat(0.2) ) ? bm0.style.width : w - (x * h ) / 2 + 'px'; //1 * bm0.style.width.replace('px','') / ((16/9) / x) + 'px'
-	poster.style.height = y * w + 'px'
-	poster.style.marginTop = (h - 1 * poster.style.height.replace('px','')) / 2 + 'px'
-	poster.style.marginLeft = Math.abs(Math.abs(x - (w / h)) - parseFloat(24/10 - 4/3).toFixed(2) < parseFloat(0.2) ) ? '' : (w - 1 * poster.style.width.replace('px','')) / 2 + 'px'; //(w - 1 * poster.style.width.replace('px','')) / 2 + 'px'
+  if (typeof poster != 'undefined') {
+    var poster_img = poster.getElementsByTagName('img')[0]
+    if (!yt6.fullscreen && !yt6.ytp_fullscreen && poster_img && typeof poster_img.naturalWidth == 'number') {
+      var x = (poster_img.naturalWidth / poster_img.naturalHeight)
+      var y = (poster_img.naturalHeight / poster_img.naturalWidth)
+      //console.log([x , y, (1 * p1.style.width.replace('px','') / p1.style.height.replace('px','')) , 16/9 , (1 * p1.style.height.replace('px','') / p1.style.width.replace('px','')) , 9/16 , w/h])
+      if ((h/w - 3/4) > parseFloat(0.2) || Math.abs(x - (1 * p1.style.width.replace('px','') / p1.style.height.replace('px',''))) < parseFloat(0.2) ) {
+	poster.style.width = x * h + 'px'
+	poster.style.height = bm0.style.height
+	poster.style.marginTop = ''
+	poster.style.marginLeft = (w - 1 * poster.style.width.replace('px','')) / 2 + 'px'
+      } else {
+	  poster.style.width = Math.abs(Math.abs(x - (w / h)) - parseFloat(24/10 - 4/3).toFixed(2) < parseFloat(0.2) ) ? bm0.style.width : w - (x * h ) / 2 + 'px'; //1 * bm0.style.width.replace('px','') / ((16/9) / x) + 'px'
+	  poster.style.height = y * w + 'px'
+	  poster.style.marginTop = (h - 1 * poster.style.height.replace('px','')) / 2 + 'px'
+	  poster.style.marginLeft = Math.abs(Math.abs(x - (w / h)) - parseFloat(24/10 - 4/3).toFixed(2) < parseFloat(0.2) ) ? '' : (w - 1 * poster.style.width.replace('px','')) / 2 + 'px'; //(w - 1 * poster.style.width.replace('px','')) / 2 + 'px'
+	}
+    } else { //in fullscreen mode
+	poster.style.width = '100%'
+	poster.style.height = '100%'
       }
   }
 
