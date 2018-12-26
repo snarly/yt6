@@ -3548,7 +3548,13 @@ function back2html5() {
 				  bc.insertBefore(bm0, bc.firstChild)
 				} else {
 				    var bc = document.getElementsByTagName('ytd-player')[0] || document.getElementById('player-container')
-				    document.getElementById('player-container').insertBefore(bm0, document.getElementById('player-container').firstChild)
+				    if (bc && bc.id == 'ytd-player') {
+				      for (j in bc.children) { //console.log(bc.children[j].id);
+					if (bc.children[j].id == 'container') { bc = yt6.api = bc.children[j]; break }
+				      }
+				    }
+				    //document.getElementById('player-container').insertBefore(bm0, document.getElementById('player-container').firstChild)
+				    bc.insertBefore(bm0, bc.firstChild)
 				  }
 
 			        if (x.getAttribute('id') == 'movie_player0') x.setAttribute('id','movie_player')
@@ -5242,8 +5248,8 @@ yt6.pl_next = null; delete yt6.pl_next
 	    var zi = z[i].getElementsByTagName('A')[0]
 	    if (zi && zi.getAttribute('href') != null) {
 	      var x = zi.getAttribute('href').split('v=')[1].split('&')[0]
-	      if (zi.innerHTML.indexOf('>▶</span>') != -1 || (mix[0] && mix[0].hasAttribute('hidden') || zi.parentNode.hasAttribute('selected')) && ytplayer.config.args.video_id == x || yt6.vid == x ) {
-		var y = (!yt6.ytg) ? zi.getAttribute('href').split('&index=')[1].split('&')[0] - 1 + 1 : zi.innerHTML.split('<span class="style-scope ytg-formatted-string">')[1].split('</span>')[0]; //console.log(typeof y + y);
+	      if (zi.innerHTML.indexOf('/watch?v=' + yt6.vid) != -1 || (mix[0] && mix[0].hasAttribute('hidden') || zi.parentNode.hasAttribute('selected')) && ytplayer.config.args.video_id == x || yt6.vid == x ) {
+		var y = (!yt6.ytg) ? zi.getAttribute('href').split('&index=')[1].split('&')[0] - 1 + 1 : zi.innerHTML.split('<span class="style-scope ytg-formatted-string">')[1].split('</span>')[0]; //console.log(typeof y + y + ' '+ zi.innerHTML.indexOf('>▶</span>') +' '+ ytplayer.config.args.video_id +' '+ x +' '+ yt6.vid);
 
 		if (!yt6.ytg) {
 		var offset = z[i].getAttribute('style').split(', ')[1]
@@ -11535,7 +11541,7 @@ if (yt6.force_flash || (p.tagName == 'EMBED' && p.getAttribute('class') == 'forc
 							  var zi = z[i].getElementsByTagName('A')[0]
 							  if (zi && zi.getAttribute('href') != null) {
 							    var x = zi.getAttribute('href').split('v=')[1].split('&')[0]
-							    if (z[i].innerHTML.indexOf('>▶</span>') != -1 || (mix[0] && mix[0].hasAttribute('hidden') || z[i].parentNode.hasAttribute('selected')) && ytplayer.config.args.video_id == x ) {
+							    if (z[i].innerHTML.indexOf('/watch?v=' + yt6.vid) != -1 || (mix[0] && mix[0].hasAttribute('hidden') || z[i].parentNode.hasAttribute('selected')) && ytplayer.config.args.video_id == x ) {
 								if (document.getElementById('bm0') && yt6.x) {
 								  yt6.x = true
 								} else {
@@ -12737,7 +12743,7 @@ if (a.getAttribute('id') != 'player') { //pre-2016 layout start
     //} else var MC = 0
 
     var yh = -1* ytp_style.height.replace('px','').split('"').join('') - MC
-    if (browserName == 'Edge') { var g = 1 } else var g = 0;
+    var g = 0; //if (browserName == 'Edge') { var g = 1 } else var g = 0;
     var a = document.getElementById('player-container')
     a.style.marginTop = ''
     e.position = ''
@@ -14270,7 +14276,7 @@ function aspect(a) {
 	var y = window.pageYOffset || (document.documentElement || document.body.parentNode || document.body).scrollTop
 	var windowheight = parseInt(window.innerHeight || document.documentElement.clientHeight || yt6.body.clientHeight)
         windowheight = yt6.wh = (yt6.size != 'default') ? Math.round((windowheight / 100 >>0) * 80) : Math.round(windowheight)
-    if (yt6.size == 'default' && yt6.mpb && yt6.mpb.hasAttribute('active')) windowheight = Math.min(yt6.api.parentNode.parentNode.offsetHeight, bm0.offsetHeight)
+        if (yt6.size == 'default' && yt6.mpb && yt6.mpb.hasAttribute('active')) windowheight = Math.min(yt6.api.parentNode.parentNode.offsetHeight, bm0.offsetHeight)
         var windowwidth = parseInt(window.innerWidth || document.documentElement.clientWidth || yt6.body.clientWidth)
 
 
