@@ -10,7 +10,7 @@ var yt6 = window.document.getElementById('snarls_player')
   yt6.size = 'default'
 
 
-    var browserName;
+    var browserName = undefined;
 
     // Opera 8.0+
     if ((window.opr && opr.addons) || window.opera || (navigator.userAgent.indexOf(' OPR/') >= 0))
@@ -115,6 +115,41 @@ var yt6 = window.document.getElementById('snarls_player')
                 browser = navigator.appName;
             }
         }
+
+
+	var other_browser = function detect_brave_browser() {
+	  // initial assertions
+
+	  if (!window.google_onload_fired //&&
+	       //navigator.userAgent &&
+	      //!navigator.userAgent.includes('Chrome')
+	     ) {
+	     if (nAgt.includes('Chrome')) {
+		yt6.tmp = false
+		if (nAgt.includes('Chromium')) yt6.tmp = 'Chromium'
+		if (nAgt.includes('Vivaldi')) yt6.tmp = 'Vivaldi'
+	     } else yt6.tmp = false;
+
+	     return yt6.tmp;
+	  }
+
+	  // set up test
+	  var test = document.createElement('iframe');
+	  test.style.display = 'none';
+	  document.body.appendChild(test);
+
+	  // empty frames only have this attribute set in Brave Shield
+	  var is_brave = yt6.tmp = (test.contentWindow.google_onload_fired === true) ? 'Brave' : false;
+
+	  // teardown test
+	  test.parentNode.removeChild(test);
+
+	  return yt6.tmp
+	}
+
+	if (other_browser()) browser = yt6.tmp
+
+
         // trim the version string
         if ((ix = version.indexOf(';')) != -1) version = version.substring(0, ix);
         if ((ix = version.indexOf(' ')) != -1) version = version.substring(0, ix);
@@ -223,6 +258,10 @@ var yt6 = window.document.getElementById('snarls_player')
         flashVersion: flashVersion
     };
 }(this));
+
+
+	if ((!browserName || browserName == 'Chrome') && (jscd.browser == 'Chromium' || jscd.browser == 'Brave' || jscd.browser == 'Vivaldi')) browserName = jscd.browser
+
 /*
 console.log(
     'OS: ' + jscd.os +' '+ jscd.osVersion + '\n' +
@@ -234,8 +273,8 @@ console.log(
     'Cookies: ' + jscd.cookies + '\n' +
     'Screen Size: ' + jscd.screen + '\n\n' +
     'Full User Agent: ' + navigator.userAgent
-);*/
-
+);
+*/
 
 	var osName;
 
@@ -6271,7 +6310,7 @@ if (document.getElementById("bm1") != null) {
   html.push(
    '<br><b>' + title + '</b>' +
    '<br>Links will expire on <br>' + expire_date()[1] +
-   '<br><br><div id="bm7" style="inline-block">Preferred format -- (in case ' + browserName + ' is having trouble playing one back):<br>'+
+   '<br><br><div id="bm7" style="inline-block">Preferred format in case ' + browserName + ' is having trouble playing one back:<br>'+
    '<input type="radio" class="preferred-format all" onclick="yt6.select_fmt(\'all\')">Any</input>'+
    '<input type="radio" class="preferred-format webm" onclick="yt6.select_fmt(\'webm\')">WebM</input>'+
    '<input type="radio" class="preferred-format h264" onclick="yt6.select_fmt(\'h264\')">DASH/MP4</input>'+
@@ -12117,7 +12156,8 @@ function resize_layers(w,h,me_aspect){
   if (typeof me_flash_[0] != 'undefined') me_flash_[1] = document.getElementById(mep_x('me_flash__ __container'))
 
   var windowwidth = parseInt(window.innerWidth || document.documentElement.clientWidth || yt6.body.clientWidth) - yt6.sb;// - 1
-  var windowheight = parseInt(window.innerHeight || document.documentElement.clientHeight || yt6.body.clientHeight)
+  var mhp = (yt6.layout != 16) ? yt6.mhp.offsetHeight : yt6.mhp.parentNode.offsetHeight
+  var windowheight = parseInt(window.innerHeight || document.documentElement.clientHeight || yt6.body.clientHeight) - mhp - 8
   windowheight = yt6.wh = (yt6.size != 'default') ? Math.round((windowheight / 100 >>0) * 80) : windowheight
   if (yt6.size == 'default' && yt6.mpb && yt6.mpb.hasAttribute('active')) windowheight = Math.min(yt6.api.parentNode.parentNode.offsetHeight, bm0.offsetHeight)
 
@@ -13893,7 +13933,7 @@ function switch_players() {
       if (x) x.style.display = 'none'
       var x = gc('mejs-controls')[0]
       if (x) x.style.display = 'none'
-      if (yt6.player1) try { yt6.player1.hideControls(false) } catch(e){}
+      if (yt6.player1) try { yt6.player1.hideControls(false); gclass("mejs-overlay-play")[0].style.visibility = 'hidden' } catch(e){}
       bm0.style.visibility = 'hidden'
       //p.style.display = ''
       var p = document.getElementById('movie_player')
@@ -14057,8 +14097,10 @@ function aspect(a) {
     if (!class_1 || (class_1 && class_1.indexOf('medium_a') == -1)) class_1 = class_0.replace('large','large_a')
   }
 
+
   var windowwidth = parseInt(window.innerWidth || document.documentElement.clientWidth || yt6.body.clientWidth) - yt6.sb;// - 1
-  var windowheight = parseInt(window.innerHeight || document.documentElement.clientHeight || yt6.body.clientHeight);
+  var mhp = (yt6.layout != 16) ? yt6.mhp.offsetHeight : yt6.mhp.parentNode.offsetHeight
+  var windowheight = parseInt(window.innerHeight || document.documentElement.clientHeight || yt6.body.clientHeight) - mhp - 8;
   var hdiff = yt6.hdiff
   if (hdiff == undefined) hdiff = 30
   var dw = document.getElementById('aspect')
@@ -14135,6 +14177,12 @@ function aspect(a) {
 
       } else {
 //console.log('m'+a)
+
+	  if (typeof yt6.A_[p1.getAttribute('src').split('itag=')[1].split('&')[0]] == 'string' || (p1.width == 0 && p1.height == 0)) {
+	    p1.height = (windowheight / 100 >>0) * 80;
+	    p1.width = p1.height * (yt6.aspect_ratio || yt6.ar)
+	  }
+
 	  if ( (yt6.x && p1 && (p1.width || (p1.height && yt6.size == 'media'))) || (!yt6.x && (!dw || (dw && a == 'media'))) ){
 
 	    yt6.size = 'media'
