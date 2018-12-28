@@ -125,7 +125,7 @@ var yt6 = window.document.getElementById('snarls_player')
 	      //!navigator.userAgent.includes('Chrome')
 	     ) {
 	     if (nAgt.includes('Chrome')) {
-		yt6.tmp = false
+		yt6.tmp = 'Chrome'
 		if (nAgt.includes('Chromium')) yt6.tmp = 'Chromium'
 		if (nAgt.includes('Vivaldi')) yt6.tmp = 'Vivaldi'
 	     } else yt6.tmp = false;
@@ -260,7 +260,7 @@ var yt6 = window.document.getElementById('snarls_player')
 }(this));
 
 
-	if ((!browserName || browserName == 'Chrome') && (jscd.browser == 'Chromium' || jscd.browser == 'Brave' || jscd.browser == 'Vivaldi')) browserName = jscd.browser
+	if ((!browserName || browserName == 'Chrome') && yt6.tmp) browserName = jscd.browser
 
 /*
 console.log(
@@ -609,30 +609,35 @@ for(var i=0;i<338;i++) if (qual[i]) qual[i]['s'] = ''
   yt6.fmts_fallback.V = {};
   yt6.fmts_fallback.A = {};
   yt6.fmts_fallback.V3D = {};
-  yt6.fmts_fallback.V.webm = [,,272,315,,313,308,,271,303,,46,,170,248,,302,,45,,247,,44,,,219,218,168,246,245,244,,43,,243,,242,,278,,241,,
+  yt6.fmts_fallback.V.av1 = [,,,,,,,,,,,,,399,,,,,,,,398,,,,,,397,,,,,,,,396,,,,,395,,,394]
+  yt6.fmts_fallback.V.webm = [,,272,315,,313,308,,271,303,,46,,,170,248,,302,,45,,,247,,44,,,,219,218,168,246,245,244,,,43,,243,,,242,,,278,,241,,
   43,,18,,22,,
-  ,,272,315,,313,308,,271,303,,46,,170,248,,302,,45,,247,,44,,,219,218,168,246,245,244,,43,,243,,242,,278,,241,,
-  ,,,251,172,171,,250,249,,258,256,141,140,139]
-  yt6.fmts_fallback.V.h264 = [138,38,,,266,,,264,,,299,,37,,,137,,298,,22,,136,,78,59,,,,,,,135,,18,,134,,133,,132,,160,
-  ,18,,43,,22,
-  138,38,,,266,,,264,,,299,,37,,,137,,298,,22,,136,,78,59,,,,,,,135,,18,,134,,133,,132,,160,
-  258,256,141,,,,140,,,139,,,,,,251,172,171,250,249]
-  yt6.fmts_fallback.A.webm = [,,,251,172,171,,250,249,,
   ,,,251,172,171,,250,249,,
+  ,,272,315,,313,308,,271,303,,46,,170,248,,302,,45,,247,,44,,,219,218,168,246,245,244,,43,,243,,242,,278,,241,,
   258,256,141,140,139]
-  yt6.fmts_fallback.A.aac = [258,256,141,,,,140,,,139,
+  yt6.fmts_fallback.V.h264 = [138,38,,,266,,,264,,,299,,37,,,,137,,298,,22,,,136,,78,59,,,,,,,,135,,,18,,134,,,133,,,132,,160,
+  ,18,,43,,22,
   258,256,141,,,,140,,,139,
-  251,172,171,250,249]
+  138,38,,,266,,,264,,,299,,37,,,137,,298,,22,,136,,78,59,,,,,,,135,,18,,134,,133,,132,,160,
+  ,,,,,251,172,171,250,249]
+  yt6.fmts_fallback.A.webm = [,,,251,172,171,,250,249,,
+  ,,,251,172,171,,250,249,]
+  yt6.fmts_fallback.A.aac = [258,256,141,,,,140,,,139,
+  258,256,141,,,,140,,,139]
   yt6.fmts_fallback.V3D.h264 = [85,,84,,,82,83]
   yt6.fmts_fallback.V3D.webm = [,102,,101,100]
   yt6.fmts_fallback.other = [35,34,6,5,36,17,13]
 
+  yt6.fmts_fallback.V.dash = []
   yt6.fmts_fallback.V.all = []
   yt6.fmts_fallback.A.all = []
   yt6.fmts_fallback.V3D.all = []
 
   for(i=0; i<yt6.fmts_fallback.V.h264.length;i++){
-    if (yt6.fmts_fallback.V.h264[i] || yt6.fmts_fallback.V.webm[i]) yt6.fmts_fallback.V.all[i] = yt6.fmts_fallback.V.h264[i] || yt6.fmts_fallback.V.webm[i]
+    if (yt6.fmts_fallback.V.h264[i] || yt6.fmts_fallback.V.webm[i] || yt6.fmts_fallback.V.av1[i]) {
+      yt6.fmts_fallback.V.all[i] = yt6.fmts_fallback.V.h264[i] || yt6.fmts_fallback.V.webm[i] || yt6.fmts_fallback.V.av1[i]
+	  yt6.fmts_fallback.V.dash[i] = yt6.fmts_fallback.V.h264[i] || yt6.fmts_fallback.V.av1[i]
+    }
     if (yt6.fmts_fallback.A.aac[i] || yt6.fmts_fallback.A.webm[i]) yt6.fmts_fallback.A.all[i] = yt6.fmts_fallback.A.aac[i] || yt6.fmts_fallback.A.webm[i]
     if (yt6.fmts_fallback.V3D.h264[i] || yt6.fmts_fallback.V3D.webm[i]) yt6.fmts_fallback.V3D.all[i] = yt6.fmts_fallback.V3D.h264[i] || yt6.fmts_fallback.V3D.webm[i]
   }
@@ -4759,7 +4764,12 @@ function getReferenceObjects() {
 
 	  var z = document.getElementsByTagName('YTD-TWO-COLUMN-BROWSE-RESULTS-RENDERER')
 	  // this initial DOM-constructor junk ruins perception, so let's remove it before grabbing the key-elements
-	  if (z.length > 0) for(i=0;i<z.length;i++){ if (z[i]) z[i].parentNode.removeChild(z[i]) }
+	  if (z.length > 0) for(i=0;i<z.length;i++){ if (z[i]) {
+        z[i].setAttribute('style','display: none'); z[i].style.display = 'none'; 
+        z[i].setAttribute('name','sp_junk'); z[i].name = 'sp_junk';
+        document.body.appendChild(z[i]); //document.body z[i].parentNode.removeChild(z[i]);
+        yt6.init = 1
+      } }
 
   yt6.osw = document.getElementById('placeholder-player') || document.getElementById('player')
   yt6.mhp = document.getElementById('masthead-positioner') || document.getElementById('logo') || document.getElementById('home-button').parentNode;//gc('x-scope ytd-masthead-1')[0]
@@ -5099,7 +5109,7 @@ yt6.mep_renew = function() {
 
 	if (yt6.prefer_fmt == 'all') {
 	  var x = 'all'
-	} else var x = (yt6.prefer_fmt == 'h264') ? 'aac' : 'webm'
+	} else var x = (yt6.prefer_fmt == 'dash') ? 'aac' : 'webm'
 
 
 	  if (!index) for(j=0;j<yt6.fmts_fallback.A[x].length;j++){
@@ -5183,7 +5193,7 @@ yt6.mep_renew = function() {
 	      for(j=0;j<yt6.fmts_fallback.A[alt_pool].length;j++){
 		var z = document.getElementById(mep_x('mep_') + '_sourcechooser_' + yt6.userprefA[i])
 		if (z && yt6.fmts_fallback.A[alt_pool][j] == parseInt(qual[yt6.userprefA[i]]['a'])) {
-		  var Aindex = (alt_pool == 'aac') ? j : j; console.log('alt format:'+ qual[yt6.userprefA[i]]['t'])
+		  var Aindex = (alt_pool == 'aac') ? j : j; //console.log('alt format:'+ qual[yt6.userprefA[i]]['t'])
 		  var Afmt_pool = yt6.fmts_fallback.A[x]
 		  break
 		}
@@ -5378,10 +5388,10 @@ if (playlist.id.indexOf('watch') == -1) {
       yt6.pl_index = (yt6.pl_index) ? yt6.pl_index.split('&')[0] - 1 : null
       var z = document.getElementById('publisher-container')
       if (z) {
-	z = z.lastChild
+	z = z.lastChild; if (z) z = z.lastChild
 	if (z) {
-	  if (!yt6.pl_index) yt6.pl_index = 1 * z[yt6.txt].split(' /')[0] - 1
-	  yt6.pl_length = 1 * z[yt6.txt].split('/ ')[1]
+	  if (!yt6.pl_index) yt6.pl_index = 1 * z[yt6.txt].split('/')[1] - 1
+	  yt6.pl_length = 1 * z[yt6.txt].split('/')[0]
 	}
       }
     } else {
@@ -5425,7 +5435,7 @@ if (playlist.id.indexOf('watch') == -1) {
 		    yt6.playlist_scroller.scrollTop = 64 * yt6.pl_index
 		  }*/
 	      } else {
-		  yt6.playlist_scroller.scrollTop = 64 * (yt6.pl_index - yt6.pl_index - 1 + x) //-1
+		  yt6.playlist_scroller.scrollTop = 64 * (x - 1) //-1
 		}
 
 //console.log('!! '+yt6.pl_index + ' '+yt6.scrollTop)
@@ -5433,7 +5443,7 @@ if (playlist.id.indexOf('watch') == -1) {
 //console.log('Yay! ' + yt6.pl_index + ' ' + yt6.pl_index.toString().slice(-2) + ' ' + (yt6.pl_index - 0) % (yt6.pl_index.toString().replace(yt6.pl_index.toString().slice(-2), '00') - 0) + ' ' + yt6.playlist_scroller.scrollTop)
 
 	      $waitUntil(function() {
-		    var z = playlist_videoitems()
+		    //var z = playlist_videoitems()
 //for(k=0;k<z.length;k++){
 		    var z = playlist_videoitems()
 		    //console.log('begin ' + z.length + ' ' + yt6.playlist_scroller.scrollTop)
@@ -5452,8 +5462,13 @@ if (playlist.id.indexOf('watch') == -1) {
 		      if (z && z[i] && typeof z[i].getAttribute('style') == 'string' && z[i].getAttribute('style').indexOf('0px, 0px, 0px') != -1)  {
 			if (z[i].getElementsByTagName('a')[0] && typeof z[i].getElementsByTagName('a')[0].href == 'string') {
 			  var refIndex = 1 * z[i].getElementsByTagName('a')[0].href.split('&index=')[1].split('&')[0] - 1
+			  if (yt6.init == 1) { refIndex = (refIndex + 1) }
 			  var curIndex = location.href.split('&index=')[1]
 			  if (curIndex) { curIndex = curIndex.split('&')[0] - 1 } else curIndex = player().getPlaylistIndex()
+
+			  var x = document.getElementsByTagName('YTD-TWO-COLUMN-BROWSE-RESULTS-RENDERER')
+			  if (x.length > 0) for(j=0;j<x.length;j++){ if (x[j]) {if (x[j].name == 'sp_junk') { x[j].parentNode.removeChild(x[j]); break } } }
+
 			  yt6.playlist_scroller.scrollTop = (curIndex - refIndex) * 64
 			  //console.log(curIndex + ' ' + player().getPlaylistIndex() + ' '+ yt6.pl_i + typeof yt6.pl_i)
 			  //console.log(yt6.playlist_scroller.scrollTop)
@@ -6313,7 +6328,7 @@ if (document.getElementById("bm1") != null) {
    '<br><br><div id="bm7" style="inline-block">Preferred format in case ' + browserName + ' is having trouble playing one back:<br>'+
    '<input type="radio" class="preferred-format all" onclick="yt6.select_fmt(\'all\')">Any</input>'+
    '<input type="radio" class="preferred-format webm" onclick="yt6.select_fmt(\'webm\')">WebM</input>'+
-   '<input type="radio" class="preferred-format h264" onclick="yt6.select_fmt(\'h264\')">DASH/MP4</input>'+
+   '<input type="radio" class="preferred-format dash" onclick="yt6.select_fmt(\'dash\')">DASH/MP4</input>'+
    '</div>'+
    '<br>Sometimes YouTube has certain, typically V+A formats disabled, while the rest may work. When decryption key update fails, no valid media links occur. To fix it, remove and reload the script manually.<br>'
   )
@@ -10275,6 +10290,7 @@ if (!t.sourcechooserButton) {//console.log('error')
 		yt6.href = ''
 		yt6.audio = ''
 		yt6.args = ''
+		yt6.init = 0; try { delete yt6.init } catch(e){}
 
 
 		var bm0 = document.getElementById('bm0')
@@ -13508,6 +13524,8 @@ if (yt6.flexy) {
   if (yt6.flexy) {
     yt6.tbg.style.position = 'absolute'
 	yt6.tbg.style.top = (yt6.wide) ? '' : '64px'
+	if (yt6.force_flash && p.tagName == 'EMBED') p.style.position = (yt6.wide) ? 'absolute' : ''
+
       if (windowwidth >= 1000) {
 	yt6.inf.removeAttribute('style')
 	if (!yt6.wide) yt6.wna.removeAttribute('style')
@@ -13633,7 +13651,7 @@ if (yt6.flexy) {
 	        if (!playlist) yt6.wsb.style.marginTop = '16px'
 	        if (!yt6.x && !c && p && p.style.width == 'auto') p.style.width = yt6.osw.style.width = windowwidth + 'px'
 	        if ((windowwidth + yt6.sb) >= 657 && (yt6.x || yt6.force_flash)) yt6.osw.setAttribute('hidden','')
-		if (!yt6.x) a.style.left = ''
+		if (!yt6.x) { if (p.tagName == 'EMBED') { yt6.tbg.style.width = clone(a.style.left); p.style.position = 'absolute' }; a.style.left = '' }
 		
 	      }
 
@@ -14100,7 +14118,7 @@ function aspect(a) {
 
   var windowwidth = parseInt(window.innerWidth || document.documentElement.clientWidth || yt6.body.clientWidth) - yt6.sb;// - 1
   var mhp = (yt6.layout != 16) ? yt6.mhp.offsetHeight : yt6.mhp.parentNode.offsetHeight
-  var windowheight = parseInt(window.innerHeight || document.documentElement.clientHeight || yt6.body.clientHeight) - mhp - 8;
+  var windowheight = parseInt(window.innerHeight || document.documentElement.clientHeight || yt6.body.clientHeight) //- mhp - 8;
   var hdiff = yt6.hdiff
   if (hdiff == undefined) hdiff = 30
   var dw = document.getElementById('aspect')
@@ -15239,16 +15257,22 @@ else {
 	  } else {
 
 	      var opacity = player().style.opacity;
-	      p.style.left = '0px'
+	      if (yt6.layout == 16) {
+	        p.style.display = 'inline-block'; var display = player().style.display;
+	        var position = (yt6.flexy && yt6.wide) ? 'absolute' : ''
+	        var left = (yt6.flexy && yt6.wide) ? p.style.left : '0px'			
+	      } else var left = '0px'
+	      p.style.left = left
 	      p.style.top = '0px'
 	      p.style.width = z.style.width
 	      p.style.height = (z.style.height != '0px') ? z.style.height : bm0.style.height
 	      p.style.visibility = (bm0.style.visibility == 'hidden') ? 'visible' : 'hidden'
-	      if (yt6.layout == 16) p.style.display = 'inline-block'; var display = player().style.display;
 	      p.style.opacity = opacity || '1'
 	      zoom = 1; rotate = 0
 	      if (browserName != 'Safari') {
-	        p.setAttribute('style','top: 0px; left: 0px; width: ' + z.style.width + '; height: ' + ((z.style.height != '0px') ? z.style.height : bm0.style.height) + '; visibility: visible; opacity: '+opacity); if (display != '') p.setAttribute('style', p.getAttribute('style') + '; display: ' + display);
+	        p.setAttribute('style','top: 0px; left: ' + left + '; width: ' + z.style.width + '; height: ' + ((z.style.height != '0px') ? z.style.height : bm0.style.height) + '; visibility: visible; opacity: '+opacity)
+	        if (display != '') p.setAttribute('style', p.getAttribute('style') + '; display: ' + display)
+	        if (position != '') p.setAttribute('style', p.getAttribute('style') + '; position: absolute')
 	      } else {
 	          v.style[prop]='rotate('+rotate+'deg) scale('+zoom+')';
 		  if (me_flash && !me_flash_) me_flash.style[prop]='rotate('+rotate+'deg) scale('+zoom+')';
