@@ -3110,6 +3110,7 @@ if (typeof jQuery != 'undefined') {
 					src: track.attr('src'),
 					kind: track.attr('kind'),
 					label: track.attr('label') || '',
+					translated: track.attr('translated') || '',
 					entries: [],
 					isLoaded: false
 				});
@@ -4812,7 +4813,8 @@ if (typeof jQuery != 'undefined') {
 				url: track.src,
 				dataType: "text",
 				success: function(d) {
-d = ytsubtitle2srt(d,track.srclang,mejs.language.codes[track.srclang])
+d = ytsubtitle2srt(d, track.srclang, mejs.language.codes[track.srclang], track.translated) //yt6
+
 					// parse the loaded file
 					if (typeof d == "string" && (/<tt\s+xml/ig).exec(d)) {
 						track.entries = mejs.TrackFormatParser.dfxp.parse(d);
