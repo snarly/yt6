@@ -8630,7 +8630,7 @@ function mep_run() {
 							    }*/
  
 							} else {
-							    console.log('nextVideo')
+							    //console.log('nextVideo')
 							    player().seekTo(yt6.movie_player.getDuration()+1)//player().nextVideo()
 							  }
 
