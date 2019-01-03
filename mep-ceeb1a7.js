@@ -2341,7 +2341,7 @@ if (typeof jQuery != 'undefined') {
 					});
 
 				// any additional controls people might add and want to hide
-				t.container.find('.mejs-control')
+				t.container.find('.mejs-overlaí-play')
 					.css('visibility','visible')
 					.stop(true, true).fadeIn(200, function() {t.controlsAreVisible = true;});
 
@@ -2351,7 +2351,7 @@ if (typeof jQuery != 'undefined') {
 					.css('display','block');
 
 				// any additional controls people might add and want to hide
-				t.container.find('.mejs-control')
+				t.container.find('.mejs-overlay-play')
 					.css('visibility','visible')
 					.css('display','block');
 
@@ -2368,7 +2368,7 @@ if (typeof jQuery != 'undefined') {
 
 			doAnimation = typeof doAnimation == 'undefined' || doAnimation;
 
-			if (!t.controlsAreVisible || t.options.alwaysShowControls || t.keyboardAction)
+			if (!t.controlsAreVisible || t.options.alwaysShowControls ) //|| t.keyboardAction || (yt6 && yt6.x && !t.isFullScreen && document.getElementById('bm0') && $(document.getElementById('bm0')).data('hover'))
 				return;
 
 			if (doAnimation) {
@@ -2383,10 +2383,15 @@ if (typeof jQuery != 'undefined') {
 				});
 
 				// any additional controls people might add and want to hide
-				t.container.find('.mejs-control').stop(true, true).fadeOut(200, function() {
+				t.container.find('.mejs-overlay-play').stop(true, true).fadeOut(200, function() {
 					$(this)
 						.css('visibility','hidden')
 						.css('display','block');
+				});
+
+				t.container.find('.mejs-volume-slider').stop(true, true).fadeOut(200, function() {
+					$(this)
+						.css('display','none');
 				});
 			} else {
 
@@ -2396,7 +2401,7 @@ if (typeof jQuery != 'undefined') {
 					.css('display','block');
 
 				// hide others
-				t.container.find('.mejs-control')
+				t.container.find('.mejs-overlay-play')
 					.css('visibility','hidden')
 					.css('display','block');
 
@@ -3106,7 +3111,7 @@ if (typeof jQuery != 'undefined') {
 				track = $(track);
 
 				t.tracks.push({
-					srclang: (track.attr('srclang')) ? track.attr('srclang').toLowerCase() : '',
+					srclang: (track.attr('srclang')) || '', // ? track.attr('srclang').toLowerCase() : '',
 					src: track.attr('src'),
 					kind: track.attr('kind'),
 					label: track.attr('label') || '',
@@ -4708,7 +4713,7 @@ if (typeof jQuery != 'undefined') {
 			// add to list
 			for (i=0; i<player.tracks.length; i++) {
 				if (player.tracks[i].kind == 'subtitles') {
-					player.addTrackButton(player.tracks[i].srclang, player.tracks[i].label, i);//yt6
+					player.addTrackButton(player.tracks[i].srclang, player.tracks[i].label, i, player.tracks[i].translated);//yt6
 				}
 			}
 
@@ -4853,7 +4858,18 @@ d = ytsubtitle2srt(d, track.srclang, mejs.language.codes[track.srclang], track.t
 				.find('input[value=' + lang + ']')
 					.prop('disabled',false)
 				.siblings('label')
-					.html( label );
+					.html( label )
+					.attr('time','123456789')//yt6
+
+			if (yt6) {
+			  var a = getElementsByAttribute(document,'label','time','123456789')
+			  for (i=0;i<a.length;i++){
+			    if (a[i]) {
+				a[i][yt6.txt] = a[i].getAttribute('translated') + label;
+				a[i].removeAttribute('time')
+			    }
+			  }
+			}//yt6
 
 			// auto select
 			if (t.options.startLanguage == lang) {
@@ -4863,7 +4879,7 @@ d = ytsubtitle2srt(d, track.srclang, mejs.language.codes[track.srclang], track.t
 			t.adjustLanguageBox();
 		},
 
-		addTrackButton: function(lang, label, id) {//yt6
+		addTrackButton: function(lang, label, id, translated) {//yt6
 			var t = this;
 			if (label === '') {
 				label = mejs.language.codes[lang] || lang;
@@ -4872,8 +4888,8 @@ d = ytsubtitle2srt(d, track.srclang, mejs.language.codes[track.srclang], track.t
 			t.captionsButton.find('ul').append(
 				$('<li>'+
 					'<input type="radio" name="' + t.id + '_captions" id="' + t.id + '_captions_' + id + '" value="' + lang + '" disabled="disabled" />' +
-					'<label for="' + t.id + '_captions_' + lang + '">' + label + ' (loading)' + '</label>'+
-				'</li>')
+					'<label for="' + t.id + '_captions_' + lang + '" translated="' + translated + '">' + label + ' (loading)' + '</label>'+
+				'</li>').prop('translated', translated)
 			);//yt6 captions_+lang -> captions_+id
 
 			t.adjustLanguageBox();
@@ -5082,16 +5098,16 @@ d = ytsubtitle2srt(d, track.srclang, mejs.language.codes[track.srclang], track.t
 			da:'Danish',
 			de:'German',
 			en:'English',
-			'en-au':'English (Australia)',
-			'en-ca':'English (Canada)',
-			'en-gb':'English (United Kingdom)',
-			'en-nz':'English (New Zealand)',
-			'en-us':'English (United States)',
-			'en-za':'English (South Africa)',
+			'en-AU':'English (Australia)',
+			'en-CA':'English (Canada)',
+			'en-GB':'English (United Kingdom)',
+			'en-NZ':'English (New Zealand)',
+			'en-US':'English (United States)',
+			'en-ZA':'English (South Africa)',
 			el:'Greek',
 			eo:'Esperanto',
 			es:'Spanish',
-			'es-mx':'Spanish (Mexico)',
+			'es-MX':'Spanish (Mexico)',
 			et:'Estonian',
 			eu:'Basque',
 			fa:'Persian',
@@ -5147,8 +5163,8 @@ d = ytsubtitle2srt(d, track.srclang, mejs.language.codes[track.srclang], track.t
 			pl:'Polish',
 			ps:'Pashto',
 			pt:'Portuguese',
-			'pt-br':'Portuguese (Brazil)',
-			'pt-pt':'Portuguese (Portugal)',
+			'pt-BR':'Portuguese (Brazil)',
+			'pt-PT':'Portuguese (Portugal)',
 			ro:'Romanian',
 			ru:'Russian',
 			sd:'Sindhi',
@@ -5178,10 +5194,10 @@ d = ytsubtitle2srt(d, track.srclang, mejs.language.codes[track.srclang], track.t
 			yi:'Yiddish',
 			yo:'Yoruba',
 			zh:'Chinese',
-			'zh-cn':'Chinese (Simplified)',
-			'zh-hans':'Chinese (Simplified)',
-			'zh-hant':'Chinese (Traditional)',
-			'zh-tw':'Chinese (Taiwan)',
+			'zh-CN':'Chinese (Simplified)',
+			'zh-Hans':'Chinese (Simplified)',
+			'zh-Hant':'Chinese (Traditional)',
+			'zh-TW':'Chinese (Taiwan)',
 			zu:'Zulu'
 		}
 	};
