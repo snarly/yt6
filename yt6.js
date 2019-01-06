@@ -4203,7 +4203,7 @@ if (player()) {
 	var bm0 = document.getElementById('bm0')
 	var player2 = document.getElementById('player2')
 	var player1 = document.getElementById('player1')
-	var bn = gc('play snarl-button yt-uix-button-text')[0]
+	var bn = yt6.btn.play
 
 	if (yt6 && !yt6.x) {
           if (player() && typeof player().getPlayerState == 'function') {
@@ -8521,7 +8521,7 @@ function mep_run() {
 					  if ( (yt6 && yt6.timer == 999999999) || me.src == 'https://www.youtube.com/ptracking' )
 					    return void 0;
 					  if (yt6.x) {
-					  var bn = gc('play snarl-button yt-uix-button-text')[0];
+					  var bn = yt6.btn.play;
 					  if (bn) { bn.innerHTML = 'pause'; try { gc('play snarl-button yt-uix-button-text')[1].innerHTML = 'pause' } catch(e) {} }//for(i=0;i<bn.length;i++) bn[i].innerHTML = 'pause';
 					  if ( ((!yt6.A_V[itag(me.src)] &&
 						 !yt6.A_[itag(me.src)] &&
@@ -8600,11 +8600,11 @@ function mep_run() {
 					    if (yt6.x) { yt6.Seeked2 = true; me.play() }; return void 0
 					  }
 					  if (yt6.x) {
-					    var bn = gc('mejs-overlay mejs-layer mejs-overlay-play')[0]
+					    var bn = yt6.btn.play //gc('mejs-overlay mejs-layer mejs-overlay-play')[0]
 					    if (bn) bn.style.visibility = 'visible';
 					    if (Seek == 2) { yt6.Seeked2 = false; if (Seek == 1 && yt6.sync_maybe_clear != true && player2.paused) Seek = null; }
 					  }
-					  var bn = gc('play snarl-button yt-uix-button-text')[0];
+					  var bn = yt6.btn.play;
 					  if (bn) { bn.innerHTML = 'play'; try { gc('play snarl-button yt-uix-button-text')[1].innerHTML = 'play' } catch(e) {} }//for(i=0;i<bn.length;i++) bn[i].innerHTML = 'play';
 					  if (yt6.retry < 8 && player2) {
 					    if (me.src != player2.src) {
@@ -15053,6 +15053,8 @@ var controls = document.getElementById('controls-sp')
 
   //document.getElementById('remove-sp').parentNode.setAttribute('style','display:inline-block');
 
+  yt6.btn.play = gc('play snarl-button yt-uix-button-text')[0]
+
 
     var y = document.getElementById('bm8')
     if (y && y.firstChild) {
@@ -15079,6 +15081,8 @@ var controls = document.getElementById('controls-sp')
 	}
       }
     }
+
+  yt6.btn.play2 = getElementsByAttribute(document.getElementById('controls_bak'),'button','class','play snarl-button yt-uix-button-text')[0];
 
     //var z = y.children
     //for(var i in z){ if (z[i] && typeof z[i].getAttribute == 'function' && z[i].getAttribute('id')) z[i].removeAttribute('id') }
@@ -15258,16 +15262,16 @@ else {
 
 /* Toggle play functionality and button label */    
 	case 'play snarl-button yt-uix-button-text':
-        var bn = gc('play snarl-button yt-uix-button-text')[0]
+        var bn = yt6.btn.play //gc('play snarl-button yt-uix-button-text')[0]
 	if ( v && (v != stage || (v.getAttribute('name') != null && v.getAttribute('name').indexOf('me_flash') > -1))) {
 	  if ((v.parentNode.paused == true) || (v.paused == true)){
 	    if (typeof v.play == 'function') try { v.play() } catch(e) {}
 	    if (typeof v.playMedia == 'function') try { v.playMedia(); v.parentNode.paused = false } catch(e) {}
-	    if (bn) { bn.innerHTML = 'pause'; try { gc('play snarl-button yt-uix-button-text')[1].innerHTML = 'pause' } catch(e) {} }//for(i=0;i<bn.length;i++) bn[i].innerHTML = 'pause'
+	    if (bn) { bn.innerHTML = 'pause'; try { yt6.btn.play2.innerHTML = 'pause' } catch(e) {} }
           } else {
             if (typeof v.pause == 'function') try { v.pause() } catch(e) {}
             if (typeof v.pauseMedia == 'function') try { v.pauseMedia(); v.parentNode.paused = true } catch(e) {}
-            if (bn) { bn.innerHTML = 'play'; try { gc('play snarl-button yt-uix-button-text')[1].innerHTML = 'play' } catch(e) {} }//for(i=0;i<bn.length;i++) bn[i].innerHTML = 'play'
+            if (bn) { bn.innerHTML = 'play'; try { yt6.btn.play2.innerHTML = 'play' } catch(e) {} }
           }
 	  if (!yt6.x && p && p.tagName != 'OBJECT' && typeof p.getPlayerState == 'function' && p.getPlayerState() > 2) try { p.playVideo(); p.playVideo() } catch(e) {}
 	} else {
@@ -15276,10 +15280,10 @@ else {
 
 			if ((typeof p.getPlayerState == 'function' && p.getPlayerState() != 1) || (typeof p.getPlayerState != 'function' && bn.innerHTML == 'play')) {
 			  m.postMessage("playVideo", "*")
-			  if (bn) { bn.innerHTML = 'pause'; try { gc('play snarl-button yt-uix-button-text')[1].innerHTML = 'pause' } catch(e) {} }
+			  if (bn) { bn.innerHTML = 'pause'; try { yt6.btn.play2.innerHTML = 'pause' } catch(e) {} }
 			} else {
 			    m.postMessage("pauseVideo", "*")
-			    if (bn) { bn.innerHTML = 'play'; try { gc('play snarl-button yt-uix-button-text')[1].innerHTML = 'play' } catch(e) {} }
+			    if (bn) { bn.innerHTML = 'play'; try { yt6.btn.play2.innerHTML = 'play' } catch(e) {} }
 			  }
 
 	    } else {
@@ -15287,10 +15291,10 @@ else {
 		    if (p) {
 		        if ((typeof p.getPlayerState == 'function' && p.getPlayerState() != 1) || (typeof p.getPlayerState != 'function' && bn.innerHTML == 'play')) {//alert(player().getPlayerState())
 			  yt6.embed.play()
-			  if (bn) { bn.innerHTML = 'pause'; try { gc('play snarl-button yt-uix-button-text')[1].innerHTML = 'pause' } catch(e) {} }
+			  if (bn) { bn.innerHTML = 'pause'; try { yt6.btn.play2.innerHTML = 'pause' } catch(e) {} }
 			} else {
 			    yt6.embed.pause()
-			    if (bn) { bn.innerHTML = 'play'; try { gc('play snarl-button yt-uix-button-text')[1].innerHTML = 'play' } catch(e) {} }
+			    if (bn) { bn.innerHTML = 'play'; try { yt6.btn.play2.innerHTML = 'play' } catch(e) {} }
 			  }
 		    } else onYouTubeIframeAPIReady()
 	      }
