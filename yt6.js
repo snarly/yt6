@@ -612,16 +612,16 @@ for(var i=0;i<338;i++) if (qual[i]) qual[i]['s'] = ''
   yt6.fmts_fallback.V = {};
   yt6.fmts_fallback.A = {};
   yt6.fmts_fallback.V3D = {};
-  yt6.fmts_fallback.V.av1 = [,,,,,,,,,,,,,399,,,,,,,,398,,,,,,397,,,,,,,,396,,,,,395,,,394]
-  yt6.fmts_fallback.V.webm = [,,272,315,,313,308,,271,303,,46,,,170,248,,302,,45,,,247,,44,,,,219,218,168,246,245,244,,,43,,243,,,242,,,278,,241,,
+  yt6.fmts_fallback.V.av1 = [,,,,,,,,,,,,,,,,399,,,,,,,,,398,,,,,,,397,,,,,,,,,,,,396,,,,,,,395,,,,394]
+  yt6.fmts_fallback.V.webm = [,272,,337,315,,313,,336,308,,271,,335,303,,,46,,170,248,,334,302,,,45,,169,247,,333,,44,,,219,218,168,246,245,244,,332,,43,,167,243,,331,,242,,330,,278,,241,,
   43,,18,,22,,
   ,,,251,172,171,,250,249,,
-  ,,272,315,,313,308,,271,303,,46,,170,248,,302,,45,,247,,44,,,219,218,168,246,245,244,,43,,243,,242,,278,,241,,
+  ,272,,337,315,,313,,336,308,,271,,335,303,,,46,,170,248,,334,302,,,45,,169,247,,333,,44,,,219,218,168,246,245,244,,332,,43,,167,243,,331,,242,,330,,278,,241,,
   258,256,141,140,139]
-  yt6.fmts_fallback.V.h264 = [138,38,,,266,,,264,,,299,,37,,,,137,,298,,22,,,136,,78,59,,,,,,,,135,,,18,,134,,,133,,,132,,160,
+  yt6.fmts_fallback.V.h264 = [138,,38,,,305,,266,,,304,,264,,,299,,,37,,,137,,,298,,,22,,,136,,,,78,59,,,,,,,135,,396,,18,,,134,,,,133,,394,,132,,160,
   ,18,,43,,22,
   258,256,141,,,,140,,,139,
-  138,38,,,266,,,264,,,299,,37,,,137,,298,,22,,136,,78,59,,,,,,,135,,18,,134,,133,,132,,160,
+  138,,38,,,305,,266,,,304,,264,,,299,,,37,,,137,,,298,,,22,,,136,,,,78,59,,,,,,,135,,396,,18,,,134,,,,133,,394,,132,,160,
   ,,,,,251,172,171,250,249]
   yt6.fmts_fallback.A.webm = [,,,251,172,171,,250,249,,
   ,,,251,172,171,,250,249,,43,,]
@@ -4176,6 +4176,7 @@ function set_controls(){
   if (!stage)  var stage = p
   if (!v) v = p
   yt6.stage = stage; yt6.v = v
+
   CtrlS(stage,v)
 
 }
@@ -8361,7 +8362,7 @@ function mep_run() {
 						}
 
 						if (typeof yt6.errcount == 'undefined') yt6.errcount = 0
-						if (!yt6.ytg && yt6.errcount >= 0) { console.log('0 ' +yt6.errcount);  decryption_failure() } else yt6.errcount = yt6.errcount + 1; //hand_axe();
+						if (!yt6.ytg && yt6.errcount >= 0) { decryption_failure() } else yt6.errcount = yt6.errcount + 1; //hand_axe();
 
 						if ( (yt6.ytg && yt6.errcount >= 1) || (!yt6.ytg && yt6.errcount >= (1 * proxies.length)) ) {//(yt6.ytg && !(yt6.errcount < (1 + 1 * proxies.length)) //me.src = '';
 						  if (!yt6.ytg || (yt6.ytg && !yt6.encrypted)) {
@@ -8540,7 +8541,7 @@ function mep_run() {
 						        if (yt6.diff > parseFloat(0.3) && yt6.sync_timer < 8 || !yt6.V_[itag(me.src)]) { return true }
 							  else {//console.log(yt6.diff)
 							    if (yt6.newvideo) {
-							      if (typeof yt6.player2.media.setCurrentTime == 'function' || browserName == 'Edge' || browserName == 'IE') { try { console.log(yt6.newvideo) } catch(e){}
+							      if (typeof yt6.player2.media.setCurrentTime == 'function' || browserName == 'Edge' || browserName == 'IE') {
 								me.play(); Seek = null; //me.play();
 								//yt6.player2.media.currentTime = me.currentTime = 0;
 							      }
@@ -11465,7 +11466,7 @@ if (yt6.mpb && yt6.mpb.tagName == 'YTD-MINIPLAYER') {
 
 //console.log(	z.offsetWidth != 1 * yt6.w.replace('px','')		)
 //console.log(	p.tagName != 'EMBED' && Math.round((z.offsetWidth / z.offsetHeight).toFixed(3) * 100) != Math.round((yt6.w.replace('px','') / yt6.h.replace('px','')).toFixed(3) * 100)	)
-//console.log(	p.tagName == 'EMBED' && (Math.round(yt6.aspect_ratio.toFixed(3) * 100) !=  Math.round((yt6.w.replace('px','') / yt6.h.replace('px','')).toFixed(3) * 100) || (Math.round((z.offsetWidth / z.offsetHeight).toFixed(3) * 100) != Math.round((yt6.w.replace('px','') / yt6.h.replace('px','')).toFixed(3) * 100) && (yt6.inf.offsetWidth != (2 * yt6.osw.style.left.replace('px','') + 1 * yt6.w.replace('px',''))) ) )	)
+//console.log(	p.tagName == 'EMBED' && (					 Math.round(yt6.aspect_ratio.toFixed(3) * 100) !=  Math.round((yt6.w.replace('px','') / yt6.h.replace('px','')).toFixed(3) * 100)					 || Math.round((z.offsetWidth / z.offsetHeight).toFixed(3) * 100) != Math.round((yt6.w.replace('px','') / yt6.h.replace('px','')).toFixed(3) * 100)) && (yt6.inf.offsetWidth != (2 * yt6.osw.style.left.replace('px','') + 1 * yt6.w.replace('px','')) ) )
 //console.log(	Math.abs(z.offsetHeight - 1 * yt6.h.replace('px','')) > 30 && (Math.round((z.offsetWidth / z.offsetHeight).toFixed(3) * 100) == Math.round(yt6.aspect_ratio.toFixed(3) * 100) )		)
 
 
@@ -11474,9 +11475,11 @@ if (yt6.mpb && yt6.mpb.tagName == 'YTD-MINIPLAYER') {
 			     (z.offsetHeight == 0 && 1 * yt6.w.replace('px','') < yt6.pls.ww && yt6.h.replace('px','') != yt6.w.replace('px','') / yt6.aspect_ratio)
 			    ) ||
 			  (!yt6.wide &&
-			    (z.offsetWidth != 1 * yt6.w.replace('px','') && //Math.round(yt6.w.replace('px','')) != 400 &&
+			    (z.offsetWidth != 1 * yt6.w.replace('px','') && !(yt6.aspect_ratio < 1 && Math.round(yt6.w.replace('px','')) == 400) &&
 			      ((p.tagName != 'EMBED' && Math.round((z.offsetWidth / z.offsetHeight).toFixed(3) * 100) != Math.round((yt6.w.replace('px','') / yt6.h.replace('px','')).toFixed(3) * 100)) || 
-			       (p.tagName == 'EMBED' && (Math.round(yt6.aspect_ratio.toFixed(3) * 100) !=  Math.round((yt6.w.replace('px','') / yt6.h.replace('px','')).toFixed(3) * 100) || Math.round((z.offsetWidth / z.offsetHeight).toFixed(3) * 100) != Math.round((yt6.w.replace('px','') / yt6.h.replace('px','')).toFixed(3) * 100)) && (yt6.inf.offsetWidth != (2 * yt6.osw.style.left.replace('px','') + 1 * yt6.w.replace('px','')) ) )
+			       (p.tagName == 'EMBED' && (
+					Math.round(yt6.aspect_ratio.toFixed(3) * 100) !=  Math.round((yt6.w.replace('px','') / yt6.h.replace('px','')).toFixed(3) * 100)
+					 || Math.round((z.offsetWidth / z.offsetHeight).toFixed(3) * 100) != Math.round((yt6.w.replace('px','') / yt6.h.replace('px','')).toFixed(3) * 100)) && (yt6.inf.offsetWidth != (2 * yt6.osw.style.left.replace('px','') + 1 * yt6.w.replace('px','')) ) )
 			      ) || ( (Math.abs(z.offsetHeight - 1 * yt6.h.replace('px','')) > 10 || (1 * yt6.w.replace('px','') > yt6.inf.offsetWidth)) && (Math.round((z.offsetWidth / z.offsetHeight).toFixed(3) * 100) == Math.round(yt6.aspect_ratio.toFixed(3) * 100)) )
 //|| yt6.inf.offsetWidth > 1 * yt6.w.replace('px','') 
 			    )
@@ -11515,7 +11518,7 @@ if (yt6.mpb && yt6.mpb.tagName == 'YTD-MINIPLAYER') {
 			  //}
 			  if (yt6.inf.offsetWidth != (2 * yt6.osw.style.left.replace('px','') + 1 * yt6.w.replace('px','')) )
 			  if (yt6.aspect_ratio > 1) {//(Math.round((16/9).toFixed(3) * 100) > Math.round(yt6.aspect_ratio.toFixed(3) * 100) && yt6.aspect_ratio > 1)
-			    if (yt6.osw.style.left != '0px') yt6.osw.style.left = '0px'
+			    if (yt6.osw.style.left != '0px') { yt6.osw.style.left = '0px' }
 			  } else if (yt6.osw.style.left != (yt6.inf.offsetWidth - 1 * yt6.w.replace('px','')) / 2 + 'px') {
 			      yt6.osw.style.left = (yt6.inf.offsetWidth - 1 * yt6.w.replace('px','')) / 2 + 'px'
 			    }
@@ -13824,7 +13827,7 @@ if (yt6.flexy) {
 	    yt6.api.style.top = ''
 
 	    var y = (yt6.inf.offsetWidth - a.parentNode.offsetWidth) / 2
-	    yt6.osw.style.left = '0px' //y + 'px'  //(y > 0 && windowwidth >= 1000 && (h/w - 3/4) > parseFloat(0.1)) ? y + 'px' : ''
+	    yt6.osw.style.left = (yt6.aspect_ratio >= 1) ? '0px' : y + 'px'  //(y > 0 && windowwidth >= 1000 && (h/w - 3/4) > parseFloat(0.1)) ? y + 'px' : ''
 	  }
       }
 
@@ -15190,7 +15193,9 @@ var CtrlS = function (stage,v){
     v.style.left = '0px'
     v.style.top = '0px'
   }
+  if (yt6.flexy) var left = yt6.osw.style.left
   if (bm0) resize_layers( bm0.style.width, bm0.style.height, false )
+  if (yt6.flexy) yt6.osw.style.left = left
 
 
 /* If a button was clicked (uses event delegation)...*/
