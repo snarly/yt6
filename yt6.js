@@ -5405,7 +5405,7 @@ yt6.pl_next = null; delete yt6.pl_next
 	    };
 	  }
 
-	} else if (yt6.ytg) {
+	} else if (yt6.ytg && z[i+1]) {
 	    var yi = z[i+1].getElementsByTagName('A')[0]
 	    if (yi && yi.getAttribute('href') != null) {
 	      var x = yi.getAttribute('href').split('v=')[1].split('&')[0];
@@ -8316,7 +8316,7 @@ function mep_run() {
 						  for(k=Math.max(j+1,0);k<yt6.fmts_fallback_uniq.length;k++){
 						    var index = yt6.fmts_fallback_uniq[k]; //console.log(k +' '+ index)
 						    var dash = document.getElementById(mep_x('mep_') + '_sourcechooser_' + index); //console.log(dash)
-						    if (!dash || !yt6.fmts_fallback.V[yt6.prefer_fmt].includes(index)) { yt6.srcbak.push(index); //index = qual[index]['a'];
+						    if (!dash && !yt6.fmts_fallback.V[yt6.prefer_fmt].includes(index)) { yt6.srcbak.push(index); //index = qual[index]['a'];
 						      dash = document.getElementById(mep_x('mep_') + '_sourcechooser_' + qual[index]['a'])
 						    }
 						    if (index && dash && !yt6.srcbak.includes(index)) { break } else { yt6.srcbak.push(index); index = null }
