@@ -8620,7 +8620,7 @@ function mep_run() {
 					    if (bn) bn.style.visibility = 'visible';
 					    if (Seek == 2) { yt6.Seeked2 = false; if (Seek == 1 && yt6.sync_maybe_clear != true && player2.paused) Seek = null; }
 					  }
-					  playButton()
+					  //playButton()
 					  if (yt6.btn.play) { yt6.btn.play.innerHTML = 'play'; try { yt6.btn.play2.innerHTML = 'play' } catch(e) {} }
 					  if (yt6.retry < 8 && player2) {
 					    if (me.src != player2.src) {
@@ -12256,9 +12256,9 @@ function getElementsByAttribute(oElm, strTagName, strAttributeName, strAttribute
 
 function playButton() {
   var a = getElementsByAttribute(document.getElementById('controls-sp'),'button','class','play snarl-button yt-uix-button-text')
-  if (a) { yt6.btn.play = a[0] } else yt6.btn.play = {}
+  if (a) { yt6.btn.play = a[0] } else yt6.btn.play = null
   var b = getElementsByAttribute(document.getElementById('controls_bak'),'button','class','play snarl-button yt-uix-button-text')
-  if (b) { yt6.btn.play2 = b[0] } else yt6.btn.play2 = {}
+  if (b) { yt6.btn.play2 = b[0] } else yt6.btn.play2 = null
 }
 
 
