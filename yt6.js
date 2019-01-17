@@ -4829,7 +4829,8 @@ function getReferenceObjects() {
 
 	  var z = document.getElementsByTagName('YTD-TWO-COLUMN-BROWSE-RESULTS-RENDERER')
 	  // this initial DOM-constructor junk ruins perception, so let's move it before grabbing the key-elements
-	  if (z.length > 0) {
+	  if (typeof yt6.init == 'undefined' && z.length > 0) {
+	    yt6.init = 0
 	    for(i=0;i<z.length;i++) if (z[i]) {
 	      if (document.getElementsByTagName('ytd-page-manager')[0]) { document.getElementsByTagName('ytd-page-manager')[0].appendChild(z[i].parentNode) } else {
 		yt6.init = 1
@@ -4838,7 +4839,7 @@ function getReferenceObjects() {
 		body.appendChild(z[i]); //document.body z[i].parentNode.removeChild(z[i]);
 	      }
 	    }
-	  } //else yt6.init = 0
+	  }
 
   yt6.osw = document.getElementById('placeholder-player') || document.getElementById('player')
   yt6.mhp = document.getElementById('masthead-positioner') || document.getElementById('logo') || document.getElementById('home-button').parentNode;//gc('x-scope ytd-masthead-1')[0]
@@ -5216,7 +5217,7 @@ yt6.mep_renew = function() {
 	      if (autoplay()) {
 		z.click()
 		if (1 * itagx != 1 * yt6.userprefV[i]) no_default(itagx, 'V')
-		if (typeof yt6.player1.play == 'function' && yt6.x) try { yt6.player1.play() } catch(e) { console.log(e) }; //autoplay trigger
+		if (typeof yt6.player1.play == 'function' && yt6.x) try { yt6.player1.play() } catch(e) { }; //autoplay trigger
 		if (z.parentNode.parentNode.children.length < 3 && yt6.userprefV.length > 2) { no_default(itagx, 'V') }
 	      } else {
 		  z.setAttribute('checked','checked'); z.checked = 'true'
@@ -8306,7 +8307,7 @@ function mep_run() {
 
 					    //console.log(yt6.retry +' '+ limit +' '+ yt6.current + ' '+ yt6.srcbak);
 					    if ( yt6.retry < limit && (document.getElementById('ytassetsjs') || yt6.ytg ) &&
-						!((yt6.srcbak.includes(171) || yt6.srcbak.includes(140)) )//&& (yt6.srcbak.includes(278) || yt6.srcbak.includes(132)))
+						!((yt6.srcbak.includes(171) || yt6.srcbak.includes(140)) && (yt6.srcbak.includes(278) || yt6.srcbak.includes(132)))
 					       ) {
 					      if (sauce[i]) { sauce[i].removeAttribute('checked'); sauce[i].checked = '' }; me.pause()
 
@@ -10474,7 +10475,7 @@ if (!t.sourcechooserButton) {//console.log('error')
 		yt6.href = ''
 		yt6.audio = ''
 		yt6.args = ''
-		//yt6.init = 0; try { delete yt6.init } catch(e){}
+		yt6.init = 0; try { delete yt6.init } catch(e){}
 
 
 		var bm0 = document.getElementById('bm0')
