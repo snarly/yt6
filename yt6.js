@@ -5121,7 +5121,7 @@ yt6.mep_renew = function() {
       function find_the_source() {
 
 	var find = true
-	var z = document.getElementById('bm4'); if (z) z.style.display = 'block'
+	var z = document.getElementById('bm4'); if (z) z.style.display = 'inline-block'
 
 	for(i=0;i<yt6.userprefV.length;i++){
 
