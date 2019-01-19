@@ -4829,11 +4829,11 @@ function getReferenceObjects() {
 
 	  var z = document.getElementsByTagName('YTD-TWO-COLUMN-BROWSE-RESULTS-RENDERER')
 	  // this initial DOM-constructor junk ruins perception, so let's move it before grabbing the key-elements
-	  if (typeof yt6.init == 'undefined' && z.length > 0) {
-	    yt6.init = 0
+	  yt6.pl_fix = 0
+	  if (z.length > 0) {
+	    yt6.pl_fix = 1
 	    for(i=0;i<z.length;i++) if (z[i]) {
 	      if (document.getElementsByTagName('ytd-page-manager')[0]) { document.getElementsByTagName('ytd-page-manager')[0].appendChild(z[i].parentNode) } else {
-		yt6.init = 1
 		z[i].setAttribute('style','display: none'); z[i].style.display = 'none'; 
 		z[i].setAttribute('name','sp_junk'); z[i].name = 'sp_junk';
 		body.appendChild(z[i]); //document.body z[i].parentNode.removeChild(z[i]);
@@ -5449,7 +5449,7 @@ if (yt6.layout == 16 && playlist && ((!playlist.lastChild || !playlist.firstElem
 if (playlist && typeof playlist.id == 'string') {
 if (playlist.id.indexOf('watch') == -1) {
   
-  var playlist_scroller = yt6.playlist_scroller = (!yt6.ytg) ? gclass('playlist-items yt-scrollbar-dark style-scope ytd-playlist-panel-renderer')[yt6.init] : document.getElementsByTagName('ytg-scroll-pane')[1] ;//has-scroller; // x-scope iron-list-0')[0]
+  var playlist_scroller = yt6.playlist_scroller = (!yt6.ytg) ? gclass('playlist-items yt-scrollbar-dark style-scope ytd-playlist-panel-renderer')[0] : document.getElementsByTagName('ytg-scroll-pane')[1] ;//has-scroller; // x-scope iron-list-0')[0]
 
   if (typeof playlist_scroller != 'undefined') {
 
@@ -5468,8 +5468,8 @@ if (playlist.id.indexOf('watch') == -1) {
       if (z) {
 	z = z.lastChild; if (z) z = z.lastChild
 	if (z) {
-	  if (!yt6.pl_index) yt6.pl_index = 1 * z[yt6.txt].split('/')[1] - 1
-	  yt6.pl_length = 1 * z[yt6.txt].split('/')[0]
+	  if (!yt6.pl_index) yt6.pl_index = 1 * z[yt6.txt].split('/')[0] - 1
+	  yt6.pl_length = 1 * z[yt6.txt].split('/')[1]
 	}
       }
     } else {
@@ -5540,14 +5540,14 @@ if (playlist.id.indexOf('watch') == -1) {
 		      if (z && z[i] && typeof z[i].getAttribute('style') == 'string' && z[i].getAttribute('style').indexOf('0px, 0px, 0px') != -1)  {
 			if (z[i].getElementsByTagName('a')[0] && typeof z[i].getElementsByTagName('a')[0].href == 'string') {
 			  var refIndex = 1 * z[i].getElementsByTagName('a')[0].href.split('&index=')[1].split('&')[0] - 1
-			  //if (yt6.init == 1) { refIndex = (refIndex + 1) }
+			  //if (yt6.pl_fix == 1) { refIndex = (refIndex + 1) }
 			  var curIndex = location.href.split('&index=')[1]
 			  if (curIndex) { curIndex = curIndex.split('&')[0] - 1 } else try { curIndex = player().getPlaylistIndex() } catch(e){}
 
 			  //var x = document.getElementsByTagName('YTD-TWO-COLUMN-BROWSE-RESULTS-RENDERER')
 			  //if (x.length > 0) for(j=0;j<x.length;j++){ if (x[j]) {if (x[j].name == 'sp_junk') { x[j].parentNode.removeChild(x[j]); break } } }
 
-			  yt6.playlist_scroller.scrollTop = (curIndex - refIndex) * 64
+			  yt6.playlist_scroller.scrollTop = (curIndex - refIndex - yt6.pl_fix) * 64; //console.log(yt6.pl_fix + ' '+yt6.playlist_scroller.scrollTop + ' '+ curIndex +' ' + refIndex)
 			  //console.log(curIndex + ' ' + player().getPlaylistIndex() + ' '+ yt6.pl_i + typeof yt6.pl_i)
 			  //console.log(yt6.playlist_scroller.scrollTop)
 			  if (yt6.playlist_scroller.scrollTop == 0) pl_item()
@@ -10475,7 +10475,7 @@ if (!t.sourcechooserButton) {//console.log('error')
 		yt6.href = ''
 		yt6.audio = ''
 		yt6.args = ''
-		yt6.init = 0; try { delete yt6.init } catch(e){}
+		yt6.pl_fix = 0; //try { delete yt6.pl_fix } catch(e){}
 
 
 		var bm0 = document.getElementById('bm0')
