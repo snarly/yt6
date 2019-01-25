@@ -4830,14 +4830,16 @@ function getReferenceObjects() {
 	  var z = document.getElementsByTagName('YTD-TWO-COLUMN-BROWSE-RESULTS-RENDERER')
 	  // this initial DOM-constructor junk ruins perception, so let's move it before grabbing the key-elements
 	  yt6.pl_fix = 0
-	  if (z.length > 0) {
+	  if (z.length > 0 && (z[0].parentNode.firstChild.tagName == 'YTD-TWO-COLUMN-BROWSE-RESULTS-RENDERER' || !document.getElementById('mep_init') ) ) {
 	    yt6.pl_fix = 1
 	    for(i=0;i<z.length;i++) if (z[i]) {
-	      if (document.getElementsByTagName('ytd-page-manager')[0]) { document.getElementsByTagName('ytd-page-manager')[0].appendChild(z[i].parentNode) } else {
-		z[i].setAttribute('style','display: none'); z[i].style.display = 'none'; 
-		z[i].setAttribute('name','sp_junk'); z[i].name = 'sp_junk';
-		body.appendChild(z[i]); //document.body z[i].parentNode.removeChild(z[i]);
-	      }
+	      if (document.getElementsByTagName('ytd-page-manager')[0]) {
+		document.getElementsByTagName('ytd-page-manager')[0].appendChild(z[i].parentNode)
+	      } else {
+		  z[i].setAttribute('style','display: none'); z[i].style.display = 'none'; 
+		  z[i].setAttribute('name','sp_junk'); z[i].name = 'sp_junk';
+		  body.appendChild(z[i]); //document.body z[i].parentNode.removeChild(z[i]);
+	        }
 	    }
 	  }
 
@@ -5222,7 +5224,7 @@ yt6.mep_renew = function() {
 	      } else {
 		  z.setAttribute('checked','checked'); z.checked = 'true'
 		  yt6.player1.setSrc(yt6.linx[itagx])
-		  if (1 * itagx != 1 * yt6.userprefV[i] || (z.parentNode.parentNode.children.length < 3 && yt6.userprefV.length > 2)) { no_default(itagx, 'V') }
+		  if ((1 * itagx != 1 * yt6.userprefV[i] || z.parentNode.parentNode.children.length < 3) && yt6.userprefV.length > 2) { no_default(itagx, 'V') }
 		  var z = gc('mejs-time-loaded')[0]
 		  if (z) z.style.width = '0px'
 		}
@@ -8180,7 +8182,7 @@ function mep_run() {
 					  me.loaded = false;
 					  if (gc('mejs-clear')[0]) gc('mejs-clear')[0].setAttribute('id','mejs-clear')
 					});
-					addEL(me, 'error', function(e) {//console.log('1error')
+					addEL(me, 'error', function(e) { //console.log('1error') + console.log(e)
 					  if ( yt6 && yt6.player1 && (yt6.timer == 999999999 || me.src == 'https://www.youtube.com/ptracking' || yt6.player1.media.src != me.src))
 					    return void 0;
 					  if (me.networkState == 3) {
@@ -8499,7 +8501,8 @@ function mep_run() {
 
 					  if (itag(me.src) && 1 * itag(me.src) != yt6.userprefV[0]) { if (!yt6.no_default) { yt6.userprefV.unshift(1 * itag(me.src)); delete yt6.userprefV[20]; } else no_default(itag(me.src), 'V') }
 
-					  // the "no_default" stuff above is supposed to ensure that only actual user clicks will change the defaults (by deleting the last recorded automatic choices from the preference array)
+					  // the "no_default" stuff above is supposed to ensure that only actual user clicks change the defaults, by deleting the last recorded choice from the preference array which was made by an automated process
+
 					  yt6.no_default = false
 
 					  if (gc('mejs-clear')[0]) gc('mejs-clear')[0].setAttribute('id','mejs-clear')
@@ -8614,7 +8617,20 @@ function mep_run() {
 
 						  }
 						} else {
-						    if (yt6.autoplay && me.currentTime < 3 && yt6.speed > 1.7) me.play()
+						    if (yt6.autoplay && me.currentTime < 3) { me.play() }// && (yt6.speed > 1.7 || yt6.encrypted)
+
+						    var playPromise = me.play();
+
+						    if (playPromise !== undefined)
+						    if (typeof playPromise.then == 'function') {
+						      playPromise.then(function () {
+						          //console.log('Playing....');
+						      }).catch(function (error) {
+						          //console.log('Failed to play....' + error);
+							  me.load(); me.play()
+						      });
+						    } //else
+
 						    /*if (!yt6.A_V[itag(me.src)] && Seek != 4) {
 						      Seek = 4; player2.pause()
 						    };
@@ -8623,7 +8639,7 @@ function mep_run() {
 						    }*/
 					          };
 					    if (Seek == 3 ) { Seek = null }
-					  } else if (!me.paused) me.pause(); //!yt6.x
+					  } else if (!me.paused) { me.pause(); console.log('ytd') } //!yt6.x
 					  if (yt6.speed) player2.playbackRate = me.playbackRate = yt6.speed;
 					  if (!me.paused && typeof player2.loaded != 'number') {
 					    yt6.player1.showControls(true)
@@ -9115,7 +9131,9 @@ if (!player1.media.paused) yt6.Seeked2 = false
 					  me.playing = me.playing + 1
 					  if ( yt6.x && yt6.browser_tab == 'hidden' && player1.media.paused ) {
 					    player1.media.currentTime = me.currentTime; yt6.browser_tab = 'visible'
-					    player1.play();
+					    player1.play(); yt6.browser_tab = 'hidden';
+					    // Temporary switcheroo of the browser_tab flag to keep the video playing on a background tab when chrome-based browsers would continuously try to stop the paired playback of video & audio
+					    // Console message: "Active resource loading counts reached a per-frame limit while the tab was in background. Network requests will be delayed until a previous loading finishes, or the tab is brought to the foreground. See https://www.chromestatus.com/feature/5527160148197376 for more details"
 					  };
 					  if (!yt6.sync_maybe_clear && yt6.retry < 8 && parseInt(yt6.diff) < parseInt(0.3)) { yt6.retry = 0; if (Seek == 1) yt6.sync_maybe_clear = false; } else { yt6.sync_maybe_clear = true }
 					});
