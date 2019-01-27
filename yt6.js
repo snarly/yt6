@@ -513,7 +513,7 @@ function qr(sr) {//if (sr && typeof sr.indexOf == 'function' && ( sr.indexOf('it
   return qa;
 }
 
-yt6.userprefV = [333,43,18]
+yt6.userprefV = [246,43,18]
 yt6.userprefA = [171,140]
 
   var qual = {
@@ -600,7 +600,9 @@ yt6.userprefA = [171,140]
     396: {'t':'360p DASH AV1','a':'243'},
     397: {'t':'480p DASH AV1','a':'244'},
     398: {'t':'720p DASH AV1','a':'247'},
-    399: {'t':'1080p DASH AV1','a':'248'}
+    399: {'t':'1080p DASH AV1','a':'248'},
+    400: {'t':'1440p DASH AV1 ^fps','a':'308'},
+    401: {'t':'2160p DASH AV1 ^fps','a':'315'}
   };
 
 
@@ -612,21 +614,22 @@ for(var i=0;i<338;i++) if (qual[i]) qual[i]['s'] = ''
   yt6.fmts_fallback.V = {};
   yt6.fmts_fallback.A = {};
   yt6.fmts_fallback.V3D = {};
-  yt6.fmts_fallback.V.av1 = [,,,,,,,,,,,,,,,,399,,,,,,,,,398,,,,,,,397,,,,,,,,,,,,396,,,,,,,395,,,,394,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,399,,,,,,,,,398,,,,,,,397,,,,,,,,,,,,396,,,,,,,395,,,,394]
-  yt6.fmts_fallback.V.webm = [,272,,337,315,,313,,336,308,,271,,335,303,,,248,,170,46,,334,302,,,247,,169,45,,333,,246,245,244,,219,218,168,44,,,332,,243,,167,43,,331,,242,,330,,278,241,,,
+  yt6.fmts_fallback.V.av1 = [,,,,401,,,,,,400,,,,,,,,399,,,,,,,,,398,,,,,,,397,,,,,,,,,,,,396,,,,,,,395,,,,394,,,,,,,,,,,,,,,,,,
+,,,,401,,,,,,400,,,,,,,,399,,,,,,,,,398,,,,,,,397,,,,,,,,,,,,396,,,,,,,395,,,,394]
+  yt6.fmts_fallback.V.webm = [,272,,337,,315,,313,,336,,308,,271,,335,303,,,248,,170,46,,334,302,,,247,,169,45,,333,,246,245,244,,219,218,168,44,,,332,,243,,167,43,,331,,242,,330,,278,241,,,
   43,,
   //18,,22,
   ,
   ,,,251,172,171,,250,249,,
-  ,272,,337,315,,313,,336,308,,271,,335,303,,,248,,170,46,,334,302,,,247,,169,45,,333,,246,245,244,,219,218,168,44,,,332,,243,,167,43,,331,,242,,330,,278,241,,,
+  ,272,,337,,315,,313,,336,,308,,271,,335,303,,,248,,170,46,,334,302,,,247,,169,45,,333,,246,245,244,,219,218,168,44,,,332,,243,,167,43,,331,,242,,330,,278,241,,,
   //258,256,141,140,139
   ]
-  yt6.fmts_fallback.V.h264 = [138,,38,,,305,,266,,,304,,264,,,299,,,137,,,37,,,298,,,136,,,22,,,,,,135,,,,,78,59,,396,,134,,,18,,,,133,,394,,,132,160,
+  yt6.fmts_fallback.V.h264 = [138,,38,,,,305,,266,,,,304,,264,,,299,,,137,,,37,,,298,,,136,,,22,,,,,,135,,,,,78,59,,396,,134,,,18,,,,133,,394,,,132,160,
   ,18,
   //,43,,
   22,
   258,256,141,,,,140,,,139,
-  138,,38,,,305,,266,,,304,,264,,,299,,,137,,,37,,,298,,,136,,,22,,,,,,135,,,,,78,59,,396,,134,,,18,,,,133,,394,,,132,160,
+  138,,38,,,,305,,266,,,,304,,264,,,299,,,137,,,37,,,298,,,136,,,22,,,,,,135,,,,,78,59,,396,,134,,,18,,,,133,,394,,,132,160,
   //,,,,,251,172,171,250,249
   ]
   yt6.fmts_fallback.A.webm = [,,,251,172,171,,250,249,,
@@ -11761,14 +11764,17 @@ if (yt6.mpb && yt6.mpb.tagName == 'YTD-MINIPLAYER') {
 	  }
 
 
-if (yt6.pls) if (yt6.layout == 12) {
-  if (yt6.btn && yt6.btn.playlist && yt6.btn.playlist.getAttribute('class').indexOf('yt-uix-button-toggled') == -1 && yt6.autoplay == 
+	if (yt6.pls) {
+	  if (yt6.layout == 12) {
+	    if (yt6.btn && yt6.btn.playlist && yt6.btn.playlist.getAttribute('class').indexOf('yt-uix-button-toggled') == -1 && yt6.autoplay == 
 true) { yt6.btn.playlist.click() }
-  if (yt6.btn && yt6.btn.shuffle && yt6.btn.shuffle.getAttribute('class').indexOf('yt-uix-button-toggled') == -1 && yt6.shuffle == true) { yt6.btn.shuffle.click() }
-} else {
-    if (yt6.btn && yt6.btn.playlist && yt6.btn.playlist.parentNode.getAttribute('aria-pressed') == 'false' && yt6.autoplay == true) { yt6.btn.playlist.click() }
-    if (yt6.btn && yt6.btn.shuffle && yt6.btn.shuffle.parentNode.getAttribute('aria-pressed') == 'false' && yt6.shuffle == true) { yt6.btn.shuffle.click() }
-  }
+	    if (yt6.btn && yt6.btn.shuffle && yt6.btn.shuffle.getAttribute('class').indexOf('yt-uix-button-toggled') == -1 && yt6.shuffle == true) { yt6.btn.shuffle.click() }
+	  } else {
+	      if (yt6.autoplay == true && yt6.btn && yt6.btn.playlist && yt6.btn.playlist.parentNode.getAttribute('aria-pressed') == 'false') { yt6.autoplay = false; yt6.btn.playlist.parentNode.setAttribute('aria-pressed','true'); yt6.btn.playlist.click(); yt6.btn.playlist.click() }
+	      if (yt6.shuffle == true && yt6.btn && yt6.btn.shuffle && yt6.btn.shuffle.parentNode.getAttribute('aria-pressed') == 'false') { yt6.shuffle = false; yt6.btn.shuffle.parentNode.setAttribute('aria-pressed','true'); yt6.btn.shuffle.click(); yt6.btn.shuffle.click() }
+	    }
+	} //else { yt6.autoplay = false; yt6.shuffle = false }
+
 
 	if (yt6.mode != yt6.wide) {
  //console.log(yt6.size + ' autoscale mode ' + yt6.wide + ' '+ yt6.w +' '+ yt6.h ); 
