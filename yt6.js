@@ -513,7 +513,7 @@ function qr(sr) {//if (sr && typeof sr.indexOf == 'function' && ( sr.indexOf('it
   return qa;
 }
 
-yt6.userprefV = [43,18]
+yt6.userprefV = [333,43,18]
 yt6.userprefA = [171,140]
 
   var qual = {
@@ -612,17 +612,23 @@ for(var i=0;i<338;i++) if (qual[i]) qual[i]['s'] = ''
   yt6.fmts_fallback.V = {};
   yt6.fmts_fallback.A = {};
   yt6.fmts_fallback.V3D = {};
-  yt6.fmts_fallback.V.av1 = [,,,,,,,,,,,,,,,,399,,,,,,,,,398,,,,,,,397,,,,,,,,,,,,396,,,,,,,395,,,,394]
-  yt6.fmts_fallback.V.webm = [,272,,337,315,,313,,336,308,,271,,335,303,,,46,,170,248,,334,302,,,45,,169,247,,333,,44,,,219,218,168,246,245,244,,332,,43,,167,243,,331,,242,,330,,278,,241,,
-  43,,18,,22,,
+  yt6.fmts_fallback.V.av1 = [,,,,,,,,,,,,,,,,399,,,,,,,,,398,,,,,,,397,,,,,,,,,,,,396,,,,,,,395,,,,394,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,399,,,,,,,,,398,,,,,,,397,,,,,,,,,,,,396,,,,,,,395,,,,394]
+  yt6.fmts_fallback.V.webm = [,272,,337,315,,313,,336,308,,271,,335,303,,,248,,170,46,,334,302,,,247,,169,45,,333,,246,245,244,,219,218,168,44,,,332,,243,,167,43,,331,,242,,330,,278,241,,,
+  43,,
+  //18,,22,
+  ,
   ,,,251,172,171,,250,249,,
-  ,272,,337,315,,313,,336,308,,271,,335,303,,,46,,170,248,,334,302,,,45,,169,247,,333,,44,,,219,218,168,246,245,244,,332,,43,,167,243,,331,,242,,330,,278,,241,,
-  258,256,141,140,139]
-  yt6.fmts_fallback.V.h264 = [138,,38,,,305,,266,,,304,,264,,,299,,,37,,,137,,,298,,,22,,,136,,,,78,59,,,,,,,135,,396,,18,,,134,,,,133,,394,,132,,160,
-  ,18,,43,,22,
+  ,272,,337,315,,313,,336,308,,271,,335,303,,,248,,170,46,,334,302,,,247,,169,45,,333,,246,245,244,,219,218,168,44,,,332,,243,,167,43,,331,,242,,330,,278,241,,,
+  //258,256,141,140,139
+  ]
+  yt6.fmts_fallback.V.h264 = [138,,38,,,305,,266,,,304,,264,,,299,,,137,,,37,,,298,,,136,,,22,,,,,,135,,,,,78,59,,396,,134,,,18,,,,133,,394,,,132,160,
+  ,18,
+  //,43,,
+  22,
   258,256,141,,,,140,,,139,
-  138,,38,,,305,,266,,,304,,264,,,299,,,37,,,137,,,298,,,22,,,136,,,,78,59,,,,,,,135,,396,,18,,,134,,,,133,,394,,132,,160,
-  ,,,,,251,172,171,250,249]
+  138,,38,,,305,,266,,,304,,264,,,299,,,137,,,37,,,298,,,136,,,22,,,,,,135,,,,,78,59,,396,,134,,,18,,,,133,,394,,,132,160,
+  //,,,,,251,172,171,250,249
+  ]
   yt6.fmts_fallback.A.webm = [,,,251,172,171,,250,249,,
   ,,,251,172,171,,250,249,,43,,]
   yt6.fmts_fallback.A.aac = [258,256,141,,,,140,,,139,
@@ -639,7 +645,7 @@ for(var i=0;i<338;i++) if (qual[i]) qual[i]['s'] = ''
   for(i=0; i<yt6.fmts_fallback.V.h264.length;i++){
     if (yt6.fmts_fallback.V.h264[i] || yt6.fmts_fallback.V.webm[i] || yt6.fmts_fallback.V.av1[i]) {
       yt6.fmts_fallback.V.all[i] = yt6.fmts_fallback.V.h264[i] || yt6.fmts_fallback.V.webm[i] || yt6.fmts_fallback.V.av1[i]
-	  yt6.fmts_fallback.V.dash[i] = yt6.fmts_fallback.V.h264[i] || yt6.fmts_fallback.V.av1[i]
+	  yt6.fmts_fallback.V.dash[i] = yt6.fmts_fallback.V.h264[i] || yt6.fmts_fallback.V.av1[i]; //console.log(i +' '+yt6.fmts_fallback.V.all[i] +' '+qual[yt6.fmts_fallback.V.all[i]]['t'])
     }
     if (yt6.fmts_fallback.A.aac[i] || yt6.fmts_fallback.A.webm[i]) yt6.fmts_fallback.A.all[i] = yt6.fmts_fallback.A.aac[i] || yt6.fmts_fallback.A.webm[i]
     if (yt6.fmts_fallback.V3D.h264[i] || yt6.fmts_fallback.V3D.webm[i]) yt6.fmts_fallback.V3D.all[i] = yt6.fmts_fallback.V3D.h264[i] || yt6.fmts_fallback.V3D.webm[i]
@@ -4674,14 +4680,14 @@ if (start != false){
 		}
 
 
-		if ((yt6.autoplay || (autoplay2 && (autoplay2 && autoplay2[0]))) && start)
+		/*if ((yt6.autoplay || (autoplay2 && (autoplay2 && autoplay2[0]))) && start)
 		  $waitUntil(function(){
 		    if (yt6.sync_timer == true && yt6.player1 && typeof yt6.player1.play == 'function') return true },
 		    function() {
 			if (!yt6.player1.media.loaded) yt6.player1.load();
 			if (yt6.player1.media.paused) yt6.player1.play()
 			if (!yt6.player2.media.loaded) { yt6.player2.load(); yt6.player2.play() }
-		    },100,1000)
+		    },100,1000)*/
 	   }
 
 }
@@ -5210,6 +5216,8 @@ yt6.mep_renew = function() {
 	  for(j=index;j<fmt_pool.length;j++){
 	    var itagx = fmt_pool[j]; if (itagx == 278) itagx = 241; if (itagx == 160) itagx = 132
 	    var z = document.getElementById(mep_x('mep_') + '_sourcechooser_' + itagx)
+	    if (i == yt6.userprefV.length-1 && j == fmt_pool.length-1 && !z && yt6.prefer_fmt != 'all') { var find = true; var itagx = (yt6.prefer_fmt == 'webm') ? '18' : '43'; 	var z = document.getElementById(mep_x('mep_') + '_sourcechooser_' + itagx); no_default(itagx, 'V') }
+	    var z = document.getElementById(mep_x('mep_') + '_sourcechooser_' + itagx)
 	    yt6.me_flash_source = null
 	    if (find && z) { var zv = z.getAttribute('value')
 	    if (zv && (zv.indexOf('source=yt_otf') > -1 || zv.indexOf('source/yt_otf') > -1)) {
@@ -5259,7 +5267,7 @@ yt6.mep_renew = function() {
 		break
 	      }
 	    }
-	    if (Aindex && Afmt_pool) break
+	    if (Aindex == j && Afmt_pool) break
 	  }
 
 	  if (!Afmt_pool) {
@@ -5273,13 +5281,13 @@ yt6.mep_renew = function() {
 		  break
 		}
 	      }
-	      if (Aindex && Afmt_pool) break
+	      if (Aindex == j && Afmt_pool) break
 	    }
 	  }
 
 	  //var z = null
 
-	if (!yt6.audiox && Aindex && Afmt_pool) {
+	if (!yt6.audiox && Aindex == j && Afmt_pool) {
 
 	  var find = true
 	  for(i=0;i<yt6.userprefA.length;i++){
@@ -8320,7 +8328,7 @@ function mep_run() {
 						    });
 						}
 
-					      if (yt6.userprefA[0] !== yt6.userprefV[0]) {
+					      if (yt6.userprefA[0] !== yt6.userprefV[0] || !yt6.fmts_fallback.A.all.includes(itag(me.src)) ) {
 						yt6.fmts_fallback_uniq = uniq(yt6.fmts_fallback.V.all)
 						var x = yt6.userprefV[0]
 					      } else {
@@ -8472,7 +8480,7 @@ function mep_run() {
 
 					  if (yt6.newvideo) { yt6.newvideo = true } else { yt6.sync_timer = true }
 					  //var A = []; A = yt6.A_;
-					  if (yt6.A_[itag(me.src)] && mep) {
+					  if (mep) if (yt6.A_[itag(me.src)]) {
 					    var z = getElementsByAttribute(document,'input','name',mep.getAttribute('id') + '_sourcechooser')
 					    for(k=0;k<z.length;k++){
 					      if (z[k] && z[k].nextSibling) {
@@ -8497,7 +8505,14 @@ function mep_run() {
 
 					    if (itag(me.src) && 1 * itag(me.src) != yt6.userprefA[0]) { if (!yt6.no_default) { yt6.userprefA.unshift(1 * itag(me.src)); delete yt6.userprefA[20]; } else { no_default(itag(me.src), 'V'); no_default(itag(me.src), 'A') } }
 					    yt6.audiox = null; delete yt6.audiox; yt6.audio = yt6.player2.media.src = me.src;
-					  }
+
+					  } else if (!yt6.player2.media.loaded) { //console.log(yt6.ct +' '+me.currentTime+' '+yt6.player2.media.currentTime + ' '+player2.currentTime)
+					      try {
+						yt6.player2.media.setSrc(player2.getAttribute('src')); yt6.player2.media.load(); yt6.player2.media.loaded = true;
+					      } catch(e){}
+
+					      if (Math.abs(1 * yt6.ct) > 0 && me.currentTime == 0) { yt6.player2.media.currentTime = yt6.player1.media.currentTime = yt6.ct }
+					    }
 
 					  if (itag(me.src) && 1 * itag(me.src) != yt6.userprefV[0]) { if (!yt6.no_default) { yt6.userprefV.unshift(1 * itag(me.src)); delete yt6.userprefV[20]; } else no_default(itag(me.src), 'V') }
 
@@ -8627,7 +8642,7 @@ function mep_run() {
 						          //console.log('Playing....');
 						      }).catch(function (error) {
 						          //console.log('Failed to play....' + error);
-							  me.load(); me.play()
+							  me.currentTime = yt6.player1.media.currentTime; yt6.player1.load(); me.play()
 						      });
 						    } //else
 
