@@ -11766,12 +11766,11 @@ if (yt6.mpb && yt6.mpb.tagName == 'YTD-MINIPLAYER') {
 
 	if (yt6.pls) {
 	  if (yt6.layout == 12) {
-	    if (yt6.btn && yt6.btn.playlist && yt6.btn.playlist.getAttribute('class').indexOf('yt-uix-button-toggled') == -1 && yt6.autoplay == 
-true) { yt6.btn.playlist.click() }
+	    if (yt6.btn && yt6.btn.playlist && yt6.btn.playlist.getAttribute('class').indexOf('yt-uix-button-toggled') == -1 && yt6.autoplay == true) { yt6.btn.playlist.click() }
 	    if (yt6.btn && yt6.btn.shuffle && yt6.btn.shuffle.getAttribute('class').indexOf('yt-uix-button-toggled') == -1 && yt6.shuffle == true) { yt6.btn.shuffle.click() }
 	  } else {
-	      if (yt6.autoplay == true && yt6.btn && yt6.btn.playlist && yt6.btn.playlist.parentNode.getAttribute('aria-pressed') == 'false') { yt6.autoplay = false; yt6.btn.playlist.parentNode.setAttribute('aria-pressed','true'); yt6.btn.playlist.click(); yt6.btn.playlist.click() }
-	      if (yt6.shuffle == true && yt6.btn && yt6.btn.shuffle && yt6.btn.shuffle.parentNode.getAttribute('aria-pressed') == 'false') { yt6.shuffle = false; yt6.btn.shuffle.parentNode.setAttribute('aria-pressed','true'); yt6.btn.shuffle.click(); yt6.btn.shuffle.click() }
+	      if (yt6.autoplay == true && yt6.btn && yt6.btn.playlist && yt6.btn.playlist.parentNode.getAttribute('aria-pressed') == 'false') { yt6.autoplay = !yt6.autoplay; yt6.btn.playlist.click() }
+	      if (yt6.shuffle == true && yt6.btn && yt6.btn.shuffle && yt6.btn.shuffle.parentNode.getAttribute('aria-pressed') == 'false') { yt6.shuffle = !yt6.shuffle; yt6.btn.shuffle.click() }
 	    }
 	} //else { yt6.autoplay = false; yt6.shuffle = false }
 
