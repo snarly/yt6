@@ -1955,11 +1955,11 @@ if (typeof jQuery != 'undefined') {
 
 		// default amount to move back when back key is pressed
 		defaultSeekBackwardInterval: function(media) {
-			return (media.duration * 0.05);
+			return 5;//(media.duration * 0.05);
 		},
 		// default amount to move forward when forward key is pressed
 		defaultSeekForwardInterval: function(media) {
-			return (media.duration * 0.05);
+			return 5;//(media.duration * 0.05);
 		},
 
 		// set dimensions via JS instead of CSS //true
