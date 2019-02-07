@@ -4904,7 +4904,7 @@ function getReferenceObjects() {
 
 	var z = document.getElementsByTagName('ytd-watch-flexy')[0] || document.getElementsByTagName('ytd-watch')[0]
 
-	if (z && (z.hasAttribute('flexy_') || z.hasAttribute('is-currently-flexible_') || z.hasAttribute('flexy-fit-to-video_') || z.hasAttribute('flexy-v2_') || z.hasAttribute('flexy-v2-extended_') || z.hasAttribute('flexy-small-window_'))
+	if (z && (z.hasAttribute('flexy_') || z.hasAttribute('is-currently-flexible_') || z.hasAttribute('flexy-fit-to-video_') || z.hasAttribute('flexy-v2_') || z.hasAttribute('flexy-v2-extended_') || z.hasAttribute('flexy-small-window_') || (typeof z.getAttribute('style') == 'string'  && z.getAttribute('style').indexOf('--ytd-watch-flexy-') > -1) )
 	   ) {
 
 	  yt6.flexy = true
@@ -4931,6 +4931,8 @@ function getReferenceObjects() {
 	  }
 
 	} else yt6.flexy = false
+
+      //console.log(yt6.flexy)
 
   } else {
       yt6.layout = 12
@@ -5868,7 +5870,7 @@ if (ytplayer.config && ytplayer.config.args) {
 
   var html = [new Date().toLocaleString(),
     //'Click to switch streams in both native (HTML5) and alternative player. Right click & "Save as" to download.<br>'
-    'Left-click will force <i>Progressive Download</i> method to access media on both players. Use Right-click & "Save as..." to download.<br>'
+    'Left-click will cancel YT\'s <i>Adaptive Streaming</i> and force <i>Progressive Download</i> to attempt to load the file into both players. If you just want to download the file, use Right-click & "Save as..."<br>'
     // (On the native YT player, you can revert to <i>Adaptive Streaming</i> by changing quality under its own gear-icon. It\'s better when dealing with very large files or when the browser cache is stored on an SSD.)
   ];//document.getElementById('early-body').innerHTML = ''
 
