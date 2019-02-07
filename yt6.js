@@ -5867,7 +5867,9 @@ if (ytplayer.config && ytplayer.config.args) {
   try { delete yt6.aspect_ratio } catch(e) { yt6['aspect_ratio'] = undefined }
 
   var html = [new Date().toLocaleString(),
-    'Click to switch streams in both native (HTML5) and alternative player. Right click & "Save as" to download.<br>'
+    //'Click to switch streams in both native (HTML5) and alternative player. Right click & "Save as" to download.<br>'
+    'Left-click will force <i>Progressive Download</i> method to access media on both players. Use Right-click & "Save as..." to download.<br>'
+    // (On the native YT player, you can revert to <i>Adaptive Streaming</i> by changing quality under its own gear-icon. It\'s better when dealing with very large files or when the browser cache is stored on an SSD.)
   ];//document.getElementById('early-body').innerHTML = ''
 
 
@@ -11587,7 +11589,7 @@ if (yt6.mpb && yt6.mpb.tagName == 'YTD-MINIPLAYER') {
 			  if (400 >= 1 * yt6.w.replace('px','')) yt6.w = '400px'
 
 
-			if (1 * yt6.h.replace('px','') - 0 > Math.round(((wh - yt6.mhp.offsetHeight - 8) / 100 >>0) * 80)) {
+			if (!yt6.wide && 1 * yt6.h.replace('px','') - 0 > Math.round(((wh - yt6.mhp.offsetHeight - 8) / 100 >>0) * 80) ) {
 			  var z = z.offsetHeight //(p.tagName != 'EMBED') ? wh : z.offsetHeight//Math.round(((wh - yt6.mhp.offsetHeight - 8) / 100 >>0) * 80)
 			  yt6.h = z + 'px'
 			  //if (!(p.tagName == 'EMBED')) yt6.w = z * yt6.aspect_ratio + 'px'
@@ -14759,8 +14761,8 @@ function aspect(a) {
      }
 
       yt6.size = 'default'
-      var w = (!yt6.flexy) ? fix_Width() : yt6.api.parentNode.parentNode.offsetWidth + 'px'
-      if (yt6.flexy && 1 * w.replace('px','') > yt6.inf.offsetWidth) w = yt6.inf.offsetWidth + 'px'
+      var w = (yt6.flexy && !yt6.wide) ? yt6.api.parentNode.parentNode.offsetWidth + 'px' : fix_Width()
+      if (yt6.flexy && !yt6.wide && 1 * w.replace('px','') > yt6.inf.offsetWidth) w = yt6.inf.offsetWidth + 'px'
       var h = (webgl) ? w.replace('px','') / parseFloat(webgl.width / webgl.height) + 'px' : fix_Height()
 
       if (document.getElementById('aspect')) { document.getElementById('aspect').parentNode.removeChild(document.getElementById('aspect'))}
