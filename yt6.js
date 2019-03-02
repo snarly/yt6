@@ -11357,7 +11357,7 @@ addEL(window, 'spfdone', yt6.body.spfdone, false);
 
 	var ads = gc('videoAdUiSkipButton')[0]; if (ads && !yt6.x) { ads.click(); ads.setAttribute("class","videoAdUiSkipButton") }
 	var ads = gc('ytp-ad-skip-ad-slot')[0]; if (ads && !yt6.x) { var ads = gc('ytp-ad-skip-button ytp-button')[0]; ads.click() }
-	var ads = gc('ytp-ad-preview-container')[0]; if (ads && !yt6.x) { ads.parentNode.removeChild(ads); try { console.log('?'); p.loadVideoById(yt6.vid) } catch(e){} }
+	var ads = gc('ytp-ad-preview-container')[0]; if (ads && !yt6.x) { ads.parentNode.removeChild(ads); if (yt6.vid != video_id()[0]) try { p.loadVideoById(video_id()[0]) } catch(e){} }
 	var ads = gc('ad-container ad-container-single-media-element-annotations ad-overlay')[0]; if (ads) { ads.style.display = 'none' }
 	var ads = gc('ytp-ad-overlay-slot')[0]; if (ads) { ads.style.display = 'none' }
 	var ads = gc("video-ads html5-stop-propagation")[0]; if (ads) { ads.parentNode.removeChild(ads) };
