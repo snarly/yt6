@@ -11356,11 +11356,12 @@ addEL(window, 'spfdone', yt6.body.spfdone, false);
 	  if (yt6.x && p && p.getAttribute('flashvars')) window.postMessage("pauseVideo", "*")
 	}
 
-	if (typeof ads_noskip == 'undefined') yt6.ads_noskip = 1
+	if (typeof yt6.ads_noskip == 'undefined') yt6.ads_noskip = 0
 
 	var ads = gc('videoAdUiSkipButton')[0]; if (ads && !yt6.x) { yt6.ads_noskip = 0; ads.click(); ads.setAttribute("class","videoAdUiSkipButton") }
-	var ads = gc('ytp-ad-skip-ad-slot')[0]; if (ads && !yt6.x) { yt6.ads_noskip = 0; var ads = gc('ytp-ad-skip-button ytp-button')[0]; ads.click() }
-	var ads = gc('ytp-ad-preview-container')[0]; if (ads && !yt6.x && yt6.ads_noskip && yt6.ads_noskip < 3) { yt6.ads_noskip = yt6.ads_noskip + 1; ads.parentNode.removeChild(ads); try { p.loadVideoById(video_id()[0], p.getCurrentTime() ) } catch(e){} }//if (yt6.vid != video_id()[0]) 
+	var ads = gc('ytp-ad-skip-ad-slot')[0]; if (ads && !yt6.x) { yt6.ads_noskip = 0; var ads = gc('ytp-ad-skip-button ytp-button')[0]; ads.click() } else {
+	  var ads = gc('ytp-ad-preview-container')[0]; if (ads && !yt6.x && yt6.ads_noskip < 4) { yt6.ads_noskip = (yt6.ads_noskip + 1); ads.parentNode.removeChild(ads); try { p.loadVideoById(video_id()[0], p.getCurrentTime() ) } catch(e){} }//if (yt6.vid != video_id()[0]) 
+	}
 	var ads = gc('ad-container ad-container-single-media-element-annotations ad-overlay')[0]; if (ads) { ads.style.display = 'none' }
 	var ads = gc("video-ads html5-stop-propagation")[0]; if (ads) { ads.parentNode.removeChild(ads) };
 	var ads = document.getElementById("google_companion_ad_div"); if (ads) { ads.parentNode.removeChild(ads) };
