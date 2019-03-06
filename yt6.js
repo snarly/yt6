@@ -1,4 +1,4 @@
-	var yt6 = window.document.getElementById('snarls_player')
+var yt6 = window.document.getElementById('snarls_player')
 
   yt6.body = document.getElementsByTagName('body')[0]
   if (yt6.body) {
@@ -10667,6 +10667,7 @@ if (!t.sourcechooserButton) {//console.log('error')
 
 		yt6.Seeked2 = false
 		yt6.navigation = true
+		yt6.ads_noskip = 0
 		yt6.mep = 'reload'
 		if (yt6.newin) delete yt6.newin
 		delete yt6.media_duration
@@ -11355,11 +11356,12 @@ addEL(window, 'spfdone', yt6.body.spfdone, false);
 	  if (yt6.x && p && p.getAttribute('flashvars')) window.postMessage("pauseVideo", "*")
 	}
 
-	var ads = gc('videoAdUiSkipButton')[0]; if (ads && !yt6.x) { ads.click(); ads.setAttribute("class","videoAdUiSkipButton") }
-	var ads = gc('ytp-ad-skip-ad-slot')[0]; if (ads && !yt6.x) { var ads = gc('ytp-ad-skip-button ytp-button')[0]; ads.click() }
-	var ads = gc('ytp-ad-preview-container')[0]; if (ads && !yt6.x) { ads.parentNode.removeChild(ads); try { p.loadVideoById(video_id()[0]) } catch(e){} }//if (yt6.vid != video_id()[0]) 
+	if (typeof ads_noskip == 'undefined') yt6.ads_noskip = 1
+
+	var ads = gc('videoAdUiSkipButton')[0]; if (ads && !yt6.x) { yt6.ads_noskip = 0; ads.click(); ads.setAttribute("class","videoAdUiSkipButton") }
+	var ads = gc('ytp-ad-skip-ad-slot')[0]; if (ads && !yt6.x) { yt6.ads_noskip = 0; var ads = gc('ytp-ad-skip-button ytp-button')[0]; ads.click() }
+	var ads = gc('ytp-ad-preview-container')[0]; if (ads && !yt6.x && yt6.ads_noskip && yt6.ads_noskip < 3) { yt6.ads_noskip = yt6.ads_noskip + 1; ads.parentNode.removeChild(ads); try { p.loadVideoById(video_id()[0], p.getCurrentTime() ) } catch(e){} }//if (yt6.vid != video_id()[0]) 
 	var ads = gc('ad-container ad-container-single-media-element-annotations ad-overlay')[0]; if (ads) { ads.style.display = 'none' }
-	var ads = gc('ytp-ad-overlay-slot')[0]; if (ads) { ads.style.display = 'none' }
 	var ads = gc("video-ads html5-stop-propagation")[0]; if (ads) { ads.parentNode.removeChild(ads) };
 	var ads = document.getElementById("google_companion_ad_div"); if (ads) { ads.parentNode.removeChild(ads) };
 	var ads = document.getElementById(mep_x("google_ads_frame")); if (ads) { ads.parentNode.removeChild(ads) };
@@ -11369,31 +11371,37 @@ addEL(window, 'spfdone', yt6.body.spfdone, false);
 	if (typeof ivo == 'undefined') var ivo = ''
 
 	if (!yt6.x && ivo.indexOf(yt6.vid + '$done') == -1 && p && p.tagName == 'DIV') {
-	  for (i=48;i<58;i++) { //0-9
+	  var z = [[48,58],[65,91],[97,123]]
+	  for (k=0;k<3;k++){
+	  for (i=z[k][0];i<z[k][1];i++) { //0-9
 	    function adbox_begone1(i) {
-	      var ads = document.getElementById('invideo-overlay:'+String.fromCharCode(i)); if (ads) ads.style.display = 'none'
+	      var ads = document.getElementById('invideo-overlay:'+String.fromCharCode(i)); if (ads) { ads.style.display = 'none'; ivo = yt6.vid + '$done'; return ivo } else return ''
 	    }
 	    function adbox_begone2(i, j) {
-	      var ads = document.getElementById('invideo-overlay:'+String.fromCharCode(i)+String.fromCharCode(j)); if (ads) ads.style.display = 'none'
+	      var ads = document.getElementById('invideo-overlay:'+String.fromCharCode(i)+String.fromCharCode(j)); if (ads) { ads.style.display = 'none'; ivo = yt6.vid + '$done'; return ivo } else return ''
 	    }
-	    adbox_begone1(i)
-	    for (j=48;j<58;j++) { //0-9
-	      adbox_begone2(i, j)
+	    ivo = adbox_begone1(i); //if (ivo) console.log('1 '+ivo)
+	    if (!ivo) for (j=48;j<58;j++) { //0-9
+	      ivo = adbox_begone2(i, j); //if (ivo) console.log('2')
 	    }
-	    for (j=65;j<91;j++) { //A-Z
-	      adbox_begone2(i, j)
+	    if (!ivo) for (j=65;j<91;j++) { //A-Z
+	      ivo = adbox_begone2(i, j); //if (ivo) console.log('3')
 	    }
-	    for (j=97;j<123;j++) { //a-z
-	      adbox_begone2(i, j)
+	    if (!ivo) for (j=97;j<123;j++) { //a-z
+	      ivo = adbox_begone2(i, j); //if (ivo) console.log('4')
 	    }
 	  }
-	  for (i=65;i<91;i++) { //A-Z
-	    adbox_begone1(i)
 	  }
-	  for (i=97;i<123;i++) { //a-z
-	    adbox_begone1(i)
+	  /*if (!ivo) for (i=65;i<91;i++) { //A-Z
+	    ivo = adbox_begone1(i); if (ivo) console.log('5')
 	  }
-	  var ivo = yt6.vid + '$done'
+	  if (!ivo) for (i=97;i<123;i++) { //a-z
+	    ivo = adbox_begone1(i); if (ivo) console.log('6')
+	  }
+
+	  if (ivo != yt6.vid + '$done') {
+	    var ads = gc('ytp-ad-overlay-slot')[0]; if (ads) { ads.style.display = 'none'; ivo = yt6.vid + '$done'; if (ivo) console.log('7') }
+	  }; console.log('"'+ivo+'"')*/
 	}
 
 
