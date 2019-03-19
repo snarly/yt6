@@ -1244,7 +1244,7 @@ yt6.feedback = function(fcnm) {
 			  scpt.type = \'text/javascript\';\
 			  scpt.id = \'ytassetsjs\';\
 			  scpt[yt6.txt] = document.getElementById(\'setjs\').value;\
-			  yt6.body.appendChild(scpt);\
+			  document.getElementsByTagName(\'body\')[0].appendChild(scpt);\
 			  var scpt = document.getElementById(\'ytassetsjs\');\
 			  scpt.srco = document.yt6 || document.getElementById(\'snarls_player\').firstChild.src || document.getElementById(\'snarls_player\').src;\
 			  var z = new Date().toLocaleString().toString();\
