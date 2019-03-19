@@ -906,22 +906,22 @@ try { var mouseEvt = document.createEvent("MouseEvents") } catch(e) {}
 //@ http://jsfromhell.com/array/shuffle [v1.0]
 
   function shuffle(o){ //v1.0
-    for(j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x)
+    for(j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x)//{console.log(o)}
     return o
   };
 
 
 
 yt6.cdn_ = function(){
-  yt6.cdns = ['//cdn.rawgit.com/','//rawcdn.githack.com/']
-  yt6.cdn = shuffle(yt6.cdns)[0]
+  yt6.cdns = ['//cdn.rawgit.com/snarly/yt6/','//rawcdn.githack.com/snarly/yt6/','//cdn.jsdelivr.net/gh/snarly/yt6@']
+  yt6.cdn = shuffle(yt6.cdns); yt6.cdn = yt6.cdn[Math.floor(Math.random() * yt6.cdn.length)]; //console.log(yt6.cdn)
 }
 
 function swfbin4(){
 
   yt6.cdn_()
   var swf1 = 'https://s.ytimg.com/yts/swfbin/player-vfljf_kbO/watch_as3.swf'
-  var swf2 = yt6.cdn + 'snarly/yt6/53bfd5591539b6a72701cb787ae915d15619c886/watch_as3.swf'
+  var swf2 = yt6.cdn + '53bfd5591539b6a72701cb787ae915d15619c886/watch_as3.swf'
   yt6.swfbin4 = document.getElementsByTagName('ytg-app')[0]
 
   if (!document.getElementsByTagName('ytg-app')[0]) {
@@ -1246,7 +1246,7 @@ yt6.feedback = function(fcnm) {
 			  scpt[yt6.txt] = document.getElementById(\'setjs\').value;\
 			  yt6.body.appendChild(scpt);\
 			  var scpt = document.getElementById(\'ytassetsjs\');\
-			  scpt.srco = document.getElementById(\'snarls_player\').firstChild.src || document.getElementById(\'snarls_player\').src;\
+			  scpt.srco = document.yt6 || document.getElementById(\'snarls_player\').firstChild.src || document.getElementById(\'snarls_player\').src;\
 			  var z = new Date().toLocaleString().toString();\
 			  scpt.setAttribute(\'time\',z);\
 			  scpt.setAttribute(\'style\',\'display: none\'); scpt.style.display = \'none\';\
@@ -1845,7 +1845,7 @@ function ajax1(update, ytg){
 	//if (yt6.ytg) hand_axe()
       var xhr = new XMLHttpRequest();
       var proxiez = []; proxiez[0] = proxies[0]; proxiez[1] = proxies[1]; proxiez[2] = proxies[2];
-      shuffle(proxiez);
+      proxiez = shuffle(proxiez);
 	  var z = def_link()
 	  proxiez.splice(0,0,'//www.youtube.com'); //if (!(yt6.oldbrowser && z && z.indexOf('%26false') > -1)) {  } else { hand_axe(); return void 0 }
       xhr.done = false;
@@ -5825,7 +5825,7 @@ function buildObject(ytplayer){
   getScrollbarWidth()
   fix_playlist()
 
-  yt6.cdn_()
+  yt6.cdn_(); //console.log(yt6.cdn)
 
 if (window.ytplayer.config) {
   if (window.ytplayer.config.args && (yt6.layout == 16 || yt6.ytg)) {
@@ -7470,11 +7470,11 @@ code = code +
 "	width: 100px;"+
 "	height: 100px;"+
 "	margin: -50px 0 0 -50px;"+
-"	background: url('" + yt6.cdn + "snarly/yt6/5b5ffacc074c0332f668db10bd2e3c36aa0be38e/bigplay.png') no-repeat;"+
+"	background: url('" + yt6.cdn + "5b5ffacc074c0332f668db10bd2e3c36aa0be38e/bigplay.png') no-repeat;"+
 "}"+
 ""+
 ".no-svg .mejs-overlay-button { "+
-"	background-image: url('" + yt6.cdn + "snarly/yt6/5b5ffacc074c0332f668db10bd2e3c36aa0be38e/bigplay.png');"+
+"	background-image: url('" + yt6.cdn + "5b5ffacc074c0332f668db10bd2e3c36aa0be38e/bigplay.png');"+
 "}"+
 ""+
 ".mejs-overlay:hover .mejs-overlay-button {"+
@@ -7489,7 +7489,7 @@ code = code +
 "	height: 80px;"+
 "	margin: -40px 0 0 -40px;"+
 "	background: #333;"+
-"	background: url('" + yt6.cdn + "snarly/yt6/5b5ffacc074c0332f668db10bd2e3c36aa0be38e/bigplay.png');"+
+"	background: url('" + yt6.cdn + "5b5ffacc074c0332f668db10bd2e3c36aa0be38e/bigplay.png');"+
 "	background: rgba(0, 0, 0, 0.9);"+
 "	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(50,50,50,0.9)), to(rgba(0,0,0,0.9)));"+
 "	background: -webkit-linear-gradient(top, rgba(50,50,50,0.9), rgba(0,0,0,0.9));"+
@@ -7503,7 +7503,7 @@ code = code +
 "	display: block;"+
 "	width: 80px;"+
 "	height: 80px;"+
-"	background: transparent url('" + yt6.cdn + "snarly/yt6/2111d0cf292b9e0f9bcb7ab79a8698b5826b5ba5/loading.gif') 50% 50% no-repeat;"+
+"	background: transparent url('" + yt6.cdn + "2111d0cf292b9e0f9bcb7ab79a8698b5826b5ba5/loading.gif') 50% 50% no-repeat;"+
 "}"+
 ""+
 "/* End: LAYERS */"+
@@ -7516,7 +7516,7 @@ code = code +
 "	padding: 0;"+
 "	bottom: 0;"+
 "	left: 0;"+
-"	background: url('" + yt6.cdn + "johndyer/mediaelement/tree/990edbe90b89ca3f40cde0d03fad805a4d6650a5/build/background.png');"+
+"	background: url('" + yt6.cdn.replace('snarly/yt6/','johndyer/mediaelement/').replace('snarly/yt6@','johndyer/mediaelement@') + "tree/990edbe90b89ca3f40cde0d03fad805a4d6650a5/build/background.png');"+
 "	background: rgba(0, 0, 0, 0.7);"+
 "	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(50,50,50,0.7)), to(rgba(0,0,0,0.7)));"+
 "	background: -webkit-linear-gradient(top, rgba(50,50,50,0.7), rgba(0,0,0,0.7)); "+
@@ -7554,11 +7554,11 @@ code = code +
 "	height: 16px;"+
 "	width: 16px;"+
 "	border: 0;"+
-"	background: transparent url('" + yt6.cdn + "snarly/yt6/e7e07cca212378b89ecdc11946d2a3fa97a63f23/controls.png') no-repeat;"+
+"	background: transparent url('" + yt6.cdn + "e7e07cca212378b89ecdc11946d2a3fa97a63f23/controls.png') no-repeat;"+
 "}"+
 ""+
 ".no-svg .mejs-controls .mejs-button button { "+
-"	background-image: url('" + yt6.cdn + "snarly/yt6/e7e07cca212378b89ecdc11946d2a3fa97a63f23/controls.png');"+
+"	background-image: url('" + yt6.cdn + "e7e07cca212378b89ecdc11946d2a3fa97a63f23/controls.png');"+
 "}"+
 ""+
 "/* :focus for accessibility */"+
@@ -7787,7 +7787,7 @@ code = code +
 "	display: none;"+
 "	height: 115px;"+
 "	width: 25px;"+
-"	background: url('" + yt6.cdn + "johndyer/mediaelement/tree/990edbe90b89ca3f40cde0d03fad805a4d6650a5/build/background.png');"+
+"	background: url('" + yt6.cdn.replace('snarly/yt6/','johndyer/mediaelement/').replace('snarly/yt6@','johndyer/mediaelement@') + "tree/990edbe90b89ca3f40cde0d03fad805a4d6650a5/build/background.png');"+
 "	background: rgba(50, 50, 50, 0.7);"+
 "	-webkit-border-radius: 0;"+
 "	-moz-border-radius: 0;"+
@@ -7920,7 +7920,7 @@ code = code +
 "	right: -10px;"+
 "	width: 130px;"+
 "	height: 100px;"+
-"	background: url('" + yt6.cdn + "johndyer/mediaelement/tree/990edbe90b89ca3f40cde0d03fad805a4d6650a5/build/background.png');"+
+"	background: url('" + yt6.cdn.replace('snarly/yt6/','johndyer/mediaelement/').replace('snarly/yt6@','johndyer/mediaelement@') + "tree/990edbe90b89ca3f40cde0d03fad805a4d6650a5/build/background.png');"+
 "	background: rgba(50,50,50,0.7);"+
 "	border: solid 1px transparent;"+
 "	padding: 10px;"+
@@ -8076,7 +8076,7 @@ code = code +
 ""+
 ".mejs-captions-text {"+
 "	padding: 3px 5px;"+
-"	background: url('" + yt6.cdn + "johndyer/mediaelement/tree/990edbe90b89ca3f40cde0d03fad805a4d6650a5/build/background.png');"+
+"	background: url('" + yt6.cdn.replace('snarly/yt6/','johndyer/mediaelement/').replace('snarly/yt6@','johndyer/mediaelement@') + "tree/990edbe90b89ca3f40cde0d03fad805a4d6650a5/build/background.png');"+
 "	background: rgba(20, 20, 20, 0.8);"+
 ""+
 "}"+
@@ -8171,7 +8171,7 @@ code = code +
 "	bottom: 26px;"+
 "	width: 86px;"+
 "	right: -110px;"+
-"	background: url('" + yt6.cdn + "johndyer/mediaelement/tree/990edbe90b89ca3f40cde0d03fad805a4d6650a5/build/background.png');"+
+"	background: url('" + yt6.cdn.replace('snarly/yt6/','johndyer/mediaelement/').replace('snarly/yt6@','johndyer/mediaelement@') + "tree/990edbe90b89ca3f40cde0d03fad805a4d6650a5/build/background.png');"+
 "	background: rgba(50,50,50,0.7);"+
 "	border: solid 1px transparent;"+
 "	padding: 10px;"+
@@ -8214,7 +8214,7 @@ code = code +
 "	right: -10px;"+
 "	width: 130px;"+
 "	height: 100px;"+
-"	background: url('" + yt6.cdn + "johndyer/mediaelement/tree/990edbe90b89ca3f40cde0d03fad805a4d6650a5/build/background.png');"+
+"	background: url('" + yt6.cdn.replace('snarly/yt6/','johndyer/mediaelement/').replace('snarly/yt6@','johndyer/mediaelement@') + "tree/990edbe90b89ca3f40cde0d03fad805a4d6650a5/build/background.png');"+
 "	background: rgba(50,50,50,0.7);"+
 "	border: solid 1px transparent;"+
 "	padding: 10px;"+
@@ -8264,7 +8264,7 @@ code = code +
 "	left: 0;"+
 "	width: 100%;"+
 "	height: 100%;"+
-"	background: url('" + yt6.cdn + "johndyer/mediaelement/tree/990edbe90b89ca3f40cde0d03fad805a4d6650a5/build/background.png');"+
+"	background: url('" + yt6.cdn.replace('snarly/yt6/','johndyer/mediaelement/').replace('snarly/yt6@','johndyer/mediaelement@') + "tree/990edbe90b89ca3f40cde0d03fad805a4d6650a5/build/background.png');"+
 "	background: rgba(50,50,50,0.7);"+
 "	z-index: 1000;"+
 "	overflow: hidden;"+
@@ -8277,7 +8277,7 @@ code = code +
 "	position: absolute;"+
 "	right: 0;"+
 "	top: 0;"+
-"	background: url('" + yt6.cdn + "johndyer/mediaelement/tree/990edbe90b89ca3f40cde0d03fad805a4d6650a5/build/background.png');"+
+"	background: url('" + yt6.cdn.replace('snarly/yt6/','johndyer/mediaelement/').replace('snarly/yt6@','johndyer/mediaelement@') + "tree/990edbe90b89ca3f40cde0d03fad805a4d6650a5/build/background.png');"+
 "	background: rgba(50,50,50,0.7);"+
 "	color: #fff;"+
 "	padding: 4px;"+
@@ -10619,7 +10619,7 @@ if (!t.sourcechooserButton) {//console.log('error')
     };
 
 
-    loadScript( protocol() + yt6.cdn + "snarly/yt6/e6c64f14d046d412840cc96fa8308f446f02b8a5/mep-ceeb1a7.js", jq1)
+    loadScript( protocol() + yt6.cdn + "e6c64f14d046d412840cc96fa8308f446f02b8a5/mep-ceeb1a7.js", jq1)
 
 
 
@@ -10988,8 +10988,12 @@ if (typeof Polymer != 'undefined') {
     })
   }
 
+  if (!yt6.ytg) {
     var z = (yt6.flexy) ? 'ytd-watch-flexy' : 'ytd-watch'
-    yt6.body.snarls_watchdog.observe( document.getElementsByTagName(z)[0], {attributes: true, attributeFilter: ['video-id'] })//.observe( Polymer.Async._twiddle, { characterData: true })
+    yt6.body.snarls_watchdog.observe( document.getElementsByTagName(z)[0], {attributes: true, attributeFilter: ['video-id'] })
+  } else {
+      yt6.body.snarls_watchdog.observe( Polymer.Async._twiddle, { characterData: true })
+    }
 
     //(new window.MutationObserver(function(){Polymer.Async._atEndOfMicrotask()})).observe(Polymer.Async._twiddle,{characterData:true});
 }
@@ -12456,7 +12460,7 @@ if (yt6.flexy && yt6.pls) {
 
   }
   //raw.githubusercontent.com/
-  loadScript( protocol() + yt6.cdn + "snarly/yt6/747fd7ad7b481ee96ea874a8f0126df995f32006/jquery.js", jq0);
+  loadScript( protocol() + yt6.cdn + "747fd7ad7b481ee96ea874a8f0126df995f32006/jquery.js", jq0);
 
 
 
@@ -12477,7 +12481,7 @@ $waitUntil(
 	      }
 	    }
 	    if (document.getElementById('jquery.js') != null) document.getElementById('jquery.js').parentNode.removeChild(document.getElementById('jquery.js'));
-	    loadScript( protocol() + yt6.cdn + "snarly/yt6/747fd7ad7b481ee96ea874a8f0126df995f32006/jquery.js", yt6.jq0); yt6.jq0 = undefined; return true
+	    loadScript( protocol() + yt6.cdn + "747fd7ad7b481ee96ea874a8f0126df995f32006/jquery.js", yt6.jq0); yt6.jq0 = undefined; return true
   	}
     }//else
   },
@@ -15306,7 +15310,7 @@ function control_panel1() {
 
     var remove = document.createElement('div');
     remove.id = 'remove-sp';
-    var remove_sp_innerhtml = '<button onclick="switch_players()" class="snarl-button yt-uix-button-text" aria-label="Switch" title="Switch" style="width: 22px; height: 22px; padding: 0 1px 0 0"><img src="//s.ytimg.com/yts/img/HTML5_1Color_Black-vfl902gVJ.png" style="vertical-align:middle; height:12px; padding:0px""></img></button><button onclick="aspect()" class="snarl-button yt-uix-button-text" style="width: 30px" aria-label="Resize" title="Resize">«↔»</button><br><button style="width: 22px" onclick="var z = window.prompt(\'Are you sure you want to quit? \(Exit options: 0-3\)\\n Cancel = Not now;\\n 0 = Remove script without page refresh;\\n 1 = Refresh page with classic layout;\\n 2 = Refresh page with new layout \(if supported\);\\n 3 = Visit page on Gaming subdomain;\', \'0\'); if (!z) var z = window.confirm(\'OK will attempt to switch between YouTube layouts and refresh the page. \\nCancel will abort.\'); if (typeof z == \'boolean\' && z == false) return void 0; if (z && z != true) { if (z != 0 && (z == 1 || z == 2 || z == 3)) { if (z == 2) document.cookie=&quot;PREF=f1=50000000&f5=10&f6=1004;path=/;domain=.youtube.com;expires=Session&quot;; if (z == 1) document.cookie=&quot;PREF=f1=50000000&f5=10&f6=8;path=/;domain=.youtube.com;expires=Session&quot;; if (z == 3) { location.href = window.location.href.replace(\'www.youtube.com\',\'gaming.youtube.com\') } else location.href = window.location.href.replace(\'gaming.youtube.com\',\'www.youtube.com\') } else if (z == 0) deldiv() } else { if (!yt6.ytg) if (yt6.layout == 16) { document.cookie=&quot;PREF=f1=50000000&f5=10&f6=8;path=/;domain=.youtube.com;expires=Session&quot;; } else document.cookie=&quot;PREF=f1=50000000&f5=10&f6=1004;path=/;domain=.youtube.com;expires=Session&quot;; location.href = window.location.href; };" class="snarl-button yt-uix-button-text" aria-label="Remove" title="Remove">X</button><button id="audio_x" class="snarl-button yt-uix-button-text" aria-label="External audio" title="External audio" style="padding: 0 1px 0 1px; right: 0px" onclick="if (yt6.player1 && yt6.player2 && typeof yt6.player2.load == \'function\') { var audio_x = window.prompt(\'Enter URL of any audio (or video) file across the net to use as background sound. Only plays alongside non-MSE-mode video-only sources.\', document.getElementById(\'no.2\').src); yt6.audiox = document.getElementById(\'no.2\').src = yt6.player2.media.src = audio_x || yt6.linx[yt6.userprefA[0]]; if (!audio_x) { yt6.audiox = null; delete yt6.audiox }; yt6.player1.pause(); yt6.player2.load() };">audio</button></div>'
+    var remove_sp_innerhtml = '<button onclick="switch_players()" class="snarl-button yt-uix-button-text" aria-label="Switch" title="Switch" style="width: 22px; height: 22px; padding: 0 1px 0 0"><img src="//s.ytimg.com/yts/img/HTML5_1Color_Black-vfl902gVJ.png" style="vertical-align:middle; height:12px; padding:0px""></img></button><button onclick="aspect()" class="snarl-button yt-uix-button-text" style="width: 30px" aria-label="Resize" title="Resize">«↔»</button><br><button style="width: 22px" onclick="var z = window.prompt(\'Are you sure you want to quit? \(Exit options: 0-3\)\\n Cancel = Not now;\\n 0 = Remove script without page refresh;\\n 1 = Refresh page with classic layout;\\n 2 = Refresh page with new layout \(if supported\);\\n 3 = Visit page on Gaming subdomain;\', \'0\'); if (!z) var z = window.confirm(\'OK will attempt to switch between YouTube layouts and refresh the page. \\nCancel will abort.\'); if (typeof z == \'boolean\' && z == false) return void 0; if (z && !(typeof z == \'boolean\' && z == true)) { if (z != 0 && (z == 1 || z == 2 || z == 3)) { if (z == 2) document.cookie=&quot;PREF=f1=50000000&f5=10&f6=1004;path=/;domain=.youtube.com;expires=Session&quot;; if (z == 1) document.cookie=&quot;PREF=f1=50000000&f5=10&f6=8;path=/;domain=.youtube.com;expires=Session&quot;; if (z == 3) { location.href = window.location.href.replace(\'www.youtube.com\',\'gaming.youtube.com\') } else location.href = window.location.href.replace(\'gaming.youtube.com\',\'www.youtube.com\') } else if (z == 0) deldiv() } else { if (!yt6.ytg) if (yt6.layout == 16) { document.cookie=&quot;PREF=f1=50000000&f5=10&f6=8;path=/;domain=.youtube.com;expires=Session&quot;; } else document.cookie=&quot;PREF=f1=50000000&f5=10&f6=1004;path=/;domain=.youtube.com;expires=Session&quot;; location.href = window.location.href; };" class="snarl-button yt-uix-button-text" aria-label="Remove" title="Remove">X</button><button id="audio_x" class="snarl-button yt-uix-button-text" aria-label="External audio" title="External audio" style="padding: 0 1px 0 1px; right: 0px" onclick="if (yt6.player1 && yt6.player2 && typeof yt6.player2.load == \'function\') { var audio_x = window.prompt(\'Enter URL of any audio (or video) file across the net to use as background sound. Only plays alongside non-MSE-mode video-only sources.\', document.getElementById(\'no.2\').src); yt6.audiox = document.getElementById(\'no.2\').src = yt6.player2.media.src = audio_x || yt6.linx[yt6.userprefA[0]]; if (!audio_x) { yt6.audiox = null; delete yt6.audiox }; yt6.player1.pause(); yt6.player2.load() };">audio</button></div>'
 
     span.appendChild(remove);
     remove.setAttribute('style','display: inline-block');
