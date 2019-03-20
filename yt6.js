@@ -6726,7 +6726,7 @@ if (document.getElementById("bm1") != null) {
   }//onclic
 
   document.getElementById('bm1').appendChild(dw)
-  document.getElementById('bm4').setAttribute('style','font-size:10px; padding:0px 3px; width: 52px; max-height:30px; height: 30px; vertical-align: middle; display:none; font-weight:bold;')
+  document.getElementById('bm4').setAttribute('style','font-size:10px; padding:0px 3px; width: 52px; max-height:30px; height: 30px; vertical-align: middle; display:inline-block; font-weight:bold;')
   document.getElementById('bm4').setAttribute('class','snarl-button yt-uix-button-text')
   document.getElementById('bm4').onclick = onclic
 
