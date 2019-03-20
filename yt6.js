@@ -514,7 +514,7 @@ function qr(sr) {//if (sr && typeof sr.indexOf == 'function' && ( sr.indexOf('it
   return qa;
 }
 
-yt6.userprefV = [246,43,18]
+yt6.userprefV = [397,43,18]
 yt6.userprefA = [171,140]
 
   var qual = {
@@ -1237,7 +1237,7 @@ yt6.feedback = function(fcnm) {
 
 		    var bm1 = document.createElement('span')
 		    bm1.id = 'bm10'
-		    bm1.innerHTML = '<span><textarea id="setjs" value="" maxlength="2097152" rows="1" cols="15" style="height: 20px; border: solid;" onkeyup="if (event.keyCode == 13) {\
+		    bm1.innerHTML = '<span><textarea id="setjs" value="" maxlength="2097152" rows="1" cols="15" style="height: 20px; border: solid;" onkeyup="var yt6 = document.getElementById(\'snarls_player\'); if (event.keyCode == 13) {\
 			if (document.getElementById(\'setjs\').value.indexOf(\'function()\') != -1 || document.getElementById(\'setjs\').value.indexOf(\'function fcnm(\') != -1) {\
 			  if (document.getElementById(\'controls-sp\') != null) document.getElementById(\'controls-sp\').innerHTML = \'OK, Processing...\';\
 			  var scpt = document.createElement(\'div\');\
@@ -6067,7 +6067,8 @@ if (ytplayer.config && ytplayer.config.args) {
     
           function setLink(href){
 
-            var onclic = 'yt6.ct = document.getElementById("player1").currentTime;'+
+            var onclic = 'var yt6 = document.getElementById(\'snarls_player\');'+
+'		yt6.ct = document.getElementById("player1").currentTime;'+
 '		var p = player(), p = yt6.movie_player, p1load = null;'+
 '		var found = false;'+
 '		var me_flash = getElementsByAttribute(document,"object","name","me_flash"); '+
@@ -6544,9 +6545,9 @@ if (document.getElementById("bm1") != null) {
    '<br><b>' + title + '</b>' +
    '<br>Links will expire on <br>' + expire_date()[1] +
    '<br><br><div id="bm7" style="inline-block">Preferred format in case ' + browserName + ' is having trouble playing one back:<br>'+
-   '<input type="radio" class="preferred-format all" onclick="yt6.select_fmt(\'all\')">Any</input>'+
-   '<input type="radio" class="preferred-format webm" onclick="yt6.select_fmt(\'webm\')">WebM</input>'+
-   '<input type="radio" class="preferred-format dash" onclick="yt6.select_fmt(\'dash\')">DASH/MP4</input>'+
+   '<input type="radio" class="preferred-format all" onclick="var yt6 = document.getElementById(\'snarls_player\');  yt6.select_fmt(\'all\')">Any</input>'+
+   '<input type="radio" class="preferred-format webm" onclick="var yt6 = document.getElementById(\'snarls_player\'); yt6.select_fmt(\'webm\')">WebM</input>'+
+   '<input type="radio" class="preferred-format dash" onclick="var yt6 = document.getElementById(\'snarls_player\'); yt6.select_fmt(\'dash\')">DASH/MP4</input>'+
    '</div>'+
    '<br>Sometimes YouTube has certain, typically V+A formats disabled, while the rest may work. When decryption key update fails, no valid media links occur. To fix it, remove and reload the script manually.<br>'
   )
@@ -6564,7 +6565,7 @@ if (document.getElementById("bm1") != null) {
   dw.id = 'wp_cb'
   dw.type = 'checkbox'
   document.getElementById('wallpaper_sp').appendChild(dw)
-  var onclic = "if (this.checked) { yt6.wallpaper = true; this.setAttribute('checked','checked') } else { yt6.wallpaper = false; this.removeAttribute('checked','') }"
+  var onclic = "var yt6 = document.getElementById('snarls_player'); if (this.checked) { yt6.wallpaper = true; this.setAttribute('checked','checked') } else { yt6.wallpaper = false; this.removeAttribute('checked','') }"
   dw.setAttribute('onclick', onclic)
   dw.setAttribute('style','inline-block')
   if (yt6.wallpaper) { document.getElementById('wp_cb').checked = true; ; document.getElementById('wp_cb').setAttribute('checked','checked') }
@@ -6580,7 +6581,7 @@ if (document.getElementById("bm1") != null) {
   dw.id = 'no_cards'
   dw.type = 'checkbox'
   document.getElementById('bm6').appendChild(dw)
-  var onclic = "if (this.checked) { yt6.no_cards = true } else { yt6.no_cards = false }; no_cards()"
+  var onclic = "var yt6 = document.getElementById('snarls_player'); if (this.checked) { yt6.no_cards = true } else { yt6.no_cards = false }; no_cards()"
   dw.setAttribute('onclick', onclic)
   dw.setAttribute('style','inline-block')
   if (yt6.no_cards) {
@@ -6600,7 +6601,7 @@ if (document.getElementById("bm1") != null) {
   dw.id = 'flash_on'
   dw.type = 'checkbox'
   document.getElementById('bm9').appendChild(dw)
-  var onclic = "if (this.checked) { yt6.force_flash = true } else { yt6.force_flash = false };"
+  var onclic = "var yt6 = document.getElementById('snarls_player'); if (this.checked) { yt6.force_flash = true } else { yt6.force_flash = false };"
   dw.setAttribute('onclick', onclic)
   dw.setAttribute('style','inline-block')
   if (yt6.force_flash) {
@@ -8635,7 +8636,9 @@ function mep_run() {
 
 						  } else { //encrypted
 							if (yt6.x) { switch_players(); window.yt6_swapped = 1; if (yt6.ytg) yt6.ytg.swapped = 1 } else if (!(yt6.html5_fail || html5_fail) && p.tagName == 'EMBED' && !window.yt6_swapped && !yt6.swapped) { back2html5() }
-							if (yt6.encrypted && !document.getElementById('ytassetsjs')) { yt6.errcount = 0; hand_axe() } else {
+							var z = document.getElementById('ytassetsjs')
+							if (!(html5_fail && yt6.html5_fail)) if (z) z.parentNode.removeChild(z)
+							if (yt6.encrypted && !document.getElementById('ytassetsjs')) { yt6.errcount = 0; if (yt6.ytg){hand_axe()} } else {
 							  //if (autoplay(false)) try { p.playVideo() } catch(e){ console.log(e) };
 							}
 						    }
@@ -14922,7 +14925,7 @@ function aspect(a) {
 //w_pos.left > (windowwidth - x - w.offsetWidth) || w_pos.left < (x + w.offsetWidth) || 
 	if (h_pos.top > (windowheight - y - h.offsetHeight) || h_pos.top < (y + h.offsetHeight)) { return true } else return false
       }
-      dw.innerHTML = '<span><div id="fix_frame4" style="' + style + '">Fix<input onclick="if (yt6) if (yt6.size == \'custom\') { yt6.size = yt6.size_bak; this.checked = false; this.setAttribute(\'checked\',\'\') } else { yt6.size_bak = yt6.size; yt6.size = \'custom\'; this.checked = true; this.setAttribute(\'checked\',\'checked\') };" id="fixed-frame" type="checkbox"></input></div><input id="a_width" value="' + w.replace("px","") + '" style="display:inline-block;width:35px;height:13px;text-align:right" onkeyup="if (event.keyCode == 13) { yt6.w = document.getElementById(\'a_width\').value; yt6.h = document.getElementById(\'a_height\').value; if (1 * yt6.h > 9999) { yt6.h = document.getElementById(\'a_height\').value = 9999; document.getElementById(\'a_height\').setAttribute(\'value\', 9999) }; resize_layers(document.getElementById(\'a_width\').value + \'px\', document.getElementById(\'a_height\').value + \'px\', false); var st = clone(yt6.scrollTo); if (yt6.update_aspect()) window.scrollBy(yt6.scrollTo[1] - st[1], yt6.scrollTo[3] - st[3]) }" onfocus="yt6.update_aspect();"></input>x<input id="a_height" value="' + h.replace("px","") + '" style="display:inline-block;width:35px;height:13px;text-align:right" onkeyup="if (event.keyCode == 13) { yt6.w = document.getElementById(\'a_width\').value; yt6.h  = document.getElementById(\'a_height\').value; if (1 * yt6.h > 9999) { yt6.h = document.getElementById(\'a_height\').value = 9999; document.getElementById(\'a_height\').setAttribute(\'value\', 9999) }; resize_layers(document.getElementById(\'a_width\').value + \'px\',document.getElementById(\'a_height\').value + \'px\', false); var st = clone(yt6.scrollTo); if (yt6.update_aspect()) window.scrollBy(yt6.scrollTo[1] - st[1], yt6.scrollTo[3] - st[3]) }" onfocus="yt6.update_aspect()"></input>px</span>';
+      dw.innerHTML = '<span><div id="fix_frame4" style="' + style + '">Fix<input onclick="if (yt6) if (yt6.size == \'custom\') { yt6.size = yt6.size_bak; this.checked = false; this.setAttribute(\'checked\',\'\') } else { yt6.size_bak = yt6.size; yt6.size = \'custom\'; this.checked = true; this.setAttribute(\'checked\',\'checked\') };" id="fixed-frame" type="checkbox"></input></div><input id="a_width" value="' + w.replace("px","") + '" style="display:inline-block;width:35px;height:13px;text-align:right" onkeyup="if (event.keyCode == 13) { yt6.w = document.getElementById(\'a_width\').value; yt6.h = document.getElementById(\'a_height\').value; if (1 * yt6.h > 9999) { yt6.h = document.getElementById(\'a_height\').value = 9999; document.getElementById(\'a_height\').setAttribute(\'value\', 9999) }; resize_layers(document.getElementById(\'a_width\').value + \'px\', document.getElementById(\'a_height\').value + \'px\', false); var st = clone(yt6.scrollTo); if (yt6.update_aspect()) window.scrollBy(yt6.scrollTo[1] - st[1], yt6.scrollTo[3] - st[3]) }" onfocus="yt6.update_aspect();"></input>x<input id="a_height" value="' + h.replace("px","") + '" style="display:inline-block;width:35px;height:13px;text-align:right" onkeyup="if (event.keyCode == 13) { yt6.w = document.getElementById(\'a_width\').value; yt6.h  = document.getElementById(\'a_height\').value; if (1 * yt6.h > 9999) { yt6.h = document.getElementById(\'a_height\').value = 9999; document.getElementById(\'a_height\').setAttribute(\'value\', 9999) }; resize_layers(document.getElementById(\'a_width\').value + \'px\',document.getElementById(\'a_height\').value + \'px\', false); var st = clone(yt6.scrollTo); if (yt6.update_aspect()) window.scrollBy(yt6.scrollTo[1] - st[1], yt6.scrollTo[3] - st[3]) }" onfocus="var yt6 = document.getElementById(\'snarls_player\'); yt6.update_aspect()"></input>px</span>';
       try { document.getElementById('yt-alert-message').appendChild(dw); } catch(e){}
 
       if (yt6.size == 'custom') { document.getElementById('fixed-frame').checked = true; document.getElementById('fixed-frame').setAttribute('checked', 'checked') }
