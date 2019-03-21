@@ -8600,7 +8600,7 @@ function mep_run() {
 						    var p = player(), p = yt6.movie_player
 						  
 						    if ((yt6.ytg && !(p.tagName == 'EMBED' && window.yt6_swapped == 1)) || (!yt6.ytg && yt6.flash != 1)) {
-						      if (p && p.tagName != 'EMBED') { console.log(document.getElementById('bm0').parentNode.id); relocate_mep() } else { p = gc('forced flashplayer')[0]; if (p) p.parentNode.removeChild(p) }; forceFlashplayerObject()
+						      if (p && p.tagName != 'EMBED') { relocate_mep() } else { p = gc('forced flashplayer')[0]; if (p) p.parentNode.removeChild(p) }; forceFlashplayerObject()
 						      //if (autoplay(false) && typeof p.pauseVideo == 'function') p.playVideo();
 						      var p = player(), p = yt6.movie_player; if (!p) p = gc('forced flashplayer')[0]; try { p.style.display = 'none' } catch(e){}; 
 						      p.style.display = 'none'; yt6.swapped = 1; //switch_players()
