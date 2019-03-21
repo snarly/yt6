@@ -6235,6 +6235,7 @@ if (ytplayer.config && ytplayer.config.args) {
                 var fn = (yt6.fn + x).replace(/&/g,'%26').replace(/\+/g,'%2B')
               }
 
+          var itag_ = itag(href)
           var size = href.match(/[&\?]clen=([0-9]+)&/i); var sizeq = ''
           if ((typeof size != 'undefined') && (size !== null)) {
             size = parseInt(size[1],10);
@@ -6251,15 +6252,17 @@ if (ytplayer.config && ytplayer.config.args) {
             if (qq.indexOf("fps") != -1) y = y + 1;
 	    var z = 1 * ( y - 1 * qq.length - 0 - 3*Math.floor((1 * qq.length/18) - 0) ); //console.log('Array '+ z + typeof z)
             if (typeof z == 'number' && z > 0 && qq.indexOf('+') == -1) {
-              //if (x.indexOf('p ') != -1) sizeq = ' title="Video" aria-label="Video"'
-              //if (x.indexOf('k ') != -1) sizeq = ' title="Audio" aria-label="Audio"'
+              if (x.indexOf('p ') != -1) { var m = 'V' } else if (x.indexOf('k ') != -1) var m = 'A'
+              sizeq = ' title="'+ m +' ('+itag_+')" aria-label="'+ m +' ('+itag_+')"'
               size = Array(z).join(".") + size; //Bit shift by 0 which is equivalent to division by 1
             } else {
-                sizeq = ' title="' + size + ' AV" aria-label="' + size +' AV" '; size = '';
+                sizeq = ' title="' + size + ' AV ('+itag_+')" aria-label="' + size +' AV('+itag_+')" '; size = '';
               }
           } else { size = '';
-              //if (x.indexOf('p ') != -1) sizeq = ' title="Video" aria-label="Video"'
-              //if (x.indexOf('k ') != -1) sizeq = ' title="Audio" aria-label="Audio"'
+              if (x.indexOf('p ') != -1) {
+                var m = (itag_ > 102) ? 'V' : 'AV'
+              } else if (x.indexOf('k ') != -1) var m = 'A'
+              sizeq = ' title="'+ m +' ('+itag_+')" aria-label="'+ m +' ('+itag_+')"'
             } 
 
 
@@ -8471,7 +8474,7 @@ function mep_run() {
 
 					    var limit = getElementsByAttribute(document,'input','name',mep_x('mep_') + '_sourcechooser')
 					    if (limit && limit.length) { //&& limit.length < 11
-					      limit = limit.length
+					      limit = yt6.limit = (limit.length + 11)
 					      if (limit == 1 && typeof yt6.current == 'number' && typeof yt6.A_[yt6.current] == 'string') {
 						switch_players()
 					      } else if (yt6.ytg) yt6.errcount = 0
@@ -8492,6 +8495,8 @@ function mep_run() {
 
 					      if (yt6.userprefA[0] !== yt6.userprefV[0] || !yt6.fmts_fallback.A.all.includes(itag(me.src)) ) {
 						yt6.fmts_fallback_uniq = uniq(yt6.fmts_fallback.V.all); yt6.fmts_fallback_uniq = yt6.fmts_fallback_uniq.concat(43)
+						yt6.fmts_fallback_uniq.push(yt6.fmts_fallback_uniq.splice(yt6.fmts_fallback_uniq.indexOf('43'), 1)[0])
+						yt6.fmts_fallback_uniq.push(yt6.fmts_fallback_uniq.splice(yt6.fmts_fallback_uniq.indexOf('18'), 1)[0])
 						var x = yt6.userprefV[0]
 					      } else {
 						  yt6.fmts_fallback_uniq = uniq(yt6.fmts_fallback.A.all)
@@ -8636,9 +8641,9 @@ function mep_run() {
 
 						  } else { //encrypted
 							if (yt6.x) { switch_players(); window.yt6_swapped = 1; if (yt6.ytg) yt6.ytg.swapped = 1 } else if (!(yt6.html5_fail || html5_fail) && p.tagName == 'EMBED' && !window.yt6_swapped && !yt6.swapped) { back2html5() }
-							var z = document.getElementById('ytassetsjs')
-							if (!(html5_fail && yt6.html5_fail)) if (z) z.parentNode.removeChild(z)
-							if (yt6.encrypted && !document.getElementById('ytassetsjs')) { yt6.errcount = 0; if (yt6.ytg){hand_axe()} } else {
+							//var z = document.getElementById('ytassetsjs')
+							//if (!(html5_fail && yt6.html5_fail)) if (z) z.parentNode.removeChild(z) // not good, causes endless loop
+							if (yt6.encrypted && !document.getElementById('ytassetsjs')) { yt6.errcount = 0; hand_axe() } else {
 							  //if (autoplay(false)) try { p.playVideo() } catch(e){ console.log(e) };
 							}
 						    }
@@ -9061,9 +9066,9 @@ function mep_run() {
 					addEL(me, 'error', function(e) {//console.log('player2 error: ' + me.networkState + ', media type: "'+ me.canPlayType(me.type) + '"')
 					  if ( yt6 && yt6.player2 && (yt6.timer == 999999999 || me.src == 'https://www.youtube.com/ptracking' || yt6.player2.media.src != me.src))
 					    return void 0;
-					  if ((me.networkState == 1 || me.networkState == 3) && yt6.retry < 8) {
+					  if ((me.networkState == 1 || me.networkState == 3) && yt6.retry < yt6.limit) {
 
-					    yt6.retry++
+					    yt6.retry++;
 					    yt6.player2.setSrc(me.src);
 					    Seek = 1;
 					    yt6.player2.load();
@@ -9327,7 +9332,7 @@ if (!player1.media.paused) yt6.Seeked2 = false
 					    // Temporary switcheroo of the browser_tab flag to keep the video playing on a background tab when chrome-based browsers would continuously try to stop the paired playback of video & audio
 					    // Console message: "Active resource loading counts reached a per-frame limit while the tab was in background. Network requests will be delayed until a previous loading finishes, or the tab is brought to the foreground. See https://www.chromestatus.com/feature/5527160148197376 for more details"
 					  };
-					  if (!yt6.sync_maybe_clear && yt6.retry < 8 && parseInt(yt6.diff) < parseInt(0.3)) { yt6.retry = 0; if (Seek == 1) yt6.sync_maybe_clear = false; } else { yt6.sync_maybe_clear = true }
+					  if (!yt6.sync_maybe_clear && yt6.retry < yt6.limit && parseInt(yt6.diff) < parseInt(0.3)) { yt6.retry = 0; if (Seek == 1) yt6.sync_maybe_clear = false; } else { yt6.sync_maybe_clear = true }
 					});
 					addEL(me, 'volumechange', function() {//console.log('2volumechange')
 					  if ( yt6 && yt6.player2 && (!yt6.x || yt6.timer == 999999999 || me.src == 'https://www.youtube.com/ptracking' || yt6.player2.media.src != me.src))
@@ -9586,7 +9591,10 @@ if (typeof linx[160] === 'string') { linx.splice(132, 1, linx[160])}
       js.name = '0'
       document.getElementById('player1').appendChild(js)
     }
-  }
+	yt6.limit = 2
+  } else yt6.limit = 0
+  for(i=0;i<linx.length;i++){ if(linx[i]) yt6.limit++ }
+
 
 yt6.A_ = A
 yt6.V_ = V
@@ -15292,7 +15300,7 @@ function control_panel1() {
     js.id = 'yt-alert-message';
     z.insertBefore(js, z.firstChild);
     js.setAttribute('class','yt-alert-message');
-    js.setAttribute('style','background:#FFFFFF; opacity:0.8; display: table; height: 44px; width: 100%'); js.style.display = 'table'; js.style.height = '44px'; js.style.width = '100%'
+    js.setAttribute('style','background:#FFFFFF; opacity:0.8; display: table; height: 44px'); js.style.display = 'table'; js.style.height = '44px'; //; width: 100% js.style.width = '100%'
     delete js;
   }
 
