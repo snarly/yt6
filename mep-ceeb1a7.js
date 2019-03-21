@@ -5187,6 +5187,7 @@ d = ytsubtitle2srt(d, track.srclang, mejs.language.codes[track.srclang], track.t
 			tl:'Tagalog',
 			tr:'Turkish',
 			uk:'Ukrainian',
+			und:'Unpecified',
 			ur:'Urdu',
 			uz:'Uzbek',
 			vi:'Vietnamese',
