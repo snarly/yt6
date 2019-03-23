@@ -8532,7 +8532,7 @@ function mep_run() {
 						if (autoplay(false) && me.paused) player1.play();
 					      } else {
 					          if (yt6.retry < limit) yt6.retry++; yt6.srcbak.push(itag(me.src)); //yt6.srcbak = [];
-					          if (!yt6.ytg) decryption_failure()
+					          //if (!yt6.ytg) decryption_failure()
 					        } //else console.log(dash +' '+index)
 
 /*					      var dash = document.getElementById(mep_x('mep_') + '_sourcechooser_242')//240p  VP9webm');
@@ -8580,7 +8580,7 @@ function mep_run() {
 
 						if (typeof yt6.errcount == 'undefined') yt6.errcount = 0
 						if (!yt6.ytg && yt6.errcount >= 0) {
-						  yt6.srcbak.push(itag(me.src)); decryption_failure()
+						  yt6.srcbak.push(itag(me.src)); decryption_failure(); yt6.player1.showControls(true)
 						  if (yt6.errcount == 0) { 
 						    /*var x = itag(me.src);
 						    if (x == 160) x = 132;
@@ -15796,6 +15796,9 @@ else {
 	  if (yt6.ytg && v) { v.style.left = '0px'; v.style.top = '0px' }
 	  resize_layers( bm0.style.width, bm0.style.height, false )
 	  zoom = 1; rotate = 0
+	  if (yt6.player1) yt6.player1.showControls(false);
+	  var controls = gc('mejs-controls')[0]; if (controls) if (controls.style.display == 'none') controls.style.display = 'block';
+	  controls = gclass("mejs-overlay-play")[0]; if (controls) controls.style.display = 'none'
 
 	  if (v != p) {
 
