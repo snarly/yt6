@@ -474,7 +474,7 @@ mejs.HtmlMediaElement = {
 		//}
 	
 		if (typeof url == 'string') {
-			this.src = url;
+			if (this.src != url) this.src = url;
 		} else {
 			var i, media;
 
