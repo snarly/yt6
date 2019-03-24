@@ -8504,7 +8504,7 @@ function mep_run() {
 						  var x = yt6.userprefA[0]
 						}
 
-						var itag_ = (!yt6.srcbak[yt6.srcbak.length-1]) ? itag(me.src) : yt6.fmts_fallback_uniq[(yt6.fmts_fallback_uniq.indexOf(1 * yt6.srcbak[yt6.srcbak.length-1]) + 1)]
+						var itag_ = (!yt6.srcbak[yt6.srcbak.length-1] || limit.length < 2) ? itag(me.src) : yt6.fmts_fallback_uniq[(yt6.fmts_fallback_uniq.indexOf(1 * yt6.srcbak[yt6.srcbak.length-1]) + 1)]
 
 					      //console.log(yt6.fmts_fallback_uniq); console.log(itag_)
 					      for(j=0;j<yt6.fmts_fallback.V.all.length;j++){
@@ -8532,7 +8532,7 @@ function mep_run() {
 						if (autoplay(false) && me.paused) player1.play();
 					      } else {
 					          if (yt6.retry < limit) yt6.retry++; yt6.srcbak.push(itag(me.src)); //yt6.srcbak = [];
-					          //if (!yt6.ytg) decryption_failure()
+					          if (!yt6.ytg) decryption_failure()
 					        } //else console.log(dash +' '+index)
 
 /*					      var dash = document.getElementById(mep_x('mep_') + '_sourcechooser_242')//240p  VP9webm');
@@ -8580,7 +8580,7 @@ function mep_run() {
 
 						if (typeof yt6.errcount == 'undefined') yt6.errcount = 0
 						if (!yt6.ytg && yt6.errcount >= 0) {
-						  yt6.srcbak.push(itag(me.src)); decryption_failure(); yt6.player1.showControls(true)
+						  decryption_failure(); yt6.player1.showControls(true); yt6.srcbak = []//yt6.srcbak.push(itag(me.src)); 
 						  if (yt6.errcount == 0) { 
 						    /*var x = itag(me.src);
 						    if (x == 160) x = 132;
@@ -8640,14 +8640,17 @@ function mep_run() {
 						    },
 						    function() { // prepare change back to html5 on a new, playable video
 							yt6.retry = 0; yt6.errcount = 0
+							var p = player(), p = yt6.movie_player;
 							var z = document.getElementById('flash_on');
 							if (z) { z.checked = false; z.setAttribute('checked','');
 							}
 							yt6.force_flash = false; //if (yt6.ytg && yt6.x) { switch_players()   switch_players() }}
+							if (p && p.style.visibility != 'visible') switch_players()
 							if (autoplay(false)) {
-							  var bm0 = document.getElementById('bm0'); if (bm0) bm0.style.visibility = 'hidden';
-							  if (p) p.style.visibility = 'visible'; yt6.x = false
-							} else { switch_players() }
+							  //var bm0 = document.getElementById('bm0'); if (bm0) bm0.style.visibility = 'hidden';
+							  //if (p) p.style.visibility = 'visible'; yt6.x = false;
+							  p.playVideo()
+							} //else { switch_players() }
 						    },250,5000);
 
 						  } else { //encrypted
