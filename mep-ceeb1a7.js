@@ -2988,25 +2988,25 @@ if (typeof jQuery != 'undefined') {
 			media.addEventListener('play',function() {
 				bigPlay.hide();
 				loading.hide();
-				controls.find('.mejs-time-buffering').hide();
+				//controls.find('.mejs-time-buffering').hide();
 				error.hide();
 			}, false);
 
 			media.addEventListener('playing', function() {
 				bigPlay.hide();
 				loading.hide();
-				controls.find('.mejs-time-buffering').hide();
+				//controls.find('.mejs-time-buffering').hide();
 				error.hide();
 			}, false);
 
 			media.addEventListener('seeking', function() {
 				loading.show();
-				controls.find('.mejs-time-buffering').show();
+				//controls.find('.mejs-time-buffering').show();
 			}, false);
 
 			media.addEventListener('seeked', function() {
 				loading.hide();
-				controls.find('.mejs-time-buffering').hide();
+				//controls.find('.mejs-time-buffering').hide();
 			}, false);
 
 			media.addEventListener('pause',function() {
@@ -3017,7 +3017,7 @@ if (typeof jQuery != 'undefined') {
 
 			media.addEventListener('waiting', function() {
 				loading.show();
-				controls.find('.mejs-time-buffering').show();
+				//controls.find('.mejs-time-buffering').show();
 			}, false);
 
 
@@ -3028,7 +3028,7 @@ if (typeof jQuery != 'undefined') {
 				//	return;
 
 				loading.show();
-				controls.find('.mejs-time-buffering').show();
+				//controls.find('.mejs-time-buffering').show();
                 // Firing the 'canplay' event after a timeout which isn't getting fired on some Android 4.1 devices (https://github.com/johndyer/mediaelement/issues/1305)
                 if (mejs.MediaFeatures.isAndroid) {
                     media.canplayTimeout = window.setTimeout(
@@ -3044,14 +3044,14 @@ if (typeof jQuery != 'undefined') {
 			}, false);
 			media.addEventListener('canplay',function() {
 				loading.hide();
-				controls.find('.mejs-time-buffering').hide();
+				//controls.find('.mejs-time-buffering').hide();
                 clearTimeout(media.canplayTimeout); // Clear timeout inside 'loadeddata' to prevent 'canplay' to fire twice
 			}, false);
 
 			// error handling
 			media.addEventListener('error',function() {
 				loading.hide();
-				controls.find('.mejs-time-buffering').hide();
+				//controls.find('.mejs-time-buffering').hide();
 				error.show();
 				error.find('mejs-overlay-error').html("Error loading this resource");
 			}, false);
@@ -3072,12 +3072,12 @@ if (typeof jQuery != 'undefined') {
 				// listen for key presses
 				t.globalBind('keydown', function(e) {
 					if (typeof yt6 != 'undefined' && yt6.x && yt6.movie_player && typeof yt6.movie_player.seekTo == 'function') {
-					  if (typeof yt6.yt_ct == 'number' && parseFloat(yt6.yt_ct + 10) > parseFloat(yt6.movie_player.getDuration()) ) { yt6.yt_ct = 0; yt6.movie_player.seekTo(0); }
+					  if (typeof yt6.yt_ct == 'number' && parseFloat(yt6.yt_ct + 10) > parseFloat(yt6.movie_player.getDuration()) ) { yt6.yt_ct = parseFloat(yt6.yt_ct - 5); yt6.movie_player.seekTo(yt6.yt_ct); }
 					}
 					return t.onkeydown(player, media, e);
 				});
 				t.globalBind('keyup', function(e) {//yt6
-					if (typeof yt6 != 'undefined' && typeof yt6.yt_ct == 'number' && yt6.movie_player && typeof yt6.movie_player.seekTo == 'function') {
+					if (typeof yt6 != 'undefined' && yt6.x && typeof yt6.yt_ct == 'number' && yt6.movie_player && typeof yt6.movie_player.seekTo == 'function') {
 					  yt6.movie_player.seekTo(yt6.yt_ct)
 					}
 				});
