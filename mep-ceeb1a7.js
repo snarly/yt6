@@ -3071,9 +3071,16 @@ if (typeof jQuery != 'undefined') {
 
 				// listen for key presses
 				t.globalBind('keydown', function(e) {
+					if (typeof yt6 != 'undefined' && yt6.x && yt6.movie_player && typeof yt6.movie_player.seekTo == 'function') {
+					  if (typeof yt6.yt_ct == 'number' && parseFloat(yt6.yt_ct + 10) > parseFloat(yt6.movie_player.getDuration()) ) { yt6.yt_ct = 0; yt6.movie_player.seekTo(0); }
+					}
 					return t.onkeydown(player, media, e);
 				});
-
+				t.globalBind('keyup', function(e) {//yt6
+					if (typeof yt6 != 'undefined' && typeof yt6.yt_ct == 'number' && yt6.movie_player && typeof yt6.movie_player.seekTo == 'function') {
+					  yt6.movie_player.seekTo(yt6.yt_ct)
+					}
+				});
 
 				// check if someone clicked outside a player region, then kill its focus
 				t.globalBind('click', function(event) {
