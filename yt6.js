@@ -8794,8 +8794,8 @@ function mep_run() {
 							  else {//console.log(yt6.diff)
 							    if (yt6.newvideo) {
 							      if (typeof yt6.player2.media.setCurrentTime == 'function'){// || browserName == 'Edge' || browserName == 'IE') {
-								me.p = gclass('mejs-button mejs-playpause-button mejs-pause')[0]; if (me.p && yt6.player2.media.paused) { me.p.click() } else
-								me.play(); Seek = null; ////me.play();
+								me.p = gclass('mejs-button mejs-playpause-button mejs-play')[0]; if (me.p && yt6.player2.media.paused) { me.p.click(); player2.play() } else if (me.paused)
+								me.play(); //Seek = null; ////me.play();
 								//yt6.player2.media.currentTime = me.currentTime = 0;
 							      }
 							    } else {
@@ -8870,7 +8870,7 @@ function mep_run() {
 					  if (yt6.x) {
 					    var bn = gc('mejs-overlay mejs-layer mejs-overlay-play')[0]
 					    if (bn) bn.style.visibility = 'visible';
-					    if (Seek == 2) { yt6.Seeked2 = false; if (Seek == 1 && player2.paused) Seek = null; }//Seek == 1 && yt6.sync_maybe_clear != true &&
+					    if (Seek == 2) { yt6.Seeked2 = false }; //if (Seek == 1 && player2.paused) Seek = null;//Seek == 1 && yt6.sync_maybe_clear != true &&
 					  }
 					  //playButton()
 					  if (yt6.btn.play) { yt6.btn.play.innerHTML = 'play'; try { yt6.btn.play2.innerHTML = 'play' } catch(e) {} }
@@ -8879,7 +8879,8 @@ function mep_run() {
 					      if (Seek == 3) try { yt6.player2.pause() } catch(e) {};
 					      //if (Seek === 0) { me.play() };
 					      if (yt6.A_V[itag(me.src)] && Seek != 1 && me.playbackRate == player2.playbackRate) { yt6.player1.setCurrentTime(me.currentTime) } else player2.playbackRate = me.playbackRate;
-					      try { player2.pause(); player2.currentTime = me.currentTime; if (me.loaded && player2.loaded && Seek == 0) Seek = null; } catch(e) {}
+					      try { player2.pause(); player2.currentTime = me.currentTime; //if (me.loaded && player2.loaded && Seek == 0) Seek = null;
+					      } catch(e) {}
 					    }
 					  } else if (Seek == 1) {//without working sound setup on a remote desktop forget the audio player -- it just generates errors making it seem like file decoding had failed -- we attempt to play the audio 7 times, on the 8th try play the video part only
 					      Seek = null; me.play()
@@ -9035,7 +9036,7 @@ function mep_run() {
 					  if (yt6.A_V[itag(me.src)] && !player2.paused )  {// && Srcto != Audio
 					    player2.pause()
 					  }
-					  if (Seek == 1 && parseInt(yt6.diff) < parseInt(0.3)) { Seek = null; }//delete yt6.sync_maybe_clear }//yt6.sync_maybe_clear == true && 
+					  //if (Seek == 1 && parseInt(yt6.diff) < parseInt(0.3)) { Seek = null; }//delete yt6.sync_maybe_clear }//yt6.sync_maybe_clear == true && 
 					});
 					addEL(me, 'seeked', function() {//console.log('1seeked '+ Seek +' '+ player1.media.playing +' '+ player2.playing)
 					  if ( yt6 && yt6.player1 && (yt6.timer == 999999999 || me.src == 'https://www.youtube.com/ptracking' || yt6.player1.media.src != me.src))
@@ -9335,7 +9336,7 @@ function mep_run() {
 						      Seek = 1;
 						        player1.pause(); //Seek = null;
 						        $waitUntil(function(){ if (yt6.newvideo == false) { return true } else {
-							    player2.pause();
+							    if (!yt6.player2.media.paused) player2.pause();
 							    try {
 							      player1.media.currentTime = me.currentTime = yt6.player2.media.currentTime = player2.currentTime = yt6.ct = 0
 							    } catch(e) {
@@ -10662,7 +10663,7 @@ if (!t.sourcechooserButton) {//console.log('error')
     };
 
 
-    loadScript( protocol() + yt6.cdn + "e55c5e2b5b4c57e09a718ba1101972e578995d75/mep-ceeb1a7.js", jq1)
+    loadScript( protocol() + yt6.cdn + "8e32bfeef519cfc051f142c7eb96bf76c0bcf9c3/mep-ceeb1a7.js", jq1)
 
 
 
@@ -10711,6 +10712,7 @@ if (!t.sourcechooserButton) {//console.log('error')
 		yt6.Seeked2 = false
 		yt6.navigation = true
 		yt6.ads_noskip = 0
+		yt6.yt_ct = 0
 		yt6.mep = 'reload'
 		if (yt6.newin) delete yt6.newin
 		delete yt6.media_duration
