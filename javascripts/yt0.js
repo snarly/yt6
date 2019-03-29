@@ -9311,7 +9311,7 @@ function mep_run() {
 					    if (!player1.media.paused) try { yt6.player2.pause() } catch(e) {}
 					    if (Seek == 4) { player1.play() } else player1.pause(); 
 					    if (Seek == 2 && player2.duration != player2.currentTime && !(yt6.player1.media.currentTime > player2.duration)) {
-					      if (!player1.media.paused) { Seek = 1 } else Seek = null
+					      if (!player1.media.paused) { Seek = 1 } //else Seek = null
 					    };
  					  } else {
 					      if ( typeof yt6.movie_player.getPlayerState == 'function' && !yt6.x ) try { yt6.player2.pause(); } catch(e){}
