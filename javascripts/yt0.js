@@ -9126,7 +9126,7 @@ function mep_run() {
 					      if (!yt6.Seeked2) {console.log('2s1 '+ yt6.newvideo)
 						if (yt6.diff > parseFloat(0.3)) {
 						  Seek = 1; me.pause(); //gc('rotateleft snarl-button yt-uix-button-text')[0].innerHTML = yt6.diff
-						} else { console.log(yt6.autoplay +' '+ me.paused +' '+ player1.media.paused); if (yt6.autoplay && (browserName == 'Edge' || browserName == 'IE')) { me.pause(); Seek = 1; player1.pause() } }
+						} else { console.log(yt6.autoplay +' '+ me.paused +' '+ player1.media.paused); if (yt6.autoplay && (browserName == 'Edge' || browserName == 'IE')) { console.log('? '+Seek) } }
 					      } else {console.log('2s2 '+yt6.newvideo)
 						  //player1.media.currentTime = yt6.ct = me.currentTime;
 						  if (!me.paused) $waitUntil(function(){ if (player1.media.paused) { return true } else {
@@ -9311,7 +9311,7 @@ function mep_run() {
 					    if (!player1.media.paused) try { yt6.player2.pause() } catch(e) {}
 					    if (Seek == 4) { player1.play() } else player1.pause(); 
 					    if (Seek == 2 && player2.duration != player2.currentTime && !(yt6.player1.media.currentTime > player2.duration)) {
-					      if (!player1.media.paused) { Seek = 1 } //else Seek = null
+					      if (!player1.media.paused) { Seek = 1 } else Seek = null
 					    };
  					  } else {
 					      if ( typeof yt6.movie_player.getPlayerState == 'function' && !yt6.x ) try { yt6.player2.pause(); } catch(e){}
