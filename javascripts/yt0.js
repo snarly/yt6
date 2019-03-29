@@ -9121,7 +9121,7 @@ function mep_run() {
 					    //if (!player1.media.paused) yt6.Seeked2 = false
 					    me.p = null
 					    if (yt6.x && me.currentTime.toFixed(2) != player1.media.currentTime.toFixed(2)) {// && (1*yt6.retry - 0) < 8
-					    if (me.duration) { player1.media.currentTime = me.currentTime; //Seek = 1;
+					    if (me.loaded) { player1.media.currentTime = me.currentTime; //Seek = 1;
 					    } else { if (yt6.autoplay) { player1.play(); return void 0; } }
 					      if (!yt6.Seeked2) {
 						if (yt6.diff > parseFloat(0.3)) {
@@ -9341,7 +9341,7 @@ function mep_run() {
 							    try {
 							      player1.media.currentTime = me.currentTime = yt6.player2.media.currentTime = player2.currentTime = yt6.ct = 0
 							    } catch(e) {
-								yt6.player1.media.currentTime = me.currentTime = 0;
+								if (me.loaded) { yt6.player1.media.currentTime = me.currentTime = yt6.ct = 0; } else yt6.player1.media.currentTime = yt6.ct = 0
 							      }; //player1.play()
 							  }},
 						          function(){
