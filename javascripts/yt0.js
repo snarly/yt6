@@ -9122,7 +9122,7 @@ function mep_run() {
 					    me.p = null
 					    if (yt6.x && me.currentTime.toFixed(2) != player1.media.currentTime.toFixed(2)) {// && (1*yt6.retry - 0) < 8
 					    try { player1.media.currentTime = me.currentTime;} catch(e) {} //Seek = 1;
-					    } else { if (yt6.autoplay) { player1.play(); return void 0; } }
+					    //} else { if (yt6.autoplay) { player1.play(); return void 0; } }
 					      if (!yt6.Seeked2) {
 						if (yt6.diff > parseFloat(0.3)) {
 						  Seek = 1; me.pause(); //gc('rotateleft snarl-button yt-uix-button-text')[0].innerHTML = yt6.diff
