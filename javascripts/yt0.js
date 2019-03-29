@@ -9126,7 +9126,7 @@ function mep_run() {
 					      if (!yt6.Seeked2) {console.log('2s1 '+ yt6.newvideo)
 						if (yt6.diff > parseFloat(0.3)) {
 						  Seek = 1; me.pause(); //gc('rotateleft snarl-button yt-uix-button-text')[0].innerHTML = yt6.diff
-						} else { console.log(yt6.autoplay +' '+ me.paused +' '+ player1.media.paused); yt6.Seeked2 = !yt6.Seeked2; if (yt6.autoplay) me.play() }
+						} else { console.log(yt6.autoplay +' '+ me.paused +' '+ player1.media.paused); yt6.Seeked2 = !yt6.Seeked2; if (yt6.autoplay) { Seek = 1; player1.pause(); me.play() }
 					      } else {console.log('2s2 '+yt6.newvideo)
 						  //player1.media.currentTime = yt6.ct = me.currentTime;
 						  if (!me.paused) $waitUntil(function(){ if (player1.media.paused) { return true } else {
