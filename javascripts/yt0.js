@@ -9121,9 +9121,10 @@ function mep_run() {
 					    //if (!player1.media.paused) yt6.Seeked2 = false
 					    me.p = null
 					    if (yt6.x && me.currentTime.toFixed(2) != player1.media.currentTime.toFixed(2)) {// && (1*yt6.retry - 0) < 8
-					    player1.media.currentTime = me.currentTime; //Seek = 1;
+					    try { player1.media.currentTime = me.currentTime; //Seek = 1;
+					    } catch(e) { console.log('yt6.player2.media.currentTime = ' + me.currentTime) }
 					      if (!yt6.Seeked2) {console.log('2s1')
-						if (yt6.diff > parseFloat(0.3)) {
+						if (yt6.newvideo || yt6.diff > parseFloat(0.3)) {
 						  Seek = 1; me.pause(); //gc('rotateleft snarl-button yt-uix-button-text')[0].innerHTML = yt6.diff
 						}
 					      } else {console.log('2s2')
