@@ -9118,7 +9118,7 @@ function mep_run() {
 					  if ( yt6 && yt6.player2 && (yt6.timer == 999999999 || me.src == 'https://www.youtube.com/ptracking' || yt6.player2.media.src != me.src))
 					    return void 0;
 					  if (player2.duration > player2.currentTime && !(yt6.player1.media.currentTime > player2.duration)) {//ax
-					    if ((browserName == 'IE' || browserName == 'Edge') && !player1.media.paused) yt6.Seeked2 = false
+					    //if ((browserName == 'IE' || browserName == 'Edge') && !player1.media.paused) yt6.Seeked2 = false
 					    me.p = null
 					    if (yt6.x && me.currentTime.toFixed(2) != player1.media.currentTime.toFixed(2)) {// && (1*yt6.retry - 0) < 8
 					      try { player1.media.currentTime = me.currentTime;} catch(e) {} //Seek = 1;
