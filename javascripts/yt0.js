@@ -9122,7 +9122,7 @@ function mep_run() {
 					    me.p = null
 					    if (yt6.x && me.currentTime.toFixed(2) != player1.media.currentTime.toFixed(2)) {// && (1*yt6.retry - 0) < 8
 					      try { player1.media.currentTime = me.currentTime;} catch(e) {} //Seek = 1;
-					      if (browserName != 'IE' && browserName != 'Edge') {
+					      //if (browserName != 'IE' && browserName != 'Edge') {
 						if (!yt6.Seeked2) {
 						  if (yt6.diff > parseFloat(0.3)) {
 						    Seek = 1; me.pause(); //gc('rotateleft snarl-button yt-uix-button-text')[0].innerHTML = yt6.diff
@@ -9140,7 +9140,7 @@ function mep_run() {
 						    },200,200)
 						  }
 
-					      } else Seek = 1;
+					      //} else Seek = 1;
 
 					      yt6.player1.showControls(true)
 					      //yt6.player1.options.alwaysShowControls = false
