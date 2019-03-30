@@ -9334,7 +9334,7 @@ function mep_run() {
 						  if (!(yt6.player1.media.paused)) {
 						    //if (yt6.diff != 0) me.loaded = 1
 						    if (yt6.player1.media.loaded && typeof me.loaded == 'number' || me.playing >= 2) {//prevents an unwanted video restart
-						      me.loaded = true; player1.play(); //player1.media.play()
+						      me.loaded = true; player1.play(); player1.media.play()
 						    } else { player1.media.play() }
 						  } else {
 						      Seek = 1;
