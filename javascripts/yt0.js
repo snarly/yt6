@@ -9126,7 +9126,7 @@ function mep_run() {
 					      if (!yt6.Seeked2) {
 						if (yt6.diff > parseFloat(0.3)) {
 						  Seek = 1; me.pause(); //gc('rotateleft snarl-button yt-uix-button-text')[0].innerHTML = yt6.diff
-						} else { if (yt6.autoplay && player1.media.paused) { Seek = 1; player1.pause(); }; console.log('play?') }
+						} else { if (yt6.autoplay && player1.media.paused) { yt6.Seeked2 = !yt6.Seeked2; Seek = 1; player1.pause(); }; console.log('play?') }
 					      } else {
 						  //player1.media.currentTime = yt6.ct = me.currentTime;
 						  if (!me.paused) $waitUntil(function(){ if (player1.media.paused) { return true } else {
