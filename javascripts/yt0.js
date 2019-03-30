@@ -8782,7 +8782,7 @@ function mep_run() {
 						) || (typeof srcto != 'undefined' && Srcto == Audio) ) && (yt6.retry < 8)
 					     )  {
 						  me.playing = 0;
-						  if (browserName != 'IE' && browserName != 'Edge' && !player2.loaded) { yt6.player2.media.load(); $waitUntil(function(){ if (player2.loaded) return true },function(){ yt6.Seek = 1; me.pause(); player2.play(); player1.play() },250,5000) }
+						  if (!player2.loaded) { yt6.player2.media.load(); $waitUntil(function(){ if (player2.loaded) return true },function(){ yt6.Seek = 1; me.pause(); player2.play(); player1.play() },250,5000) }
 						  if (player2.paused) { player2.play() }; 
 						  if (!yt6.A_V[itag(me.src)] && yt6.browser_tab == 'visible' && player2.duration != player2.currentTime && !(me.currentTime > player2.duration)) {
 						    yt6.diff = Math.abs(parseFloat(parseFloat(me.currentTime) - parseFloat(player2.currentTime)));
