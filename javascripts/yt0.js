@@ -9340,13 +9340,13 @@ function mep_run() {
 						      Seek = 1;
 						        player1.pause(); //Seek = null;
 						        $waitUntil(function(){ if (yt6.newvideo == false) { return true } else {
-							    //if (!yt6.player2.media.paused)
+							    if (!yt6.player2.media.paused)
 							    player2.pause();
 							    try {
 							      player1.media.currentTime = me.currentTime = yt6.player2.media.currentTime = player2.currentTime = yt6.ct = 0
 							    } catch(e) {
 								try { yt6.player1.media.currentTime = me.currentTime = yt6.ct = 0; } catch(e) { yt6.player1.media.currentTime = yt6.ct = 0 }
-							      }; //if (player1.media.paused) player1.play()
+							      }; if (player1.media.paused) player1.play()
 							  }},
 						          function(){
 							    yt6.Seek = 1; yt6.player1.media.currentTime = me.currentTime
