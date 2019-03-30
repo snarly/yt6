@@ -9346,7 +9346,7 @@ function mep_run() {
 							      player1.media.currentTime = me.currentTime = yt6.player2.media.currentTime = player2.currentTime = yt6.ct = 0
 							    } catch(e) {
 								try { yt6.player1.media.currentTime = me.currentTime = yt6.ct = 0; } catch(e) { yt6.player1.media.currentTime = yt6.ct = 0 }
-							      }; if (player1.media.paused) player1.play()
+							      }; //if (player1.media.paused) player1.play()
 							  }},
 						          function(){
 							    yt6.Seek = 1; yt6.player1.media.currentTime = me.currentTime
