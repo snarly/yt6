@@ -9334,13 +9334,13 @@ function mep_run() {
 						  if (!(yt6.player1.media.paused)) {
 						    //if (yt6.diff != 0) me.loaded = 1
 						    if (yt6.player1.media.loaded && typeof me.loaded == 'number' || me.playing >= 2) {//prevents an unwanted video restart
-						      me.loaded = true; player1.play(); player1.media.play()
+						      me.loaded = true; player1.play(); //player1.media.play()
 						    } else { player1.media.play() }
 						  } else {
 						      Seek = 1;
 						        player1.pause(); //Seek = null;
 						        $waitUntil(function(){ if (yt6.newvideo == false) { return true } else {
-							    //if (!yt6.player2.media.paused)
+							    if (!yt6.player2.media.paused)
 							    player2.pause();
 							    try {
 							      player1.media.currentTime = me.currentTime = yt6.player2.media.currentTime = player2.currentTime = yt6.ct = 0
