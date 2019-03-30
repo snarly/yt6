@@ -9118,18 +9118,18 @@ function mep_run() {
 					  if ( yt6 && yt6.player2 && (yt6.timer == 999999999 || me.src == 'https://www.youtube.com/ptracking' || yt6.player2.media.src != me.src))
 					    return void 0;
 					  if (player2.duration > player2.currentTime && !(yt6.player1.media.currentTime > player2.duration)) {//ax
-					    //if (!player1.media.paused) yt6.Seeked2 = false
+					    if ((browserName == 'IE' || browserName == 'Edge') && !player1.media.paused) yt6.Seeked2 = false
 					    me.p = null
 					    if (yt6.x && me.currentTime.toFixed(2) != player1.media.currentTime.toFixed(2)) {// && (1*yt6.retry - 0) < 8
-					    try { player1.media.currentTime = me.currentTime;} catch(e) {} //Seek = 1;
-					    //} else { if (yt6.autoplay) { player1.play(); return void 0; } }
-					      if (!yt6.Seeked2) {
-						if (yt6.diff > parseFloat(0.3)) {
-						  Seek = 1; me.pause(); //gc('rotateleft snarl-button yt-uix-button-text')[0].innerHTML = yt6.diff
-						} else { if (yt6.autoplay && player1.media.paused) { yt6.Seeked2 = !yt6.Seeked2; Seek = 1; player1.pause(); player1.play() }; console.log('play?') }
-					      } else {
-						  //player1.media.currentTime = yt6.ct = me.currentTime;
-						  if (!me.paused) $waitUntil(function(){ if (player1.media.paused) { return true } else {
+					      try { player1.media.currentTime = me.currentTime;} catch(e) {} //Seek = 1;
+					      if (browserName != 'IE' && browserName != 'Edge') {
+						if (!yt6.Seeked2) {
+						  if (yt6.diff > parseFloat(0.3)) {
+						    Seek = 1; me.pause(); //gc('rotateleft snarl-button yt-uix-button-text')[0].innerHTML = yt6.diff
+						  } //else { if (yt6.autoplay && player1.media.paused) { Seek = 1; player1.pause(); player1.play() }; console.log('play?') }
+						} else {
+						    //player1.media.currentTime = yt6.ct = me.currentTime;
+						    if (!me.paused) $waitUntil(function(){ if (player1.media.paused) { return true } else {
 							if (yt6.Seek != 1) {
 							  player2.pause(); yt6.Seek = 1; player1.play()
 							} else yt6.Seek = 2;
@@ -9138,7 +9138,10 @@ function mep_run() {
 						    function(){ yt6.Seek = 1; player1.play(); //yt6.Seek = 1; player2.play(); 
 						      yt6.Seeked2 = false;
 						    },200,200)
-						}
+						  }
+
+					      } else Seek = 1;
+
 					      yt6.player1.showControls(true)
 					      //yt6.player1.options.alwaysShowControls = false
 					      me.p = mep()
