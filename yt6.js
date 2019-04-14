@@ -1168,7 +1168,7 @@ function hand_axe(){
 		    var bm1 = document.getElementById('ytassetsjs')
 		    if (bm1) bm1.parentNode.removeChild(bm1)
 		    var bm1 = document.createElement('span')
-		    bm1.id = 'bm1'; console.log(ytplayer)
+		    bm1.id = 'bm1'
 		    var sytimg = ytplayer.config.assets.js
 		    if (sytimg.indexOf('/yts/') == 0) sytimg = sytimg.replace('/yts/','//s.ytimg.com/yts/')
 		    bm1.innerHTML = '<button id="getjs" onclick="var bm1 = document.getElementById(\'bm1\'); bm1.newWindow = window.open( \'' + protocol() + sytimg + '\', \'_blank\'); if (bm1.newWindow != null) bm1.newWindow.focus(); "><span><img src="//yt3.ggpht.com/-afBnHVG_R6E/AAAAAAAAAAI/AAAAAAAAAAA/LtE5kbPkZvE/s27-c-k-no-mo-rj-c0xffffff/photo.jpg" style="height:27px"></img></span></button';
