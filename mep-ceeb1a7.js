@@ -2988,25 +2988,25 @@ if (typeof jQuery != 'undefined') {
 			media.addEventListener('play',function() {
 				bigPlay.hide();
 				loading.hide();
-				//controls.find('.mejs-time-buffering').hide();
+				controls.find('.mejs-time-buffering').hide();
 				error.hide();
 			}, false);
 
 			media.addEventListener('playing', function() {
 				bigPlay.hide();
 				loading.hide();
-				//controls.find('.mejs-time-buffering').hide();
+				controls.find('.mejs-time-buffering').hide();
 				error.hide();
 			}, false);
 
 			media.addEventListener('seeking', function() {
 				loading.show();
-				//controls.find('.mejs-time-buffering').show();
+				controls.find('.mejs-time-buffering').show();
 			}, false);
 
 			media.addEventListener('seeked', function() {
 				loading.hide();
-				//controls.find('.mejs-time-buffering').hide();
+				controls.find('.mejs-time-buffering').hide();
 			}, false);
 
 			media.addEventListener('pause',function() {
@@ -3017,7 +3017,7 @@ if (typeof jQuery != 'undefined') {
 
 			media.addEventListener('waiting', function() {
 				loading.show();
-				//controls.find('.mejs-time-buffering').show();
+				controls.find('.mejs-time-buffering').show();
 			}, false);
 
 
@@ -3028,7 +3028,7 @@ if (typeof jQuery != 'undefined') {
 				//	return;
 
 				loading.show();
-				//controls.find('.mejs-time-buffering').show();
+				controls.find('.mejs-time-buffering').show();
                 // Firing the 'canplay' event after a timeout which isn't getting fired on some Android 4.1 devices (https://github.com/johndyer/mediaelement/issues/1305)
                 if (mejs.MediaFeatures.isAndroid) {
                     media.canplayTimeout = window.setTimeout(
@@ -3044,14 +3044,14 @@ if (typeof jQuery != 'undefined') {
 			}, false);
 			media.addEventListener('canplay',function() {
 				loading.hide();
-				//controls.find('.mejs-time-buffering').hide();
+				controls.find('.mejs-time-buffering').hide();
                 clearTimeout(media.canplayTimeout); // Clear timeout inside 'loadeddata' to prevent 'canplay' to fire twice
 			}, false);
 
 			// error handling
 			media.addEventListener('error',function() {
 				loading.hide();
-				//controls.find('.mejs-time-buffering').hide();
+				controls.find('.mejs-time-buffering').hide();
 				error.show();
 				error.find('mejs-overlay-error').html("Error loading this resource");
 			}, false);
@@ -4647,7 +4647,10 @@ if (typeof jQuery != 'undefined') {
 							'</ul>'+
 						'</div>'+
 					'</div>')
-						.insertBefore(document.getElementsByClassName('mejs-time mejs-duration-container')[0].nextSibling);//.appendTo(controls);
+						.appendTo(controls) //.insertBefore(document.getElementsByClassName('mejs-time mejs-duration-container')[0].nextSibling);//.appendTo(controls);
+
+			if (document.getElementsByClassName('mejs-time mejs-duration-container')[0] && document.getElementsByClassName('mejs-time mejs-duration-container')[0].nextSibling) { player.captionsButton.insertBefore(document.getElementsByClassName('mejs-time mejs-duration-container')[0].nextSibling) }
+
 
 
 			var subtitleCount = 0;
