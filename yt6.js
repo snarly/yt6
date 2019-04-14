@@ -11178,18 +11178,7 @@ yt6.body.spfrequest = function(e) {
     if (yt6.x && player()) try { player().pauseVideo() } catch(e) {}
 //    if (bm0) { var ffp = gc('forced flashplayer')[0]; console.log('01 ' + bm0.parentNode.id + ffp + yt6.movie_player.getAttribute('id')); if (ffp && ffp.parentNode) console.log(ffp.parentNode.id) } else console.log('01 bm0 missing')
 
-			  var z = document.getElementsByTagName('iframe')
-			  for(i=0;i<z.length;i++){
-			    if(z[i] && z[i].getAttribute('id') == 'movie_player') {
-				z[i].id = 'movie_player4_iframe';
-				z[i].name = 're-embed2';
-				z[i].src = '';
-				document.getElementsByTagName('head')[0].appendChild(document.getElementById('movie_player4_iframe'))
-				//yt6.re2 = z[i]
-				break;
-				//return
-			    }
-			  }
+    if (yt6.movie_player.tagName == 'IFRAME') { undo_iframe() }
 
     if (yt6.swfbin4) yt6.swfbin4_backup = yt6.swfbin4
     if (yt6.force_flash) relocate_mep(true)
