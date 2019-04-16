@@ -9743,12 +9743,14 @@ function nop(){//    } else {
     js.setAttribute('controls','controls')
     js.setAttribute('preload',"none")
   //if (typeof gc('video-stream html5-main-video')[1] === 'undefined') {
-    var p1 = document.getElementById('player1')
-    p1.setAttribute('class','video-stream html5-main-video')
-    p1.style.zIndex = "0"
+    document.getElementById('player1').setAttribute('class','video-stream html5-main-video')
+    document.getElementById('player1').style.zIndex = "0"
+	  
+  if (!document.getElementById('unavailable formats')) {
     var js = document.createElement('div')
     js.id = 'unavailable formats'
     document.getElementById('video-hide').appendChild(js)
+  }
   //}
 
   } else {  //if (document.getElementById('bm0') != null) { document.getElementById('bm0').parentNode.removeChild(document.getElementById('bm0')) }
@@ -9777,12 +9779,13 @@ function nop(){//    } else {
     p1.appendChild(js)
   }
 
+var p1 = document.getElementById('player1')
 var A = [],V = [],AV = [];    var linx = []; linx = yt6.linx;  var html = []; html = yt6.html
 if (typeof linx[160] === 'string') { linx.splice(132, 1, linx[160])}
   for (i=0;i<500;i++) {//linx
+    var z = document.getElementById(i)
     if (linx[i]) {
-      var z = document.getElementById(i)
-      var js = (z && z.parentNode == p1) ? z : document.createElement('source')
+      var js = (z && z.parentNode == document.getElementById('player1')) ? z : document.createElement('source')
       js.id = i
       js.setAttribute('id',i)
       js.name = i
@@ -9818,17 +9821,17 @@ if (typeof linx[160] === 'string') { linx.splice(132, 1, linx[160])}
       if (typeof webm != 'undefined') {
         if ((linx[i].split('//')[1] != webm.split('//')[1]) && (i != 160)) {
           js.src = 'https:' + linx[i]
-          p1.appendChild(js)
+          document.getElementById('player1').appendChild(js)
         }
       } else {
           if (i != 160) {
             js.src = 'https:' + linx[i]
-            p1.appendChild(js)
+            document.getElementById('player1').appendChild(js)
           }
         }
       delete js
 
-    } //else if (z && z.parentNode == p1) {
+    } //else if (z && z.parentNode == document.getElementById('player1')) {
 	//z.src = ''; z.setAttribute('src','')
 	//if (document.getElementById('unavailable formats')) document.getElementById('unavailable formats').appendChild(z)
       //}
