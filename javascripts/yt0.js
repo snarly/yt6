@@ -9784,7 +9784,7 @@ var p1 = document.getElementById('player1')
 var A = [],V = [],AV = [];    var linx = []; linx = yt6.linx;  var html = []; html = yt6.html
 if (typeof linx[160] === 'string') { linx.splice(132, 1, linx[160])}
   for (i=0;i<500;i++) {//linx
-    var z = document.getElementById(i) || null
+    var z = document.getElementById('"'+i+'"')
     if (linx[i]) {
       if (z && (z.parentNode == p1)) {
         var js = z
