@@ -9785,7 +9785,7 @@ if (typeof linx[160] === 'string') { linx.splice(132, 1, linx[160])}
   for (i=0;i<500;i++) {//linx
     var z = document.getElementById(i)
     if (linx[i]) {
-      var js = (z && z.parentNode == document.getElementById('player1')) ? z : document.createElement('source')
+      var js = document.createElement('source'); if (z && z.parentNode == document.getElementById('player1')) { console.log(z); z.parentNode.removeChild(z) } 
       js.id = i
       js.setAttribute('id',i)
       js.name = i
