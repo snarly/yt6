@@ -9772,7 +9772,7 @@ function nop(){//    } else {
   if (typeof webm != 'undefined') {
     var z = document.getElementById('43')
     var js = (z && z.parentNode == p1) ? z : document.createElement('source')
-    js.id = '43'
+    if (js == z) js.id = '43'
     js.src = webm
     js.type = 'video/webm'
     js.title = qual[43].replace("WebM","")
@@ -9783,13 +9783,12 @@ var p1 = document.getElementById('player1')
 var A = [],V = [],AV = [];    var linx = []; linx = yt6.linx;  var html = []; html = yt6.html
 if (typeof linx[160] === 'string') { linx.splice(132, 1, linx[160])}
   for (i=0;i<500;i++) {//linx
-    var z = document.getElementById(i)
+    //var z = document.getElementById(i)
     if (linx[i]) {
-      var js = document.createElement('source'); if (z && z.parentNode == document.getElementById('player1')) { console.log(z); z.parentNode.removeChild(z) } 
-      js.id = i
-      js.setAttribute('id',i)
+      var js = document.createElement('source'); //if (z && z.parentNode == p1) { console.log(z); z.parentNode.removeChild(z) } 
+      if (js == z) { js.id = i; js.setAttribute('id',i); console.log(i) }
       js.name = i
-      js.setAttribute('name', i)
+      //js.setAttribute('name', i)
       if (qual[i] && qual[i]['t']) {
         if (i < 103) {
           AV[i] = "itag=" + i
@@ -9821,12 +9820,12 @@ if (typeof linx[160] === 'string') { linx.splice(132, 1, linx[160])}
       if (typeof webm != 'undefined') {
         if ((linx[i].split('//')[1] != webm.split('//')[1]) && (i != 160)) {
           js.src = 'https:' + linx[i]
-          document.getElementById('player1').appendChild(js)
+          p1.appendChild(js)
         }
       } else {
           if (i != 160) {
             js.src = 'https:' + linx[i]
-            document.getElementById('player1').appendChild(js)
+            p1.appendChild(js)
           }
         }
       delete js
