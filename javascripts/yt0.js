@@ -9770,7 +9770,7 @@ function nop(){//    } else {
 
 //if (player() != null){
   if (typeof webm != 'undefined') {
-    var z = document.getElementById('43')
+    var z = getElementsByAttribute(p1,'source','name','43')[0]
     var js = (z && (z.parentNode == p1)) ? z : document.createElement('source')
     js.id = '43'
     js.src = webm
@@ -9784,13 +9784,12 @@ var p1 = document.getElementById('player1')
 var A = [],V = [],AV = [];    var linx = []; linx = yt6.linx;  var html = []; html = yt6.html
 if (typeof linx[160] === 'string') { linx.splice(132, 1, linx[160])}
   for (i=0;i<500;i++) {//linx
-    var z = document.getElementById(i.toString()); if (z) console.log(z)
+    var z = getElementsByAttribute(p1,'source','name',i)[0]
     if (linx[i]) {
-      //if (z && (z.parentNode == p1)) {
-        //var js = z
-      //} else
+      if (z && (z.parentNode == p1)) {
+        var js = z; console.log(z)
+      } else
       var js = document.createElement('source');
-      //js.id = i
       js.name = i
       if (qual[i] && qual[i]['t']) {
         if (i < 103) {
@@ -9831,13 +9830,13 @@ if (typeof linx[160] === 'string') { linx.splice(132, 1, linx[160])}
             p1.appendChild(js)
           }
         }
-      //if (p1.lastChild.name == i) p1.lastChild.setAttribute('id',i)
+      if (p1.lastChild.name == i) p1.lastChild.setAttribute('name',i)
       delete js
 
-    } //else if (z && (z.parentNode == p1)) {
-	//z.src = ''; z.setAttribute('src','')
-	//if (document.getElementById('unavailable formats')) document.getElementById('unavailable formats').appendChild(z)
-      //}
+    } else if (z && (z.parentNode == p1)) {
+	z.src = ''; z.setAttribute('src','')
+	if (document.getElementById('unavailable formats')) document.getElementById('unavailable formats').appendChild(z)
+      }
   }
 
   if (linx.length == 0) {//set up dummy sources on pages where no sources could be acquired
