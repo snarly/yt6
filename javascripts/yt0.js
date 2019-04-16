@@ -9774,14 +9774,14 @@ function nop(){//    } else {
     js.src = webm
     js.type = 'video/webm'
     js.title = qual[43].replace("WebM","")
-    document.getElementById('player1').appendChild(js)
+    p1.appendChild(js)
   }
 
 var A = [],V = [],AV = [];    var linx = []; linx = yt6.linx;  var html = []; html = yt6.html
 if (typeof linx[160] === 'string') { linx.splice(132, 1, linx[160])}
   for (i=0;i<500;i++) {//linx
-    var z = document.getElementById(i)
     if (linx[i]) {
+      var z = document.getElementById(i)
       var js = (z && z.parentNode == p1) ? z : document.createElement('source')
       js.id = i
       js.setAttribute('id',i)
@@ -9818,20 +9818,20 @@ if (typeof linx[160] === 'string') { linx.splice(132, 1, linx[160])}
       if (typeof webm != 'undefined') {
         if ((linx[i].split('//')[1] != webm.split('//')[1]) && (i != 160)) {
           js.src = 'https:' + linx[i]
-          document.getElementById('player1').appendChild(js)
+          p1.appendChild(js)
         }
       } else {
           if (i != 160) {
             js.src = 'https:' + linx[i]
-            document.getElementById('player1').appendChild(js)
+            p1.appendChild(js)
           }
         }
       delete js
 
-    } else if (z && z.parentNode == p1) {
+    } //else if (z && z.parentNode == p1) {
 	//z.src = ''; z.setAttribute('src','')
-	if (document.getElementById('unavailable formats')) document.getElementById('unavailable formats').appendChild(z)
-      }
+	//if (document.getElementById('unavailable formats')) document.getElementById('unavailable formats').appendChild(z)
+      //}
   }
 
   if (linx.length == 0) {//set up dummy sources on pages where no sources could be acquired
