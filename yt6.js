@@ -9772,12 +9772,11 @@ function nop(){//    } else {
   if (typeof webm != 'undefined') {
     var z = getElementsByAttribute(p1,'source','name','43')[0]
     var js = (z && (z.parentNode == p1)) ? z : document.createElement('source')
-    js.id = '43'
     js.src = webm
+    js.name = '43'
     js.type = 'video/webm'
     js.title = qual[43].replace("WebM","")
     p1.appendChild(js)
-    p1.lastChild.setAttribute('id',i)
   }
 
 var p1 = document.getElementById('player1')
@@ -9845,7 +9844,6 @@ if (typeof linx[160] === 'string') { linx.splice(132, 1, linx[160])}
       var js = document.createElement('source')
       js.type = k[i]
       js.src = 'https://www.youtube.com/ptracking'
-      js.id = '0'
       js.name = '0'
       p1.appendChild(js)
     }
