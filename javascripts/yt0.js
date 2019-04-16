@@ -9774,7 +9774,7 @@ function nop(){//    } else {
     js.src = webm
     js.type = 'video/webm'
     js.title = qual[43].replace("WebM","")
-    p1.appendChild(js)
+    document.getElementById('player1').appendChild(js)
   }
 
 var A = [],V = [],AV = [];    var linx = []; linx = yt6.linx;  var html = []; html = yt6.html
@@ -9784,9 +9784,9 @@ if (typeof linx[160] === 'string') { linx.splice(132, 1, linx[160])}
     if (linx[i]) {
       var js = (z && z.parentNode == p1) ? z : document.createElement('source')
       js.id = i
-      //js.setAttribute('id',i)
+      js.setAttribute('id',i)
       js.name = i
-      //js.setAttribute('name', i)
+      js.setAttribute('name', i)
       if (qual[i] && qual[i]['t']) {
         if (i < 103) {
           AV[i] = "itag=" + i
@@ -9818,12 +9818,12 @@ if (typeof linx[160] === 'string') { linx.splice(132, 1, linx[160])}
       if (typeof webm != 'undefined') {
         if ((linx[i].split('//')[1] != webm.split('//')[1]) && (i != 160)) {
           js.src = 'https:' + linx[i]
-          p1.appendChild(js)
+          document.getElementById('player1').appendChild(js)
         }
       } else {
           if (i != 160) {
             js.src = 'https:' + linx[i]
-            p1.appendChild(js)
+            document.getElementById('player1').appendChild(js)
           }
         }
       delete js
