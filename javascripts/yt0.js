@@ -9770,22 +9770,25 @@ function nop(){//    } else {
 
 //if (player() != null){
   if (typeof webm != 'undefined') {
-    var z = document.getElementById('43')
+    var z = getElementsByAttribute(document,'source','name','43')[0]
     var js = (z && z.parentNode == p1) ? z : document.createElement('source')
-    if (js == z) js.id = '43'
+    js.id = '43'
     js.src = webm
     js.type = 'video/webm'
     js.title = qual[43].replace("WebM","")
     p1.appendChild(js)
+    p1.lastChild.setAttribute('id',i)
   }
 
 var p1 = document.getElementById('player1')
 var A = [],V = [],AV = [];    var linx = []; linx = yt6.linx;  var html = []; html = yt6.html
 if (typeof linx[160] === 'string') { linx.splice(132, 1, linx[160])}
   for (i=0;i<500;i++) {//linx
-    var z = document.getElementById(i)
+    var z = document.getElementById(i) || null
     if (linx[i]) {
-      var js = (z && z.parentNode == p1) ? z : document.createElement('source'); if (z) { console.log(z) } 
+      if (z && (z.parentNode == p1)) {
+        var js = z
+      } else var js = document.createElement('source')
       js.name = i
       if (qual[i] && qual[i]['t']) {
         if (i < 103) {
@@ -9818,16 +9821,17 @@ if (typeof linx[160] === 'string') { linx.splice(132, 1, linx[160])}
       if (typeof webm != 'undefined') {
         if ((linx[i].split('//')[1] != webm.split('//')[1]) && (i != 160)) {
           js.src = 'https:' + linx[i]
-          js.id = i
+          //js.id = i
           p1.appendChild(js)
         }
       } else {
           if (i != 160) {
             js.src = 'https:' + linx[i]
-            js.id = i
+            //js.id = i
             p1.appendChild(js)
           }
         }
+      p1.lastChild.setAttribute('id',i)
       delete js
 
     } else if (z && z.parentNode == p1) {
@@ -9844,7 +9848,7 @@ if (typeof linx[160] === 'string') { linx.splice(132, 1, linx[160])}
       js.src = 'https://www.youtube.com/ptracking'
       js.id = '0'
       js.name = '0'
-      document.getElementById('player1').appendChild(js)
+      p1.appendChild(js)
     }
 	yt6.limit = 2
   } else yt6.limit = 0
