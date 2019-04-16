@@ -9830,10 +9830,10 @@ if (typeof linx[160] === 'string') { linx.splice(132, 1, linx[160])}
         }
       delete js
 
-    } //else if (z && z.parentNode == document.getElementById('player1')) {
+    } else if (z && z.parentNode == p1) {
 	//z.src = ''; z.setAttribute('src','')
-	//if (document.getElementById('unavailable formats')) document.getElementById('unavailable formats').appendChild(z)
-      //}
+	if (document.getElementById('unavailable formats')) document.getElementById('unavailable formats').appendChild(z)
+      }
   }
 
   if (linx.length == 0) {//set up dummy sources on pages where no sources could be acquired
