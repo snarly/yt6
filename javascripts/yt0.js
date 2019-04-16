@@ -9770,8 +9770,8 @@ function nop(){//    } else {
 
 //if (player() != null){
   if (typeof webm != 'undefined') {
-    var z = getElementsByAttribute(document,'source','name','43')[0]
-    var js = (z && z.parentNode == p1) ? z : document.createElement('source')
+    var z = document.getElementById('43')
+    var js = (z && (z.parentNode == p1)) ? z : document.createElement('source')
     js.id = '43'
     js.src = webm
     js.type = 'video/webm'
@@ -9784,7 +9784,7 @@ var p1 = document.getElementById('player1')
 var A = [],V = [],AV = [];    var linx = []; linx = yt6.linx;  var html = []; html = yt6.html
 if (typeof linx[160] === 'string') { linx.splice(132, 1, linx[160])}
   for (i=0;i<500;i++) {//linx
-    var z = document.getElementById('"'+i+'"')
+    var z = null; //document.getElementById(i.toString())
     if (linx[i]) {
       if (z && (z.parentNode == p1)) {
         var js = z
@@ -9831,10 +9831,10 @@ if (typeof linx[160] === 'string') { linx.splice(132, 1, linx[160])}
             p1.appendChild(js)
           }
         }
-      p1.lastChild.setAttribute('id',i)
+      if (p1.lastChild.name == i) p1.lastChild.setAttribute('id',i)
       delete js
 
-    } else if (z && z.parentNode == p1) {
+    } else if (z && (z.parentNode == p1)) {
 	//z.src = ''; z.setAttribute('src','')
 	if (document.getElementById('unavailable formats')) document.getElementById('unavailable formats').appendChild(z)
       }
