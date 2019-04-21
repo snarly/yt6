@@ -2445,12 +2445,14 @@ function loadCSS(url, callback) {
 
 function video_title() {
 
+  var watch_page = true
   var title = document.getElementById('eow-title') || gc('title style-scope ytd-video-primary-info-renderer')[0]
   var title = (title) ? title[yt6.txt] : document.title.substring(0, document.title.length)
-  if (title.indexOf(' - YouTube') == title.length - 10) title = title.substring(0, title.length - 10)
-  if (title.indexOf(' - YouTube Gaming') == title.length - 17) title = title.substring(0, title.length - 17)
+  if (title.indexOf(' - YouTube') == title.length - 10) { title = title.substring(0, title.length - 10); watch_page = false }
+  if (title.indexOf(' - YouTube Gaming') == title.length - 17) { title = title.substring(0, title.length - 17); watch_page = false }
+  if (location.href.indexOf('.com/watch?v=') == -1) watch_page = false
 
-  return title
+  return [title, watch_page]
 }
 
 function video_id() {
@@ -5277,8 +5279,6 @@ yt6.mep_renew = function() {
     function preload(){
 
 
-	yt6.navigation = false
-
 	yt6.player1.setPoster(getPoster())
 
 	if (bp()) bp().style.display = 'block'
@@ -5572,6 +5572,8 @@ yt6.mep_renew = function() {
       find_the_source()
 
       yt6.newvideo = true
+
+      if (typeof yt6.player1 != 'undefined' && typeof yt6.player1.play != 'function') yt6.navigation = false
 
       wallpaper()
 
@@ -8613,6 +8615,7 @@ function mep_run() {
 		  translations:['en','de','es'],
 		  success: function(me) {  $('#audio-type').html( me.pluginType);
 					addEL(me, 'loadstart', function() {//console.log('1loadstart')
+					  yt6.navigation = false
 					  if (typeof yt6.srcbak == 'undefined') yt6.srcbak = []
 					  if ( yt6 && yt6.player1 && (yt6.timer == 999999999 || me.src == 'https://www.youtube.com/ptracking' || yt6.player1.media.src != me.src))
 					    return void 0;
@@ -11660,9 +11663,13 @@ addEL(window, 'spfdone', yt6.body.spfdone, false);
     if (z.getAttribute('id') != 'player') {
       var z = z.firstChild
     }
-	if (z && z.getAttribute('style') && z.getAttribute('style').toString() == '[object CSS2Properties]') {
-	  z.style.display = 'none';
-	  if (bm0) try { document.getElementById('movie_player_to_insert').appendChild(bm0) } catch(e){}
+	if (!yt6.navigation && z && z.getAttribute('style') && z.getAttribute('style').toString() == '[object CSS2Properties]') {
+	  var vt = video_title()
+	  if (vt && !vt[1]) {
+	    z.style.display = 'none'
+	    //console.log(document.getElementById('movie_player'))
+	    if (bm0) try { document.getElementById('movie_player_to_insert').appendChild(bm0) } catch(e){}
+	  }
 	}
 
 	wide_view()
@@ -13212,10 +13219,13 @@ if (f != null) {
       var ytp_style = z.currentStyle || window.getComputedStyle(z, null)
     }
 
-  if (o != null) if (o.toString() != '[object CSS2Properties]') { z.setAttribute('style', o) } else {
+  if (o != null) if (o.toString() != '[object CSS2Properties]') { z.setAttribute('style', o) } else if (!yt6.navigation) {
+    var vt = video_title()
+    if (vt && !vt[1]) {
 	z.style.display = 'none'
 	//console.log(document.getElementById('movie_player'))
 	if (bm0) try { document.getElementById('movie_player_to_insert').appendChild(bm0) } catch(e){}
+    }
   }
 
 
@@ -15121,7 +15131,7 @@ function aspect(a) {
 
 //alert(a + ' ' + windowwidth + ' ' + playerwidth + bm0.style.width + bm0.style.height + Math.round(1*((windowheight / 100 >>0) * 80) * yt6.me_aspect) +  'px '+ bm0.style.height + ' ' + Math.round((windowheight / 100 >>0) * 80) + 'px' + Math.round(playerwidth / yt6.aspect_ratio) + 'px')
 
-  if ( yt6.size == 'custom' || a == 'media' || yt6.navigation ||
+  if ( yt6.size == 'custom' || a == 'media' ||
        (
 	a != 'default' && //!(yt6.size == 'theater' && yt6.flexy) &&
 	 ( (!((1*bm0.style.height.replace('px','') == Math.round((windowheight / 100 >>0) * 80)) && (1*bm0.style.width.replace('px','') == Math.round(2+((windowheight / 100 >>0) * 80) * yt6.me_aspect)) && (yt6.size == 'theater') )) //|| yt6.size != 'theater'
