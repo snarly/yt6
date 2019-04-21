@@ -5573,7 +5573,7 @@ yt6.mep_renew = function() {
 
       yt6.newvideo = true
 
-      if (typeof yt6.player1 != 'undefined' && typeof yt6.player1.play != 'function') yt6.navigation = false
+      if (typeof yt6.player1 == 'undefined' || (typeof yt6.player1 != 'undefined' && typeof yt6.player1.play != 'function')) yt6.navigation = false
 
       wallpaper()
 
