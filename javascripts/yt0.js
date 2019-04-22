@@ -1505,7 +1505,7 @@ function test_4() {
 	test_4(); return void 0;
       } else { console.log('empty')
 	  z.setAttribute('name', document.title)*/
-	  try { z.innerHTML = '' } catch(e) { z[yt6.txt] = '' }
+	  try { z.innerHTML = '' } catch(e) {}
 	}
 
     if (yt6.error == '  \n  ') return void 0;
@@ -6943,7 +6943,7 @@ if (typeof html.splice != 'function') return void 0;
 
   bm3.setAttribute('class','yt-uix-button-menu ')
   try { bm3.innerHTML = document.getElementById('bm2').innerHTML } catch(e){}
-  document.getElementById('bm2')[yt6.txt] = ''
+  try { document.getElementById('bm2').innerHTML = '' } catch(e){}
 //var csspopupheight = parseInt(bm3.offsetHeight) + 10 ;bm3.setAttribute('style',bm3.getAttribute('style') + ';height:' + csspopupheight + 'px;' + 'overflow-y: scroll')
 
 
