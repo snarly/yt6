@@ -2059,28 +2059,28 @@ function getPoster(){
 
 
   //if (window.ytplayer.config.args.video_id) {
-  var img1 = document.getElementById('test_poster')
-  if (!img1) {
-    var img1 = document.createElement('div')
-    img1.id = 'test_poster'
-    img1.style.visibility = "hidden";
-    img1.style.width = "100px";
-    img1.style.msOverflowStyle = "scrollbar";
-    yt6.appendChild(img1)
+  var img = document.getElementById('test_poster')
+  if (!img) {
+    var img = document.createElement('div')
+    img.id = 'test_poster'
+    img.style.visibility = "hidden";
+    img.style.width = "100px";
+    img.style.msOverflowStyle = "scrollbar";
+    yt6.appendChild(img)
   }
     yt6.timer = 0
-    var img2 = document.getElementById('test_poster_img')
-    if (img2) try { img2.parentNode.removeChild(img2) } catch(e){}
-    var img2 = document.createElement('img')
-    img2.id = 'test_poster_img'
-    img2.src = poster
-    img2.style.display = 'none'
-    img2.onload = function(){
-      $waitUntil(function() { var img = document.getElementById('test_poster_img'); yt6.timer = yt6.timer + 1; //console.log('? ' + yt6.timer); 
+    var img = document.getElementById('test_poster2')
+    if (img) try { img.parentNode.removeChild(img) } catch(e){}
+    var img = document.createElement('img')
+    img.id = 'test_poster2'
+    img.src = poster
+    img.style.display = 'none'
+    img.onload = function(){
+      $waitUntil(function() { var img = document.getElementById('test_poster2'); yt6.timer = yt6.timer + 1; //console.log('? ' + yt6.timer); 
 	  if (yt6.timer > 50 && img && img.parentNode) img.parentNode.parentNode.removeChild(img.parentNode)
 	  if (gc('mejs-poster mejs-layer')[0] && img && img.naturalWidth == 120 && img.naturalHeight == 90) return true
 	},
-        function() { var img = document.getElementById('test_poster_img')
+        function() { var img = document.getElementById('test_poster2')
 	  //img.src = '//yt3.ggpht.com/-afBnHVG_R6E/AAAAAAAAAAI/AAAAAAAAAAA/LtE5kbPkZvE/s27-c-k-no-mo-rj-c0xffffff/photo.jpg'
 	  //i1.ytimg.com/i/gsZadWjuuN2dEhI0mZfVfQ/mq1.jpg?v=531525b4'
 	  if (img) {
@@ -2090,13 +2090,13 @@ function getPoster(){
 	      z.style.backgroundImage = "url('" + img.src + "')";
 	      z.firstChild.src = img.src;
 	    }
-	    var img = document.getElementById('test_poster_img')
+	    var img = document.getElementById('test_poster2')
 	    if (img) try { img.parentNode.removeChild(img) } catch(e){}
 	  }
         },200,10000
       )
-      if (img1) img1.insertBefore(img2, img1.firstChild)
-      delete img2
+      if (document.getElementById('test_poster')) document.getElementById('test_poster').insertBefore(img, document.getElementById('test_poster').firstChild)
+      delete img
     }
 
 
