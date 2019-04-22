@@ -2059,23 +2059,28 @@ function getPoster(){
 
 
   //if (window.ytplayer.config.args.video_id) {
-  var img = document.getElementById('test_poster')
-  if (!img) {
-    var img = document.createElement('div')
-    img.id = 'test_poster'
-    yt6.appendChild(img)
-  } else img.innerHTML = ''
+  var img1 = document.getElementById('test_poster')
+  if (!img1) {
+    var img1 = document.createElement('div')
+    img1.id = 'test_poster'
+    img1.style.visibility = "hidden";
+    img1.style.width = "100px";
+    img1.style.msOverflowStyle = "scrollbar";
+    yt6.appendChild(img1)
+  }
     yt6.timer = 0
-    var img = document.createElement('img')
-    img.id = 'test_poster2'
-    img.src = poster
-    img.style.display = 'none'
-    img.onload = function(){
-      $waitUntil(function() { var img = document.getElementById('test_poster2'); yt6.timer = yt6.timer + 1; //console.log('? ' + yt6.timer); 
+    var img2 = document.getElementById('test_poster_img')
+    if (img2) try { img2.parentNode.removeChild(img2) } catch(e){}
+    var img2 = document.createElement('img')
+    img2.id = 'test_poster_img'
+    img2.src = poster
+    img2.style.display = 'none'
+    img2.onload = function(){
+      $waitUntil(function() { var img = document.getElementById('test_poster_img'); yt6.timer = yt6.timer + 1; //console.log('? ' + yt6.timer); 
 	  if (yt6.timer > 50 && img && img.parentNode) img.parentNode.parentNode.removeChild(img.parentNode)
 	  if (gc('mejs-poster mejs-layer')[0] && img && img.naturalWidth == 120 && img.naturalHeight == 90) return true
 	},
-        function() { var img = document.getElementById('test_poster2')
+        function() { var img = document.getElementById('test_poster_img')
 	  //img.src = '//yt3.ggpht.com/-afBnHVG_R6E/AAAAAAAAAAI/AAAAAAAAAAA/LtE5kbPkZvE/s27-c-k-no-mo-rj-c0xffffff/photo.jpg'
 	  //i1.ytimg.com/i/gsZadWjuuN2dEhI0mZfVfQ/mq1.jpg?v=531525b4'
 	  if (img) {
@@ -2085,13 +2090,12 @@ function getPoster(){
 	      z.style.backgroundImage = "url('" + img.src + "')";
 	      z.firstChild.src = img.src;
 	    }
-	    var img = document.getElementById('test_poster2')
+	    var img = document.getElementById('test_poster_img')
 	    if (img) try { img.parentNode.removeChild(img) } catch(e){}
 	  }
         },200,10000
       )
-      if (document.getElementById('test_poster')) document.getElementById('test_poster').appendChild(img)
-      delete img
+      if (img1) img1.insertBefore(img2, img1.firstChild)
     }
 
 
@@ -5905,26 +5909,36 @@ if (playlist.id.indexOf('watch') == -1) {
 
 
 function getScrollbarWidth() {
+
+  var outer = document.getElementById('test_poster')
+  if (!outer) {
     var outer = document.createElement("div");
+    outer.id = 'test_poster'
     outer.style.visibility = "hidden";
     outer.style.width = "100px";
     outer.style.msOverflowStyle = "scrollbar"; // needed for WinJS apps
 
-    yt6.body.appendChild(outer);
-
+    yt6.appendChild(outer);
+    
     var widthNoScroll = outer.offsetWidth;
     // force scrollbars
     outer.style.overflow = "scroll";
+  }
 
+  var inner = document.getElementById('scrollbar_width')
+  if (outer && !inner) {
     // add innerdiv
     var inner = document.createElement("div");
+    inner.id = 'scrollbar_width'
     inner.style.width = "100%";
-    outer.appendChild(inner);        
+    outer.appendChild(inner);
+  }
 
-    var widthWithScroll = inner.offsetWidth;
+    try { var widthWithScroll = inner.offsetWidth; } catch(e) { var widthWithScroll = (widthNoScroll + 15) }
 
     // remove divs
-    outer.parentNode.removeChild(outer);
+    //try { outer.parentNode.removeChild(outer) } catch(e){};
+    console.log( widthNoScroll +' '+ widthWithScroll);
     yt6.sb = widthNoScroll - widthWithScroll;
     return widthNoScroll - widthWithScroll;
 }
