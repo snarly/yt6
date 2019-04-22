@@ -1505,7 +1505,7 @@ function test_4() {
 	test_4(); return void 0;
       } else { console.log('empty')
 	  z.setAttribute('name', document.title)*/
-	  z.innerHTML = ''
+	  try { z.innerHTML = '' } catch(e) { z[yt6.txt] = '' }
 	}
 
     if (yt6.error == '  \n  ') return void 0;
@@ -2096,6 +2096,8 @@ function getPoster(){
         },200,10000
       )
       if (img1) img1.insertBefore(img2, img1.firstChild)
+      if (img2) img2.parentNode.removeChild(img2)
+      delete img2
     }
 
 
@@ -5919,11 +5921,11 @@ function getScrollbarWidth() {
     outer.style.msOverflowStyle = "scrollbar"; // needed for WinJS apps
 
     yt6.appendChild(outer);
-    
+  }
+
     var widthNoScroll = outer.offsetWidth;
     // force scrollbars
     outer.style.overflow = "scroll";
-  }
 
   var inner = document.getElementById('scrollbar_width')
   if (outer && !inner) {
@@ -5934,7 +5936,7 @@ function getScrollbarWidth() {
     outer.appendChild(inner);
   }
 
-    try { var widthWithScroll = inner.offsetWidth; } catch(e) { var widthWithScroll = (widthNoScroll + 15) }
+    try { var widthWithScroll = inner.offsetWidth; } catch(e) { var widthWithScroll = (widthNoScroll + 16) }
 
     // remove divs
     //try { outer.parentNode.removeChild(outer) } catch(e){};
