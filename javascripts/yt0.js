@@ -2096,7 +2096,6 @@ function getPoster(){
         },200,10000
       )
       if (img1) img1.insertBefore(img2, img1.firstChild)
-      if (img2) img2.parentNode.removeChild(img2)
       delete img2
     }
 
@@ -5940,7 +5939,7 @@ function getScrollbarWidth() {
 
     // remove divs
     //try { outer.parentNode.removeChild(outer) } catch(e){};
-    console.log( widthNoScroll +' '+ widthWithScroll);
+    //console.log( widthNoScroll +' '+ widthWithScroll);
     yt6.sb = widthNoScroll - widthWithScroll;
     return widthNoScroll - widthWithScroll;
 }
@@ -6943,8 +6942,8 @@ if (typeof html.splice != 'function') return void 0;
   z.cursor = 'default'; z.fontSize = '13px'; z.color = 'black'; z.display = 'block'; z.visibility = 'hidden'; z.position = 'fixed'; z.left = '0%'; z.top = '48px'; z.maxWidth = '224px'; z.height = bm3.height + 'px'; z.marginTop = '0px'; z.marginRight = '0px'; z.background = '#FFFFFF'; z.opacity = '1'; z.padding = '2px 2px 2px 2px'; z.border = '1px solid #DDD'; z.zIndex = '2147483648'; z.overflowY = 'hidden'
 
   bm3.setAttribute('class','yt-uix-button-menu ')
-  bm3.innerHTML = document.getElementById('bm2').innerHTML
-  document.getElementById('bm2').innerHTML = ''
+  bm3[yt6.txt] = document.getElementById('bm2').innerHTML
+  document.getElementById('bm2')[yt6.txt] = ''
 //var csspopupheight = parseInt(bm3.offsetHeight) + 10 ;bm3.setAttribute('style',bm3.getAttribute('style') + ';height:' + csspopupheight + 'px;' + 'overflow-y: scroll')
 
 
