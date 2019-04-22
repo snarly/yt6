@@ -2069,8 +2069,8 @@ function getPoster(){
     yt6.appendChild(img)
   }
     yt6.timer = 0
-    var img = document.getElementById('test_poster2')
-    if (img) try { img.parentNode.removeChild(img) } catch(e){}
+    var img = getElementsByAttribute(document.getElementById('test_poster'),'img','id','test_poster2')
+    while (img[0]) try { img[0].parentNode.removeChild(img[0]) } catch(e){}
     var img = document.createElement('img')
     img.id = 'test_poster2'
     img.src = poster
