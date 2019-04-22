@@ -2086,7 +2086,7 @@ function getPoster(){
 	      z.firstChild.src = img.src;
 	    }
 	    var img = document.getElementById('test_poster2')
-	    img.parentNode.removeChild(img)
+	    if (img) try { img.parentNode.removeChild(img) } catch(e){}
 	  }
         },200,10000
       )
@@ -9031,7 +9031,7 @@ function mep_run() {
 					  try { yt6.player2.setVolume( me.volume ) } catch(e) {};
 					  if (yt6.speed) { player2.playbackRate = me.playbackRate = yt6.speed;
 					  var z = document.getElementById('displaySpeed')
-					  if (z) z.innerHTML = "Speed " + Math.round(yt6.speed * 100) + "%" };
+					  if (z) try { z.innerHTML = "Speed " + Math.round(yt6.speed * 100) + "%" }; } catch(e){}
 
 					  if (yt6.player2.media.loaded || Seek == 0) { yt6.newvideo = false }
 
@@ -11024,7 +11024,7 @@ if (!t.sourcechooserButton) {//console.log('error')
 
 
 		//these all would become part of the next ytPubsubPubsubInstance and have side effects, so wipe them
-		var a = document.getElementById('bm3'); if (a) a.innerHTML = ''
+		var a = document.getElementById('bm3'); if (a) try { a.innerHTML = '' } catch(e){ console.log(e); delete a[yt6.txt] }
 		for(i=0;i<100;i++) if (yt6.linx[i]) delete yt6.linx[i]
 		for(i=0;i<338;i++) if (qual[i] && qual[i]['s']) qual[i]['s'] = ''
 		yt6.fn = ''
@@ -11323,7 +11323,7 @@ if (typeof Polymer != 'undefined') {
 	  var a = document.getElementById('bm0');
 	  var b = gc('mejs-controls')[0];
 	  var p = yt6.movie_player, c, cf; //player(), c = 
-	  if (p) {console.log('1')
+	  if (p) {
 	    try { cf = typeof p.getPlayerState } catch(e) { cf = null }
 	    /*if (cf) {  
 	      if (p.tagName == 'EMBED' || p.tagName == 'OBJECT') {
@@ -11338,8 +11338,8 @@ if (typeof Polymer != 'undefined') {
 	 }
 	},
 	  function(){
-	    $waitUntil(function() { console.log('2'); if (yt6.movie_player && typeof yt6.movie_player.pauseVideo == 'function') return true },
-              function(){console.log('3')
+	    $waitUntil(function() { if (yt6.movie_player && typeof yt6.movie_player.pauseVideo == 'function') return true },
+              function(){
 		var z = document.getElementById('bm0')
 		if (z && z.style.visibility == 'visible' && autoplay(false) == false) player().pauseVideo();//"||" instead of "&&" --> will always pause on new page
 	      },100,3000)
