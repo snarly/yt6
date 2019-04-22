@@ -2095,7 +2095,7 @@ function getPoster(){
 	  }
         },200,10000
       )
-      if (document.getElementById('test_poster')) document.getElementById('test_poster').insertBefore(img, document.getElementById('test_poster').firstChild)
+      if (document.getElementById('test_poster')) document.getElementById('test_poster').appendChild(img)
       delete img
     }
 
