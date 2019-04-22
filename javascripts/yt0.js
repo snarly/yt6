@@ -9026,12 +9026,14 @@ function mep_run() {
 					  if (yt6.newvideo) { yt6.newvideo = true; yt6.player1.setCurrentTime(0);
 					  } else {
 					    //if (yt6.ct) me.setCurrentTime(yt6.ct)
-					  };
+					  }
 
-					  try { yt6.player2.setVolume( me.volume ) } catch(e) {};
-					  if (yt6.speed) { player2.playbackRate = me.playbackRate = yt6.speed;
-					  var z = document.getElementById('displaySpeed')
-					  if (z) try { z.innerHTML = "Speed " + Math.round(yt6.speed * 100) + "%" }; } catch(e){}
+					  try { yt6.player2.setVolume( me.volume ) } catch(e) {}
+					  if (yt6.speed) {
+					    player2.playbackRate = me.playbackRate = yt6.speed;
+					    var z = document.getElementById('displaySpeed')
+					    if (z) try { z.innerHTML = "Speed " + Math.round(yt6.speed * 100) + "%" } catch(e){}
+					  }
 
 					  if (yt6.player2.media.loaded || Seek == 0) { yt6.newvideo = false }
 
