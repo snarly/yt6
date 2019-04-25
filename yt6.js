@@ -2357,13 +2357,15 @@ function correct_flashvars(a) { // prepare the flash player object's flashvars v
     args.url_encoded_fmt_stream_map = url_encoded_fmt_stream_map				// update real data with the modified clone
 
 
+    args.t = 1 // by late April 2019, maintainers removed this data from the object tree -- flash player needs it
 
- // put an empty string here since Flash Player can't handle adaptive formats without server side support
+
+ // put an empty string here because this homemade instance of flash player can't handle adaptive formats :(
     args.adaptive_fmts = ''
 
 
 
-if (typeof player_response == 'string') { // no more captions in Flash, same reason
+if (typeof player_response == 'string') { // no more captions in flash, can't handle those either
 /*
   console.log(player_response)
   var cut0 = player_response.split(',"captions":{');//--/"defaultAudioTrackIndex"+\:[0-9]\}/)--
