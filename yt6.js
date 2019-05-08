@@ -11453,7 +11453,7 @@ if (typeof Polymer != 'undefined') {
   if (!yt6.ytg && !yt6.ytm) {
     var z = (yt6.flexy) ? 'ytd-watch-flexy' : 'ytd-watch'
     yt6.body.snarls_watchdog.observe( document.getElementsByTagName(z)[0], {attributes: true, attributeFilter: ['video-id'] })
-  } else {
+  } else if (Polymer.Async._twiddle) {
       yt6.body.snarls_watchdog.observe( Polymer.Async._twiddle, { characterData: true })
     }
 
@@ -15890,6 +15890,12 @@ function control_panel1() {
     var js = document.createElement('div')
     document.getElementById('yt-alert-message').appendChild(js);
     js.setAttribute('style','display: table-cell; vertical-align: middle; line-height: 17px'); js.style.display = 'table-cell'; js.style.verticalAlign = 'middle'; js.style.lineHeight = '17px'
+    if (yt6.ytm) {
+      var js = document.getElementById('yt-alert-message')
+      js.style.position = 'absolute'
+      js.style.marginTop = yt6.mhp.offsetHeight + 'px'
+      js.style.zIndex = '5'
+    }
     var js = document.createElement('span')
     document.getElementById('yt-alert-message').firstChild.appendChild(js);
     var span = document.getElementById('yt-alert-message').getElementsByTagName('span')[0]
