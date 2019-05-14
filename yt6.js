@@ -11808,7 +11808,7 @@ addEL(window, 'spfdone', yt6.body.spfdone, false);
 		 (typeof window.ytplayer != 'undefined' && ytplayer.config && ytplayer.config.args && ytplayer.config.args.video_id == yt6.vid) ) {
 		z.style.display = 'none'
 		yt6.navigation = false; //console.log('!')
-		if (bm0 && !yt6.blocked && bm0.parentNode == document.getElementById('movie_player_to_insert')) try { yt6.api.appendChild(bm0) } catch(e){}
+		if (bm0 && bm0.parentNode == document.getElementById('movie_player_to_insert')) try { yt6.api.appendChild(bm0) } catch(e){}
 	      } else {
 		  if (typeof window.ytplayer == 'undefined' || (typeof window.ytplayer != 'undefined' && ytplayer.config)) {
 		    yt6.navigation = false; //console.log(ytplayer.config.args.video_id + ' !! ' + yt6.vid)
