@@ -171,6 +171,7 @@ jQuery.fn = jQuery.prototype = {
 				// HANDLE: $(#id)
 				} else {
 					elem = document.getElementById( match[2] );
+					if ( !elem ) try { elem = document.querySelector( '#' + match[ 2 ] ) } catch(e) {}
 
 					// Check parentNode to catch when Blackberry 4.6 returns
 					// nodes that are no longer in the document #6963
