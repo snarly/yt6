@@ -1230,10 +1230,10 @@ function hand_axe(){
 			  var z = gid('home-button')
 		          if (z) {
 			    z = z.parentNode
-			  } else throw 'YouTube layout mismatch';
+			  } else throw 'YouTube layout mismatch'
 			}
 		      }
-		    z.insertBefore(bm1, z.lastChild);
+		    z.insertBefore(bm1, z.lastChild)
 		    var z_class = z.getAttribute('class') || z.outerHTML.split('class="')[1].split('"')[0]
 
 		    //bm1.newWindow = window.open(protocol() + ytplayer.config.assets.js, "_blank", "width=100,height=100,menubar=yes");
@@ -1253,15 +1253,15 @@ yt6.recharge = function() {
 			if (gid("snarls_player")) gid('snarls_player').parentNode.removeChild(gid("snarls_player"))
 		      }
 		    var z = (yt6.layout == 16) ? 'inline-block' : 'block'
-		    if (gid('movie_player')) gid('movie_player').setAttribute('style','display: ' + z);
+		    if (gid('movie_player')) gid('movie_player').setAttribute('style','display: ' + z)
 		    if (gid('snarls_player') == undefined) {
-			  var q=document.createElement('div');
-			  q.id='snarls_player';
-			  yt6.body.appendChild(q);
-			  var q=document.createElement('script');
-			  q.id='snarls_player';
-			  q.src= (gid('ytassetsjs')) ? gid('ytassetsjs').srco : window.yt6.src;//px + '/snarly/yt6/master/yt6.js';
-			  gid('snarls_player').appendChild(q);
+			  var q=document.createElement('div')
+			  q.id='snarls_player'
+			  yt6.body.appendChild(q)
+			  var q=document.createElement('script')
+			  q.id='snarls_player'
+			  q.src=(gid('ytassetsjs')) ? gid('ytassetsjs').srco : (window.yt6d) ? window.yt6d.src : '';//px + '/snarly/yt6/master/yt6.js';
+			  gid('snarls_player').appendChild(q)
 		    }
 }
 
@@ -1319,20 +1319,20 @@ yt6.feedback = function(fcnm) {
 				redo_dl_button(  yt6.args,  yt6.html,  yt6.href);\
 				yt6.mep_up();\
 			    } catch(e){ yt6.recharge() } } else {*/
-		    z.insertBefore(bm1, z.lastChild);
+		    z.insertBefore(bm1, z.lastChild)
 
 control_panel1()
 var panel = gid('controls-sp')
 if (panel) {
   panel.parentNode.removeChild(gid('remove-sp'))
-  panel.style.position = 'relative';
+  panel.style.position = 'relative'
   panel.innerHTML = '<span>ERROR: Data could not be retrieved via proxy, but you can do it by hand. A new tab or window should have opened -- if pop-ups are blocked, click the Transformer-icon. The content is a wall of text, part of the YouTube Player\'s own program code, starting with something like \"var _yt_player\" or \"function\". If possible, run the bookmarklet on that page too to get only the few lines needed. With browsers like Internet Explorer or Edge you may have no other option but to download the javascript file (usually callsed base.js), save it as a text file, and use a regular text editor to view it. SELECT (Ctrl+A) & COPY (Ctrl+C) then PASTE the content into the input field which appeared around the YouTube logo on this page (Ctrl+V). If done, press ENTER.</span>'
 }
 
 
     var js = document.createElement('style');
-    js.type = 'text/css';
-    js.media = 'screen';
+    js.type = 'text/css'
+    js.media = 'screen'
     var code = 
 
 ".sitewide-consent-visible .yt-consent-banner {"+
@@ -1348,11 +1348,11 @@ if (panel) {
 "}"
 
     try {
-      js.appendChild(document.createTextNode(code));
-      gid('video-hide').appendChild(js);
+      js.appendChild(document.createTextNode(code))
+      gid('video-hide').appendChild(js)
     } catch (e) {
       js.text = code;
-      gid('video-hide').appendChild(js);
+      gid('video-hide').appendChild(js)
     }
     delete js;
 
@@ -7310,6 +7310,14 @@ if (!gid('bm4')) {
     var top = (yt6.layout != 16) ? yt6.mhp.offsetHeight : yt6.mhp.parentNode.offsetHeight
     var bm3 = gid('bm3') 
     if (bm3) bm3.style.top = (!yt6.ytm) ? top - 2 + "px" : '0px'
+
+    if (yt6.ytm) {
+      var ytm = document.getElementsByTagName('ytmusic-player')[0]
+	  var yta = gid('yt-alert-message')
+      if (ytm && yta && typeof ytm.getAttribute == 'function' && ytm.getAttribute('player-ui-state_') == 'MINIPLAYER') {
+        yta.style.position = (yta.style.position == 'absolute') ? 'fixed' : 'absolute'
+      }
+    }
 
     if  (window.ytplayer &&
 	 window.ytplayer.config &&
