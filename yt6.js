@@ -1617,7 +1617,7 @@ function test_4() {
 
 
 	//var ypsi = yt6.flatten(ytPubsubPubsubInstance); //console.log(ypsi)
-	var durl = yt6.durl(ypsi); //console.log(durl.length)
+	var durl = yt6.durl(ypsi); //console.log(durl)
 	var dsig = yt6.dsig(ypsi); //unused
 	var vqua = yt6.vqua(ypsi); //unused
 
@@ -1783,13 +1783,14 @@ function test_4() {
 	//for (var eurl of durl) {
 	for (k=0;k < durl.length;k++) {
 	  var eurl = durl[k];
-	  if (yt6.mobile && !ytplayer.config.args.url_encoded_fmt_stream_map) { yt6.encrypted = true
+	  if ((yt6.mobile || yt6.ytm) && !(ytplayer.config && ytplayer.config.args && ytplayer.config.args.url_encoded_fmt_stream_map)) { //yt6.encrypted = true
+	    if (!ytplayer.config) { ytplayer.config = {}; ytplayer.config.args = {} }
 	    if (!ytplayer.config.args.adaptive_fmts) ytplayer.config.args.adaptive_fmts = eurl + ','
 	    if (!ytplayer.config.args.adaptive_fmts.includes(eurl)) {
 	      ytplayer.config.args.adaptive_fmts = ytplayer.config.args.adaptive_fmts + eurl +','
 	    }
-	  }
-	  if (eurl && eurl.indexOf('itag') != -1 && eurl.indexOf('signature') != -1) {
+	  };
+	  if (eurl && eurl.indexOf('itag') != -1 && (eurl.indexOf('signature') != -1 || eurl.indexOf('sig=') != -1)) {
 	    //var nurl = (typeof URL != 'undefined') ? new URL(eurl) : {};
 	    //if (nurl && nurl.searchParams) {
 	      //var usp = nurl.searchParams
@@ -6656,6 +6657,7 @@ if (ytplayer && ytplayer.config && ytplayer.config.args) {
 
 	if (qs && qq) {
 
+	if (!qs.url) continue;
 	var href = unescape(qs.url).replace('http:', '').replace('https:', '')
 
 	if (href.indexOf('source=yt_live_broadcast') != -1 || href.indexOf('/source/yt_live_broadcast/') != -1) { yt6.live = true } else yt6.live = false
@@ -7316,7 +7318,7 @@ if (typeof html.splice != 'function') return void 0;
 	if (bc) { //console.log(bc.id + '"' + bc.parentNode.id + '"' + yt6.osw.parentNode.id)
 	  bc.insertBefore(dw, yt6.osw)
 	}
-	  bc = document.getElementsByTagName('YTD-PAGE-MANAGER')[0] || gid('bm1')//document.getElementsByTagName('ytm-watch')[0];
+	  bc = (!yt6.mobile) ? document.getElementsByTagName('YTD-PAGE-MANAGER')[0] : gid('bm1')//document.getElementsByTagName('ytm-watch')[0];
 	  if (bc) bc.parentNode.insertBefore(dw, bc);
       }
   }
@@ -11458,7 +11460,7 @@ if (!t.sourcechooserButton) {//console.log('error')
 
 
 		//these all would become part of the next ytPubsubPubsubInstance and have side effects, so wipe them
-		var a = gid('bm3'); if (a) try { a.innerHTML = '' } catch(e){ console.log(e); delete a[yt6.txt] }
+		var a = gid('bm3'); if (a) try { a.innerHTML = '' } catch(e){ delete a[yt6.txt] }
 		for(i=0;i<100;i++) if (yt6.linx[i]) delete yt6.linx[i]
 		for(i=0;i<338;i++) if (qual[i] && qual[i]['s']) qual[i]['s'] = ''
 		yt6.fn = ''
