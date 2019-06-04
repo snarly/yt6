@@ -7269,7 +7269,7 @@ if (typeof html.splice != 'function') return void 0;
   dw.id = 'flash_on'
   dw.type = 'checkbox'
   gid('bm9').appendChild(dw)
-  var onclic = "var yt6 = gid('snarls_player'); if (this.checked) { yt6.force_flash = true; forceFlashplayerObject(); switch_players(); switch_players(); $waitUntil(function(){var mp = getElementsByAttribute(document, 'div','name','original')[0]; if (mp && mp.parentNode.getAttribute('id') == 'movie_player_to_dispose') { return true } else console.log(mp) }, function() {var mp = getElementsByAttribute(document, 'div','name','original')[0]; mp.setAttribute('id','movie_player0'); mp.setAttribute('class','YouTube_TM'); },250,5000); } else { yt6.force_flash = false; back2html5() };" //mp.firstChild.setAttribute('class','html5-video-container0'); mp.firstChild.firstChild.setAttribute('class','video-stream html5-main-video0'); 
+  var onclic = "var yt6 = gid('snarls_player'); if (this.checked) { yt6.force_flash = true; forceFlashplayerObject(); switch_players(); switch_players(); $waitUntil(function(){var mp = getElementsByAttribute(document, 'div','name','original')[0]; if (mp && mp.parentNode.getAttribute('id') == 'movie_player_to_dispose') { return true } }, function() {var mp = getElementsByAttribute(document, 'div','name','original')[0]; mp.setAttribute('id','movie_player0'); mp.setAttribute('class','YouTube_TM'); },250,5000); } else { yt6.force_flash = false; back2html5() };" //mp.firstChild.setAttribute('class','html5-video-container0'); mp.firstChild.firstChild.setAttribute('class','video-stream html5-main-video0'); 
   dw.setAttribute('onclick', onclic)
   dw.setAttribute('style','inline-block')
   if (yt6.force_flash) {
