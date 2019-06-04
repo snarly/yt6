@@ -5250,7 +5250,7 @@ function getReferenceObjects() {
   }
   yt6.wsb = gid('watch7-sidebar') || gid('related') || gid('sidebar') || document.getElementsByTagName('ytg-watch-sidebar')[0] || gid('secondary') || gc('side-panel style-scope ytmusic-player-page')[0]
   yt6.wsa = gid('watch7-sidebar-ads') || gid('player-ads')
-  yt6.wna = (!yt6.ytm && yt6.layout == 12) ? gid('watch-header') : gid('alerts')
+  yt6.wna = (!yt6.ytm && !yt6.mobile) ? gid('watch-header') : gid('alerts')
   yt6.top = gid('top') || gid('content-layer') || yt6.ytm
   if (yt6.wna && yt6.wna.getAttribute('id') == 'watch-header') yt6.wna = gid('watch7-notification-area')
 
