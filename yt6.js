@@ -6653,7 +6653,7 @@ if (ytplayer && ytplayer.config && ytplayer.config.args) {
 	var qs = yt6.qr; //if (qs == null) continue;//alert('qs')
 	var qq = yt6.qa; //if (qq == null) continue;//alert('qq')
 
-	if (qs && qq) {
+      if (qs && qq) {
 
 	if (!qs.url) continue;
 	var href = unescape(qs.url).replace('http:', '').replace('https:', '')
@@ -6694,10 +6694,11 @@ if (ytplayer && ytplayer.config && ytplayer.config.args) {
 	  } else if ( qq.indexOf('DASH AAC')) var audio = 'https:' + href; // if M$ or not yet defined
 	} else var audio = yt6.audiox
 
-    } else {
-		var qs = ''; var qq = ''; var href = '' + href
-      }
+      } else {
+	   var qs = {}; var qq = ''; var href = '' + href
+	}
 
+	if (html.indexOf(href) > -1) continue
 
         var fn = yt6.fn = args.title || document.title //+ '-' + qq).toLowerCase()
         //         .replace(/[!"&'().:[\]|]/g,'')
