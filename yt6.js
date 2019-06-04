@@ -5250,7 +5250,7 @@ function getReferenceObjects() {
   }
   yt6.wsb = gid('watch7-sidebar') || gid('related') || gid('sidebar') || document.getElementsByTagName('ytg-watch-sidebar')[0] || gid('secondary') || gc('side-panel style-scope ytmusic-player-page')[0]
   yt6.wsa = gid('watch7-sidebar-ads') || gid('player-ads')
-  yt6.wna = (!yt6.ytm && !yt6.mobile) ? gid('watch-header') : gid('alerts')
+  yt6.wna = (!yt6.ytm && !yt6.mobile && yt6.layout == 12) ? gid('watch-header') : gid('alerts'); var wna = null;
   yt6.top = gid('top') || gid('content-layer') || yt6.ytm
   if (yt6.wna && yt6.wna.getAttribute('id') == 'watch-header') yt6.wna = gid('watch7-notification-area')
 
@@ -5286,10 +5286,10 @@ function getReferenceObjects() {
 	  if (l[i].getAttribute('id') == 'player') yt6.osw = l[i]
 	  if (l[i].getAttribute('id') == 'container') yt6.con = l[i]
 	  if (l[i].getAttribute('id') == 'main') yt6.man = l[i]
-	  if (l[i].getAttribute('id') == 'alerts') yt6.wna = l[i]
+	  if (l[i].getAttribute('id') == 'alerts') wna = l[i]
 	  if (l[i].getAttribute('id') == 'info' && !yt6.ytg) yt6.inf = l[i]
 	  if (l[i].getAttribute('id') == 'miniplayer-bar') { yt6.mpb = l[i].firstChild }
-	  if (yt6.con && yt6.man && yt6.wna && (!yt6.ytg && yt6.inf)) { var l = null; break }
+	  if (yt6.con && yt6.man && wna && (!yt6.ytg && yt6.inf)) { yt6.wna = wna; var l = null; break }
 	}
 
 	var l = document.getElementsByTagName('YTD-MINIPLAYER')[0]
@@ -5297,31 +5297,29 @@ function getReferenceObjects() {
 
 	var z = document.getElementsByTagName('ytd-watch-flexy')[0] || document.getElementsByTagName('ytd-watch')[0]
 
-	if (z && (z.hasAttribute('flexy_') || z.hasAttribute('is-currently-flexible_') || z.hasAttribute('flexy-fit-to-video_') || z.hasAttribute('flexy-v2_') || z.hasAttribute('flexy-v2-extended_') || z.hasAttribute('flexy-small-window_') || (typeof z.getAttribute('style') == 'string'  && z.getAttribute('style').indexOf('--ytd-watch-flexy-') > -1) )
+	if (z && (z.hasAttribute('flexy') || z.hasAttribute('flexy_') || z.hasAttribute('is-currently-flexible_') || z.hasAttribute('flexy-fit-to-video_') || z.hasAttribute('flexy-v2_') || z.hasAttribute('flexy-v2-extended_') || z.hasAttribute('flexy-small-window_') || (typeof z.getAttribute('style') == 'string'  && z.getAttribute('style').indexOf('--ytd-watch-flexy-') > -1) )
 	   ) {
 
 	  yt6.flexy = true
 
 
 	  var l = gc('style-scope ytd-watch-flexy')
-	  if (l[0]) {
-	    for (i=0;i<l.length;i++) {
-	      if (l[i].getAttribute('id') == 'player') yt6.osw = l[i]
-	      if (l[i].getAttribute('id') == 'alerts') yt6.wna = l[i]
-	      if (l[i].getAttribute('id') == 'info' && !yt6.ytg) yt6.inf = yt6.con = yt6.man = l[i]
-	      if (l[i].getAttribute('id') == 'primary') yt6.top = (yt6.wide) ? l[i] : l[i].parentNode
-	      if (yt6.con && yt6.man && yt6.wna && (!yt6.ytg && yt6.inf)) { var l = null; break }
-	    }
-	    if (!yt6.top) yt6.top = gid('primary')
-	    /*if (!yt6.top) {
-	      var l = gc('style-scope ytd-app')
-	      if (l[0]) {
-	        for (i=0;i<l.length;i++) {
-	          if (l[i].getAttribute('id') == 'content') { yt6.top = l[i]; var l = null; break }
-	        }
-	      }
-	    }*/
+	  for (i=0;i<l.length;i++) {
+	    if (l[i].getAttribute('id') == 'player') yt6.osw = l[i]
+	    if (l[i].getAttribute('id') == 'alerts') wna = l[i]
+	    if (l[i].getAttribute('id') == 'info' && !yt6.ytg) yt6.inf = yt6.con = yt6.man = l[i]
+	    if (l[i].getAttribute('id') == 'primary') yt6.top = (yt6.wide) ? l[i] : l[i].parentNode
+	    if (yt6.con && yt6.man && wna && (!yt6.ytg && yt6.inf)) { yt6.wna = wna; var l = null; break }
 	  }
+	  if (!yt6.top) yt6.top = gid('primary')
+	  /*if (!yt6.top) {
+	    var l = gc('style-scope ytd-app')
+	    if (l[0]) {
+	      for (i=0;i<l.length;i++) {
+	        if (l[i].getAttribute('id') == 'content') { yt6.top = l[i]; var l = null; break }
+	      }
+	    }
+	  }*/
 
 	} else yt6.flexy = false
 
@@ -15203,7 +15201,8 @@ if ((p1 != null) && (yt6.x)){
 	}
         var src_chooser_height = src_chooser(z)[0]
         var src_chooser_width = src_chooser(z)[1]
-        if (h - 30 < src_chooser_height) {
+        if (src_chooser_height)
+	if (h - 30 < src_chooser_height) {
           z.style.height = h - 51 + 'px'
           z.style.width = "145px";//((src_chooser_width) + 15) + 'px'
           z.style.overflowY = "scroll"
