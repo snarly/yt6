@@ -1805,7 +1805,7 @@ function test_4() {
 	      //`<a href="${eurl}">${efmt}</a>`;
 	        '<a name="' + usp.get('itag') + '" href="' + eurl + '">' + efmt + '</a>';//nurl.href
 	    } else {
-	        cvar usp = eurl.split('?')[1]
+	        var usp = eurl.split('?')[1]
 	        if (usp) {
 	          var efmt = get_quality(usp)
 	          var z = qr(usp); if (z && z.itag) cfmt[z.itag] =
