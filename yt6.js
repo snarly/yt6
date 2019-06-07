@@ -12575,7 +12575,7 @@ if (yt6.mpb && yt6.mpb.tagName == 'YTD-MINIPLAYER') {
 
 		   if (yt6.autoplay && yt6.pls) {
 		      var z = gclass('playlist-items yt-scrollbar-dark style-scope ytd-playlist-panel-renderer')[0]
-		      if (yt6.layout == 16 && !yt6.ytg && z.nextSibling.tagName == 'IRON-LIST' && z.nextSibling.id == 'items') {
+		      if (yt6.layout == 16 && !yt6.ytg && z.nextSibling && z.nextSibling.tagName == 'IRON-LIST' && z.nextSibling.id == 'items') {
 			z = z.nextSibling
 		      }
 		      if (z) {
