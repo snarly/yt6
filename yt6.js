@@ -6716,7 +6716,7 @@ if (ytplayer && ytplayer.config && ytplayer.config.args) {
   ];//gid('early-body').innerHTML = ''
 
 
-  if (!(ytplayer.config && ytplayer.config.args && ytplayer.config.args.errorcode == 150)) {
+  if (!(ytplayer.config && ytplayer.config.args && ytplayer.config.args.errorcode == 150) || yt6.ytm) {
 
    test_4()
 
