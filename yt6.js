@@ -3744,7 +3744,6 @@ function alt_yt_cleanup() {//console.log(player().getAttribute('name') + typeof 
 				  var bm0 = gid('bm0')
 				  if (ytplayer.config.args.errorcode == 150 || (bm0 && bm0.parentNode.getAttribute('id') == 'movie_player_to_insert')) {
 				    if (bm0) yt6.api.appendChild(bm0)
-				    if (yt6.x) { switch_players() }
 				    if (yt6.status == 'fail') {
 				      alt_yt()
 				    } else if (yt6.x) { switch_players(); switch_players() }
