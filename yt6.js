@@ -1968,7 +1968,7 @@ function test_4() {
     if (!yt6.original) yt6.original = getElementsByAttribute(document,'div','name','original')[0]
     
     if (p && !p.getAttribute('time') && p.tagName != 'OBJECT') {
-	  p.setAttribute('class','YouTube_TM')
+	if (p.className.indexOf('YouTube_TM') == -1) p.setAttribute('class','YouTube_TM ' + p.className)
       if ((!p.name && !yt6.original) || (p.name && p.name != 'YouTube_TM' && p.name != 'original')) {
 	p.name = 'original'
 	p.setAttribute('name','original')
@@ -6596,7 +6596,7 @@ if (typeof ytplayer == 'undefined') var ytplayer = window.ytplayer
 
   if ( !yt6.mobile && ytplayer && ( ytplayer.config && (!yt6.ytm && ytplayer.config.args && (typeof ytplayer.config.args.url_encoded_fmt_stream_map == 'undefined' || typeof ytplayer.config.args.adaptive_fmts == 'undefined' || ytplayer.config.args.adaptive_fmts == '') || (z && z.indexOf('//www.youtube.com/yts/jsbin/') != -1) ) || (yt6.ytm && (!ytplayer.config.assets || ytplayer.config.args.video_id != video_id()[0] ) ) ) ) {
     //var z = gc('ytassetsjs-0'); while (z && z[0]) z[0].parentNode.removeChild(z[0]);
-if ((yt6.layout == 12 || yt6.ytm) && ytplayer.config.args && ytplayer.args.csi_page_type && ytplayer.args.csi_page_type.indexOf('watch') != -1 && ((!ytplayer.config.args.url_encoded_fmt_stream_map && !ytplayer.config.args.adaptive_fmts) || ytplayer.config.args.video_id != yt6.vid) ) { var pass = true } else var pass = false; // || yt6.force_flash
+if ((yt6.layout == 12 || yt6.ytm) && ytplayer.config.args && ytplayer.config.args.csi_page_type && ytplayer.config.args.csi_page_type.indexOf('watch') != -1 && ((!ytplayer.config.args.url_encoded_fmt_stream_map && !ytplayer.config.args.adaptive_fmts) || ytplayer.config.args.video_id != yt6.vid) ) { var pass = true } else var pass = false; // || yt6.force_flash
 
     if (yt6.osw && yt6.osw.getAttribute('id') == 'player' || pass) {
 	var z = document.getElementsByTagName('ytd-playability-error-supported-renderers')[0]
@@ -6749,6 +6749,11 @@ if (ytplayer && ytplayer.config && ytplayer.config.args) {
 	  yt6.player1.setSrc('https://www.youtube.com/ptracking')
 	} else try { gid('player1').src = 'https://www.youtube.com/ptracking' } catch(e){}
       }
+      //if (yt6.pls) {
+	//var z = gid('player-unavailable') || gid('error-screen')
+	//if (z) z.style.display = ''
+      //}
+      if (yt6.newin) delete yt6.newin
     }
 
 
@@ -7033,11 +7038,11 @@ if (ytplayer && ytplayer.config && ytplayer.config.args) {
           if (href != '') if (typeof qq.split(" ")[1] != 'undefined') { 
             if (typeof j != 'number') {
               html.push(
-                '<a name="' + qs.itag +'" href="' + protocol() + href + '&title=' + fn +'" onclick="' + rp(onclic) + '"' + sizeq + ' download="' + fn + '.' + qq.split(" ")[1].toLowerCase() + '">' + qq + size + '</a>'
+                '<a name="' + qs.itag +'" class="yt6-links" href="' + protocol() + href + '&title=' + fn +'" onclick="' + rp(onclic) + '"' + sizeq + ' download="' + fn + '.' + qq.split(" ")[1].toLowerCase() + '">' + qq + size + '</a>'
               );
             } else {
                 html.splice(
-                  j+1, 0, '<a name="' + qs.itag +'" href="' + protocol() + href + '&title=' + fn +'" onclick="' + rp(onclic) + '"' + sizeq + ' download="' + fn + '.' + qq.split(" ")[1].toLowerCase() + '">' + qq + size + '</a>'
+                  j+1, 0, '<a name="' + qs.itag +'" class="yt6-links"  href="' + protocol() + href + '&title=' + fn +'" onclick="' + rp(onclic) + '"' + sizeq + ' download="' + fn + '.' + qq.split(" ")[1].toLowerCase() + '">' + qq + size + '</a>'
                 );
               }
     
@@ -7046,11 +7051,11 @@ if (ytplayer && ytplayer.config && ytplayer.config.args) {
           } else {
               if (typeof j != 'number'){
                 html.push(
-                  '<a name="' + qs.itag +'" href="' + protocol() + href + '&title=' + fn +'" onclick="' + rp(onclic) + '"' + sizeq + ' download="' + fn + '">' + qs.itag + size + '</a>'
+                  '<a name="' + qs.itag +'" class="yt6-links"  href="' + protocol() + href + '&title=' + fn +'" onclick="' + rp(onclic) + '"' + sizeq + ' download="' + fn + '">' + qs.itag + size + '</a>'
                 );
               } else {
                   html.splice(
-                      j+1, 0, '<a name="' + qs.itag +'" href="' + protocol() + href + '&title=' + fn +'" onclick="' + rp(onclic) + '"' + sizeq + ' download="' + fn + '">' + qs.itag + size + '</a>'
+                      j+1, 0, '<a name="' + qs.itag +'" class="yt6-links"  href="' + protocol() + href + '&title=' + fn +'" onclick="' + rp(onclic) + '"' + sizeq + ' download="' + fn + '">' + qs.itag + size + '</a>'
                   );
                 }
             }
@@ -7384,7 +7389,7 @@ if (typeof html.splice != 'function') return void 0;
   dw.id = 'flash_on'
   dw.type = 'checkbox'
   gid('bm9').appendChild(dw)
-  var onclic = "var yt6 = gid('snarls_player'); if (this.checked) { yt6.force_flash = true; forceFlashplayerObject(); switch_players(); switch_players(); $waitUntil(function(){var mp = getElementsByAttribute(document, 'div','name','original')[0]; if (mp && mp.parentNode.getAttribute('id') == 'movie_player_to_dispose') { return true } }, function() {var mp = getElementsByAttribute(document, 'div','name','original')[0]; mp.setAttribute('id','movie_player0'); mp.setAttribute('class','YouTube_TM'); },250,5000); } else { yt6.force_flash = false; back2html5() };" //mp.firstChild.setAttribute('class','html5-video-container0'); mp.firstChild.firstChild.setAttribute('class','video-stream html5-main-video0'); 
+  var onclic = "var yt6 = gid('snarls_player'); if (this.checked) { yt6.force_flash = true; forceFlashplayerObject(); switch_players(); switch_players(); $waitUntil(function(){var mp = getElementsByAttribute(document, 'div','name','original')[0]; if (mp && mp.parentNode.getAttribute('id') == 'movie_player_to_dispose') { return true } }, function() {var mp = getElementsByAttribute(document, 'div','name','original')[0]; mp.setAttribute('id','movie_player0'); mp.setAttribute('class','YouTube_TM ' + mp.className); },250,5000); } else { yt6.force_flash = false; back2html5() };" //mp.firstChild.setAttribute('class','html5-video-container0'); mp.firstChild.firstChild.setAttribute('class','video-stream html5-main-video0'); 
   dw.setAttribute('onclick', onclic)
   dw.setAttribute('style','inline-block')
   if (yt6.force_flash) {
@@ -7682,6 +7687,12 @@ var jq0 = function()
 "	vertical-align:middle"+
 "}"+
 
+".yt6-links {"+
+"    color: #167ac6;"+
+"    cursor: pointer;"+
+"    text-decoration: none;"+
+"}"+
+
 "#change button {"+
 "width:18px;"+
 "text-align:center"+
@@ -7713,11 +7724,11 @@ var jq0 = function()
 "a:hover, a:focus {"+
 "    text-decoration: underline;"+
 "}"+
-"a {"+
-"    color: #167ac6;"+
-"    cursor: pointer;"+
-"    text-decoration: none;"+
-"}"+
+//"a {"+
+//"    color: #167ac6;"+
+//"    cursor: pointer;"+
+//"    text-decoration: none;"+
+//"}"+
 ".yt-uix-button::-moz-focus-inner {"+
 "	border:0;"+
 "	padding:0"+
@@ -11656,7 +11667,7 @@ if (!t.sourcechooserButton) {//console.log('error')
 			  if (p && p.nodeName != 'EMBED' && p.nodeName != 'IFRAME' && !gid('movie_player1')) { //console.log('#3')
 
 			    if (p && !p.getAttribute('time') && p.tagName != 'OBJECT') {
-			      p.setAttribute('class','YouTube_TM')
+			      p.setAttribute('class','YouTube_TM ' + p.className)
 			      if ((!p.name) || (p.name && p.name != 'YouTube_TM' && p.name != 'original')) {
 				p.name = 'original'
 				p.setAttribute('name','original')
@@ -13722,7 +13733,7 @@ function ytsubtitle2srt( d, track_srclang, mejs_language_code, translated) {
 
   if (yt6.lastsub != d) {
     gid('subtitles_sp').innerHTML = gid('subtitles_sp').innerHTML +
-      '<a class="" href="' + uriContent +'" ' + onclic + ' download="' + unescape(fn) + '_' + track_srclang + '.srt">SRT ' + translated + mejs_language_code + '</a><br>';
+      '<a class="yt6-links" href="' + uriContent +'" ' + onclic + ' download="' + unescape(fn) + '_' + track_srclang + '.srt">SRT ' + translated + mejs_language_code + '</a><br>';
   }
 
   yt6.lastsub = d
