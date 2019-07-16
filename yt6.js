@@ -3582,10 +3582,10 @@ function alt_yt_cleanup() {//console.log(player().getAttribute('name') + typeof 
 	  if (ytplayer.config.args.el) delete ytplayer.config.args.el
 	  ytplayer.config.args.csi_page_type = 'watch,watch7_html5'
 	  ytplayer.config.args.iv_allow_in_place_switch = '0'
+	  ytplayer.config.args.c = 'WEB'
 	  ytplayer.config.args.is_embed = ''
 	  ytplayer.config.args.embedded_player_response = ''
 	  ytplayer.config.args.embed_config = ''
-
 
 	  yt6.status = ytplayer.config.args.status
 	  yt6.reason = ytplayer.config.args.reason || yt6.age.t
@@ -6024,7 +6024,8 @@ yt6.mep_renew = function() {
       if (yt6.layout == 16 && yt6.newin && yt6.pls) {
         ajax1(true);
         try { yt6.newin = window.open(protocol() + '//www.youtube.com/watch?v=' + yt6.newin).blur() } catch(e) { return void 0 };
-        window.focus()
+        //onDownload(JSON.stringify(ytplayer.config));
+	//window.focus()
       } else yt6.newin = null
 
 
@@ -12397,7 +12398,7 @@ addEL(window, 'spfdone', yt6.body.spfdone, false);
 		  var ads0 = ads0[0] * 60 + ads0[1] * 1
 		}
 
-	      if (yt6.ad_ == ads0 && yt6.linx.length) {
+	      if (yt6.ad_ == ads0 && yt6.linx.length && !yt6.blocked) {
 
 		if ((yt6.pre_ad == '?' || yt6.media_duration != ads0) && Math.abs(yt6.previous_media_duration - ads0) > 1.5) {
 
