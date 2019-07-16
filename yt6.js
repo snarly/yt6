@@ -6025,7 +6025,7 @@ yt6.mep_renew = function() {
         ajax1(true);
         try { yt6.newin = window.open(protocol() + '//www.youtube.com/watch?v=' + yt6.newin).blur() } catch(e) { return void 0 };
         //onDownload(JSON.stringify(ytplayer.config));
-	//window.focus()
+	window.focus()
       } else yt6.newin = null
 
 
@@ -6500,9 +6500,11 @@ if (!yt6.wallpaper) { var bm0 = gid('bm0'); if (bm0) resize_layers( bm0.style.wi
     if (imgs && imgs[0]) {
       for(i=0;i<imgs.length;i++) {
         var a = imgs[i].getElementsByTagName('img')[0]
-        if (a && a.tagName == 'IMG' && a.src != '' && a.parentNode && a.parentNode.parentNode && a.parentNode.parentNode.parentNode.tagName != 'YTD-GUIDE-ENTRY-RENDERER') {
-	  if (a.src.indexOf('yts/img/pixel') != -1) { a.src = clone(a.getAttribute('data-thumb')); a.setAttribute('src', clone(a.getAttribute('data-thumb'))) }
-	  imgA.push(a) } //a.src = a.src.split('?')[0]; 
+        if (a && a.tagName == 'IMG' && a.src != '' && a.parentNode && a.parentNode.parentNode && a.parentNode.parentNode.parentNode && a.parentNode.parentNode.parentNode.parentNode && a.parentNode.parentNode.parentNode.parentNode.tagName != 'YTD-GUIDE-ENTRY-RENDERER') {
+	  if (a.src.indexOf('yts/img/pixel') != -1) { a.src = a.getAttribute('data-thumb'); a.setAttribute('src', a.src) }
+	  imgA.push(a)
+	} //a.src = a.src.split('?')[0]; 
+
       }
     }
   }
@@ -11619,7 +11621,11 @@ if (!t.sourcechooserButton) {//console.log('error')
 		yt6.Seeked2 = false
 		yt6.navigation = true
 		yt6.ads_noskip = 0
-		if ((yt6.blocked && yt6.age.blocked >= 5) || (!yt6.blocked && yt6.age.blocked >= 6)) yt6.age.blocked = 1;// if (yt6.blocked || yt6.age.blocked > 13) 
+		if ((yt6.blocked && yt6.age.blocked >= 5) || (!yt6.blocked && yt6.age.blocked >= 6)) { // if (yt6.blocked || yt6.age.blocked > 13)
+		  yt6.age.blocked = 1;
+		} else {
+		    if (yt6.ad_) delete yt6.ad_ 
+		  }
 		if (yt6.age.blocked > 0) yt6.blocked = false;
 
 		yt6.pre_ad = false
