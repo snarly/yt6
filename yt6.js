@@ -12544,7 +12544,7 @@ addEL(window, 'spfdone', yt6.body.spfdone, false);
 	  } //else if (yt6.pre_ad != '?') { yt6.ad_ = ads0; yt6.real_media_duration_ = yt6.real_media_duration }
 	} else {
 	    var ads = gc('ytp-ad-preview-container')[0]
-	    if (ads && !ads (!yt6.x || yt6.ytm) && yt6.ads_noskip < 4) { //console.log('skip in-video ad')
+	    if (ads && (!yt6.x || yt6.ytm) && yt6.ads_noskip < 4) { //console.log('skip in-video ad')
 	      yt6.pre_ad = false; yt6.ad_ = null
 	      yt6.ads_noskip = (yt6.ads_noskip + 1); ads.parentNode.removeChild(ads)
 	      try { p.loadVideoById(video_id()[0], p.getCurrentTime() ) } catch(e){}
