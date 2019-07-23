@@ -6650,6 +6650,7 @@ function mute_ad(p) {
 
 	        } else if ((!(Math.abs(yt6.real_media_duration - ads0) > 1.5)) || (yt6.ad_muted && yt6.real_media_duration == yt6.loaded_media_duration)) { // conditions to unmute
 		    //yt6.ad_duration = 0
+		    yt6.pre_ad = false
 		    if (typeof p.isMuted == 'function' && p.isMuted() && yt6.ad_muted) {
 		      try { p.unMute(); yt6.ytp_v.unMute() } catch(e) {}
 		      yt6.ad_muted = false
