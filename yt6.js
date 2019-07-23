@@ -12532,18 +12532,19 @@ addEL(window, 'spfdone', yt6.body.spfdone, false);
 
 	if (typeof yt6.ads_noskip == 'undefined') yt6.ads_noskip = 0
 
-	//var ads = gc('videoAdUiSkipButton')[0]; if (ads && (!yt6.x || yt6.ytm)) { yt6.ads_noskip = 0; ads.click(); ads.setAttribute("class","videoAdUiSkipButton") }
+	var ads = gc('videoAdUiSkipButton')[0]; if (ads && (!yt6.x || yt6.ytm)) { yt6.ads_noskip = 0; ads.click(); ads.setAttribute("class","videoAdUiSkipButton") }
 
 //
 	var ads = gc('ytp-ad-skip-ad-slot')[0]
 	if (ads && (!yt6.x || yt6.ytm)) {
 	  yt6.ads_noskip = 0; var ads = gc('ytp-ad-skip-button ytp-button')[0]
 	  if (ads) { //console.log('skip pre-emptive or trailing ad')
-	    ads.click(); yt6.pre_ad = false; yt6.ad_ = null
+	    ads.click();
+	    yt6.pre_ad = false; yt6.ad_ = null
 	  } //else if (yt6.pre_ad != '?') { yt6.ad_ = ads0; yt6.real_media_duration_ = yt6.real_media_duration }
 	} else {
 	    var ads = gc('ytp-ad-preview-container')[0]
-	    if (ads && (!yt6.x || yt6.ytm) && yt6.ads_noskip < 4) { //console.log('skip in-video ad')
+	    if (ads && !ads (!yt6.x || yt6.ytm) && yt6.ads_noskip < 4) { //console.log('skip in-video ad')
 	      yt6.pre_ad = false; yt6.ad_ = null
 	      yt6.ads_noskip = (yt6.ads_noskip + 1); ads.parentNode.removeChild(ads)
 	      try { p.loadVideoById(video_id()[0], p.getCurrentTime() ) } catch(e){}
