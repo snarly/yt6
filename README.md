@@ -29,14 +29,14 @@ Note: Users of FF-addon NoScript
 
 2. Add to NoScript Settings / Whitelist
 
-      githubusercontent.com
-      rawgit.com
-      githack.com
-      jsdelivr.com 
-      allow-any-origin.appspot.com
-      cors-anywhere.herokuapp.com
-      crossorigin.me
-      youtube.com
+      githubusercontent.com, 
+      rawgit.com, 
+      githack.com, 
+      jsdelivr.net, 
+      allow-any-origin.appspot.com, 
+      cors-anywhere.herokuapp.com, 
+      crossorigin.me, 
+      youtube.com, 
       googlevideo.com
 
 
