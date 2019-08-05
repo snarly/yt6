@@ -2817,8 +2817,8 @@ function clone(obj) {
 
 function correct_flashvars(a) { // prepare the flash player object's flashvars variable
 
-  var vid = video_id()[0]
-  if (!window.ytplayer.config.args.video_id) {					// brand new since 2019-07-30: the video_id object is deleted by yt on each new page
+  var vid = video_id()[0], c = conf('args')
+  if (c[0] && !(c[1] && c[1].video_id)) {					// brand new since 2019-07-30: the video_id object is deleted by yt on each new page
     a.video_id = vid
     window.ytplayer.config.args.video_id = vid
   }
@@ -2954,7 +2954,12 @@ if (typeof player_response == 'string') { // no more captions in flash, can't ha
 
   console.log(cut2)
 */
-  args.player_response = '{"playabilityStatus":{"status":"OK"},"playbackTracking":{},"videoDetails":{"videoId":"'+ args.video_id +'","title":"'+ args.title +'","lengthSeconds":"'+ args.length_seconds +'"},"adSafetyReason":{"isEmbed":true}}"'
+  var z = ''
+  if (yt6.args.video_id) z = '"videoId":"'+ args.video_id +'"'
+  if (yt6.args.title) z = '"title":"'+ args.title +'"'
+  if (yt6.args.length_seconds) z = '"lengthSeconds":"'+ args.length_seconds +'"'
+
+  args.player_response = '{"playabilityStatus":{"status":"OK"},"playbackTracking":{},"videoDetails":{'+ z +'},"adSafetyReason":{"isEmbed":true}}"'
 }
 
   // emptying
@@ -3192,7 +3197,7 @@ function alt_yt(vid) {
 			      gid('movie_player').parentNode.removeChild(gid('movie_player'))
 			      try { window.ytplayer.config.html5 = true } catch(e){}
 			      yt6.html5_fail = false
-			      yt6.force_flash = false
+			      yt6.force_flash = false; console.log('1')
 			    } else { //html5 player is not working, fall back to flash
 				yt6.movie_player.parentNode.removeChild(yt6.movie_player)
 				var p = player(), p = yt6.movie_player
@@ -3426,7 +3431,7 @@ function alt_yt(vid) {
 			      gid(yt6.movie_player.id).parentNode.removeChild(gid(yt6.movie_player.id))
 			      var z = gid('flash_on')
 			      if (z) { z.checked = false; z.setAttribute('checked','') }
-			      yt6.force_flash = false; yt6.flash = null
+			      yt6.force_flash = false; yt6.flash = null; console.log('2')
 			    }
 			  }
 
@@ -4418,7 +4423,7 @@ if ( yt6.tmp && !player() || (player() && typeof player().getPlayerState != 'fun
 
 }
 
-
+var c = conf('args')
 
  //alert('player ' + player() + 'window.ytplayer ' + window.ytplayer + 'ytplayer.config ' + ytplayer.config + 'ytplayer.config.loaded ' + ytplayer.config.loaded + gid('ytassetsjs') + 'fcnm' + typeof gid('ytassetsjs') + 1 * def_link().indexOf('%26false'))
 // onDownload(gid('player-api').innerHTML);
@@ -6760,7 +6765,9 @@ function mute_ad(p) {
 
 	  var ads0 = gc('ytp-time-duration')[0]
 	  if (ads0) ads0 = ads0[yt6.txt]
-	  //console.log(ads0+' '+yt6.real_media_duration_)
+	  var mp = yt6.original || getElementsByAttribute(yt6,'div','name','original')[0]
+	  if (p && p.tagName != 'DIV') p = mp || p
+	  //console.log(ads0+' '+yt6.real_media_duration_ + ' '+p.tagName)
 
 	  yt6.ytp_v = {};
 
@@ -9803,7 +9810,7 @@ function mep_run() {
 							// turn off force_flash indicators because flash was only fired up automatically for this video as it had no supported formats for html5 playback
 							var z = gid('flash_on')
 							if (z) { z.checked = false; z.setAttribute('checked','') }
-							yt6.force_flash = false
+							yt6.force_flash = false; console.log('3')
 
 							//if (yt6.ytg && yt6.x) { switch_players()   switch_players() }}
 							if (p && p.style.visibility != 'visible') switch_players()
@@ -11033,7 +11040,7 @@ if (k < 4) {
     z.name = 'flashvars'
     z.value = 'thumb=' + encodeURIComponent(getPoster()) + '&controls=true&file=' + encodeURIComponent(protocol() + yt6.linx[18])
     js[0].appendChild(z)
-    if (yt6.txt == 'innerText') js[0].style.display = 'none'
+    if (!yt6.force_flash && yt6.txt == 'innerText') js[0].style.display = 'none'
     gid('bm0').style.visibility = 'hidden'
     if (player()) player().style.visibility = 'visible'
   }
@@ -11985,7 +11992,7 @@ if (!t.sourcechooserButton) {//console.log('error')
 		  yt6.flash_recreation_timer = 0
 
 		  if (yt6.flash == 1 && player() && yt6.movie_player.getAttribute('class') == 'forced flashplayer' && yt6.vid == 'videoId{11}') {//console.log('#2');
-		    ageless_verification() // needed before flash activation to see if video is age-restricted
+		    if (yt6.layout == 16) ageless_verification() // needed before flash activation to see if video is age-restricted
 		    try { window.ytplayer.config.args.url_encoded_fmt_stream_map = ''} catch(e){}
 
 		    $waitUntil(function(){ if (window.ytplayer.config.args.url_encoded_fmt_stream_map) { return true }
@@ -12405,6 +12412,9 @@ addEL(window, 'spfprocess', yt6.body.spfprocess, false);
 //new page is displayed
 yt6.body.spfdone = function(e) {
 
+	var c = conf('args'), c2
+	if (!(c[1] && c[1])) { ageless_verification(); c2 = conf('args') }
+
 	var p = player()
 	var bm0 = gid('bm0')
 	var yt6 = gid('snarls_player')
@@ -12419,6 +12429,8 @@ yt6.body.spfdone = function(e) {
 
     var z = gid('unavailable-submessage') || gclass('ytd-playability-error-supported-renderers')[0]
 
+  
+
   if (z && z[yt6.txt] && z[yt6.txt].replace(/(\r\n|\n|\r)/gm," ").split(' ').join('') != '') {
 
     var e = ''
@@ -12428,7 +12440,7 @@ yt6.body.spfdone = function(e) {
 
     if (gid('watch7-player-age-gate-content') || e.indexOf(video_id()[0]) > -1) {
 
-	ageless_verification()
+	if (!(c2 && c2[0] && c2[1])) ageless_verification()
 
 /*      var z = document.createElement('iframe');
       z.id = 're-embed2';
@@ -13723,7 +13735,8 @@ if (yt6.flexy && yt6.pls) {
 	  c = conf('args')
 
 	  //check args
-	  if (c[1] && c[1].video_id && (c[1].video_id != yt6.vid || (yt6.blocked)) ) { //typeof c[1].video_id == 'string' && (c[1].video_id != yt6.vid) //|| (yt6.ytm &&
+	  if (c[1] && c[1].video_id && (c[1].video_id != yt6.vid || yt6.blocked) ) { //typeof c[1].video_id == 'string' && (c[1].video_id != yt6.vid) //|| (yt6.ytm &&
+		if (yt6.ytm && document.title == 'YouTube Music') { document.title = yt6.title }
 	    var z = clone(yt6.vid)
 	    ytplayer.config.args.video_id = (!yt6.ytm) ? z + 'ytd' : z + 'ytm'
 	    yt6d.current.video_id = z; c = conf('args')
@@ -13835,7 +13848,7 @@ if (yt6.flexy && yt6.pls) {
 
 			// since 2019-07-30 : args.video_id=undefined --> need to get video info via xhr3
 		        //if (window.ytplayer.config.args.video_id != video_id()[0]) {//&& video_id()[0] != yt6.player1.media.init) {
-			if (c[1] && c[1].video_id.substring(11)) {// != 'ytm'
+			if (c[1] && c[1].video_id.substring(11) || (yt6.ytm && document.title == 'YouTube Music')) {// != 'ytm'
 			  if (yt6.player1) try { yt6.player1.setSrc('https://www.youtube.com/ptracking'); yt6.player1.load() } catch(e){}
 			  if (yt6.player2) try { yt6.player2.setSrc('https://www.youtube.com/ptracking'); yt6.player2.load() } catch(e){}
 			  xhr2.done = false
@@ -13848,12 +13861,12 @@ if (yt6.flexy && yt6.pls) {
 			  //}
 
 			  var c = conf('args')
-			  if (yt6.ytm && c[1].video_id.substring(11) == 'ytm') {//== yt6.vid
+			  if (yt6.ytm && c[1].video_id.substring(11) == 'ytm' ) {//== yt6.vid
 			    if (ytplayer.config.args.title) { yt6.title = c[1].title } else yt6.title = document.title;
 			    //yt6.title = video_title()[0]
 			    //ytplayer.config.args.video_id = clone(yt6.vid)//.video_id = 'ytm';
 			    if (!yt6.prev_media.includes(yt6.audio)) { document.title = yt6.title }
-			  } else if (!yt6.ytm) { //console.log('? '+ytplayer.config.args.video_id)
+			  } else if (yt6.ytm && document.title == 'YouTube Music') {console.log('??!!')
 			      //yt6.title = document.title = ytplayer.config.args.title + ' - YouTube'
 			      //ytplayer.config.args.video_id = yt6.vid
 			    }
@@ -16105,7 +16118,7 @@ function switch_players() {
   var p2 = gid('player2')
   var bm0 = gid('bm0')
   var flashvars = getFlashVars();//player().getAttribute('flashvars')
-  var me_flash = getElementsByAttribute(gid("player-api"),"object","name","me_flash")
+  var me_flash = getElementsByAttribute(yt6.api,"object","name","me_flash")
 
       var z = yt6.osw
       if (z == gid('placeholder-player')) {
@@ -16162,6 +16175,7 @@ function switch_players() {
       }
       if (me_flash[0]) me_flash[0].style.display = ''
     }
+    if (yt6.force_flash && me_flash[0]) me_flash[0].style.display = ''
 
       if (yt6.player1 && yt6.player1.media && yt6.player2 && yt6.player2.media) try {
 	 yt6.player2.media.currentTime = yt6.ct = yt6.player1.media.currentTime
