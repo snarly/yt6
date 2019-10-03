@@ -2318,7 +2318,7 @@ if (yt6.html5_fail) {
 //    if (bm0) { var ffp = gc('forced flashplayer')[0]; console.log('05 ' + bm0.parentNode.id + ffp + yt6.p.getAttribute('id')); if (ffp && ffp.parentNode) console.log(ffp.parentNode.id) } else console.log('05 bm0 missing')
 
     } else {  yt6.ie7 = true;
-	console.log('//case of MSIE 7/8 on XP')
+	// console.log('//case of MSIE 7/8 on XP')
 	// from '17 February/March onward (since wannacry spread?)
 	// all these data must be present at code injecting time
 	gid("player-api").innerHTML = '<span tabindex="0"></span><span tabindex="0"></span><noembed></noembed>'
@@ -2386,135 +2386,8 @@ var mp = getElementsByAttribute(yt6, 'div','id','movie_player')[0]; if (mp) mp.s
     return new_fmp
 
 };// forceFlashplayerObject();
-/*function forceFlashplayerObject(auto){
-//https://addons.mozilla.org/en-US/firefox/addon/youtube-flash-player/versions/beta
-
-	var fmp = gid('movie_player')
-	if ( fmp && fmp.tagName == 'EMBED' && (fmp.fv_vid == video_id()[0] || video_id()[0] == yt6.vid ) && fmp.fv_done == 1) { return void 0; } else {
-	  if (fmp && fmp.getAttribute('name') == 'me_flash' && fmp.fv_vid != video_id()[0]) { fmp.parentNode.removeChild(fmp) }
-	}
 
 
-
-  var z = gid('movie_player_to_dispose');
-  if (z) {
-    try { z.stopVideo() } catch(e){}
-    try { exit(z) } catch(e){}
-  }
-
-
-
-yt6.tmp = gc("html5-video-container")[0]
-yt6.html5_fail = ( !yt6.tmp ||
-  (player() && yt6.tmp && yt6.tmp.parentNode == player() &&
-   (yt6.tmp.innerHTML == '' ||
-    !yt6.tmp.firstChild ||
-    (yt6.tmp.firstChild && typeof yt6.tmp.firstChild.getAttribute == 'function' && yt6.tmp.firstChild.getAttribute('src') == '') ||
-    typeof yt6.tmp.firstChild.play != 'function' ||
-    gc('ytp-error')[0]
-  ))) ? true : false
-
-if (yt6.html5_fail && !auto) {
-  if (!( yt6.layout == 16 && !gc('ytp-error')[0] )) {
-    player().parentNode.removeChild(player()); yt6.flash.forced = 2; yt6.flash.flag = 1
-  } else yt6.html5_fail = false
-}
-    var c = conf('args')
-    var p = player(), p = yt6.p, fv = correct_flashvars(c[1]), ffp = gc('forced flashplayer')[0]
-
-
-if (!(yt6.flashvars == fv && ffp && ffp.tagName == 'EMBED' && ffp.getAttribute('flashvars') == fv)) {
-
-    yt6.flashvars = fv
-    var t = gid('movie_player_to_insert')//player-api
-
-    if (yt6.html5_fail && !auto) { yt6.flash.flag = 1 }
-
-    yt6.setAttribute('style','display: none;')
-    if (yt6.getAttribute('style') == 'display: none;') {//post-IE8
-
-	var z = document.createElement('embed')
-									//for old browsers (except MSIE) @ the beginning
-	var style = (!yt6.oldbrowser) ? 'display: none' : ''; 		// leave 'style' empty
-	var flashvars = (c[0] && c[1]) ? fv : '';					// leave 'flashvars' empty
-	var id = (!yt6.oldbrowser) ? 'movie_player1' : 'movie_player';	// let them have the true id (they don't like elements getting moved around while flash player still loading)
-
-
-//    if (bm0) { var ffp = gc('forced flashplayer')[0]; console.log('04 ' + bm0.parentNode.id + ffp + yt6.p.getAttribute('id')); if (ffp && ffp.parentNode) console.log(ffp.parentNode.id) } else console.log('04 bm0 missing')
-
-	//if (yt6.layout == 12) {
-	  //var p3 = gid('movie_player') || gid('movie_player1')
-	//} else {
-	    var p3 = document.getElementsByClassName('forced flashplayer')
-	    if (p3[0]) {
-	      p3 = p3[p3.length-1]
-	    } else
-	      var p3 = gid('movie_player1') || gid('movie_player')
-	  //}
-
-	if (browserName != 'IE' && p3 && p3.getAttribute('time')) {//self-created embedded player already present, just modify it
-//; console.log('1 '+p.nodeName + p.getAttribute('time') + typeof p.getAttribute('flashvars'))
-	  p3.setAttribute('id','movie_player1')
-	  var z = p3.getAttribute('flashvars'); if (z && z.indexOf('fmt_list=') == -1) { p3.style.display = 'none' }
-	  p3.setAttribute('flashvars', flashvars)
-//console.log('way to deactivate the latest version of flash')
-	  p3.src = ''
-	  p3.style.display = 'none'
-	  p3.src = yt6.swfbin4
-	  p3.style.display = 'block'
-	  t.insertBefore(p3, t.firstChild)
-	  var new_fmp = p3
-	} else { //create embed element
-//; console.log('2 '+p.nodeName + p.getAttribute('time') + typeof p.getAttribute('flashvars'))
-	    if (browserName == 'IE' && p3) { try { p3.stopVideo() } catch(e){}; p3.style.display = 'none'; p3.parentNode.removeChild(p3) }
-	    t.insertBefore(z, t.firstChild)
-	    if (!yt6.swfbin4 && yt6.swfbin4_backup) yt6.swfbin4 = yt6.swfbin4_backup.split('player-')[1].split('/')[0]
-	    z.setAttribute('class','forced flashplayer'); z.setAttribute("style",style); z.setAttribute("wmode", yt6.wmode); z.type="application/x-shockwave-flash"; z.src = yt6.swfbin4; //"https://s.ytimg.com/yts/swfbin/player-" + yt6.swfbin4 + "/watch_as3.swf";
-	    z.setAttribute("aria-label","YouTube Video Player"); z.name="movie_player"; z.id=id; z.setAttribute("flashvars",flashvars); z.setAttribute("allowfullscreen","true"); z.setAttribute("allowscriptaccess","always"); z.setAttribute("bgcolor","#000000"); z.setAttribute("height","100%"); z.setAttribute("width","100%"); z.setAttribute('time', new Date().toLocaleString().toString())
-	    var new_fmp = z
-	  }
-
-//    if (bm0) { var ffp = gc('forced flashplayer')[0]; console.log('05 ' + bm0.parentNode.id + ffp + yt6.p.getAttribute('id')); if (ffp && ffp.parentNode) console.log(ffp.parentNode.id) } else console.log('05 bm0 missing')
-
-    } else {  yt6.ie7 = true;
-		//case of MSIE 7/8 on XP
-		// from '17 February/March onward (since wannacry spread?)
-		// all these data must be present at code injecting time
-	  gid("player-api").innerHTML = '<span tabindex="0"></span><span tabindex="0"></span><noembed></noembed>'
-	  gid("player-api").firstChild.innerHTML = '<embed style="" wmode="' + yt6.wmode + '" type="application/x-shockwave-flash" src="' + yt6.swfbin4 + '" aria-label="YouTube Video Player" name="movie_player" id="movie_player" flashvars="'+ fv +'" allowfullscreen="true" allowscriptaccess="always" bgcolor="#000000" time="'+new Date().toLocaleString().toString()+'" height="100%" width="100%">';
-      }
-
-    if (yt6.getAttribute('style')) { yt6.removeAttribute('style') }
-
-
-    if (!ytplayer.config) {
-
-	ageless_verification()
-	if (yt6.html5_fail) try { fmp.setAttribute("flashvars", fv); fmp.fv_vid = video_id()[0]; fmp.fv_done = 1 } catch(e) {}
-
-    } else {
-	if (ytplayer && ytplayer.config) if (!ytplayer.config.args) {
-	  yt6.parentNode.removeChild(yt6)
-	} else {
-	    if (!ytplayer.config.args.url_encoded_fmt_stream_map) {
-	      ageless_verification()
-	    } else {
-		//if (ytplayer.config.hml5 == false) {
-		  try { fmp.setAttribute("flashvars", fv); fmp.fv_vid = video_id()[0]; fmp.fv_done = 1; fmp.setAttribute('src',''); fmp.setAttribute('src', yt6.swfbin4) } catch(e) { }//if (player() == null) { forceFlashplayerObject(); return void 0; } }
-		//} else yt.player.Application.create("player-api", ytplayer.config)
-	      }
-	  }
-      }
-
-} else { var new_fmp = ffp }
-//    if (bm0) { var ffp = gc('forced flashplayer')[0]; console.log('06 ' + bm0.parentNode.id + ffp + yt6.p.getAttribute('id')); if (ffp && ffp.parentNode) console.log(ffp.parentNode.id) } else console.log('06 bm0 missing')
-
-
-    if (fmp && fmp.getAttribute('src') == 'about:blank') yt6.parentNode.removeChild(yt6)
-console.log('"'+new_fmp.src+'"'); new_fmp.src = yt6.flash.swfbin4
-    return new_fmp
-
-};// forceFlashplayerObject();*/
 
 
 
@@ -4764,7 +4637,7 @@ function ageless_verification(spfpc) { //console.log('age')
 				  if (!bm0 && yt6.status == 'unplayable' && gid('bm01')) { bm0 = gid('bm01') }
 				  if ( (c[1] && (c[1].errorcode == 150 || c[1].errorcode == 101)) || (bm0 && bm0.parentNode.getAttribute('id') == 'movie_player_to_insert')) { //console.log('2 '+yt6.status)
 				    if (yt6.p.parentNode && yt6.p.tagName == 'DIV' && !(yt6.p.firstChild && yt6.p.firstChild.nextSibling)) {
-				      console.log('remove'); yt6.p.parentNode.removeChild(yt6.p); yt6.p = null
+				      yt6.p.parentNode.removeChild(yt6.p); yt6.p = null
 				    } else if (bm0) { unhide(bm0); bm0.setAttribute('id','bm0') }
 				    if ((yt6.layout == 12 && yt6.status == 'ok') || yt6.status == 'unplayable' || yt6.p == null) { //if (c[1]) console.log('3 "'+c[1].adaptive_fmts+'"')
 				      alt_yt()
@@ -4791,7 +4664,7 @@ function ageless_verification(spfpc) { //console.log('age')
 					}
 				      }
 				    } else return true
-				  } else if (yt6.old_ytplayer) try { yt6.old_ytplayer.pauseVideo(); console.log('destroy'); yt6.old_ytplayer.destroy() } catch(e){ if (yt6.old_ytplayer.parentNode) { console.log('remove2');yt6.old_ytplayer.parentNode.removeChild(yt6.old_ytplayer) }; return true }
+				  } else if (yt6.old_ytplayer) try { yt6.old_ytplayer.pauseVideo(); yt6.old_ytplayer.destroy() } catch(e){ if (yt6.old_ytplayer.parentNode) { yt6.old_ytplayer.parentNode.removeChild(yt6.old_ytplayer) }; return true }
 				} else { //console.log('?')
 				    //if ((yt6.status == 'ok' && !yt6.old_ytplayer) || (yt6.status == 'unplayable' && !yt6.reason && yt6.html5_fail && yt6.p.tagName == 'DIV' && yt6.p.id == 'movie_player' && gid('bm01')) ) {
 				      //gid('movie_player_to_dispose').appendChild(yt6.p)
@@ -5462,10 +5335,10 @@ function back2html5() {
 			    //p.cueVideoByUrl('https://www.youtube.com/v/' + vid +'?version=3', yt6.ytp.ct, yt6.ytp.cq)
 			    //p.loadVideoById(vid, yt6.ytp.ct, yt6.ytp.cq)
 			    var c = conf('args')
-			    try { if (typeof p.getPlayerState == 'function') try { console.log(vid); p.loadVideoById(vid); p.playVideo() } catch(e){}
+			    try { if (typeof p.getPlayerState == 'function') try { p.loadVideoById(vid); p.playVideo() } catch(e){}
 			      if (location.href.split('list=PL')[1]) {
 				fix_playlist()
-				var pl_index = (!(yt6.blocked && yt6.layout == 16)) ? yt6.pl_index : (1 * yt6.pl_index) + 1; console.log(pl_index)
+				var pl_index = (!(yt6.blocked && yt6.layout == 16)) ? yt6.pl_index : (1 * yt6.pl_index) + 1
 				c[1].list = 'PL' + location.href.split('list=PL')[1].split('&')[0].split('/')[0]
 				p.cuePlaylist({
 				  listType: 'playlist',
