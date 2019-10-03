@@ -4351,7 +4351,7 @@ function ageless_verification(spfpc) { //console.log('age')
       function parse_video_info(arguments){
 
 
-		yt6.ytp.state = (player() && typeof yt6.p.getPlayerState == 'function') ? yt6.p.getPlayerState() : 0
+		yt6.ytp.state = (player() && !(yt6.ytm && yt6.p.tagName == 'EMBED') && typeof yt6.p.getPlayerState == 'function') ? yt6.p.getPlayerState() : 0
 
 
 
@@ -9360,7 +9360,7 @@ if (typeof html.splice != 'function') return void 0;
 	"	    if (mp.className.indexOf('YouTube_TM') == -1) mp.setAttribute('class','YouTube_TM ' + mp.className);"+
 	"	  }"+
 	"	},250,5000);"+
-	"     $waitUntil(function(){ var p = player();"+
+	"     if (!yt6.ytm) $waitUntil(function(){ var p = player();"+
 	"	  if (p && p.tagName == 'EMBED' && typeof p.getPlayerState == 'function' && p.getPlayerState() >= 1) { return true } else {}"+
 	"	},"+
 	"	function() { if (yt6.ytp.ct > 3) { var p = player(); try { p.seekTo(yt6.ytp.ct) } catch(e){} }"+
@@ -14902,7 +14902,7 @@ addEL(window, 'spfdone', yt6.body.spfdone, false);
 			      yt6.ytp.cq = p.getPlaybackQuality()
 			      try { p.loadVideoById(vid || video_id()[0], yt6.ytp.ct) } catch(e){}
 			      if (location.href.split('list=PL')[1]) {
-				fix_playlist()
+				if (!(yt6.ytm && p.tagName == 'EMBED')) fix_playlist()
 				var pl_index = (!(yt6.blocked && yt6.layout == 16)) ? yt6.pl_index : (1 * yt6.pl_index) + 1
 				c[1].list = 'PL' + location.href.split('list=PL')[1].split('&')[0].split('/')[0]
 				p.cuePlaylist({
