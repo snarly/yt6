@@ -4850,7 +4850,7 @@ function ageless_verification(spfpc) { //console.log('age')
 	var c = conf('args'), p0, p01
 	//console.log((typeof yt6.rpt == 'string') +' '+c[0].loaded_from)
 	//if (yt6.rpt && c[0] && c[0].loaded_from == 'video_info') {
-	  p0 = original(player()); if (p0 && typeof p0.getPlayerState == 'function') console.log(p0.getPlayerState())
+	  p0 = original(player()); //if (p0 && typeof p0.getPlayerState == 'function') console.log(p0.getPlayerState())
 	  p01 = getElementsByAttribute(yt6.api,'div','id','movie_player')
 	  if (p01[1] && typeof p01[1].getPlayerState == 'function') { //console.log(p01[1].getPlayerState())
 	    if (yt6.layout == 16 && p01[1].getPlayerState() == 1) {
