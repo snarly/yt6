@@ -16044,8 +16044,13 @@ if (yt6.flexy && yt6.pls) {
 	    //console.log('???'+strPrevHash + yt6.strHash + window.location.hash + yt6.strLocation + '\n' + window.location.href + '\n' + yt6.title +'\n'+ document.title +'\n'+ ytplayer.config.args.title)
 
 
+	    if (yt6.layout == 16 && !yt6.ytm && !yt6.ytg && yt6d.previous.video_id != prev_vid && prev_vid != yt6.vid) {
+		yt6d.previous.video_id = prev_vid
+		yt6.title = yt6.title + 'ytd'
+	    }
 
-	    if (watch && document.title != yt6.title) {// reloading may be triggered twice if these values are still the same at this point, so wait another turn till yt updates document.title
+
+	    if (watch && (document.title != yt6.title || yt6d.previous.video_id == prev_vid)) {// reloading may be triggered twice if these values are still the same at this point, so wait another turn till yt updates document.title
 
 		yt6.navigation = true
 		// Store the new and previous locations.
