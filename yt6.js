@@ -11388,6 +11388,7 @@ function mep_run() {
 
 						var z = gc('ytassetsjs-0'); z = (z) ? z.length : 0
 						if (typeof yt6.errcount == 'undefined') yt6.errcount = 0;
+						yt6.ad_ = 1; //just to avoid an unnecessary jump
 						yt6.errcount = yt6.errcount + parseInt(z);
 						//yt6.srcbak = null; delete yt6.srcbak;//original format chosen by user
 						yt6.current = null; delete yt6.current;//current test format
@@ -16044,9 +16045,9 @@ if (yt6.flexy && yt6.pls) {
 	    //console.log('???'+strPrevHash + yt6.strHash + window.location.hash + yt6.strLocation + '\n' + window.location.href + '\n' + yt6.title +'\n'+ document.title +'\n'+ ytplayer.config.args.title)
 
 
-	    if (yt6.layout == 16 && !yt6.ytm && !yt6.ytg && yt6d.previous.video_id != prev_vid && prev_vid != yt6.vid) {
+	    if (yt6.layout == 16 && document.title == yt6.title && !yt6.ytm && !yt6.ytg && yt6d.previous.video_id != prev_vid && prev_vid != yt6.vid) {
 		yt6d.previous.video_id = prev_vid
-		yt6.title = yt6.title + 'ytd'
+		yt6.title = yt6.title + 'ytd'; // in case the previous and the current video have identical titles
 	    }
 
 
