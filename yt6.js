@@ -1914,6 +1914,7 @@ function test_4(peek) {//console.log('test-4')
 	      itag = (itag) ? 1 * (itag.split('&')[0].split('&amp;')[0]) : null
 	      if (typeof itag == 'number' && !isNaN(itag)) {
 		signame = (signame) ? signame : (eurl.split('lsig=')[1] || eurl.split('lsig%3D')[1]) ? 'sig' : 'signature'
+//; console.log(signame); if (signame == 'signature') console.log(eurl)
 		fmts = (itag < 100) ? 'url_encoded_fmt_stream_map' : 'adaptive_fmts'
 		if (yt6.ytp.video_id && window.location.href.indexOf(yt6.ytp.video_id) > -1) {//(eurl.length < 1500 || yt6.ytm){
 		  //if (!(fmts == 'url_encoded_fmt_stream_map' && eurl.length < 1500)) {
@@ -11745,7 +11746,7 @@ function mep_run() {
 					  }
 					  if (yt6.size == 'media') Mqch()
 					});
-					addEL(me, 'loadeddata', function() {//console.log('1loaded');
+					addEL(me, 'loadeddata', function() { me.loaded_vid = video_id()[0] + '/' + itag(me.src); //console.log('1loaded '+ me.loaded_vid); 
 					  if ( yt6 && yt6.player1 && !yt6.navigation && (yt6.timer == 999999999 || me.src == 'https://www.youtube.com/ptracking' || yt6.player1.media.src != me.src))
 					    return void 0;
 					  yt6.retry = 0; yt6.srcbak = []
@@ -11770,7 +11771,7 @@ function mep_run() {
 					  }
 					  if (yt6.x) { if (!player2.paused) me.play() } else yt6.player1.hideControls(false)
 					});
-					addEL(me, 'play', function() {//console.log('1play')
+					addEL(me, 'play', function() { //console.log('1play')
 					  if ( yt6 && yt6.player1 && !yt6.navigation && (yt6.timer == 999999999 || me.src == 'https://www.youtube.com/ptracking' || yt6.player1.media.src != me.src))
 					    return void 0;
 					  if (yt6.x) {
@@ -11778,7 +11779,9 @@ function mep_run() {
 					  if ( ((!yt6.A_V[itag(me.src)] &&
 						 !yt6.A_[itag(me.src)] &&
 						 (yt6.V_[itag(me.src)] || me.src.indexOf('itag=278') > -1) 
-						) || (typeof srcto != 'undefined' && Srcto == Audio) ) && (yt6.retry < 8)
+						) ||
+						(typeof srcto != 'undefined' && Srcto == Audio)
+					       ) && (yt6.retry < 8)
 					     )  {
 						  me.playing = 0;
 						  //if (browserName != 'IE' && browserName != 'Edge' && !player2.loaded) { }
@@ -14842,6 +14845,7 @@ addEL(window, 'spfdone', yt6.body.spfdone, false);
 	z.width = z.offsetWidth
 	z.height = z.offsetHeight
 
+    var sameTitles = 0
 
       if (yt6.tbg != null) yt6.tbg.width = yt6.tbg.offsetWidth
 
@@ -14904,8 +14908,8 @@ addEL(window, 'spfdone', yt6.body.spfdone, false);
 	wide_view()
 
 
-	if ((!yt6.x || yt6.newvideo) && !yt6.ad_ && !yt6.linx.length && p && yt6.pls && yt6.status != 'unplayable' && !(yt6.ytm) && !(yt6.xhr.async && !yt6.xhr.completed))//yt6.status != 'error' && 
-	try { //console.log('jump to next ' + yt6.status + ' '+yt6.linx.length)
+	if ((!yt6.x || yt6.newvideo) && !yt6.ad_ && !yt6.linx.length && p && yt6.pls && yt6.status && yt6.status != 'unplayable' && !(yt6.ytm) && !(yt6.xhr.async && !yt6.xhr.completed))//yt6.status != 'error' && 
+	try { //console.log('jump to next ' + yt6.status + ' '+yt6.linx.length +' '+ yt6.ad_)
 	  yt6.ad_ = 1; fix_playlist(); try { yt6.pl_next.click() } catch(e){ FireEvent2(yt6.pl_next, 'click') }
 	} catch(e) { }
 
@@ -16046,12 +16050,12 @@ if (yt6.flexy && yt6.pls) {
 
 
 	    if (yt6.layout == 16 && document.title == yt6.title && !yt6.ytm && !yt6.ytg && yt6d.previous.video_id != prev_vid && prev_vid != yt6.vid) {
-		yt6d.previous.video_id = prev_vid
-		yt6.title = yt6.title + 'ytd'; // in case the previous and the current video have identical titles
+		//yt6d.previous.video_id = prev_vid
+		//yt6.title = yt6.title + 'ytd'; // in case the previous and the current video have identical titles
 	    }
 
 
-	    if (watch && (document.title != yt6.title || yt6d.previous.video_id == prev_vid)) {// reloading may be triggered twice if these values are still the same at this point, so wait another turn till yt updates document.title
+	    if (watch && (document.title != yt6.title)) {// reloading may be triggered twice if these values are still the same at this point, so wait another turn till yt updates document.title
 
 		yt6.navigation = true
 		// Store the new and previous locations.
@@ -16344,12 +16348,12 @@ if (yt6.flexy && yt6.pls) {
 
 
 
-
         if (window.location.href.indexOf('v=' + yt6.change) == -1 && window.location.href.indexOf('v/' + yt6.change) == -1) {
 	  var c = conf('args')
 	  if (document.title != 'YouTube' || (c[1] && c[1].title && yt6.title != unescape(decodeURIComponent(c[1].title.split('+').join(' ')))) ) {
 	    if (typeof yt6.title == 'undefined' || (yt6.title != document.title && !(yt6.ytm && document.title == 'YouTube Music' && document.title.indexOf('music.youtube.com/') > -1)) || yt6.strLocation != window.location.href) {
 	      //console.log('yt6.title: ' + yt6.title + ' --> ' + document.title)
+	      yt6d.previous.title = clone(yt6.title)
 	      yt6.title = document.title;
               if (yt6.layout == 16 && document.title == 'YouTube' && gc('title style-scope ytd-video-primary-info-renderer')[0]) yt6.title = gc('title style-scope ytd-video-primary-info-renderer')[0][yt6.txt]
 	      yt6.strLocation = window.location.href;
@@ -16357,7 +16361,19 @@ if (yt6.flexy && yt6.pls) {
 		    if (yt6d.previous.video_id) yt6d.pprevid = clone(yt6d.previous.video_id)
 		    yt6d.previous.video_id = (!yt6.blocked && typeof prev_vid == 'string') ? prev_vid.substring(0,11) : yt6d.pprevid; //if (yt6d.current.lsig) 
 		  }
-	    } else if (yt6.ytm) { // try to update encrypted media by a title change triggered by auto-click (outdated since 2017-07-30)
+		if (yt6.layout == 16 && !yt6.ytm && !yt6.ytg && yt6d.previous.video_id != prev_vid && prev_vid != yt6.vid && yt6d.previous.title == document.title) {
+		  sameTitles = sameTitles + 1
+		}
+	    } else {
+		if (yt6d.previous.title == document.title) { //console.log(sameTitles)
+		  sameTitles++
+		  if (sameTitles > 3) { //console.log('the previous and the current video have identical titles')
+		    yt6d.previous.video_id = prev_vid
+		    yt6.title = yt6.title + sameTitles
+		    sameTitles = 0
+		  }
+		} else sameTitles = 0
+		if (yt6.ytm) { // try to update encrypted media by a title change triggered by auto-click (outdated since 2017-07-30)
 		/*var z = gc('content-info-wrapper style-scope ytmusic-player-bar')[0]
 		if (z) z = z.getElementsByTagName('yt-formatted-string')[0]
 		if (z && z.title && yt6.title.indexOf(z.title) == -1) {
@@ -16369,10 +16385,12 @@ if (yt6.flexy && yt6.pls) {
 		    }
 		  }
 		}*/
-	     }
+		}
+	      }
 	  }
 	} else { document.title = yt6.title;
 	  }
+
 
 
   }//spf else
