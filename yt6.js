@@ -2720,7 +2720,7 @@ function load_from_page_source(x) { //console.log('load_from_page_source')
 		} //else console.log('nope '+yt6.change)
 	    } else { yt6.ytplayer = null; yt6.change = 0 }
 
-	    if (!yt6.x && yt6.ytp.state && yt6.ytp.state != 2 && c[1].adaptive_fmts) { // updating the data object may stop the playback, push play again
+	    if (!yt6.x && yt6.ytp.state && yt6.ytp.state != 2 && c[1].adaptive_fmts) { // updating the data object may stop playback, press play again
 	      $waitUntil(function(){ var p = player()
 		   if (p && typeof p.getPlayerState == 'function' && yt6.p.getPlayerState() == 2) return true
 		 },
@@ -8184,8 +8184,9 @@ function wallpaper(){
 
 function mute_ad(p) {
 
-	var ads0 = gc('ytp-time-duration')[0]
+	var ads0 = (!yt6.ytm) ? gc('ytp-time-duration')[0] : gc('time-info style-scope ytmusic-player-bar')[0]
 	if (ads0) ads0 = ads0[yt6.txt]
+	if (ads0 && yt6.ytm) ads0 = ads0.split(' / ')[1]
 	var mp = yt6.original || getElementsByAttribute(yt6,'div','name','original')[0]
 	if (p && p.tagName != 'DIV') p = mp || p
 	//console.log(ads0+' '+yt6.real_media_duration_ + ' '+p.tagName)
@@ -8642,8 +8643,11 @@ if (c[1]) {
 
 
 
-  var signame = (c[1] && ((c[1].url_encoded_fmt_stream_map && c[1].url_encoded_fmt_stream_map.indexOf('lsig%3D') > -1) || (c[1].adaptive_fmts && c[1].adaptive_fmts.indexOf('&lsig=') > -1))) ? 'sig' : 'signature'
-
+  var signame = (c[1] && (
+	(c[1].url_encoded_fmt_stream_map && c[1].url_encoded_fmt_stream_map.indexOf('lsig%3D') > -1) ||
+	(c[1].adaptive_fmts && (c[1].adaptive_fmts.indexOf('lsig%3D') > -1 || c[1].adaptive_fmts.indexOf('&lsig=') > -1))
+      )) ? 'sig' : 'signature'
+	//if (c[1]) { if (c[1].adaptive_fmts) console.log(c[1].adaptive_fmts.indexOf('&lsig=') +' '+c[1].adaptive_fmts.indexOf('lsig%') ); if (c[1].url_encoded_fmt_stream_map) console.log(c[1].url_encoded_fmt_stream_map.indexOf('lsig%3D')) } else console.log('-')
 
   var ft = [args.url_encoded_fmt_stream_map, args.adaptive_fmts],
       fn, ad = 0, durA1 = [], durA2 = [], durL1 = [], durL2 = [], avg1, avg2, length_seconds = args.length_seconds
@@ -8672,7 +8676,7 @@ if (c[1]) {
 	  href += '&' + signame + '=' + qs[signame]
 	}
 	if (qs.s){
-	  href += '&' + signame + '=' + dc(qs.s)     //rewrite_ytplayer(z[j], qs.s, dc(qs.s))
+	  href += '&' + signame + '=' + dc(qs.s)
 	}
 	if (href.indexOf("&ratebypass=yes") == -1) { href += '&ratebypass=yes'}
 
@@ -8750,13 +8754,13 @@ if (c[1]) {
 		     ) {
 	            // 36 seconds arbitrarily set as a filtering limit, because there is one example (krY83viRbaM) where
 	            // the video and its audio part have a legitimate 35 seconds difference in length.
-	            // This means if the upload and the preceeding commercial differs only by 36 seconds or less in length,
-	            // we may get the ad's links for playback in those formats/resolutions which the original video was not provided in
+	            // This means if the upload's and the preceeding commercial's length differs only by 36 seconds or less,
+	            // we may get the ad's links for playback in the formats/resolutions which the original video was not provided in
 
 		    //if (qs.itag == l) {
 	              linx[l] = linx[l].split('&title=')[0] + '&title=Advertisement'
 		    //}
-	            //console.log('ad container:'+ ad +' avg1:' + avg1 +' avg2:'+avg2+' dur1:'+durA1[k]+' dur2:'+durA2[k] +' '+ Math.abs(avg2 - durA1[k])+ ' '+ Math.abs(avg1 - durA2[k]))
+	            console.log('ad container:'+ ad +' avg1:' + avg1 +' avg2:'+avg2+' dur1:'+durA1[k]+' dur2:'+durA2[k] +' '+ Math.abs(avg2 - durA1[k])+ ' '+ Math.abs(avg1 - durA2[k]))
 		    //console.log(linx[l])
 		    break; break;
 	          }
@@ -9275,6 +9279,9 @@ if (yt6.oldbrowser) {
   yt6.href = href
   yt6.audio = (yt6.audiox) ? yt6.audiox : audio//(gid('player2')) ? gid('player2').getAttribute('src') : audio
   yt6.args = args
+
+
+  if (yt6.ytm && yt6.linx.length > 1 && yt6.loaded_vid != yt6.vid) { yt6.loaded_vid = clone(yt6.vid) }
 
 
   // with xhr.async == true, a positive return value must be sent
@@ -13847,7 +13854,7 @@ if (!t.sourcechooserButton) {//console.log('error')
 
 
 
-	var mep_reload = yt6.mep_reload = function(){ //console.log('mep_reload '+yt6.api)
+	var mep_reload = yt6.mep_reload = function(){ //console.log('mep_reload '+yt6.age.count)
 
 	    var c = conf('args')
 
@@ -14920,7 +14927,7 @@ addEL(window, 'spfdone', yt6.body.spfdone, false);
 
 	if ((!yt6.xhr.async || (yt6.xhr.async && yt6.xhr.completed) || yt6.x || yt6.ytm) && !yt6.navigation && !yt6.live && p && !(yt6.mpb && yt6.mpb.hasAttribute('active')) ) { //check for in-video ad
 
-	  ads0 = (!yt6.ytm && yt6.flash.forced) ? mute_ad(p) : null
+	  ads0 = !(yt6.ytm && yt6.flash.forced) ? mute_ad(p) : null
 
 	} else if (yt6.navigation && p.tagName == 'DIV' && p.firstChild && p.firstChild.firstChild) {//yt6.pre_ad = false
 	    //var v = p.firstChild.firstChild
@@ -14976,19 +14983,21 @@ addEL(window, 'spfdone', yt6.body.spfdone, false);
 				  listType: 'playlist',
 				  list: c[1].list,
 				  index: yt6.pl_index,
-				  startSeconds: yt6.ytp.ct,
-				  suggestedQuality: yt6.ytp.cq
+				  startSeconds: yt6.ytp.ct//,
+				  //suggestedQuality: yt6.ytp.cq
 				})
 			      } else {
 				p.cueVideoById({
 				  videoId: vid,
-				  startSeconds: yt6.ytp.ct,
-				  suggestedQuality: yt6.ytp.cq
+				  startSeconds: yt6.ytp.ct//,
+				  //suggestedQuality: yt6.ytp.cq
 				})
 			        }
 		              $waitUntil(function(){var p = player(), s
-				if (p && typeof p.getPlayerState == 'function') var s = p.getPlayerState()
-				if (s == 2) { return true } else try { p.playVideo(); p.pauseVideo() } catch(e){}
+				if (p && !(yt6.ytm && p.tagName == 'EMBED') && typeof p.getPlayerState == 'function') {
+				  var s = p.getPlayerState()
+				  if (s == 2) { return true } else try { p.playVideo(); p.pauseVideo() } catch(e){}
+				}
 			      },function() { yt6.p.playVideo() }, 100,5000)
 		} catch(e){}
 	    }
@@ -16058,7 +16067,7 @@ if (yt6.flexy && yt6.pls) {
 	    }
 
 
-	    if (watch && (document.title != yt6.title)) {// reloading may be triggered twice if these values are still the same at this point, so wait another turn till yt updates document.title
+	    if (watch && document.title != yt6.title && !(yt6.ytm && yt6.ad_ && yt6.loaded_vid == yt6.vid)) {// reloading may be triggered twice if these values are still the same at this point, so wait another turn till yt updates document.title
 
 		yt6.navigation = true
 		// Store the new and previous locations.
@@ -16190,7 +16199,7 @@ if (yt6.flexy && yt6.pls) {
 
 			  //if (ytplayer.config.args.video_id != 'ytm') mep_reload();
 
-			    //Encrypted videos on Music and Gaming subdomain may need a second data refresh, but how to tell for sure when it's actually required? Check if a previously watched video's media has been auto-picked by the program again. (method not 100% tho)
+			    //Encrypted videos on Music and Gaming subdomain may need a second data refresh, but how to tell for sure when it's actually needed? Check if a previously watched video's media has been auto-picked by the program again. (method not 100% tho)
 			    //console.log(yt6.prev_media); console.log(yt6.prev_media.includes(yt6.audio)); console.log(video_title()[1])
 			    if (yt6.ytm || yt6.ytg) {
 			      if ( (video_title()[1] && (strPrevLocation == location.href || c[1].video_id == 'ytm') && (yt6.prev_media.includes(yt6.audio) || yt6.ytm)) || change) {//console.log(yt6.vid)
