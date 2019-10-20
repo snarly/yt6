@@ -8760,7 +8760,7 @@ if (c[1]) {
 		    //if (qs.itag == l) {
 	              linx[l] = linx[l].split('&title=')[0] + '&title=Advertisement'
 		    //}
-	            console.log('ad container:'+ ad +' avg1:' + avg1 +' avg2:'+avg2+' dur1:'+durA1[k]+' dur2:'+durA2[k] +' '+ Math.abs(avg2 - durA1[k])+ ' '+ Math.abs(avg1 - durA2[k]))
+	            //console.log('ad container:'+ ad +' avg1:' + avg1 +' avg2:'+avg2+' dur1:'+durA1[k]+' dur2:'+durA2[k] +' '+ Math.abs(avg2 - durA1[k])+ ' '+ Math.abs(avg1 - durA2[k]))
 		    //console.log(linx[l])
 		    break; break;
 	          }
