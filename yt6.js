@@ -8423,12 +8423,7 @@ function buildObject(ytplayer){
 	      }
 	    //yt6.p.playVideo()
 	  } catch(e){}
-		              $waitUntil(function(){var p = player(), s
-				if (p && !(yt6.ytm && p.tagName == 'EMBED') && typeof p.getPlayerState == 'function') {
-				  var s = p.getPlayerState()
-				  if (s == 2) { return true } else try { p.playVideo(); p.pauseVideo() } catch(e){}
-				}
-			      },function() { yt6.p.playVideo() }, 100,5000)
+
 	}
 
 	if (yt6.xhr.async && yt6d.previous.linx.length) {// && !(yt6.layout == 12 && yt6.blocked)
@@ -14984,7 +14979,7 @@ addEL(window, 'spfdone', yt6.body.spfdone, false);
 		              var vid = location.href.split('v=')[1].split('&')[0] || location.href.split('/v/')[1].split('/')[0]
 		              yt6.ytp.ct = p.getCurrentTime()
 			      yt6.ytp.cq = p.getPlaybackQuality()
-			      //try { p.loadVideoById(vid || video_id()[0], yt6.ytp.ct) } catch(e){}
+			      try { p.loadVideoById(vid || video_id()[0], yt6.ytp.ct) } catch(e){}
 			      if (location.href.split('list=PL')[1]) {
 				if (!(yt6.ytm && p.tagName == 'EMBED')) fix_playlist()
 				var pl_index = (!(yt6.blocked && yt6.layout == 16)) ? yt6.pl_index : (1 * yt6.pl_index) //+ 1
@@ -15003,6 +14998,12 @@ addEL(window, 'spfdone', yt6.body.spfdone, false);
 				  suggestedQuality: yt6.ytp.cq
 				})
 			        }
+		              $waitUntil(function(){var p = player(), s
+				if (p && !(yt6.ytm && p.tagName == 'EMBED') && typeof p.getPlayerState == 'function') {
+				  var s = p.getPlayerState(); //console.log(s)
+				  if (s == 2) { return true } else try { p.playVideo(); p.pauseVideo() } catch(e){}
+				}
+			      },function() { yt6.p.playVideo() }, 100,5000)
 		} catch(e){}
 	    }
 	  }
