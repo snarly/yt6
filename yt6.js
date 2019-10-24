@@ -8421,8 +8421,14 @@ function buildObject(ytplayer){
 		'videoId': yt6.vid
 		})
 	      }
-	    yt6.p.playVideo()
+	    //yt6.p.playVideo()
 	  } catch(e){}
+		              $waitUntil(function(){var p = player(), s
+				if (p && !(yt6.ytm && p.tagName == 'EMBED') && typeof p.getPlayerState == 'function') {
+				  var s = p.getPlayerState()
+				  if (s == 2) { return true } else try { p.playVideo(); p.pauseVideo() } catch(e){}
+				}
+			      },function() { yt6.p.playVideo() }, 100,5000)
 	}
 
 	if (yt6.xhr.async && yt6d.previous.linx.length) {// && !(yt6.layout == 12 && yt6.blocked)
@@ -12737,11 +12743,13 @@ for (i=k.length-1;i>-1;i--) {
 
 if (ytplayer && ytplayer.config && ytplayer.config.args && unescape(ytplayer.config.args.ttsurl) != 'undefined') {
 
+var ttsurl = ytplayer.config.args.ttsurl
+
 var x = (yt6.ytp_response) ? 0 : 1
 
-for(k=x;k<ytplayer.config.args.ttsurl.length;k++){
+for(k=x;k<ttsurl.length;k++){
 
-  var sref = unescape(ytplayer.config.args.ttsurl[k]) + '&type=list&tlangs=1&fmts=0&asrs=1'
+  var sref = unescape(ttsurl[k]) + '&type=list&tlangs=1&fmts=0&asrs=1'
   //      sref += '&type=track&lang=en&name&kind&fmt=1'
   //      sref += '&type=list&tlangs=1&fmts=0&asrs=1'
   var xhr1 = new XMLHttpRequest()
@@ -12771,13 +12779,13 @@ for(k=x;k<ytplayer.config.args.ttsurl.length;k++){
     var lang_code = text[k-x].getAttribute('lang_code'); if (lang_code) { surl += '&lang=' + lang_code; }
     var name = text[k-x].getAttribute('name'); if (name) { surl += '&name=' + name } else { surl += '&name' }
     var kind = text[k-x].getAttribute('kind'); if (kind) { surl += '&kind=' + kind } else { surl += '&kind' }
-    if (!kind) kind = unescape(ytplayer.config.args.ttsurl[k]).split('kind=')[1]
+    if (!kind) kind = unescape(ttsurl[k]).split('kind=')[1]
     if (kind) kind = kind.split('&')[0]
 //if ((typeof slang == 'undefined') && ((kind != 'asr') || (text.length == b+1)) ) {
     var slang = lang_code; var slangurl = surl
 // }
-    if (kind == 'frc') {
-	lang_frcA.push(unescape(ytplayer.config.args.ttsurl[k]))
+    if (kind == 'frc' && ytplayer.config.args.ttsurl) {
+	lang_frcA.push(unescape(ttsurl[k]))
 	ytplayer.config.args.ttsurl.splice(ytplayer.config.args.ttsurl.length, 0, ytplayer.config.args.ttsurl.splice(k,1))
 	k--
 	continue
@@ -12818,7 +12826,7 @@ if (k < 4) {
 
   for (i in tracks) {
     if (tracks[i] != '') {
-      sref = unescape(ytplayer.config.args.ttsurl[k]) + tracks[i]
+      sref = unescape(ttsurl[k]) + tracks[i]
       var js = document.createElement('track')
       js.id = 'captions-' + i
       gid('player1').appendChild(js)
@@ -12862,6 +12870,8 @@ if (k < 4) {
   }
 
 //}//player_null
+
+
 
   var js = getElementsByAttribute(document,"object","name","me_flash")
   if (typeof js[0] == 'undefined' && yt6.p && (typeof yt6.p.getAttribute('flashvars') == 'string' || yt6.html5_fail) ) {
@@ -14974,7 +14984,7 @@ addEL(window, 'spfdone', yt6.body.spfdone, false);
 		              var vid = location.href.split('v=')[1].split('&')[0] || location.href.split('/v/')[1].split('/')[0]
 		              yt6.ytp.ct = p.getCurrentTime()
 			      yt6.ytp.cq = p.getPlaybackQuality()
-			      try { p.loadVideoById(vid || video_id()[0], yt6.ytp.ct) } catch(e){}
+			      //try { p.loadVideoById(vid || video_id()[0], yt6.ytp.ct) } catch(e){}
 			      if (location.href.split('list=PL')[1]) {
 				if (!(yt6.ytm && p.tagName == 'EMBED')) fix_playlist()
 				var pl_index = (!(yt6.blocked && yt6.layout == 16)) ? yt6.pl_index : (1 * yt6.pl_index) //+ 1
@@ -14983,22 +14993,16 @@ addEL(window, 'spfdone', yt6.body.spfdone, false);
 				  listType: 'playlist',
 				  list: c[1].list,
 				  index: yt6.pl_index,
-				  startSeconds: yt6.ytp.ct//,
-				  //suggestedQuality: yt6.ytp.cq
-				})
+				  startSeconds: yt6.ytp.ct,
+				  suggestedQuality: yt6.ytp.cq
+				}); //console.log(yt6.p.getCurrentTime())
 			      } else {
 				p.cueVideoById({
 				  videoId: vid,
-				  startSeconds: yt6.ytp.ct//,
-				  //suggestedQuality: yt6.ytp.cq
+				  startSeconds: yt6.ytp.ct,
+				  suggestedQuality: yt6.ytp.cq
 				})
 			        }
-		              $waitUntil(function(){var p = player(), s
-				if (p && !(yt6.ytm && p.tagName == 'EMBED') && typeof p.getPlayerState == 'function') {
-				  var s = p.getPlayerState()
-				  if (s == 2) { return true } else try { p.playVideo(); p.pauseVideo() } catch(e){}
-				}
-			      },function() { yt6.p.playVideo() }, 100,5000)
 		} catch(e){}
 	    }
 	  }
