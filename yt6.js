@@ -5,6 +5,7 @@ if (!window.yt6d || (window.yt6d && window.yt6d.yt6 != yt6)) try { //data object
   yt6d.yt6 = window.yt6 = yt6
   yt6d.timers={}
   yt6d.linx={}
+  yt6d.document={}
   yt6d.current={}
   yt6d.current.linx=[]
   yt6d.current.ei=[]
@@ -1448,14 +1449,18 @@ if (!gid('video-hide')) {
 	  var z = document.createElement("div")
 	  z.id = 'player'
 	  yt6.body.insertBefore(z, yt6.body.firstElementChild.nextSibling.nextSibling.nextSibling)
-	  z.setAttribute('class','skeleton')
+	  z.setAttribute('class','skeleton flexy')
 	  z.setAttribute('hidden','')
+	  var y = document.createElement("div")
+	  y.id = 'player-wrap'
+	  z.appendChild(y)
+	  var z = gid('player-wrap') || z
 	  var y = document.createElement("div")
 	  y.id = 'player-api'
 	  z.appendChild(y)
 	  y.setAttribute('class','player-width player-height off-screen-target player-api')
 	  var xhr2 = new XMLHttpRequest()
-          xhr2.open('get', window.location, false)
+          xhr2.open('get', window.location.href, false)
 	  xhr2.onreadystatechange = function() {
 	    if (xhr2.readyState == 4 && xhr2.status == 200 && xhr2.responseText) {
 	      var y = xhr2.responseText.toString()
@@ -11825,7 +11830,9 @@ function mep_run() {
 							if (yt6.sync_timer > 5 && me.loaded) {
 							  yt6.sync_timer = 0
 							} else try {//if (yt6.V_[itag(me.src)]) {
-							    if (itag(me.src) != 278) { Seek = 1; me.pause(); Seek = 1; } else Seek = null;
+							    //if (itag(me.src) != 278) {
+								Seek = 1; me.pause(); Seek = 1
+							    //} else Seek = null;
 							    player2.currentTime = yt6.ct = me.currentTime; //me.pause();
 							    //} else {
 								//    me.play()
@@ -11980,9 +11987,32 @@ function mep_run() {
 								}//console.log(yt6.shuffle + mp.tagName)
 
 						          yt6.navigation = true
-												//mp.playVideoAt(yt6.pl_index+1) || mp.nextVideo('0')
-						          //function nextOn() { if (!yt6.pre_ad) { var a = mp.getCurrentTime(); mp.seekTo(mp.getDuration()); mp.stopping = false; FireEvent2(mp, 'mouseup'); mp.playVideo(); if (mp.getCurrentTime() == a) { } else { zi.click() }; if (yt6.pl_index < mp.getPlaylistIndex()) { zi.click() } else if (mp != yt6.p) { pl_item(); yt6.pl_next.click() } } else { pl_item(); yt6.pl_next.click() } }
+
 						          function nextOn() {
+
+							    // in recent browsers, settimeouts do not work as expected in the new layout if the player's tab isn't the currently active one and the native yt player is not the one being used ...
+							    // the result is ridiculously prolonged reloading-time or complete failure to reload
+							    // to remedy this, on page change we temporarily switch over to the native player and let it play until the rest of the page deigns to load up as well
+							    // a proxy function will check if yt6d.document.title (document.title) was updated, then we can finally switch back to the external player and continue playback
+
+							    if (yt6.browser_tab == 'hidden' && yt6.layout == 16 && !yt6.ytm && !yt6.ytg) {
+								yt6.previous_title = clone(yt6.title)
+								yt6.player1.pause(); switch_players()
+								yt6.player1.setSrc('https://www.youtube.com/ptracking')
+								yt6.player1.load()
+								yt6d.ended = true
+								if (yt6.p && typeof yt6.p.getPlayerState == 'function') {
+								  $waitUntil(function(){ var p = player(), s, t; if (p && typeof p.getPlayerState == 'function') { s = p.getPlayerState(), t = p.getCurrentTime() }
+								    //var z = (yt6.flexy) ? 'ytd-watch-flexy' : 'ytd-watch', z = document.getElementsByTagName(z)[0]
+								    //if (z) z = z.getAttribute('video-id'); //console.log('11ended ' + yt6.x +' '+ s +' '+ t +' '+ yt6.vid +' '+ z +' '+ yt6.strLocation +' '+ (document.title == yt6.title))
+								    if ( (t > 0 && document.title !== yt6.previous_title && p.getVideoUrl().indexOf(yt6.vid) > -1) || document.title !== yt6.previous_title || yt6.browser_tab == 'visible') { return true } //else if (t > 0) if (p.getVideoUrl().indexOf(yt6.vid) == -1) { try { p.playVideo() } catch(e){} } else try { p.pauseVideo() } catch(e){}
+								    if (yt6d.document.title != yt6.previous_title) return true
+								  },function() { //console.log(yt6.p.getPlayerState())
+									//if (!yt6.x) switch_players()
+									yt6.x = true; try { if (yt6.A_V[itag(me.src)]) { yt6.player1.media.play() } else yt6.player2.media.play() } catch(e){}
+								    },500,12000)
+								}
+							    }
 						            if (!yt6.pre_ad) { var a = mp.getCurrentTime(); //mp.seekTo(mp.getDuration());
 						              //mp.stopping = false; FireEvent2(mp, 'mouseup'); mp.playVideo();
 						              //if (mp.getCurrentTime() == a || mp.getCurrentTime() < mp.getDuration()) { 
@@ -12248,9 +12278,33 @@ function mep_run() {
 								}//console.log(yt6.shuffle + mp.tagName)
 
 						          yt6.navigation = true
-												//mp.playVideoAt(yt6.pl_index+1) || mp.nextVideo('0')
-						          //function nextOn() { if (!yt6.pre_ad) { var a = mp.getCurrentTime(); mp.seekTo(mp.getDuration()); mp.stopping = false; FireEvent2(mp, 'mouseup'); mp.playVideo(); if (mp.getCurrentTime() == a) { } else { zi.click() }; if (yt6.pl_index < mp.getPlaylistIndex()) { zi.click() } else if (mp != yt6.p) { pl_item(); yt6.pl_next.click() } } else { pl_item(); yt6.pl_next.click() } }
+
 						          function nextOn() {
+
+							    // in recent browsers, settimeouts do not work as expected in the new layout if the player's tab isn't the currently active one and the native yt player is not the one being used ...
+							    // the result is ridiculously prolonged reloading-time or complete failure to reload
+							    // to remedy this, on page change we temporarily switch over to the native player and let it play until the rest of the page deigns to load up as well
+							    // a proxy function will check if yt6d.document.title (document.title) was updated, then we can finally switch back to the external player and continue playback
+
+							    if (yt6.browser_tab == 'hidden' && yt6.layout == 16 && !yt6.ytm && !yt6.ytg) {
+								yt6.previous_title = clone(yt6.title)
+								yt6.player1.pause(); switch_players()
+								yt6.player1.setSrc('https://www.youtube.com/ptracking')
+								yt6.player1.load()
+								yt6d.ended = true
+								if (yt6.p && typeof yt6.p.getPlayerState == 'function') {
+								  $waitUntil(function(){ var p = player(), s, t; if (p && typeof p.getPlayerState == 'function') { s = p.getPlayerState(), t = p.getCurrentTime() }
+								    //var z = (yt6.flexy) ? 'ytd-watch-flexy' : 'ytd-watch', z = document.getElementsByTagName(z)[0]
+								    //if (z) z = z.getAttribute('video-id'); //console.log('11ended ' + yt6.x +' '+ s +' '+ t +' '+ yt6.vid +' '+ z +' '+ yt6.strLocation +' '+ (document.title == yt6.title))
+								    if ( (t > 0 && document.title !== yt6.previous_title && p.getVideoUrl().indexOf(yt6.vid) > -1) || document.title !== yt6.previous_title || yt6.browser_tab == 'visible') { return true } //else if (t > 0) if (p.getVideoUrl().indexOf(yt6.vid) == -1) { try { p.playVideo() } catch(e){} } else try { p.pauseVideo() } catch(e){}
+								    if (yt6d.document.title != yt6.previous_title) return true
+								  },function() { //console.log(yt6.p.getPlayerState())
+									//if (!yt6.x) switch_players()
+									yt6.x = true; try { if (yt6.A_V[itag(me.src)]) { yt6.player1.media.play() } else yt6.player2.media.play() } catch(e){}
+								    },500,12000)
+								}
+							    }
+
 						            if (!yt6.pre_ad) { var a = mp.getCurrentTime(); //mp.seekTo(mp.getDuration());
 						              //mp.stopping = false; FireEvent2(mp, 'mouseup'); mp.playVideo();
 						              //if (mp.getCurrentTime() == a || mp.getCurrentTime() < mp.getDuration()) { 
@@ -14886,6 +14940,21 @@ addEL(window, 'spfdone', yt6.body.spfdone, false);
 	    }
 	}
 
+    if (typeof Proxy == 'function') {
+      yt6d.proxy_handler = {
+	set(target, key, value) {
+		target[key] = value
+		if (yt6d.ended && yt6.browser_tab == 'hidden' && yt6.layout == 16 && !yt6.ytm && !yt6.ytg && yt6d.document.title != yt6.previous_title) {
+		  yt6d.ended = false
+		  if (yt6.p && typeof yt6.p.getPlayerState == 'function') {
+		    if (!yt6.x) switch_players(); yt6.x = true; try { yt6.p.pauseVideo() } catch(e){}; try { yt6.player2.play() } catch(e){}
+		  }
+		}
+	}
+      }
+      yt6d.document = new Proxy(yt6d, yt6d.proxy_handler)
+    }
+
 
 	var z = yt6.osw
 	if (z.getAttribute('id') != 'player') {
@@ -16444,6 +16513,7 @@ if (yt6.flexy && yt6.pls) {
 	    }
 	  }
 //console.log(yt6.title + document.title + yt6.spf);
+  yt6d.document.title = window.document.title
 
       }//if
       },
