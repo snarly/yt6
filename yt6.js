@@ -11478,8 +11478,10 @@ function mep_run() {
 					      } else if (yt6.ytg) yt6.errcount = 0
 					    } else limit = 11
 
-					    //console.log(yt6.retry +' '+ limit +' '+ yt6.current + ' '+ yt6.failed_itags);
-					    if ( yt6.retry < limit && yt6.failed_itags2 < 3 && (gid('ytassetsjs') || yt6.ytg ) &&
+					    //console.log(yt6.retry +' '+ limit +' '+ yt6.current + ' '+ yt6.failed_itags2);
+
+					    if ( yt6.retry >= limit && yt6.failed_itags2 < 5) { yt6.retry = 0; yt6.failed_itags2++ }
+					    if ( yt6.retry < limit && yt6.failed_itags2 < 5 && (gid('ytassetsjs') || yt6.ytg ) &&
 						!((yt6.failed_itags.includes(171) || yt6.failed_itags.includes(140)) && (yt6.failed_itags.includes(278) || yt6.failed_itags.includes(132)) && (yt6.failed_itags.includes(43) || yt6.failed_itags.includes(18)))
 					       ) {
 					      if (sauce[i]) { sauce[i].removeAttribute('checked'); sauce[i].checked = '' }; me.pause()
@@ -11558,9 +11560,9 @@ function mep_run() {
 						if (yt6.current && yt6.current == itag(me.src) && !yt6.failed_itags.includes(yt6.current)) { yt6.failed_itags.push(yt6.current) } //add the current source's itag to srcbak if it has already been tried once and shows up in this error block again
 						//console.log('play ' +itag_)
 						player1.load(); //player1.load();
-						if (autoplay(false) && me.paused) if (!yt6.A_[itag(me.src)]) { player1.play() } else { Seek = 1; me.currentTime = yt6.ct || 0 };
+						if (autoplay(false) && me.paused) if (!yt6.A_[itag(me.src)]) { player1.play() } else { Seek = 1; me.currentTime = yt6.ct || 0; player1.play() };
 					      } else {
-					          if (yt6.retry < limit) yt6.retry++; yt6.failed_itags.push(itag(me.src)); //yt6.failed_itags = [];
+					          if (yt6.retry < limit) { yt6.retry++; yt6.failed_itags.push(itag(me.src)) } else if (yt6.failed_itags2 < 5) { yt6.retry = 0; yt6.failed_itags++ }; //yt6.failed_itags = [];
 					          if (!yt6.ytg) decryption_failure()
 					        } //else console.log(dash +' '+itag_)
 
@@ -11595,7 +11597,7 @@ function mep_run() {
 						  } else { decryption_failure(); }
 
 						}*/
-					    } else if (yt6.failed_itags2 < 3) { yt6.failed_itags2++ } else {// no playable sources
+					    } else {// no playable sources
 						//console.log(yt6.x + ' ? ' + yt6.encrypted +' ' + yt6.errcount + ' '+(1 * proxies.length +' '+yt6.flash));
 						yt6.current = null; var p = player(), p = yt6.p; 
 						//if (!yt6.ytg || (yt6.ytg && yt6.x && (typeof yt6.errcount == 'undefined' || yt6.errcount == 0))) { decryption_failure() }
