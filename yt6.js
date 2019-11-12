@@ -4421,8 +4421,8 @@ function ageless_verification(spfpc) { //console.log('age')
 
 	if (ytplayer.config.loaded_from != 'page_source' && !yt6.ytm) ytplayer.config.loaded_from = 'video_info'
 
-	var mp = yt6.original || yt6.p, c = conf('args')
-	if (typeof JSON != 'undefined' && c[1] && (!c[1].player_response || (typeof c[1].player_response == 'string' && c[1].player_response.split('"status":"')[1] && c[1].player_response.split('"status":"')[1].split('"')[0] == 'UNPLAYABLE')) ) try { c[1].player_response = JSON.stringify(mp.getPlayerResponse()) } catch(e){}
+	var mp = yt6.original || yt6.p, c = conf('args'), p_r
+	if (typeof JSON != 'undefined' && c[1] && (!c[1].player_response || (typeof c[1].player_response == 'string' && c[1].player_response.split('"status":"')[1] && c[1].player_response.split('"status":"')[1].split('"')[0] == 'UNPLAYABLE')) ) try { var p_r = JSON.stringify(mp.getPlayerResponse()); if (typeof p_r == 'string') c[1].player_response = p_r } catch(e){}
 
 
 	yt6.missing_source = player_response()
