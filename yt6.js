@@ -2400,6 +2400,7 @@ var mp = getElementsByAttribute(yt6, 'div','id','movie_player')[0]; if (mp) mp.s
 
 function player_response() {
 
+
 	var z = ytplayer.config.args.player_response
 	if (z) { //console.log(ytplayer.config.loaded_from +'\n'+z)
 
@@ -2485,14 +2486,15 @@ function player_response() {
 		  s = x[i].split('"cipher":"')[1] || ''
 		  if (s) { yt6.encrypted = true
 		    s = s.split('"')[0]
-		    url = '&' + s.split('\\u0026').join('&').split(',').join('%2C').split('\\').join('')
+		    var ampersand = (s.split('\\u0026sp=')[1]) ? '\\u0026' : '&'
+		    url = '&' + s.split(ampersand).join('&').split(',').join('%2C').split('\\').join('')
 		    if (s.substring(0,2) == 's=') {
-		      s = s.split('s=')[1].split('\\u0026')[0]
+		      s = s.split('s=')[1].split(ampersand)[0]
 		    } else {
-			s = s.split('\\u0026s=')[1].split('\\u0026')[0]
+			s = s.split(ampersand + 's=')[1].split(ampersand)[0]
 		      }
 		    var url1 = url.split('&url=')[1]; if (url1) url = url1.split('&s=' + s)[0]
-		    var url1 = url.split('\\u0026url=')[1]; if (url1) url = url1.split('\\u0026s=')[0]
+		    var url1 = url.split(ampersand + 'url=')[1]; if (url1) url = url1.split(ampersand + 's=')[0]
 		    url = (url.split('videoplayback%3F')[1]) ?
 			'&url=' + url + '&s=' + s :
 			'&url=' + encodeURIComponent(url) + '&s=' + encodeURIComponent(s);
@@ -2571,25 +2573,26 @@ function player_response() {
 		  s = x[i].split('"cipher":"')[1] || ''
 		  if (s) { yt6.encrypted = true
 		    s = s.split('"')[0]
+			var ampersand = (s.split('\\u0026sp=')[1]) ? '\\u0026' : '&'
 		    if (s.substring(0,3) == 'sp=') {
-		      sp = 'sp=' + s.split('sp=')[1].split('\\u0026')[0] + '\\u0026'
+		      sp = 'sp=' + s.split('sp=')[1].split(ampersand)[0] + ampersand
 		    } else {
-			sp = '\\u0026sp=' + s.split('\\u0026sp=')[1].split('\\u0026')[0]
+			sp = ampersand + 'sp=' + s.split(ampersand + 'sp=')[1].split(ampersand)[0]
 		      }
 		    url = s.split(sp).join('')
-		    if (sp) { sp = sp.split('\\u0026').join('&'); if (sp.split('sp=')[1]) sp = sp.split('sp=')[1].split('&')[0] }
+		    if (sp) { sp = sp.split(ampersand).join('&'); if (sp.split('sp=')[1]) sp = sp.split('sp=')[1].split('&')[0] }
 		    //console.log('\nsp=\n'+ sp +'\n')
 
 		    if (s.substring(0,2) == 's=') {
-		      s = 's=' + s.split('s=')[1].split('\\u0026')[0].split('&')[0]
-		    } else s = '\\u0126s=' + s.split('\\u0026s=')[1].split('\\u0026')[0].split('&')[0]
+		      s = 's=' + s.split('s=')[1].split(ampersand)[0].split('&')[0]
+		    } else s = ampersand + 's=' + s.split(ampersand)[1].split(ampersand)[0].split('&')[0]
 		    url = url.split(s).join('')
-		    if (s) { s = s.split('\\u0026').join('&'); if (s.split('s=')[1]) s = s.split('s=')[1].split('&')[0] }
+		    if (s) { s = s.split(ampersand).join('&'); if (s.split('s=')[1]) s = s.split('s=')[1].split('&')[0] }
 		    //console.log('\ns=\n'+ s +'\n')
 
 		    url = '&' + url.split(',').join('%2C') //.split('\\u0026').join('')
 		    var url1 = url.split('&url=')[1]; if (url1) url = url1.split('\\u0026')[0].split('\\').join('')
-		    var url1 = url.split('\\u0026url=')[1]; if (url1) url = url1.split('\\u0026s=')[0].split('\\').join('')
+		    var url1 = url.split(ampersand + 'url=')[1]; if (url1) url = url1.split(ampersand + 's=')[0].split('\\').join('')
 		    url = (url.split('videoplayback%3F')[1]) ?
 			'&url=' + url + '&s=' + s + '&sp=' + sp :
 			'&url%3D' + encodeURIComponent(url) + '&s%3D' + encodeURIComponent(s) + '&sp%3D' + sp;
@@ -4417,6 +4420,11 @@ function ageless_verification(spfpc) { //console.log('age')
 	}
 
 	if (ytplayer.config.loaded_from != 'page_source' && !yt6.ytm) ytplayer.config.loaded_from = 'video_info'
+
+	var mp = yt6.original || yt6.p, c = conf('args')
+	if (typeof JSON != 'undefined' && c[1] && (!c[1].player_response || (typeof c[1].player_response == 'string' && c[1].player_response.split('"status":"')[1] && c[1].player_response.split('"status":"')[1].split('"')[0] == 'UNPLAYABLE')) ) try { c[1].player_response = JSON.stringify(mp.getPlayerResponse()) } catch(e){}
+
+
 	yt6.missing_source = player_response()
 
 
@@ -4800,7 +4808,7 @@ function ageless_verification(spfpc) { //console.log('age')
 
 	var xhr3 = new XMLHttpRequest()
 	var proxy = '';//(yt6.ytg) ? shuffle(proxies)[0] : '';
-	var x = (yt6.x && yt6.browser_tab == 'hidden' && !yt6.blocked) ? true : ((yt6.layout == 12 || yt6.blocked || yt6.flash.forced || yt6.ytm || yt6.ytg) ? false : yt6.xhr.async)
+	var x = (yt6.x && yt6.browser_tab == 'hidden' && !yt6.blocked) ? true : ((yt6.layout == 12 || yt6.layout == 16 || yt6.blocked || yt6.flash.forced || yt6.ytm || yt6.ytg) ? false : yt6.xhr.async)
 	xhr3.open('get', proxy + '//www.youtube.com/get_video_info?video_id=' + vid, x);// 
 	xhr3.onreadystatechange = function() { 
 
@@ -11879,7 +11887,7 @@ function mep_run() {
 						      },250,1250)
 
 						  }
-						} else {
+						} else if (yt6.browser_tab == 'visible') {
 						    if (yt6.autoplay && me.currentTime < 3) { me.play() }// && (yt6.speed > 1.7 || yt6.encrypted)
 
 						    var playPromise = me.play();
@@ -11900,7 +11908,13 @@ function mep_run() {
 						    if (me.src == player2.src) {
 						      Seek = null; if (!yt6.player2.media.paused) yt6.player2.pause()
 						    }*/
-					          };
+					          } else if (!yt6.player2.media.paused) {
+					              // pause call seemingly isn't enough to stop player2 in this case??? src must be rewritten in order to make it stop
+					              yt6.player2.media.pause()
+					              var src = yt6.player2.media.src
+					              yt6.player2.setSrc('')
+					              yt6.player2.setSrc(src)
+					            }
 					    if (Seek == 3 ) { Seek = null }
 					  } else if (!me.paused) { me.pause() } //!yt6.x
 					  if (yt6.speed) player2.playbackRate = me.playbackRate = yt6.speed;
@@ -14975,7 +14989,7 @@ addEL(window, 'spfdone', yt6.body.spfdone, false);
 
     if (typeof Proxy == 'function') {
       yt6d.proxy_handler = {
-	set(target, key, value) {
+	set: function(target, key, value) {
 		target[key] = value
 		if (yt6 && yt6d && yt6d.ended && yt6.browser_tab == 'hidden' && yt6.layout == 16 && !yt6.ytm && !yt6.ytg && yt6d.document.title != yt6.previous_title && yt6.player1 && yt6.player1.media) {
 		  yt6d.ended = false
