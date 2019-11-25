@@ -2486,7 +2486,7 @@ function player_response() {
 		  s = x[i].split('"cipher":"')[1] || ''
 		  if (s) { yt6.encrypted = true
 		    s = s.split('"')[0]
-		    var ampersand = (s.split('\\u0026sp=')[1]) ? '\\u0026' : '&'
+		    var ampersand = (s.split('\\u0026sp=')[1] || s.split('\\u0026s=')[1]) ? '\\u0026' : '&'
 		    url = '&' + s.split(ampersand).join('&').split(',').join('%2C').split('\\').join('')
 		    if (s.substring(0,2) == 's=') {
 		      s = s.split('s=')[1].split(ampersand)[0]
@@ -2573,7 +2573,7 @@ function player_response() {
 		  s = x[i].split('"cipher":"')[1] || ''
 		  if (s) { yt6.encrypted = true
 		    s = s.split('"')[0]
-			var ampersand = (s.split('\\u0026sp=')[1]) ? '\\u0026' : '&'
+			var ampersand = (s.split('\\u0026sp=')[1] || s.split('\\u0026s=')[1]) ? '\\u0026' : '&'
 		    if (s.substring(0,3) == 'sp=') {
 		      sp = 'sp=' + s.split('sp=')[1].split(ampersand)[0] + ampersand
 		    } else {
@@ -2585,7 +2585,7 @@ function player_response() {
 
 		    if (s.substring(0,2) == 's=') {
 		      s = 's=' + s.split('s=')[1].split(ampersand)[0].split('&')[0]
-		    } else s = ampersand + 's=' + s.split(ampersand)[1].split(ampersand)[0].split('&')[0]
+		    } else s = ampersand + 's=' + s.split(ampersand + 's=')[1].split(ampersand)[0].split('&')[0]
 		    url = url.split(s).join('')
 		    if (s) { s = s.split(ampersand).join('&'); if (s.split('s=')[1]) s = s.split('s=')[1].split('&')[0] }
 		    //console.log('\ns=\n'+ s +'\n')
