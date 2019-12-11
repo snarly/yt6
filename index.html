@@ -66,7 +66,7 @@ I just wrapped up to make their programs work together.</p>
 <h1>Usage on mobile platform / Make it appear like an installed app</h1>
 <br>
 
-<p>As of yet, bookmarklets are not supported on mobile devices at all, so creating a bookmark of this kind is useless in this case.
+<p>As of yet, bookmarklets are not supported on mobile devices at all, so creating a bookmark of this kind is useless in that case.
 <br><br>
 There are, however, some browser extensions which may provide a workaround. The ones below can automate execution of <strong><b>any javascript code</b></strong> specified by the user, upon each new page load. In a true Desktop environment this has just one benefit: not having to click the bookmarklet because it will always be fired up as if it was an installed app. The major drawback, regardless of platform, is the possibility of numerous users sending another load request for the main script on each and every subsequent videos, which may cause heavy overload on its development url. (In my experience for example, Firefox Mobile does have the nasty habit of doing a full page refresh on every YouTube page change in Desktop view mode, which is exactly what would eventually trigger an overload.) But on mobile, this is the only way to go. The bookmarklet's code contains sanity checks for the current web location already, so nothing will happen if we are not on a YouTube video page. Still, it's better to turn off these add-ons when you have no particular need for them.
 <br><br>
