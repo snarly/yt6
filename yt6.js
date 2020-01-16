@@ -2614,8 +2614,10 @@ function player_response() {
 	      }
 	    }
 	    if (formats && (formats.indexOf('url=') > -1 || formats.indexOf('url%3D') > -1)) {//.split('%2540%2540').join('%2526')
-	      ytplayer.config.args.adaptive_fmts = formats //.split('%402B').join('%2B')
-	      //console.log(ytplayer.config.args.adaptive_fmts)
+	      //ytplayer.config.args.adaptive_fmts = formats	// oops
+	      // Recently the above line started to kill the yt player creation process -- happens inside the alt_yt() function call, on age-restricted videos
+	      // Postpone feeding the value to the proper object, store it for later use instead
+	      yt6.adaptive_fmts = formats
 	    }
 	  }
 
@@ -2623,7 +2625,7 @@ function player_response() {
 
 	}
 
-  if (ytplayer.config.args.adaptive_fmts && ytplayer.config.args.url_encoded_fmt_stream_map) yt6.missing_source = false
+  if (ytplayer.config.args.adaptive_fmts || ytplayer.config.args.url_encoded_fmt_stream_map) yt6.missing_source = false
 
 }
 
@@ -4136,7 +4138,7 @@ function alt_yt(vid) { //console.log('alt_yt')
 			      //try { window.ytplayer.config.html5 = true } catch(e){}
 			      yt6.html5_fail = false
 			      yt6.flash.forced = false
-			    } else { console.log('html5 player is not working, fall back to flash')
+			    } else { //console.log('html5 player is not working, fall back to flash')
 				yt6.p.parentNode.removeChild(yt6.p)
 				var p = player(), p = yt6.p
 				p.setAttribute('flashvars', correct_flashvars(ytplayer.config.args))
@@ -4229,6 +4231,12 @@ function alt_yt(vid) { //console.log('alt_yt')
 		    iframe()
 
 		 }
+
+	    if (!ytplayer.config.args.adaptive_fmts && yt6.adaptive_fmts) {
+		// passing the value, hopefully the yt player is OK by this point
+		ytplayer.config.args.adaptive_fmts = clone(yt6.adaptive_fmts)
+		yt6.adaptive_fmts = null
+	    }
 
 }//alt_yt
 
@@ -4515,7 +4523,7 @@ function ageless_verification(spfpc) { //console.log('age')
 //console.log('C '+yt6.blocked + ' '+yt6.age.blocked +' '+ yt6.status +' '+ yt6.reason + '? spfpc: '+spfpc +' '+ yt6.api +' '+gid('bm01')); if (c[1]) if (c[1].adaptive_fmts) { console.log('adaptive_fmts = true') } else console.log('adaptive_fmts = false')
 
 	if ( (yt6.api && yt6.api.parentNode &&
-	      (!(spfpc && yt6.status == 'ok' && yt6.reason && !(c[1] && c[1].url_encoded_fmt_stream_map && c[1].adaptive_fmts)) &&
+	      ( (yt6.reason && (c[1] && (c[1].url_encoded_fmt_stream_map || c[1].adaptive_fmts))) && //!(spfpc && yt6.status == 'ok' && yt6.reason && !(c[1] && c[1].url_encoded_fmt_stream_map && c[1].adaptive_fmts)) &&
 	       (( !yt6.missing_source && (player()) && (yt6.blocked || (yt6.age.blocked && !gid('bm01'))) ) ||
 	        ( yt6.reason && (yt6.status == 'unplayable' || (yt6.layout == 16 && yt6.blocked)) ) ||
 		( yt6.p.tagName == 'DIV' && !(yt6.p.firstChild && yt6.p.firstChild.nextSibling))
@@ -4764,6 +4772,11 @@ function ageless_verification(spfpc) { //console.log('age')
 	    }
 
 	} else { //console.log('not blocked')
+	    if (!ytplayer.config.args.adaptive_fmts && yt6.adaptive_fmts) {
+		// passing the value, hopefully the yt player is OK by this point
+		ytplayer.config.args.adaptive_fmts = clone(yt6.adaptive_fmts)
+		yt6.adaptive_fmts = null
+	    }
 	    if (yt6.p && yt6.p.tagName == 'IFRAME') { undo_iframe()
 			  /*var z = gid('movie_player0')
 			  if (z && z.firstChild && z.firstChild.getAttribute('class')) {
@@ -8663,7 +8676,7 @@ if (c[1]) {
       )) ? 'sig' : 'signature'
 	//if (c[1]) { if (c[1].adaptive_fmts) console.log(c[1].adaptive_fmts.indexOf('&lsig=') +' '+c[1].adaptive_fmts.indexOf('lsig%') ); if (c[1].url_encoded_fmt_stream_map) console.log(c[1].url_encoded_fmt_stream_map.indexOf('lsig%3D')) } else console.log('-')
 
-  var ft = [args.url_encoded_fmt_stream_map, args.adaptive_fmts],
+  var ft = [args.url_encoded_fmt_stream_map, args.adaptive_fmts || yt6.adaptive_fmts ],
       fn, ad = 0, durA1 = [], durA2 = [], durL1 = [], durL2 = [], avg1, avg2, length_seconds = args.length_seconds
 
 
@@ -15872,6 +15885,45 @@ if (yt6.layout == 12) {
 }
 
 
+if (yt6.layout == 16 && yt6.blocked && !yt6.ytm && p && typeof p.getPlayerState == 'function') {
+
+  if (p.getCurrentTime() > 0 && p.getPlayerState() == 0) {
+    var vid = location.href.split('v=')[1].split('&')[0] || location.href.split('/v/')[1].split('/')[0]
+    if (p.getVideoUrl().indexOf(yt6d.current.video_id) == -1) {
+	  var p0 = document.getElementById('video-hide')
+	  if (p0) p0 = p0.querySelector('#movie_player') || p0.querySelector('#movie_player0')
+	  if (p0) {
+	    undo_iframe(); try { p.destroy() } catch(e){ p.parentNode.removeChild(p) }
+	    p0.setAttribute('name','original')
+	    yt6.api.insertBefore(p0, yt6.api.firstChild)
+	    p = player(), p = yt6.p
+	  }
+ 	  fix_playlist()
+	  $waitUntil(function(){ var y = yt6.pl_index, zi = yt6.pl_next; if ((typeof y == 'number' && zi) || yt6.layout == 12 || !yt6.pls) { return true } else pl_item() },
+	  function() { var p = player(), p = yt6.p;
+	    if (p && typeof p.playVideoAt == 'function' && p.getAttribute('class') != 'forced flashplayer') { var mp = p }
+	    else { var mp = yt6.original = getElementsByAttribute(yt6,'div','name','original')[0] }
+	    try { yt6.navigation = true
+	    if ((!yt6.shuffle && !yt6.ytg) || yt6.layout == 12) {
+	      if (yt6.pls) { try { yt6.pl_next.click() } catch(e) { mp.nextVideo('0') } } else mp.nextVideo('0')
+	    } else {
+		if (p == mp) {
+		  if (!yt6.ytg || yt6.pre_ad) { mp.playVideoAt(yt6.pl_index+1) || mp.nextVideo('0'); } else try { mp.seekTo(mp.getDuration()); mp.playVideo()} catch(e) { mp.nextVideo('0')}
+		} else {
+		    try {
+		      $waitUntil(function(){if (location.href.indexOf(yt6.vid) == -1) { return true } else {
+			mp.stopping = false; FireEvent2(mp, 'mouseup'); mp.seekTo(mp.getDuration()); if (!yt6.ad_muted) mp.mute(); mp.playVideo(); mp.pauseVideo(); if (!yt6.ad_muted) mp.unMute();
+		      } },
+			function(){},250,1000)
+		    } catch(e) { yt6.navigation = false }
+		  }
+	    }
+	    } catch(e) { yt6.navigation = false }
+	  },250,1500)
+
+    }
+  }
+}
 
 // flash autoplay handling -- (the function methods of flash are inaccessible on Music layout, hence no way to detect programmatically when a video ended to initiate a jump to the next one, it has to be done manually)
 
