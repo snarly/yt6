@@ -1156,6 +1156,15 @@ function find_key(rpt){
 	    //var regex = new RegExp('^(?!(?:=function(a){a=a.split("");+\\w+\\s)$)', 'g');
 	    fcnm = rpt.split('=function(a){a=a.split("")')[0]; fcnm = (fcnm) ? fcnm.substr(fcnm.length-2, 3) : null
 
+
+        // Fragile code -- the function we are looking for *must* begin exactly with the stuff passed to the next rpt.split function as argument;
+        // It's practically a blind guess. Once yt-folks change that part, the array definition would have to be rewritten accordingly, or else no valid media links will happen.
+	//
+	// A random example of how the wanted bit of code looks like, as of 25 Jan 2020.
+	// The variable name referring to this function will be stored in "fcnm":
+	// =function(a){a=a.split("");ot.Iq(a,8);ot.bw(a,21);ot.h0(a,2);ot.bw(a,32);ot.h0(a,1);ot.bw(a,34);ot.Iq(a,59);ot.h0(a,2);return a.join("")};
+
+
 	    var array = rpt.split('=function(a){a=a.split("")')
 	    if (array.length) for (i=0;i<array.length;i++) {
 	      var x = array[i], y = array[i+1]; //console.log(x);
@@ -1166,8 +1175,6 @@ function find_key(rpt){
 		}
 	    }
 
-        // fragile code -- the function we are looking for needs to begin exactly as quoted on the line above;
-        // once yt-folks change it, the fcnm definition would have to be rewritten accordingly, or else no valid media links happen
 	  }
       }
   } else {
@@ -1198,8 +1205,18 @@ function find_key(rpt){
 
   } catch(e) {
 
-      // the same easy-to-break code as above
-      if (!fcnm) { var fcnm = rpt.split('=function(a){a=a.split("")')[0]; fcnm = (fcnm) ? fcnm.substr(fcnm.length-2, 3) : null }
+      // same as above
+      if (!fcnm) {
+	    var array = rpt.split('=function(a){a=a.split("")')
+	    if (array.length) for (i=0;i<array.length;i++) {
+	      var x = array[i], y = array[i+1]; //console.log(x);
+	      if (y && y.indexOf(';var ') == 0) {
+		fcnm = null; continue
+	      } else {
+		  fcnm = (x) ? x.substr(x.length-2,3) : null; x = null; y = null; break
+		}
+	    }
+      }
       var fs = fcnm + '=function(a){a=a.split("")'; fs = fs + rpt.split(fs)[1].split('};')[0];
 
     }
