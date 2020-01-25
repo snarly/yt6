@@ -1153,10 +1153,21 @@ function find_key(rpt){
 	} else {//2018/09
 	    //(\w+)\s*=\s*function\((\w+)\){\s*\2=\s*\2\.split\(""\)\s*;
 
+	    //var regex = new RegExp('^(?!(?:=function(a){a=a.split("");+\\w+\\s)$)', 'g');
 	    fcnm = rpt.split('=function(a){a=a.split("")')[0]; fcnm = (fcnm) ? fcnm.substr(fcnm.length-2, 3) : null
 
-        // fragile code -- it requires the sought function to begin exactly as quoted on the line above;
-        // once folks at yt alter it, the line would need to be edited accordingly or else the script may fail at load time
+	    var array = rpt.split('=function(a){a=a.split("")')
+	    if (array.length) for (i=0;i<array.length;i++) {
+	      var x = array[i], y = array[i+1]; //console.log(x);
+	      if (y && y.indexOf(';var ') == 0) {
+		fcnm = null; continue
+	      } else {
+		  fcnm = (x) ? x.substr(x.length-2,3) : null; x = null; y = null; break
+		}
+	    }
+
+        // fragile code -- the function we are looking for needs to begin exactly as quoted on the line above;
+        // once yt-folks change it, the fcnm definition would have to be rewritten accordingly, or else no valid media links happen
 	  }
       }
   } else {
