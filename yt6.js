@@ -2642,9 +2642,12 @@ function player_response() {
 	      }
 	    }
 	    if (formats && (formats.indexOf('url=') > -1 || formats.indexOf('url%3D') > -1)) {//.split('%2540%2540').join('%2526')
-	      //ytplayer.config.args.adaptive_fmts = formats	// oops
-	      // Recently the above line started to kill the yt player creation process -- happens inside the alt_yt() function call, on age-restricted videos
-	      // Postpone feeding the value to the proper object, store it for later use instead
+		// The line below started to kill the yt player creation process lately -- happens inside the alt_yt() function call on age-restricted videos
+	        // Postpone feeding the value to the proper object, store it for later use instead
+	      if (yt6.x && yt6.browser_tab == 'hidden') {
+		// Except when the player's tab is unseen -- then do it anyway to prevent playback from apparent stalling?
+		ytplayer.config.args.adaptive_fmts = formats
+	      }
 	      yt6.adaptive_fmts = formats
 	    }
 	  }
