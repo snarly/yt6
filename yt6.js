@@ -19905,8 +19905,8 @@ var controls = gid('controls-sp')
   if (controls) {
     controls.innerHTML =  '<button class="play snarl-button yt-uix-button-text" style="display: inline-block; width: 46px; text-align:left">play</button>'+
   			    '<div style="display: inline-block; position: ' + divpos + '">'+
-			    '<button id="cucc1" class="previous snarl-button yt-uix-button-text" style="padding: 0 4px 0 4px; right: 0px">prev</button>'+
-			    '<button id="cucc2" class="next snarl-button yt-uix-button-text" style="padding: 0 4px 0 4px; right: 0px">next</button></div>'+
+			    '<button class="previous snarl-button yt-uix-button-text" style="padding: 0 4px 0 4px; right: 0px">prev</button>'+
+			    '<button class="next snarl-button yt-uix-button-text" style="padding: 0 4px 0 4px; right: 0px">next</button></div>'+
                           '<div id="change" style="display: block">' +
                             '<button class="reset snarl-button yt-uix-button-text" style="width:40px; text-align:left">reset</button>' +
                             '<button class="zoomin snarl-button yt-uix-button-text" aria-label="Zoom in" title="Zoom in">+</button>' +
@@ -20122,7 +20122,7 @@ var CtrlS = function (stage,v){
 
 	case 'next snarl-button yt-uix-button-text':
 	try { yt6.player1.pause() } catch(e){}
- 	  fix_playlist(); gid('bm5').innerHTML = '"' + gid('cucc2').getAttribute('class') +'"\n' + t.className
+ 	  fix_playlist()
 	  $waitUntil(function(){ var y = yt6.pl_index, zi = yt6.pl_next; if ((typeof y == 'number' && zi) || yt6.layout == 12 || !yt6.pls) { return true } else pl_item() },
 	  function() { var p = player(), p = yt6.p;
 	    if (p && typeof p.playVideoAt == 'function' && p.getAttribute('class') != 'forced flashplayer') { var mp = p }
