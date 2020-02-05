@@ -443,85 +443,7 @@ function getTarget(evt){
      }
 }
 
-yt6.browser_tab = 'visible'
 
-if (!window.onchange) {
-
-(function() {
-  var hidden = 'hidden';
-
-
-  window.onchange = function (evt) {
-    var v = 'visible', h = 'hidden',
-        evtMap = {
-          focus:v, focusin:v, pageshow:v, blur:h, focusout:h, pagehide:h
-        },
-        pv = (yt6.browser_tab == 'hidden') ? h : v;
-    //console.log('0 '+yt6.browser_tab +' '+evt.type + ' ' + this[hidden])
-    evt = evt || window.event;
-    if (evt.type && evt.type.indexOf('visibilitychange') != -1) { //console.log(this[hidden])
-      if ( (yt6.browser_tab == 'hidden' && (this[hidden] == false || typeof this[hidden] == 'undefined' )) || (yt6.browser_tab == 'visible' && (this[hidden] == true || typeof this[hidden] == 'undefined' )) ) {
-        //if (typeof this[hidden] != 'undefined') {		  
-          yt6.browser_tab = this[hidden] ? 'hidden' : 'visible';
-        //} else yt6.browser_tab = 'visible'
-      } else {
-	      if (yt6.browser_tab == 'hidden') { yt6.browser_tab = 'visible' } else if (this[hidden]) { yt6.browser_tab = 'hidden' }
-	    }
-    } else if (evt.type in evtMap) {
-	      yt6.browser_tab = evtMap[evt.type];
-	    } else if (evt.type == 'change') {
-	        if (typeof this[hidden] == 'undefined') {
-	          if (yt6.browser_tab != 'visible') { yt6.browser_tab = 'hidden' } //else if (this[hidden]) { yt6.browser_tab = 'hidden' }
-	        } else {
-	            
-	          }
-	      } else {//yt6.browser_tab = yt6.browser_tab
-	        
-	      }
-    if (!yt6.browser_tab) yt6.browser_tab = 'visible'
-    //console.log(yt6.browser_tab)
-
-    if (yt6.player1) {
-	  if (pv == 'hidden' && yt6.browser_tab == 'visible' && typeof yt6.diff == 'number' && yt6.player1.media) {
-	    try { yt6.ct = yt6.player1.media.currentTime = yt6.player2.media.currentTime } catch(e){}
-	  }
-	  if (yt6.me_flash_) {
-	    if (yt6.browser_tab == 'hidden') {
-	      removeEL(yt6.player1.media, 'click', yt6.player1.clickToPlayPauseCallback, 'false')
-	      removeEL(yt6.player1.media, 'click', yt6.player1.clickToPlayPauseCallback, 'false')
-	    }
-	    var z = gc('mejs-fullscreen-hover')
-	    if ((yt6.browser_tab == 'visible' && !yt6.navigation) && z[0] && z[0].style.display == 'block') for(var i=0;i<z.length;i++) z[i].style.display = 'none';// || !yt6.player1.isFullScreen
-	  }
-    }
-
-  }
-
-
-  // Standards:
-  if (hidden in document)
-    addEL(document, "visibilitychange", window.onchange);
-  else if ((hidden = "mozHidden") in document)
-    addEL(document, "mozvisibilitychange", window.onchange);
-  else if ((hidden = "webkitHidden") in document)
-    addEL(document, "webkitvisibilitychange", window.onchange);
-  else if ((hidden = "msHidden") in document)
-    addEL(document, "msvisibilitychange", window.onchange);
-  // IE 9 and lower:
-  else if ("onfocusin" in document)
-    document.onfocusin = document.onfocusout = window.onchange;
-  // All others:
-  else
-    window.onpageshow = window.onpagehide
-    = window.onfocus = window.onblur = window.onchange;
-
-
-  // set the initial state (but only if browser supports the Page Visibility API)
-  if( document[hidden] !== undefined )
-    onchange({type: document[hidden] ? "blur" : "focus"});
-})();
-
-}//window.onchange
 
 
 if (typeof fnCheckLocation != 'number') { //gid(mep_x("google_ads_frame")) != null &&
@@ -852,6 +774,119 @@ function $waitUntil(check,onComplete,delay,timeout) {
       clearInterval(intervalPointer)
   },timeout)
 }
+
+
+
+function itag(me_src){
+  if (typeof me_src == 'string') {
+    var itagx
+    if (me_src.indexOf('itag=') > -1) itagx = me_src.split('itag=')[1].split('&')[0]
+    if (me_src.indexOf('itag/') > -1) itagx = me_src.split('itag/')[1].split('/')[0]
+    if (itagx) { return itagx } else { return 999 }
+  } else return 999
+}
+
+
+
+yt6.browser_tab = 'visible'
+
+if (!window.onchange) {
+
+(function() {
+  var hidden = 'hidden';
+
+
+  window.onchange = function (evt) {
+    var v = 'visible', h = 'hidden',
+        evtMap = {
+          focus:v, focusin:v, pageshow:v, blur:h, focusout:h, pagehide:h
+        },
+        pv = (yt6.browser_tab == 'hidden') ? h : v;
+    //console.log('0 '+yt6.browser_tab +' '+evt.type + ' ' + this[hidden])
+    evt = evt || window.event;
+    if (evt.type && evt.type.indexOf('visibilitychange') != -1) { //console.log(this[hidden])
+      if ( (yt6.browser_tab == 'hidden' && (this[hidden] == false || typeof this[hidden] == 'undefined' )) || (yt6.browser_tab == 'visible' && (this[hidden] == true || typeof this[hidden] == 'undefined' )) ) {
+        //if (typeof this[hidden] != 'undefined') {		  
+          yt6.browser_tab = this[hidden] ? 'hidden' : 'visible';
+        //} else yt6.browser_tab = 'visible'
+      } else {
+	      if (yt6.browser_tab == 'hidden') { yt6.browser_tab = 'visible' } else if (this[hidden]) { yt6.browser_tab = 'hidden' }
+	    }
+    } else if (evt.type in evtMap) {
+	      yt6.browser_tab = evtMap[evt.type];
+	    } else if (evt.type == 'change') {
+	        if (typeof this[hidden] == 'undefined') {
+	          if (yt6.browser_tab != 'visible') { yt6.browser_tab = 'hidden' } //else if (this[hidden]) { yt6.browser_tab = 'hidden' }
+	        } else {
+	            
+	          }
+	      } else {//yt6.browser_tab = yt6.browser_tab
+	        
+	      }
+    if (!yt6.browser_tab) yt6.browser_tab = 'visible'
+    //console.log(yt6.browser_tab)
+
+
+    if (yt6.player1 && yt6.player1.media) {
+	  var t1, t2
+	  if (Array.isArray(yt6.A_V) && yt6.A_V[itag(yt6.player1.media.src)]) { t1 = true; yt6.Seek = 1 }
+
+	  if (pv == 'hidden' && yt6.browser_tab == 'visible') {
+	    if (Array.isArray(yt6.V_) && yt6.V_[itag(yt6.player1.media.src)]) {
+	      if (yt6.player2 && yt6.player2.media) try {
+		t1 = yt6.player1.getCurrentTime(), t2 = yt6.player2.getCurrentTime()
+		if (typeof t1 == 'number' && typeof t2 == 'number' && Math.abs(t1 - t2) > 0.1) {
+		  yt6.ct = yt6.player1.media.currentTime = yt6.player2.media.currentTime
+		}
+	      } catch(e){}
+	    }
+	  }
+	  if (pv == 'visible' && yt6.browser_tab == 'hidden') {
+	    if ((t2 && yt6.seeked2 && yt6.player1.media.paused) || (t1 && !yt6.Seeked2 && yt6.player1.media.paused)) { if (t1) try { yt6.player1.play() } catch(e){} }
+	    yt6.Seeked2 = false
+	  }
+
+
+	  if (yt6.me_flash_) {
+	    if (yt6.browser_tab == 'hidden') {
+	      removeEL(yt6.player1.media, 'click', yt6.player1.clickToPlayPauseCallback, 'false')
+	      removeEL(yt6.player1.media, 'click', yt6.player1.clickToPlayPauseCallback, 'false')
+	    }
+	    var z = gc('mejs-fullscreen-hover')
+	    if ((yt6.browser_tab == 'visible' && !yt6.navigation) && z[0] && z[0].style.display == 'block') for(var i=0;i<z.length;i++) z[i].style.display = 'none';// || !yt6.player1.isFullScreen
+	  }
+    }
+
+  }
+
+
+  // Standards:
+  if (hidden in document)
+    addEL(document, "visibilitychange", window.onchange);
+  else if ((hidden = "mozHidden") in document)
+    addEL(document, "mozvisibilitychange", window.onchange);
+  else if ((hidden = "webkitHidden") in document)
+    addEL(document, "webkitvisibilitychange", window.onchange);
+  else if ((hidden = "msHidden") in document)
+    addEL(document, "msvisibilitychange", window.onchange);
+  // IE 9 and lower:
+  else if ("onfocusin" in document)
+    document.onfocusin = document.onfocusout = window.onchange;
+  // All others:
+  else
+    window.onpageshow = window.onpagehide
+    = window.onfocus = window.onblur = window.onchange;
+
+
+  // set the initial state (but only if browser supports the Page Visibility API)
+  if( document[hidden] !== undefined )
+    onchange({type: document[hidden] ? "blur" : "focus"});
+})();
+
+}//window.onchange
+
+
+
 
 
 
@@ -3035,15 +3070,6 @@ console.log('hand_axe1')
 
 }//ajax1
 
-
-function itag(me_src){
-  if (typeof me_src == 'string') {
-    var itagx
-    if (me_src.indexOf('itag=') > -1) itagx = me_src.split('itag=')[1].split('&')[0]
-    if (me_src.indexOf('itag/') > -1) itagx = me_src.split('itag/')[1].split('/')[0]
-    if (itagx) { return itagx } else { return 999 }
-  } else return 999
-}
 
 
 function getPoster(){
