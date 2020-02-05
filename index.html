@@ -54,8 +54,8 @@
 
 <a href="javascript:(function(){var w=window,d=w.document;if(d.location.href.indexOf('youtube.com/watch')>-1||d.location.href.indexOf('/base.js')==d.location.href.length-8){var id='snarls_player',e='script';yt6=(w.yt6)?w.yt6:{};yt6d=(w.yt6d)?w.yt6d:{};yt6.loaded=0;function s(x){x=x||id;return d.getElementById(x)};function c(e){return d.createElement(e)};function a(q){s().appendChild(q);s().add_subs='en,hu,de';yt6d.src=q.src};function r(){if(s()){var x=s().querySelector('#'+id);if(x)s().removeChild(x)}};function b(){var i,j,o,x;o=['.githack','git','js'];for(j,x,i=o.length;i;j=Math.floor(Math.random()*i),x=o[--i],o[i]=o[j],o[j]=x);if(yt6d.src!=1)o.splice(0,0,'.githubusercontent');var q=c('div');q.id=id;if(q!=s())d.body.appendChild(q);var src='https://raw'+o[0]+'.com/snarly/yt6/master/yt6.js';var src0='https://cdn.jsdelivr.net/gh/snarly/yt6@latest/yt6.js';function oc(ox,oy,sr){return(oy!='js')?sr.replace(ox,oy):src0};var q=c(e);q.id=id;q.src=(o[0]!='js')?src:src0;q.onerror=function(){var q=c(e);q.id=id;q.src=oc(o[0],o[1],src);q.onerror=function(){var q=c(e);q.id=id;q.src=oc(o[0],o[2],src);q.onerror=function(){var q=c(e);q.id=id;q.src=oc(o[0],o[3],src);q.onerror=function(){var q=c(e);q.id=id;q.src=src.replace('https','http')};a(q);r();};a(q);r();};a(q);r();};try{a(q);}catch(f){a(q)};};function g(){try{deldiv()}catch(f){r()};yt6d.src=1;b()};if(!s()){b()};if(s()&&(!yt6.body||(yt6.loaded>1&&!s('mep_init'))))setTimeout(function(){if(!yt6.body||(yt6.body&&yt6.loaded>2&&!s('mep_init')))g()},3000);}else{void 0};})();/*201912101600*/">Yt6 -- Snarl's YouTube Video Player (bookmarklet)</a><br>
 Last updated on Dec 10, 2019 16:00<br>
-(Please try and use the latest version (and if it works well, dump the 
-older ones). It may be crucial regarding its functionality.)<br>
+(Please try and use the latest version, and if it works well, dump the 
+older ones. It may be crucial regarding its functionality.)<br>
 
 
 <p><code>javascript:<br>
@@ -64,7 +64,7 @@ older ones). It may be crucial regarding its functionality.)<br>
 
 <p>__</p>
 
-<p>On any YouTube video (watch) page, this bookmarklet will call an external player and load some extra functions, some of which can be used with YouTube's original player as well. It doesn't work with live streams as intended yet. To use it, you have to <strong><b>click on it on your bookmarks list</b></strong> each time you enter a video page, unless you have the code already running. Autoplay depends on the state of the "Loop Playlist" button on user-creted playlists. Use the HTML5 emblem to switch between the native and this alternative player. The program is able to</p>
+<p>On any YouTube video (watch) page, this bookmarklet will call an external player and load some extra functions, some of which can be used with YouTube's original player as well. It doesn't work with live streams as intended yet. To use it, you have to <strong><b>click on it on your bookmarks list</b></strong> each time you enter a video page, unless you have the code already running. Autoplay depends on the state of the "Loop Playlist" button on user-created playlists. Use the HTML5 emblem to switch between the native and this alternative player. The program is able to</p>
 <p>
 - restrict on-site advertisement,<br>
 - resize, zoom, rotate and move around video picture arbitrarily,<br>
