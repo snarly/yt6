@@ -2807,7 +2807,7 @@ function load_from_page_source(x) { //console.log('load_from_page_source')
 
 	    if (!yt6.x && yt6.ytp.state && yt6.ytp.state != 2 && c[1].adaptive_fmts) { // updating the data object may stop playback, press play again
 	      $waitUntil(function(){ var p = player()
-		   if (p && typeof p.getPlayerState == 'function' && yt6.p.getPlayerState() == 2) return true
+		   if (p && typeof p.getPlayerState == 'function' && p.getPlayerState() == 2) return true
 		 },
 		 function(){
 		   try { yt6.p.playVideo() } catch(e) {}
@@ -4864,15 +4864,21 @@ function ageless_verification(spfpc) { //console.log('age')
 
 
 
+	 // updating the formats data object may cause an unexpected stop of the original player, so try to press play again
 
-	    /*if (!yt6.x && yt6.ytp.state && yt6.ytp.state != 2 && c[1].adaptive_fmts) { // updating the data object may stop the playback, push play again
-	      $waitUntil(function(){ var p = player()
-		   if (p && typeof p.getPlayerState == 'function' && yt6.p.getPlayerState() == 2) return true
-		 },
-		 function(){
-		   try { yt6.p.playVideo() } catch(e) {}
-		 }, 600, 6000)
-	    }*/
+	    if (!yt6.x && yt6.ytp.state && yt6.ytp.state != 2 && c[1].adaptive_fmts) {
+	      //if (yt6.browser_tab == 'hidden') {
+		//try { yt6.p.playVideo() } catch(e){}
+	      //}
+	      if (yt6.layout == 16 && !yt6d.previous.linx.length) { // most notably in the new layout
+	        $waitUntil(function(){ var p = player()
+		    if (p && typeof p.getPlayerState == 'function') if (p.getPlayerState() == 2) { p.playVideo() } else try { p.playVideo() } catch(e){}
+		  },
+		  function(){
+		    try { yt6.p.playVideo() } catch(e) {}
+		  }, 200, 4000) // do it repeatedly for 4 seconds
+	      }
+	    }
 
       }//parse_video_info
 
@@ -6180,7 +6186,7 @@ if (player()) {
 	  function resync() {
 	    if (!yt6.x) {
 	      if (p2()) try {
- 		player2.currentTime = player().getCurrentTime()
+ 		if (Math.abs(player().getCurrentTime() - player2.duration) > 1) player2.currentTime = player().getCurrentTime()
 		player2.playbackRate = player().getPlaybackRate()
 		//if (v && v != stage && v.getAttribute('src') && v.getAttribute('src').indexOf('googlevideo') == -1) player().setPlaybackRate( yt6.speed )
 	      } catch(e) {}
@@ -6204,7 +6210,13 @@ if (player()) {
 			    }
 			  }
 			}; break;
-		case 2: if (yt6.mobile && yt6.x && p1()) { player1.pause() } else if (p2()) { player2.pause(); resync() }; break
+		case 2: if (yt6.x && p1()) { player1.pause() } else if (p2()) { player2.pause(); resync() };
+			if (!yt6.x) {
+			  $waitUntil(function(){ if (yt6.browser_tab == 'hidden') return true },
+			    function(){ var p = player()
+			      if (p && typeof p.getPlayerState == 'function') try { p.playVideo() } catch(e) {}
+			    }, 40, 500) // Check for a very short period of time to see whether this call for pause coincides with being on a hidden tab, meaning the call came from YT's own code to prevent background play on mobile. Counteract if so.
+		        }; break
 		case 3: if (p2()) { player2.pause(); resync() }; break
 		case 5: if (p2()) { player2.pause(); }; break
 	  }
@@ -12182,7 +12194,7 @@ function mep_run() {
 							    // To remedy this, on page change we temporarily switch over to the native player and let it play until the rest of the page deigns to load up as well
 							    // a proxy function will check if yt6d.document.title (document.title) was updated, then we can finally switch back to the external player and continue playback
 
-							    if (yt6.browser_tab == 'hidden' && yt6.layout == 16 && !yt6.ytm && !yt6.ytg) {
+							    if (yt6.browser_tab == 'hidden' && yt6.layout == 16 && yt6.x && !yt6.ytm && !yt6.ytg) {
 								yt6.previous_title = clone(yt6.title)
 								yt6.player1.pause(); switch_players()
 								yt6.player1.setSrc('https://www.youtube.com/ptracking')
@@ -12475,7 +12487,7 @@ function mep_run() {
 							    // to remedy this, on page change we temporarily switch over to the native player and let it play until the rest of the page deigns to load up as well
 							    // a proxy function will check if yt6d.document.title (document.title) was updated, then we can finally switch back to the external player and continue playback
 
-							    if (yt6.browser_tab == 'hidden' && yt6.layout == 16 && !yt6.ytm && !yt6.ytg) {
+							    if (yt6.browser_tab == 'hidden' && yt6.layout == 16 && yt6.x && !yt6.ytm && !yt6.ytg) {
 								yt6.previous_title = clone(yt6.title)
 								yt6.player1.pause(); switch_players()
 								yt6.player1.setSrc('https://www.youtube.com/ptracking')
@@ -20154,8 +20166,8 @@ var CtrlS = function (stage,v){
 	    if (p && typeof p.playVideoAt == 'function' && p.getAttribute('class') != 'forced flashplayer') { var mp = p }
 	    else { var mp = yt6.original = getElementsByAttribute(yt6,'div','name','original')[0] }
 	    try { yt6.navigation = true
-	    if ((!yt6.shuffle && !yt6.ytg) || yt6.layout == 12) {
-	      if (yt6.pls) { try { mp.nextVideo('0') } catch(e) { try { yt6.pl_next.click() } catch(e){} } } else { mp.nextVideo('0') }
+	    if ((!yt6.shuffle && !yt6.ytg) || yt6.layout == 12 || yt6.mobile) {
+	      if (yt6.pls && !yt6.mobile) { try { mp.nextVideo('0') } catch(e) { try { yt6.pl_next.click() } catch(e){} } } else { try { yt6.pl_next.click() } catch(e){ mp.nextVideo('0') } }
 	    } else {
 		if (p == mp) {
 		  if (!yt6.ytg || yt6.pre_ad) { mp.playVideoAt(yt6.pl_index+1) || mp.nextVideo('0'); } else try { mp.seekTo(mp.getDuration()); mp.playVideo()} catch(e) { mp.nextVideo('0')}
