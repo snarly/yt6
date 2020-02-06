@@ -828,6 +828,7 @@ if (!window.onchange) {
 
 
     if (yt6.player1 && yt6.player1.media) {
+
 	  var t1, t2
 	  if (Array.isArray(yt6.A_V) && yt6.A_V[itag(yt6.player1.media.src)]) { t1 = true; yt6.Seek = 1 }
 
@@ -835,7 +836,7 @@ if (!window.onchange) {
 	    if (Array.isArray(yt6.V_) && yt6.V_[itag(yt6.player1.media.src)]) {
 	      if (yt6.player2 && yt6.player2.media) try {
 		t1 = yt6.player1.getCurrentTime(), t2 = yt6.player2.getCurrentTime()
-		if (typeof t1 == 'number' && typeof t2 == 'number' && Math.abs(t1 - t2) > 0.1) {
+		if (typeof t1 == 'number' && typeof t2 == 'number' && Math.abs(t1 - t2) > 0.3) {
 		  yt6.ct = yt6.player1.media.currentTime = yt6.player2.media.currentTime
 		}
 	      } catch(e){}
@@ -2981,7 +2982,7 @@ function ajax1(update, ytg){
 	      if (i === proxiez.length-1) {
 
 		if ((e.toString().indexOf('"Access to restricted URI denied"  code: "1012"') > -1) || (e.toString().indexOf('ReferenceError: Security violation') > -1) || (xhr.responseText.indexOf('403 Forbidden') > -1) || (e.toString().indexOf('XMLHttpRequest Exception 101') > -1)) {
-console.log('hand_axe1')
+
 		  hand_axe()
 
 		} else {
@@ -3199,7 +3200,7 @@ function player(debug) {
       if (gid('player-api') || yt6.ytm) {
         yt6.api = gid("movie_player").parentNode;
       } else if (yt6.layout == 12 && gid('player-mole-container')) {
-          if (!(yt6.api && yt6.api.id == 'player-api' && yt6.api.parentNode)) try { console.log('player-api gone with the wind ' + debug) } catch(e){}
+          //if (!(yt6.api && yt6.api.id == 'player-api' && yt6.api.parentNode)) try { console.log('player-api gone with the wind ' + debug) } catch(e){}
           var a = document.createElement('div')
 	  a.id = 'player-api'
           gid('player-mole-container').insertBefore(a, gid('player-mole-container').firstChild)
@@ -4866,17 +4867,17 @@ function ageless_verification(spfpc) { //console.log('age')
 
 	 // updating the formats data object may cause an unexpected stop of the original player, so try to press play again
 
-	    if (!yt6.x && yt6.ytp.state && yt6.ytp.state != 2 && c[1].adaptive_fmts) {
+	    if (!yt6.x && yt6.ytp.state && yt6.ytp.state != 2) {// && c[1].adaptive_fmts
 	      //if (yt6.browser_tab == 'hidden') {
 		//try { yt6.p.playVideo() } catch(e){}
 	      //}
-	      if (yt6.layout == 16 && !yt6d.previous.linx.length) { // most notably in the new layout
+	      if (yt6.layout == 16 && yt6d.previous.linx.length) { // most notably in the new layout
 	        $waitUntil(function(){ var p = player()
 		    if (p && typeof p.getPlayerState == 'function') if (p.getPlayerState() == 2) { p.playVideo() } else try { p.playVideo() } catch(e){}
 		  },
 		  function(){
 		    try { yt6.p.playVideo() } catch(e) {}
-		  }, 200, 4000) // do it repeatedly for 4 seconds
+		  }, 200, 600) // do it repeatedly
 	      }
 	    }
 
@@ -6186,7 +6187,8 @@ if (player()) {
 	  function resync() {
 	    if (!yt6.x) {
 	      if (p2()) try {
- 		if (Math.abs(player().getCurrentTime() - player2.duration) > 1) player2.currentTime = player().getCurrentTime()
+ 		//if (Math.abs(player().getCurrentTime() - player2.duration) > 1) 
+		  player2.currentTime = player().getCurrentTime()
 		player2.playbackRate = player().getPlaybackRate()
 		//if (v && v != stage && v.getAttribute('src') && v.getAttribute('src').indexOf('googlevideo') == -1) player().setPlaybackRate( yt6.speed )
 	      } catch(e) {}
@@ -6210,8 +6212,8 @@ if (player()) {
 			    }
 			  }
 			}; break;
-		case 2: if (yt6.x && p1()) { player1.pause() } else if (p2()) { player2.pause(); resync() };
-			if (!yt6.x) {
+		case 2: if (yt6.mobile && yt6.x && p1()) { player1.pause() } else if (p2()) { player2.pause(); resync() };
+			if (!yt6.x ) {//&& !yt6.navigation && !yt6.newvideo
 			  $waitUntil(function(){ if (yt6.browser_tab == 'hidden') return true },
 			    function(){ var p = player()
 			      if (p && typeof p.getPlayerState == 'function') try { p.playVideo() } catch(e) {}
@@ -8555,7 +8557,7 @@ function buildObject(ytplayer){
 
     } else {
 
-	if (yt6.osw && yt6.osw.getAttribute('id') == 'placeholder-player' && !c[0]) { console.log('old layout, no data, video blocked, nothing to do here')
+	if (yt6.osw && yt6.osw.getAttribute('id') == 'placeholder-player' && !c[0]) { //console.log('old layout, no data, video blocked, nothing to do here')
 	  yt6.osw.setAttribute('style','display: none')
 	  return void 0
 	}
@@ -8965,6 +8967,8 @@ if (c[1]) {
     
           function setLink(href){
 
+            var http = (typeof href == 'string' && href.indexOf('http') == 0) ? '' : protocol()
+
             var onclic = 'var yt6 = gid(\'snarls_player\');'+
 '		yt6.ct = gid("player1").currentTime;'+
 '		var p = player(), p = yt6.p, v, p1load = null;'+
@@ -9072,7 +9076,7 @@ if (c[1]) {
 //'			gid("player1").setAttribute("src","' + http + href + '");'+
 '			var yt_ct;'+
 '			if (p && typeof p.getCurrentTime == "function") yt_ct = p.getCurrentTime();'+
-'			if (!yt6.x) gc("video-stream html5-main-video")[0].setAttribute("src","' + http + href + '");'+
+'			if (!yt6.x) gc("video-stream html5-main-video")[0].setAttribute("src","' + http + href + '"); '+
 '			if (!yt6.x) if (yt_ct && yt6.player2) {'+
 '			  yt6.player2.media.playbackRate = p.getPlaybackRate();'+
 '			  p.setPlaybackRate(1); p.setPlaybackRate(yt6.player2.media.playbackRate);'+
@@ -11598,37 +11602,13 @@ function mep_run() {
 
 					    //console.log(yt6.retry +' '+ limit +' '+ yt6.current + ' '+ yt6.failed_itags2);
 
-				  	  // Atttempting to replace one unusable link with its counterpart in the alternative set
-					  var bm3 = gid('bm3'), a, b
-					  if (bm3) {
-					    a = gid('yt6-links'), b = gid('alt-links')
-					  }
-					  for (j=0;j<b.children.length;j++){ 
-					    if (b.children[j].name == yt6.current && b.children[j].href) {
-					      for (k=0;k<a.children.length;k++){
-					        if (a.children[k].name == yt6.current) {
-						  var alt_link = clone(b.children[j].href); if (!alt_link) { break; break }
-						  //console.log('old: '+yt6.linx[yt6.current] +'\nold2:'+ sauce[i].value +'\nnew: '+alt_link )
-						  yt6.linx[yt6.current] = alt_link
-						  sauce[i].value = alt_link
-						  a.children[k].href = alt_link
-						  try { b.removeChild(b.children[j].nextSibling) } catch(e){}; b.removeChild(b.children[j])
-						  me.setSrc(alt_link); me.load()
-						  try { sauce[i].click() } catch(e){}
-						  me.play()
-						  return void 0; break; break
-					        }
-					      }
-					    }
-					  }
-
-
 
 					    if ( yt6.retry >= limit && yt6.failed_itags2 < 5) { yt6.retry = 0; yt6.failed_itags2++ }
 					    if ( yt6.retry < limit && yt6.failed_itags2 < 5 && (gid('ytassetsjs') || yt6.ytg ) &&
 						!((yt6.failed_itags.includes(171) || yt6.failed_itags.includes(140)) && (yt6.failed_itags.includes(278) || yt6.failed_itags.includes(132)) && (yt6.failed_itags.includes(43) || yt6.failed_itags.includes(18)))
 					       ) {
 					      if (sauce[i]) { sauce[i].removeAttribute('checked'); sauce[i].checked = '' }; me.pause()
+
 
 						function uniq(a) {
 						    var seen = {};
@@ -11654,6 +11634,34 @@ function mep_run() {
 					      for(j=0;j<yt6.fmts_fallback_uniq.length;j++){
 						if (yt6.fmts_fallback_uniq[j] == itag_ ) {
 						  //var k = (yt6.ytg) ? 0 : (j+yt6.retry)
+
+
+					  	  // Attempting to replace one unusable link with its counterpart in the alternative set
+						  var bm3 = gid('bm3'), a, b, l
+						  if (bm3) {
+						    a = gid('yt6-links'), b = gid('alt-links')
+						  }
+						  for (l=0;l<b.children.length;l++){ 
+						    if (b.children[l].name == itag_ && b.children[l].href) {
+						      for (k=0;k<a.children.length;k++){
+						        if (a.children[k].name == itag_) {
+							  var alt_link = clone(b.children[l].href); if (!alt_link) { break; break }
+							  //console.log('old: '+yt6.linx[yt6.current] +'\nold2:'+ sauce[i].value +'\nnew: '+alt_link )
+							  yt6.linx[yt6.current] = alt_link
+							  sauce[i].value = alt_link
+							  a.children[k].href = alt_link
+							  try { b.removeChild(b.children[l].nextSibling) } catch(e){}; b.removeChild(b.children[l])
+							  me.setSrc(alt_link); //me.load()
+							  //try { sauce[i].click() } catch(e){}
+							  //me.play()
+							  //return void 0;
+							  break; break
+						        }
+						      }
+						    }
+						  }
+
+
 
 						  if (yt6.failed_itags2 == 1 || yt6.failed_itags2 == 3) {
 
@@ -20391,7 +20399,6 @@ var CtrlS = function (stage,v){
 
 	case 'down snarl-button yt-uix-button-text':
 	  yt6.wmode = 'window'; if (yt6.ytg && v.style.top == '') v.style.top = '0px'
-	  //if (yt6.ie7 == true) console.log(gid('player').innerHTML)
 	  $waitUntil(function() {
 	  if (yt6.controls_pushed) {
 	    if (yt6.x) { var top = yt6.t; yt6.t_ = top; yt6.t = (yt6.t + 5) } else { var ytop = yt6.yt_t; yt6.yt_t_ = ytop; yt6.yt_t = (yt6.yt_t + 5); yt6.yt_t_0 = yt6.yt_t }
