@@ -843,7 +843,7 @@ if (!window.onchange) {
 	    }
 	  }
 	  if (pv == 'visible' && yt6.browser_tab == 'hidden') {
-	    if ((t2 && yt6.seeked2 && yt6.player1.media.paused) || (t1 && !yt6.Seeked2 && yt6.player1.media.paused)) { if (t1) try { yt6.player1.play() } catch(e){} }
+	    if ((t2 && yt6.seeked2 && yt6.player1.media.paused) || (t1 && !yt6.Seeked2 && yt6.player1.media.paused)) { if (yt6.mobile && t1 == true) try { yt6.player1.play() } catch(e){} }
 	    yt6.Seeked2 = false
 	  }
 
@@ -20615,4 +20615,3 @@ var CtrlS = function (stage,v){
 
 
 }//CtrlS
-
