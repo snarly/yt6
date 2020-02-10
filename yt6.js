@@ -832,7 +832,7 @@ if (!window.onchange) {
 	  var t1, t2
 	  if (Array.isArray(yt6.A_V) && yt6.A_V[itag(yt6.player1.media.src)]) { t1 = true; yt6.Seek = 1 }
 
-	  if (!pv && pv == 'hidden' && yt6.browser_tab == 'visible') {
+	  if (pv == 'hidden' && yt6.browser_tab == 'visible') {
 	    if (Array.isArray(yt6.V_) && yt6.V_[itag(yt6.player1.media.src)]) {
 	      if (yt6.player2 && yt6.player2.media) try {
 		t1 = yt6.player1.getCurrentTime(), t2 = yt6.player2.getCurrentTime()
@@ -6279,7 +6279,7 @@ function chk_src(me) {
 	z = (z) ? z.getAttribute('src') : null; //console.log('"'+z +'\n'+me.id+'\n'+me.src)
 	if (z) z = z.split('//')[1]
 	if ((yt6 && yt6.timer == 999999999) || me.src == 'https://www.youtube.com/ptracking' || y != z) {
-	  if (y != z && y != 'https://www.youtube.com/ptracking' && yt6 && yt6.timer != 999999999) {console.log('chk_src')
+	  if (y != z && y != 'https://www.youtube.com/ptracking' && yt6 && yt6.timer != 999999999) {
 	    yt6.player2.setSrc('https://www.youtube.com/ptracking')
 	    yt6.player1.setSrc('https://www.youtube.com/ptracking')
 	    yt6.player2.load(); yt6.player1.load()
