@@ -11857,7 +11857,7 @@ function mep_run() {
 						yt6.current = null; var p = player(), p = yt6.p; 
 						//if (!yt6.ytg || (yt6.ytg && yt6.x && (typeof yt6.errcount == 'undefined' || yt6.errcount == 0))) { decryption_failure() }
 
-					  	   console.log('Attempting to replace unusable links with the alternative set')
+					  	  //console.log('Attempting to replace unusable links with the alternative set')
 						  var bm3 = gid('bm3'), a, b, l
 						  if (bm3) {
 						    a = gid('yt6-links'), b = gid('alt-links')
