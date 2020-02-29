@@ -16676,7 +16676,12 @@ if (yt6.flexy && yt6.pls) {
 	    }
 
 
-	    if ( !(yt6.player1 && yt6.player1.media && yt6.player1.media.loaded_vid && yt6.player1.media.loaded_vid.substring(0,11) == c[1].video_id.substring(0,11)) && // condition to avoid a second reload caused occasionally by the sluggishness of the setTimeout approach
+	    if (yt6.layout == 16 && !yt6.ytm && !yt6.ytg && !yt6.blocked) { // non-Firefox, new layout, age-blocked videos still need going through this twice...
+	      yt6.age.check()
+	      if (yt6.blocked) { document.title = clone(document.title); yt6.title = '' }
+	    }
+
+	    if ( (yt6.blocked || !(yt6.player1 && yt6.player1.media && yt6.player1.media.loaded_vid && yt6.player1.media.loaded_vid.substring(0,11) == c[1].video_id.substring(0,11)) ) && // condition to avoid a second reload caused occasionally by the sluggishness of the setTimeout approach
 		 watch && document.title != yt6.title && !(yt6.ytm && yt6.ad_ && yt6.loaded_vid == yt6.vid) ) {// reloading may be triggered twice if these values are still the same at this point, so wait another turn till yt updates document.title
 
 		yt6.navigation = true
@@ -16765,6 +16770,7 @@ if (yt6.flexy && yt6.pls) {
 				if (c[1] && c[1].status != 'fail' && yt6.age.t == null || (yt6.age.t && yt6.age.t.replace(/(\r\n|\n|\r)/gm," ").split(' ').join('') == '')) {
 				  ytplayer.config.args.status = 'ok'
 				} else yt6.age.done = 0
+				if (c[1].status == undefined && c[1].video_id != video_id()[0]) return true
 				//console.log(yt6.age.t +'"'+ window.ytplayer.config.args.status +'"'+ window.ytplayer.config.args.video_id + video_id()[0])
 			      }
 			  },
