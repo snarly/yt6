@@ -32,7 +32,7 @@
     <meta name="msapplication-TileImage" content="favicon-270.png"/>
     <meta name="msapplication-config" content="none"/>
 
-    <title>Yt6</title>
+    <title>Yt6 -- Snarl's YouTube Video Player (bookmarklet)</title>
   </head>
 
   <body>
@@ -90,13 +90,30 @@ I just wrapped up to make their programs work together.</p>
 <h1>Usage on mobile platform / Make it appear like an installed app</h1>
 <br>
 
-<p>As of yet, bookmarklets are not supported on mobile devices at all, so creating a bookmark of this kind is useless in that case.
-<br><br>
-There are, however, some browser extensions which may provide a workaround. The ones below can automate execution of <strong><b>any javascript code</b></strong> specified by the user, upon each new page load. In a true Desktop environment this has just one benefit: not having to click the bookmarklet because it will always be fired up as if it was an installed app. The major drawback, regardless of platform, is the possibility of numerous users sending another load request for the main script on each and every subsequent videos, which may cause heavy overload on its development url. (In my experience for example, Firefox Mobile does have the nasty habit of doing a full page refresh on every YouTube page change in Desktop view mode, which is exactly what would eventually trigger an overload.) But on mobile, this is the only way to go. The bookmarklet's code contains sanity checks for the current web location already, so nothing will happen if we are not on a YouTube video page. Still, it's better to turn off these add-ons when you have no particular need for them.
-<br><br>
-Please note that the <code>javascript:</code> keyword (with the colon) preceding the code is only required on a working bookmarklet line or at the address bar of the browser, serving as a tag to signal what comes after it, and as such, must be omitted from a body of script. The actual pure javascript part begins with <code>(function(){</code> here and ends with <code>})();</code>. Stuff between these <code>/* ... */</code> are just comments, they can be incorporated but the javascript interpreter will ignore them anyway. And one more thing: when you copy the code directly from the link, your browser may convert the space characters found inside of it into <code>%20</code>s. That's fine for a bookmarklet, but will break any plain javascript block. Unless you perform a Search & Replace <code>%20</code>s back to spaces before you'd feed the code to an add-on, you're better off with copying the written text instead, because touchy-touchy tap-tap devices are excruciatingly dumb when it comes to editing delicate texts...
-
-<br><br>
+<p>
+<strike>
+As of yet, bookmarklets are not supported on mobile devices at all, so creating a bookmark of this kind is useless in that case.
+</strike>
+<br>
+<br>
+Bookmarklets work with most browsers on mobile too, you just have to <strong><b>tap the URL/address bar first</b></strong> (NOT the YouTube search bar!) 
+instead of going to your bookmarks page where this bookmarklet would never be executed properly. Browsers will initiate a search for all the available options 
+for whatever you type there, which in most case will include the various bookmarks you have saved. You can either search for it by typing its name 
+("Yt6" or whatever you named it) or by typing the prefix "javascript:" to narrow down the search to bookmarklets only. Tapping on the correct entry on the 
+appearing list will make the bookmarklet run, finally. So, in the end, you won't need any of the extensions below to make use of this program on mobile.
+<br>
+<br>
+There are some browser extensions which can automate the execution of <strong><b>any javascript code</b></strong> specified by the user, upon each new page load. 
+In our case this has just one benefit: not having to click/tap the bookmarklet because it will always be fired up as if it was an installed app. The major drawback, 
+regardless of platform, is the possibility of numerous users sending another load request for the main script on each and every subsequent videos, which may cause 
+heavy overload on its development url. (For example, in my experience Firefox Mobile does have the nasty habit of doing a full page refresh on every YouTube page change 
+in Desktop view mode, which is exactly what would eventually trigger an overload.) The bookmarklet's code contains sanity checks for the current web location already, 
+so nothing will happen if we are not on a YouTube video page. Still, it's better to turn off these add-ons when you have no particular need for them.
+<br>
+<br>
+Please note that the <code>javascript:</code> prefix (with the colon) preceding the code is only required on a working bookmarklet line or at the address bar of the browser, serving as a tag to signal what comes after it, and as such, must be omitted from a body of script. The actual pure javascript part begins with <code>(function(){</code> here and ends with <code>})();</code>. Stuff between these <code>/* ... */</code> are just comments, they can be incorporated but the javascript interpreter will ignore them anyway. And one more thing: when you copy the code directly from the link, your browser may convert the space characters found inside of it into <code>%20</code>s. That's fine for a bookmarklet, but will break any plain javascript block. Unless you perform a Search & Replace <code>%20</code>s back to spaces before you'd feed the code to an add-on, you're better off with copying the written text instead, because touchy-touchy tap-tap devices are excruciatingly dumb when it comes to editing delicate texts...
+<br>
+<br>
 I am not involved with any of the following software's development, I merely tested them to see if they really do what they claim to do. Use them at your own risk. (And keep in mind that on mobile you will inevitably bump into more bugs than on Desktop/Laptop.)
 
 </p>
