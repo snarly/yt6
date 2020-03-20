@@ -14096,7 +14096,7 @@ if (!t.sourcechooserButton) {//console.log('error')
 //display-playback-speed
 		html = '<div class="mejs-button mejs-speed-button" style="width: 34px"><div id="displaySpeed" style="width: 34px; padding: 2px 2px 2px 2px; color: white;">Speed 100%</div>' + 
 								'<button type="button" aria-label="' + t.options.speedText + '" title="' + t.options.speedText + '">' + t.options.defaultSpeed + t.options.speedChar + '</button>' + 
-								'<div class="mejs-speed-selector">' + 
+								'<div class="mejs-speed-selector" style="width: 130px; right: -80px;">' + 
 								'<ul style="display: inline-block">';
 				
 		if ($.inArray(t.options.defaultSpeed, t.options.speeds) === -1) {
@@ -14171,7 +14171,7 @@ if (!t.sourcechooserButton) {//console.log('error')
 //                $('<div class="display-playback-speed hidden">Speed 100%</div> ')
 //                    .appendTo(controls);
 
-	    var btnheight = Math.floor((speedSelector.height() - 15) / 2)
+	    var btnheight = Math.floor((speedSelector.height() ) / 2)
 
             var faster =
                     $('<div class="mejs-button mejs-faster-button hidden" align="center" valign="center" style="color: white; height: ' + btnheight + 'px;">' +//padding:0px 0px 0px 10px; 
@@ -18934,7 +18934,7 @@ if ((p1 != null) && (yt6.x)){
           z.style.overflowY = "scroll"
         } else {//console.log(src_chooser_height)
             if (src_chooser_height != 0) z.style.height = src_chooser_height + 1 + 'px'
-            z.style.width = "145px";//(src_chooser_width + 0) + 'px'
+            z.style.width = "130px";//(src_chooser_width + 0) + 'px'
             z.style.overflowY = "hidden"
           }
         z.style.zIndex = 2
