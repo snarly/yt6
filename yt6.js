@@ -4397,7 +4397,9 @@ function ageless_verification(spfpc) { //console.log('age')
 		  }
 		  if (z.assets) { var c = conf('assets')
 		    if (!yt6d.base_js || (!(c[1] && c[1].js))) {
-		      c[1].css = z.assets.css; c[1].js = yt6d.base_js = z.assets.js
+		      c[1].css = z.assets.css;
+		      yt6d.base_js = (c[1] && c[1].js) ? c[1].js : z.assets.js;
+		      if (!(c[1] && c[1].js)) c[1].js = z.assets.js; //c[1].js = yt6d.base_js = z.assets.js
 		    }
 		  }
 		  if (z.attrs) { var c = conf('attrs')
@@ -11858,39 +11860,42 @@ function mep_run() {
 						yt6.current = null; var p = player(), p = yt6.p; 
 						//if (!yt6.ytg || (yt6.ytg && yt6.x && (typeof yt6.errcount == 'undefined' || yt6.errcount == 0))) { decryption_failure() }
 
-					  	  //console.log('Attempting to replace unusable links with the alternative set')
-						  var bm3 = gid('bm3'), a, b, l
+
+					  	//if (!yt6.alt_links_used) {
+						  //console.log('Attempting to replace unusable links with the alternative set')
+						  var bm3 = gid('bm3'), a, b, l, alt_link
 						  if (bm3) {
 						    a = gid('yt6-links'), b = gid('alt-links')
 						  }
 						  if (a && b && b.children.length > 0) {
-						  for (l=0;l<b.children.length;l++){
-						    if (typeof b.children[l].name == 'string' && b.children[l].href) {//itag_
-						      for (k=0;k<a.children.length;k++){
-						        if (a.children[k].name == b.children[l].name) {//itag_
-							  var alt_link = clone(b.children[l].href); if (!alt_link) { break; break }
-							  if (yt6.failed_itags[0]) { yt6.current = clone(yt6.failed_itags[0]); yt6.failed_itags = []; yt6.retry = 0 }
-							  //console.log('old: '+yt6.linx[yt6.current] +'\nold2:'+ sauce[i].value +'\nnew: '+alt_link )
-							  yt6.linx[yt6.current] = alt_link
-							  sauce[i].value = alt_link
-							  a.children[k].href = alt_link
-							  try { b.removeChild(b.children[l].nextSibling) } catch(e){}; b.removeChild(b.children[l])
-							  //me.setSrc(alt_link); //me.load()
-							  //try { sauce[i].click() } catch(e){}
-							  //if (autoplay(true)) me.play()
-							  //return void 0;
-							  //break; break
-						        }
+						    for (l=0;l<b.children.length;l++){
+						      if (typeof b.children[l].name == 'string' && b.children[i].name != 'undefined' && b.children[l].href) {//itag_
+							for (k=0;k<a.children.length;k++){
+							  if (a.children[k].name == b.children[l].name) { //console.log(a.children[k].name)//itag_
+							    var alt_link = clone(b.children[l].href); if (!alt_link) { break; break }
+							    if (yt6.failed_itags[0]) { yt6.current = clone(yt6.failed_itags[0]); yt6.failed_itags = []; yt6.retry = 0 }
+							    //console.log('old: '+yt6.linx[yt6.current] +'\nold2:'+ sauce[i].value +'\nnew: '+alt_link )
+							    yt6.linx[yt6.current] = alt_link
+							    sauce[i].value = alt_link
+							    a.children[k].href = alt_link
+							    try { b.removeChild(b.children[l].nextSibling) } catch(e){}; b.removeChild(b.children[l])
+							    //me.setSrc(alt_link); //me.load()
+							    //try { sauce[i].click() } catch(e){}
+							    //if (autoplay(true)) me.play()
+							    //return void 0;
+							    //break; break
+							  }
+							}
 						      }
 						    }
-						  }
-						  if (alt_link && !yt6.failed_itags[0]) {
+						    if (alt_link && !yt6.failed_itags[0]) { //yt6.alt_links_used = true
 							me.setSrc(alt_link); me.load()
 							try { sauce[i].click() } catch(e){}
 							if (autoplay(true)) me.play()
 							return void 0
+						    }
 						  }
-						  }
+						//}
 
 
 
@@ -14166,11 +14171,12 @@ if (!t.sourcechooserButton) {//console.log('error')
 //                $('<div class="display-playback-speed hidden">Speed 100%</div> ')
 //                    .appendTo(controls);
 
+	    var btnheight = Math.floor((speedSelector.height() - 15) / 2)
 
             var faster =
-                    $('<div class="mejs-button mejs-faster-button hidden" align="center" valign="center" style="color: white; height: 120px;">' +//padding:0px 0px 0px 10px; 
+                    $('<div class="mejs-button mejs-faster-button hidden" align="center" valign="center" style="color: white; height: ' + btnheight + 'px;">' +//padding:0px 0px 0px 10px; 
 			//'<button type="button" style="background-position: -96px -6px; margin: 12px 5px;"</button>' +
-                        '<button type="button" style="background: none; border: 1px solid white; height: 120px" aria-controls="' + t.id + '" title="' + t.options.fasterText + '" aria-label="' + t.options.fasterText + '"></button>+' +
+                        '<button type="button" style="background: none; border: 1px solid white; height: ' + btnheight + 'px" aria-controls="' + t.id + '" title="' + t.options.fasterText + '" aria-label="' + t.options.fasterText + '"></button>+' +
                     '</div>')
                     .appendTo(speedCustom)/*(controls)
 			.hover(function() {
@@ -14202,9 +14208,9 @@ if (!t.sourcechooserButton) {//console.log('error')
 
 
             var slower =
-                    $('<div class="mejs-button mejs-slower-button hidden" align="center" valign="center" style="color: white; height: 120px;">' +
+                    $('<div class="mejs-button mejs-slower-button hidden" align="center" valign="center" style="color: white; height: ' + btnheight + 'px;">' +
 			//'<button type="button" style="background-position: -96px 6px; margin: 4px 5px"</button>' +
-                        '<button type="button" style="background: none; border: 1px solid white; height: 120px;" aria-controls="' + t.id + '" title="' + t.options.slowerText + '" aria-label="' + t.options.slowerText + '"></button>-' +
+                        '<button type="button" style="background: none; border: 1px solid white; height: ' + btnheight + 'px;" aria-controls="' + t.id + '" title="' + t.options.slowerText + '" aria-label="' + t.options.slowerText + '"></button>-' +
                         '</div>')
                         .appendTo(speedCustom)/*(controls)
 			.hover(function() {
@@ -14409,6 +14415,7 @@ if (!t.sourcechooserButton) {//console.log('error')
 		//console.log(yt6.age.count)
 		yt6.Seeked2 = false
 		yt6.navigation = true
+		//yt6.alt_links_used = false
 		yt6.ads_noskip = 0
 		yt6.age.blocked = 0
 		yt6.pl_fix = 0
@@ -18927,7 +18934,7 @@ if ((p1 != null) && (yt6.x)){
           z.style.overflowY = "scroll"
         } else {//console.log(src_chooser_height)
             if (src_chooser_height != 0) z.style.height = src_chooser_height + 1 + 'px'
-            z.style.width = "130px";//(src_chooser_width + 0) + 'px'
+            z.style.width = "145px";//(src_chooser_width + 0) + 'px'
             z.style.overflowY = "hidden"
           }
         z.style.zIndex = 2
