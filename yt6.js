@@ -17393,9 +17393,9 @@ function nop(){//    } else {
 
   if (z.parentNode.getAttribute('id') == 'placeholder-player') {
     var b = z.parentNode;//gid('placeholder-player')
-    var a_ = z; if (a_) a = a_.cloneNode(false)//b.firstChild
+    var a_ = z; if (a_) var a = a_.cloneNode(false)//b.firstChild
   } else {
-      var a = z; if (a) a = a.cloneNode(false)
+      var a = z; if (a) var a = a.cloneNode(false)
       var b = yt6.top
       if (yt6.mobile && !b) return void 0//gid('top') || gid('content-layer')
       b.style.setProperty('margin-top','',''); b.removeAttribute('style');// = '0px'
