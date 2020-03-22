@@ -17282,10 +17282,10 @@ function resize_layers(w,h,me_aspect){
     yt6.tbg.style.setProperty('display','none','')
     yt6.tbg.style.setProperty('height','0px','')
   }*/
-  var api = gid('player-api').style
-  var bm0 = gid('bm0')
+  var api_ = gid('player-api'); if (api_) var api = api_.cloneNode(false).style
+  var bm0_ = gid('bm0'); if (bm0_) var bm0 = bm0_.cloneNode(false)
   var webgl = get_webgl()
-  var mep = gid(mep_x("mep_"))
+  var mep_ = gid(mep_x("mep_")); if (mep_) var mep = mep_.cloneNode(false)
   var me_flash_ = getElementsByAttribute(document,"embed","name",mep_x("me_flash_"))
   if (typeof me_flash_[0] != 'undefined') me_flash_[1] = gid(mep_x('me_flash__ __container'))
 
@@ -17393,10 +17393,11 @@ function nop(){//    } else {
 
   if (z.parentNode.getAttribute('id') == 'placeholder-player') {
     var b = z.parentNode;//gid('placeholder-player')
-    var a = z;//b.firstChild
+    var a_ = z; if (a_) a = a_.cloneNode(false)//b.firstChild
   } else {
-      var a = z;
-      var b = yt6.top; if (yt6.mobile && !b) return void 0//gid('top') || gid('content-layer')
+      var a = z; if (a) a = a.cloneNode(false)
+      var b = yt6.top
+      if (yt6.mobile && !b) return void 0//gid('top') || gid('content-layer')
       b.style.setProperty('margin-top','',''); b.removeAttribute('style');// = '0px'
       yt6.tbg.style.setProperty('margin-bottom','','')
       if (!(yt6.fullscreen || yt6.ytp_fullscreen)) yt6.tbg.style.setProperty('display','inline-block','')
@@ -17547,7 +17548,8 @@ if (f != null) {
 
   var flashvars = player().getAttribute('flashvars')
   var chat = document.getElementsByTagName('ytd-live-chat-frame')[0] || gid('chat')
-  var p1 = gid('player1')
+
+  var p1_ = gid('player1'); if (p1_) var p1 = p1_.cloneNode(false)
 
   var ytp_class = p.getAttribute('class')
 
@@ -17707,7 +17709,10 @@ function zip(){
 //      if (Math.abs(p1.style.height.replace('px','') - Math.floor(p1.style.height.replace('px','') / 2) * 2) < Math.abs(p1.style.height.replace('px','') - Math.ceil(p1.style.height.replace('px','') / 2) * 2)) { p1.style.height = Math.floor(p1.style.height.replace('px','') / 2) * 2 + 2 + 'px' } else { p1.style.height = Math.ceil(p1.style.height.replace('px','') / 2) * 2 + 'px' }
       if (c) try { gid('a_width').value = (bm0) ? bm0.style.width.replace('px','') : p.parentNode.parentNode.offsetWiddth + 'px'; gid('a_height').value = (bm0) ? bm0.style.height.replace('px','') : p.parentNode.parentNode.offsetHeight + 'px' } catch(e){}
     }
-  }
+
+
+  }//p1 null
+
 
   var windowheight = parseInt(window.innerHeight || document.documentElement.clientHeight || yt6.body.clientHeight)
 
@@ -17743,13 +17748,15 @@ function zip(){
 
     a.removeAttribute("style")
 
-    a.style.width = w + 'px'
+    if (c) a.style.width = w + 'px'; // triggers a superfluous repositioning of the flexible player in default view mode
     a.style.height = h + 'px'
     a.style.left = api.left
     a.style.backgroundColor = 'transparent'
     a.style.minHeight = '0px'
     a.style.maxHeight = '9999px'
     a.style.display = (!yt6.flexy && !yt6.mobile) ? 'inline-block' : ''
+
+    z.setAttribute('style', a.style.cssText)
 
     if (a.getAttribute('id') == 'player' && !yt6.ytg) {
 	var l = yt6.con
@@ -17777,6 +17784,9 @@ function zip(){
     } else var l = gc('footer relative layout vertical style-scope ytg-watch-page')[0]
 
     if (yt6.wsb) yt6.wsb.removeAttribute('style') //yt6.wsb.setAttribute('style','top:0px')
+
+
+
 
 if (a.getAttribute('id') != 'player') { //pre-2016 layout start
 //console.log('pre-2016 layout')
@@ -17954,7 +17964,7 @@ if (a.getAttribute('id') != 'player') { //pre-2016 layout start
 
     var yh = -1* ytp_style.height.replace('px','').split('"').join('') - MC
     var g = 0; //if (browserName == 'Edge') { var g = 1 } else var g = 0;
-    var a = gid('player-container')
+    var a_ = gid('player-container'); if (a_) var a = a_.cloneNode(false)
     a.style.marginTop = ''
     e.position = ''
     var ptc = gid('player-theater-container')
@@ -18726,7 +18736,7 @@ if (yt6.flexy) {
 
 	  var x = (windowwidth - 2 * eleft - w) / 2
 	  if (yt6.aspect_ratio > 1 ) {
-	    x = (a.parentNode.offsetWidth >= w) ? x : x - ((w - a.parentNode.offsetWidth) / 2);
+	    x = (a_.parentNode.offsetWidth >= w) ? x : x - ((w - a_.parentNode.offsetWidth) / 2);
 	  }
 
 
@@ -18775,7 +18785,8 @@ if (yt6.flexy) {
 	      }
 	    yt6.api.style.top = ''
 
-	    var y = (yt6.inf.offsetWidth - a.parentNode.offsetWidth) / 2
+	    var y = (yt6.inf.offsetWidth - a_.parentNode.offsetWidth) / 2
+	    if (p1 && (h * yt6.aspect_ratio) < 425) y = y - ((425 - (h * yt6.aspect_ratio)) / 2)
 	    yt6.osw.style.left = (yt6.aspect_ratio >= 1) ? '0px' : y + 'px'  //(y > 0 && windowwidth >= 1000 && (h/w - 3/4) > parseFloat(0.1)) ? y + 'px' : ''
 	  }
       }
@@ -18830,6 +18841,16 @@ if (yt6.flexy) {
 
 
   }
+
+
+  if (p1_) p1_.setAttribute('style', p1.style.cssText)
+  if (api_) api_.style = api.cssText
+  if (bm0_) bm0_.style = bm0.style.cssText
+  if (mep_) mep_.style = mep.style.cssText
+  if (a)
+    if (yt6.layout == 16) {
+	if (gid('player-container')) gid('player-container').style = a.style.cssText
+    } else z.style = a.style.cssText
 
 
 }//scaling
@@ -18947,6 +18968,7 @@ if ((p1 != null) && (yt6.x)){
   var top = (yt6.layout != 16) ? yt6.mhp.offsetHeight : yt6.mhp.parentNode.offsetHeight
   var z = gid("bm3")
   if (z) z.style.top = (!yt6.ytm) ? top - 2 + "px" : '0px' 
+
 
 
   //var flexyleft = yt6.flexyleft = 
