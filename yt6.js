@@ -18854,7 +18854,7 @@ if (yt6.flexy) {
 
 
   if (p1_) p1_.setAttribute('style', p1.style.cssText)
-  if (api_) api_.style = api.cssText
+  if (api_) api_.setAttribute('style', api.cssText)
   if (bm0_) bm0_.setAttribute('style', bm0.style.cssText)
   if (mep_) mep_.setAttribute('style', mep.style.cssText)
   if (a)
