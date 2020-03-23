@@ -1357,7 +1357,7 @@ function hand_axe(){
 		    var sytimg = ytplayer.config.assets.js
 		    if (!sytimg) sytimg = yt6d.base_js || '//m.youtube.com' + ytcfg.data_.PLAYER_JS_URL
 		    if (sytimg.indexOf('/yts/') == 0) sytimg = sytimg.replace('/yts/','//s.ytimg.com/yts/')
-		    bm1.innerHTML = '<button id="getjs" onclick="var bm1 = gid(\'bm1\'); bm1.newWindow = window.open( \'' + protocol() + sytimg + '\', \'_blank\'); if (bm1.newWindow != null) bm1.newWindow.focus(); "><span><img src="//yt3.ggpht.com/-afBnHVG_R6E/AAAAAAAAAAI/AAAAAAAAAAA/LtE5kbPkZvE/s27-c-k-no-mo-rj-c0xffffff/photo.jpg" style="height:27px"></img></span></button';
+		    bm1.innerHTML = '<button id="getjs" onclick="var bm1 = gid(\'bm1\'); bm1.newWindow = window.open( \'' + protocol() + sytimg + '\', \'_blank\'); if (bm1.newWindow != null) bm1.newWindow.focus(); "><span><img src="//yt3.ggpht.com/-afBnHVG_R6E/AAAAAAAAAAI/AAAAAAAAAAA/LtE5kbPkZvE/s192-c-k-no-mo-rj-c0xffffff/photo.jpg" style="height:27px"></img></span></button';
 		    var z = gc('yt-masthead-logo-container ')
 		    if (z[0]) {
 		      var z = z[0]
@@ -9173,7 +9173,7 @@ if (c[1]) {
 '		if ((sauce != undefined) && (sauce.length != 0)) {'+
 '		  for (i=0;i<sauce.length;i++) {'+
 '		    if (sauce[i] != undefined) {'+ //check if the chosen format was put in the sourcechooser box list too
-'		      if (("'+href+'" == sauce[i].getAttribute("value").replace("https:","")) || ("'+href.replace("&ratebypass=yes","")+'" == sauce[i].getAttribute("value").replace("https:","")) || ("'+href.substring(0, href.length-2)+'" == sauce[i].getAttribute("value").replace("https:","")) || ("'+href.substring(0, href.length-2).replace("&ratebypass=yes","")+'" == sauce[i].getAttribute("value").replace("https:",""))) {'+ //check if both links point to the same URLs
+'		      if (("'+href+'" == sauce[i].getAttribute("value").replace("https:","")) || ("'+href.replace("&ratebypass=yes","")+'" == sauce[i].getAttribute("value").replace("https:","")) || ("'+href.substring(0, href.length-2)+'" == sauce[i].getAttribute("value").replace("https:","")) || ("'+href.substring(0, href.length-2).replace("&ratebypass=yes","")+'" == sauce[i].getAttribute("value").replace("https:","")) || itag("'+href+'") == itag(sauce[i].getAttribute("value")) ) {'+ //check if both links point to the same URLs
 '			var found = true;'+
 '			if (yt6.x) for (j=0;j<sauce.length;j++) {'+
 '			  if (sauce[j] != undefined) {'+
@@ -9236,13 +9236,15 @@ if (c[1]) {
 '			      }'+
 '			    yt6.player2.media.setCurrentTime(yt6.ct);'+
 '			    if (yt6.x && p1load == 1) { yt6.player1.media.play() } else { yt6.player1.pause() }'+//; yt6.player2.pause()
-'			  }   '+
-'			;return false'+
+'			  };   '+
+'			if (yt6 && yt6.mobile) { this.href0 = "' + href + '"; this.removeAttribute("href") };'+
+'			return false'+
 '		      };'+
 '		    }'+
 '		  }'+//for
 '		};'+//empty sourcechooser box?
 
+'		if (yt6 && yt6.mobile) { this.href0 = "' + href + '"; this.removeAttribute("href") };'+
 '		if (found == false) {'+
 '		  window.open( "' + href + '", "_blank").focus()'+
 '		}; '+
@@ -9808,7 +9810,15 @@ if (typeof html.splice != 'function') return void 0;
 	var l = gclass('yt6-links')//-used')
 	//for(i=0;i<l.length;i++) { a.appendChild(l[i].previousSibling); a.appendChild(l[i]); }//if(l[i] && l[i].parentNode != a) 
 	//var l = gclass('yt6-links')//, n = (m == 'used') ? a : b;
-	for(i=0;i<l.length;i++) { n = (l[i].m == 'used') ? a : b; n.appendChild(l[i].previousSibling); n.appendChild(l[i]);  } //if(l[i] && l[i].parentNode != a) l[i].setAttribute('class','yt6-links alt')
+	for(i=0;i<l.length;i++) {
+	  if (yt6.mobile)
+	    addEL(l[i], 'touchend', function(event) {
+		var touch = event.touches[0];
+		//event.preventDefault();
+		this.href = this.href0
+	    }, false);
+	  n = (l[i].m == 'used') ? a : b; n.appendChild(l[i].previousSibling); n.appendChild(l[i]);
+	} //if(l[i] && l[i].parentNode != a) l[i].setAttribute('class','yt6-links alt')
 	//var l = gclass('yt6-links-used')
 	//for(i=0;i<l.length;i++) { l[i].setAttribute('class','yt6-links used')}
 	//var l = gc('yt6-links')
@@ -9821,7 +9831,7 @@ if (!gid('bm4')) {
 
   var dw = document.createElement('button')
   dw.id = 'bm4'
-  dw.innerHTML = '<img src="//yt3.ggpht.com/-afBnHVG_R6E/AAAAAAAAAAI/AAAAAAAAAAA/LtE5kbPkZvE/s27-c-k-no-mo-rj-c0xffffff/photo.jpg" style="height:27px; font"></img><br><div style="margin-left: -2px">Download</div>'
+  dw.innerHTML = '<img src="//yt3.ggpht.com/-afBnHVG_R6E/AAAAAAAAAAI/AAAAAAAAAAA/LtE5kbPkZvE/s192-c-k-no-mo-rj-c0xffffff/photo.jpg" style="height:27px; font"></img><br><div style="margin-left: -2px">Download</div>'
 //i1.ytimg.com/i/gsZadWjuuN2dEhI0mZfVfQ/mq1.jpg?v=531525b4
 
   var onclic = function(){
@@ -12242,7 +12252,7 @@ function mep_run() {
 					  if (yt6.speed) yt6.player2.media.playbackRate = me.playbackRate = yt6.speed;
 					  if (!me.paused && typeof yt6.player2.media.loaded != 'number') {
 					    yt6.player1.showControls(true)
-					    yt6.player1.hideControls(true)
+					    if (!yt6.A_[itag(me.src)]) yt6.player1.hideControls(true)
 					    //try { document.activeElement.blur() } catch(e) {}
 					  }
 					  if (player1.options.loop1 && player1.options.alwaysShowControls == false) {
@@ -12895,7 +12905,7 @@ function mep_run() {
 
     var poster_click = function(){
       var k = gclass('mejs-playpause-button')
-      if (typeof k[0] != 'undefined') { k[0].firstChild.click() }
+      if (typeof k[0] != 'undefined') { k[0].firstChild.click(); if (yt6.A_[itag(yt6.player1.media.src)] && !yt6.player1.media.paused) yt6.player1.hideControls(true) }
     }
 
     var z = gc('mejs-layer mejs-poster')
@@ -18845,12 +18855,12 @@ if (yt6.flexy) {
 
   if (p1_) p1_.setAttribute('style', p1.style.cssText)
   if (api_) api_.style = api.cssText
-  if (bm0_) bm0_.style = bm0.style.cssText
-  if (mep_) mep_.style = mep.style.cssText
+  if (bm0_) bm0_.setAttribute('style', bm0.style.cssText)
+  if (mep_) mep_.setAttribute('style', mep.style.cssText)
   if (a)
     if (yt6.layout == 16) {
-	if (gid('player-container')) gid('player-container').style = a.style.cssText
-    } else z.style = a.style.cssText
+	if (gid('player-container')) gid('player-container').setAttribute('style', a.style.cssText)
+    } else z.setAttribute('style', a.style.cssText)
 
 
 }//scaling
@@ -18973,6 +18983,7 @@ if ((p1 != null) && (yt6.x)){
 
   //var flexyleft = yt6.flexyleft = 
   ythtml5_size()
+
   
   if (typeof yt6.wallpaper == 'string') wallpaper()
   //if (!flexyleft && p1) flexyleft = 1 * p1.style.left.replace('px','')
@@ -19430,6 +19441,7 @@ function nop(){//    } else {
   for(i=0;i<properties.length;i++){
     if ((z) && (typeof z.style[properties[i]] !== 'undefined')) { z.style[properties[i]] = 'none'; break }
   }
+  if (v && yt6.prop && yt6.propName) try { v.style[yt6.propName] = yt6.prop } catch(e){}
   
   }
 
