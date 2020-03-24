@@ -9872,7 +9872,7 @@ if (!gid('bm4')) {
 
 	if (ytam)
 	if (yt6.flexy && yt6.pls && ww < 1000) {
-	  yt6.pls.firstChild.insertBefore(ytam, yt6.pls.firstChild.firstChild)
+	  yt6.pls.firstElementChild.insertBefore(ytam, yt6.pls.firstElementChild.firstElementChild)
 	} else if (wna && wna.parentNode && ytam != wna.firstChild) wna.insertBefore(ytam, wna.firstChild)
 
     if (!bm3) { var bm1 = gid('bm1'); if (bm1) bm1.parentNode.removeChild(bm1); redo_dl_button(  yt6.args,  yt6.html,  yt6.href); return void 0; }
@@ -15987,7 +15987,7 @@ if (yt6.mpb && yt6.mpb.tagName == 'YTD-MINIPLAYER') {
 		    var ww = parseInt(window.innerWidth || document.documentElement.clientWidth || yt6.body.clientWidth) - yt6.sb
 		    var wh = parseInt(window.innerHeight || document.documentElement.clientHeight || yt6.body.clientHeight)// - mhp - 8
 		    if (ww < 1000 && yt6.pls) {
-		      if (gid(yt_alert_message) && gid(yt_alert_message).parentNode.parentNode != yt6.pls) yt6.pls.firstChild.insertBefore(gid(yt_alert_message), yt6.pls.firstChild.firstChild)
+		      if (gid(yt_alert_message) && gid(yt_alert_message).parentNode.parentNode != yt6.pls) yt6.pls.firstElementChild.insertBefore(gid(yt_alert_message), yt6.pls.firstElementChild.firstElementChild)
 		    }
 
 		    if (yt6.w && !(yt6.wide && yt6.w == ww + 'px') && !(yt6.mpb && yt6.mpb.hasAttribute('active') && yt6.w == p.parentNode.offsetWidth + 'px') && typeof yt6.w.replace == 'function') {
@@ -16073,8 +16073,8 @@ if (yt6.mpb && yt6.mpb.tagName == 'YTD-MINIPLAYER') {
 			if (yt6.pls && typeof yt6.pls.ww == 'number') ww = yt6.pls.ww
 			//if (!yt6.pls && ytam && ytam.parentNode != wna) wna.insertBefore(ytam, wna.firstChild)
 			if (ytam)
-			if (yt6.flexy && ww < 1000 && yt6.pls && yt6.pls.firstChild) {
-			  if (ytam != yt6.pls.firstChild.firstChild) yt6.pls.firstChild.insertBefore(ytam, yt6.pls.firstChild.firstChild)
+			if (yt6.flexy && ww < 1000 && yt6.pls && yt6.pls.firstElementChild) {
+			  if (ytam != yt6.pls.firstElementChild.firstElementChild) yt6.pls.firstElementChild.insertBefore(ytam, yt6.pls.firstElementChild.firstElementChild)
 			} else if (wna && wna.parentNode && ytam != wna.firstChild) { wna.insertBefore(ytam, wna.firstChild) }
 
 		}// flexible player only
@@ -16533,7 +16533,7 @@ if (yt6.flexy && yt6.pls) {
     }
   } else if (wna && wna.firstChild == gid(yt_alert_message)) {
 	if (gid(yt_alert_message)) wna.insertBefore(gid(yt_alert_message), wna.firstChild)
-	//yt6.pls.firstChild.insertBefore(gid(yt_alert_message), yt6.pls.firstChild.firstChild)
+	//yt6.pls.firstElementChild.insertBefore(gid(yt_alert_message), yt6.pls.firstElementChild.firstElementChild)
     }
 }
 
@@ -18116,7 +18116,7 @@ if (a.getAttribute('id') != 'player') { //pre-2016 layout start
 if (windowwidth < 1000) {
   //if (playlist) {
 
-    if (yt6.flexy && gid(yt_alert_message) && playlist) playlist.firstChild.insertBefore(gid(yt_alert_message), playlist.firstChild.firstChild)
+    if (yt6.flexy && gid(yt_alert_message) && playlist) playlist.firstElementChild.insertBefore(gid(yt_alert_message), playlist.firstElementChild.firstElementChild)
 
     if ((windowwidth + yt6.sb) > 881) {
       if (yt6.flexy) {
@@ -18290,7 +18290,7 @@ if (windowwidth < 1000) {
 if (yt6.flexy) {
   if (windowwidth < 1000) {
     if (playlist) {
-	playlist.firstChild.insertBefore(gid(yt_alert_message), playlist.firstChild.firstChild)
+	playlist.firstElementChild.insertBefore(gid(yt_alert_message), playlist.firstElementChild.firstElementChild)
 	playlist.style.marginTop = '0px'
 	yt6.inf.style.marginTop = '-24px'
     } else yt6.con.style.marginTop = ''
@@ -18393,7 +18393,7 @@ if (yt6.flexy) {
 if (yt6.flexy) {
   if (windowwidth < 1000) {
     if (playlist) {
-	playlist.firstChild.insertBefore(gid(yt_alert_message), playlist.firstChild.firstChild)
+	playlist.firstElementChild.insertBefore(gid(yt_alert_message), playlist.firstElementChild.firstElementChild)
 	playlist.style.marginTop = '0px'
 	yt6.con.style.marginTop = (w >= 657) ? h + 'px' : ''//'-24px'
 	if (w == windowwidth && w < 709) yt6.wna.style.marginTop = ''
@@ -20339,7 +20339,7 @@ var controls = gid('controls-sp')
     //for(var i in z){ if (z[i] && typeof z[i].getAttribute == 'function' && z[i].getAttribute('id')) z[i].removeAttribute('id') }
 
   var windowwidth = parseInt(window.innerWidth || document.documentElement.clientWidth || yt6.body.clientWidth) - yt6.sb // - 1
-  if (yt6.flexy && yt6.pls && windowwidth < 1000) yt6.pls.firstChild.insertBefore(gid(yt_alert_message), yt6.pls.firstChild.firstChild)
+  if (yt6.flexy && yt6.pls && windowwidth < 1000) yt6.pls.firstElementChild.insertBefore(gid(yt_alert_message), yt6.pls.firstElementChild.firstElementChild)
 
   return gid('controls-sp')
 }//control_panel1
