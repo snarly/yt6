@@ -3856,7 +3856,7 @@ function iframe() {
 
 		      yt6.embed.play = function() {
 			yt6.embed.check(yt6.embed.player)
-			try { yt6.embed.player.playVideo() } catch(e) {console.log(e)
+			try { yt6.embed.player.playVideo() } catch(e) {
 			  if (e && e.toString().indexOf('DOM') > -1) { alert('Error: The YouTube player is not attached to the DOM.')
 			    window.yt6.embed.active()
 			  }
@@ -3875,7 +3875,7 @@ function iframe() {
 		      $waitUntil(function(){ if (typeof CtrlS == 'function') return true },
 			function(){ set_controls()
 			  if (yt6.age.t == yt6.reason && yt6.x) switch_players()
-			  if (!yt6.x && autoplay(false)) try { yt6.embed.play() } catch(e){alert(e)}
+			  if (!yt6.x && autoplay(false)) try { yt6.embed.play() } catch(e){}
 			},300,3000)
 
 		  } //embed control
