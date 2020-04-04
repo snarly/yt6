@@ -837,7 +837,7 @@ if (!window.onchange) {
 	      if (yt6.player2 && yt6.player2.media) try {
 		t1 = yt6.player1.getCurrentTime(), t2 = yt6.player2.getCurrentTime()
 		if (typeof t1 == 'number' && typeof t2 == 'number' && Math.abs(t1 - t2) > 0.3) {
-		  yt6.ct = yt6.player1.media.currentTime = yt6.player2.media.currentTime
+		  yt6.ct = yt6.player1.media.currentTime = yt6.player2.media.currentTime; if (yt6.player1.media.paused == false) { yt6.player1.play() } else yt6.player1.pause()
 		}
 	      } catch(e){}
 	    }
@@ -3912,7 +3912,7 @@ function iframe() {
 
 		    window.yt6.embed.active = function() {
 
-			try { original(yt6.p).stopVideo() } catch(e){}
+			try { original(yt6.p).pauseVideo() } catch(e){}
 
 			var c = conf('args')
 			if (c[1] && location.href.split('list=PL')[1]) {
@@ -6263,7 +6263,7 @@ if (player()) {
 	var player1 = gid('player1')
 
 
-	if ((yt6 && !yt6.x) || (yt6.mobile && yt6.x)) {
+	if (yt6 && (!yt6.x || yt6.browser_tab == 'hidden' || (yt6.x && yt6.navigation && yt6.browser_tab == 'visible') || (yt6.mobile && yt6.x) )) {
 	  if (player() && typeof yt6.p.getPlayerState == 'function') {
 	    if (typeof yt6.p.getAttribute('flashvars') != 'string') {
 		var stage = gc('html5-video-content')[0]
@@ -6291,29 +6291,41 @@ if (player()) {
 	  }
 
 	  switch (newState) {
+		case -1: if (yt6.x && yt6.navigation && yt6.browser_tab == 'visible') try { yt6.p.pauseVideo() } catch(e){}; break
 		case 0: if (p2()) player2.pause(); resync(); break
-		case 1: if (yt6.mobile && yt6.x && p1() && player1.media.loaded_vid == yt6.vid) { player1.play() } else if (p2()) {
-			  if ((typeof srcto != 'undefined') && (srcto == yt6.audio)) { player2.play(); break }
+		case 1: if (yt6.x && yt6.navigation && yt6.browser_tab == 'visible') try { yt6.p.pauseVideo(); } catch(e){};
+			if (yt6.browser_tab == 'hidden' && yt6.x && p1()) {
+			  if (yt6.player1 && yt6.player1.media) {
+			     var a = 0, b = 0; try { a = yt6.p.getDuration() } catch(e){ a = 0 }; try { b = yt6.player1.media.currentTime } catch(e){ b = 0 };
+			     if ((yt6.newvideo || yt6.player1.media.loaded_vid == yt6.vid) && (a - b) > 1) { yt6.player1.play(); break };
+			  }
+			}
+			if (p2()) {
+			  if (typeof srcto != 'undefined' && srcto == yt6.audio) { player2.play(); break }
 			  if (v && v.src) {
 			    if (typeof v.src.split('itag=')[1] != 'undefined') {
-			      if  ( (typeof yt6.A_V[v.src.split('itag=')[1].split('&')[0]] !== 'string')
-				   && (typeof yt6.A_[v.src.split('itag=')[1].split('&')[0]] !== 'string')
-				   && ((typeof yt6.V_[v.src.split('itag=')[1].split('&')[0]] === 'string')
-				       || (v.src.indexOf('itag=278') > -1))
-				  || ((typeof srcto != 'undefined') && (srcto == yt6.audio)) 
-				) { player2.play() }
+			      if ( (    (typeof yt6.A_V[v.src.split('itag=')[1].split('&')[0]] !== 'string')
+				     && (typeof yt6.A_[v.src.split('itag=')[1].split('&')[0]] !== 'string')
+				     && ( (typeof yt6.V_[v.src.split('itag=')[1].split('&')[0]] === 'string')
+				           || (v.src.indexOf('itag=278') > -1)
+					)
+				   )
+				   || (typeof srcto != 'undefined' && srcto == yt6.audio)
+				 ) { player2.play() }
 			    }
 			  }
 			}; break;
-		case 2: if (yt6.mobile && yt6.x && p1()) { player1.pause() } else if (p2()) { player2.pause(); resync() };
+		case 2: //if (yt6.mobile && yt6.x && p1()) { player1.pause() } else
+			if (yt6.browser_tab == 'hidden' && yt6.x && p1() && yt6.player1.media.loaded_vid == yt6.vid) { yt6.Seek = 5 }
+			if (p2()) { player2.pause(); resync() };
 			if (!yt6.x ) {//&& !yt6.navigation && !yt6.newvideo
 			  $waitUntil(function(){ if (yt6.browser_tab == 'hidden') return true },
 			    function(){ var p = player()
 			      if (p && typeof p.getPlayerState == 'function') try { p.playVideo() } catch(e) {}
-			    }, 40, 500) // Check for a very short period of time to see whether this call for pause coincides with being on a hidden tab, meaning the call came from YT's own code to prevent background play on mobile. Counteract if so.
+			    }, 40, 1000) // Check for a very short period of time to see whether this call for pause coincides with being on a hidden tab, meaning the call came from YT's own code to prevent background play on mobile. Counteract if so.
 		        }; break
-		case 3: if (p2()) { player2.pause(); resync() }; break
-		case 5: if (p2()) { player2.pause(); }; break
+		case 3: if (!yt6.x && yt6.browser_tab == 'visible' && p2()) { player2.pause(); resync() }; if (yt6.x && yt6.navigation && yt6.browser_tab == 'visible') try { yt6.p.pauseVideo() } catch(e){}; break
+		case 5: if (!yt6.x && yt6.browser_tab == 'visible' && p2()) { player2.pause(); }; if (yt6.x && yt6.navigation && yt6.browser_tab == 'visible') try { yt6.p.pauseVideo() } catch(e){}; break
 	  }
 
 	} else if (yt6 && yt6.x && newState == -1) try { player().pauseVideo() } catch(e) {}
@@ -12276,7 +12288,7 @@ function mep_run() {
 					  }
 					  if (yt6.size == 'media') Mqch()
 					});
-					addEL(me, 'loadeddata', function() { me.loaded_vid = video_id()[0] + '/' + itag(me.src); //console.log('1loaded '+ me.loaded_vid); 
+					addEL(me, 'loadeddata', function() { me.loaded_vid = video_id()[0]; me.loaded_itag = itag(me.src) //console.log('1loaded '+ me.loaded_vid); 
 					  if ( yt6 && yt6.player1 && !yt6.navigation && (yt6.timer == 999999999 || me.src == 'https://www.youtube.com/ptracking' || yt6.player1.media.src != me.src))
 					    return void 0;
 					  yt6.retry = 0; yt6.failed_itags = []; yt6.failed_itags2 = 1
@@ -12478,7 +12490,7 @@ function mep_run() {
 					      }
 					    //if (!me.paused && player2.paused) player2.currentTime = yt6.ct
 					  } //else if (me.currentTime != yt6.ct) me.currentTime = yt6.ct
-					    if (yt6.ytp.ct2) if (location.href.indexOf(yt6d.current.video_id) > -1 && me.loaded_vid == yt6.vid + '/' + itag(me.src)) { yt6.player1.media.currentTime = yt6.player2.media.currentTime = me.currentTime = yt6.ct = clone(yt6.ytp.ct2); yt6.ytp.ct2 = 0; if (!me.paused && yt6.V_[itag(me.src)])  yt6.player2.media.play() }
+					    if (yt6.ytp.ct2) if (location.href.indexOf(yt6d.current.video_id) > -1 && me.loaded_vid == yt6.vid && me.loaded_itag == itag(me.src)) { yt6.player1.media.currentTime = yt6.player2.media.currentTime = me.currentTime = yt6.ct = clone(yt6.ytp.ct2); yt6.ytp.ct2 = 0; if (!me.paused && yt6.V_[itag(me.src)])  yt6.player2.media.play() }
 					  yt6.loop.on = player1.options.loop1
 					  if (yt6.loop.on && me.currentTime >= yt6.loop.end) {
 					    try { yt6.player1.pause(); yt6.player2.pause(); Seek = 1;
@@ -15232,7 +15244,7 @@ if (typeof Polymer != 'undefined') {
 	      }*/
 	      if (cf) c = (cf == 'function') ? p.getPlayerState() : null
 	      var a = (c) ? gid('bm0') : null
-	      if (a && (yt6.x || a.style.visibility == 'visible') && c && (c == 1 || c > 2) && p) p.stopVideo(); //console.log(yt6.sync_timer +' '+ mutation.attributeName +' '+ yt6.vid);
+	      if (a && (yt6.x || a.style.visibility == 'visible') && c && (c == 1 || c > 2) && p) p.pauseVideo(); //console.log(yt6.sync_timer +' '+ mutation.attributeName +' '+ yt6.vid);
 	      //var b = gc('mejs-controls')[0]
 	      //if (a && a.style.visibility == 'hidden' && b) b.style.visibility = 'hidden'
 	      //if (yt6.sync_timer == true) return true
