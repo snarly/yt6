@@ -12564,7 +12564,7 @@ function mep_run() {
 							    // To remedy this, on page change we temporarily switch over to the native player and let it play until the rest of the page deigns to load up as well
 							    // a proxy function will check if yt6d.document.title (document.title) was updated, then we can finally switch back to the external player and continue playback
 
-							    if (yt6.browser_tab == 'hidden' && yt6.layout == 16 && yt6.x && !yt6.ytm && !yt6.ytg) {
+							    if (yt6.browser_tab == 'hidden' && yt6.layout == 16 && yt6.x && !yt6.mobile && !yt6.ytm && !yt6.ytg) {
 								yt6.previous_title = clone(yt6.title)
 								yt6.player1.pause();
 								switch_players()
@@ -12887,7 +12887,7 @@ function mep_run() {
 							    // to remedy this, on page change we temporarily switch over to the native player and let it play until the rest of the page deigns to load up as well
 							    // a proxy function will check if yt6d.document.title (document.title) was updated, then we can finally switch back to the external player and continue playback
 
-							    if (yt6.browser_tab == 'hidden' && yt6.layout == 16 && yt6.x && !yt6.ytm && !yt6.ytg) {
+							    if (yt6.browser_tab == 'hidden' && yt6.layout == 16 && yt6.x && !yt6.mobile && !yt6.ytm && !yt6.ytg) {
 								yt6.previous_title = clone(yt6.title)
 								yt6.player1.pause();
 								switch_players()
