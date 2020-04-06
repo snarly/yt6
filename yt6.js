@@ -6322,7 +6322,7 @@ if (player()) {
 			  $waitUntil(function(){ if (yt6.browser_tab == 'hidden') return true },
 			    function(){ var p = player()
 			      if (p && typeof p.getPlayerState == 'function') try { p.playVideo() } catch(e) {}
-			    }, 40, 1000) // Check for a very short period of time to see whether this call for pause coincides with being on a hidden tab, meaning the call came from YT's own code to prevent background play on mobile. Counteract if so.
+			    }, 40, 400) // Check for a very short period of time to see whether this call for pause coincides with being on a hidden tab, meaning the call came from YT's own code to prevent background play on mobile. Counteract if so.
 		        }; break
 		case 3: if (!yt6.x && yt6.browser_tab == 'visible' && p2()) { player2.pause(); resync() }; if (yt6.x && yt6.navigation && yt6.browser_tab == 'visible') try { yt6.p.pauseVideo() } catch(e){}; break
 		case 5: if (!yt6.x && yt6.browser_tab == 'visible' && p2()) { player2.pause(); }; if (yt6.x && yt6.navigation && yt6.browser_tab == 'visible') try { yt6.p.pauseVideo() } catch(e){}; break
