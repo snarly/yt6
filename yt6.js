@@ -6316,7 +6316,7 @@ if (player()) {
 			  }
 			}; break;
 		case 2: //if (yt6.mobile && yt6.x && p1()) { player1.pause() } else
-			if (yt6.browser_tab == 'hidden' && yt6.x && p1() && yt6.player1.media.loaded_vid == yt6.vid) { yt6.Seek = 5 }
+			if (yt6.browser_tab == 'hidden' && yt6.x && p1() && yt6.player1.media.loaded_vid == yt6.vid) try { yt6.p.playVideo() } catch(e){} //
 			if (p2()) { player2.pause(); resync() };
 			if (!yt6.x ) {//&& !yt6.navigation && !yt6.newvideo
 			  $waitUntil(function(){ if (yt6.browser_tab == 'hidden') return true },
@@ -12608,12 +12608,19 @@ function mep_run() {
 
 							  if (yt6.mobile) {
 							    if (yt6.pls) {
-							      var z = gc('c3-material-button-button')[3]
+							      var z = gc('playlist-controls-primary')[0]
+								      if (z) {
+								z = z.getElementsByTagName('c3-material-button')[1]
+							        if (z) {
+								  z = z.getElementsByClassName('c3-material-button-button')[0]
+								} else z = gc('c3-material-button-button')[3]
+							      } else z = gc('c3-material-button-button')[3]
+
 							    } else {
 								var z = gc('player-controls-middle center')[0]
-								if (z) { z = (z) ? z.firstChild : null } else mp.nextVideo('0')
+								if (z) { try { z = z.firstChild.nextSibling.nextSibling } catch(e){ z = null } } else mp.nextVideo('0')
 							      }
-							    if (z) try { z.click() } catch(e) { yt6.pl_previous.click() }
+							    try { z.click() } catch(e) { yt6.pl_next.click() }
 							    return void 0
 							  }
 
@@ -12931,12 +12938,19 @@ function mep_run() {
 
 							  if (yt6.mobile) {
 							    if (yt6.pls) {
-							      var z = gc('c3-material-button-button')[3]
+							      var z = gc('playlist-controls-primary')[0]
+								      if (z) {
+								z = z.getElementsByTagName('c3-material-button')[1]
+							        if (z) {
+								  z = z.getElementsByClassName('c3-material-button-button')[0]
+								} else z = gc('c3-material-button-button')[3]
+							      } else z = gc('c3-material-button-button')[3]
+
 							    } else {
 								var z = gc('player-controls-middle center')[0]
-								if (z) { z = (z) ? z.firstChild : null } else mp.nextVideo('0')
+								if (z) { try { z = z.firstChild.nextSibling.nextSibling } catch(e){ z = null } } else mp.nextVideo('0')
 							      }
-							    if (z) try { z.click() } catch(e) { yt6.pl_previous.click() }
+							    try { z.click() } catch(e) { yt6.pl_next.click() }
 							    return void 0
 							  }
 
