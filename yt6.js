@@ -12017,7 +12017,7 @@ function mep_run() {
 						if (yt6.current && yt6.current == itag(me.src) && !yt6.failed_itags.includes(yt6.current)) { yt6.failed_itags.push(yt6.current) } //add the current source's itag to srcbak if it has already been tried once and shows up in this error block again
 						//console.log('play ' +itag_)
 						player1.load(); //player1.load();
-						if (autoplay(false) && me.paused) { Seek = 1; me.currentTime = yt6.ct || 0; player1.play() }; if (yt6.V_[itag(me.src)]) yt6.player2.media.play()
+						if (autoplay(false) && me.paused) { Seek = 1; me.currentTime = yt6.ct || 0; player1.play(); if (yt6.V_[itag(me.src)]) yt6.player2.media.play() }
 					      } else {
 					          if (yt6.retry < limit) { yt6.retry++; yt6.failed_itags.push(itag(me.src)) } else if (yt6.failed_itags2 < 5) { yt6.retry = 0; yt6.failed_itags++ }; //yt6.failed_itags = [];
 					          if (!yt6.ytg) decryption_failure()
@@ -12394,7 +12394,7 @@ function mep_run() {
 							  }
 						      },250,1250)
 						    } else {
-							if (yt6.browser_tab == "hidden" && Seek != 3 && Seek != 1) {
+							if (yt6.browser_tab == "hidden" && Seek != 3) {
 							  //Seek = 5; yt6.ct = me.currentTime = yt6.player1.media.currentTime = yt6.player2.media.currentTime
 							} else {
 							  //  if (Seek == 1) { yt6.player2.pause() }//yt6.Seek = 1; 
