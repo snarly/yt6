@@ -12017,7 +12017,7 @@ function mep_run() {
 						if (yt6.current && yt6.current == itag(me.src) && !yt6.failed_itags.includes(yt6.current)) { yt6.failed_itags.push(yt6.current) } //add the current source's itag to srcbak if it has already been tried once and shows up in this error block again
 						//console.log('play ' +itag_)
 						player1.load(); //player1.load();
-						if (autoplay(false) && me.paused) if (!yt6.A_[itag(me.src)]) { player1.play() } else { Seek = 1; me.currentTime = yt6.ct || 0; player1.play() };
+						if (autoplay(false) && me.paused) { Seek = 1; me.currentTime = yt6.ct || 0; player1.play() }; if (yt6.V_[itag(me.src)]) yt6.player2.media.play()
 					      } else {
 					          if (yt6.retry < limit) { yt6.retry++; yt6.failed_itags.push(itag(me.src)) } else if (yt6.failed_itags2 < 5) { yt6.retry = 0; yt6.failed_itags++ }; //yt6.failed_itags = [];
 					          if (!yt6.ytg) decryption_failure()
@@ -12394,11 +12394,11 @@ function mep_run() {
 							  }
 						      },250,1250)
 						    } else {
-							if (yt6.browser_tab == "hidden" && Seek != 3) {
-							  Seek = 5; yt6.ct = me.currentTime = yt6.player1.media.currentTime = yt6.player2.media.currentTime
+							if (yt6.browser_tab == "hidden" && Seek != 3 && Seek != 1) {
+							  //Seek = 5; yt6.ct = me.currentTime = yt6.player1.media.currentTime = yt6.player2.media.currentTime
 							} else {
-							    if (Seek == 1) { yt6.player2.pause() }//yt6.Seek = 1; 
-							    if (Seek == 5) { Seek = 2; return void 0 }
+							  //  if (Seek == 1) { yt6.player2.pause() }//yt6.Seek = 1; 
+							  //  if (Seek == 5) { Seek = 2; return void 0 }
 							  }
 						      }
 						  }
@@ -15245,17 +15245,17 @@ if (typeof Polymer != 'undefined') {
   if (!yt6.body.snarls_watchdog) {
     yt6.body.snarls_watchdog = new MutationObserver(function(mutations){
       mutations.forEach(function(mutation) {
-	if (mutation.type == 'attributes' && mutation['target'].getAttribute('video-id') == yt6.vid)
+	if (yt6 && yt6.browser_tab == 'visible' && mutation.type == 'attributes' && mutation['target'].getAttribute('video-id') == yt6.vid)
  	$waitUntil(function() { //console.log(yt6.sync_timer +' '+ mutation.attributeName +' '+ yt6.vid);
-	  if (yt6.browser_tab == 'visible') {//attributeName == 'video-id'
+	  //attributeName == 'video-id'
 	    var p = yt6.p, c, cf; //player(), c = 
 	    if (p) {
 	      try { cf = typeof p.getPlayerState } catch(e) { cf = null }
-	      /*if (cf) {  
-		if (p.tagName == 'EMBED' || p.tagName == 'OBJECT') {
-		  try { cf = typeof p.getPlayerState } catch(e) { cf = null }
-		} else cf = typeof p.getPlayerState
-	      }*/
+	      //if (cf) {  
+		//if (p.tagName == 'EMBED' || p.tagName == 'OBJECT') {
+		  //try { cf = typeof p.getPlayerState } catch(e) { cf = null }
+		//} else cf = typeof p.getPlayerState
+	      //}
 	      if (cf) c = (cf == 'function') ? p.getPlayerState() : null
 	      var a = (c) ? gid('bm0') : null
 	      if (a && (yt6.x || a.style.visibility == 'visible') && c && (c == 1 || c > 2) && p) p.pauseVideo(); //console.log(yt6.sync_timer +' '+ mutation.attributeName +' '+ yt6.vid);
@@ -15263,7 +15263,6 @@ if (typeof Polymer != 'undefined') {
 	      //if (a && a.style.visibility == 'hidden' && b) b.style.visibility = 'hidden'
 	      //if (yt6.sync_timer == true) return true
 	    }
-	  }
 	},
 	  function(){
 	    $waitUntil(function() { if (yt6.p && typeof yt6.p.pauseVideo == 'function') return true },
