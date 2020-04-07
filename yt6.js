@@ -6315,9 +6315,7 @@ if (player()) {
 			    }
 			  }
 			}; break;
-		case 2: //if (yt6.mobile && yt6.x && p1()) { player1.pause() } else
-			if (yt6.browser_tab == 'hidden' && yt6.x && p1() && yt6.player1.media.loaded_vid == yt6.vid) try { yt6.p.playVideo() } catch(e){} //
-			if (p2()) { player2.pause(); resync() };
+		case 2: if (p2()) { player2.pause(); resync() }
 			if (!yt6.x ) {//&& !yt6.navigation && !yt6.newvideo
 			  $waitUntil(function(){ if (yt6.browser_tab == 'hidden') return true },
 			    function(){ var p = player()
@@ -7539,7 +7537,10 @@ yt6.mep_renew = function() {
 	    //} else {
 	      yt6.me_flash_source = z
 	      if (autoplay() && !yt6.ytm) {
-		z.click()
+		if (!yt6.mobile) { z.click() } else {
+		  z.setAttribute('checked','checked'); z.checked = 'true'
+		  yt6.player1.setSrc(yt6.linx[itagx])
+		}
 		if (1 * itagx != 1 * yt6.userprefV[i]) no_default(itagx, 'V')
 		if (typeof yt6.player1.play == 'function' && yt6.x) try { yt6.player1.play() } catch(e) { }; //autoplay trigger
 		if (z.parentNode.parentNode.children.length < 3 && yt6.userprefV.length > 2) { no_default(itagx, 'V') }
@@ -9820,8 +9821,8 @@ if (typeof html.splice != 'function') return void 0;
     '<input type="radio" class="preferred-format dash" onclick="var yt6 = gid(\'snarls_player\'); yt6.select_fmt(\'dash\')">DASH/MP4</input>'+
    '</div>'+
    '<button id="xhr_type" class="snarl-button yt-uix-button-text" onclick="var yt6 = gid(\'snarls_player\'), a; if (yt6.xhr.async) { yt6.xhr.async = false; a = \'synchronous (old)\' } else { yt6.xhr.async = true; a = \'asynchronous (new)\' }; this[yt6.txt] = \'XHR: \' + a">XHR: ' + ((yt6.xhr.async) ? 'asnchronous (new)' : 'synchronous \(old\)') + '</button><br>'+
-'<button id="wp_t" class="snarl-button yt-uix-button-text" onclick="var yt6 = gid(\'snarls_player\'), wp_cb = gid(\'wp_cb\'); if (yt6.tbg && yt6.tbg.style.left) this.wp_left = clone(yt6.tbg.style.left); if (yt6.wallpaper) { if (typeof yt6.wallpaper == \'string\') { yt6d.wallpaper = clone(yt6.wallpaper); yt6.wallpaper = prompt(\'Enter URL(s) of custom wallpaper(s) (separated by comma)\\nType &quot;1&quot; to restore default.\\n\\nImages can be of any type which the browser can display. They will be hotlinked this way, so avoid linking to sites with strict download limits and prefer those served through caching servers.\', yt6d.wallpaper); if (yt6.wallpaper == 1) { yt6.wallpaper = false; yt6d.wallpaper = \'' + protocol() + yt6.cdn + '31ec5334c730af96803fb1b3cc677eb0c5e5c0df/extrawide.jpg\' }; if (yt6.wallpaper == undefined) { yt6.wallpaper = true; this[yt6.txt] = \'Thumbnails wallpaper\'; } else { if (!yt6.wallpaper && wp_cb && wp_cb.hasAttribute(\'checked\')) { wp_cb.removeAttribute(\'checked\',\'checked\'); wp_cb.checked = false; yt6.wallpaper = false; this[yt6.txt] = \'Thumbnails wallpaper\'; } else this[yt6.txt] = \'Custom wallpaper\'; }; if (typeof yt6.wallpaper == \'string\' && (yt6.wallpaper.indexOf(\'https://\') == 0 || yt6.wallpaper.indexOf(\'http://\') == 0)) yt6d.wallpaper = clone(yt6.wallpaper); } else { this[yt6.txt] = \'Custom wallpaper\'; yt6.wallpaper = clone(yt6d.wallpaper) } } else { if (wp_cb) { wp_cb.setAttribute(\'checked\',\'checked\'); wp_cb.checked = true; yt6.wallpaper = true } }; wallpaper(); if (this.wp_left && yt6.tbg) yt6.tbg.style.left = clone(this.wp_left); ">' + ((typeof yt6.wallpaper == 'string') ? 'Custom wallpaper' : 'Thumbnails wallpaper') + '</button>'+
-   '<input id="wp_cb" type="checkbox" onclick="var yt6 = gid(\'snarls_player\'), wp_t = gid(\'wp_t\'); if (this.checked) { yt6.wallpaper = (typeof yt6.wallpaper == \'boolean\') ? true : clone(yt6d.wallpaper); this.setAttribute(\'checked\',\'checked\') } else { if (typeof yt6.wallpaper == \'string\' && (yt6.wallpaper.indexOf(\'https://\') == 0 || yt6.wallpaper.indexOf(\'http://\') == 0)) { yt6d.wallpaper = clone(yt6.wallpaper) }; yt6.wallpaper = false; if (wp_t) wp_t[yt6.txt] = \'Thumbnails wallpaper\'; this.removeAttribute(\'checked\',\'\') }; wallpaper()" '+ ((yt6.wallpaper) ? 'checked="checked"' : '') + '>'+
+'<button id="wp_t" class="snarl-button yt-uix-button-text" onclick="var yt6 = gid(\'snarls_player\'), wp_cb = gid(\'wp_cb\'); if (yt6.tbg && yt6.tbg.style.left) this.wp_left = clone(yt6.tbg.style.left); if (yt6.wallpaper) { if (typeof yt6.wallpaper == \'string\') { yt6d.wallpaper = clone(yt6.wallpaper); yt6.wallpaper = prompt(\'Enter URL(s) of custom wallpaper(s) (separated by comma)\\nType &quot;1&quot; to restore default.\\n\\nImages can be of any type which the browser can display. They will be hotlinked this way, so avoid linking to sites with strict download limits and prefer those served through caching servers.\', yt6d.wallpaper); if (yt6.wallpaper == 1) { yt6.wallpaper = false; yt6d.wallpaper = \'' + protocol() + yt6.cdn + '31ec5334c730af96803fb1b3cc677eb0c5e5c0df/extrawide.jpg\' }; if (yt6.wallpaper == undefined) { yt6.wallpaper = true; this[yt6.txt] = \'Thumbnails wallpaper\'; } else { if (!yt6.wallpaper && wp_cb && wp_cb.hasAttribute(\'checked\')) { wp_cb.removeAttribute(\'checked\'); wp_cb.checked = \'\'; yt6.wallpaper = false; this[yt6.txt] = \'Thumbnails wallpaper\'; } else this[yt6.txt] = \'Custom wallpaper\'; }; if (typeof yt6.wallpaper == \'string\' && (yt6.wallpaper.indexOf(\'https://\') == 0 || yt6.wallpaper.indexOf(\'http://\') == 0)) yt6d.wallpaper = clone(yt6.wallpaper); } else { this[yt6.txt] = \'Custom wallpaper\'; yt6.wallpaper = clone(yt6d.wallpaper) } } else { if (wp_cb) { wp_cb.setAttribute(\'checked\',\'checked\'); wp_cb.checked = \'true\'; yt6.wallpaper = true } }; wallpaper(); if (this.wp_left && yt6.tbg) yt6.tbg.style.left = clone(this.wp_left); ">' + ((typeof yt6.wallpaper == 'string') ? 'Custom wallpaper' : 'Thumbnails wallpaper') + '</button>'+
+   '<input id="wp_cb" type="checkbox" onclick="var yt6 = gid(\'snarls_player\'), wp_t = gid(\'wp_t\'); if (this.checked) { yt6.wallpaper = (typeof yt6.wallpaper == \'boolean\') ? true : clone(yt6d.wallpaper); this.setAttribute(\'checked\',\'checked\') } else { if (typeof yt6.wallpaper == \'string\' && (yt6.wallpaper.indexOf(\'https://\') == 0 || yt6.wallpaper.indexOf(\'http://\') == 0)) { yt6d.wallpaper = clone(yt6.wallpaper) }; yt6.wallpaper = false; if (wp_t) wp_t[yt6.txt] = \'Thumbnails wallpaper\'; this.removeAttribute(\'checked\'); this.checked = \'\' }; wallpaper()" '+ ((yt6.wallpaper) ? 'checked="checked"' : '') + '>'+
 
    '</div><br>' +
 
