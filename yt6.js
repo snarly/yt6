@@ -615,7 +615,11 @@ yt6.prev_media = []
     399: {'t':'1080p DASH AV1 xfps','a':'248',		'q':'hd1080','m':'video/mp4; codecs="av01.0.09M.08"'},
     400: {'t':'1440p DASH AV1 xfps','a':'308',		'q':'hd1440','m':'video/mp4; codecs="av01.0.12M.08"'},
     401: {'t':'2160p DASH AV1 xfps','a':'315',		'q':'hd2160','m':'video/mp4; codecs="av01.0.13M.08"'},
-    402: {'t':'4320p DASH AV1 xfps','a':'272',		'q':'highres','m':'video/mp4; codecs="av01.0.16M.08"'}
+    402: {'t':'4320p DASH AV1 xfps','a':'272',		'q':'highres','m':'video/mp4; codecs="av01.0.16M.08"'},
+    597: {'t':'144p DASH H.264 vfps','a':'598',		'q':'tiny','m':'video/mp4; codecs="avc1.4d400c"'},// new highly compressed low-resolution super tiny in size formats
+    598: {'t':'144p WebM VP9','a':'597',		'q':'tiny','m':'video/webm; codecs="vp9.2"'},
+    599: {'t':'30k DASH HE AAC','a':'600',		'q':'tiny','m':'audio/mp4; codecs="mp4a.40.5"'},
+    600: {'t':'30k WebM Opus','a':'599',		'q':'tiny','m':'audio/webm; codecs="opus"'}
   };
 
 
@@ -627,28 +631,28 @@ for(var i=0;i<338;i++) if (qual[i]) qual[i]['s'] = ''
   yt6.fmts_fallback.V = {};
   yt6.fmts_fallback.A = {};
   yt6.fmts_fallback.V3D = {};
-  yt6.fmts_fallback.V.av1 = [,,,,401,,,,,,400,,,,,,,,399,,,,,,,,,398,,,,,,,397,,,,,,,,,,,,396,,,,,,,395,,,,394,,,,,,,,,,,,,,,,,,
+  yt6.fmts_fallback.V.av1 = [,,,,401,,,,,,400,,,,,,,,399,,,,,,,,,398,,,,,,,397,,,,,,,,,,,,396,,,,,,,395,,,,394,,,,,,,,,,,,,,,,,,,,
 ,,,,401,,,,,,400,,,,,,,,399,,,,,,,,,398,,,,,,,397,,,,,,,,,,,,396,,,,,,,395,,,,394]
-  yt6.fmts_fallback.V.webm = [,272,,337,,315,,313,,336,,308,,271,,335,303,,,248,,170,46,,334,302,,,247,,169,45,,333,,246,245,244,,219,218,168,44,,,332,,243,,167,43,,331,,242,,330,,278,241,,,
+  yt6.fmts_fallback.V.webm = [,272,,337,,315,,313,,336,,308,,271,,335,303,,,248,,170,46,,334,302,,,247,,169,45,,333,,246,245,244,,219,218,168,44,,,332,,243,,167,43,,331,,242,,330,,278,241,,,598,,
   43,,
   //18,,22,
   ,
   ,,,251,172,171,,250,249,,
-  ,272,,337,,315,,313,,336,,308,,271,,335,303,,,248,,170,46,,334,302,,,247,,169,45,,333,,246,245,244,,219,218,168,44,,,332,,243,,167,43,,331,,242,,330,,278,241,,,
+  ,272,,337,,315,,313,,336,,308,,271,,335,303,,,248,,170,46,,334,302,,,247,,169,45,,333,,246,245,244,,219,218,168,44,,,332,,243,,167,43,,331,,242,,330,,278,241,,,598,,
   //258,256,141,140,139
   ]
-  yt6.fmts_fallback.V.h264 = [138,,38,,,,305,,266,,,,304,,264,,,299,,,137,,,37,,,298,,,136,,,22,,,,,,135,,,,,78,59,,396,,134,,,18,,,,133,,394,,,132,160,
+  yt6.fmts_fallback.V.h264 = [138,,38,,,,305,,266,,,,304,,264,,,299,,,137,,,37,,,298,,,136,,,22,,,,,,135,,,,,78,59,,,,134,,,18,,,,133,,,,,132,160,,597,
   ,18,
   //,43,,
   22,
   258,256,141,,,,140,,,139,
-  138,,38,,,,305,,266,,,,304,,264,,,299,,,137,,,37,,,298,,,136,,,22,,,,,,135,,,,,78,59,,396,,134,,,18,,,,133,,394,,,132,160,
+  138,,38,,,,305,,266,,,,304,,264,,,299,,,137,,,37,,,298,,,136,,,22,,,,,,135,,,,,78,59,,,,134,,,18,,,,133,,,,,132,160,,597,
   //,,,,,251,172,171,250,249
   ]
   yt6.fmts_fallback.A.webm = [,,,251,172,171,,250,249,,
-  ,,,251,172,171,,250,249,,43,,]
+  ,,,251,172,171,,250,249,,600,43,,]
   yt6.fmts_fallback.A.aac = [258,256,141,,,,140,,,139,
-  258,256,141,,,,140,,,139,,18,22]
+  258,256,141,,,,140,,,139,,599,,18,22]
   yt6.fmts_fallback.V3D.h264 = [85,,84,,,82,83]
   yt6.fmts_fallback.V3D.webm = [,102,,101,100]
   yt6.fmts_fallback.other = [35,34,6,5,36,17,13]
@@ -5312,8 +5316,12 @@ function me_flash_up(file, ib){
   }
 
 
+// Mobile layout
+if (window.location.href.indexOf('//m.youtube.com') > -1) {
 
-yt6.mobile = (window.location.href.indexOf('//m.youtube.com') > -1) ? true : false
+  yt6.mobile = true
+
+} else yt6.mobile = false
 
 
 // Music layout
@@ -9980,7 +9988,7 @@ if (typeof html.splice != 'function') return void 0;
   var a = gid('yt6-links'), b = gid('alt-links'), m = 'used';
   if (a && b) {
     var z = gc('yt6-links')
-    for (j=0;j<404;j++) {
+    for (j=0;j<999;j++) {
       if (qual[j]) for (i=0;i<z.length;i++){
         if (z[i] && z[i].getAttribute('name') == j){//z[i].setAttribute('class','yt6-links-alt')
 		  var y = getElementsByAttribute(bm3,'a','name',j)
@@ -13357,7 +13365,7 @@ function nop(){//    } else {
 var p1 = gid('player1')
 var A = [],V = [],AV = [];    var linx = []; linx = yt6.linx;  var html = []; html = yt6.html
 if (typeof linx[160] === 'string') { linx.splice(132, 1, linx[160])}
-  for (i=0;i<500;i++) {//linx
+  for (i=0;i<999;i++) {//linx
     var z = getElementsByAttribute(p1,'source','name',i)[0]
     if (linx[i] && linx[i].indexOf('&title=Advertisement') == -1) {
       if (z && (z.parentNode == p1)) {
@@ -14562,7 +14570,6 @@ if (!t.sourcechooserButton) {//console.log('error')
 
 	}
 
-
     };
 
 
@@ -15645,6 +15652,365 @@ addEL(window, 'spfdone', yt6.body.spfdone, false);
 
     var sameTitles = 0
 
+
+
+  if (yt6.mobile) {
+  // Functions to emulate touch events, needed for skipping over in-video ads on youtube's mobile version
+  // Written by "hammerjs"
+  // https://github.com/hammerjs/touchemulator
+
+
+    var isMultiTouch = false;
+    var multiTouchStartPos;
+    var eventTarget;
+    var touchElements = {};
+
+    // polyfills
+    if(!document.createTouch) {
+        document.createTouch = function(view, target, identifier, pageX, pageY, screenX, screenY, clientX, clientY) {
+            // auto set
+            if(clientX == undefined || clientY == undefined) {
+                clientX = pageX - window.pageXOffset;
+                clientY = pageY - window.pageYOffset;
+            }
+
+            return new Touch(target, identifier, {
+                pageX: pageX,
+                pageY: pageY,
+                screenX: screenX,
+                screenY: screenY,
+                clientX: clientX,
+                clientY: clientY
+            });
+        };
+    }
+
+    if(!document.createTouchList) {
+        document.createTouchList = function() {
+            var touchList = new TouchList();
+            for (var i = 0; i < arguments.length; i++) {
+                touchList[i] = arguments[i];
+            }
+            touchList.length = arguments.length;
+            return touchList;
+        };
+    }
+
+    /**
+     * create an touch point
+     * @constructor
+     * @param target
+     * @param identifier
+     * @param pos
+     * @param deltaX
+     * @param deltaY
+     * @returns {Object} touchPoint
+     */
+    function Touch(target, identifier, pos, deltaX, deltaY) {
+        deltaX = deltaX || 0;
+        deltaY = deltaY || 0;
+
+        this.identifier = identifier;
+        this.target = target;
+        this.clientX = pos.clientX + deltaX;
+        this.clientY = pos.clientY + deltaY;
+        this.screenX = pos.screenX + deltaX;
+        this.screenY = pos.screenY + deltaY;
+        this.pageX = pos.pageX + deltaX;
+        this.pageY = pos.pageY + deltaY;
+    }
+
+    /**
+     * create empty touchlist with the methods
+     * @constructor
+     * @returns touchList
+     */
+    function TouchList() {
+        var touchList = [];
+
+        touchList.item = function(index) {
+            return this[index] || null;
+        };
+
+        // specified by Mozilla
+        touchList.identifiedTouch = function(id) {
+            return this[id + 1] || null;
+        };
+
+        return touchList;
+    }
+
+
+    /**
+     * Simple trick to fake touch event support
+     * this is enough for most libraries like Modernizr and Hammer
+     */
+    function fakeTouchSupport() {
+        var objs = [window, document.documentElement];
+        var props = ['ontouchstart', 'ontouchmove', 'ontouchcancel', 'ontouchend'];
+
+        for(var o=0; o<objs.length; o++) {
+            for(var p=0; p<props.length; p++) {
+                if(objs[o] && objs[o][props[p]] == undefined) {
+                    objs[o][props[p]] = null;
+                }
+            }
+        }
+    }
+
+    /**
+     * we don't have to emulate on a touch device
+     * @returns {boolean}
+     */
+    function hasTouchSupport() {
+        return ("ontouchstart" in window) || // touch events
+               (window.Modernizr && window.Modernizr.touch) || // modernizr
+               (navigator.msMaxTouchPoints || navigator.maxTouchPoints) > 2; // pointer events
+    }
+
+    /**
+     * disable mouseevents on the page
+     * @param ev
+     */
+    function preventMouseEvents(ev) {
+        ev.preventDefault();
+        ev.stopPropagation();
+    }
+
+    /**
+     * only trigger touches when the left mousebutton has been pressed
+     * @param touchType
+     * @returns {Function}
+     */
+    function onMouse(touchType) {
+        return function(ev) {
+            // prevent mouse events
+            preventMouseEvents(ev);
+
+            if (ev.which !== 1) {
+                return;
+            }
+
+            // The EventTarget on which the touch point started when it was first placed on the surface,
+            // even if the touch point has since moved outside the interactive area of that element.
+            // also, when the target doesnt exist anymore, we update it
+            if (ev.type == 'mousedown' || !eventTarget || (eventTarget && !eventTarget.dispatchEvent)) {
+                eventTarget = ev.target;
+            }
+
+            // shiftKey has been lost, so trigger a touchend
+            if (isMultiTouch && !ev.shiftKey) {
+                triggerTouch('touchend', ev);
+                isMultiTouch = false;
+            }
+
+            triggerTouch(touchType, ev);
+
+            // we're entering the multi-touch mode!
+            if (!isMultiTouch && ev.shiftKey) {
+                isMultiTouch = true;
+                multiTouchStartPos = {
+                    pageX: ev.pageX,
+                    pageY: ev.pageY,
+                    clientX: ev.clientX,
+                    clientY: ev.clientY,
+                    screenX: ev.screenX,
+                    screenY: ev.screenY
+                };
+                triggerTouch('touchstart', ev);
+            }
+
+            // reset
+            if (ev.type == 'mouseup') {
+                multiTouchStartPos = null;
+                isMultiTouch = false;
+                eventTarget = null;
+            }
+        }
+    }
+
+    /**
+     * trigger a touch event
+     * @param eventName
+     * @param mouseEv
+     */
+    function triggerTouch(eventName, mouseEv) {
+        var touchEvent = document.createEvent('Event');
+        touchEvent.initEvent(eventName, true, true);
+
+        touchEvent.altKey = mouseEv.altKey;
+        touchEvent.ctrlKey = mouseEv.ctrlKey;
+        touchEvent.metaKey = mouseEv.metaKey;
+        touchEvent.shiftKey = mouseEv.shiftKey;
+
+        touchEvent.touches = getActiveTouches(mouseEv, eventName);
+        touchEvent.targetTouches = getActiveTouches(mouseEv, eventName);
+        touchEvent.changedTouches = getChangedTouches(mouseEv, eventName);
+
+        eventTarget.dispatchEvent(touchEvent);
+    }
+
+    /**
+     * create a touchList based on the mouse event
+     * @param mouseEv
+     * @returns {TouchList}
+     */
+    function createTouchList(mouseEv) {
+        var touchList = new TouchList();
+
+        if (isMultiTouch) {
+            var f = TouchEmulator.multiTouchOffset;
+            var deltaX = multiTouchStartPos.pageX - mouseEv.pageX;
+            var deltaY = multiTouchStartPos.pageY - mouseEv.pageY;
+
+            touchList.push(new Touch(eventTarget, 1, multiTouchStartPos, (deltaX*-1) - f, (deltaY*-1) + f));
+            touchList.push(new Touch(eventTarget, 2, multiTouchStartPos, deltaX+f, deltaY-f));
+        } else {
+            touchList.push(new Touch(eventTarget, 1, mouseEv, 0, 0));
+        }
+
+        return touchList;
+    }
+
+    /**
+     * receive all active touches
+     * @param mouseEv
+     * @returns {TouchList}
+     */
+    function getActiveTouches(mouseEv, eventName) {
+        // empty list
+        if (mouseEv.type == 'mouseup') {
+            return new TouchList();
+        }
+
+        var touchList = createTouchList(mouseEv);
+        if(isMultiTouch && mouseEv.type != 'mouseup' && eventName == 'touchend') {
+            touchList.splice(1, 1);
+        }
+        return touchList;
+    }
+
+    /**
+     * receive a filtered set of touches with only the changed pointers
+     * @param mouseEv
+     * @param eventName
+     * @returns {TouchList}
+     */
+    function getChangedTouches(mouseEv, eventName) {
+        var touchList = createTouchList(mouseEv);
+
+        // we only want to return the added/removed item on multitouch
+        // which is the second pointer, so remove the first pointer from the touchList
+        //
+        // but when the mouseEv.type is mouseup, we want to send all touches because then
+        // no new input will be possible
+        if(isMultiTouch && mouseEv.type != 'mouseup' &&
+            (eventName == 'touchstart' || eventName == 'touchend')) {
+            touchList.splice(0, 1);
+        }
+
+        return touchList;
+    }
+
+    /**
+     * show the touchpoints on the screen
+     */
+    function showTouches(ev) {
+        var touch, i, el, styles;
+
+        // first all visible touches
+        for(i = 0; i < ev.touches.length; i++) {
+            touch = ev.touches[i];
+            el = touchElements[touch.identifier];
+            if(!el) {
+                el = touchElements[touch.identifier] = document.createElement("div");
+                document.body.appendChild(el);
+            }
+
+            styles = TouchEmulator.template(touch);
+            for(var prop in styles) {
+                el.style[prop] = styles[prop];
+            }
+        }
+
+        // remove all ended touches
+        if(ev.type == 'touchend' || ev.type == 'touchcancel') {
+            for(i = 0; i < ev.changedTouches.length; i++) {
+                touch = ev.changedTouches[i];
+                el = touchElements[touch.identifier];
+                if(el) {
+                    el.parentNode.removeChild(el);
+                    delete touchElements[touch.identifier];
+                }
+            }
+        }
+    }
+
+    /**
+     * TouchEmulator initializer
+     */
+    function TouchEmulator() {
+        if (hasTouchSupport()) {
+            return;
+        }
+
+        fakeTouchSupport();
+
+        window.addEventListener("mousedown", onMouse('touchstart'), true);
+        window.addEventListener("mousemove", onMouse('touchmove'), true);
+        window.addEventListener("mouseup", onMouse('touchend'), true);
+
+        window.addEventListener("mouseenter", preventMouseEvents, true);
+        window.addEventListener("mouseleave", preventMouseEvents, true);
+        window.addEventListener("mouseout", preventMouseEvents, true);
+        window.addEventListener("mouseover", preventMouseEvents, true);
+
+        // it uses itself!
+        window.addEventListener("touchstart", showTouches, false);
+        window.addEventListener("touchmove", showTouches, false);
+        window.addEventListener("touchend", showTouches, false);
+        window.addEventListener("touchcancel", showTouches, false);
+    }
+
+    // start distance when entering the multitouch mode
+    TouchEmulator.multiTouchOffset = 75;
+
+    /**
+     * css template for the touch rendering
+     * @param touch
+     * @returns object
+     */
+    TouchEmulator.template = function(touch) {
+        var size = 30;
+        var transform = 'translate('+ (touch.clientX-(size/2)) +'px, '+ (touch.clientY-(size/2)) +'px)';
+        return {
+            position: 'fixed',
+            left: 0,
+            top: 0,
+            background: '#fff',
+            border: 'solid 1px #999',
+            opacity: .6,
+            borderRadius: '100%',
+            height: size + 'px',
+            width: size + 'px',
+            padding: 0,
+            margin: 0,
+            display: 'block',
+            overflow: 'hidden',
+            pointerEvents: 'none',
+            webkitUserSelect: 'none',
+            mozUserSelect: 'none',
+            userSelect: 'none',
+            webkitTransform: transform,
+            mozTransform: transform,
+            transform: transform
+        }
+    };
+  // end of touchemulator
+  }
+
+
+
       if (yt6.tbg != null) yt6.tbg.width = yt6.tbg.offsetWidth
 
       // This will be the method that we use to check
@@ -15770,21 +16136,74 @@ addEL(window, 'spfdone', yt6.body.spfdone, false);
 
 
 //
-	var ads = gc('ytp-ad-skip-ad-slot')[0]
+	var ads = gc('ytp-ad-player-overlay')[0]
+	if (ads && ads.lastChild) {
+
+	  ads = gc('ytp-ad-skip-ad-slot')[0]
+	  if (!ads) {
+
+	    yt6.ad_unskippable = gc('ytp-ad-toggle-button ytp-ad-instream-user-sentiment-dislike-button')[0]
+	    ads = gc('ytp-ad-persistent-progress-bar-container')[0] // ad-related object as a dummy target for an ineffective click
+	    // don't know how to skip over these yet, they only provide the option to like or dislike them
+
+	  } else yt6.ad_unskippable = false
+
+	}
+
 	if (ads && (!yt6.x || yt6.ytm || yt6.mobile)) {
-	  if (!yt6.mobile) yt6.ads_noskip = 0; var ads = gc('ytp-ad-skip-button ytp-button')[0]
-	  if (ads) { //console.log('skip pre-emptive or trailing ad')
-	    ads.click(); //yt6.pre_ad = false; yt6.ad_ = null; yt6.real_media_duration_ = null
-	    if (yt6.mobile && !yt6.ads_noskip_m) {
+
+	  if (!yt6.mobile) yt6.ads_noskip = 0
+	  if (!yt6.ad_unskippable) ads = gc('ytp-ad-skip-button ytp-button')[0]
+
+	  if (ads) { //console.log('skip pre-emptive or trailing ad '+ yt6.ads_noskip_m)
+
+	  if (!yt6.mobile) {
+
+	    ads.click()
+
+	  } else { //&& !yt6.ads_noskip_m) {//yt6.pre_ad = false; yt6.ad_ = null; yt6.real_media_duration_ = null
+	    
+	      if (!yt6.ad_unskippable) {
+		var ads = gc('ytp-ad-skip-button-icon')[0]; if (ads) ads = gclass('ytp-ad-text ytp-ad-skip-button-text')[0]
+	      }
+	      if (ads) { //console.log(ads)
+
+		var prebtn = (!yt6.ad_unskippable) ? gclass('ytp-ad-text ytp-ad-preview-text')[0] : ads
+
+		//var vpoffset = ads.getBoundingClientRect()
+
+		//if (vpoffset && !vpoffset.left) vpoffset = prebtn.getBoundingClientRect()
+		//var vpleft = (vpoffset) ? (vpoffset.left + 5) : 0
+		//var vptop = (vpoffset) ? (vpoffset.top + 5) : 0
+
+		yt6.evtest = function(e) { if (e && typeof e.pageY == 'number') yt6d.mouseEvent = e; } //try { console.log(yt6d.mouseEvent) } catch(err) { console.log(err) }
+
+		if (!yt6.ads_noskip_m) {
+		  addEL(prebtn, 'click', yt6.evtest, false)
+		} else {
+		    removeEL(prebtn, 'click', yt6.evtest, false)
+		  }
+		prebtn.click()
+
+		eventTarget = ads
+		triggerTouch('touchstart', yt6d.mouseEvent);
+		triggerTouch('touchend', yt6d.mouseEvent);
+
+		if (1 >= yt6.linx.length) {
+		  ajax1(true, yt6.ytg)
+		  yt6.error = ''
+		  var built = buildObject(window.ytplayer)
+		  if ((yt6.xhr.async && !!built) || (!yt6.xhr.async && video_title()[1]) || yt6.ytm) {//if ((!!built && !yt6.xhr.async) || yt6.ytm) {
+		    redo_dl_button(  yt6.args,  yt6.html,  yt6.href)
+		    yt6.mep_up()
+		    yt6.mep_renew()
+		  }
+		}
+
+
 		yt6.ads_noskip_m = 1
 		ads.parentNode.style.display = 'block'
-		ads.parentNode.parentNode.click()
-		var click = new MouseEvent("click", {
-		  bubbles: true,
-		  cancelable: true,
-		  view: window
-		})
-		ads.dispatchEvent(click)
+	      }
 	    }
 	  }
 	} else {
@@ -16961,13 +17380,13 @@ if (yt6.flexy && yt6.pls) {
 
 		if (yt6.html5swap) {
 		  swap_player()
-		} /*else if (yt6.layout == 16 && yt6.newin && yt6.newin != true && yt6.pls && strPrevLocation.indexOf(yt6.newin) > -1) {
+		} else if (yt6.layout == 16 && yt6.newin && yt6.newin != true && yt6.pls && strPrevLocation.indexOf(yt6.newin) > -1) {
 		    if (yt6.age.check()) { // when an age-restricted video is up on a playlist, the new system will skip over it in a matter of seconds except if you are logged in and old enough to watch it, so you consider opening that video outside of the playlist
 		      ajax1(true)
 		      try { yt6.newin = window.open(protocol() + '//www.youtube.com/watch?v=' + yt6.newin); if (yt6.newin) yt6.newin.blur() } catch(e) { return void 0 } // window.open may be null?
 		      window.focus()
 		    } else yt6.newin = '';
-		  }*/
+		  }
 
 		//video_id : current video page location
 		//window.ytplayer.config.args.video_id : last prepared video to load
@@ -17345,6 +17764,34 @@ $waitUntil(
 
 
 
+function getCoords(elem) {
+  // (1)
+  var box = elem.getBoundingClientRect();
+
+  var body = document.body;
+  var docEl = document.documentElement;
+
+  // (2)
+  var scrollTop = window.pageYOffset || docEl.scrollTop || body.scrollTop;
+  var scrollLeft = window.pageXOffset || docEl.scrollLeft || body.scrollLeft;
+
+  // (3)
+  var clientTop = docEl.clientTop || body.clientTop || 0;
+  var clientLeft = docEl.clientLeft || body.clientLeft || 0;
+
+  // (4)
+  var top = box.top + scrollTop - clientTop;
+  var left = box.left + scrollLeft - clientLeft;
+
+  return {
+  top: top,
+  left: left,
+  scrollTop: scrollTop,
+  scrollLeft: scrollLeft,
+  clientTop: clientTop,
+  clientLeft: clientLeft
+  
+  };}
 
 
 
