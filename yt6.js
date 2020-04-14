@@ -15654,7 +15654,7 @@ addEL(window, 'spfdone', yt6.body.spfdone, false);
 	z.height = z.offsetHeight
 
     var sameTitles = 0
-    var debug = 1
+    var debug = false
 
 
   if (('ontouchstart' in window) || ('onmsgesturechange' in window) || debug) {
