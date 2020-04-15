@@ -16201,7 +16201,7 @@ addEL(window, 'spfdone', yt6.body.spfdone, false);
 
 		if (!yt6.ads_noskip_m) {
 		  addEL(prebtn, 'click', evtest, false)
-		    if (1 >= yt6.linx.length) {console.log('update')
+		    if (1 >= yt6.linx.length) { //console.log('update')
 			ajax1(true, yt6.ytg)
 			yt6.error = ''
 			var built = buildObject(window.ytplayer)
@@ -16214,15 +16214,21 @@ addEL(window, 'spfdone', yt6.body.spfdone, false);
 		} else {
 		    removeEL(prebtn, 'click', evtest, false)
 		  }
+
 		prebtn.click()
 
-		eventTarget = ads
-		triggerTouch('touchstart', yt6d.mouseEvent); // generating emulated touch here
-		triggerTouch('touchend', yt6d.mouseEvent);
+		ads.parentNode.style.display = 'block'
 
+		try {
+
+		  eventTarget = ads
+		  triggerTouch('touchstart', yt6d.mouseEvent); // generating emulated touch here
+		  triggerTouch('touchend', yt6d.mouseEvent);
+
+		} catch(e){}
 
 		yt6.ads_noskip_m = 1
-		ads.parentNode.style.display = 'block'
+
 	      }
 	    //}
 	  }
