@@ -13100,7 +13100,7 @@ function mep_run() {
 							    try {
 							      player1.media.currentTime = me.currentTime = yt6.player2.media.currentTime = player2.currentTime = yt6.ct = 0
 							    } catch(e) {
-								try { yt6.player1.media.currentTime = me.currentTime = yt6.ct } catch(e) { yt6.player1.media.currentTime = yt6.ct = 0 }
+								try { yt6.player1.media.currentTime = me.currentTime = yt6.ct = 0 } catch(e) { yt6.player1.media.currentTime = yt6.ct = 0 }
 							      }; //if (player1.media.paused) player1.play()
 							  }},
 						          function(){
@@ -15120,7 +15120,7 @@ if (!t.sourcechooserButton) {//console.log('error')
 	    if (yt6.player2 && yt6.player2.media && typeof yt6.player2.media.src == 'string' && yt6.linx && yt6.linx.indexOf(yt6.player2.media.src.replace(protocol(),'')) == -1) yt6.player2.media.loaded = false;
 	    try {
 		yt6.player1.media.loaded = false
-		yt6.player1.media.currentTime = yt6.player2.media.currentTime = player2.currentTime = 0
+		yt6.player1.media.currentTime = yt6.player2.media.currentTime = player2.currentTime = yt6.ct = 0
 	    } catch(e) {
 	        //yt6.player1.media.currentTime = 0;
 	      };
