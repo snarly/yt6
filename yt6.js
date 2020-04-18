@@ -16251,7 +16251,6 @@ addEL(window, 'spfdone', yt6.body.spfdone, false);
 		  eventTarget = ads
 		  triggerTouch('touchstart', yt6d.mouseEvent); // generating emulated touch here
 		  triggerTouch('touchend', yt6d.mouseEvent);
-		  load_from_source(true); yt6.title = ''
 
 		} catch(e){}
 
