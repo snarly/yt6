@@ -7558,12 +7558,9 @@ yt6.mep_renew = function() {
 	    //} else {
 	      yt6.me_flash_source = z
 	      if (autoplay() && !yt6.ytm) {
-		if (!(yt6.mobile && yt6.newvideo)) {
-		  z.click()
-		} else {
-		    z.setAttribute('checked','checked'); z.checked = 'true'
-		    yt6.player1.setSrc(yt6.linx[itagx])
-		  }
+		z.setAttribute('checked','checked'); z.checked = 'true'
+		yt6.player1.setSrc(yt6.linx[itagx])
+		z.click()
 		if (1 * itagx != 1 * yt6.userprefV[i]) no_default(itagx, 'V')
 		if (yt6.x && typeof yt6.player1.play == 'function') {
 		  try { yt6.player1.play() } catch(e){} //autoplay trigger
