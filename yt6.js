@@ -17363,7 +17363,7 @@ if (yt6.flexy && yt6.pls) {
 	        //if (yt6.age.done != 1) { c[1].video_id = '' } else yt6.age.done = 0
 	      }
 	      if (c[1].title &&
-		  (yt6.title != unescape(decodeURIComponent(c[1].title.split('+').join(' '))).split(' - YouTube')[Math.max(0, unescape(decodeURIComponent(c[1].title.split('+').join(' '))).split(' - YouTube').length-1)]) || !c[1].title) {
+		  (yt6.title != unescape(decodeURIComponent(c[1].title.split('+').join(' ').split('%').join('%25'))).split(' - YouTube')[Math.max(0, unescape(decodeURIComponent(c[1].title.split('+').join(' ').split('%').join('%25'))).split(' - YouTube').length-1)]) || !c[1].title) {
 	        change = z
 	      }
 	      //ageless_verification()
