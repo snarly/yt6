@@ -12594,7 +12594,36 @@ function mep_run() {
 						    }
 						  } else {
 
+							    // Settimeouts do not work as expected in Material Design layout if the player's browser tab is in the background and the native yt player is not the one being used ...
+							    // the result is ridiculously prolonged reloading-time or complete failure to reload
+							    // To remedy this, before page change we temporarily switch over to the native player and let it play until the rest of the page deigns to load zzas well
+							    // a proxy function will check if yt6d.proxy.document_title (document.title) was updated, then we can finally switch back to the external player and continue playback
+
+							    if (yt6.browser_tab == 'hidden' && yt6.layout == 16 && yt6.x && !yt6.mobile && !yt6.ytm && !yt6.ytg) {
+								yt6.previous_title = clone(yt6.title)
+								yt6.player1.pause();
+								switch_players()
+								yt6.player1.setSrc('https://www.youtube.com/ptracking')
+								yt6.player1.load()
+								yt6d.ended = true
+								if (yt6.p && yt6.p.tagName == 'DIV' && typeof yt6.p.getPlayerState == 'function') {
+								  $waitUntil(function(){ var p = player(), s, t; if (p && typeof p.getPlayerState == 'function') { s = p.getPlayerState(), t = p.getCurrentTime(); yt6.ytp.ct2 = t }
+								    //var z = (yt6.flexy) ? 'ytd-watch-flexy' : 'ytd-watch', z = document.getElementsByTagName(z)[0]
+								    //if (z) z = z.getAttribute('video-id'); //console.log('11ended ' + yt6.x +' '+ s +' '+ t +' '+ yt6.vid +' '+ z +' '+ yt6.strLocation +' '+ (document.title == yt6.title))
+								    if ( (t > 0 && document.title !== yt6.previous_title && p.getVideoUrl().indexOf(yt6.vid) > -1) || document.title !== yt6.previous_title || yt6.browser_tab == 'visible') { return true } //else if (t > 0) if (p.getVideoUrl().indexOf(yt6.vid) == -1) { try { p.playVideo() } catch(e){} } else try { p.pauseVideo() } catch(e){}
+								    if (yt6d.proxy.document_title != yt6.previous_title) { return true } //else yt6.sync_timer = true
+								  },function() { //console.log(yt6.p.getPlayerState())
+									//if (!yt6.x) switch_players()
+									yt6.x = true; try { if (!yt6.V_[itag(me.src)]) { Seek = 1; yt6.player1.play() } else yt6.player2.media.play() } catch(e){}
+								    },500,12000)
+								  yt6.p.nextVideo('0')
+								  return void 0
+								}
+							    }
+
+
 						      fix_playlist()
+
 
 						      $waitUntil(function(){var y = yt6.pl_index, zi = yt6.pl_next; if ((typeof y == 'number' && zi) || (yt6.browser_tab == 'hidden' && typeof yt6.p.playVideoAt == 'function')) { return true } else { pl_item() } },
 						      function(){ var y = yt6.pl_index, zi = yt6.pl_next;
@@ -12619,30 +12648,6 @@ function mep_run() {
 
 						          function nextOn() {
 
-							    // On the new layout, in recent browsers settimeouts do not work as expected if the player's browser tab is not the currently active one and the native yt player is not the one being used ...
-							    // the result is ridiculously prolonged reloading-time or complete failure to reload
-							    // To remedy this, on page change we temporarily switch over to the native player and let it play until the rest of the page deigns to load up as well
-							    // a proxy function will check if yt6d.proxy.document_title (document.title) was updated, then we can finally switch back to the external player and continue playback
-
-							    if (yt6.browser_tab == 'hidden' && yt6.layout == 16 && yt6.x && !yt6.mobile && !yt6.ytm && !yt6.ytg) {
-								yt6.previous_title = clone(yt6.title)
-								yt6.player1.pause();
-								switch_players()
-								yt6.player1.setSrc('https://www.youtube.com/ptracking')
-								yt6.player1.load()
-								yt6d.ended = true
-								if (yt6.p && typeof yt6.p.getPlayerState == 'function') {
-								  $waitUntil(function(){ var p = player(), s, t; if (p && typeof p.getPlayerState == 'function') { s = p.getPlayerState(), t = p.getCurrentTime(); yt6.ytp.ct2 = t }
-								    //var z = (yt6.flexy) ? 'ytd-watch-flexy' : 'ytd-watch', z = document.getElementsByTagName(z)[0]
-								    //if (z) z = z.getAttribute('video-id'); //console.log('11ended ' + yt6.x +' '+ s +' '+ t +' '+ yt6.vid +' '+ z +' '+ yt6.strLocation +' '+ (document.title == yt6.title))
-								    if ( (t > 0 && document.title !== yt6.previous_title && p.getVideoUrl().indexOf(yt6.vid) > -1) || document.title !== yt6.previous_title || yt6.browser_tab == 'visible') { return true } //else if (t > 0) if (p.getVideoUrl().indexOf(yt6.vid) == -1) { try { p.playVideo() } catch(e){} } else try { p.pauseVideo() } catch(e){}
-								    if (yt6d.proxy.document_title != yt6.previous_title) { return true } //else yt6.sync_timer = true
-								  },function() { //console.log(yt6.p.getPlayerState())
-									//if (!yt6.x) switch_players()
-									yt6.x = true; try { if (!yt6.V_[itag(me.src)]) { Seek = 1; yt6.player1.play() } else yt6.player2.media.play() } catch(e){}
-								    },500,12000)
-								}
-							    }
 
 							    if (yt6.layout == 16 && yt6.blocked && yt6.pls && !yt6.ytm && !yt6.ytg) {
 							      $waitUntil(function(){var p = original(yt6.p); if (p) { return true } },
@@ -12924,7 +12929,36 @@ function mep_run() {
 							}
 						  } else {
 
+							    // Settimeouts do not work as expected in Material Design layout if the player's browser tab is in the background and the native yt player is not the one being used ...
+							    // the result is ridiculously prolonged reloading-time or complete failure to reload
+							    // To remedy this, before page change we temporarily switch over to the native player and let it play until the rest of the page deigns to load as well
+							    // a proxy function will check if yt6d.proxy.document_title (document.title) was updated, then we can finally switch back to the external player and continue playback
+
+							    if (yt6.browser_tab == 'hidden' && yt6.layout == 16 && yt6.x && !yt6.mobile && !yt6.ytm && !yt6.ytg) {
+								yt6.previous_title = clone(yt6.title)
+								yt6.player1.pause();
+								switch_players()
+								yt6.player1.setSrc('https://www.youtube.com/ptracking')
+								yt6.player1.load()
+								yt6d.ended = true
+								if (yt6.p && yt6.p.tagName == 'DIV' && typeof yt6.p.getPlayerState == 'function') {
+								  $waitUntil(function(){ var p = player(), s, t; if (p && typeof p.getPlayerState == 'function') { s = p.getPlayerState(), t = p.getCurrentTime() }
+								    //var z = (yt6.flexy) ? 'ytd-watch-flexy' : 'ytd-watch', z = document.getElementsByTagName(z)[0]
+								    //if (z) z = z.getAttribute('video-id'); //console.log('11ended ' + yt6.x +' '+ s +' '+ t +' '+ yt6.vid +' '+ z +' '+ yt6.strLocation +' '+ (document.title == yt6.title))
+								    if ( (t > 0 && document.title !== yt6.previous_title && p.getVideoUrl().indexOf(yt6.vid) > -1) || document.title !== yt6.previous_title || yt6.browser_tab == 'visible') { return true } //else if (t > 0) if (p.getVideoUrl().indexOf(yt6.vid) == -1) { try { p.playVideo() } catch(e){} } else try { p.pauseVideo() } catch(e){}
+								    if (yt6d.proxy.document_title != yt6.previous_title) { return true } //else yt6.sync_timer = true
+								  },function() { //console.log(yt6.p.getPlayerState())
+									//if (!yt6.x) switch_players()
+									yt6.x = true; try { if (!yt6.V_[itag(me.src)]) { Seek = 1; yt6.player1.play() } else yt6.player2.media.play() } catch(e){}
+								    },500,12000)
+								  yt6.p.nextVideo('0')
+								  return void 0
+								}
+							    }
+
+
 						      fix_playlist()
+
 
 						      $waitUntil(function(){var y = yt6.pl_index, zi = yt6.pl_next; if ((typeof y == 'number' && zi) || (yt6.browser_tab == 'hidden' && typeof yt6.p.playVideoAt == 'function')) { return true } else { pl_item() } },
 						      function(){ var y = yt6.pl_index, zi = yt6.pl_next; 
@@ -12949,30 +12983,6 @@ function mep_run() {
 
 						          function nextOn() {
 
-							    // in recent browsers, settimeouts do not work as expected in the new layout if the player's tab isn't the currently active one and the native yt player is not the one being used ...
-							    // the result is ridiculously prolonged reloading-time or complete failure to reload
-							    // to remedy this, on page change we temporarily switch over to the native player and let it play until the rest of the page deigns to load up as well
-							    // a proxy function will check if yt6d.proxy.document_title (document.title) was updated, then we can finally switch back to the external player and continue playback
-
-							    if (yt6.browser_tab == 'hidden' && yt6.layout == 16 && yt6.x && !yt6.mobile && !yt6.ytm && !yt6.ytg) {
-								yt6.previous_title = clone(yt6.title)
-								yt6.player1.pause();
-								switch_players()
-								yt6.player1.setSrc('https://www.youtube.com/ptracking')
-								yt6.player1.load()
-								yt6d.ended = true
-								if (yt6.p && typeof yt6.p.getPlayerState == 'function') {
-								  $waitUntil(function(){ var p = player(), s, t; if (p && typeof p.getPlayerState == 'function') { s = p.getPlayerState(), t = p.getCurrentTime() }
-								    //var z = (yt6.flexy) ? 'ytd-watch-flexy' : 'ytd-watch', z = document.getElementsByTagName(z)[0]
-								    //if (z) z = z.getAttribute('video-id'); //console.log('11ended ' + yt6.x +' '+ s +' '+ t +' '+ yt6.vid +' '+ z +' '+ yt6.strLocation +' '+ (document.title == yt6.title))
-								    if ( (t > 0 && document.title !== yt6.previous_title && p.getVideoUrl().indexOf(yt6.vid) > -1) || document.title !== yt6.previous_title || yt6.browser_tab == 'visible') { return true } //else if (t > 0) if (p.getVideoUrl().indexOf(yt6.vid) == -1) { try { p.playVideo() } catch(e){} } else try { p.pauseVideo() } catch(e){}
-								    if (yt6d.proxy.document_title != yt6.previous_title) { return true } //else yt6.sync_timer = true
-								  },function() { //console.log(yt6.p.getPlayerState())
-									//if (!yt6.x) switch_players()
-									yt6.x = true; try { if (!yt6.V_[itag(me.src)]) { Seek = 1; yt6.player1.play() } else yt6.player2.media.play() } catch(e){}
-								    },500,12000)
-								}
-							    }
 
 							    if (yt6.layout == 16 && yt6.blocked && yt6.pls && !yt6.ytm && !yt6.ytg) {
 							      $waitUntil(function(){var p = original(yt6.p); if (p) { return true } },
@@ -13162,7 +13172,7 @@ function mep_run() {
 					      // Temporary switcheroo of the browser_tab flag to keep the video playing on a background tab when chrome-based browsers would continuously try to stop the paired playback of video & audio
 					      // Console message: "Active resource loading counts reached a per-frame limit while the tab was in background. Network requests will be delayed until a previous loading finishes, or the tab is brought to the foreground. See https://www.chromestatus.com/feature/5527160148197376 for more details"
 					    } else player1.media.currentTime = yt6.ct // to help the space key (pause) bug
-					  };
+					  }
 					  if (yt6.retry < yt6.limit && parseInt(yt6.diff) < parseInt(0.3)) { yt6.retry = 0; }//!yt6.sync_maybe_clear && if (Seek == 1) yt6.sync_maybe_clear = false; } else { yt6.sync_maybe_clear = true }
 					});
 					addEL(me, 'volumechange', function() {//console.log('2volumechange')
@@ -17001,22 +17011,23 @@ if (yt6.mpb && yt6.mpb.tagName == 'YTD-MINIPLAYER') {
 	    yt6d.proxy.orientation = yt6d.orientation
 
 	    screen.orientation.onchange = function() {
-		if (yt6d) {// && yt6d.orientation_set != false
+		if (yt6d) {
 		  if (yt6d.orientation == 0) { // portrait to landscape
 		    yt6d.orientation = 90
 		  } else { // landscape to portrait
 		      yt6d.orientation = 0
 		    }
 		}
-
-		var p1 = gid('player1')
-		if (yt6.fullscreen && p1) {
-		  p1.style.width = '100%'
-		  p1.style.height = '100%'
-		}
-		if (!yt6.fullscreen) {
-		  aspect(yt6.size)
-		  if (yt6.pls) scrollToCurrentVideo()
+		if (yt6) {
+		  var p1 = gid('player1')
+		  if (yt6.fullscreen && p1) {
+		    p1.style.width = '100%'
+		    p1.style.height = '100%'
+		  }
+		  if (!yt6.fullscreen) {
+		    aspect(yt6.size)
+		    if (yt6.pls) scrollToCurrentVideo()
+		  }
 		}
 
 	    }
