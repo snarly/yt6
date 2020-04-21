@@ -8372,9 +8372,9 @@ function wallpaper(){
 	ypos = 0;
     }
 
-    if (!yt6.wallpaper) {
+    if (!yt6.wallpaper && !yt6.fullscreen && !yt6.newvideo) {
 
-	resize_layers( yt6.w, yt6.h, false )
+	resize_layers( yt6.w, yt6.h, false ) //slug2
 
     } else {
 
@@ -11654,7 +11654,7 @@ code = code +
 "	visibility: hidden;"+
 "	position: absolute;"+
 "	bottom: 26px;"+
-"	right: -10px;"+
+"	right: -10px; "+
 "	width: 130px;"+
 "	height: 100px;"+
 "	background: url('" + yt6.cdn2 + "tree/990edbe90b89ca3f40cde0d03fad805a4d6650a5/build/background.png');"+
@@ -12594,27 +12594,29 @@ function mep_run() {
 						    }
 						  } else {
 
-							    // Settimeouts do not work as expected in Material Design layout if the player's browser tab is in the background and the native yt player is not the one being used ...
-							    // the result is ridiculously prolonged reloading-time or complete failure to reload
-							    // To remedy this, before page change we temporarily switch over to the native player and let it play until the rest of the page deigns to load zzas well
-							    // a proxy function will check if yt6d.proxy.document_title (document.title) was updated, then we can finally switch back to the external player and continue playback
+							    // Settimeouts do not work as expected on the Material Design layout when the player's browser tab is in the background and the native yt player is not the one being used
+							    // the prolonged reloading-time / failure to reload seemes to have been due to too many resize_layers function calls marked as "slug1, 2 and 3" causing too much strain for this bloated layout
+
+							    // fix: a proxy function to check if yt6d.proxy.document_title (document.title) was updated, then we can switch back to the external player and continue playback
 
 							    if (yt6.browser_tab == 'hidden' && yt6.layout == 16 && yt6.x && !yt6.mobile && !yt6.ytm && !yt6.ytg) {
 								yt6.previous_title = clone(yt6.title)
 								yt6.player1.pause();
-								switch_players()
+								switch_players(); yt6.x_ = true
 								yt6.player1.setSrc('https://www.youtube.com/ptracking')
 								yt6.player1.load()
+								//yt6.player2.setSrc('https://www.youtube.com/ptracking')
+								//yt6.player2.load()
 								yt6d.ended = true
 								if (yt6.p && yt6.p.tagName == 'DIV' && typeof yt6.p.getPlayerState == 'function') {
-								  $waitUntil(function(){ var p = player(), s, t; if (p && typeof p.getPlayerState == 'function') { s = p.getPlayerState(), t = p.getCurrentTime(); yt6.ytp.ct2 = t }
+								  $waitUntil(function(){ var p = player(), s, t; if (p && typeof p.getPlayerState == 'function') { s = p.getPlayerState(), t = p.getCurrentTime() }
 								    //var z = (yt6.flexy) ? 'ytd-watch-flexy' : 'ytd-watch', z = document.getElementsByTagName(z)[0]
 								    //if (z) z = z.getAttribute('video-id'); //console.log('11ended ' + yt6.x +' '+ s +' '+ t +' '+ yt6.vid +' '+ z +' '+ yt6.strLocation +' '+ (document.title == yt6.title))
 								    if ( (t > 0 && document.title !== yt6.previous_title && p.getVideoUrl().indexOf(yt6.vid) > -1) || document.title !== yt6.previous_title || yt6.browser_tab == 'visible') { return true } //else if (t > 0) if (p.getVideoUrl().indexOf(yt6.vid) == -1) { try { p.playVideo() } catch(e){} } else try { p.pauseVideo() } catch(e){}
 								    if (yt6d.proxy.document_title != yt6.previous_title) { return true } //else yt6.sync_timer = true
 								  },function() { //console.log(yt6.p.getPlayerState())
 									//if (!yt6.x) switch_players()
-									yt6.x = true; try { if (!yt6.V_[itag(me.src)]) { Seek = 1; yt6.player1.play() } else yt6.player2.media.play() } catch(e){}
+									yt6.x = true; yt6.x_ = false; try { if (!yt6.V_[itag(me.src)]) { Seek = 1; yt6.player1.play() } else yt6.player2.media.play() } catch(e){}
 								    },500,12000)
 								  yt6.p.nextVideo('0')
 								  return void 0
@@ -12929,17 +12931,19 @@ function mep_run() {
 							}
 						  } else {
 
-							    // Settimeouts do not work as expected in Material Design layout if the player's browser tab is in the background and the native yt player is not the one being used ...
-							    // the result is ridiculously prolonged reloading-time or complete failure to reload
-							    // To remedy this, before page change we temporarily switch over to the native player and let it play until the rest of the page deigns to load as well
-							    // a proxy function will check if yt6d.proxy.document_title (document.title) was updated, then we can finally switch back to the external player and continue playback
+							    // Settimeouts do not work as expected on the Material Design layout when the player's browser tab is in the background and the native yt player is not the one being used
+							    // the prolonged reloading-time / failure to reload seemes to have been due to too many resize_layers function calls marked as "slug1, 2 and 3" causing too much strain for this bloated layout
+
+							    // fix: a proxy function to check if yt6d.proxy.document_title (document.title) was updated, then we can switch back to the external player and continue playback
 
 							    if (yt6.browser_tab == 'hidden' && yt6.layout == 16 && yt6.x && !yt6.mobile && !yt6.ytm && !yt6.ytg) {
 								yt6.previous_title = clone(yt6.title)
 								yt6.player1.pause();
-								switch_players()
+								switch_players(); yt6.x_ = true
 								yt6.player1.setSrc('https://www.youtube.com/ptracking')
 								yt6.player1.load()
+								//yt6.player2.setSrc('https://www.youtube.com/ptracking')
+								//yt6.player2.load()
 								yt6d.ended = true
 								if (yt6.p && yt6.p.tagName == 'DIV' && typeof yt6.p.getPlayerState == 'function') {
 								  $waitUntil(function(){ var p = player(), s, t; if (p && typeof p.getPlayerState == 'function') { s = p.getPlayerState(), t = p.getCurrentTime() }
@@ -12949,7 +12953,7 @@ function mep_run() {
 								    if (yt6d.proxy.document_title != yt6.previous_title) { return true } //else yt6.sync_timer = true
 								  },function() { //console.log(yt6.p.getPlayerState())
 									//if (!yt6.x) switch_players()
-									yt6.x = true; try { if (!yt6.V_[itag(me.src)]) { Seek = 1; yt6.player1.play() } else yt6.player2.media.play() } catch(e){}
+									yt6.x = true; yt6.x_ = false; try { if (!yt6.V_[itag(me.src)]) { Seek = 1; yt6.player1.play() } else yt6.player2.media.play() } catch(e){}
 								    },500,12000)
 								  yt6.p.nextVideo('0')
 								  return void 0
@@ -14401,7 +14405,7 @@ if (!t.sourcechooserButton) {//console.log('error')
 //display-playback-speed
 		html = '<div class="mejs-button mejs-speed-button" style="width: 34px"><div id="displaySpeed" style="width: 34px; padding: 2px 2px 2px 2px; color: white;">Speed 100%</div>' + 
 								'<button type="button" aria-label="' + t.options.speedText + '" title="' + t.options.speedText + '">' + t.options.defaultSpeed + t.options.speedChar + '</button>' + 
-								'<div class="mejs-speed-selector" style="width: 130px; right: -80px;">' + 
+								'<div class="mejs-speed-selector" style="width: 110px; left: -30px;">' + 
 								'<ul style="display: inline-block">';
 				
 		if ($.inArray(t.options.defaultSpeed, t.options.speeds) === -1) {
@@ -14634,7 +14638,7 @@ if (!t.sourcechooserButton) {//console.log('error')
     };
 
 
-    loadScript( protocol() + yt6.cdn + "8882b78f2729a9e71d8ca1fab59a84202240873c/mep-ceeb1a7.js", jq1)
+    loadScript( protocol() + yt6.cdn + "a2a4bcf42afa37dd1f1aac825a900a81b25ac78b/mep-ceeb1a7.js", jq1)
 
 
 
@@ -14647,7 +14651,7 @@ if (!t.sourcechooserButton) {//console.log('error')
 		var bm0 = gid('bm0')
 
 		if (yt6.size == undefined) yt6.size = 'default'
-		aspect(yt6.size, false)
+		if (!yt6.fullscreen) aspect(yt6.size, false) //slug3
 
  		if (wide_view() || gid('aspect')) {
 
@@ -15327,7 +15331,10 @@ if (typeof Polymer != 'undefined') {
 	      //}
 	      if (cf) c = (cf == 'function') ? p.getPlayerState() : null
 	      var a = (c) ? gid('bm0') : null
-	      if (a && (yt6.x || a.style.visibility == 'visible') && c && (c == 1 || c > 2) && p) p.pauseVideo(); //console.log(yt6.sync_timer +' '+ mutation.attributeName +' '+ yt6.vid);
+	      if (a && (yt6.x || a.style.visibility == 'visible') && c && (c != 2 && c > -1) && p) {
+		p.pauseVideo(); //console.log(yt6.sync_timer +' '+ mutation.attributeName +' '+ yt6.vid);
+		return true
+	      }
 	      //var b = gc('mejs-controls')[0]
 	      //if (a && a.style.visibility == 'hidden' && b) b.style.visibility = 'hidden'
 	      //if (yt6.sync_timer == true) return true
@@ -16838,20 +16845,27 @@ if (yt6.mpb && yt6.mpb.tagName == 'YTD-MINIPLAYER') {
 
 
 	var autoscale = gid('placeholder-player') || (gid('player-api')) ? gid('player-api').parentNode : null;// || gid('player-container')
+	var windowwidth, windowheight
+	/*if (yt6.layout == 16 && !yt6.ytm && !yt6.mobile && !yt6.ytg) {
+	  windowheight = parseInt(window.innerHeight || document.documentElement.clientHeight || yt6.body.clientHeight)
+	  windowwidth = parseInt(window.innerWidth || document.documentElement.clientWidth || yt6.body.clientWidth)
+	  console.log(p1.offsetWidth +' '+windowwidth +' '+p1.offsetHeight +' '+windowheight)
+	}*/
 
-
-
-	if ( (autoscale != null) && (gc('mejs-clear')[0]) && !yt6.ytg && //(yt6.layout == 12 || yt6.size == 'default' || (yt6.blocked && yt6.age.blocked > 0)) &&//
+	if ( autoscale != null && gc('mejs-clear')[0] && !yt6.ytg && //(yt6.layout == 12 || yt6.size == 'default' || (yt6.blocked && yt6.age.blocked > 0)) &&//
 	    (
-	      ( (
+	      (
 		 ( (ads == -1) || (p1 && p1.style.width != '100%' && p1.style.height != '100%') )
 		//&& !( (ads == -1) && ((gid('player1').style.width != '100%') && (gid('player1').style.height != '100%')) )
-		) ) &&
-	       (p && p.offsetWidth != screen.width) && (p.offsetHeight != screen.height) && (mep != null) &&
-	       ((mep.offsetWidth != screen.width) &&
-	        (mep.offsetHeight != screen.height))
+	      ) &&
+		!(p1 && p1.offsetWidth == windowwidth && p1.offsetHeight == windowheight)
+		&&
+		p && p.offsetWidth != screen.width && p.offsetHeight != screen.height && mep != null &&
+		  ((mep.offsetWidth != screen.width) &&
+		   (mep.offsetHeight != screen.height)
+		  )
 	    )
-	  ) { //console.log("sw: "+ screen.width +", sh: "+screen.height+", pw: "+ p.offsetWidth +                    ", ph: "+ p.offsetHeight +", bw: "+ bm0.offsetWidth +                    ", bh: "+ bm0.offsetHeight);
+	   ) { //console.log("sw: "+ screen.width +", sh: "+screen.height+", pw: "+ p.offsetWidth +                    ", ph: "+ p.offsetHeight +", bw: "+ bm0.offsetWidth +                    ", bh: "+ bm0.offsetHeight);
 	  //yt6.fullscreen = false
 
 
@@ -16957,7 +16971,7 @@ if (yt6.mpb && yt6.mpb.tagName == 'YTD-MINIPLAYER') {
 	  }
 
 
-	if ( bm0 && yt6.fullscreen == true && p1 && p1.style.width != '100%' && p1.style.height != '100%' ) { //console.log('p1 fullscreen off')
+	if ( bm0 && yt6.fullscreen == true && p1 && p1.style.width != '100%' && p1.style.height != '100%') { console.log('p1 fullscreen off')// && !(p1.offsetWidth == windowwidth && p1.offsetHeight == windowheight)
 
 	  yt6.fullscreen = false
 	  if (yt6.pstyle) {
@@ -18089,7 +18103,7 @@ function bestfit(){
 
 
 
-function resize_layers(w,h,me_aspect){
+function resize_layers(w,h,me_aspect){ //console.log('resize')
 
   if (yt6.layout == 12 && !video_title()[1]) return void 0
   if (yt6 && (!yt6.top || !yt6.osw || !yt6.mhp)) getReferenceObjects()
@@ -20687,7 +20701,7 @@ function aspect(a) {
 
 }
 
-yt6.aspect = function(a) { aspect(a) }
+yt6.aspect = function(a) { console.log('0'); aspect(a) }
 
 
 function deldiv(){
@@ -21253,7 +21267,7 @@ var CtrlS = function (stage,v){
 
   if (yt6.flexy) var left = yt6.osw.style.left
 
-  if (bm0) { resize_layers( bm0.style.width, bm0.style.height, false ) } else resize_layers( yt6.w, yt6.h, false ) //
+  if (!yt6.fullscreen) if (bm0) { resize_layers( bm0.style.width, bm0.style.height, false ) } else resize_layers( yt6.w, yt6.h, false ) //slug1
 
   /*if (yt6.aspect2) {
     if (yt6.wna && gid(yt_alert_message) && gid(yt_alert_message).parentNode != yt6.wna) {
