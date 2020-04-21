@@ -3760,7 +3760,7 @@ if (typeof jQuery != 'undefined') {
 	$.extend(mejs.MepDefaults, {
 		muteText: mejs.i18n.t('Mute Toggle'),
         allyVolumeControlText: mejs.i18n.t(''),//Use Up/Down Arrow keys to increase or decrease volume.
-		//hideVolumeOnTouchDevices: true,
+		hideVolumeOnTouchDevices: false,
 		
 		audioVolume: 'horizontal',
 		videoVolume: 'vertical'
