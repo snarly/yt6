@@ -6618,7 +6618,7 @@ if (autoplay != null) {
 	  if (typeof yt6.player1.media.firstChild != 'undefined' && yt6.player1.media.firstChild.name == '0') {
 	    if (yt6.x && yt6.swapped != 1) {
 	      try { yt6.player1.hideControls() } catch(e) {}
-	      switch_players(); alert('1'); yt6.swapped = 1; if (yt6.ytg) yt6.ytg.swapped = 1
+	      switch_players(); yt6.swapped = 1; if (yt6.ytg) yt6.ytg.swapped = 1
 	      if (yt6.autoplay) try {
 		p.stopVideo()
 		p.setPlaybackRate( yt6.speed )
