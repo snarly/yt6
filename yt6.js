@@ -12194,7 +12194,7 @@ function mep_run() {
 
 						      //if (autoplay(false) && typeof p.pauseVideo == 'function') p.playVideo();
 						      var p = player(), p = yt6.p; if (!p) p = gc('forced flashplayer')[0]; try { p.style.display = 'none' } catch(e){}; 
-						      p.style.display = 'none'; alert('2');yt6.swapped = 1; //switch_players()
+						      p.style.display = 'none'; yt6.swapped = 1; //switch_players()
 						     
 						    } else { // flash object already in place
 							if (!yt6.swapped && p && p.tagName != 'EMBED') { relocate_mep() }
