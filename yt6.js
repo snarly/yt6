@@ -22,6 +22,8 @@ if (!window.yt6d || (window.yt6d && window.yt6d.yt6 != yt6)) try { //data object
   if (window.spf && window.ytspf) yt6.spf = true
   var yt_alert_message = 'yt-alert-message'
   yt6.wallpaper = false
+  yt6.poster = {}
+  yt6.age = {}
 
 
   yt6.body = document.getElementsByTagName('body')[0]
@@ -623,7 +625,7 @@ yt6.prev_media = []
   };
 
 
-  var a,b,i,j,k,x,y,z;
+  var i,j,k,z;
 
 for(var i=0;i<338;i++) if (qual[i]) qual[i]['s'] = ''
 
@@ -1033,6 +1035,7 @@ try { var mouseEvt, mouseEvt = document.createEvent("MouseEvents") } catch(e) {}
 //@ http://jsfromhell.com/array/shuffle [v1.0]
 
   function shuffle(o){ //v1.0
+    var i, j, x
     for(j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x)//{console.log(o)}
     return o
   };
@@ -1604,13 +1607,15 @@ if (!gid('video-hide')) {
 yt6.tmp = gc("html5-video-container")[0]
 yt6.html5_fail = ( !yt6.tmp ||
   (player() && yt6.tmp && yt6.tmp.parentNode == player() &&
-   (yt6.tmp.innerHTML == '' ||
-    !yt6.tmp.firstChild ||
+   ( ( !(yt6.p && typeof yt6.p.getPlayerState == 'function') &&
+       (yt6.tmp.innerHTML == '' || !yt6.tmp.firstChild)
+     ) ||
     (yt6.tmp.firstChild && typeof yt6.tmp.firstChild.getAttribute == 'function' && yt6.tmp.firstChild.getAttribute('src') == '') ||
     typeof yt6.tmp.firstChild.play != 'function' ||
-    gc('ytp-error')[0]
+    ( !(yt6.p && typeof yt6.p.getPlayerState == 'function') && gc('ytp-error')[0])
   ))) ? true : false
 //console.log(yt6.oldbrowser +' '+yt6.html5_fail)
+if (yt6.p && typeof yt6.p.getPlayerState == 'function' && gc('ytp-error')[0]) { yt6.age.blocked = 111 }
 
 if (yt6.html5_fail && !yt6.oldbrowser) {
   if (!( yt6.layout == 16 && !gc('ytp-error')[0] )) {
@@ -3172,6 +3177,12 @@ function getPoster(){
     img.id = 'test_poster2'
     img.src = poster
     img.style.display = 'none'
+    var z = gc('mejs-poster mejs-layer')[0]
+    if (z && z.firstChild){
+      z.firstChild.naturalWidth = 0
+      z.firstChild.naturalHeight = 0
+      z.firstChild.src = ''
+    }
     img.onload = function(){
       $waitUntil(function() { var img = gid('test_poster2'); yt6.timer = yt6.timer + 1; //console.log('? ' + yt6.timer); 
 	  if (yt6.timer > 50 && img && img.parentNode) img.parentNode.parentNode.removeChild(img.parentNode)
@@ -3184,8 +3195,10 @@ function getPoster(){
 	    img.src = img.src.replace('maxresdefault','hqdefault')
 	    var z = gc('mejs-poster mejs-layer')[0]
 	    if (z && z.firstChild){
-	      z.style.backgroundImage = "url('" + img.src + "')";
-	      z.firstChild.src = img.src;
+	      z.style.backgroundImage = "url('" + img.src + "')"
+	      z.firstChild.naturalWidth = 0
+	      z.firstChild.naturalHeight = 0
+	      z.firstChild.src = yt6.poster.src = img.src
 	    }
 	    var img = gid('test_poster2')
 	    if (img) try { img.parentNode.removeChild(img) } catch(e){}
@@ -3196,18 +3209,50 @@ function getPoster(){
       delete img
     }
 
-
-  yt6.poster = poster
   //} else return ''
 
   return poster
 }
 
 
+function poster_resize(w, h, mep) {
+
+ if (typeof mep == 'object' && typeof w == 'number' && typeof h == 'number') {
+
+ var bm0 = gid('bm0')
+ var poster = gc('mejs-poster mejs-layer')[0] || getElementsByAttribute(mep,'div','class','mejs-poster mejs-layer')[0]
+  if (typeof poster != 'undefined') {
+    var poster_img = yt6.poster.img = poster.getElementsByTagName('img')[0]
+    if (!yt6.fullscreen && !yt6.ytp.fullscreen && poster_img && typeof poster_img.naturalWidth == 'number') {
+      var x = (poster_img.naturalWidth / poster_img.naturalHeight)
+      var y = (poster_img.naturalHeight / poster_img.naturalWidth)
+      yt6.poster.resize = !(x && y) ? true : false
+      //console.log([x , y, (1 * p1.style.width.replace('px','') / p1.style.height.replace('px','')) , 16/9 , (1 * p1.style.height.replace('px','') / p1.style.width.replace('px','')) , 9/16 , w/h])
+
+      if (yt6.aspect_ratio < 16/9 && Math.abs(yt6.aspect_ratio - 16/9) > 0.1){//yt6.wallpaper || parseFloat(0.2) > Math.abs(yt6.aspect_ratio - 3/4) || Math.abs(x - (1 * p1.style.width.replace('px','') / p1.style.height.replace('px',''))) < parseFloat(0.2) ) {
+	poster.style.width = x * h + 'px'
+	poster.style.height = (bm0) ? bm0.style.height : p.parentNode.parentNode.offsetHeight + 'px'
+	poster.style.marginTop = ''
+	poster.style.marginLeft = (w - 1 * poster.style.width.replace('px','')) / 2 + 'px'
+      } else {
+	  try { var bm0w = (bm0) ? bm0.style.width : p.parentNode.parentNode.offsetWidth + 'px' } catch(e){ var bm0w = '640px'}
+	  poster.style.width = Math.abs(Math.abs(x - (w / h)) - parseFloat(24/10 - 4/3).toFixed(2) < parseFloat(0.2) ) ? bm0w : w - (x * h ) / 2 + 'px'; //1 * bm0.style.width.replace('px','') / ((16/9) / x) + 'px'
+	  poster.style.height = y * w + 'px'
+	  poster.style.marginTop = (h - 1 * poster.style.height.replace('px','')) / 2 + 'px'
+	  poster.style.marginLeft = Math.abs(Math.abs(x - (w / h)) - parseFloat(24/10 - 4/3).toFixed(2) < parseFloat(0.2) ) ? '' : (w - 1 * poster.style.width.replace('px','')) / 2 + 'px'; //(w - 1 * poster.style.width.replace('px','')) / 2 + 'px'
+	}
+    } else { //in fullscreen mode
+	poster.style.width = '100%'
+	poster.style.height = '100%'
+      }
+  }
+  }
+
+}
 
 
 function mep_x(a){
-  var a1 = a.split('_ _')[0];
+  var a1 = a.split('_ _')[0], a2;
   if (a1 != null) {
     try {
       a2 = a.split('_ _')[1];
@@ -3239,8 +3284,7 @@ function protocol() { var protocol = 'http:'; //return protocol
 
 
 function player(debug) {
-  var p
-  p = document.querySelector('#movie_player'), pid = (p && p.parentNode) ? p.parentNode.getAttribute('id') : '' // in the new layout, getElementById() will not necessarlily find the first object in the DOM-hierarchy with the given id, but the first one that existed with the id, therefore it's better to use querySelector() instead for locating the current movie_player
+  var p = document.querySelector('#movie_player'), pid = (p && p.parentNode) ? p.parentNode.getAttribute('id') : '' // in the new layout, getElementById() will not necessarlily find the first object in the DOM-hierarchy with the given id, but the first one that existed with the id, therefore it's better to use querySelector() instead for locating the current movie_player
   if (p && (
 	(!yt6.ytm && p.parentNode && (pid && pid != 'movie_player_to_insert' && pid != 'movie_player_to_dispose' && pid != 'test-4' && pid != 'ytp_dump')) ||
 	(yt6.ytm && (!yt6.api || (p.parentNode.getAttribute('id') != 'movie_player_to_insert' && p.parentNode.getAttribute('id') != 'movie_player_to_dispose')))
@@ -3419,7 +3463,7 @@ function correct_flashvars(a) { // prepare the flash player object's flashvars v
       url_encoded_fmt_stream_map	= yt6.args.url_encoded_fmt_stream_map,	// clone
 
   // backups of 2 objects which need to be modified to be able to use Flash in spite of being no longer supported by YouTube
-      player_response			= yt6.args.player_response		// the JSON.stringified ["captions"] child object needs to be wiped
+      player_response			= yt6.args.player_response,		// the JSON.stringified ["captions"] child object needs to be wiped
       ad3_module			= yt6.args.ad3_module			// if not empty, ad3_module will break the flash player as well
 
 
@@ -4477,7 +4521,7 @@ function ageless_verification(spfpc) { //console.log('age')
 		  }
 		}
 	      }
-	      //console.log(ytplayer.config); console.log('args:'+typeof window.ytplayer.config.args)
+	      //console.log(window);console.log(ytplayer.config)
 	      try { yt6.rpt = 1; if (xhr1.done != false) xhr1.done = true } catch(e){}
 	    }
 	  }
@@ -5235,7 +5279,6 @@ function me_flash_up(file, ib){
 
 
   yt6.retry = 0
-  yt6.age = {}
   yt6.age.done = 0
   // age-restriction checking by looking at relevant DOM objects
   // due to the nature of the newer layout, this approach causes a false positive detection whenever navigating away from an actual blocked page to an accessible video
@@ -5307,11 +5350,11 @@ function me_flash_up(file, ib){
 				} else yt6.age.blocked = 0
 			     } else yt6.age.blocked = 0
 			   }
-			} else yt6.age.blocked = 0;
+			} else if (yt6.age.blocked != 111) yt6.age.blocked = 0;
 		  }
 	} catch(e) { }
 
-	if ((yt6.layout == 12 && yt6.blocked) || (yt6.layout == 16 && yt6.age.blocked && yt6.age.blocked < 5)) { 
+	if ((yt6.layout == 12 && yt6.blocked) || (yt6.layout == 16 && yt6.age.blocked && (yt6.age.blocked < 5 || yt6.age.blocked == 111))) { 
 	  yt6.newin = video_id()[0]
 	  yt6.blocked = true
 	} else yt6.blocked = false
@@ -6619,7 +6662,7 @@ if (autoplay != null) {
 	var autoplay
 	if (yt6.ytg) autoplay2 = document.getElementsByTagName('ytg-playlist-panel-renderer');//gc('style-scope ytg-playlist-panel-renderer')
 	if (yt6.ytm) { autoplay2 = []; autoplay2[0] = gid('queue') }
-	if (yt6.mobile && yt6.pls) { autoplay2 = []; autoplay2[0] = yt6.pls }
+	if (yt6.mobile) { autoplay2 = []; autoplay2[0] = yt6.pls }
 	if (!autoplay2[0]) { yt6.autoplay = false } else {
 	  yt6.autoplay = true
 	  if (typeof yt6.player1.media.firstChild != 'undefined' && yt6.player1.media.firstChild.name == '0') {
@@ -7460,11 +7503,7 @@ yt6.mep_renew = function() {
 	var tc = gc('mejs-time-current')[0]
 	if (tc) { tc.setAttribute('width', '0px'); tc.style.width = '0px' }
 
-	if (!yt6.fullscreen) resize_layers( yt6.w, yt6.h )
 
-
-
-	//var z = gid(mep_x('mep_') + '_sourcechooser_360p  VP8 + 128k Vorbiswebm') ||    gid(mep_x('mep_') + '_sourcechooser_360p  H.264 + 96k AACmp4')
 
       function find_the_source() {
 
@@ -10023,7 +10062,7 @@ if (typeof html.splice != 'function') return void 0;
 
 
   //move alt-links
-  var a = gid('yt6-links'), b = gid('alt-links'), m = 'used';
+  var a = gid('yt6-links'), b = gid('alt-links'), m = 'used', n;
   if (a && b) {
     var z = gc('yt6-links')
     for (j=0;j<999;j++) {
@@ -16331,7 +16370,7 @@ addEL(window, 'yt-navigate-finish', yt6.body.yt_navigate_finish, false)
 		  triggerTouch('touchend', yt6d.mouseEvent);
 
 		  if (1 >= yt6.linx.length) {
-		    if (yt6.x) { switch_players(); alert('0'); yt6.swapped = 1 }
+		    if (yt6.x) { switch_players(); yt6.swapped = 1 }
 		    /*var p = player(), p = yt6.p
 		    $waitUntil(function(){ var vid = ''; if (yt6.p && typeof yt6.p.getVideoUrl == 'function') vid = yt6.p.getVideoUrl().split('v=')[1] || yt6.p.getVideoUrl().split('v/')[1]; if (vid && location.href.indexOf(vid.split('&')[0]) > -1) return true },
 		      function() {
@@ -16553,6 +16592,7 @@ if (yt6 != null) if (yt6.loaded && typeof yt6.loaded == 'boolean') {
 
 	if (poster && !yt6.ie7 && poster.getAttribute('style') && 1* poster.getAttribute('style').indexOf('("') > -1) {
 	  poster.setAttribute('style', poster.getAttribute('style').split('("').join("('").split('")').join("')"));
+	  if (yt6.poster.resize) poster_resize(1 * yt6.w.replace('px',''), 1 * yt6.h.replace('px',''), mep)
 	}
 
 
@@ -17023,8 +17063,10 @@ if (yt6.mpb && yt6.mpb.tagName == 'YTD-MINIPLAYER') {
 		    z.style.height = webgl.height.replace('%','px')
 		    var x = (p1) ? p1.offsetWidth : screen.width
 		    var y = (p1) ? p1.offsetHeight : screen.height
-		    z.style.left = (x - webgl.width.replace('px','')) / 2 + 'px'
-		    z.style.top = (y - webgl.height.replace('px','')) / 2 + 'px'
+		    if (x && y) {
+		      z.style.left = (x - webgl.width.replace('px','')) / 2 + 'px'
+		      z.style.top = (y - webgl.height.replace('px','')) / 2 + 'px'
+		    }
 		  }
 	        }
 	      }
@@ -17048,16 +17090,6 @@ if (yt6.mpb && yt6.mpb.tagName == 'YTD-MINIPLAYER') {
       if (yt6.player1) { //console.log(p1.style.width +' '+screen.width +'px '+ p1.offsetWidth +' '+ parseInt(window.innerWidth || document.documentElement.clientWidth || yt6.body.clientWidth)+' '+ p1.style.height +' '+screen.height +'px ' + p1.offsetHeight)
 	if (yt6.layout == 12) {
 	  yt6.fullscreen12 = (yt6.Seek == 3) ? false : !yt6.fullscreen12
-	  /*if (p1)
-	  if (yt6.player1.isFullScreen) {
-	    if (p1.offsetWidth == screen.width || p1.offsetHeigth == screen.height) {
-	      yt6.player1.isFullScreen2 = false//true
-	    }
-	  } else if (yt6.fullscreen && !yt6.player1.isFullScreen2 && yt6.fullscreen12 === 0) { //console.log('xfs')
-	      yt6.player1.exitFullScreen()
-	      var z = gclass('mejs-button mejs-fullscreen-button')[0]
-	      try { z.click() } catch(e){}; if (x) try { z.click() } catch(e){}
-	    } //else try { yt6.player1.isFullScreen = false; yt6.player1.exitFullScreen() } catch(e){}*/
 	}
       }
 
@@ -17065,10 +17097,6 @@ if (yt6.mpb && yt6.mpb.tagName == 'YTD-MINIPLAYER') {
 
 	  if (yt6.layout == 12 && yt6.Seek == 3 && yt6.fullscreen && !yt6.fullscreen12 && autoplay(false)) {
 	    try {
-		//yt6.size2 = clone(yt6.size)
-		//yt6.fullscreen12 = true
-		//var x = clone(yt6.player1.isFullScreen)
-		//yt6.player1.enterFullScreen()
 
 		if (bm0.parentNode != yt6.api) unhide(bm0)
 
@@ -17076,26 +17104,22 @@ if (yt6.mpb && yt6.mpb.tagName == 'YTD-MINIPLAYER') {
 		// while in Chrome the screen size and the offset values differ by the attached Developer Console's dimensions
 		if (browserName == 'Firefox') { // (p1 && (p1.offsetWidth == screen.width && p1.offsetHeight == screen.height)) {
 		  aspect('theater') // needed in Firefox
-		  //try { z.click() } catch(e){}; //if (x) try { z.click() } catch(e){}
 		}
 
 		yt6.player1.enterFullScreen()
-		//var fullscreen = mozRequestFullScreen || webkitRequestFullScreen || msRequestFullScreen
-		//try { fullscreen() } catch(e){ console.log(e)}
-		//var z = gclass('mejs-button mejs-fullscreen-button')[0]
-
 
 		if (p1) {
 		  p1.style.width = '100%'
 		  p1.style.height = '100%'
 		}
 		yt6.fullscreen12 = true
+
 	    } catch(e){}
 	  }
 
       } else
 
-	if ( bm0 && yt6.fullscreen == true && p1 && p1.style.width != '100%' && p1.style.height != '100%' && !yt6.fullscreen12 ) { //console.log('p1 fullscreen off')// && !(p1.offsetWidth == windowwidth && p1.offsetHeight == windowheight)
+	if ( bm0 && yt6.fullscreen == true && p1 && p1.style.width != '100%' && p1.style.height != '100%' && !yt6.fullscreen12 ) { //console.log('p1 fullscreen off')
 
 	  if (!(yt6.player1 && yt6.player1.isFullScreen)) {
 
@@ -17129,8 +17153,10 @@ if (yt6.mpb && yt6.mpb.tagName == 'YTD-MINIPLAYER') {
 		  z.style.height = webgl.height.replace('%','px')
 		  var x = (p1) ? p1.offsetWidth : screen.width
 		  var y = (p1) ? p1.offsetHeight : screen.height
-		  z.style.left = (x - webgl.width.replace('px','')) / 2 + 'px'
-		  z.style.top = (y - webgl.height.replace('px','')) / 2 + 'px'
+		  if (x && y) {
+		    z.style.left = (x - webgl.width.replace('px','')) / 2 + 'px'
+		    z.style.top = (y - webgl.height.replace('px','')) / 2 + 'px'
+		  }
 	        }
 		if (p) {
 		  if (p.style.visibility != 'hidden' && p.style.width != '') { //(p.style.display != 'none')
@@ -17213,9 +17239,9 @@ if (yt6.mpb && yt6.mpb.tagName == 'YTD-MINIPLAYER') {
 	  if (bestfit()) {
 	    if (bm0 && gid('aspect')) {
 	     resize_layers(gid('a_width').value + 'px', gid('a_height').value + 'px', false)
-	    } else resize_layers(yt6.w, yt6.h);
+	    } //else resize_layers(yt6.w, yt6.h);
 	  }
-	  yt6.mode = yt6.wide
+	  yt6.mode = clone(yt6.wide)
  //console.log(yt6.size + ' autoscale mode ' + yt6.wide + ' '+ yt6.w +' '+ yt6.h ); 
 	}
 
@@ -19438,7 +19464,7 @@ if (yt6.flexy) {
 		      }
 		  }
 		if (!yt6.flexy) z.style.top = l.style.marginTop
-		a.style.left = api.left = '0px'
+		a.style.left = api.left = '0px' //!(p1 && 1 * p1.style.width.replace('px','') < 425) ? '0px' : -1 * (425 - 1 * p1.style.width.replace('px','')) / 2 + 'px'
 
 	      }
 
@@ -19837,10 +19863,10 @@ if (yt6.tbg) {
     }
 }
 
-var z = gid('player-container')
-if (yt6.layout == 16 && z) {
- z.style.width = (!yt6.ytp.fullscreen) ? yt6.w : '100%'
- z.style.height = (!yt6.ytp.fullscreen) ? yt6.h : '100%'
+var a = gid('player-container')
+if (yt6.layout == 16 && a) {
+ a.style.width = (!yt6.ytp.fullscreen && !yt6.wide) ? yt6.w : '100%'
+ a.style.height = (!yt6.ytp.fullscreen) ? yt6.h : '100%'
 }
 
 
@@ -19883,9 +19909,11 @@ if ((p1 != null) && (yt6.x)){
 	  var y = z[i].style.display
 	  z[i].style.width = x.width.replace('%','px')
 	  z[i].style.height = x.height.replace('%','px')
-	  try {
-	    z[i].style.left = ((p1.style.width != '100%') && (p1.style.height != '100%')) ? (w - x.width.replace('px','')) / 2 + 'px' : (screen.width - x.width.replace('px','')) / 2 + 'px'
-	    z[i].style.top = ((p1.style.width != '100%') && (p1.style.height != '100%')) ? (h - hdiff -x.height.replace('px','')) / 2 + 'px' : (screen.height - x.height.replace('px','')) / 2 + 'px'
+	  var dx = (p1) ? p1.offsetWidth : screen.width
+	  var dy = (p1) ? p1.offsetHeight : screen.height
+	  if (!(yt6.fullscreen && !dx && !dy)) try {
+	    z[i].style.left = ((p1.style.width != '100%') && (p1.style.height != '100%')) ? (w - x.width.replace('px','')) / 2 + 'px' :  (dx - x.width.replace('px','')) / 2 + 'px'
+	    z[i].style.top = ((p1.style.width != '100%') && (p1.style.height != '100%')) ? (h - hdiff -x.height.replace('px','')) / 2 + 'px' : (dy - x.height.replace('px','')) / 2 + 'px'
 	  } catch(e) {}
 	  z[i].style.display = y
         }
@@ -19935,7 +19963,7 @@ if ((p1 != null) && (yt6.x)){
 
   if (yt6.w7a != null) yt6.w7a.style.display = 'none'
 
-  var mhp = (yt6.layout != 16) ? yt6.mhp.offsetHeight : yt6.mhp.parentNode.offsetHeight
+  var mhp = (yt6.layout != 16) ? yt6.mhp.offsetHeight : yt6.mhp.parentNode.parentNode.offsetHeight
   var z = gid("bm3")
   if (z) z.style.top = (!yt6.ytm) ? mhp - 2 + "px" : '0px' 
 
@@ -19948,31 +19976,7 @@ if ((p1 != null) && (yt6.x)){
   if (typeof yt6.wallpaper == 'string') wallpaper()
   //if (!flexyleft && p1) flexyleft = 1 * p1.style.left.replace('px','')
 
-  if (mep) var poster = gc('mejs-poster mejs-layer')[0] || getElementsByAttribute(mep,'div','class','mejs-poster mejs-layer')[0]
-  if (typeof poster != 'undefined') {
-    var poster_img = poster.getElementsByTagName('img')[0]
-    if (!yt6.fullscreen && !yt6.ytp.fullscreen && poster_img && typeof poster_img.naturalWidth == 'number') {
-      var x = (poster_img.naturalWidth / poster_img.naturalHeight)
-      var y = (poster_img.naturalHeight / poster_img.naturalWidth)
-      //console.log([x , y, (1 * p1.style.width.replace('px','') / p1.style.height.replace('px','')) , 16/9 , (1 * p1.style.height.replace('px','') / p1.style.width.replace('px','')) , 9/16 , w/h])
-
-      if (yt6.wallpaper || parseFloat(0.2) > Math.abs(yt6.aspect_ratio - 3/4) || Math.abs(x - (1 * p1.style.width.replace('px','') / p1.style.height.replace('px',''))) < parseFloat(0.2) ) {
-	poster.style.width = x * h + 'px'
-	poster.style.height = (bm0) ? bm0.style.height : p.parentNode.parentNode.offsetHeight + 'px'
-	poster.style.marginTop = ''
-	poster.style.marginLeft = (w - 1 * poster.style.width.replace('px','')) / 2 + 'px'
-      } else {
-	  try { var bm0w = (bm0) ? bm0.style.width : p.parentNode.parentNode.offsetWidth + 'px' } catch(e){ var bm0w = '640px'}
-	  poster.style.width = Math.abs(Math.abs(x - (w / h)) - parseFloat(24/10 - 4/3).toFixed(2) < parseFloat(0.2) ) ? bm0w : w - (x * h ) / 2 + 'px'; //1 * bm0.style.width.replace('px','') / ((16/9) / x) + 'px'
-	  poster.style.height = y * w + 'px'
-	  poster.style.marginTop = (h - 1 * poster.style.height.replace('px','')) / 2 + 'px'
-	  poster.style.marginLeft = Math.abs(Math.abs(x - (w / h)) - parseFloat(24/10 - 4/3).toFixed(2) < parseFloat(0.2) ) ? '' : (w - 1 * poster.style.width.replace('px','')) / 2 + 'px'; //(w - 1 * poster.style.width.replace('px','')) / 2 + 'px'
-	}
-    } else { //in fullscreen mode
-	poster.style.width = '100%'
-	poster.style.height = '100%'
-      }
-  }
+  if (mep) poster_resize(w, h, mep)
 
 
 if (p1 && p1.parentNode) if (strLeft || strTop) {//console.log('propUpdate')
