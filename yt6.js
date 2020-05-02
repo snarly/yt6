@@ -16216,7 +16216,7 @@ addEL(window, 'yt-navigate-finish', yt6.body.yt_navigate_finish, false)
 	    target[key] = value
 	    if (yt6 && yt6d) {
 		//document.title
-		if (key == 'document_title' && key != yt6.previous_title && yt6d.ended && yt6.browser_tab == 'hidden' && yt6.layout == 16 && !yt6.ytm && !yt6.ytg && yt6.player1 && yt6.player1.media) {
+		if (key == 'document_title' && value != yt6.previous_title && yt6d.ended && yt6.browser_tab == 'hidden' && yt6.layout == 16 && !yt6.ytm && !yt6.ytg && yt6.player1 && yt6.player1.media) {
 		  yt6d.ended = false
 		  if (yt6.p && typeof yt6.p.getPlayerState == 'function') {
 		    try { yt6.p.pauseVideo() } catch(e){}
@@ -16224,7 +16224,7 @@ addEL(window, 'yt-navigate-finish', yt6.body.yt_navigate_finish, false)
 		  if (!yt6.x) { switch_players(); yt6.x = true }
 		  if (autoplay(false)) try {
 		    yt6.player1.load()
-		    yt6.player2.play() // background play on new layout would most definitely hang without this clumsy "mismatched previous audio starts again"-hack before the next video on a playlist could come up
+		    //yt6.player2.play() // background play on new layout would most definitely hang without this clumsy "mismatched previous audio starts again"-hack before the next video on a playlist could come up
 		  } catch(e){}
 		}
 
