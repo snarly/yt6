@@ -3237,18 +3237,36 @@ function poster_resize(w, h, mep) {
  var poster = gc('mejs-poster mejs-layer')[0] || getElementsByAttribute(mep,'div','class','mejs-poster mejs-layer')[0]
   if (typeof poster != 'undefined') {
     var poster_img = yt6.poster.img = poster.getElementsByTagName('img')[0]
-    if (!yt6.fullscreen && !yt6.ytp.fullscreen && poster_img && typeof poster_img.naturalWidth == 'number') {
+    if (bm0 && poster_img && typeof poster_img.naturalWidth == 'number')
+    if (!yt6.fullscreen && !yt6.ytp.fullscreen) {
       var x = (poster_img.naturalWidth / poster_img.naturalHeight)
       var y = (poster_img.naturalHeight / poster_img.naturalWidth)
       yt6.poster.resize = !(x && y && !isNaN(x) && !isNaN(y)) ? true : false
+
+      if (typeof yt6.aspect_ratio === 'string') {
+        yt6.aspect_ratio = yt6.aspect_ratio.split("x")[0] / yt6.aspect_ratio.split('x')[1]
+        yt6.ar = yt6.aspect_ratio
+      }
+
       //console.log([x , y, (1 * p1.style.width.replace('px','') / p1.style.height.replace('px','')) , 16/9 , (1 * p1.style.height.replace('px','') / p1.style.width.replace('px','')) , 9/16 , w/h])
-      //console.log(yt6.aspect_ratio - 16/9); console.log(Math.abs(x - yt6.aspect_ratio)); console.log(w/h - x)
-      if (yt6.aspect_ratio - 16/9 < 0.57 || !(Math.abs(x - yt6.aspect_ratio) > 0.7 || w/h - x < 1.1) ) { //console.log('portrait view or unusual difference between video and poster aspect ratio')
+//console.log((16/9 - yt6.aspect_ratio).toFixed(2))
+//console.log((x - yt6.aspect_ratio).toFixed(2))
+//console.log((x - w/h).toFixed(2))
+//console.log(Math.abs((16/9 - yt6.aspect_ratio) - (x - w/h)).toFixed(2))
+//console.log(Math.abs((w / h) - yt6.aspect_ratio).toFixed(2))
+
+      if ( yt6.aspect_ratio < 16/9 && Math.abs(yt6.aspect_ratio - 16/9) > 0.1
+	   // pb,us
+	   && ( !(Math.abs((x - yt6.aspect_ratio).toFixed(2)) < 0.2 && (Math.abs((w / h) - yt6.aspect_ratio).toFixed(2) < 0.3 || Math.abs((16/9 - yt6.aspect_ratio) - (x - w/h)).toFixed(2) > 0.5))
+	        || (yt6.layout == 12 && yt6.size == 'default' && (16/9 - yt6.aspect_ratio) < (0.5))
+	      )
+	   && !(ytplayer && ytplayer.config && ytplayer.config.args && ytplayer.config.args.embedded_player_response && ytplayer.config.args.embedded_player_response.indexOf('VEVO\"}]}') > -1 && (x - yt6.aspect_ratio).toFixed(2) < 0.5)
+	 ) { //console.log('vertical fit')
 	poster.style.width = x * h + 'px'
 	poster.style.height = (bm0) ? bm0.style.height : p.parentNode.parentNode.offsetHeight + 'px'
 	poster.style.marginTop = ''
 	poster.style.marginLeft = (w - 1 * poster.style.width.replace('px','')) / 2 + 'px'
-      } else { //console.log('regular poster placement for flexible layout')
+      } else { //console.log('horizontal fit')
 	  try { var bm0w = (bm0) ? bm0.style.width : p.parentNode.parentNode.offsetWidth + 'px' } catch(e){ var bm0w = '640px'}
 	  poster.style.width = Math.abs(Math.abs(x - (w / h)) - parseFloat(24/10 - 4/3).toFixed(2) < parseFloat(0.2) ) ? bm0w : w - (x * h ) / 2 + 'px'; //1 * bm0.style.width.replace('px','') / ((16/9) / x) + 'px'
 	  poster.style.height = y * w + 'px'
@@ -5368,6 +5386,7 @@ function me_flash_up(file, ib){
 			     	     )
 			  ) {
 			  if (!yt6.ytm ) {
+			    r.setAttribute('hidden','')
 			    yt6.age.blocked = (!yt6.age.blocked) ? 1 : (yt6.age.blocked + 1)
 			  } else {
 			      r = r.querySelector('#info').getElementsByTagName('yt-formatted-string')[0]
@@ -6463,11 +6482,11 @@ if (player()) {
 	    function() { var x = player().getPlayerState(); if ( x == 3 || x == -1 || yt6.flash.forced ) { return true } else { yt6d.timers.media++ } },
 	    function() {
 	      $waitUntil(function(){ if (yt6d.timers.media == 3 && !yt6.fullscreen) { return true } else { yt6d.timers.media++ } }, // wait 1500 seconds, hopefully the new media dimensions are available by then
-		function() { yt6.aspect('media') }, 500,3000)
+		function() { if (yt6.size == 'media') yt6.aspect('media') }, 500,3000)
 	  },300,600)
 	}
       } else $waitUntil(function(){ if (yt6d.timers.media == 3 && !yt6.fullscreen) { return true } else { yt6d.timers.media++ } },
-		function() { yt6.aspect('media') }, 500,3000)
+		function() { if (yt6.size == 'media') yt6.aspect('media') }, 500,3000)
     }
   }
 
@@ -9202,7 +9221,7 @@ if (c[1]) {
 
 
 	  var l
-	  // look for different length, may be advertisement
+	  // look for differing length, may be advertisement
 
 	  var ei = z[j].split('&ei=')[1] || z[j].split('?ei=')[1] || z[j].split('%26ei%3D')[1] || z[j].split('%3Fei%3D')[1]
 	  if (ei) ei = ei.split('&')[0].split('%26')[0]
@@ -9730,7 +9749,7 @@ if (rpt != null) {//ajax2
   var w_init = gid('player-api').offsetWidth + 'px'
   var h_init = gid('player-api').offsetHeight + 'px'
 
-  if ((!yt6.aspect_ratio) || (yt6.aspect_ratio == null)) {
+  if (!yt6.aspect_ratio) {
     var x = null
     var h_orig = document.getElementsByTagName('head')[0].innerHTML.match(/og:video:height([^(]+)/)
     if ((typeof h_orig != 'undefined') && (h_orig != null)) {
@@ -12880,8 +12899,7 @@ function mep_run() {
 					  if ( yt6 && yt6.player1 && !yt6.navigation && (yt6.timer == 999999999 || me.src == 'https://www.youtube.com/ptracking' || yt6.player1.media.src != me.src))
 					    return void 0;
 					  if (!yt6.player2.media.currentTime && yt6.V_[itag(me.src)] && player2.paused) //&& Math.abs(yt6.player1.getCurrentTime() - yt6.player2.getCurrentTime()) < 0.1)
-					    { yt6.player2.play() }
-					  //if (me.playing == yt6.player2.media.playing) { yt6.player2.media.playing = 0 } else me.playing = yt6.player2.media.playing;
+					    { Seek = 1; yt6.player2.play() }
 					  if (yt6.A_V[itag(me.src)] && !player2.paused )  {// && Srcto != Audio
 					     yt6.player2.media.pause()
 					  }
@@ -15503,7 +15521,7 @@ if (typeof Polymer != 'undefined') {
 	      if (cf) c = (cf == 'function') ? p.getPlayerState() : null
 	      var a = (c) ? gid('bm0') : null
 	      if (a && (yt6.x || a.style.visibility == 'visible') && c && (c != 2 && c > -1) && p) {
-		p.pauseVideo(); //console.log(yt6.sync_timer +' '+ mutation.attributeName +' '+ yt6.vid);
+		//p.pauseVideo(); //console.log(yt6.sync_timer +' '+ mutation.attributeName +' '+ yt6.vid);
 		return true
 	      }
 	      //var b = gc('mejs-controls')[0]
@@ -15893,6 +15911,15 @@ yt6.body.yt_navigate_finish = function() {
 			      }
 			  }
 			} catch(e){}
+
+	$waitUntil(function(){ var c = conf('args'); if (yt6.title != document.title || (c[1] && !(c[1].title && yt6.title == c[1].title))) return true},
+	    function() {
+	      if (yt6.age.check() && yt6.newin) {
+		ajax1(true)
+		try { yt6.newin = window.open(protocol() + '//www.youtube.com/watch?v=' + yt6.newin); if (yt6.newin) yt6.newin.blur() } catch(e) { return void 0 } // window.open may be null?
+		window.focus()
+	      } else yt6.newin = ''
+	},500,5000)
 }
 addEL(window, 'yt-navigate-finish', yt6.body.yt_navigate_finish, false)
 
@@ -17782,7 +17809,7 @@ if (yt6.flexy && yt6.pls) {
 		   || !(yt6.player1 && yt6.player1.media && yt6.player1.media.loaded_vid && yt6.player1.media.loaded_vid.substring(0,11) == c[1].video_id.substring(0,11))  // condition to avoid a second reload caused occasionally by the slowness of the setTimeout approach
 		 ) && watch
 		   && document.title != yt6.title
-		   && !(yt6.ytm && yt6.ad_ && yt6.loaded_vid == yt6.vid) ) {// reloading may be triggered twice if these values are still the same at this point, so wait another turn till yt updates document.title
+		   && (!(yt6.ytm && yt6.ad_ && yt6.loaded_vid == yt6.vid) || yt6.blocked) ) {// reloading may be triggered twice if these values are still the same at this point, so wait another turn till yt updates document.title
 
 		yt6.navigation = true
 
@@ -20126,7 +20153,15 @@ if (p1 && p1.parentNode) if (strLeft || strTop) {//console.log('propUpdate')
      var z = gid('player-api'); if (z && document.getElementsByTagName('ytg-scroll-pane')[0]) z.style.top = 1 * z.style.top.replace('px','') - document.getElementsByTagName('ytg-scroll-pane')[0].scrollTop + 'px'
   }
 
-
+  if (yt6.player1 && typeof yt6.player1.showControls == 'function') try {
+    if (yt6.x) {
+      yt6.player1.showControls(true)
+      if (!yt6.player1.media.paused) {
+	var bp = gclass("mejs-overlay-play")[0]
+	//if (bp) bp.style.visibility = 'hidden'
+      }
+    } else yt6.player1.hideControls(false)
+  } catch(e){}
 
 
   if (chat) if (yt6.layout == 12 || yt6.ytg) {
@@ -20135,25 +20170,7 @@ if (p1 && p1.parentNode) if (strLeft || strTop) {//console.log('propUpdate')
       //chat.style.marginTop = yt6.wsb.style.top
       yt6.wsb.removeAttribute('style')
     }
-/*
-  if (yt6.player1) {
-    yt6.controls = gc('mejs-controls')[0]
-    if (typeof yt6.player1.hideControls == 'function') {
-      if (yt6.controls) {
-	yt6.player1.hideControls()
-      }
-    }
-    if (typeof yt6.player1.showControls == 'function' && yt6.x) {
-      if (yt6.controls) {
-        yt6.player1.showControls()
-	if (yt6.controls.style.visibility == 'hidden') {
-	  yt6.player1.hideControls()
-	  yt6.player1.showControls()
-	}
-      }
-    }
-  }
-*/
+
 }
 
 
@@ -20907,7 +20924,7 @@ function aspect(a) {
 
     resize_layers(w,h, true)
 
-    if (yt6.x && yt6.player1) yt6.player1.showControls(true)
+    //if (yt6.x && yt6.player1) yt6.player1.showControls(true)
 
 
     if (class_1) gid('player').setAttribute('class',class_1)
