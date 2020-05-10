@@ -3258,7 +3258,7 @@ function poster_resize(w, h, mep) {
       if ( yt6.aspect_ratio < 16/9 && Math.abs(yt6.aspect_ratio - 16/9) > 0.1
 	   // pb,us
 	   && ( !(Math.abs((x - yt6.aspect_ratio).toFixed(2)) < 0.2 && (Math.abs((w / h) - yt6.aspect_ratio).toFixed(2) < 0.3 || Math.abs((16/9 - yt6.aspect_ratio) - (x - w/h)).toFixed(2) > 0.5))
-	        || (yt6.layout == 12 && yt6.size == 'default' && (16/9 - yt6.aspect_ratio) < (0.5))
+	        || ( ( (yt6.layout == 12 && yt6.size == 'default') || yt6.mobile) && (16/9 - yt6.aspect_ratio) < (0.5))
 	      )
 	   && !(ytplayer && ytplayer.config && ytplayer.config.args && ytplayer.config.args.embedded_player_response && ytplayer.config.args.embedded_player_response.indexOf('VEVO\"}]}') > -1 && (x - yt6.aspect_ratio).toFixed(2) < 0.5)
 	 ) { //console.log('vertical fit')
@@ -6402,19 +6402,18 @@ if (player()) {
 		case -1: if (yt6.x && yt6.navigation && yt6.browser_tab == 'visible') try { yt6.p.pauseVideo() } catch(e){}; break
 		case 0: if (p2()) player2.pause(); resync(); break
 		case 1: if (yt6.x && yt6.navigation && yt6.browser_tab == 'visible') try { yt6.p.pauseVideo(); } catch(e){};
-			if (yt6.browser_tab == 'hidden' && (yt6.x || yt6d.ended) && p1()) {
+			if (yt6.browser_tab == 'hidden' && yt6.x && p1()) {
 			  if (yt6.player1 && yt6.player1.media) {
 			    var dur, vid, ct
 			    if (yt6.p && yt6.p.tagName != 'EMBED') try { vid = yt6.p.getVideoUrl().split('v=')[1] || yt6.p.getVideoUrl().split('v/')[1] } catch(e){}
-			    if (vid && location.href.indexOf(vid) > -1 && yt6.player1.media.loaded_vid == vid) { //console.log(yt6.player1.media.currentTime)
+			    if ((vid && (location.href.indexOf(vid) > -1 || yt6.player1.media.loaded_vid == vid)) || (yt6.player1.media.loaded_vid == yt6.vid)) { //console.log(yt6.player1.media.currentTime)
 			      try {
 				dur = yt6.p.getDuration()
 				ct = yt6.p.getCurrentTime()
 			      } catch(e){ dur = 0; vid = yt6.vid; dur = yt6.player1.media.duration; ct = yt6.player1.media.currentTime }
-
-			      if (yt6.player1.media.paused) yt6.player1.play(); //console.log('start background play via the lock screen\'s media play button, may require multiple quick taps')
+			      //if (yt6.player1.media.currentTime < 1) yt6.player1.setCurrentTime(ct)
+			      yt6.player1.play(); //console.log('start background play via the lock screen\'s media play button, may require multiple quick taps')
 			      //if (Math.abs(yt6.player1.media.currentTime - ct) > 0.3) yt6.player1.setCurrentTime(ct)
-
 			      break;
 			    }
 			  }
@@ -7663,12 +7662,12 @@ yt6.mep_renew = function() {
 		  try { yt6.player1.play() } catch(e){}; //console.log('autoplay trigger')
 		}
 		if (z.parentNode.parentNode.children.length < 3 && yt6.userprefV.length > 2) { no_default(itagx, 'V') }
-		if ( yt6.browser_tab == 'hidden') {
+		/*if ( yt6.browser_tab == 'hidden') {
 		  if (yt6.p && yt6.p.parentNode && yt6.p.tagName == 'DIV' && typeof yt6.p.getCurrentTime == 'function') {
 		    var ct = yt6.p.getCurrentTime()
 		    if (ct && yt6.x) yt6.player1.setCurrentTime(ct)
 		  }
-		}
+		}*/
 
 
 	      } else if (yt6.linx[itagx]) {
@@ -12501,7 +12500,7 @@ function mep_run() {
 					  } else if (yt6.x && yt6.autoplay) me.play()
 					});
 					addEL(me, 'play', function() { //console.log('1play')
-					  if ( yt6 && yt6.player1 && !yt6.navigation && (yt6.timer == 999999999 || me.src == 'https://www.youtube.com/ptracking' || yt6.player1.media.src != me.src || (yt6.browser_tab == "hidden" && parseFloat(yt6.diff) > 2 && me.currentTime > 4) )) { //console.log(yt6.diff + ' == '+me.currentTime)
+					  if ( yt6 && yt6.player1 && !yt6.navigation && (yt6.timer == 999999999 || me.src == 'https://www.youtube.com/ptracking' || yt6.player1.media.src != me.src || (yt6.browser_tab == "hidden" && yt6.diff > 2 && me.currentTime > 4) )) { //console.log(yt6.diff + ' == '+me.currentTime)
 					    return void 0
 					  }
 					  if (yt6.x) {
@@ -12586,11 +12585,13 @@ function mep_run() {
 							  }
 						      },250,1250)
 						    } else {
-							if (yt6.browser_tab == "hidden" && Seek != 3) {
-							  Seek = 5; yt6.ct = me.currentTime = yt6.player1.media.currentTime = yt6.player2.media.currentTime
+							if (yt6.browser_tab == "hidden") {
+							  if (Seek != 3 && me.loaded_vid == yt6.vid && !yt6.navigation && yt6.title == document.title && me.currentTime && me.currentTime != me.duration) {
+							    Seek = 5; yt6.Seeked2 = false; //yt6.ct = me.currentTime = yt6.player1.media.currentTime = yt6.player2.media.currentTime
+							  }
 							} else {
 							  //  if (Seek == 1) { yt6.player2.pause() }//yt6.Seek = 1; 
-							  //  if (Seek == 5) { Seek = 2; return void 0 }
+							    if (Seek == 5) { Seek = 2; }//return void 0 }
 							  }
 						      }
 						  }
@@ -13277,6 +13278,7 @@ function mep_run() {
 					addEL(me, 'play', function() { //console.log('2play')
 					  if ( yt6 && yt6.player2 && !yt6.navigation && (yt6.timer == 999999999 || me.src == 'https://www.youtube.com/ptracking' || yt6.player2.media.src != me.src || yt6.retry >= 7 ))//|| (!yt6.x && yt6.p.tagName == 'DIV' && yt6.ytp && yt6.ytp.v && typeof yt6.ytp.v.currentTime == 'number' ) ))
 					    return void 0;
+					  //me.playing = 0
 					  var player1_src = yt6.player1.media.src;
 					  if (yt6.A_V[itag(player1_src)] && yt6.x) {
 					    if (Seek != 4) { Seek = 4; me.pause(); player1.play() } else Seek = 2
@@ -13330,8 +13332,8 @@ function mep_run() {
 					  //me.playing = me.playing + 1
 					  if ( yt6.x && player1.media.paused ) {
 					    if (yt6.browser_tab == 'hidden') {
-					      //player1.media.currentTime = me.currentTime; yt6.browser_tab = 'visible'
-					       //player1.play(); yt6.browser_tab = 'hidden';
+					      player1.media.currentTime = me.currentTime; yt6.browser_tab = 'visible'
+					      player1.play(); yt6.browser_tab = 'hidden'
 					      // Temporary switcheroo of the browser_tab flag to keep the video playing on a background tab when chrome-based browsers would continuously try to stop the paired playback of video & audio
 					      // Console message: "Active resource loading counts reached a per-frame limit while the tab was in background. Network requests will be delayed until a previous loading finishes, or the tab is brought to the foreground. See https://www.chromestatus.com/feature/5527160148197376 for more details"
 					    } else player1.media.currentTime = yt6.ct // to help the space key (pause) bug
@@ -17782,25 +17784,25 @@ if (yt6.flexy && yt6.pls) {
 	    yt6.change = video_title()[0]
 	    if (typeof document.title == 'string' && yt6d.previous.title == document.title + 'init' && document.title.substring(document.title.length-10) == ' - YouTube' && document.title.substring(0, document.title.length-10) == c[1].title) { yt6d.previous.title = clone(yt6.title); document.title = document.title + ' ' }
 
-	    if (yt6.ytm) {
+	    //if (yt6.ytm) {
 	      //var e = gid('error-screen')
 	      //var walker = document.createTreeWalker(e, NodeFilter.SHOW_ELEMENT, null, false)
 	      //var x = walker.firstChild().parentNode
 	      //var y = x.firstElementChild
 	      //if (y && y.firstChild) { y.innerHTML = ''; yt6.blocked = false; yt6.age.blocked = 0; window.ytplayer.config.args.status = 'ok'; yt6.status = 'ok' }
-	    }
+	    //}
 	    //console.log('???'+(typeof yt6d.previous.title == 'string' && yt6d.previous.title.indexOf(yt6d.proxy.document_title) == 0) + document.title.substring(0, document.title.length-10) +'\n' + yt6.strLocation + '\n' + window.location.href + '\n' + yt6.title +'  --  yt6.title\n'+ document.title +'  --  document.title\n'+ ytplayer.config.args.title + '  --  args.title')
 
 
-	    if (yt6.layout == 16 && document.title == yt6.title && !yt6.ytm && !yt6.ytg && yt6d.previous.video_id != prev_vid && prev_vid != yt6.vid) {
+	    //if (yt6.layout == 16 && document.title == yt6.title && !yt6.ytm && !yt6.ytg && yt6d.previous.video_id != prev_vid && prev_vid != yt6.vid) {
 		//yt6d.previous.video_id = prev_vid
 		//yt6.title = yt6.title + 'ytd'; // in case the previous and the current video have identical titles
-	    }
+	    //}
 
 
-	    if (yt6.layout == 16 && !yt6.ytm && !yt6.ytg && (!yt6.blocked || yt6.x_)) { // non-Firefox new layout age-blocked videos or if the tab is hidden, we still need going through this twice...
-	      //yt6.age.check()
-	      //if (yt6.blocked || yt6.x_) { document.title = clone(document.title); yt6.title = '' }
+	    if (yt6.mobile) {//if (yt6.layout == 16 && !yt6.ytm && !yt6.ytg && (!yt6.blocked || yt6.x_)) { // non-Firefox new layout age-blocked videos or if the tab is hidden, we still need going through this twice...
+	      yt6.age.check()
+	      if (yt6.blocked || yt6.x_) { document.title = clone(document.title); yt6.title = '' }
 	    }
 
 
