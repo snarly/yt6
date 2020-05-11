@@ -4483,6 +4483,8 @@ function ageless_verification(spfpc) { //console.log('age')
     var bm0 = gid('bm0'), vid = video_id()[0], c = conf('args')
 	p0 = original(player()) || getElementsByAttribute(yt6, 'div','id','movie_player0')[0]
 
+    try { yt6.ytp.ct = (p0 && p0.parentNode) ? p0.getCurrentTime() : 0 } catch(e){ yt6.ytp.ct = 0 }
+
     // new way of yt video data storage
     if (!yt6d.previous.linx.length && !(c[1] && c[1].url_encoded_fmt_stream_map && c[1].adaptive_fmts)) {
 	yt6.missing_source0 = true
@@ -4657,7 +4659,6 @@ function ageless_verification(spfpc) { //console.log('age')
 
 
 		yt6.ytp.state = (player() && !(yt6.ytm && yt6.p.tagName == 'EMBED') && typeof yt6.p.getPlayerState == 'function') ? yt6.p.getPlayerState() : 0
-
 
 
 	yt6.args = arguments.split('&')
@@ -5040,7 +5041,7 @@ function ageless_verification(spfpc) { //console.log('age')
 	      //}
 	      if (yt6.layout == 16 && yt6d.previous.linx.length) { // most notably in the new layout
 	        $waitUntil(function(){ var p = player()
-		    if (p && typeof p.getPlayerState == 'function') if (p.getPlayerState() == 2) { p.playVideo() } else try { p.playVideo() } catch(e){}
+		    if (p && typeof p.getPlayerState == 'function') if (p.getPlayerState() == 2) { p.playVideo() } else try { p.playVideo(); yt6.ytp.ct = p.getCurrentTime() } catch(e){}
 		  },
 		  function(){
 		    try { yt6.p.playVideo() } catch(e) {}
@@ -6382,8 +6383,8 @@ if (player()) {
 	    }
 	  }
 
-	  function p2(){ return (typeof player2 == 'object' && typeof player2.pause == 'function') ? true : false }
-	  function p1(){ return (typeof player1 == 'object' && typeof player1.pause == 'function') ? true : false }
+	  function p2(){ return (!yt6.navigation && typeof player2 == 'object' && typeof player2.pause == 'function') ? true : false }
+	  function p1(){ return (!yt6.navigation && typeof player1 == 'object' && typeof player1.pause == 'function') ? true : false }
 
 	  function resync() {
 	    if (!yt6.x) {
@@ -6413,6 +6414,7 @@ if (player()) {
 			      } catch(e){ dur = 0; vid = yt6.vid; dur = yt6.player1.media.duration; ct = yt6.player1.media.currentTime }
 			      //if (yt6.player1.media.currentTime < 1) yt6.player1.setCurrentTime(ct)
 			      yt6.player1.play(); //console.log('start background play via the lock screen\'s media play button, may require multiple quick taps')
+			      if (typeof yt6.ytp.ct == 'number' && yt6.ytp.ct) { yt6.player1.setCurrentTime(yt6.ytp.ct); yt6.player2.setCurrentTime(yt6.ytp.ct); try { yt6.p.pauseVideo() } catch(e){} }
 			      //if (Math.abs(yt6.player1.media.currentTime - ct) > 0.3) yt6.player1.setCurrentTime(ct)
 			      break;
 			    }
