@@ -2802,7 +2802,7 @@ function load_from_page_source(x) { //console.log('load_from_page_source')
 		    } else if (yt6.layout == 16 && yt6.pls && yt6.newin) {
 			open_outside_of_playlist()
 		      }
-		  } else console.log('!')
+		  }
 		  yt6.xhr.completed = true
 		  return true
 		}
