@@ -2610,7 +2610,7 @@ function player_response() {
 		  if (url) {
 		    url = '&url=' + encodeURIComponent(unescape(url.split('","')[0]).split('\\u0026').join('&').split(',').join('%2C').split('\\').join('')); uefsm = uefsm + url
 		  }
-		  s = x[i].split('"cipher":"')[1] || ''
+		  s = x[i].split('ipher":"')[1] || '' //"cipher":" or "signatureCipher":"
 		  if (s) { yt6.encrypted = true
 		    s = s.split('"')[0]
 		    var ampersand = (s.split('\\u0026sp=')[1] || s.split('\\u0026s=')[1]) ? '\\u0026' : '&'
@@ -2697,7 +2697,7 @@ function player_response() {
 		  if (url) {
 		    url = '&url=' + encodeURIComponent(url.split('","')[0].split('\\u0026').join('&').split('\\').join('')); afmt = afmt + url //
 		  }
-		  s = x[i].split('"cipher":"')[1] || ''
+		  s = x[i].split('ipher":"')[1] || ''
 		  if (s) { yt6.encrypted = true
 		    s = s.split('"')[0]
 			var ampersand = (s.split('\\u0026sp=')[1] || s.split('\\u0026s=')[1]) ? '\\u0026' : '&'
@@ -2784,7 +2784,7 @@ function load_from_page_source(x) { //console.log('load_from_page_source')
 	    if (!yt6.ytm) {
 		var y = y.split('var ytplayer = ytplayer || {};')[1]
 		if (y) { y = 'yt6.ytplayer = {}; yt6.' + y.split(';(function()')[0].split(';(function ')[0] } else { //they named the function playerBootstrap(), but a single space after is enough
-		  if (yt6.status != 'unplayable')
+		  if (yt6.status != 'unplayable') {
 		    if ( !(yt6.p && yt6.p.tagName == 'IFRAME')) { // maybe can still play in iframe?
 		      if (yt6.blocked) {// && yt6.pls && typeof yt6.p.getVideoUrl == 'function' && !(yt6.ytm && yt6.p.tagName == 'EMBED')
 			//var vid = yt6.p.getVideoUrl().split('v=')[1] || yt6.p.getVideoUrl().split('v/')[1]
@@ -2802,6 +2802,7 @@ function load_from_page_source(x) { //console.log('load_from_page_source')
 		    } else if (yt6.layout == 16 && yt6.pls && yt6.newin) {
 			open_outside_of_playlist()
 		      }
+		  } else console.log('!')
 		  yt6.xhr.completed = true
 		  return true
 		}
@@ -2828,8 +2829,8 @@ function load_from_page_source(x) { //console.log('load_from_page_source')
 		var c = conf('args')
 		var p = (!yt6.flash.forced) ? player() : gid('movie_player0')
 		if (status != 'ok' && c[1] && c[1].status == 'ok' &&
-		  (p && p.tagName == 'DIV' && p.firstChild && !p.firstChild.nextSibling)  // yt player is wrecked, try to create a new one
-		) {
+		  (p && p.tagName == 'DIV' && p.firstChild && !p.firstChild.nextSibling)
+		) { //console.log('yt player is wrecked, try to create a new one')
 		  yt6.status = 'ok'
 		  yt6.reason = null
 		  p.parentNode.removeChild(p)
@@ -8921,13 +8922,13 @@ function buildObject(ytplayer){
 
     //var z = gc('ytassetsjs-0'); while (z && z[0]) z[0].parentNode.removeChild(z[0]);
 
-  if (  ( (yt6.layout == 12 && yt6.blocked) //old layout should only ever get a pass here if the video is blocked
+  if (  ( (yt6.layout == 12 && (yt6.blocked || (yt6.flash.forced)) ) //old layout should only ever get a pass here if the video is blocked
 	   || yt6.ytm
 	) && c[1] &&  // c[1].csi_page_type && c[1].csi_page_type.indexOf('watch') != -1 &&
 	( (!c[1].url_encoded_fmt_stream_map && !c[1].adaptive_fmts)
 	     || c[1].video_id != yt6.vid || yt6.change == video_title()[0] || yt6.mobile   // || yt6.flash.forced
 	)
-     ) { var pass = true } else var pass = false;
+     ) { var pass = true } else var pass = false
 
 
     if (yt6.osw && yt6.osw.getAttribute('id') == 'player' || pass) {
@@ -10186,6 +10187,7 @@ if (!gid('bm4')) {
 
     var yt6 = gid('snarls_player')
     if (yt6 && !yt6.mhp) getReferenceObjects()
+    if (ytplayer.config && ytplayer.config.args && ytplayer.config.args.status == 'error') { yt6.status = 'unplayable'; ytplayer.config.args.status = 'unplayable' }
     var mhp = (yt6.layout != 16) ? yt6.mhp.offsetHeight : yt6.mhp.parentNode.parentNode.offsetHeight
     var bm3 = gid('bm3'), bm0 = gid('bm0') 
     if (bm3) bm3.style.top = (!yt6.ytm) ? mhp - 2 + "px" : '0px'
@@ -17517,7 +17519,7 @@ if (yt6.layout == 16 && yt6.blocked && !yt6.ytm && p && typeof p.getPlayerState 
 
 if (!yt6.ytm && !yt6.flash.delay && (yt6.flash.forced || (p && p.tagName == 'EMBED' && p.getAttribute('class') == 'forced flashplayer')) ) {
   //console.log(yt6.ct +' '+ yt6.loaded_media_duration +' '+ yt6.navigation); if (typeof p.getPlayerState == 'function') console.log(p.getPlayerState() +' '+p.getCurrentTime() +' '+p.getDuration())
-  if (yt6.autoplay && !yt6.navigation && ((!yt6.x && p && typeof p.getPlayerState == 'function' && p.getPlayerState() == 0 && p.getCurrentTime() >= p.getDuration() )) ) {//(yt6.x && yt6.player1.media.paused && yt6.loaded_media_duration && yt6.ct >= yt6.loaded_media_duration - 1) || 
+  if (!yt6.navigation && ((!yt6.x && p && typeof p.getPlayerState == 'function' && p.getPlayerState() == 0 && p.getCurrentTime() >= p.getDuration() )) ) if (autoplay()) {//(yt6.x && yt6.player1.media.paused && yt6.loaded_media_duration && yt6.ct >= yt6.loaded_media_duration - 1) || 
 					          yt6.navigation = true
 					          var z = gclass('yt-uix-scroller-scroll-unit')
 						  if (z && z[0]) {
