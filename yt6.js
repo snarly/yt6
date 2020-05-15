@@ -12162,40 +12162,26 @@ function mep_run() {
 						  }
 						  if (!(yt6.failed_itags2 == 1 && yt6.A_[itag_] )) { break; } else { yt6.failed_itags2++ }
 
-						  } else if (yt6.failed_itags2 == 2 || yt6.failed_itags2 == 4) { // continue searching in reverse order (from lowest resolution to highest)
+						  } else if (yt6.failed_itags2 == 2 || yt6.failed_itags2 == 4) {//reverse lookup
 
-							// move medium quality legacy formats (18, 43) to a lower index, so they would come after all the 360p adaptive formats
-							// old formats show problems when playback speed is high and the tab is in the background
-							var insert_at_fmt = 332 //332,396,243,134,167,43,18
-							if (yt6.fmts_fallback_uniq.indexOf(18) > -1) try {
-							  yt6.fmts_fallback_uniq.splice(yt6.fmts_fallback_uniq.indexOf(18), 1)
-							  yt6.fmts_fallback_uniq.splice(yt6.fmts_fallback_uniq.indexOf(insert_at_fmt), 0, 18)
-							  insert_at_fmt = 18
-							} catch(e){}
-							if (yt6.fmts_fallback_uniq.indexOf(43) > -1) try {
-							  yt6.fmts_fallback_uniq.splice(yt6.fmts_fallback_uniq.indexOf(43), 1)
-							  yt6.fmts_fallback_uniq.splice(yt6.fmts_fallback_uniq.indexOf(insert_at_fmt), 0, 43)
-							} catch(e){}
-
-							for(k=Math.min(j-2,yt6.fmts_fallback_uniq.indexOf(yt6.current));k>0;k--){ //console.log(yt6.failed_itags2 + ' ' +k +' '+limit+' '+yt6.failed_itags)
-							  var itag_ = yt6.fmts_fallback_uniq[k]; //console.log(k +' '+ itag_)
-							  var dash = gid(mep_x('mep_') + '_sourcechooser_' + itag_); //console.log(dash)
-							  if (!dash && !yt6.fmts_fallback.V[yt6.prefer_fmt].includes(itag_)) { yt6.failed_itags.push(itag_); //itag_ = qual[itag_]['a'];
-							    dash = gid(mep_x('mep_') + '_sourcechooser_' + qual[itag_]['a'])
-							  }
-							  if (itag_ && dash && !(yt6.failed_itags2 == 2 && yt6.A_[itag_] ) )
-							  if (!yt6.failed_itags.includes(itag_)) {
-							    break
-							  } else { yt6.failed_itags.push(itag_) }
-							}
-							if (!(yt6.failed_itags2 == 2 && yt6.A_[itag_] )) { break; } else if (k == 0) { yt6.failed_itags2++ }
-
+						  for(k=Math.min(j-2,yt6.fmts_fallback_uniq.indexOf(yt6.current));k>0;k--){ //console.log(yt6.failed_itags2 + ' ' +k +' '+limit+' '+yt6.failed_itags)
+						    var itag_ = yt6.fmts_fallback_uniq[k]; //console.log(k +' '+ itag_)
+						    var dash = gid(mep_x('mep_') + '_sourcechooser_' + itag_); //console.log(dash)
+						    if (!dash && !yt6.fmts_fallback.V[yt6.prefer_fmt].includes(itag_)) { yt6.failed_itags.push(itag_); //itag_ = qual[itag_]['a'];
+						      dash = gid(mep_x('mep_') + '_sourcechooser_' + qual[itag_]['a'])
 						    }
+						    if (itag_ && dash && !(yt6.failed_itags2 == 2 && yt6.A_[itag_] ) )
+						    if (!yt6.failed_itags.includes(itag_)) {
+							break
+						    } else { yt6.failed_itags.push(itag_) }
+						  }
+						  if (!(yt6.failed_itags2 == 2 && yt6.A_[itag_] )) { break; } else if (k == 0) { yt6.failed_itags2++ }
+
+						  }
 
 						  if (3 >= yt6.failed_itags2 && yt6.A_[itag_]) {
 						    if (k == 0) j=0; //console.log(j +' '+itag_); console.log(yt6.fmts_fallback_uniq)
 						  }
-
 					        }
 					      }
 					      if (!dash) dash = gid(mep_x('mep_') + '_sourcechooser_' +  x)
@@ -12207,8 +12193,8 @@ function mep_run() {
 						  player1.setSrc(yt6.linx[itag_]);
 						  if (yt6.current && yt6.current == itag(me.src) && !yt6.failed_itags.includes(yt6.current)) { yt6.failed_itags.push(yt6.current) } //add the current source's itag to srcbak if it has already been tried once and shows up in this error block again
 						  //console.log('play ' +itag_)
-						  player1.load(); if (yt6.V_[itag(me.src)]) if (!(yt6.player2.media.loaded && yt6.player2.media.currentTime > 0)) { yt6.player2.load() } else yt6.ct = yt6.player2.media.currentTime//m2
-						  if (autoplay(false) && me.paused) { Seek = 1; me.currentTime = yt6.ct || 0; player1.play(); yt6.player2.play() }
+						  player1.load(); //player1.load();
+						  if (autoplay(false) && me.paused) { Seek = 1; me.currentTime = yt6.ct || 0; player1.play(); if (yt6.V_[itag(me.src)]) yt6.player2.media.play() }
 						}
 					      } else {
 					          if (yt6.retry < limit) { yt6.retry++; yt6.failed_itags.push(itag(me.src)) } else if (yt6.failed_itags2 < 5) { yt6.retry = 0; yt6.failed_itags++ }; //yt6.failed_itags = [];
@@ -12488,7 +12474,7 @@ function mep_run() {
 					  }
 					  if (yt6.size == 'media') Mqch()
 					});
-					addEL(me, 'loadeddata', function() { me.loaded_vid = video_id()[0]; me.loaded_itag = itag(me.src); //console.log('1loaded '+ me.loaded_vid); 
+					addEL(me, 'loadeddata', function() { me.loaded_vid = video_id()[0]; me.loaded_itag = itag(me.src) //console.log('1loaded '+ me.loaded_vid); 
 					  if ( yt6 && yt6.player1 && !yt6.navigation && (yt6.timer == 999999999 || me.src == 'https://www.youtube.com/ptracking' || yt6.player1.media.src != me.src))
 					    return void 0;
 					  yt6.retry = 0; yt6.failed_itags = []; yt6.failed_itags2 = 1
@@ -12517,10 +12503,8 @@ function mep_run() {
 					  if (yt6.V_[itag(me.src)]) {
 					    if (!me.paused) { Seek = 1 }//to synchronize audio
 					    try { yt6.player2.media.currentTime = player2.currentTime = yt6.ct = me.currentTime } catch(e){}
-					  } else if (yt6.x && yt6.autoplay) me.play()//m2
-					  if (yt6.x) {
-					    if (!player2.paused) me.play()//to escape stuttering freeze up at the start of playback // || yt6.V_[itag(me.src)]
-					  } else yt6.player1.hideControls(false)
+					  }
+					  if (yt6.x) { if (!player2.paused) me.play() } else yt6.player1.hideControls(false)//to escape stuttering freeze up at the start of playback
 					});
 					addEL(me, 'play', function() { //console.log('1play')
 					  if ( yt6 && yt6.player1 && !yt6.navigation && (yt6.timer == 999999999 || me.src == 'https://www.youtube.com/ptracking' || yt6.player1.media.src != me.src || (yt6.browser_tab == "hidden" && yt6.diff > 0.6 && me.currentTime > 0 && !(yt6.V_[itag(me.src)] && yt6.player2.media.paused)) )) { //console.log(yt6.diff + ' == '+me.currentTime)//m2
