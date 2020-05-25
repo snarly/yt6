@@ -5993,7 +5993,7 @@ if (typeof window.DOMParser != "undefined") {
       if ( (z.firstChild && !z.firstChild.style) || (z.firstChild && z.firstChild.style && typeof z.firstChild.style != 'object') ) z.innerHTML = '<div class="player-api player-width player-height" style="background-color: transparent"></div>'
       var z = z.firstChild
     }
-    if (z) { var o = z.getAttribute('style') } else return '-1px'; if (o && !yt6.ytg) z.removeAttribute('style')
+    if (z) { var o = z.getAttribute('style') } else return '-1px'; if (o && !yt6.ytg) { z.style = ''; z.removeAttribute('style') }
     //if (z.getAttribute('id') != 'player') {
       var y = z.currentStyle || window.getComputedStyle(z, null)
 function nop(){//    } else {
@@ -6053,7 +6053,7 @@ if ( !wide_view() || (yt6.wide && yt6.size == 'default' ) ) {
       if ( (z.firstChild && !z.firstChild.style) || (z.firstChild && z.firstChild.style && typeof z.firstChild.style != 'object') ) z.innerHTML = '<div class="player-api player-width player-height" style="background-color: transparent"></div>';
       var z = z.firstChild
     }
-    if (z) { var o = z.getAttribute('style') } else return '-1px'; if (o && !yt6.ytg) z.removeAttribute('style')
+    if (z) { var o = z.getAttribute('style') } else return '-1px'; if (o && !yt6.ytg) { z.style = ''; z.removeAttribute('style') }
     //if (z.getAttribute('id') != 'player') {
       var y = z.currentStyle || window.getComputedStyle(z, null)
 function nop(){//    } else {
@@ -7116,7 +7116,7 @@ function getReferenceObjects() {
 	}
 
   yt6.osw = (!yt6.ytm) ? gid('placeholder-player') || gid('player') : document.getElementsByTagName('ytmusic-player')[0]
-  yt6.mhp = (!yt6.ytm) ? gid('masthead-positioner') || gid('logo') : document.getElementsByTagName('ytmusic-nav-bar')[0];//gc('x-scope ytd-masthead-1')[0]
+  yt6.mhp = (!yt6.ytm) ? gid('masthead-positioner') || gid('logo') || gid('masthead-logo') : document.getElementsByTagName('ytmusic-nav-bar')[0];//gc('x-scope ytd-masthead-1')[0]
   if (!yt6.mhp && !yt6.ytm) {
     var z = gid('home-button')
     if (z) {
@@ -7227,10 +7227,17 @@ function getReferenceObjects() {
 
     }
 
-
   //yt6.api = yt6.osw.parentNode
 
   if (yt6.wna == null) yt6.wna = gid('notification-layer')
+
+
+  if (yt6.skeleton || (yt6.layout == 16 && !yt6.mobile && !yt6.wna)) {
+    yt6.skeleton = true
+    yt6.top = gid('player')
+    yt6.inf = yt6.con = yt6.man = gid('info-container') || document.getElementsByTagName('ytd-app')[0]
+    yt6.wna = yt6.wna2 = gid('messages')
+  }
 
 
   yt6.ytp.controls = gc('ytp-chrome-controls')[0]
@@ -9941,7 +9948,7 @@ if (gid("bm1")) {
     if (z[0]) {
       var z = z[0]
     } else {
-	var z = gid('logo') || gid('left-content')
+	var z = gid('logo') || gid('left-content') || gid('masthead-logo')
 	if (z == null) {
 	  var z = gid('home-button')
 	  if (z) {
@@ -9951,7 +9958,19 @@ if (gid("bm1")) {
       }
     if (!z) throw 'YouTube layout mismatch'
     z.insertBefore(dw,z.lastChild)
-    if (yt6.layout == 16 && z.hasAttribute('hidden')) { z.removeAttribute('hidden'); yt6.skeleton = true }
+
+    if (yt6.layout == 16 && !yt6.mobile) {
+      if (z.hasAttribute('hidden')) { z.removeAttribute('hidden'); yt6.skeleton = true }
+      if (yt6.osw && yt6.osw.className && yt6.osw.className.indexOf('skeleton') > -1) {
+	if (!gid('messages')) {
+	  var z = document.createElement('div')
+	  z.id = 'messages'
+	  var x = gid('info-container') || gid('watch-page-skeleton') || yt6.osw
+	  if (x != yt6.osw) { x.insertBefore(z, x.firstChild) } else x.appendChild(z)
+	}
+        yt6.skeleton = true
+      }
+    }
 
     var pos = (!yt6.mobile) ? 'relative' : 'fixed'
     gid('bm1').setAttribute('style','display:inline-block; position:'+pos+'; max-height:30px; z-index: 2101;');
@@ -10148,8 +10167,13 @@ if (typeof html.splice != 'function') return void 0;
 	if (bc) { //console.log(bc.id + '"' + bc.parentNode.id + '"' + yt6.osw.parentNode.id)
 	  bc.insertBefore(dw, yt6.osw)
 	}
-	  bc = (!yt6.mobile) ? document.getElementsByTagName('YTD-PAGE-MANAGER')[0] : gid('bm1')//document.getElementsByTagName('ytm-watch')[0];
-	  if (bc) bc.parentNode.insertBefore(dw, bc);
+
+	bc = (!yt6.mobile) ? document.getElementsByTagName('YTD-PAGE-MANAGER')[0] : gid('bm1')//document.getElementsByTagName('ytm-watch')[0];
+	if (bc) {
+	  bc.parentNode.insertBefore(dw, bc);
+	} else if (!yt6.mobile) {
+	    yt6.appendChild(dw)
+	  }
       }
   }
 
@@ -10222,6 +10246,7 @@ if (!gid('bm4')) {
     if (yt6 && !yt6.mhp) getReferenceObjects()
     if (ytplayer.config && ytplayer.config.args && ytplayer.config.args.status == 'error') { yt6.status = 'unplayable'; ytplayer.config.args.status = 'unplayable' }
     var mhp = (yt6.layout != 16) ? yt6.mhp.offsetHeight : yt6.mhp.parentNode.parentNode.offsetHeight
+    if (mhp < 30 || mhp > 112) mhp = 56
     var bm3 = gid('bm3'), bm0 = gid('bm0') 
     if (bm3) bm3.style.top = (!yt6.ytm) ? mhp - 2 + "px" : '0px'
 
@@ -13623,7 +13648,7 @@ function nop(){//    } else {
 	var bc
 	if (yt6.layout != 16 || yt6.ytg) {
 	  bc = gid('player-api')
-	} else bc = gid('player-container') || gc('player-api player-size')[0]
+	} else bc = gid('player-container') || gc('player-api player-size')[0] || gid('player-api')
 	if (yt6.ytm) bc = yt6.api
 
 	bc.appendChild(bm0)
@@ -14074,7 +14099,7 @@ if (!gid('mep_init')) {
     //gid('video-hide').appendChild(js)
 
     var code = "$waitUntil(function(){ if (typeof jQuery == 'function' && typeof $ == 'function' && typeof MediaElementPlayer == 'function') { yt6.loaded = 3; return true } else {  }}," +
-		  "function() { if (document.readyState == 'complete') { $('#version').html( mejs.version); (function() {" + mep_run.toString().split("function mep_run() {")[1].split('//mep_run')[0] + "})(); }" + //!!!function_body.toString() -> "() {" may insert a white space there!!!
+		  "function() { if (document.readyState == 'complete' || document.readyState == 'interactive' || (yt6.layout == 16 && yt6.skeleton) ) { $('#version').html( mejs.version); (function() {" + mep_run.toString().split("function mep_run() {")[1].split('//mep_run')[0] + "})(); }" + //!!!function_body.toString() -> "() {" may insert a white space there!!!
 		//" else { jQuery(document).ready(function($) { $('#version').html( mejs.version);" + mep_run.toString().replace("function mep_run() {",'') + 			    ") }"+
 			// jquery's ready() function won't fire on mobile anymore if there is an ad running on first time loading
 		 "},200,5000)"
@@ -17226,7 +17251,7 @@ if (yt6.mpb && yt6.mpb.tagName == 'YTD-MINIPLAYER') {
 	  //yt6.fullscreen = false
 
 
-	    if (!yt6.ytg) {
+	    if (!yt6.skeleton && !yt6.ytg) {
 
 	      if ((autoscale.offsetWidth != autoscale.width) && (autoscale.offsetHeight != autoscale.height)) { 
  //console.log(yt6.size + ' autoscale 0 ' + autoscale.height +' '+ autoscale.offsetHeight +' '+ yt6.w +' '+ yt6.h);
@@ -18608,7 +18633,7 @@ if (yt6.size != yt6.prev_size) {
     return void 0
   }*/
 
-    var o = (typeof z.getAttribute == 'function') ? z.getAttribute('style') : null; if (o) { z.removeAttribute('style') } //else return void 0;
+    var o = (typeof z.getAttribute == 'function') ? z.getAttribute('style') : null; if (o) { z.style = ''; z.removeAttribute('style') } //else return void 0;
     //if (z.getAttribute('id') != 'player') {
       if (z) { try { var y = z.currentStyle || window.getComputedStyle(z, null) } catch(e) { return void 0 } } else return void 0
 function nop(){//    } else {
@@ -19028,7 +19053,7 @@ function zip(){
 
 
 
-
+if (!yt6.skeleton)
 if (a.getAttribute('id') != 'player') { //pre-2016 layout start
 //console.log('pre-2016 layout')
 
@@ -20558,7 +20583,7 @@ function ythtml5_size() {
     if (z.getAttribute('id') != 'player') {
       var z = z.firstChild
     }
-    var o = z.getAttribute('style'); if (o) z.removeAttribute('style')
+    var o = z.getAttribute('style'); if (o) { z.style = ''; z.removeAttribute('style') }
     //if (z.getAttribute('id') != 'player') {
       var y = z.currentStyle || window.getComputedStyle(z, null)
 function nop(){//    } else {
@@ -21166,7 +21191,7 @@ function deldiv(){
 
 
   if (z && typeof z.style == 'object') {
-    var o = z.getAttribute('style'); if (o && !yt6.ytg) z.removeAttribute('style');
+    var o = z.getAttribute('style'); if (o && !yt6.ytg) { z.style = ''; z.removeAttribute('style') }
     var o = z.currentStyle || window.getComputedStyle(z, null)
     //z.setAttribute('style', o); if (o) z.removeAttribute('style');
   
