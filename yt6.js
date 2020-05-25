@@ -565,7 +565,16 @@ yt6.prev_media = []
     139: {'t':'48k DASH AAC','a':'249',			'q':'tiny','m':'audio/mp4; codecs="mp4a.40.2"'},
     140: {'t':'128k DASH AAC','a':'171',		'q':'tiny','m':'audio/mp4; codecs="mp4a.40.2"'},
     141: {'t':'256k DASH AAC','a':'172',		'q':'tiny','m':'audio/mp4; codecs="mp4a.40.2"'},
+    142: {'t':'240p DASH H.264e','a':'242',		'q':'small','m':'video/mp4; codecs="encv.4d4015"'},//these formats contain encrypted data, for now only playable via YT's original player which uses an unknown decryption method for them
+    143: {'t':'360p DASH H.264e','a':'243',		'q':'medium','m':'video/mp4; codecs="encv.4d401e"'},
+    144: {'t':'480p DASH H.264e','a':'244',		'q':'large','m':'video/mp4; codecs="encv.4d401f"'},
+    145: {'t':'720p DASH H.264e','a':'247',		'q':'hd720','m':'video/mp4; codecs="encv.4d401f"'},
+    146: {'t':'1080p DASH H.264e','a':'248',		'q':'hd1080','m':'video/mp4; codecs="encv.640028"'},
+    147: {'t':'1440p DASH H.264e','a':'271',		'q':'hd1440','m':'video/mp4; codecs="encv.64002a"'},
+    148: {'t':'48k DASH HE AACe','a':'249',		'q':'tiny','m':'audio/mp4; codecs="enca.40.5"'},
+    149: {'t':'128k DASH AACe','a':'171',		'q':'tiny','m':'audio/mp4; codecs="enca.40.2"'},
     160: {'t':'144p DASH H.264','a':'278',		'q':'tiny','m':'video/mp4; codecs="avc1.4d400c"'},
+    161: {'t':'144p DASH H.264e','a':'278',		'q':'tiny','m':'video/mp4; codecs="encv.4d400c"'},
     167: {'t':'360p WebM VP8','a':'134',		'q':'medium','m':'video/webm; codecs="vp8.0"'},
     168: {'t':'480p WebM VP8 670k','a':'135',		'q':'large','m':'video/webm; codecs="vp8.0"'},
     169: {'t':'720p WebM VP8','a':'136',		'q':'hd720','m':'video/webm; codecs="vp8.0"'},
@@ -2047,15 +2056,19 @@ function test_4(peek) {//console.log('test-4')
 		  //if (!(fmts == 'url_encoded_fmt_stream_map' && eurl.length < 1500)) {
 
 		  if (eurl.indexOf('http') == 0) {
+		    var z = qual[itag]
 		    if (fmts == 'url_encoded_fmt_stream_map') { // reconstruct stream_map from plain url
-		      quality = qual[itag]['q']
-		      type = encodeURIComponent(qual[itag]['m']).split(' ').join('%2B')//(itag == 43) ? 'video/webm; codecs="vp8.0, vorbis"' : 'video/mp4; codecs="avc1.42001E, mp4a.40.2"'
+		      if (z) {
+		        quality = qual[itag]['q']
+		        type = encodeURIComponent(qual[itag]['m']).split(' ').join('%2B')//(itag == 43) ? 'video/webm; codecs="vp8.0, vorbis"' : 'video/mp4; codecs="avc1.42001E, mp4a.40.2"'
+		      }
 		      var x = protocol()//(eurl.indexOf('//') == 0) ? protocol() : ''
 		      eurl = 'sp=' + signame + '&type=' + type + '&quality=' + quality + '&itag=' + itag + '&url=' + encodeURIComponent(x + eurl.split('&' + signame)[0].split('&title=')[0])
 //console.log('stream_map:' + eurl)
 		    }
 		    if (fmts == 'adaptive_fmts') { // reconstruct adaptive_fmts list from plain url
 //console.log(eurl)
+		      if (z) {
 			quality = qual[itag]['q']
 			type = encodeURIComponent(qual[itag]['m'].split(' ').join('+'))
 			s = eurl.split('lsig=').join('').split(signame +'=')[1]
@@ -2063,7 +2076,8 @@ function test_4(peek) {//console.log('test-4')
 			lmt = (eurl.split('lmt=')[1]) ? eurl.split('lmt=')[1].split('&')[0] : ''
 			clen = (eurl.split('clen=')[1]) ? eurl.split('clen=')[1].split('&')[0] : ''
 			var x = protocol()//(eurl.indexOf('//') == 0) ? protocol() : ''
-			eurl = 'itag=' + itag + '\\u0026sp=' + signame +'\\u0026s=' + s + '\\u0026type=' + type + '\\u0026quality=' + quality + '\\u0026url=' + encodeURIComponent(x + eurl.split('&' + signame)[0].split('&title=')[0]) + '\\u0026lmt=' + lmt + '\\u0026clen=' + clen
+		      }
+		      eurl = 'itag=' + itag + '\\u0026sp=' + signame +'\\u0026s=' + s + '\\u0026type=' + type + '\\u0026quality=' + quality + '\\u0026url=' + encodeURIComponent(x + eurl.split('&' + signame)[0].split('&title=')[0]) + '\\u0026lmt=' + lmt + '\\u0026clen=' + clen
 		    }
 //console.log('adaptive:' + eurl)
 		  }
