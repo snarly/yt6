@@ -851,7 +851,7 @@ if (!window.onchange) {
 	  if (Array.isArray(yt6.A_V) && yt6.A_V[itag(yt6.player1.media.src)]) { t1 = true; yt6.Seek = 1 }
 
 	  if (pv == 'hidden' && yt6.browser_tab == 'visible') {
-	    yt6.Seek = 6
+	    //yt6.Seek = 6
 	    if (Array.isArray(yt6.V_) && yt6.V_[itag(yt6.player1.media.src)]) {
 	      if (yt6.player2 && yt6.player2.media) try {
 		t1 = yt6.player1.getCurrentTime(), t2 = yt6.player2.getCurrentTime()
@@ -862,7 +862,7 @@ if (!window.onchange) {
 		    }
 		  }
 		  if (!yt6.player1.media.paused) {
-		    yt6.ct = yt6.player1.media.currentTime = yt6.player2.media.currentTime = t2
+		//    yt6.ct = yt6.player1.media.currentTime = yt6.player2.media.currentTime = t2
 		  } //else { yt6.player1.setCurrentTime(t2) }
 		} else if (yt6.p) {
 		    //t0 = (yt6.ytp.v && typeof yt6.ytp.v.currentTime == 'number') ? yt6.ytp.v.currentTime : t2
@@ -12607,7 +12607,7 @@ function mep_run() {
 						    } // <-- causes a needless reload for most of the time
 
 						  if (yt6.player2.media.paused) { //console.log('1')
-						    if (yt6.player2.media.currentTime > me.currentTime) me.setCurrentTime(yt6.player2.media.currentTime)//m2
+						    if (me.currentTime && yt6.player2.media.currentTime > me.currentTime) me.setCurrentTime(yt6.player2.media.currentTime)//m2
 						    yt6.player2.play()
 						  } else {
 						    /*$waitUntil(function(){ if (yt6.player2.media.loaded && yt6.player2.media.paused) return true },
@@ -13079,7 +13079,8 @@ function mep_run() {
 					addEL(me, 'loadeddata', function() { me.loaded_vid = video_id()[0]; me.loaded_itag = itag(me.src); //console.log('2loaded')
 					  if ( yt6 && yt6.player2 && !yt6.navigation && (yt6.timer == 999999999 || me.src == 'https://www.youtube.com/ptracking' || yt6.player2.media.src != me.src || !gid('player1') ))
 					    return void 0;
-					  if (!player1.loaded) me.loaded = 1; //yt6.retry = 0;
+					  if (!player1.loaded)
+					  me.loaded = 1; //yt6.retry = 0;
 					  var player1_src = gid('player1').getAttribute('src')
 					    if (Math.abs(player1.media.currentTime - me.currentTime) > 0.3 ) {
 					      //Seek = 1;
@@ -13381,7 +13382,7 @@ function mep_run() {
 					     //console.log('browser tried to stop the audio on the hidden tab, resuming playback')
 					     me.play(); return void 0
 					  }
-					  if (player()) if (typeof yt6.p.getPlayerState != 'function' || yt6.x ) {
+					  if (player()) if (yt6.x || typeof yt6.p.getPlayerState != 'function') {
 					    if (yt6.player2.media.currentTime != player2.currentTime) {  yt6.player2.media.pause(); }
 					    if (!player1.media.paused) try { yt6.player2.pause() } catch(e) {} //player2 not typo
 					    if (Seek == 4) { //console.log('AV format selected, separate audio paused')
