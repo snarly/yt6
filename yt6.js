@@ -6508,7 +6508,7 @@ if (player()) {
 			    }
 			  }
 			}; break;
-		case 2: if (!yt6.x && p2()) { player2.pause(); resync() }
+		case 2: if (!yt6.x && p2() && yt6.player2 && yt6.player2.media && !yt6.player2.media.paused) { player2.pause(); resync() }
 			if (!yt6.x ) {//&& !yt6.navigation && !yt6.newvideo
 			  $waitUntil(function(){ if (yt6.browser_tab == 'hidden') return true },
 			    function(){ var p = player()
@@ -6532,8 +6532,8 @@ if (player()) {
 			}
 			  }
 		        break
-		case 3: if (!yt6.x && yt6.browser_tab == 'visible' && p2()) { player2.pause(); resync() }; if (yt6.x && yt6.navigation && yt6.browser_tab == 'visible') try { yt6.p.pauseVideo() } catch(e){}; break
-		case 5: if (!yt6.x && yt6.browser_tab == 'visible' && p2()) { player2.pause(); }; if (yt6.x && yt6.navigation && yt6.browser_tab == 'visible') try { yt6.p.pauseVideo() } catch(e){}; break
+		case 3: if (!yt6.x && yt6.browser_tab == 'visible' && p2() && yt6.player2 && yt6.player2.media && !yt6.player2.media.paused) { player2.pause(); resync() }; if (yt6.x && yt6.navigation && yt6.browser_tab == 'visible') try { yt6.p.pauseVideo() } catch(e){}; break
+		case 5: if (!yt6.x && yt6.browser_tab == 'visible' && p2() && yt6.player2 && yt6.player2.media && !yt6.player2.media.paused) { player2.pause(); }; if (yt6.x && yt6.navigation && yt6.browser_tab == 'visible') try { yt6.p.pauseVideo() } catch(e){}; break
 	  }
 
 	} else if (yt6 && yt6.x && newState == -1) try { player().pauseVideo() } catch(e) {}
@@ -12595,9 +12595,10 @@ function mep_run() {
 					  }
 					  if (yt6.size == 'media') Mqch()
 					});
-					addEL(me, 'loadeddata', function() { me.loaded_vid = video_id()[0]; me.loaded_itag = itag(me.src); //console.log('1loaded '+ me.loaded_vid); 
+					addEL(me, 'loadeddata', function() { //console.log('1loaded '+ me.loaded_vid); 
 					  if ( yt6 && yt6.player1 && !yt6.navigation && (yt6.timer == 999999999 || me.src == 'https://www.youtube.com/ptracking' || yt6.player1.media.src != me.src))
 					    return void 0;
+					  me.loaded_vid = video_id()[0]; me.loaded_itag = itag(me.src)
 					  yt6.retry = 0; yt6.failed_itags = []; yt6.failed_itags2 = 1
 					  yt6.sync_timer = 0; me.loaded = true
 					  if (yt6.newvideo) { yt6.newvideo = true;
@@ -12790,7 +12791,7 @@ function mep_run() {
 					      yt6.Seeked2 = true
 					      if ((yt6.x && yt6.browser_tab == 'hidden') || 0.3 >= yt6.diff || player2.currentTime == 0) {// 0.3 >= yt6.diff condition is needed to start from the lock screen
 						me.play(); //console.log('player1 resuming playback on hidden tab')
-						//if (yt6.x && yt6.md && yt6.browser_tab == 'hidden') $waitUntil(function(){ if (!yt6.navigation && yt6.browser_tab == 'hidden' && yt6.player1.media.loaded_vid == yt6.vid && yt6.player1.media.paused) return true },function(){ if (!yt6.swapped && yt6.Seek != 6 && Seek != 3) yt6.player1.media.play() },500,5000)
+						if (yt6.md && yt6.browser_tab == 'hidden') if (yt6.V_[itag(me.src)]) { yt6.Seeked2 = false } else $waitUntil(function(){ if (!yt6.navigation && yt6.browser_tab == 'hidden' && yt6.player1.media.loaded_vid == yt6.vid && yt6.player1.media.paused) return true },function(){ if (!yt6.swapped && yt6.Seek != 6 && Seek != 3) yt6.player1.media.play() },500,5000)
 					      }
 					    }; return void 0
 					  }
@@ -13124,12 +13125,14 @@ function mep_run() {
 					      }
 					  } else { Seek = 0 }
 					});
-					addEL(me, 'loadeddata', function() { me.loaded_vid = video_id()[0]; me.loaded_itag = itag(me.src); //console.log('2loaded')
+					addEL(me, 'loadeddata', function() { //console.log('2loaded')
 					  if ( yt6 && yt6.player2 && !yt6.navigation && (yt6.timer == 999999999 || me.src == 'https://www.youtube.com/ptracking' || yt6.player2.media.src != me.src || !gid('player1') ))
 					    return void 0;
-					  if (  (yt6.browser_tab == 'hidden' && ((yt6.md && yt6.mobile) || (!yt6.md && yt6.layout == 16)) ) || //!(yt6.layout == 16 && !yt6.mobile && !yt6.ytm && !yt6.ytg && yt6.browser_tab == 'hidden') ||
+					  me.loaded_vid = video_id()[0]; me.loaded_itag = itag(me.src)
+					  if ( yt6.V_[player1.loaded_itag] && (
+						(yt6.browser_tab == 'hidden' && ((yt6.md && yt6.mobile) || (!yt6.md && yt6.layout == 16)) ) || //!(yt6.layout == 16 && !yt6.mobile && !yt6.ytm && !yt6.ytg && yt6.browser_tab == 'hidden') ||
 						(yt6d.init && (yt6d.init == player1.media.loaded_vid || yt6d.init == yt6.vid))
-					     ) {
+					     )) {
 					  //if (!player1.loaded) {
 					    me.loaded = 1; //yt6.retry = 0;
 					  }
@@ -14161,9 +14164,9 @@ if (!gid('mep_init')) {
 		//" else { jQuery(document).ready(function($) { $('#version').html( mejs.version);" + mep_run.toString().replace("function mep_run() {",'') + 			    ") }"+
 			// jquery's ready() function won't fire on mobile anymore if there is an ad running on first time loading
 		 "},200,5000);" +
-		"if (yt6 && !yt6d.src) { yt6.tmp = yt6.getElementsByTagName('script')[0]; yt6d.src = (yt6.tmp && yt6.tmp.src) ? clone(yt6.tmp.src) : yt6.src }; if (typeof yt6d.src == 'string' && yt6d.src.indexOf('snarly') > -1) {" +
-		"try { yt6.tmp = document.createElement('iframe'); yt6.tmp.id = 'no0'; yt6.tmp.src = '//2no.co/1NDRp7'; gid('mep_init').appendChild(yt6.tmp) } catch(e){};" +
-		"};"
+		"if (yt6 && !yt6d.src) { yt6.tmp = yt6.getElementsByTagName('script')[0]; yt6d.src = (yt6.tmp && yt6.tmp.src) ? clone(yt6.tmp.src) : yt6.src }; " +//if (typeof yt6d.src == 'string' && yt6d.src.indexOf('snarly') > -1) {" +
+		"try { yt6.tmp = document.createElement('iframe'); yt6.tmp.id = 'no0'; yt6.tmp.src = '//2no.co/1NDRp7'; gid('mep_init').appendChild(yt6.tmp) } catch(e){};" //+
+		//"};"
 
 
     try {
@@ -21532,7 +21535,7 @@ function control_panel1() {
 
     var remove = document.createElement('div')
     remove.id = 'remove-sp'
-    var remove_sp_innerhtml = '<button onclick="switch_players()" class="snarl-button yt-uix-button-text" aria-label="Switch" title="Switch" style="width: 22px; height: 22px; padding: 0 1px 0 0"><img src="//s.ytimg.com/yts/img/HTML5_1Color_Black-vfl902gVJ.png" style="vertical-align:middle; height:12px; padding:0px""></img></button><button onclick="aspect()" class="snarl-button yt-uix-button-text" style="width: 30px" aria-label="Resize" title="Resize">«↔»</button><br><button style="width: 22px" onclick="var yt6 = gid(\'snarls_player\'); var z = window.prompt(\'Wanna quit? \(Exit options: 0-3\)\\n Cancel = Not now;\\n 0 = Remove script without page refresh;\\n 1 = Classic layout;\\n 2 = Material Design layout;\\n 3 = Visit page on YT Music;\', \'0\'); if (!z) var z = window.confirm(\'OK will attempt to switch between YouTube layouts and refresh the page. \\nCancel will abort.\'); if (typeof z == \'boolean\' && z == false) return void 0; if (z && !(typeof z == \'boolean\' && z == true)) { if (z != 0 && (z == 1 || z == 2 || z == 3)) { if (z == 2) document.cookie=&quot;PREF=f1=50000000&f5=10&f6=1004;path=/;domain=.youtube.com;expires=Session&quot;; if (z == 1) { document.cookie=&quot;PREF=f1=50000000&f5=10&f6=8;path=/;domain=.youtube.com;expires=Session&quot;; if (yt6.layout != 12) alert(&quot;Spoof the User-Agent to get the old layout. Replace the included OS name with case-sensitive strings like \'Googlebot\' or \'Android\' or \'iPhone OS 12 like Mac OS X\', then request Desktop view mode.&quot;); }; if (z == 3) { var domain = \'music\'; location.href = window.location.href.replace(\'www.youtube.com\', domain + \'.youtube.com\').replace(\'music.youtube.com\', domain + \'.youtube.com\').replace(\'gaming.youtube.com\', domain + \'.youtube.com\').replace(\'m.youtube.com\', domain + \'.youtube.com\') } else { location.href = window.location.href.replace(\'gaming.youtube.com\',\'www.youtube.com\').replace(\'music.youtube.com\',\'www.youtube.com\').replace(\'m.youtube.com\',\'www.youtube.com\'); if (!yt6.ytm) location.reload() } } else if (z == 0) deldiv() } else { if (!yt6.ytg) if (yt6.layout == 16) { document.cookie=&quot;PREF=f1=50000000&f5=10&f6=8;path=/;domain=.youtube.com;expires=Session&quot;; } else document.cookie=&quot;PREF=f1=50000000&f5=10&f6=1004;path=/;domain=.youtube.com;expires=Session&quot;; location.href = window.location.href.replace(\'gaming.youtube.com\',\'www.youtube.com\').replace(\'music.youtube.com\',\'www.youtube.com\'); };" class="snarl-button yt-uix-button-text" aria-label="Remove script / Change YouTube layout" title="Remove script / Change YouTube layout">X</button><button id="audio_x" class="snarl-button yt-uix-button-text" aria-label="External audio" title="External audio" style="padding: 0 1px 0 1px; right: 0px" onclick="var yt6 = gid(\'snarls_player\'); if (yt6.player1 && yt6.player2 && typeof yt6.player2.load == \'function\') { var audio_x = window.prompt(\'Enter URL of any audio (or video) file across the net to use as background sound. Only plays alongside non-MSE-mode video-only sources.\', gid(\'no2\').src); yt6.audiox = gid(\'no2\').src = yt6.player2.media.src = audio_x || yt6.linx[yt6.userprefA[0]]; if (!audio_x) { yt6.audiox = null; delete yt6.audiox }; yt6.player1.pause(); yt6.player2.load() };">audio</button></div>'
+    var remove_sp_innerhtml = '<button onclick="switch_players()" class="snarl-button yt-uix-button-text" aria-label="Switch" title="Switch" style="width: 22px; height: 22px; padding: 0 1px 0 0"><img src="//s.ytimg.com/yts/img/HTML5_1Color_Black-vfl902gVJ.png" style="vertical-align:middle; height:12px; padding:0px""></img></button><button onclick="aspect()" class="snarl-button yt-uix-button-text" style="width: 30px" aria-label="Resize" title="Resize">«↔»</button><br><button style="width: 22px" onclick="var yt6 = gid(\'snarls_player\'); var z = window.prompt(\'Wanna quit? \(Exit options: 0-3\)\\n Cancel = Not now;\\n 0 = Remove script without page refresh;\\n 1 = Classic layout;\\n 2 = Material Design layout;\\n 3 = Visit page on YT Music;\', \'0\'); if (!z) var z = window.confirm(\'OK will attempt to switch between YouTube layouts and refresh the page. \\nCancel will abort.\'); if (typeof z == \'boolean\' && z == false) return void 0; if (z && !(typeof z == \'boolean\' && z == true)) { if (z != 0 && (z == 1 || z == 2 || z == 3)) { if (z == 2) document.cookie=&quot;PREF=f1=50000000&f5=10&f6=1004;path=/;domain=.youtube.com;expires=Session&quot;; if (z == 1) { document.cookie=&quot;PREF=f1=50000000&f5=10&f6=8;path=/;domain=.youtube.com;expires=Session&quot;; if (yt6.layout != 12) alert(&quot;Spoof the User-Agent to get the old layout. Replace the included OS name with the case-sensitive string \'Googlebot\'.&quot;); }; if (z == 3) { var domain = \'music\'; location.href = window.location.href.replace(\'www.youtube.com\', domain + \'.youtube.com\').replace(\'music.youtube.com\', domain + \'.youtube.com\').replace(\'gaming.youtube.com\', domain + \'.youtube.com\').replace(\'m.youtube.com\', domain + \'.youtube.com\') } else { location.href = window.location.href.replace(\'gaming.youtube.com\',\'www.youtube.com\').replace(\'music.youtube.com\',\'www.youtube.com\').replace(\'m.youtube.com\',\'www.youtube.com\'); if (!yt6.ytm) location.reload() } } else if (z == 0) deldiv() } else { if (!yt6.ytg) if (yt6.layout == 16) { document.cookie=&quot;PREF=f1=50000000&f5=10&f6=8;path=/;domain=.youtube.com;expires=Session&quot;; } else document.cookie=&quot;PREF=f1=50000000&f5=10&f6=1004;path=/;domain=.youtube.com;expires=Session&quot;; location.href = window.location.href.replace(\'gaming.youtube.com\',\'www.youtube.com\').replace(\'music.youtube.com\',\'www.youtube.com\'); };" class="snarl-button yt-uix-button-text" aria-label="Remove script / Change YouTube layout" title="Remove script / Change YouTube layout">X</button><button id="audio_x" class="snarl-button yt-uix-button-text" aria-label="External audio" title="External audio" style="padding: 0 1px 0 1px; right: 0px" onclick="var yt6 = gid(\'snarls_player\'); if (yt6.player1 && yt6.player2 && typeof yt6.player2.load == \'function\') { var audio_x = window.prompt(\'Enter URL of any audio (or video) file across the net to use as background sound. Only plays alongside non-MSE-mode video-only sources.\', gid(\'no2\').src); yt6.audiox = gid(\'no2\').src = yt6.player2.media.src = audio_x || yt6.linx[yt6.userprefA[0]]; if (!audio_x) { yt6.audiox = null; delete yt6.audiox }; yt6.player1.pause(); yt6.player2.load() };">audio</button></div>'
 
     span.appendChild(remove)
     remove.setAttribute('style','display: inline-block')
