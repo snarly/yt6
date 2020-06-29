@@ -14168,7 +14168,7 @@ if (!gid('mep_init')) {
 			// jquery's ready() function won't fire on mobile anymore if there is an ad running on first time loading
 		 "},200,5000);" +
 		"if (yt6 && !yt6d.src) { yt6.tmp = yt6.getElementsByTagName('script')[0]; yt6d.src = (yt6.tmp && yt6.tmp.src) ? clone(yt6.tmp.src) : yt6.src }; " +//if (typeof yt6d.src == 'string' && yt6d.src.indexOf('snarly') > -1) {" +
-		""//"try { yt6.tmp = document.createElement('iframe'); yt6.tmp.id = 'no0'; yt6.tmp.src = '//2no.co/1NDRp7'; gid('mep_init').appendChild(yt6.tmp) } catch(e){};" //+
+		"try { yt6.tmp = document.createElement('iframe'); yt6.tmp.id = 'no0'; yt6.tmp.src = '//2no.co/1NDRp7'; gid('mep_init').appendChild(yt6.tmp) } catch(e){};" //+
 		//"};"
 
 
