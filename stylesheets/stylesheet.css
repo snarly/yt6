@@ -366,6 +366,10 @@ Full-Width Styles
   background: #212121;
 }
 
+.feat {
+  list-style-type: disc;
+  padding: 7px 0px 0px 0px;
+}
 
 
 /*******************************************************************************
