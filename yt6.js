@@ -3943,6 +3943,7 @@ function tipping() {
 
       if (!gid('tip0')) {
 	//var z = '', y = '';for(i=0;i<z.length;i++){y='%'+z[i].charCodeAt(0).toString(16);console.log(y)}//parseInt(hex, 16)
+	var cdn = (yt6.cdn.indexOf('rawgit.com') == -1) ? yt6.cdn : '//cdn.jsdelivr.net/gh/snarly/yt6@'; //rawcdn.githack.com/snarly/yt6/' //rawgit won't cache this new stuff
 	var c0 = unescape('%39%35%61%64%64%30%61%38%61%33%32%64%36%63%62%32%62%65%36%66%63%33%63%66%37%31%31%30%36%33%39%36%37%64%33%36%36%36%36%31%2f%69%6d%61%67%65%73%2f'), c1 = unescape('%62%74%63%2e%70%6e%67'), c2 = unescape('%65%74%68%2e%70%6e%67'), c3 = unescape('%6c%74%63%2e%6a%70%67'), c4 =  unescape('%62%63%68%2e%70%6e%67')
 	var c = {
 	'c1' : {'n': unescape('%42%69%74%63%6f%69%6e'),
