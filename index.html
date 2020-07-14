@@ -43,29 +43,39 @@
           <a id="forkme_banner" href="https://github.com/snarly/yt6">View on GitHub</a>
 
           <h1 id="project_title">Yt6</h1>
-          <h2 id="project_tagline">Tweak, play back free of ads and save Youtube video & audio in almost any browser on both Desktop and Mobile</h2>
+          <h2 id="project_tagline">Tweak, play back free of ads and save YouTube video & audio in almost any browser on both Desktop and Mobile</h2>
 
     </div>
 
     <!-- MAIN CONTENT -->
     <div id="main_content_wrap" class="outer">
       <section id="main_content" class="inner">
+
+    <img style="position: absolute; right: 105%; height: 180px" src="images/screenshot01.png"></img>
+    <img style="position: absolute; right: 105%; height: 180px; top: 230px" src="images/screenshot02.png"></img>
+    <img style="position: absolute; right: -63%; height: 750px;" src="images/screenshot03.png"></img>
+    <img style="position: absolute; right: 105%; height: 180px; top: 420px" src="images/screenshot04.png"></img>
+    <img style="position: absolute; right: 105%; height: 180px; top: 610px" src="images/screenshot05.png"></img>
+
+
 	<h3>
 	<a href="javascript:(function(){var w=window,d=w.document;if(d.location.href.indexOf('youtube.com/watch')>-1||d.location.href.indexOf('/base.js')==d.location.href.length-8){var id='snarls_player',e='script';yt6=(w.yt6)?w.yt6:{};yt6d=(w.yt6d)?w.yt6d:{};yt6.loaded=0;function s(x){x=x||id;return d.getElementById(x)};function c(e){return d.createElement(e)};function a(q){s().appendChild(q);s().add_subs='en,hu,de';yt6d.src=q.src};function r(){if(s()){var x=s().querySelector('#'+id);if(x)s().removeChild(x)}};function b(){var i,j,o,x;o=['.githack','git','js'];for(j,x,i=o.length;i;j=Math.floor(Math.random()*i),x=o[--i],o[i]=o[j],o[j]=x);if(yt6d.src!=1)o.splice(0,0,'.githubusercontent');var q=c('div');q.id=id;if(q!=s())d.body.appendChild(q);var src='https://raw'+o[0]+'.com/snarly/yt6/691d1d9761911909f930d5c6c7cd14f7e3318104/yt6.js';var src0='https://cdn.jsdelivr.net/gh/snarly/yt6@691d1d9761911909f930d5c6c7cd14f7e3318104/yt6.js';function oc(ox,oy,sr){return(oy!='js')?sr.replace(ox,oy):src0};var q=c(e);q.id=id;q.src=(o[0]!='js')?src:src0;q.onerror=function(){var q=c(e);q.id=id;q.src=oc(o[0],o[1],src);q.onerror=function(){var q=c(e);q.id=id;q.src=oc(o[0],o[2],src);q.onerror=function(){var q=c(e);q.id=id;q.src=oc(o[0],o[3],src);q.onerror=function(){var q=c(e);q.id=id;q.src=src.replace('https','http')};a(q);r();};a(q);r();};a(q);r();};try{a(q);}catch(f){a(q)};};function g(){try{deldiv()}catch(f){r()};yt6d.src=1;b()};if(!s()){b()};if(s()&&(!yt6.body||(yt6.loaded>1&&!s('mep_init'))))setTimeout(function(){if(!yt6.body||(yt6.body&&yt6.loaded>2&&!s('mep_init')))g()},3000);}else{void 0};})();/*202007131020*/">Yt6 -- Snarl's YouTube Video Player (bookmarklet)</a>
 	</h3>
 	<p>
 		On any YouTube video (watch) page, this bookmarklet will call an external player and load 
-		some extra functions, some of which can be used with YouTube's original player as well.
+		some extra functions, some of which can be used with YouTube's original player as well.<br>
+		(Bookmarklets are bookmarks that contain no actual web address on their location field but 
+		some script code which the browser can execute when the user clicks / taps them.)
 	<br><br>
-		To make it work
+		To set it up
 	</p>
 	<ol>
 		<li>Right click / hold your finger on the link, and "Copy link address". If you have no 
-		such option, the code is written below in plain text, select and copy it manually</li>
+		such option, the code is written below in plain text also, select and copy it manually</li>
 		<li>Bookmark any web page (this one for example)</li>
-		<li>Edit the created bookmark's Properties / Location: remove the bookmark's original 
-		URL-address and paste this snippet of javascript code in its place. (Optionally, you can 
-		give it a name or description of your choice as well)</li>
+		<li>Edit the created bookmark's Properties / Location: delete its URL-address entirely, 
+		and paste this snippet of javascript code in its place. (Optionally, you can give it a name 
+		of your choice too.)</li>
 		<li>Save the changes, if there is a Save button!</li>
 	</ol>
 		That's it, your bookmarklet is now ready to use.
@@ -88,21 +98,23 @@ older ones. It may be crucial regarding its functionality.)
 	</p>
 	<p>__</p>
 	<h1>
-		Usage
+		How to use
 	</h1>
-		On Desktop/Laptop, just <strong><b>click on it on your bookmarks list</b></strong> each time you enter a video 
-		page, unless you have the code already running.
+		On Desktop/Laptop, simply <strong><b>click on it on your bookmarks list</b></strong> whenever you enter a 
+		YouTube video that you want to download or play around with, unless you have the code 
+		already running.
 	<br><br>
-		On mobile, <strong><b> tap the URL/address bar first </b></strong> (NOT the YouTube search bar!), after that 
-		most browsers will show it as an available option once you start typing either its name 
-		("Yt6" or whatever you named it) or the prefix "javascript:" to narrow down the search to 
-		bookmarklets only. Tapping on the correct entry on this quick search results list will 
-		initiate the call.
+		On mobile, <strong><b> tap the browser's URL/address bar first </b></strong> (NOT the YouTube search bar!). 
+		After that most browsers will show it as an available option once you start typing either its 
+		name ("Yt6" or whatever you named it) or the prefix "javascript:" to narrow down the 
+		search to bookmarklets only. Tapping on the correct entry on this quick search results list 
+		will initiate the call.
 	<br><br>
 		Automatic playback depends on the state of YouTube's own "Repeat / Loop Playlist" 
 		button on user-created playlists. 
 	<br><br>
-		Use the HTML5 emblem to switch between the native and this alternative player.
+		Use the HTML5 emblem on the control panel to switch between the native and this 
+		alternative player.
 	</p>
 	<p>
 	<h1>
@@ -256,8 +268,8 @@ older ones. It may be crucial regarding its functionality.)
 	
 	<br><br>
 		To make sure your browser chooses memory for temporary storage over the much slower 
-		and/or fragile Hard Disk / Solid-state drive, you should <strong><b>always use the program 
-		in an Incognito / In-private browser window or tab.</b></strong>
+		and/or fragile Hard Disk / Solid-state drive, <strong><b>use the program in an Incognito / 
+		In-private browser window / tab.</b></strong>
 	</p>
 	</li>
 	<br>
