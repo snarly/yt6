@@ -3134,26 +3134,28 @@ if (typeof jQuery != 'undefined') {
 			this.setControlsSize();
 		},
 		play: function() {
-			this.load();
+			if (!(browserName == 'Safari' && this.media.loaded))
+			  this.load();
 			this.media.play();
 		},
 		pause: function() {
-			try {
-				this.media.pause();
-			} catch (e) {}
+			this.media.pause();
 		},
 		load: function() {
-			if (!this.isLoaded) {
-				this.media.load();
+			if (browserName == 'Safari' && !this.media.loaded) { this.isLoaded = false;
+			  //this.setSrc(this.media.src)
 			}
-
-			this.isLoaded = true;
+			if (!this.isLoaded) {
+			  try {
+			    this.media.load(); this.isLoaded = true; this.media.loaded = (this.media.loaded) ? this.media.loaded : true
+			  } catch(e){ this.isLoaded = false; this.media.loaded = false }
+			}
 		},
 		setMuted: function(muted) {
 			this.media.setMuted(muted);
 		},
 		setCurrentTime: function(time) {
-			this.media.setCurrentTime(time);
+			try { this.media.setCurrentTime(time); } catch(e){}
 		},
 		getCurrentTime: function() {
 			return this.media.currentTime;
@@ -3162,10 +3164,10 @@ if (typeof jQuery != 'undefined') {
 			this.media.setVolume(volume);
 		},
 		getVolume: function() {
-			return this.media.volume;
+			return this.media.volume
 		},
 		setSrc: function(src) {
-			this.media.setSrc(src);
+			try { this.media.setSrc(src); } catch(e){} // safari from the High Sierra era is really touchy about this, better put it in a try / catch statement
 		},
 		remove: function() {
 			var t = this, featureIndex, feature;
