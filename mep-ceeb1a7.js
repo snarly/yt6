@@ -3139,7 +3139,7 @@ if (typeof jQuery != 'undefined') {
 			this.media.play();
 		},
 		pause: function() {
-			this.media.pause();
+			try { this.media.pause(); } catch(e){}
 		},
 		load: function() {
 			if (browserName == 'Safari' && !this.media.loaded) {
