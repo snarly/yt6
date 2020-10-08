@@ -3142,12 +3142,13 @@ if (typeof jQuery != 'undefined') {
 			this.media.pause();
 		},
 		load: function() {
-			if (browserName == 'Safari' && !this.media.loaded) { this.isLoaded = false;
-			  //this.setSrc(this.media.src)
+			if (browserName == 'Safari' && !this.media.loaded) {
+			  this.isLoaded = false;
 			}
 			if (!this.isLoaded) {
 			  try {
-			    this.media.load(); this.isLoaded = true; this.media.loaded = (this.media.loaded) ? this.media.loaded : true
+			    this.media.load(); this.isLoaded = true;
+			    if (browserName == 'Safari') { this.media.loaded = (this.media.loaded) ? this.media.loaded : true }
 			  } catch(e){ this.isLoaded = false; this.media.loaded = false }
 			}
 		},
