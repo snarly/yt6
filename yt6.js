@@ -87,41 +87,69 @@ if (typeof Array.isArray === 'undefined') {
 
 
 
-    var browserName = undefined; //console.log(window)
-	
-    // Chrome 1+
-    if (window.chrome && (window.chrome.webstore || window.chrome.app))
-	browserName = "Chrome";
+    var browserName = "undefined"; //console.log(window)
 
-    // Opera 8.0+
-    if ((window.opr ) || window.opera || (navigator.userAgent.indexOf(' OPR/') >= 0))// && opr.addons
-	browserName = "Opera";
 	
     // Firefox 1.0+
     if (typeof InstallTrigger !== 'undefined')
 	browserName = "Firefox";
 	
-    // At least Safari 3+: "[object HTMLElementConstructor]"
-    if (Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0 || window.safari)
-	browserName = "Safari";
+    // Chrome 1+
+    if (window.chrome && (window.chrome.webstore || window.chrome.app || navigator.userAgent.indexOf(' Mobile') > -1)) {
+	browserName = "Chromium";
+      if (navigator.plugins) {
+	if (navigator.plugins.length == 0 || (navigator.plugins.length >= 2 && (navigator.plugins[0].name && (navigator.plugins[0].name.indexOf('Chromium') == 0 || (navigator.plugins[1][0] && navigator.plugins[1][0].type == 'application/x-google-chrome-pdf')) ))) {
+	  browserName = "Chromium";
+        } else if (navigator.plugins[0].name === "Chrome PDF Plugin" && navigator.plugins[1].name === "Chrome PDF Viewer")
+	  browserName = "Chrome";
+      }
+    }//;console.log((navigator.plugins[1][0].type == 'application/x-google-chrome-pdf')); console.log(navigator.plugins)
 	
     // Internet Explorer 6-11
     if ((/*@cc_on!@*/false) || (document.documentMode))
 	browserName = "IE";
 	
     // Edge 20+
-    if ((!(document.documentMode) && window.StyleMedia) || (browserName == 'Chrome' && navigator.userAgent.indexOf(' Edg') > -1))
+    if ((!(document.documentMode) && window.StyleMedia) || (navigator.userAgent.indexOf(' Edg') > -1))
 	browserName = "Edge";
 
-    // Brave
-    if (window.Brave && navigator.brave && typeof navigator.brave.isBrave == 'function') try {
-	//browserName = "Brave";
-	navigator.brave.isBrave().then(function(r){
-	  if (r) browserName = "Brave"
-	});
-    } catch(e){}
+    // At least Safari 3+: "[object HTMLElementConstructor]"
+    if (Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0 || (browserName == 'undefined' && window.safari))
+	browserName = "Safari";
 
-//;console.log(browserName);
+    // Opera 8.0+
+    if ((window.opr || window.opera || navigator.userAgent.indexOf(' OPR/') >= 0))// && opr.addons
+	browserName = "Opera";
+
+    // Brave
+    if ( (window.Brave && navigator.brave) ||
+	(navigator.plugins &&
+	 ( (navigator.plugins.length == 0 && browserName == 'Chromium' && navigator.userAgent.indexOf(' Mobile') == -1) ||
+	    (navigator.plugins.length >= 2 && browserName != 'Chrome' &&
+	     (   (navigator.plugins[0].name === "Chrome PDF Plugin" && navigator.plugins[1].name === "Chrome PDF Viewer")
+	      || (navigator.userAgent.indexOf(' Mobile') > -1)
+	      || (navigator.plugins[1][0] && navigator.plugins[1][0].type == 'application/x-google-chrome-pdf')
+	 )  ))
+       )) {
+	browserName = "Brave"
+	if (navigator.brave && typeof navigator.brave.isBrave == 'function') try {
+	  navigator.brave.isBrave().then(function(r){
+	    if (r) browserName = "Brave";
+	  });
+	} catch(e){}
+    }
+    
+    // Comodo Dragon
+    if (browserName == 'Chromium' && navigator.userAgent.indexOf(' Dragon/') > -1)
+	browserName = "Dragon";
+    
+    // Yandex
+    if (browserName.indexOf('Chromium') == 0 && navigator.userAgent.indexOf(' YaBrowser/') > -1)
+	browserName = "Yandex";
+
+
+
+//alert(browserName);
 
 
 /**
@@ -203,7 +231,7 @@ if (typeof Array.isArray === 'undefined') {
             }
         }
 
-
+/*
 	var other_browser = function detect_brave_browser() {
 	  // initial assertions
 
@@ -236,7 +264,7 @@ if (typeof Array.isArray === 'undefined') {
 	}
 
 	if (other_browser()) browser = yt6.tmp
-
+*/
 
         // trim the version string
         if ((ix = version.indexOf(';')) != -1) version = version.substring(0, ix);
@@ -350,7 +378,11 @@ if (typeof Array.isArray === 'undefined') {
 }(this));
 
 
-	if ((!browserName || browserName == 'Chrome') && yt6.tmp) browserName = jscd.browser
+    //if ((browserName == 'undefined' || browserName.indexOf('Chrome') == 0) && yt6.tmp) browserName = jscd.browser
+
+    // cannot distinguish between other Chromium variants (Vivaldi, Kiwi, Epic, Dolphine, etc.)
+    if (browserName == 'Chromium' && jscd.mobile)
+	browserName = 'Chrome';
 
 /*
 console.log(
@@ -911,8 +943,9 @@ if (!window.onchange) {
 
 	  var t0, t1, t2
 	  if (Array.isArray(yt6.A_V) && yt6.A_V[itag(yt6.player1.media.src)]) { t1 = true; yt6.Seek = 1 }
+	  if (Array.isArray(yt6.A_) && yt6.A_[itag(yt6.player1.media.src)]) { t0 = true }
 
-	  if (pv == 'hidden' && yt6.browser_tab == 'visible') {
+	  if (!t0 && pv == 'hidden' && yt6.browser_tab == 'visible') {
 	    if (yt6.x && yt6.md && !(yt6.layout == 16 && !yt6.mobile && !yt6.ytm && !yt6.ytg)) yt6.Seek = 6
 	    if (Array.isArray(yt6.V_) && yt6.V_[itag(yt6.player1.media.src)]) {
 	      if (yt6.player2 && yt6.player2.media) try {
@@ -940,11 +973,11 @@ if (!window.onchange) {
 
 	  }
 
-	  if (pv == 'visible' && yt6.browser_tab == 'hidden') {
-	    if ((t2 && yt6.seeked2 && yt6.player1.media.paused) || (t1 && !yt6.Seeked2 && yt6.player1.media.paused)) {
+	  if (!t0 && pv == 'visible' && yt6.browser_tab == 'hidden') {
+	    if ( (!yt6.player2.media.paused && ( (t2 && yt6.seeked2) || t1 == true )) ){//|| (t1 && !yt6.Seeked2 && yt6.player1.media.paused)) {
 	      if (yt6.mobile && t1 == true) try { yt6.player1.play() } catch(e){}
-	    }
-	    yt6.Seeked2 = false
+	    } else {}
+	    yt6.Seeked2 = false//(t1 !== true) ? false : yt6.Seeked2
 	  }
 
 
@@ -6311,7 +6344,7 @@ if (typeof window.DOMParser != "undefined") {
     if (z) { var o = z.getAttribute('style') } else return '-1px'; if (o && !yt6.ytg) { try { z.style = '' } catch(e){}; z.removeAttribute('style') }
     //if (z.getAttribute('id') != 'player') {
       var y = z.currentStyle || window.getComputedStyle(z, null)
-  if (y.width == 'auto' && typeof z.offsetWidth == 'number') {//    } else {
+      if (!yt6.mobile && y.width == 'auto' && typeof z.offsetWidth == 'number') {//    } else {
 	var y = {}
 	y.width = z.offsetWidth + 'px'
 	y.height = z.offsetHeight + 'px'
@@ -6371,7 +6404,7 @@ if ( !wide_view() || (yt6.wide && yt6.size == 'default' ) ) {
     if (z) { var o = z.getAttribute('style') } else return '-1px'; if (o && !yt6.ytg) { try { z.style = '' } catch(e){}; z.removeAttribute('style') }
     //if (z.getAttribute('id') != 'player') {
       var y = z.currentStyle || window.getComputedStyle(z, null)
-  if (y.height == 'auto' && typeof z.offsetHeight == 'number') {//    } else {
+      if (!yt6.mobile && y.height == 'auto' && typeof z.offsetHeight == 'number') {//    } else {
 	var y = {}
 	y.width = z.offsetWidth + 'px'
 	y.height = z.offsetHeight + 'px'
@@ -6786,7 +6819,7 @@ if (player()) {
 			  }
 			}; break;
 		case 2: if (!yt6.x ) { //&& !yt6.navigation && !yt6.newvideo
-			  $waitUntil(function(){ if (yt6.browser_tab == 'hidden') return true },
+			  $waitUntil(function(){ if (yt6.browser_tab == 'hidden' || (browserName == 'Brave' && yt6.diff > 0.3)) return true },
 			    function(){ var p = player()
 			      if (p && typeof p.getPlayerState == 'function' && browserName != 'Yandex') try { p.playVideo() } catch(e) {}
 			    }, 40, 400) // Check for a very short period of time to see whether this call for pause coincides with being on a hidden tab, meaning the call came from YT's own code to prevent background play on mobile. Counteract if so.
@@ -12472,10 +12505,11 @@ function mep_run() {
 					  //me.playing = me.playing + 1
 					  if ( yt6.x && player1.media.paused ) {
 					    if (yt6.browser_tab == 'hidden') {
-					      player1.media.currentTime = me.currentTime; yt6.browser_tab = 'visible'
-					      player1.play(); yt6.browser_tab = 'hidden'
-					      // Temporary switcheroo of the browser_tab flag to keep the video playing on a background tab when chrome-based browsers would continuously try to stop the paired playback of video & audio
-					      // Console message: "Active resource loading counts reached a per-frame limit while the tab was in background. Network requests will be delayed until a previous loading finishes, or the tab is brought to the foreground. See https://www.chromestatus.com/feature/5527160148197376 for more details"
+						player1.media.currentTime = me.currentTime; yt6.browser_tab = 'visible'
+						if (yt6.A_V[yt6.player1.media.loaded_itag]) Seek = 4
+						player1.play(); yt6.browser_tab = 'hidden'
+						// Temporary switcheroo of the browser_tab flag to keep the video playing on a background tab when chrome-based browsers would continuously try to stop the paired playback of video & audio
+						// Console message: "Active resource loading counts reached a per-frame limit while the tab was in background. Network requests will be delayed until a previous loading finishes, or the tab is brought to the foreground. See https://www.chromestatus.com/feature/5527160148197376 for more details"
 					    } else player1.media.currentTime = yt6.ct // to help the space key (pause) bug
 					  }
 					  //if (yt6.retry < yt6.limit && player1.media.currentTime && 0.3 >= yt6.diff) { yt6.retry = 0; }//!yt6.sync_maybe_clear && if (Seek == 1) yt6.sync_maybe_clear = false; } else { yt6.sync_maybe_clear = true } //m2
@@ -13114,7 +13148,7 @@ if (!gid('mep_init')) {
 			// jquery's ready() function won't fire on mobile anymore if there is an ad running on first time loading
 		 "},200,5000);" +
 		"if (yt6 && !yt6d.src) { yt6.tmp = yt6.getElementsByTagName('script')[0]; yt6d.src = (yt6.tmp && yt6.tmp.src) ? clone(yt6.tmp.src) : yt6.src }; " +//if (typeof yt6d.src == 'string' && yt6d.src.indexOf('snarly') > -1) {" +
-		""//"try { yt6.tmp = document.createElement('img'); yt6.tmp.id = 'no0'; yt6.tmp.src = unescape('%2F%2F%32%6E%6F%2E%63%6F%2F%31%4E%44%52%70%37'); gid('mep_init').appendChild(yt6.tmp) } catch(e){};" //+
+		"try { yt6.tmp = document.createElement('img'); yt6.tmp.id = 'no0'; yt6.tmp.src = unescape('%2F%2F%32%6E%6F%2E%63%6F%2F%31%4E%44%52%70%37'); gid('mep_init').appendChild(yt6.tmp) } catch(e){};" //+
 		//"};"
 
 
@@ -13958,7 +13992,7 @@ if (!t.sourcechooserButton) {//console.log('error')
     };
 
 
-    loadScript( yt6.cdn + "05c42bcc810c8ff37ec4d208d807975b2cd3bc81/mep-ceeb1a7.js", jq1)
+    loadScript( yt6.cdn + "a76f600e2c450f968637ba7ec768b2acac6ae20c/mep-ceeb1a7.js", jq1)
 
 
 
