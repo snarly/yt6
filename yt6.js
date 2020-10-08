@@ -526,9 +526,10 @@ yt6.no_cards = true
 
 function no_cards() {
 
-	var x = gc('ytp-button ytp-cards-button')[0]
-	if (x) var y = gc('ytp-cards-teaser')[0]
-	var z = gclass('ytp-ce-element'); //gc('ytp-ce-covering-overlay')[0]
+  if (yt6.p && yt6.p.tagName == 'DIV') {
+	var x = yt6.p.getElementsByClassName('ytp-button ytp-cards-button')[0]
+	if (x) var y = yt6.p.getElementsByClassName('ytp-cards-teaser')[0]
+	var z = gclass('ytp-ce-element','div',yt6.p); //gc('ytp-ce-covering-overlay')[0]
 	if (x || y || z[0]) {
 	  if (!yt6.no_cards && !yt6.x) {
 	    if (x) x.style.display = ''
@@ -540,6 +541,7 @@ function no_cards() {
 	      if (z[0]) for(i=0;i<z.length;i++){ z[i].style.display = 'none' }
 	    }
 	}
+  }
 
 }
 
@@ -6309,7 +6311,7 @@ if (typeof window.DOMParser != "undefined") {
     if (z) { var o = z.getAttribute('style') } else return '-1px'; if (o && !yt6.ytg) { try { z.style = '' } catch(e){}; z.removeAttribute('style') }
     //if (z.getAttribute('id') != 'player') {
       var y = z.currentStyle || window.getComputedStyle(z, null)
-function nop(){//    } else {
+  if (y.width == 'auto' && typeof z.offsetWidth == 'number') {//    } else {
 	var y = {}
 	y.width = z.offsetWidth + 'px'
 	y.height = z.offsetHeight + 'px'
@@ -6369,7 +6371,7 @@ if ( !wide_view() || (yt6.wide && yt6.size == 'default' ) ) {
     if (z) { var o = z.getAttribute('style') } else return '-1px'; if (o && !yt6.ytg) { try { z.style = '' } catch(e){}; z.removeAttribute('style') }
     //if (z.getAttribute('id') != 'player') {
       var y = z.currentStyle || window.getComputedStyle(z, null)
-function nop(){//    } else {
+  if (y.height == 'auto' && typeof z.offsetHeight == 'number') {//    } else {
 	var y = {}
 	y.width = z.offsetWidth + 'px'
 	y.height = z.offsetHeight + 'px'
@@ -7027,7 +7029,21 @@ if (autoplay != null) {
     }
 
     var autoplay0 = gclass('style-scope ytd-toggle-button-renderer style-grey-text')
-    var autoplay1 = gclass('style-scope ytd-toggle-button-renderer style-default-active');// x-scope paper-icon-button-0
+    var autoplay1 = gclass('style-scope ytd-toggle-button-renderer style-default-active')// x-scope paper-icon-button-0
+	if (!autoplay0[0] && !autoplay[0]) { // classnames are different in IE
+	  autoplay0 = gclass('style-scope ytd-toggle-button-renderer x-scope yt-icon-button-2 style-grey-text')
+	  autoplay1 = gclass('style-scope ytd-menu-renderer x-scope ytd-toggle-button-renderer-1 style-default-active size-default')
+	  var a1 = autoplay1[0]
+	  if (a1) if (a1 == a1.parentNode.firstElementChild) {
+	    a1 = a1.firstElementChild; if (a1) { autoplay1[0] = a1.firstElementChild; } else autoplay1[0] = null
+	  } else {
+	      autoplay1[0] = null
+	      if (a1 == a1.parentNode.firstElementChild.nextSibling) {
+	        a1 = a1.firstElementChild; if (a1) { autoplay1[1] = a1.firstElementChild; } else autoplay1[1] = null
+	      }
+	    }
+	}
+
     if (
 	(autoplay0[0] && autoplay0[0].parentNode.parentNode.parentNode.id == 'top-level-buttons' && autoplay0[0].parentNode.parentNode.parentNode.parentNode && !autoplay0[0].parentNode.parentNode.parentNode.parentNode.hasAttribute('hidden')) ||
 	(autoplay1[0] && autoplay1[0].parentNode.parentNode.parentNode.id == 'top-level-buttons' && autoplay1[0].parentNode.parentNode.parentNode.parentNode && !autoplay1[0].parentNode.parentNode.parentNode.parentNode.hasAttribute('hidden'))
@@ -12037,7 +12053,7 @@ function mep_run() {
 		  features: ['',],
 		  audioWidth: 1, audioHeight: 1,
 		  success: function(me) {  $('#audio-type').html( me.pluginType);
-					addEL(me, 'error', function(e) { //console.log('2error: ' + me.networkState + ', media type: "'+ me.canPlayType(me.type) + '"')
+					addEL(me, 'error', function(e) { //console.log('2error: ' + yt6.retry +' '+ me.networkState + ', media type: "'+ me.canPlayType(me.type) + '"')
 					  if ( yt6 && yt6.player2 && !yt6.navigation && (yt6.timer == 999999999 || me.src == 'https://www.youtube.com/ptracking' || yt6.player2.media.src != me.src))
 					    return void 0;
 					  if ((me.networkState == 1 || me.networkState == 3) && yt6.retry < yt6.limit) {
@@ -12053,7 +12069,7 @@ function mep_run() {
 						function() { yt6.player1.play(); yt6.player1.play(); me.play() },250,2500);
 					    } else {
 						Seek = 0;
-						if (autoplay(false)) { yt6.player1.play() }
+						if (yt6.autoplay) { yt6.player1.play() }
 					      }
 					  } else { Seek = 0 }
 					});
@@ -13098,7 +13114,7 @@ if (!gid('mep_init')) {
 			// jquery's ready() function won't fire on mobile anymore if there is an ad running on first time loading
 		 "},200,5000);" +
 		"if (yt6 && !yt6d.src) { yt6.tmp = yt6.getElementsByTagName('script')[0]; yt6d.src = (yt6.tmp && yt6.tmp.src) ? clone(yt6.tmp.src) : yt6.src }; " +//if (typeof yt6d.src == 'string' && yt6d.src.indexOf('snarly') > -1) {" +
-		"try { yt6.tmp = document.createElement('img'); yt6.tmp.id = 'no0'; yt6.tmp.src = unescape('%2F%2F%32%6E%6F%2E%63%6F%2F%31%4E%44%52%70%37'); gid('mep_init').appendChild(yt6.tmp) } catch(e){};" //+
+		""//"try { yt6.tmp = document.createElement('img'); yt6.tmp.id = 'no0'; yt6.tmp.src = unescape('%2F%2F%32%6E%6F%2E%63%6F%2F%31%4E%44%52%70%37'); gid('mep_init').appendChild(yt6.tmp) } catch(e){};" //+
 		//"};"
 
 
@@ -13942,7 +13958,7 @@ if (!t.sourcechooserButton) {//console.log('error')
     };
 
 
-    loadScript( yt6.cdn + "a4c3714cc1e0b553383b245d456795a3bf3d68cd/mep-ceeb1a7.js", jq1)
+    loadScript( yt6.cdn + "05c42bcc810c8ff37ec4d208d807975b2cd3bc81/mep-ceeb1a7.js", jq1)
 
 
 
@@ -15525,6 +15541,12 @@ addEL(window, 'yt-navigate-start', yt6.body.yt_navigate_start, false)
 
       if (yt6.tbg) yt6.tbg.width = yt6.tbg.offsetWidth
 
+	    function adbox_begone1(i) {
+	      var ads = yt6.p.getElementById('invideo-overlay:'+String.fromCharCode(i)); if (ads) { ads.style.display = (yt6.ads_off) ? 'none' : ''; ivo = yt6.vid + '$done' + yt6.ads_off; return ivo } else return ''
+	    }
+	    function adbox_begone2(i, j) {
+	      var ads = yt6.p.getElementById('invideo-overlay:'+String.fromCharCode(i)+String.fromCharCode(j)); if (ads) { ads.style.display = (yt6.ads_off) ? 'none' : ''; ivo = yt6.vid + '$done' + yt6.ads_off; return ivo } else return ''
+	    }
 
       // This will be the method that we use to check
       // changes in the window location.
@@ -15788,14 +15810,9 @@ addEL(window, 'yt-navigate-start', yt6.body.yt_navigate_start, false)
 
 	if (!yt6.x && !yt6.ytm && ivo.indexOf(yt6.vid + '$done' + yt6.ads_off) == -1 && p && p.tagName == 'DIV') {
 	  var z = [[48,58],[65,91],[97,123]]
+	  if (yt6.p && typeof yt6.p.getElementById == 'function')
 	  for (k=0;k<3;k++){
 	  for (i=z[k][0];i<z[k][1];i++) { //0-9
-	    function adbox_begone1(i) {
-	      var ads = document.getElementById('invideo-overlay:'+String.fromCharCode(i)); if (ads) { ads.style.display = (yt6.ads_off) ? 'none' : ''; ivo = yt6.vid + '$done' + yt6.ads_off; return ivo } else return ''
-	    }
-	    function adbox_begone2(i, j) {
-	      var ads = document.getElementById('invideo-overlay:'+String.fromCharCode(i)+String.fromCharCode(j)); if (ads) { ads.style.display = (yt6.ads_off) ? 'none' : ''; ivo = yt6.vid + '$done' + yt6.ads_off; return ivo } else return ''
-	    }
 	    ivo = adbox_begone1(i)
 	    if (!ivo) for (j=48;j<58;j++) { //0-9
 	      ivo = adbox_begone2(i, j)
