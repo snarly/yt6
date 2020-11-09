@@ -2022,6 +2022,11 @@ if (typeof jQuery != 'undefined') {
 										player.play();
 								} else {
 										player.pause();
+										if (yt6) { if (yt6.Seek == 2) yt6.Seeked2 = true
+										  if (yt6.player2 && yt6.player2.media == media && yt6.player1 && yt6.player1.media && typeof yt6.player1.pause == 'function') yt6.player1.pause()
+
+										  if (yt6.player1 && yt6.player1.media == media && yt6.player2 && yt6.player2.media && typeof yt6.player2.pause == 'function') yt6.player2.pause()
+										}
 								}
 						}
 				},
@@ -2388,6 +2393,19 @@ if (typeof jQuery != 'undefined') {
 						.css('visibility','hidden')
 						.css('display','block');
 				});
+
+/*				t.container.find('.mejs-playlist-button').fadeOut(0, function() {
+					if (!t.isFullScreen) {
+					$(this)
+						.css('visibility','hidden')
+						.css('display','none');
+					} else
+					$(this)
+						.css('visibility','visible')
+						.css('display','block');
+					t.setControlsSize();
+				});*/
+
 
 				t.container.find('.mejs-volume-slider').stop(true, true).fadeOut(200, function() {
 					$(this)
@@ -3090,6 +3108,10 @@ if (typeof jQuery != 'undefined') {
 		},
 		onkeydown: function(player, media, e) {
 			if (player.hasFocus && player.options.enableKeyboard) {
+				var p = yt6.original || p_(yt6.p)
+				if (p && typeof p.getPlayerState == 'function') {
+				   var s = p.getPlayerState(); if (s != -1 && s != 5) { p.stopVideo() }
+				}
 				// find a matching key
 				for (var i = 0, il = player.options.keyActions.length; i < il; i++) {
 					var keyAction = player.options.keyActions[i];
@@ -4444,6 +4466,11 @@ if (typeof jQuery != 'undefined') {
 					.addClass('mejs-unfullscreen');
 			}
 
+			if (t.playlistButton && !yt6.ytm) {
+				t.playlistButton
+						.css('display','');
+			}
+
 			t.setControlsSize();
 			t.isFullScreen = true;
 
@@ -4498,6 +4525,11 @@ if (typeof jQuery != 'undefined') {
 			t.fullscreenBtn
 				.removeClass('mejs-unfullscreen')
 				.addClass('mejs-fullscreen');
+
+			if (t.playlistButton && !yt6.ytp.embed) {
+				t.playlistButton
+						.css('display','none');
+			}
 
 			t.setControlsSize();
 			t.isFullScreen = false;
@@ -5096,123 +5128,284 @@ d = ytsubtitle2srt(d, track.srclang, mejs.language.codes[track.srclang], track.t
 	mejs.language = {
 		codes:  {
 			af:'Afrikaans',
+			'af-ZA':'Afrikaans (SA)',
 			am:'Amharic',
 			ar:'Arabic',
+			'ar-AE':'Arabic (UAE)',
+			'ar-BH':'Arabic (Bahrain)',
+			'ar-DZ':'Arabic (Algeria)',
+			'ar-EG':'Arabic (Egypt)',
+			'ar-IQ':'Arabic (Iraq)',
+			'ar-JO':'Arabic (Jordan)',
+			'ar-KW':'Arabic (Kuwait)',
+			'ar-LB':'Arabic (Lebanon)',
+			'ar-LY':'Arabic (Libya)',
+			'ar-MA':'Arabic (Morocco)',
+			'ar-OM':'Arabic (Oman)',
+			'ar-QA':'Arabic (Qatar)',
+			'ar-SA':'Arabic (Saudi)',
+			'ar-SY':'Arabic (Syria)',
+			'ar-TN':'Arabic (Tunisia)',
+			'ar-YE':'Arabic (Yemen)',
 			az:'Azerbaijani',
+			'az-AZ':'Azeri (Latin)',
+		//	'az-AZ':'Azeri (Cyrillic)',
 			be:'Belarusian',
+			'be-BY':'Belarusian (Belarus)',
 			bg:'Bulgarian',
+			'bg-BG':'Bulgarian (Bulgaria)',
 			bn:'Bangla',
 			bs:'Bosnian',
+			'bs-BA':'Bosnian (B.Herzegovina)',
 			ca:'Catalan',
+			'ca-ES':'Catalan (Spain)',
 			ceb:'Cebuano',
 			co:'Corsican',
 			cs:'Czech',
+			'cs-CZ':'Czech (Czech R)',
 			cy:'Welsh',
+			'cy-GB':'Welsh (UK)',
 			da:'Danish',
+			'da-DK':'Danish (Denmark)',
 			de:'German',
+			'de-AT':'German (Austria)',
+			'de-CH':'German (Switzerland)',
+			'de-DE':'German (Germany)',
+			'de-LI':'German (Liechtenstein)',
+			'de-LU':'German (Luxembourg)',
+			dv:'Divehi',
+			'dv-MV':'Divehi (Maldives)',
+			el:'Greek',
+			'el-GR':'Greek (Greece)',
 			en:'English',
 			'en-AU':'English (Australia)',
+			'en-BZ':'English (Belize)',
 			'en-CA':'English (Canada)',
-			'en-GB':'English (United Kingdom)',
-			'en-NZ':'English (New Zealand)',
-			'en-US':'English (United States)',
-			'en-ZA':'English (South Africa)',
-			el:'Greek',
+			'en-CB':'English (Caribbean)',
+			'en-GB':'English (UK)',
+			'en-IE':'English (Ireland)',
+			'en-JM':'English (Jamaica)',
+			'en-NZ':'English (NZ)',
+			'en-PH':'English (Philippines)',
+			'en-TT':'English (Trinidad)',
+			'en-US':'English (US)',
+			'en-ZA':'English (SA)',
+			'en-ZW':'English (Zimbabwe)',
 			eo:'Esperanto',
 			es:'Spanish',
+			'es-AR':'Spanish (Argentina)',
+			'es-BO':'Spanish (Bolivia)',
+			'es-CL':'Spanish (Chile)',
+			'es-CO':'Spanish (Colombia)',
+			'es-CR':'Spanish (Costa Rica)',
+			'es-DO':'Spanish (Dominican)',
+			'es-EC':'Spanish (Ecuador)',
+			'es-ES':'Spanish (Castilian)',
+			'es-ES':'Spanish (Spain)',
+			'es-GT':'Spanish (Guatemala)',
+			'es-HN':'Spanish (Honduras)',
 			'es-MX':'Spanish (Mexico)',
+			'es-NI':'Spanish (Nicaragua)',
+			'es-PA':'Spanish (Panama)',
+			'es-PE':'Spanish (Peru)',
+			'es-PR':'Spanish (Puerto Rico)',
+			'es-PY':'Spanish (Paraguay)',
+			'es-SV':'Spanish (El Salvador)',
+			'es-UY':'Spanish (Uruguay)',
+			'es-VE':'Spanish (Venezuela)',
 			et:'Estonian',
+			'et-EE':'Estonian (Estonia)',
 			eu:'Basque',
+			'eu-ES':'Basque (Spain)',
 			fa:'Persian',
+			'fa-IR':'Parsi (Iran)',
 			fi:'Finnish',
+			'fi-FI':'Finnish (Finland)',
 			fil:'Filipino',
+			fo:'Faroese',
+			'fo-FO':'Faroese (Faroe Islands)',
 			fr:'French',
+			'fr-BE':'French (Belgium)',
+			'fr-CA':'French (Canada)',
+			'fr-CH':'French (Switzerland)',
+			'fr-FR':'French (France)',
+			'fr-LU':'French (Luxembourg)',
+			'fr-MC':'French (Monaco)',
 			fy:'Western Frisian',
 			ga:'Irish',
 			gd:'Scottish Gaelic',
 			gl:'Galician',
+			'gl-ES':'Galician (Spain)',
 			gu:'Gujarati',
+			'gu-IN':'Gujarati (India)',
 			ha:'Hausa',
 			haw:'Hawaiian',
 			hi:'Hindi',
+			'hi-IN':'Hindi (India)',
 			hmn:'Hmong',
 			hr:'Croatian',
+			'hr-BA':'Croatian (B.Herzegovina)',
+			'hr-HR':'Croatian (Croatia)',
 			ht:'Haitian Creole',
 			hu:'Hungarian',
+			'hu-HU':'Hungarian (Hungary)',
 			hy:'Armenian',
+			'hy-AM':'Armenian (Armenia)',
 			id:'Indonesian',
+			'id-ID':'Indonesian (Indonesia)',
 			ig:'Igbo',
 			is:'Icelandic',
+			'is-IS':'Icelandic (Iceland)',
 			it:'Italian',
+			'it-CH':'Italian (Switzerland)',
+			'it-IT':'Italian (Italy)',
 			iw:'Hebrew',
 			ja:'Japanese',
+			'ja-JP':'Japanese (Japan)',
 			jv:'Javanese',
 			ka:'Georgian',
+			'ka-GE':'Georgian (Georgia)',
 			kk:'Kazakh',
+			'kk-KZ':'Kazakh (Kazakhstan)',
 			km:'Khmer',
 			kn:'Kannada',
+			'kn-IN':'Kannada (India)',
 			ko:'Korean',
+			'ko-KR':'Korean (Korea)',
+			kok:'Konkani',
+			'kok-IN':'Konkani (India)',
 			ku:'Kurdish',
 			ky:'Kyrgyz',
+			'ky-KG':'Kyrgyz (Kyrgyzstan)',
 			la:'Latin',
 			lb:'Luxembourgish',
 			lo:'Lao',
 			lt:'Lithuanian',
+			'lt-LT':'Lithuanian (Lithuania)',
 			lv:'Latvian',
+			'lv-LV':'Latvian (Latvia)',
 			mg:'Malagasy',
 			mi:'Maori',
+			'mi-NZ':'Maori (New Zealand)',
 			mk:'Macedonian',
+			'mk-MK':'Macedonian',
 			ml:'Malayalam',
 			mn:'Mongolian',
+			'mn-MN':'Mongolian (Mongolia)',
 			mr:'Marathi',
+			'mr-IN':'Marathi (India)',
 			ms:'Malay',
+			'ms-BN':'Malay (Brunei)',
+			'ms-MY':'Malay (Malaysia)',
 			mt:'Maltese',
+			'mt-MT':'Maltese (Malta)',
 			my:'Burmese',
+			nb:'Norwegian (Bokmål)',
+			'nb-NO':'Norwegian (Bokmål)',
 			ne:'Nepali',
 			nl:'Dutch',
+			'nl-BE':'Dutch (Belgium)',
+			'nl-NL':'Dutch (Netherlands)',
+			'nn-NO':'Norwegian (Nynorsk)',
 			no:'Norwegian',
+			ns:'Northern Sotho',
+			'ns-ZA':'Northern Sotho (SA)',
 			ny:'Nyanja',
 			pa:'Punjabi',
+			'pa-IN':'Punjabi (India)',
+			or:'Odia',
 			pl:'Polish',
+			'pl-PL':'Polish (Poland)',
 			ps:'Pashto',
+			'ps-AR':'Pashto (Afghanistan)',
 			pt:'Portuguese',
 			'pt-BR':'Portuguese (Brazil)',
 			'pt-PT':'Portuguese (Portugal)',
+			qu:'Quechua',
+			'qu-BO':'Quechua (Bolivia)',
+			'qu-EC':'Quechua (Ecuador)',
+			'qu-PE':'Quechua (Peru)',
 			ro:'Romanian',
+			'ro-RO':'Romanian (Romania)',
 			ru:'Russian',
+			'ru-RU':'Russian (Russia)',
+			rw:'Kinyarwanda',
+			sa:'Sanskrit',
+			'sa-IN':'Sanskrit (India)',
+			se:'Sami (Northern)',
+			'se-FI':'Sami (Northern) (Finland)',
+			'se-FI':'Sami (Skolt) (Finland)',
+			'se-FI':'Sami (Inari) (Finland)',
+			'se-NO':'Sami (Northern) (Norway)',
+			'se-NO':'Sami (Lule) (Norway)',
+			'se-NO':'Sami (Southern) (Norway)',
+			'se-SE':'Sami (Northern) (Sweden)',
+			'se-SE':'Sami (Lule) (Sweden)',
+			'se-SE':'Sami (Southern) (Sweden)',
 			sd:'Sindhi',
 			si:'Sinhala',
 			sk:'Slovak',
+			'sk-SK':'Slovak (Slovakia)',
 			sl:'Slovenian',
+			'sl-SI':'Slovenian (Slovenia)',
 			sm:'Samoan',
 			sn:'Shona',
 			so:'Somali',
 			sq:'Albanian',
+			'sq-AL':'Albanian (Albania)',
 			sr:'Serbian',
+			'sr-BA':'Serbian (Latin) (BH)',
+			'sr-BA':'Serbian (Cyrillic) (BH)',
 			st:'Southern Sotho',
 			su:'Sundanese',
 			sv:'Swedish',
+			'sv-FI':'Swedish (Finland)',
+			'sv-SE':'Swedish (Sweden)',
 			sw:'Swahili',
+			'sw-KE':'Swahili (Kenya)',
+			syr:'Syriac',
+			'syr-SY':'Syriac (Syria)',
 			ta:'Tamil',
+			'ta-IN':'Tamil (India)',
 			te:'Telugu',
+			'te-IN':'Telugu (India)',
 			tg:'Tajik',
 			th:'Thai',
+			'th-TH':'Thai (Thailand)',
+			tk:'Turkmen',
 			tl:'Tagalog',
+			'tl-PH':'Tagalog (Philippines)',
+			tn:'Tswana',
+			'tn-ZA':'Tswana (SA)',
 			tr:'Turkish',
+			'tr-TR':'Turkish (Turkey)',
+			ts:'Tsonga',
+			tt:'Tatar',
+			'tt-RU':'Tatar (Russia)',
+			ug:'Uyghur',
 			uk:'Ukrainian',
+			'uk-UA':'Ukrainian (Ukraine)',
 			und:'unspecified language',
 			ur:'Urdu',
+			'ur-PK':'Urdu (Pakistan)',
 			uz:'Uzbek',
+			'uz-UZ':'Uzbek (Cyrillic)',
 			vi:'Vietnamese',
+			'vi-VN':'Vietnamese (Vietnam)',
 			xh:'Xhosa',
+			'xh-ZA':'Xhosa (SA)',
 			yi:'Yiddish',
 			yo:'Yoruba',
 			zh:'Chinese',
 			'zh-CN':'Chinese (Simplified)',
+			'zh-HK':'Chinese (Hong Kong)',
+			'zh-MO':'Chinese (Macau)',
 			'zh-Hans':'Chinese (Simplified)',
 			'zh-Hant':'Chinese (Traditional)',
+			'zh-SG':'Chinese (Singapore)',
 			'zh-TW':'Chinese (Taiwan)',
-			zu:'Zulu'
+			zu:'Zulu',
+			'zu-ZA':'Zulu (SA)'
 		}
 	};
 
