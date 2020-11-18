@@ -59,17 +59,17 @@
 
 
 	<h3>
-	<a href="javascript:(function(){var v='5bb3a3f538bf611feae92134bc77849736315e2c/yt6.js';w=window,d=w.document,h=d.location.href;yt6=w.yt6||{};yt6d=w.yt6d||{};if(yt6.loaded>=4)return void 0;if(h.split('youtube.com/watch')[1]||h.split('youtube.com/embed')[1]||h.split('/base.j')[1]=='s'){var id='snarls_player',e='script';yt6.loaded=0;function s(x){x=x||id;return d.getElementById(x)};function c(e){return d.createElement(e)};function a(q){s().appendChild(q);s().add_subs='en,hu,de';yt6d.src=q.src};function r(){if(s()){var x;try{x=s().querySelector('#'+id)}catch(e){x=s().firstChild};if(x)s().removeChild(x)}};function b(){var i,j,o,x;o=['.githack','git','js'];for(j,x,i=o.length;i;j=Math.floor(Math.random()*i),x=o[--i],o[i]=o[j],o[j]=x);if(yt6d.src!=1)o.splice(0,0,'.githubusercontent');var q=c('div');q.id=id;if(q!=s())d.body.appendChild(q);var src='https://raw'+o[0]+'.com/snarly/yt6/'+v,src0='https://cdn.jsdelivr.net/gh/snarly/yt6@'+v;function oc(ox,oy,sr){return(oy!='js')?sr.replace(ox,oy):src0};var q=c(e);q.id=id;q.src=(o[0]!='js')?src:src0;q.onerror=function(){var q=c(e);q.id=id;q.src=oc(o[0],o[1],src);q.onerror=function(){var q=c(e);q.id=id;q.src=oc(o[0],o[2],src);q.onerror=function(){var q=c(e);q.id=id;q.src=oc(o[0],o[3],src);q.onerror=function(){var q=c(e);q.id=id;q.src=src.replace('https','http')};a(q);r();};a(q);r();};a(q);r();};try{a(q);}catch(f){a(q)};};function g(){try{deldiv()}catch(f){r()};yt6d.src=1;b()};if(!s()){b()};setTimeout(function(){if(!yt6.body||(yt6.loaded>2&&!s('mep_init')))g()},3000);}else{void 0};})();/*202011160107*/">Yt6 -- Snarl's YouTube Video Player (bookmarklet)</a>
+	<a href="javascript:(function(){var v='ed48658b954d95119597d274c1f5fc161cc31ad1/yt6.js';w=window,d=w.document,h=d.location.href;yt6=w.yt6||{};yt6d=w.yt6d||{};if(yt6.loaded>=4)return void 0;if(h.split('youtube.com/watch')[1]||h.split('youtube.com/embed')[1]||h.split('/base.j')[1]=='s'){var id='snarls_player',e='script';yt6.loaded=0;function s(x){x=x||id;return d.getElementById(x)};function c(e){return d.createElement(e)};function a(q){s().appendChild(q);s().add_subs='en,hu,de';yt6d.src=q.src};function r(){if(s()){var x;try{x=s().querySelector('#'+id)}catch(e){x=s().firstChild};if(x)s().removeChild(x)}};function b(){var i,j,o,x;o=['.githack','git','js'];for(j,x,i=o.length;i;j=Math.floor(Math.random()*i),x=o[--i],o[i]=o[j],o[j]=x);if(yt6d.src!=1)o.splice(0,0,'.githubusercontent');var q=c('div');q.id=id;if(q!=s())d.body.appendChild(q);var src='https://raw'+o[0]+'.com/snarly/yt6/'+v,src0='https://cdn.jsdelivr.net/gh/snarly/yt6@'+v;function oc(ox,oy,sr){return(oy!='js')?sr.replace(ox,oy):src0};var q=c(e);q.id=id;q.src=(o[0]!='js')?src:src0;q.onerror=function(){var q=c(e);q.id=id;q.src=oc(o[0],o[1],src);q.onerror=function(){var q=c(e);q.id=id;q.src=oc(o[0],o[2],src);q.onerror=function(){var q=c(e);q.id=id;q.src=oc(o[0],o[3],src);q.onerror=function(){var q=c(e);q.id=id;q.src=src.replace('https','http')};a(q);r();};a(q);r();};a(q);r();};try{a(q);}catch(f){a(q)};};function g(){try{deldiv()}catch(f){r()};yt6d.src=1;b()};if(!s()){b()};setTimeout(function(){if(!yt6.body||(yt6.loaded>2&&!s('mep_init')))g()},3000);}else{void 0};})();/*202011180252*/">Yt6 -- Snarl's YouTube Video Player (bookmarklet)</a>
 	</h3>
 	<h4>
-		Last updated on Nov 16, 2020 01:07
+		Last updated on Nov 18, 2020 02:52
 	</h4>
 		(Please check back from time to time to try the latest version, and if it works well, dump the 
 older ones. It may be crucial regarding its functionality.)
 	<h1>
 		Features
 	</h1>
-		On any YouTube video (watch) page, this bookmarklet will call a external player and load 
+		On any YouTube video (watch) page, this bookmarklet will call an external player and load 
 		some extra functions, some of which can be used with YouTube's original player as well. 
 		The code is pure javascript written with the aim to be as much platform-independent and 
 		backward-compatible as possible. The program is able to
@@ -98,7 +98,7 @@ older ones. It may be crucial regarding its functionality.)
 		ineligible to watch), the site's new layout will automatically throw you to the next 
 		entry -- the script, however, will retain the age-restricted video's data and let you 
 		continue to play it until it ends or you push the "next" button, upon which events the 
-		vodeo data for the current page should load,
+		video data for the current page should load,
 		</ol>
 		</li>
 		<li class="feat">facilitate background play while your mobile is in sleep mode (experimental)</li>
@@ -145,7 +145,7 @@ older ones. It may be crucial regarding its functionality.)
 	<br>
 	<p>
 	<code>
-		javascript:(function(){var v='5bb3a3f538bf611feae92134bc77849736315e2c/yt6.js';w=window,d=w.document,h=d.location.href;yt6=w.yt6||{};yt6d=w.yt6d||{};if(yt6.loaded>=4)return void 0;if(h.split('youtube.com/watch')[1]||h.split('youtube.com/embed')[1]||h.split('/base.j')[1]=='s'){var id='snarls_player',e='script';yt6.loaded=0;function s(x){x=x||id;return d.getElementById(x)};function c(e){return d.createElement(e)};function a(q){s().appendChild(q);s().add_subs='en,hu,de';yt6d.src=q.src};function r(){if(s()){var x;try{x=s().querySelector('#'+id)}catch(e){x=s().firstChild};if(x)s().removeChild(x)}};function b(){var i,j,o,x;o=['.githack','git','js'];for(j,x,i=o.length;i;j=Math.floor(Math.random()*i),x=o[--i],o[i]=o[j],o[j]=x);if(yt6d.src!=1)o.splice(0,0,'.githubusercontent');var q=c('div');q.id=id;if(q!=s())d.body.appendChild(q);var src='https://raw'+o[0]+'.com/snarly/yt6/'+v,src0='https://cdn.jsdelivr.net/gh/snarly/yt6@'+v;function oc(ox,oy,sr){return(oy!='js')?sr.replace(ox,oy):src0};var q=c(e);q.id=id;q.src=(o[0]!='js')?src:src0;q.onerror=function(){var q=c(e);q.id=id;q.src=oc(o[0],o[1],src);q.onerror=function(){var q=c(e);q.id=id;q.src=oc(o[0],o[2],src);q.onerror=function(){var q=c(e);q.id=id;q.src=oc(o[0],o[3],src);q.onerror=function(){var q=c(e);q.id=id;q.src=src.replace('https','http')};a(q);r();};a(q);r();};a(q);r();};try{a(q);}catch(f){a(q)};};function g(){try{deldiv()}catch(f){r()};yt6d.src=1;b()};if(!s()){b()};setTimeout(function(){if(!yt6.body||(yt6.loaded>2&&!s('mep_init')))g()},3000);}else{void 0};})();/*202011160107*/
+		javascript:(function(){var v='ed48658b954d95119597d274c1f5fc161cc31ad1/yt6.js';w=window,d=w.document,h=d.location.href;yt6=w.yt6||{};yt6d=w.yt6d||{};if(yt6.loaded>=4)return void 0;if(h.split('youtube.com/watch')[1]||h.split('youtube.com/embed')[1]||h.split('/base.j')[1]=='s'){var id='snarls_player',e='script';yt6.loaded=0;function s(x){x=x||id;return d.getElementById(x)};function c(e){return d.createElement(e)};function a(q){s().appendChild(q);s().add_subs='en,hu,de';yt6d.src=q.src};function r(){if(s()){var x;try{x=s().querySelector('#'+id)}catch(e){x=s().firstChild};if(x)s().removeChild(x)}};function b(){var i,j,o,x;o=['.githack','git','js'];for(j,x,i=o.length;i;j=Math.floor(Math.random()*i),x=o[--i],o[i]=o[j],o[j]=x);if(yt6d.src!=1)o.splice(0,0,'.githubusercontent');var q=c('div');q.id=id;if(q!=s())d.body.appendChild(q);var src='https://raw'+o[0]+'.com/snarly/yt6/'+v,src0='https://cdn.jsdelivr.net/gh/snarly/yt6@'+v;function oc(ox,oy,sr){return(oy!='js')?sr.replace(ox,oy):src0};var q=c(e);q.id=id;q.src=(o[0]!='js')?src:src0;q.onerror=function(){var q=c(e);q.id=id;q.src=oc(o[0],o[1],src);q.onerror=function(){var q=c(e);q.id=id;q.src=oc(o[0],o[2],src);q.onerror=function(){var q=c(e);q.id=id;q.src=oc(o[0],o[3],src);q.onerror=function(){var q=c(e);q.id=id;q.src=src.replace('https','http')};a(q);r();};a(q);r();};a(q);r();};try{a(q);}catch(f){a(q)};};function g(){try{deldiv()}catch(f){r()};yt6d.src=1;b()};if(!s()){b()};setTimeout(function(){if(!yt6.body||(yt6.loaded>2&&!s('mep_init')))g()},3000);}else{void 0};})();/*202011180262*/
 	</code>
 	</p>
 	<p>__</p>
@@ -175,7 +175,7 @@ older ones. It may be crucial regarding its functionality.)
 		drop in sound quality rarely becomes noticeable.) Beside the fact that picking a video 
 		format for background play is pretty much pointless as you can't see it over the locked 
 		screen, it would also raise the chance of playback failure significanty. There are some 
-		browsers, which don't like playing audio on its own that much, though.
+		browsers which don't like playing audio on its own that much though.
 	<br><br>
 		Drawbacks: the jump forward button on the locked screen's media control panel will never 
 		work (by design, because they do not want you to use their site for continuous background 
