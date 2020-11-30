@@ -94,11 +94,7 @@ if (typeof Array.isArray === 'undefined') {
 
     var browserName = "undefined"; //console.log(window)
 
-	
-    // Firefox 1.0+
-    if (typeof InstallTrigger !== 'undefined')
-	browserName = "Firefox";
-	
+
     // Chrome 1+
     if (window.chrome && (window.chrome.webstore || window.chrome.app || navigator.userAgent.indexOf(' Mobile') > -1)) {
 	browserName = "Chromium";
@@ -110,21 +106,25 @@ if (typeof Array.isArray === 'undefined') {
       }
     }//;console.log((navigator.plugins[1][0].type == 'application/x-google-chrome-pdf')); console.log(navigator.plugins)
 	
-    // Internet Explorer 6-11
-    if ((/*@cc_on!@*/false) || (document.documentMode))
-	browserName = "IE";
-	
     // Edge 20+
     if ((!(document.documentMode) && window.StyleMedia) || (navigator.userAgent.indexOf(' Edg') > -1))
 	browserName = "Edge";
 
+    // Opera 8.0+
+    if (window.opr || window.opera || (navigator.userAgent.indexOf(' OPR/') > -1))// && opr.addons
+	browserName = "Opera";
+	
+    // Firefox 1.0+
+    if (typeof InstallTrigger !== 'undefined')
+	browserName = "Firefox";
+		
+    // Internet Explorer 6-11
+    if ((/*@cc_on!@*/false) || (document.documentMode))
+	browserName = "IE";
+
     // At least Safari 3+: "[object HTMLElementConstructor]"
     if (Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0 || (browserName == 'undefined' && window.safari))
 	browserName = "Safari";
-
-    // Opera 8.0+
-    if ((window.opr || window.opera || navigator.userAgent.indexOf(' OPR/') >= 0))// && opr.addons
-	browserName = "Opera";
 
     // Brave
     if ( (window.Brave && navigator.brave) ||
@@ -145,12 +145,8 @@ if (typeof Array.isArray === 'undefined') {
 	} catch(e){}
     }
     
-    // Comodo Dragon
-    if (browserName == 'Chromium' && navigator.userAgent.indexOf(' Dragon/') > -1)
-	browserName = "Dragon";
-    
     // Yandex
-    if (browserName.indexOf('Chromium') == 0 && navigator.userAgent.indexOf(' YaBrowser/') > -1)
+    if (browserName.indexOf('Chrom') == 0 && navigator.userAgent.indexOf(' YaBrowser/') > -1)
 	browserName = "Yandex";
 
 
@@ -951,8 +947,7 @@ if (!window.onchange) {
 	  if (Array.isArray(yt6.A_V) && yt6.A_V[itag(yt6.player1.media.src)]) { t1 = true; yt6.Seek = 1 }
 	  if (Array.isArray(yt6.A_) && yt6.A_[itag(yt6.player1.media.src)]) { t0 = true }
 
-	  if (!t0 && pv == 'hidden' && yt6.browser_tab == 'visible') {
-	    if (yt6.mobile) scrollToCurrentVideo()
+	  if (pv == 'hidden' && yt6.browser_tab == 'visible') {ev_log(';h->v;')
 	    if (yt6.x && yt6.md && !(yt6.layout == 16 && !yt6.mobile && !yt6.ytm && !yt6.ytg)) { yt6.Seek = 6 } else
 	    if (Array.isArray(yt6.V_) && yt6.V_[itag(yt6.player1.media.src)]) {
 	      if (yt6.player2 && yt6.player2.media) try {
@@ -1495,6 +1490,40 @@ if (document.location.href.indexOf('/base.js') == document.location.href.length-
   yt6.parentNode.removeChild(yt6)
 }
 
+
+function msg_box0(id, text, color, bgcolor){
+
+	if (!gid('msg-box1')) {
+	  var z = document.createElement('div')
+	  z.id = 'msg-box1'
+	  yt6.appendChild(z)
+	  z.setAttribute('style','position: fixed; z-index: 5; border: background-color: transparent; width: 0px; height: 0px;')
+	}
+	var a = gid('msg-box1'), b
+	a.title = id; a.ariaLabel = id
+	var mhp = (yt6.mhp) ? ((yt6.layout != 16 || yt6.ytm) ? yt6.mhp.offsetHeight : yt6.mhp.parentNode.parentNode.offsetHeight) : 0
+	var ww = parseInt(window.innerHeight || document.documentElement.clientHeight || yt6.body.clientHeight)
+	if (yt6.mobile) ww = (window.orientation === 0) ? ww / 2 : ww * 1.5
+	var wh = parseInt(window.innerHeight || document.documentElement.clientHeight || yt6.body.clientHeight)	
+
+	var z = document.createElement('div')
+	z.id = id
+	a.appendChild(z)
+	var b = gid(id)
+	var x = '50%'//(!yt6.ytm) ? '50%' : '104%'
+	b.setAttribute('style','position: fixed; font-size: 16px; text-align: center; padding: 16px; color: '+ color +'; background-color: '+ bgcolor +'; width: auto; height: auto; max-width: ' + ((!yt6.mobile) ? (screen.width) + 'px' : 'auto') +'; top: ' + ((!yt6.mobile) ? Math.max((wh / 5), mhp) : mhp) +'px; left: '+ x +'; margin-left: ' + -1 * ww / 2 +'px; right: '+ x +'; margin-right: ' + -1 * ww / 2 + 'px')
+	if (yt6.mobile) b.style.width = 'auto'
+	b.innerHTML = '<h3 class="snarl-button yt-uix-button-text" id="'+ id +'-close" style="'+ ((id.toLowerCase().indexOf('error') == -1) ? 'position: absolute; ' : '') + 'padding: 0 4px 0 4px; background-color: red; color: white; width: auto; height: auto; float: right" onclick="var close = gid(&quot;'+id+'&quot;); if (close) close.parentNode.removeChild(close); return false;">X</h3>'
+	  + text
+
+	b.style.marginLeft = -1 * b.offsetWidth / 2 + 'px'
+
+	return b
+
+}
+
+
+
 function hand_axe(){
 
 		    if (gid('getjs') != null && gid('setjs') != null) return void 0;
@@ -1629,32 +1658,15 @@ yt6.feedback = function(fcnm) {
 		    var z = bm1; if (z) z.ontouchend = ontouch_set_focus
 
 
-      if (!gid('msg-box1')) {
-	var z = document.createElement('div')
-	z.id = 'msg-box1'
-	yt6.appendChild(z)
-	z.setAttribute('style','position: fixed; z-index: 5; border: background-color: transparent; width: 0px; height: 0px;')
-      }
-      var a = gid('msg-box1'), b
-      a.title = ''
-      var mhp = (yt6.mhp) ? ((yt6.layout != 16 || yt6.ytm) ? yt6.mhp.offsetHeight : yt6.mhp.parentNode.parentNode.offsetHeight) : 0
-      var ww = parseInt(window.innerHeight || document.documentElement.clientHeight || yt6.body.clientHeight)
-	if (yt6.mobile) ww = (window.orientation === 0) ? ww / 2 : ww * 1.5
-      var wh = parseInt(window.innerHeight || document.documentElement.clientHeight || yt6.body.clientHeight)	
+     var errorText = '<span><b><strong>ERROR:</strong></b> Automatic processing failed for this video, but you can do it by hand.<br><br>A new tab or window should have opened. If not, <br><b><strong>click the Transformer-icon next to the YouTube logo.</strong></b><br><br>The new page\'s content is a wall of text -- part of the YouTube Player\'s own javascript code (base.js) -- starting with something like \"var _yt_player\" or \"function\". The clipboard may be too small for it, so <br><b><strong>try to run the bookmarklet on that page too to get only the few lines needed.</strong></b><br><br><b><strong>SELECT & COPY its content,<br>then PASTE it into the "Code input" field here.<br>If done, press ENTER.</strong></b><br><br>(If your browser can\'t play back any of the formats, this won\'t help either.)</strong></b><br></span>'// (Certain browsers, such as IE or Edge Legacy cannot display javascript files, instead they would opt to save it to your device (ca. 1MB in size). If so, use a regular text editor to view it.)
 
 
-      if (!gid('error-warning1')) {
+     if (!gid('error-warning1')) {
 
-	var z = document.createElement('div')
-	z.id = 'error-warning1'
-	a.appendChild(z)
-	var b = gid('error-warning1')
-	b.setAttribute('style','position: fixed; font-size: 16px; text-align: center; padding: 16px; color: white; background-color: red; width: auto; height: auto; max-width: ' + ((!yt6.mobile) ? (screen.width) + 'px' : 'auto') +'; top: ' + ((!yt6.mobile) ? Math.max((wh / 5), mhp) : mhp) +'px; left: 50%; margin-left: ' + -1 * ww / 2 +'px; right: 50%; margin-right: ' + -1 * ww / 2 + 'px')
-	if (yt6.mobile) b.style.width = 'auto'
+	var b = msg_box0('error-warning1',errorText,'white','red')
+
      }
 
-
-     var errorText = '<span><b><strong>ERROR:</strong></b> Automatic processing failed for this video, but you can do it by hand.<br><br>A new tab or window should have opened. Otherwise, <br><b><strong>click the Transformer-icon next to the YouTube logo.</strong></b><br><br>The new page\'s content is a wall of text -- part of the YouTube Player\'s own javascript code (base.js) -- starting with something like \"var _yt_player\" or \"function\". <strong>Try to run the bookmarklet on that page too to get only the few lines needed.</strong></b><br><br><b><strong>SELECT & COPY its content,<br>then PASTE it into the "Code input" field here.<br>If done, press ENTER.</strong></b><br><br>(If your browser can\'t play back any of the formats, this won\'t help either.)</strong></b><br></span>'// (Certain browsers, such as IE or Edge Legacy cannot display javascript files, instead they would opt to save it to your device (ca. 1MB in size). If so, use a regular text editor to view it.)
 
       if (!(b && b.parentNode)) {
 	control_panel1()
@@ -2238,7 +2250,7 @@ function test_4(peek) {//console.log('test-4')
 
 
 
-	var signame, fmts, type, itag, lmt, clen, quality, sp, s;
+	var signame, ampersand, fmts, type, itag, lmt, clen, quality, sp, s;
 	//for (var eurl of durl) {
 	for (k=0;k < durl.length;k++) {
 	  var eurl = durl[k];
@@ -2263,18 +2275,18 @@ function test_4(peek) {//console.log('test-4')
 		        quality = qual[itag]['q']
 		        type = encodeURIComponent(qual[itag]['m']).split(' ').join('%2B')//(itag == 43) ? 'video/webm; codecs="vp8.0, vorbis"' : 'video/mp4; codecs="avc1.42001E, mp4a.40.2"'
 		      }
-		      var x = protocol()//(eurl.indexOf('//') == 0) ? protocol() : ''
+		      var x = (eurl.indexOf('https://') == -1) ? protocol() : ''
 		      eurl = 'sp=' + signame + '&type=' + type + '&quality=' + quality + '&itag=' + itag + '&url=' + encodeURIComponent(x + eurl.split('&' + signame)[0].split('&title=')[0])
 		    }
 		    if (fmts == 'adaptive_fmts') { // reconstruct adaptive_fmts list from plain url
 		      if (z) {
 			quality = qual[itag]['q']
 			type = encodeURIComponent(qual[itag]['m'].split(' ').join('+'))
-			s = eurl.split('lsig=').join('').split(signame +'=')[1]
+			s = eurl.split('lsig=').join('').split(signame +'=')[1] || eurl.split('&s=')[1]
 			if (s) { s = s.split('&')[0] } else s = ''
 			lmt = (eurl.split('lmt=')[1]) ? eurl.split('lmt=')[1].split('&')[0] : ''
 			clen = (eurl.split('clen=')[1]) ? eurl.split('clen=')[1].split('&')[0] : ''
-			var x = protocol()//(eurl.indexOf('//') == 0) ? protocol() : ''
+			var x = (eurl.indexOf('https://') == -1) ? protocol() : ''
 		      }
 		      eurl = 'itag=' + itag + '\\u0026sp=' + signame +'\\u0026s=' + s + '\\u0026type=' + type + '\\u0026quality=' + quality + '\\u0026url=' + encodeURIComponent(x + eurl.split('&' + signame)[0].split('&title=')[0]) + '\\u0026lmt=' + lmt + '\\u0026clen=' + clen
 		    }
@@ -2288,10 +2300,11 @@ function test_4(peek) {//console.log('test-4')
 		  //} else
 		  //if (fmts == 'url_encoded_fmt_stream_map') console.log('@@@ - ' + eurl.length +'\n' + eurl)
 		}
+		ampersand = (eurl.split('\\u0026sp=')[1] || eurl.split('\\u0026s=')[1]) ? '\\u0026' : '&'
 		if (eurl.length < 1500){// || yt6.ytm) && 
 		if (fmts == 'url_encoded_fmt_stream_map') {
 		  var obj = {}
-		  var ft = eurl.split('&')
+		  var ft = eurl.split(ampersand)
 		  for(j=0;j<ft.length;j++){
 		    var z = ft[j].split('='); if (z && z.length)
 		    for(i=0;i<z.length;i++){
@@ -2319,23 +2332,27 @@ function test_4(peek) {//console.log('test-4')
 	      }
 	    }
 	  }
-	  if (eurl && eurl.indexOf('itag') != -1 && (eurl.indexOf('signature') != -1 || eurl.indexOf('sig=') != -1)) {
+	  if (eurl && eurl.indexOf('itag') != -1 && (eurl.indexOf('s=') == 0 || eurl.indexOf(ampersand + 's=') > -1 || eurl.indexOf('sig=') != -1 || eurl.indexOf('signature') != -1)) {
 	    //var nurl = (typeof URL != 'undefined') ? new URL(eurl) : {};
 	    //if (nurl && nurl.searchParams) {
 	      //var usp = nurl.searchParams
 	    var lsig0 = (eurl.split('&lsig=')[1] || eurl.split('?lsig=')[1])
 		lsig0 = (lsig0) ? lsig0.split('&')[0] : ''
 		if (lsig0) {
-		  lsig0 = ' lsig0="'+ lsig0 +'"'
+		  //lsig0 = ' lsig0="'+ lsig0 +'"'
 		}
 	    var sig0 = (eurl.split('&sig=')[1] || eurl.split('?sig=')[1])
-		sig0 = (sig0) ? dc(sig0.split('&')[0]) : ''
-	    if (sig0) sig0 = ' sig0="'+ sig0 +'"'
-		var sig1 = ' sig1="' + dsigA +'"'
+		sig0 = (sig0) ? dc(sig0.split(ampersand)[0]) : ''
+	    if (!sig0) sig0 = (eurl.indexOf('s=') == 0) ? eurl.split('s=')[1] : eurl.split(ampersand +'s=')[1]
+		sig0 = (sig0) ? sig0.split(ampersand)[0] : ''
 
+	    //if (sig0) sig0 = ' sig0="'+ sig0 +'"'
+		//var sig1 = ' sig1="' + dsigA +'"'
+//console.log(ampersand +' '+sig0)
 	    //if (yt6.encrypted && dsigA) var dsig1 = (dsigA[k] || dsig[k+1]); //dsig.next().value;
-	    if (typeof URLSearchParams != 'undefined') {
-	      var usp = new URLSearchParams(eurl.split('?')[1]);
+	    if (sig0)
+	    if (typeof URLSearchParams != 'undefined' && ampersand == '&') {
+	      var usp = new URLSearchParams((eurl.split('?')[1] || eurl.split('%3F')[1]))
 	      //usp.set('ratebypass','yes')
 	      //if (yt6.encrypted && dsigA) usp.set('sig', dsig1) //dsig.next().value);//'signature' --> 'sig'
 	      var efmt;
@@ -2343,13 +2360,13 @@ function test_4(peek) {//console.log('test-4')
 	      if (efmt) { efmt = efmt['t'] || usp.get('itag') } else efmt = usp.get('itag')
 	      cfmt[usp.get('itag')] =
 	      //`<a href="${eurl}">${efmt}</a>`;
-	        '<a name="' + usp.get('itag') + '" href="' + eurl + '"' + lsig0 + sig0 + sig1 + '>' + efmt + '</a>';//nurl.href
+	        '<a name="' + usp.get('itag') + '" href="' + eurl + '" lsig0="' + lsig0 + '" sig0="'+ sig0 +'" sig1="' + dsigA + '">' + efmt + '</a>';//nurl.href
 	    } else {
-	        var usp = eurl.split('?')[1]
+	        var usp = eurl.split('url=')[1]; if (usp) usp = unescape(usp.split(ampersand)[0])
 	        if (usp) {
 	          var efmt = get_quality(usp)
 	          var z = qr(usp); if (z && z.itag) cfmt[z.itag] =
-	          '<a name="' + z.itag + '" href="' + eurl + '"' + lsig0 + sig0 + sig1 + '>' + efmt + '</a>';//.replace('missing_signature', dsig1)
+	          '<a name="' + z.itag + '" href="' + usp + '&' + signame +'=' + sig0 + '" lsig0="' + lsig0 + '" sig0="' + sig0 + '" sig1="' + dsigA + '">' + efmt + '</a>';//.replace('missing_signature', dsig1)
 		}
 	      }
 	  }
@@ -3090,7 +3107,11 @@ function load_from_page_source(x, source) { //console.log('load_from_page_source
 		  yt6.xhr.completed = true
 		  return true
 		}
-		if (1 * y.indexOf('url_encoded_fmt_stream_map') > -1 || y.indexOf('"formats\\":[{') > -1 || y.indexOf('"formats":[{') > -1) { eval(y) } //else console.log(src)
+		if (1 * y.indexOf('url_encoded_fmt_stream_map') > -1 || y.indexOf('"formats\\":[{') > -1 || y.indexOf('"formats":[{') > -1) { eval(y) }
+		  else if (yt6.pre_ad && yt6.browser_tab == 'hidden') {
+		    // when media is not found / not present on the downloaded source page either, sift through the ytplayer data object
+		    test_4(); yt6.ytplayer = {}; yt6.ytplayer.config = window.ytplayer.config
+		  }
 	    } else {
 		var y = y.split('"PLAYER_CONFIG":')[1]
 		if (y) {
@@ -5741,7 +5762,7 @@ function ageless_verification(spfpc) { //console.log('age '+ yt6.age.v)
 
 	  try { xhr3.send('') } catch(e){ yt6.thumbnails = null }
 
-	} //else console.log('?? '+c[0].loaded_from)
+	}
 
 
 	if (yt6.oldbrowser && !yt6.rpt) {
@@ -5783,7 +5804,7 @@ function ageless_verification(spfpc) { //console.log('age '+ yt6.age.v)
 		p0.setAttribute('name','movie_player')
 		p0.setAttribute('id','movie_player')
 	    }
-	    if (yt6d.x && yt6.x != yt6d.x) switch_players()
+	    if (yt6d.x && yt6.x != yt6d.x) { switch_players(); delete yt6d.x }
 	  }
 
 
@@ -9994,7 +10015,7 @@ if (c[1]) {
 	        }
 	        avg2 = avg2 / durA2.length
 	      }
-	  }
+	  } else if (z.length == 1) { href = ''; linx_bak = '' }// delete remnant audio
 
 	  //if (!yt6.blocked) {	
 	  if ((length_seconds || (p && typeof p.getDuration == 'function' && !(yt6.ytm && (yt6.flash.forced || p.tagName == 'EMBED')) ))  ) {
@@ -10695,13 +10716,22 @@ var html = yt6.html
 
 if (typeof html.splice != 'function') return void 0;
 
+  var b = browserName.toLowerCase()
+  if (b == 'edge') b = 'edgium'
+  if (b == 'ie') b = 'edge'
+  if (b == 'chromium' || b == 'brave' || b == 'vivaldi' || b == 'yandex' || b == 'dragon') b = 'chrome'
+  var browserIcon = ['firefox','chrome','opera','edgium','edge','safari']
+  var output_log = ''//'\\n\'+ yt6d.log +\''
+  b = (browserIcon.indexOf(b) > -1) ? '<img src=&quot;https://www.youtube.com/img/desktop/supported_browsers/'+ b +'.png&quot;' : ''
+  b = b +'<div><div><b style=&quot;font-size: 20px; color: white; background-color: darkslateblue&quot;><strong>'+ browserName +' on '+ (navigator.oscpu || navigator.platform) +'</strong></b></div><br><textarea style=&quot;width: 280px; height: auto; background-color: white&quot;>' + navigator.userAgent + output_log +'</textarea></div>\''
+
   html.splice(1,0,'Direct links to YouTube media<br>for IP address: '+ expire_date()[0])
   html.push(
    '<b><div id="sp_title">' + title + '</div></b>' +
    'Links will expire on <br>' + expire_date()[1] + '<br><br>' +
 
    '<div id="yt6-switches">'+
-   '<div style="inline-block">Preferred format in case <a href="#" onclick="alert(&quot;' + navigator.userAgent + '&quot); return false" style="color: red; text-decoration: none" title="Click to see current User-Agent string" aria-label="Click to see current User-Agent string">' + browserName + '</a> is having trouble playing one back:<br>'+
+   '<div style="inline-block">Preferred format in case <a href="#" onclick="msg_box0(\'User-Agent\',\''+ b +',\'black\',\'transparent\'); if (gid(\'bm3\')) gid(\'bm3\').style.visibility = \'hidden\'; return false" style="color: red; text-decoration: none" title="Click to see current User-Agent string" aria-label="Click to see current User-Agent string">' + browserName + '</a> is having trouble playing one back:<br>'+
     '<input type="radio" class="preferred-format all" onclick="var yt6 = gid(\'snarls_player\');  yt6.select_fmt(\'all\')">Any</input>'+
     '<input type="radio" class="preferred-format webm" onclick="var yt6 = gid(\'snarls_player\'); yt6.select_fmt(\'webm\')">WebM</input>'+
     '<input type="radio" class="preferred-format dash" onclick="var yt6 = gid(\'snarls_player\'); yt6.select_fmt(\'dash\')">DASH/MP4</input>'+
@@ -11133,9 +11163,9 @@ if (!gid('bm4')) {
 
 
 
-function ev_log(ev) {
-  yt6d.log.push(ev); //console.log(ev)
-  if (yt6d.log.length > 20) yt6d.log.splice(0,1)
+function ev_log(event) {
+  yt6d.log.push(event); //console.log(event)
+  if (yt6d.log.length > 30) yt6d.log.splice(0,1)
 }
 
 
@@ -11452,6 +11482,7 @@ function mep_run() {
 					  if (yt6.browser_tab == 'hidden' && yt6.pls && !me.currentTime && !player2.currentTime && autoplay(false)) { ev_log('LOAD '+me.currentTime+' '+player2.currentTime)// yt6.md && !yt6.V_[itag(me.src)]
 					    var src = clone(me.src)
 					    player2.currentTime = 0; Seek = 4
+					    if (!yt6.age.dl && !yt6.age.sc) me.loaded = false;
 					    me.setSrc(src); me.play(); yt6.player1.play()
 					  }
 					});
@@ -11804,7 +11835,7 @@ function mep_run() {
 
 						      //if (autoplay(false) && typeof p.pauseVideo == 'function') p.playVideo();
 						      var p = player(), p = yt6.p; if (!p) p = gc('forced flashplayer')[0]; try { p.style.display = 'none' } catch(e){}; 
-						      p.style.display = 'none'; yt6.swapped = 1; //switch_players()
+						      p.style.display = 'none'; if (yt6.x) switch_players(); yt6.swapped = 1
 						     
 						    } else { // flash object already in place
 							if (!yt6.swapped && p && p.tagName != 'EMBED') { relocate_mep() }
@@ -12187,7 +12218,7 @@ function mep_run() {
 						yt6.Seeked2 = (yt6.V_[itag(me.src)]) ? true : yt6.Seeked2;
 						// bug in Yandex for Android: an overflow of pause calls will break the sound on a backgrounded tab until we do a full page refresh
 						// pause_count helps with the playback of V formats paired with A, but not AV or standalone A
-						if (browserName != 'Yandex' || (browserName == 'Yandex' && me.paused && yt6.V_[itag(me.src)]) ) {//yt6.V_[itag(me.src)])
+						if (browserName != 'Yandex' || (browserName == 'Yandex' && me.paused && yt6.V_[itag(me.src)]) ) {//
 						  if (!(yt6.A_V[itag(me.src)] && pause_count))//Epic AV
 						    me.play(); pause_count++;
 						  if (pause_count > 1) pause_count = 0;//Epic AV
@@ -12197,7 +12228,7 @@ function mep_run() {
 						  if (!yt6.V_[itag(me.src)]) { Seek = 4 } else { yt6.Seeked2 = false }
 					      } else if (browserName == 'Yandex') { pause_count++; if (pause_count > 44) pause_count = 0; Seek = 1 }
 					    }
-					    if (( !(Seek == 3 || yt6.navigation) && yt6.retry < 8 && yt6.player2) || !me.loaded) return void 0
+					    if (( !(Seek == 3 || yt6.navigation) && yt6.retry < 8 && yt6.player2) || !me.loaded) return void 0// && !(yt6.md && yt6.newvideo && yt6.browser_tab == 'hidden')
 					  }
 					  if (yt6.x) {
 					    var bn = gc('mejs-overlay mejs-layer mejs-overlay-play')[0]
@@ -12564,7 +12595,7 @@ function mep_run() {
 						(yt6.browser_tab == 'hidden' && ( (!yt6.md && yt6.layout == 16)) ) || //(yt6.md && yt6.mobile) ||
 						(yt6d.init && (yt6d.init == player1.media.loaded_vid || yt6d.init == yt6.vid))
 					     ) ) {
-					    me.loaded = 1; me.currentTime = yt6.ct = player1.media.currentTime 
+					    me.loaded = 1; me.currentTime = yt6.ct = player1.media.currentTime
 					  }
 
 					  var player1_src = gid('player1').getAttribute('src')
@@ -14570,6 +14601,15 @@ if (!t.sourcechooserButton) {//console.log('error')
 		    // yt mechanism destroys the external player's container here when the following conditions are true
 		    // unless its DOM node is moved out of the way, so
 		    if (yt6.layout == 12 && yt6.flash.forced && bm0 && bm0.parentNode != z) { z.appendChild(bm0) }
+
+			if (yt6.ytp.strState != 4) if (player() && !(yt6.ytm && yt6.p.tagName == 'EMBED')) {
+			  if (typeof yt6.p.getPlayerState == 'function') {
+			    yt6.ytp.strState = yt6.p.getPlayerState(); yt6.ytp.strCt = yt6.p.getCurrentTime()
+			  } else {
+			      yt6.ytp.strState = -1; yt6.ytp.strCt = 0
+			    }
+			}
+
 
 		    if (window.ytplayer && yt6.mep == 'running' && //(!(yt6.xhr.async && !yt6.xhr.completed)
 		       ( (yt6.xhr.async &&
@@ -19843,7 +19883,7 @@ if (yt6.flexy) {
 	  var x = (windowwidth - 2 * eleft - w) / 2
 	  if (yt6.aspect_ratio > 1 ) {
 	    // cloneNodes
-	    x = (a_.parentNode.offsetWidth >= w) ? x : x - ((w - a_.parentNode.offsetWidth) / 2);
+	    x = (a_ && a_.parentNode.offsetWidth >= w || !a_) ? x : x - ((w - a_.parentNode.offsetWidth) / 2);
 	    //x = (a.parentNode.offsetWidth >= w) ? x : x - ((w - a.parentNode.offsetWidth) / 2);
 	  }
 
@@ -19894,7 +19934,7 @@ if (yt6.flexy) {
 	    yt6.api.style.top = ''
 
 	    // cloneNodes
-	    var y = (yt6.inf.offsetWidth - a_.parentNode.offsetWidth) / 2
+	    var y = (a_) ? (yt6.inf.offsetWidth - a_.parentNode.offsetWidth) / 2 : 0
 	    //var y = (yt6.inf.offsetWidth - a.parentNode.offsetWidth) / 2
 	//    if (p1 && (h * yt6.aspect_ratio) < 425) y = y - ((425 - (h * yt6.aspect_ratio)) / 2) //mw
 	    yt6.osw.style.left = (yt6.aspect_ratio > 1) ? '0px' : y + 'px'; //console.log(w +' '+ yt6.aspect_ratio +' '+yt6.osw.style.left +' '+ y)
@@ -19955,7 +19995,7 @@ if (yt6.flexy) {
 		
 	      }
 
-	if (!yt6.x && !c && !yt6.ytp.fullscreen) ptc.style.top = '16px'
+	if (ptc && !yt6.x && !c && !yt6.ytp.fullscreen) ptc.style.top = '16px'
 	if (!yt6.wide && (windowwidth + yt6.sb) < 1000) ptc.style.top = ''
 
 
@@ -20150,7 +20190,7 @@ if ((p1 != null) && (yt6.x)){
   if (z) z.style.top = mhp - 2 + 'px'//(!yt6.ytm) ?  : '0px' 
 
 
-
+  if (!yt6.x)
   //var flexyleft = yt6.flexyleft = 
   ythtml5_size()
 
@@ -21065,7 +21105,7 @@ yt6.aspect = function(a) { aspect(a) }
 
 function deldiv(){
 
-
+  getReferenceObjects()
   if (!player()) {
 	var z = document.createElement('div')
 	z.id = 'movie_player'
@@ -21741,7 +21781,7 @@ var CtrlS = function (stage,v){
 			} else try { mp.playVideoAt((yt6.pl_index - yt6.pl_set) + 1) } catch(e) { try { yt6.pl_next.click() } catch(e){} }
 		      } else try {
 			  if ('onclick' in yt6.pl_next) {
-			    if (browserName == 'Firefox') {
+			    if (browserName == 'Firefox' || yt6.ytm) {
 			      try { mp.nextVideo('0') } catch(e){ if (yt6.pl_next) { yt6.pl_next.click() } }
 			    } else if (yt6.pl_next) { yt6.pl_next.click() } else mp.nextVideo('0')
 			  } else if (yt6.oldbrowser && yt6.pl_next && yt6.pl_next.toString() && yt6.pl_next.toString().indexOf('http') == 0) location.href = yt6.pl_next.toString()
