@@ -59,10 +59,10 @@
 
 
 	<h3>
-	<a href="javascript:(function(){var v='f100cd65a78fea627237fc4ed5a3ff837b6826a0/yt6.js',w=window,d=w.document,h=d.location.href;yt6=w.yt6||{};yt6d=w.yt6d||{};if(yt6.loaded>=4)return void 0;if(h.split('youtube.com/watch')[1]||h.split('youtube.com/embed')[1]||h.split('/base.j')[1]=='s'){var id='snarls_player',e='script';yt6.loaded=0;function s(x){x=x||id;return d.getElementById(x)};function c(e){return d.createElement(e)};function a(q){s().appendChild(q);s().add_subs='en,hu,de';yt6d.src=q.src};function r(){if(s()){var x;try{x=s().querySelector('#'+id)}catch(e){x=s().firstChild};if(x)s().removeChild(x)}};function b(){var i,j,o,x;o=['.githack','git','js'];for(j,x,i=o.length;i;j=Math.floor(Math.random()*i),x=o[--i],o[i]=o[j],o[j]=x);if(yt6d.src!=1)o.splice(0,0,'.githubusercontent');var q=c('div');q.id=id;if(q!=s())d.body.appendChild(q);var src='https://raw'+o[0]+'.com/snarly/yt6/'+v,src0='https://cdn.jsdelivr.net/gh/snarly/yt6@'+v;function oc(ox,oy,sr){return(oy!='js')?sr.replace(ox,oy):src0};var q=c(e);q.id=id;q.src=(o[0]!='js')?src:src0;q.onerror=function(){var q=c(e);q.id=id;q.src=oc(o[0],o[1],src);q.onerror=function(){var q=c(e);q.id=id;q.src=oc(o[0],o[2],src);q.onerror=function(){var q=c(e);q.id=id;q.src=oc(o[0],o[3],src);q.onerror=function(){var q=c(e);q.id=id;q.src=src.replace('https','http')};a(q);r();};a(q);r();};a(q);r();};try{a(q);}catch(f){a(q)};};function g(){try{deldiv()}catch(f){r()};yt6d.src=1;b()};if(!s()){b()};setTimeout(function(){if(!yt6.body||(yt6.loaded>2&&!s('mep_init')))g()},3000);}else{void 0};})();/*202011300344*/">Yt6 -- Snarl's YouTube Video Player (bookmarklet)</a>
+	<a href="javascript:(function(){'use strict';var v='2179151542d27c24c7f938495a5e5ec94233aa06/yt6.js',w=window,d=w.document,h=d.location.href,yt6=w.yt6||{},yt6d=w.yt6d||{};if(yt6.loaded>=4)return void 0;if(h.split('youtube.com/watch')[1]||h.split('youtube.com/embed')[1]||h.split('/base.j')[1]=='s'){var id='snarls_player',e='script',q;yt6.loaded=0;function s(x){x=x||id;return d.getElementById(x)};function c(e){return d.createElement(e)};function a(q){s().appendChild(q);s().add_subs='en,hu,de';yt6d.src=q.src};function r(){if(s()){var x;try{x=s().querySelector('#'+id)}catch(e){x=s().firstChild};if(x)s().removeChild(x)}};function b(){var i,j,o,x;o=['.githack','git','js'];for(j,x,i=o.length;i;j=Math.floor(Math.random()*i),x=o[--i],o[i]=o[j],o[j]=x);if(yt6d.src!=1)o.splice(0,0,'.githubusercontent');q=c('div');q.id=id;if(q!=s())d.body.appendChild(q);var src='https://raw'+o[0]+'.com/snarly/yt6/'+v,src0='https://cdn.jsdelivr.net/gh/snarly/yt6@'+v;function oc(ox,oy,sr){return(oy!='js')?sr.replace(ox,oy):src0};q=c(e);q.id=id;q.src=(o[0]!='js')?src:src0;q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[1],src);q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[2],src);q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[3],src);q.onerror=function(){q=c(e);q.id=id;q.src=src.replace('https','http')};a(q);r();};a(q);r();};a(q);r();};try{a(q);}catch(f){a(q)};};function g(){try{deldiv()}catch(f){r()};yt6d.src=1;b()};if(!s()){b()};setTimeout(function(){yt6=w.yt6;if(!yt6||(yt6&&(!yt6.body||(yt6.loaded>2&&!s('mep_init')))))g()},3000);}else{void 0};})()/*202012010630*/">Yt6 -- Snarl's YouTube Video Player (bookmarklet)</a>
 	</h3>
 	<h4>
-		Last updated on Nov 30, 2020 03:44
+		Last updated on Dec 01, 2020 06:30
 	</h4>
 		(Please check back from time to time to try the latest version, and if it works well, dump the 
 older ones. It may be crucial regarding its functionality.)
@@ -105,10 +105,12 @@ older ones. It may be crucial regarding its functionality.)
 		<li class="feat">change between YouTube layouts by setting the cookie on exit no longer works :( 
 		<ol>
 		YouTube stopped honoring the setting in July 2020 -- use a suitable browser 
-		extension such as <strong><b>"Good Old YouTube"</b></strong> (for <a href="https://addons.mozilla.org/en/firefox/addon/good-old-youtube/">Firefox</a> and <a href="https://chrome.google.com/webstore/detail/good-old-youtube/klkejolkjcefmocpgpjiefbpmgofahmh">Chrome</a>) if you want the 
-		classic layout back. Meanwhile, YT's spf js has also been deliberately deactivated, which 
-		means all navigation on the old UI will now draw a full page refresh, making the 
-		site's -- not to mention this script's -- usage feel thoroughly impractical and outdated.
+		extension such as <div style="color: red; display: inline-block">Good Old YouTube</div> (for <a href="https://addons.mozilla.org/en/firefox/addon/good-old-youtube/">Firefox</a> and <a href="https://chrome.google.com/webstore/detail/good-old-youtube/klkejolkjcefmocpgpjiefbpmgofahmh">Chrome</a>) or <div style="color: red; display: inline-block">Old YouTube</div> (for <a href="https://addons.mozilla.org/en-US/firefox/addon/old-youtube/">Firefox</a>) if you want the 
+		classic layout back.<br>
+		Meanwhile, YT's spf js has also been deliberately deactivated, which means all 
+		navigation on the old UI will now draw a full page refresh, making the site's -- not to 
+		mention the script's -- usage feel thoroughly impractical and outdated. This issue can 
+		be fixed though. More about it in the Old YouTube layout fix section below.
 		</ol>
 		</li>
 	</ol>
@@ -145,7 +147,7 @@ older ones. It may be crucial regarding its functionality.)
 	<br>
 	<p>
 	<code>
-		javascript:(function(){var v='f100cd65a78fea627237fc4ed5a3ff837b6826a0/yt6.js',w=window,d=w.document,h=d.location.href;yt6=w.yt6||{};yt6d=w.yt6d||{};if(yt6.loaded>=4)return void 0;if(h.split('youtube.com/watch')[1]||h.split('youtube.com/embed')[1]||h.split('/base.j')[1]=='s'){var id='snarls_player',e='script';yt6.loaded=0;function s(x){x=x||id;return d.getElementById(x)};function c(e){return d.createElement(e)};function a(q){s().appendChild(q);s().add_subs='en,hu,de';yt6d.src=q.src};function r(){if(s()){var x;try{x=s().querySelector('#'+id)}catch(e){x=s().firstChild};if(x)s().removeChild(x)}};function b(){var i,j,o,x;o=['.githack','git','js'];for(j,x,i=o.length;i;j=Math.floor(Math.random()*i),x=o[--i],o[i]=o[j],o[j]=x);if(yt6d.src!=1)o.splice(0,0,'.githubusercontent');var q=c('div');q.id=id;if(q!=s())d.body.appendChild(q);var src='https://raw'+o[0]+'.com/snarly/yt6/'+v,src0='https://cdn.jsdelivr.net/gh/snarly/yt6@'+v;function oc(ox,oy,sr){return(oy!='js')?sr.replace(ox,oy):src0};var q=c(e);q.id=id;q.src=(o[0]!='js')?src:src0;q.onerror=function(){var q=c(e);q.id=id;q.src=oc(o[0],o[1],src);q.onerror=function(){var q=c(e);q.id=id;q.src=oc(o[0],o[2],src);q.onerror=function(){var q=c(e);q.id=id;q.src=oc(o[0],o[3],src);q.onerror=function(){var q=c(e);q.id=id;q.src=src.replace('https','http')};a(q);r();};a(q);r();};a(q);r();};try{a(q);}catch(f){a(q)};};function g(){try{deldiv()}catch(f){r()};yt6d.src=1;b()};if(!s()){b()};setTimeout(function(){if(!yt6.body||(yt6.loaded>2&&!s('mep_init')))g()},3000);}else{void 0};})();/*202011300344*/
+		javascript:(function(){'use strict';var v='2179151542d27c24c7f938495a5e5ec94233aa06/yt6.js',w=window,d=w.document,h=d.location.href,yt6=w.yt6||{},yt6d=w.yt6d||{};if(yt6.loaded>=4)return void 0;if(h.split('youtube.com/watch')[1]||h.split('youtube.com/embed')[1]||h.split('/base.j')[1]=='s'){var id='snarls_player',e='script',q;yt6.loaded=0;function s(x){x=x||id;return d.getElementById(x)};function c(e){return d.createElement(e)};function a(q){s().appendChild(q);s().add_subs='en,hu,de';yt6d.src=q.src};function r(){if(s()){var x;try{x=s().querySelector('#'+id)}catch(e){x=s().firstChild};if(x)s().removeChild(x)}};function b(){var i,j,o,x;o=['.githack','git','js'];for(j,x,i=o.length;i;j=Math.floor(Math.random()*i),x=o[--i],o[i]=o[j],o[j]=x);if(yt6d.src!=1)o.splice(0,0,'.githubusercontent');q=c('div');q.id=id;if(q!=s())d.body.appendChild(q);var src='https://raw'+o[0]+'.com/snarly/yt6/'+v,src0='https://cdn.jsdelivr.net/gh/snarly/yt6@'+v;function oc(ox,oy,sr){return(oy!='js')?sr.replace(ox,oy):src0};q=c(e);q.id=id;q.src=(o[0]!='js')?src:src0;q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[1],src);q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[2],src);q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[3],src);q.onerror=function(){q=c(e);q.id=id;q.src=src.replace('https','http')};a(q);r();};a(q);r();};a(q);r();};try{a(q);}catch(f){a(q)};};function g(){try{deldiv()}catch(f){r()};yt6d.src=1;b()};if(!s()){b()};setTimeout(function(){yt6=w.yt6;if(!yt6||(yt6&&(!yt6.body||(yt6.loaded>2&&!s('mep_init')))))g()},3000);}else{void 0};})()/*202012010630*/
 	</code>
 	</p>
 	<p>__</p>
@@ -165,6 +167,28 @@ older ones. It may be crucial regarding its functionality.)
 	<br><br>
 		Use the HTML5 emblem on the control panel to switch between the native and this 
 		alternative player.
+	<br><br>
+		It is also possible to use the code (MINUS the bookmarklet-only header "javascript:") as a 
+		userscript with addons like <div style="color: green; display: inline-block">Greasemonkey</div> (for <a href="https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/">Firefox</a>), or <div style="color: green; display: inline-block">Tampermonkey</div> (for <a href="https://addons.mozilla.org/en-US/firefox/addon/tampermonkey/">Firefox</a> and <a href="https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo">Chrome</a>).<br>
+		The following header must be placed above the javascript part on the addon's new script-creator
+		/-editor interface.
+	<pre>
+// ==UserScript==
+// @name         Yt6 -- Snarl's YouTube Video Player (userscript)
+// @namespace    yt6
+// @version      202012010630
+// @author       Snarl
+// @match        https://*.youtube.com/watch*
+// @match        https://*.youtube.com/embed/*
+// @match        http://*.youtube.com/watch*
+// @match        http://*.youtube.com/embed/*
+// @grant        none
+// @run-at       document-end
+// @icon         https://yt3.ggpht.com/-afBnHVG_R6E/AAAAAAAAAAI/AAAAAAAAAAA/LtE5kbPkZvE/s27-c-k-no-mo-rj-c0xffffff/photo.jpg
+// ==/UserScript==
+
+(function(){'use strict';var v='2179151542d27c24c7f938495a5e5ec94233aa06/yt6.js',w=window,d=w.document,h=d.location.href,yt6=w.yt6||{},yt6d=w.yt6d||{};if(yt6.loaded>=4)return void 0;if(h.split('youtube.com/watch')[1]||h.split('youtube.com/embed')[1]||h.split('/base.j')[1]=='s'){var id='snarls_player',e='script',q;yt6.loaded=0;function s(x){x=x||id;return d.getElementById(x)};function c(e){return d.createElement(e)};function a(q){s().appendChild(q);s().add_subs='en,hu,de';yt6d.src=q.src};function r(){if(s()){var x;try{x=s().querySelector('#'+id)}catch(e){x=s().firstChild};if(x)s().removeChild(x)}};function b(){var i,j,o,x;o=['.githack','git','js'];for(j,x,i=o.length;i;j=Math.floor(Math.random()*i),x=o[--i],o[i]=o[j],o[j]=x);if(yt6d.src!=1)o.splice(0,0,'.githubusercontent');q=c('div');q.id=id;if(q!=s())d.body.appendChild(q);var src="https://ru5pc/yt6/yt4.js",src0=src;function oc(ox,oy,sr){return(oy!='js')?sr.replace(ox,oy):src0};q=c(e);q.id=id;q.src=(o[0]!='js')?src:src0;q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[1],src);q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[2],src);q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[3],src);q.onerror=function(){q=c(e);q.id=id;q.src=src.replace('https','http')};a(q);r();};a(q);r();};a(q);r();};try{a(q);}catch(f){a(q)};};function g(){try{deldiv()}catch(f){r()};yt6d.src=1;b()};if(!s()){b()};setTimeout(function(){yt6=w.yt6;if(!yt6||(yt6&&(!yt6.body||(yt6.loaded>2&&!s('mep_init')))))g()},3000);}else{void 0};})()/*202012010630*/
+	</pre>
 	<br><br>
 	<h1>
 		Background play on Mobile
@@ -270,7 +294,73 @@ older ones. It may be crucial regarding its functionality.)
 		<b><strong>Con:</strong></b> due to a YT limitation, you can only access the first 200 videos on an embedded 
 		playlist. The example above is the 1023th entry (indexed 1022) on the list, and it will load 
 		fine. But once you try to navigate, there will be no way to watch anything above index 199.
+	<br><br>
+	<h1>
+		Old YouTube layout fix
+	</h1>
+		For certain browsers (such as Firefox) installing one of the "Old YouTube" add-ons may 
+		not be enough. You also need to make sure that the word <b><strong>Googlebot</strong></b> is included 
+		somewhere in the browser's useragent string.
+	<br><br>
+		There are useragent spoofer add-ons specifically made for this, but you can also do it on 
+		Firefox's internal configuration page <b><strong>about:config</strong></b> by adding or, if it exists, editing the 
+		preference key <code>general.useragent.override</code> and simply give it a string value such as<br>
+	<code>
+		Mozilla/5.0 (Windows NT 10.0; rv:83.0) Gecko/20100101 Firefox/83.0 <b><strong>Googlebot</strong></b>
+	</code><br><br>
+		Warning: this may give you the old YouTube layout back, but on other sites (such as 
+		reddit, for instance) that one word may be the reason why access to content will be denied 
+		to you, given your browser is now identified as a bot. Until you change the useragent 
+		to something else.
+	<br><br>
+		To fix the aforementioned Yt spf issue, I have created a userscript -- usable with add-ons 
+		like Greasemonkey or Tampermonkey -- which reinstates the Yt spf. This task must be 
+		done very early in the webpage parsing process, hence can't be accomplished as part of 
+		the Yt6 script. So here it is:<br>
+	<pre>
+// ==UserScript==
+// @name         Yt spf
+// @namespace    Yt spf
+// @version      202012010630
+// @author       Snarl
+// @match        https://*.youtube.com/*
+// @match        http://*.youtube.com/*
+// @grant        none
+// @run-at       document-start
+// @icon         https://yt3.ggpht.com/-afBnHVG_R6E/AAAAAAAAAAI/AAAAAAAAAAA/LtE5kbPkZvE/s27-c-k-no-mo-rj-c0xffffff/photo.jpg
+// ==/UserScript==
 
+(function() {
+		'use strict';
+
+		var d = window.document
+		// earliest stage of loading the yt page
+		if (d.readyState == 'loading' && !(typeof ytspf != 'undefined' && ytspf.enabled == true) && typeof Proxy == 'function') {
+
+				var s = d.createElement('script')
+				s.id = "ytspf"
+				var h = d.lastChild.firstChild // HEAD element already exists
+
+				// code to define the ytspf object as it once used to be, before the new yt code has a chance to do it differently
+				var code = "var ytspf = {};ytspf.enabled = true;ytspf.config = {'reload-identifier': 'spfreload'};ytspf.config['request-headers'] = {'X-YouTube-Ad-Signals': {toString: function() {return (window['yt'] && yt['ads_'] && yt.ads_['signals_'] &&yt.ads_.signals_['getAdSignalsString']) ?yt.ads_.signals_.getAdSignalsString() :'';}},'X-YouTube-Identity-Token': null};ytspf.config['experimental-request-headers'] = ytspf.config['request-headers'];ytspf.config['cache-max'] = 50;ytspf.config['navigate-limit'] = 50;ytspf.config['navigate-lifetime'] = 64800000;"
+
+				// then wrap the ytspf object around a proxy of the same name with a "set"-trap to deny the re-definition attempt by yt
+				code = code + "ytspf = new Proxy(ytspf, { set(target, prop, val) { return false } });"
+
+				// append the script element to the document HEAD
+				try {
+					s.appendChild(document.createTextNode(code))
+					h.appendChild(s)
+				} catch (e) {
+						try {
+							s.text = code
+							h.appendChild(s)
+						} catch (e) {}
+					}
+
+		}
+})()
+	</pre>
 
 
 	<p>__</p>
