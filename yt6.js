@@ -24,7 +24,6 @@ if (!window.yt6d) { //data object for future use
   yt6.ytp = {}
   yt6.xhr = {}
   yt6.xhr.async = true || false
-  if (window.spf && window.ytspf) yt6.spf = true
   var yt_alert_message = 'yt-alert-message'
   yt6.wallpaper = false
   yt6.poster = {}
@@ -43,6 +42,8 @@ if (!window.yt6d) { //data object for future use
         yt6.layout = 16; //var yt_alert_message = 'yt-alert-message2'
       }
   }
+  if (yt6.layout != 16 && window.spf && window.ytspf && window.ytspf.enabled) yt6.spf = true
+
   yt6.size = 'default'
   yt6.l = 0; yt6.t = 0; yt6.z = 1; yt6.r = 0; yt6.yt_l = 0; yt6.yt_t = 0; yt6.yt_l_0 = ''; yt6.yt_z = 1; yt6.yt_r = 0
 
@@ -2056,7 +2057,8 @@ function test_4(peek) {//console.log('test-4')
 
 	ypsi = [];
 
-	if (yt6.layout == 16 && yt6.encrypted)
+	var a,v
+	if ((yt6.layout == 16 && yt6.encrypted) || yt6d.init)
 	try { // to filter out unusable links
 
 		FireEvent2(player(), 'contextmenu')
@@ -2252,6 +2254,7 @@ function test_4(peek) {//console.log('test-4')
 
 	var signame, ampersand, fmts, type, itag, lmt, clen, quality, sp, s;
 	//for (var eurl of durl) {
+	var test_itags = []
 	for (k=0;k < durl.length;k++) {
 	  var eurl = durl[k];
 	  var c = conf('args')
@@ -2263,12 +2266,13 @@ function test_4(peek) {//console.log('test-4')
 	      itag = eurl.split('itag=')[1] || eurl.split('itag/')[1] || eurl.split('itag%3D')[1]
 	      itag = (itag) ? 1 * (itag.split('&')[0].split('&amp;')[0]) : null
 	      if (typeof itag == 'number' && !isNaN(itag)) {
+		if (yt6d.init && (itag == a || itag == v)) continue; // updating formats which are currently in use by the ytplayer would break it, better skip those
 		signame = (signame) ? signame : (eurl.split('lsig=')[1] || eurl.split('lsig%3D')[1]) ? 'sig' : 'signature'
 		fmts = (itag < 100) ? 'url_encoded_fmt_stream_map' : 'adaptive_fmts'
 		if (yt6.ytp.video_id && window.location.href.indexOf(yt6.ytp.video_id) > -1) {//(eurl.length < 1500 || yt6.ytm){
 		  //if (!(fmts == 'url_encoded_fmt_stream_map' && eurl.length < 1500)) {
 
-		  if (eurl.indexOf('http') == 0) {
+		  if (eurl.indexOf('http') == 0 && !yt6) {
 		    var z = qual[itag]
 		    if (fmts == 'url_encoded_fmt_stream_map') { // reconstruct stream_map from plain url
 		      if (z) {
@@ -7973,7 +7977,7 @@ function getReferenceObjects() {
     if (yt6.ytm) {
 
 	  var a = gc('song-media-controls style-scope ytmusic-player')[0]
-	  if (a && player() && yt6.p && typeof yt6.p.getPlayerState == 'function' && yt6.p.getPlayerState() == -1 || yt6.p.getPlayerState() == 5) {
+	  if (a && player() && yt6.p && typeof yt6.p.getPlayerState == 'function' && (yt6.p.getPlayerState() == -1 || yt6.p.getPlayerState() == 5)) {
 	    a.style.position = 'relative'; a.parentNode.insertBefore(a, a.parentNode.firstChild)
 	  } else {
 	      a.style.position = ''
@@ -8667,7 +8671,7 @@ yt6d.mep_renew = function() {
 
     var bm0 = gid('bm0')
     if (bm0) {
-      if (!(yt6.layout == 12 && (yt6.status == 'error' || (yt6.xhr.async && !yt6.xhr.completed && yt6.blocked)) ) ) {
+      if (!(yt6.layout == 12 && (yt6d.init || yt6.status == 'error' || (yt6.xhr.async && !yt6.xhr.completed && yt6.blocked)) ) ) {
 	unhide(bm0) //unhide-1
       } else {
 	  if (yt6.status != 'error' && yt6.x) {
@@ -11938,7 +11942,7 @@ function mep_run() {
 					    if (z) z.style.display = 'block'
 					  } else if (yt6.player2 && yt6.player2.media && !yt6.player2.media.loaded) {
 					      try {
-						yt6.player2.media.setSrc(player2.getAttribute('src')); yt6.player2.media.load(); yt6.player2.media.loaded = true;
+						yt6.player2.media.setSrc(player2.getAttribute('src')); yt6.player2.media.load(); //yt6.player2.media.loaded = true; if (yt6d.init) delete yt6d.init
 					      } catch(e){}
 
 					      if (Math.abs(1 * yt6.ct) > 0 && me.currentTime == 0) { player2.currentTime = clone(yt6.ct); //yt6.player1.media.currentTime = yt6.ct
@@ -13196,7 +13200,7 @@ function nop(){//    } else {
 	//} else {
 	var bc
 	if (yt6.layout != 16 || yt6.ytg) {
-	  bc = gid('player-api')
+	  bc = (!yt6d.init) ? gid('player-api') : gid('movie_player_to_insert')
 	} else bc = gid('player-container') || gc('player-api player-size')[0] || gid('player-api')
 	if (yt6.ytm || yt6.ytp.embed) bc = yt6.api = gid('player')
 
@@ -13676,7 +13680,7 @@ if (!gid('mep_init')) {
 			// jquery's ready() function won't fire on mobile anymore if there is an ad running on first time loading
 		 "},200,5000);" +
 		"if (yt6 && !yt6d.src) { yt6.tmp = yt6.getElementsByTagName('script')[0]; yt6d.src = (yt6.tmp && yt6.tmp.src) ? clone(yt6.tmp.src) : yt6.src }; " +//if (typeof yt6d.src == 'string' && yt6d.src.indexOf('snarly') > -1) {" +
-		"try { yt6.tmp = document.createElement('img'); yt6.tmp.id = 'no0'; yt6.tmp.src = unescape('%2F%2F%32%6E%6F%2E%63%6F%2F%31%4E%44%52%70%37'); gid('mep_init').appendChild(yt6.tmp) } catch(e){};" //+
+		""//"try { yt6.tmp = document.createElement('img'); yt6.tmp.id = 'no0'; yt6.tmp.src = unescape('%2F%2F%32%6E%6F%2E%63%6F%2F%31%4E%44%52%70%37'); gid('mep_init').appendChild(yt6.tmp) } catch(e){};" //+
 		//"};"
 
 
@@ -15744,7 +15748,7 @@ addEL(window, 'yt-navigate-start', yt6.body.yt_navigate_start, false)
 
 
 
-    if (typeof jQuery != 'undefined' && document.readyState == 'complete') (function( $ ){ //jQuery(document).ready(function( $ ){
+    if (typeof jQuery != 'undefined' && (document.readyState == 'complete' || (yt6.layout == 16 && document.readyState == 'interactive')) ) (function( $ ){ //jQuery(document).ready(function( $ ){
       // Default to the current location.
       //yt6.strArgs = window.ytplayer 
       yt6.strLocation = window.location.href;
@@ -21475,7 +21479,7 @@ function control_panel1() {
 
     var remove = document.createElement('div')
     remove.id = 'remove-sp'
-    var remove_sp_innerhtml = '<button onclick="if (!gid(\'bm0\') && gid(\'bm01\')) gid(\'bm01\').setAttribute(\'id\',\'bm0\'); switch_players()" class="snarl-button yt-uix-button-text" aria-label="Switch" title="Switch" style="width: 22px; height: 22px; padding: 0 1px 0 0"><img src="//s.ytimg.com/yts/img/HTML5_1Color_Black-vfl902gVJ.png" style="vertical-align:middle; height:12px; padding:0px""></img></button><button onclick="aspect()" class="snarl-button yt-uix-button-text" style="width: 30px" aria-label="Resize" title="Resize">«↔»</button><br><button style="width: 22px" onclick="var yt6 = gid(\'snarls_player\'); var z = prompt(\'Wanna quit? \(Exit options: 0-3\)\\n Cancel = Not now;\\n 0 = Remove script without page refresh;\\n 1 = Normal YouTube;\\n 2 = Legacy compliant;\\n 3 = YT Music;\', \'0\'); if (!z) var z = window.confirm(\'OK will attempt to switch between YouTube layouts and refresh the page. \\nCancel will abort.\'); if (typeof z == \'boolean\' && z == false) return void 0; if (z && !(typeof z == \'boolean\' && z == true)) { if (z != 0 && (z == 1 || z == 2 || z == 3)) { if (z == 1) document.cookie=&quot;PREF=f1=50000000&f5=10&f6=1004;path=/;domain=.youtube.com;expires=Session&quot;; if (z == 2) { document.cookie=&quot;PREF=f1=50000000&f5=10&f6=8;path=/;domain=.youtube.com;expires=Session&quot;; if (yt6.layout != 12 && navigator.userAgent.indexOf(\'Googlebot\') == -1) { var old; old = \'Switching back to the classic layout is now only possible with the help of browser extensions such as &quot;Good Old YouTube&quot; :(\'; /*alert(old);*/ }; }; if (z == 3) { var domain = \'music\'; location.href = window.location.href.replace(\'www.youtube.com\', domain + \'.youtube.com\').replace(\'music.youtube.com\', domain + \'.youtube.com\').replace(\'gaming.youtube.com\', domain + \'.youtube.com\').replace(\'m.youtube.com\', domain + \'.youtube.com\').replace(\'/embed/\' + video_id()[0] + \'?\',\'/watch?v=\' + yt6.vid + \'&\' + (window.location.href.split(\'?\')[1] || \'\')) } else { if (!yt6.ytp.embed) { location.href = window.location.href.replace(\'gaming.youtube.com\',\'www.youtube.com\').replace(\'music.youtube.com\',\'www.youtube.com\').replace(\'m.youtube.com\',\'www.youtube.com\') }; /*if (!yt6.ytm) {*/ if (z == 2) { location.href = \'https://www.youtube.com/embed/\' + video_id()[0] + \'?\' + (location.href.split(\'v=\' + yt6.vid).join(\'\').split(\'?\')[1] || location.href.split(\'v=\' + yt6.vid).join(\'\').split(\'&\')[1] || \'\') } else { if (yt6.ytp.embed) { location.href = window.location.href.replace(\'/embed/\' + yt6.vid + \'?\',\'/watch?v=\' + yt6.vid + \'&\' + (window.location.href.split(\'?\')[1] || \'\')) }; }; /*location.reload()*/ /*}*/ } } else if (z == 0) deldiv() } else { if (!yt6.ytg) if (yt6.layout == 16) { document.cookie=&quot;PREF=f1=50000000&f5=10&f6=8;path=/;domain=.youtube.com;expires=Session&quot;; } else document.cookie=&quot;PREF=f1=50000000&f5=10&f6=1004;path=/;domain=.youtube.com;expires=Session&quot;; location.href = window.location.href.replace(\'gaming.youtube.com\',\'www.youtube.com\').replace(\'music.youtube.com\',\'www.youtube.com\').replace(\'/embed/\' + video_id()[0] + \'?\',\'/watch?v=\' + yt6.vid + \'&\' + window.location.href.split(\'/embed/\' + yt6.vid + \'?\')[1]); };" class="snarl-button yt-uix-button-text" aria-label="Remove script / Change YouTube layout" title="Remove script / Change YouTube layout">X</button><button id="audio_x" class="audio_x snarl-button yt-uix-button-text" aria-label="Use mousewheel to set speed" title="Use mousewheel to set speed" style="padding: 0px 1px 0px 1px; right: 0px" onclick="var yt6 = gid(\'snarls_player\'); if (yt6.player1 && yt6.player2 && typeof yt6.player2.load == \'function\') { var src = \'\'; if (gid(\'no2\')) src = gid(\'no2\').src; var audio_x = window.prompt(\'Enter URL of any audio (or video) file across the net to use as background sound. Will only play alongside video-only sources in progressive download mode.\', src); yt6.audiox = src = yt6.player2.media.src = audio_x || yt6.linx[yt6.userprefA[0]]; if (!audio_x) { yt6.audiox = null; delete yt6.audiox }; yt6.player1.pause(); yt6.player2.load() }; yt6.speed = 1; yt6.ytp.speed();">audio</button></div>'// (' + ((typeof yt6.speed == 'number') ? yt6.speed : 1).toFixed(2) * 100 + '%)
+    var remove_sp_innerhtml = '<button onclick="if (!gid(\'bm0\') && gid(\'bm01\')) gid(\'bm01\').setAttribute(\'id\',\'bm0\'); switch_players()" class="snarl-button yt-uix-button-text" aria-label="Switch" title="Switch" style="width: 22px; height: 22px; padding: 0 1px 0 0"><img src="//s.ytimg.com/yts/img/HTML5_1Color_Black-vfl902gVJ.png" style="vertical-align:middle; height:12px; padding:0px""></img></button><button onclick="aspect()" class="snarl-button yt-uix-button-text" style="width: 30px" aria-label="Resize" title="Resize">«↔»</button><br><button style="width: 22px" onclick="var yt6 = gid(\'snarls_player\'); var z = prompt(\'Wanna quit? \(Exit options: 0-3\)\\n Cancel = Not now;\\n 0 = Remove script without page refresh;\\n 1 = Normal YouTube;\\n 2 = Legacy compliant;\\n 3 = YT Music;\', \'0\'); if (!z) var z = window.confirm(\'OK will attempt to switch between YouTube layouts and refresh the page. \\nCancel will abort.\'); if (typeof z == \'boolean\' && z == false) return void 0; if (z && !(typeof z == \'boolean\' && z == true)) { if (z != 0 && (z == 1 || z == 2 || z == 3)) { if (z == 1) document.cookie=&quot;PREF=f1=50000000&f5=10&f6=1004;path=/;domain=.youtube.com;expires=Session&quot;; if (z == 2) { document.cookie=&quot;PREF=f1=50000000&f5=10&f6=8;path=/;domain=.youtube.com;expires=Session&quot;; if (yt6.layout != 12 && navigator.userAgent.indexOf(\'Googlebot\') == -1) { var old; old = \'Switching back to the classic layout is now only possible with the help of browser extensions such as &quot;Good Old YouTube&quot; :(\'; /*alert(old);*/ }; }; if (z == 3) { var domain = \'music\'; location.href = window.location.href.replace(\'www.youtube.com\', domain + \'.youtube.com\').replace(\'music.youtube.com\', domain + \'.youtube.com\').replace(\'gaming.youtube.com\', domain + \'.youtube.com\').replace(\'m.youtube.com\', domain + \'.youtube.com\').replace(\'/embed/\' + video_id()[0] + \'?\',\'/watch?v=\' + yt6.vid + \'&\').replace(\'/embed/\' + video_id()[0],\'/watch?v=\' + yt6.vid) } else { if (!yt6.ytp.embed) { location.href = window.location.href.replace(\'gaming.youtube.com\',\'www.youtube.com\').replace(\'music.youtube.com\',\'www.youtube.com\').replace(\'m.youtube.com\',\'www.youtube.com\') }; /*if (!yt6.ytm) {*/ if (z == 2) { location.href = \'https://www.youtube.com/embed/\' + video_id()[0] + \'?\' + (location.href.split(\'v=\' + yt6.vid).join(\'\').split(\'?\')[1] || location.href.split(\'v=\' + yt6.vid).join(\'\').split(\'&\')[1] || \'\') } else { if (yt6.ytp.embed) { location.href = window.location.href.replace(\'?\',\'&\').replace(\'/embed/\', \'/watch?v=\') }; }; /*location.reload()*/ /*}*/ } } else if (z == 0) deldiv() } else { if (!yt6.ytg) if (yt6.layout == 16) { document.cookie=&quot;PREF=f1=50000000&f5=10&f6=8;path=/;domain=.youtube.com;expires=Session&quot;; } else document.cookie=&quot;PREF=f1=50000000&f5=10&f6=1004;path=/;domain=.youtube.com;expires=Session&quot;; location.href = window.location.href.replace(\'gaming.youtube.com\',\'www.youtube.com\').replace(\'music.youtube.com\',\'www.youtube.com\').replace(\'/embed/\' + video_id()[0] + \'?\',\'/watch?v=\' + yt6.vid + \'&\' + window.location.href.split(\'/embed/\' + yt6.vid + \'?\')[1]); };" class="snarl-button yt-uix-button-text" aria-label="Remove script / Change YouTube layout" title="Remove script / Change YouTube layout">X</button><button id="audio_x" class="audio_x snarl-button yt-uix-button-text" aria-label="Use mousewheel to set speed" title="Use mousewheel to set speed" style="padding: 0px 1px 0px 1px; right: 0px" onclick="var yt6 = gid(\'snarls_player\'); if (yt6.player1 && yt6.player2 && typeof yt6.player2.load == \'function\') { var src = \'\'; if (gid(\'no2\')) src = gid(\'no2\').src; var audio_x = window.prompt(\'Enter URL of any audio (or video) file across the net to use as background sound. Will only play alongside video-only sources in progressive download mode.\', src); yt6.audiox = src = yt6.player2.media.src = audio_x || yt6.linx[yt6.userprefA[0]]; if (!audio_x) { yt6.audiox = null; delete yt6.audiox }; yt6.player1.pause(); yt6.player2.load() }; yt6.speed = 1; yt6.ytp.speed();">audio</button></div>'// (' + ((typeof yt6.speed == 'number') ? yt6.speed : 1).toFixed(2) * 100 + '%)
 
     span.appendChild(remove)
     remove.setAttribute('style','display: inline-block')
