@@ -105,7 +105,7 @@ older ones. It may be crucial regarding its functionality.)
 		<li class="feat">change between YouTube layouts by setting the cookie on exit no longer works :( 
 		<ol>
 		YouTube stopped honoring the setting in July 2020 -- use a suitable browser 
-		extension such as <div style="color: red; display: inline-block">Good Old YouTube</div> (for <a href="https://addons.mozilla.org/en/firefox/addon/good-old-youtube/">Firefox</a> and <a href="https://chrome.google.com/webstore/detail/good-old-youtube/klkejolkjcefmocpgpjiefbpmgofahmh">Chrome</a>) or <div style="color: red; display: inline-block">Old YouTube</div> (for <a href="https://addons.mozilla.org/en-US/firefox/addon/old-youtube/">Firefox</a>) if you want the 
+		extension such as <div style="background-color: orange; display: inline-block">Good Old YouTube</div> (for <a href="https://addons.mozilla.org/en/firefox/addon/good-old-youtube/">Firefox</a> and <a href="https://chrome.google.com/webstore/detail/good-old-youtube/klkejolkjcefmocpgpjiefbpmgofahmh">Chrome</a>) or <div style="background-color: orange; display: inline-block">Old YouTube</div> (for <a href="https://addons.mozilla.org/en-US/firefox/addon/old-youtube/">Firefox</a>) if you want the 
 		classic layout back.<br>
 		Meanwhile, YT's spf js has also been deliberately deactivated, which means all 
 		navigation on the old UI will now draw a full page refresh, making the site's -- not to 
@@ -162,18 +162,26 @@ older ones. It may be crucial regarding its functionality.)
 		<b><strong>its name</strong></b> ("Yt6" or whatever you named it) or the prefix "javascript:" to narrow down the 
 		search to bookmarklets only. <b><strong>Tapping on the correct entry</strong></b> shall initiate the call.
 	<br><br>
-		It is also possible to use the code as a userscript with addons like
-	<ol>
-		- <div style="color: green; display: inline-block">Greasemonkey</div> (for <a href="https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/">Firefox</a>),<br>
-		- <div style="color: green; display: inline-block">Tampermonkey</div> (for <a href="https://addons.mozilla.org/en-US/firefox/addon/tampermonkey/">Firefox</a>, <a href="https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo">Chrome</a> and <a href="https://microsoftedge.microsoft.com/addons/detail/tampermonkey/iikmkjmpaadaobahmlepeloendndfphd">Edge</a>) or <br>
-		- <div style="color: green; display: inline-block">Violentmonkey</div> (for <a href="https://addons.mozilla.org/en-US/firefox/addon/violentmonkey/">Firefox</a>, <a href=" https://chrome.google.com/webstore/detail/violentmonkey/jinjaccalgkegednnccohejagnlnfdag">Chrome</a> and <a href="https://microsoftedge.microsoft.com/addons/detail/violentmonkey/eeagobfjdenkkddmbclomhiblgggliao">Edge</a>)<br>
-	</ol>
-		<div style="color: red; display: inline-block">Do not use it as a userscript with Firefox though!</div> That browser constructs the YT pages 
-		too slow compared to how quick it loads the userscript. Just stick with the bookmarklet 
-		way for Firefox.
+		Automatic playback depends on the state of YouTube's own "Repeat / Loop Playlist" 
+		button on user-created playlists. 
 	<br><br>
-		The following header must be placed above the javascript part on the addon's new script-creator
-		/-editor interface.
+		Use the HTML5 emblem on the control panel to switch between the native and this 
+		alternative player.
+	<br><br>
+		It is also possible to use the bookmarklet code (minus the "javascript:" header) as a 
+		userscript with addons like
+	<ol>
+		<div style="background-color:orange; display: inline-block">Greasemonkey</div> (for <a href="https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/">Firefox</a>),<br>
+		<div style="background-color:orange; display: inline-block">Tampermonkey</div> (for <a href="https://addons.mozilla.org/en-US/firefox/addon/tampermonkey/">Firefox</a>, <a href="https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo">Chrome</a>, <a href="https://microsoftedge.microsoft.com/addons/detail/tampermonkey/iikmkjmpaadaobahmlepeloendndfphd">Edge</a> and <a href="https://addons.opera.com/hu/extensions/details/tampermonkey-beta/">Opera</a>) or <br>
+		<div style="background-color:orange; display: inline-block">Violentmonkey</div> (for <a href="https://addons.mozilla.org/en-US/firefox/addon/violentmonkey/">Firefox</a>, <a href=" https://chrome.google.com/webstore/detail/violentmonkey/jinjaccalgkegednnccohejagnlnfdag">Chrome</a> and <a href="https://microsoftedge.microsoft.com/addons/detail/violentmonkey/eeagobfjdenkkddmbclomhiblgggliao">Edge</a>)<br>
+	</ol>
+	<ol style="font-size: 13px">
+		(<div style="color: red; display: inline-block">Warning: Do not load the Yt6 script with these addons in <b><strong>Firefox</strong></b>, just stick with the bookmarklet!</div><br>
+		Firefox constructs the YT page too slow compared to how quick it loads the userscript. As a result, the 
+		program weaves itself into a half-baked webpage, ultimately causing its own malfunction.)
+	</ol>
+		The following header must be placed above the javascript part on the addon's 
+		[new script-creator / script-editor] interface.
 	<pre>
 // ==UserScript==
 // @name         Yt6 -- Snarl's YouTube Video Player (userscript)
@@ -191,12 +199,6 @@ older ones. It may be crucial regarding its functionality.)
 
 (function(){var v='2179151542d27c24c7f938495a5e5ec94233aa06/yt6.js',w=window,d=w.document,h=d.location.href,yt6=w.yt6||{},yt6d=w.yt6d||{};if(yt6.loaded>=4)return void 0;if(h.split('youtube.com/watch')[1]||h.split('youtube.com/embed')[1]||h.split('/base.j')[1]=='s'){var id='snarls_player',e='script',q;yt6.loaded=0;function s(x){x=x||id;return d.getElementById(x)};function c(e){return d.createElement(e)};function a(q){s().appendChild(q);s().add_subs='en,hu,de';yt6d.src=q.src};function r(){if(s()){var x;try{x=s().querySelector('#'+id)}catch(e){x=s().firstChild};if(x)s().removeChild(x)}};function b(){var i,j,o,x;o=['.githack','git','js'];for(j,x,i=o.length;i;j=Math.floor(Math.random()*i),x=o[--i],o[i]=o[j],o[j]=x);if(yt6d.src!=1)o.splice(0,0,'.githubusercontent');q=c('div');q.id=id;if(q!=s())d.body.appendChild(q);var src='https://raw'+o[0]+'.com/snarly/yt6/'+v,src0='https://cdn.jsdelivr.net/gh/snarly/yt6@'+v;function oc(ox,oy,sr){return(oy!='js')?sr.replace(ox,oy):src0};q=c(e);q.id=id;q.src=(o[0]!='js')?src:src0;q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[1],src);q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[2],src);q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[3],src);q.onerror=function(){q=c(e);q.id=id;q.src=src.replace('https','http')};a(q);r();};a(q);r();};a(q);r();};try{a(q);}catch(f){a(q)};};function g(){try{deldiv()}catch(f){r()};yt6d.src=1;b()};if(!s()){b()};setTimeout(function(){yt6=w.yt6;if(!yt6||(yt6&&(!yt6.body||(yt6.loaded>2&&!s('mep_init')))))g()},3000);}else{void 0};})()/*202012040204*/
 	</pre>
-	<br><br>
-		Automatic playback depends on the state of YouTube's own "Repeat / Loop Playlist" 
-		button on user-created playlists. 
-	<br><br>
-		Use the HTML5 emblem on the control panel to switch between the native and this 
-		alternative player.
 	<br><br>
 
 	<h1>
@@ -286,73 +288,85 @@ older ones. It may be crucial regarding its functionality.)
 		to create an embedded video on other websites. There is literally nothing on these pages 
 		beside the player itself, therefore it's super lightweight which makes it a legit choice even 
 		for modern browsers (if you just want simple playback in the background). It's clunky and 
-		inconvenient to use on mobile, not recommended there. On desktop, it's okay though.
+		inconvenient to use on mobile, not recommended there. On desktop, it's okay.
 	<br><br>
 		Regular video URL with playlist<br>
 	<code>https://www.youtube.com/<b><strong><div style="color: red; display: inline-block">watch?v=</div></strong></b>BJPKUw8QIlk<b><strong><div style="color: red; display: inline-block">&</div></strong></b>list=PLXlj3dvMsYiLWcmENQsUHEQr8Snw1PH3X&index=1022</code>
 <br><br>
 		The "embed" variant to enter on the address bar<br>
 	<code>https://www.youtube.com/<b><strong><div style="color: red; display: inline-block">embed/</div></strong></b>BJPKUw8QIlk<b><strong><div style="color: red; display: inline-block">?</div></strong></b>list=PLXlj3dvMsYiLWcmENQsUHEQr8Snw1PH3X&index=1022</code>
-	<br><br>
-		Unfortunately, YouTube is getting more and more restrictive on browsers which are not up to 
-		date (or not up their alley). The site is testing the browser's <b><strong>User-Agent string</strong></b> (among 
-		others) to determine whether to grant access to the media data through an embed page or 
-		not. (If access was denied, no media urls will be available for playback.)
-	<br><br>
-		Here is one example of how a User-Agent string normally looks like:
 
-	<pre>Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:83.0) Gecko/20100101 Firefox/83.0</pre>
+	<br><br>
+		Then you just load the script like you would on a watch page.
+	<br><br>
+		There is one caveat though.
+	<br><br>
+		YouTube has recently begun to test the browser's <b><strong>User-Agent string</strong></b> more thoroughly 
+		to determine whether to grant access to content or not. If access was denied, no media urls 
+		will be available for playback. So if YT doesn't like your UA, you will have no choice but to 
+		modify or spoof it.
 	<br>
-		A side-note (and rant):<br>
-		This UA belongs to the most recent release of the Ubuntu linux distributed, standard, 83.0 
-		version of Firefox, so it's not even a legacy browser by any means. And yet, YT denies 
-		direct media access to it over this approach. No tweaking in the <b><strong>about:config</strong></b> settings -- 
-		as shown below -- will help. Moreover, I only found this single <a href="https://addons.mozilla.org/en-US/firefox/addon/uaswitcher/">User-Agent Switcher</a> 
-		extension (and <a href="https://microsoftedge.microsoft.com/addons/detail/useragent-switcher/npjnioaeoicmjokbdpfiecnbildopjad">this one</a> for MS Edge Canary on Windows 7) which was able to fix the 
-		issue, and it can only insert predefined UA values, so no fine-tuning is possible.<br>
-		This was not the case 1 or 2 versions ago, and it's a very sad hint at how Google may be 
-		trying to screw over its competition, above all Mozilla and the linux community, with little 
-		hidden stabs like that. (At least, FF 83.0 for Windows is not cut off by the YT servers yet.)
+	<u><h4>Mobile specific</h4></u>
+	<ol>
+		The following parts of a mobile UA trigger sites to show their mobile interfaces, and in 
+		case of the YT embed page, block script-access.
 	<br><br>
-		Below are some <b><strong><u>sections</u></strong></b> (in red) of various User-Agent strings which you must alter 
-		one way or another to get YT to serve the media for legacy browsers also on such embed 
-		pages. I've written some random examples too on how its advisable to change them.
-	<br>
-	<h5>Platform specific parts</h5>
-		 <code style="color: red">X11; Linux</code> --> <code>X11; U; Linux</code><br>
-		 <code style="color: red">Android</code> --> <code>Nodroid</code><br>
-		 <code style="color: red">Mobile</code> --> <code>Mobil</code><br>
-		 <code style="color: red">iPhone;</code><code style="color: red">CPU;</code><code style="color: red">iPhone</code> --> <code>jPhone; GPU; uPhone</code> (yes, all three)
-
-	<h5>Firefox</h5>
-		 <code>Mac OS X <div style="color: red; display: inline-block">Y.Z</div></code> -- where Y.Z must be >= <code>10.13</code><br>
-		 <code>Windows NT <div style="color: red; display: inline-block">X.Y</div></code> -- where X.Y must be <= 6.1 in case FF version is <= <code>62</code><br>
-
-	<h5>Chrome</h5>
-		<code>Mac OS X <div style="color: red; display: inline-block">A_B_C</div></code> -- where A_B_C must be >= <code>10_14_4</code><br>
-		on Windows <code>Chrome/<div style="color: red; display: inline-block">XX</div>.0.YYZZ.VV</code> -- where XX must be >= <code>70</code><br>
-	<ol style="font-size: 13px">
-			Note: the YY part of the Chrome version number, as a rule of thumb, is always 50% or somewhat less than 
-			50% of the value of XX (so if XX == 70, YY must be a number between 35 and 31). How the remaining part 
-			of the minor version numbers should be calculated is a mistery. You'll have to experiment with it yourself to 
-			find out which values work. One thing seems to be certain: if both XX and YY are even numbers (let's say 
-			XX == 84 and YY == 42), ZZ and VV can all be zeroes.
+		 <code style="color: red">Linux; Android</code><br>
+		 <code style="color: red">Android</code> [...] <code style="color: red">Mobile</code><br>
+		 <code style="color: red">iPhone; CPU; iPhone</code> [...] <code style="color: red">Mobile</code><br>
+		 <code style="color: red">iPad; CPU</code> [...] <code style="color: red">Mobile</code></code>
+	<br><br>
+		The "Request Desktop version" option in mobile browsers does in effect replace the 
+		mobile UA with a hardcoded Desktop UA. So turn that on before you visit an embed 
+		page on mobile.
 	</ol>
-		on Android <code>Chrome/<div style="color: red; display: inline-block">XX</div>.0.YYZZ.VV</code> -- where XX must be >= <code>73</code><br>
-
-	<h5>Edge</h5>
-		<code>Chrome/<div style="color: red; display: inline-block">XX</div>.0.YYZZ.VV</code> -- where XX must be >= <code>70</code><br>
-	<h5>Opera</h5>
-		<code style="color: red">OPR/</code> --> <code>OP/</code> or <code style="color: red">Opera</code> --> <code>Oper</code> (Opera is also being screwed over badly)<br>
-		<code>Chrome/<div style="color: red; display: inline-block">XX</div>.0.YYZZ.VV</code> -- where XX must be >= <code>75</code><br>
-		<code>Mac OS X <div style="color: red; display: inline-block"">A_B_C</div></code> -- where A_B_C must be <= <code>10_14_4</code><br>
-		on Mac OS <code style="color: red">Chrome/</code> --> <code>Chrom/</code><br>
-	<h5>Yandex</h5>
-		<code>Chrome/<div style="color: red; display: inline-block">XX</div>.0.YYZZ.VV</code> -- where XX must be >= <code>73</code><br>
-		<code>Windows NT <div style="color: red; display: inline-block">X.Y</div></code> -- where X.Y must be <= <code>6.2</code> in case YaBrowser version is >= <codee>19.6.1.053</code>
+	<u><h4>Useful addons</h4></u>
+	<ol>
+	<div style="background-color: orange; color: black; display: inline-block">User-Agent Switcher and Manager</div> for <a href="https://addons.mozilla.org/en-US/firefox/addon/user-agent-string-switcher/">Firefox</a>, <a href="https://chrome.google.com/webstore/detail/user-agent-switcher-and-m/bhchdcejhohfmigjafbampogmaanbfkg">Chrome</a>, <a href="https://microsoftedge.microsoft.com/addons/detail/useragent-switcher-and-m/cnjkedgepfdpdbnepgmajmmjdjkjnifa">Edge</a> and <a href="https://addons.opera.com/hu/extensions/details/user-agent-switcher-8/">Opera</a><br>
+	Alternative: <div style="background-color: orange; color: black; display: inline-block">User-Agent Switcher</div> for <a href="https://addons.mozilla.org/en-US/firefox/addon/uaswitcher/">Firefox</a>, and <a href="https://microsoftedge.microsoft.com/addons/detail/useragent-switcher/npjnioaeoicmjokbdpfiecnbildopjad">MS Edge Canary</a>
+	</ol>
+	In Firefox-variants, you can try using the internal configuration page <b><strong>about:config</strong></b> and 
+	add, or if it exists, edit, the preference key <code>general.useragent.override</code> by giving it the 
+	chosen User-Agent string.
 	<br><br>
-		Then you just load the script like you would on a watch page. Old browser or not, it should work.
-	<br><br>
+	Below are some working examples. Text in blue are recommended values.
+	<u><h4>Firefox</h4></u>
+	<ol>
+		<h6>Windows</h6><code>Mozilla/5.0 (Windows NT <b style="color: blue; display: inline-block">10.0</b>; Win64; x64; rv:<b style="color: blue; display: inline-block">83.0</b>) Gecko/20100101 Firefox/<div style="color: blue; display: inline-block">83.0</div></code>
+		<h6>Linux</h6><code>Mozilla/5.0 (X11; Linux x86_64; en-us; rv:<b style="color: blue; display: inline-block">83.0</b>) Gecko/20100101 Firefox/<b style="color: blue; display: inline-block">83.0</b></code>
+		<h6>Mac OS X</h6><code>Mozilla/5.0 (Macintosh; Intel Mac OS X <b style="color: blue; display: inline-block">10.16.1</b>; rv:<b style="color: blue; display: inline-block">83.0</b>) Gecko/20100101 Firefox/<b style="color: blue; display: inline-block">83.0</b></code>
+	</ol>
+	<u><h4>Chrome</h4></u>
+	<ol>
+		<h6 style="display: inline-block">Windows</h6><br><code>Mozilla/5.0 (Windows NT <b style="color: blue; display: inline-block">10.0</b>; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/<b style="color: blue; display: inline-block">85.0.4183.83</b> Safari/537.36</code><br>or<br><code>Mozilla/5.0 (Windows NT <b style="color: blue; display: inline-block">6.1</b>; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/<b style="color: blue; display: inline-block">80.0.3987.122</b> Safari/537.36</code>
+		<div><h6>Linux</h6>
+		<code>Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/<b style="color: blue; display: inline-block">86.0.4240.111</b> Safari/537.36</code></div>
+		<div><h6 style="display: inline-block">Mac OS X</h6><br>
+		<code>Mozilla/5.0 (Macintosh; Intel Mac OS X <b style="color: blue; display: inline-block">10_14_4</b>) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/<b style="color: blue; display: inline-block">99.0.3538.77</b> Safari/537.36</code>
+		</div>
+	</ol>
+	<u><h4>Edge</h4></u>
+	<ol>
+		<div><h6 style="display: inline-block">Windows</h6><br><code>Mozilla/5.0 (Windows NT <b style="color: blue; display: inline-block">10.0</b>; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/<b style="color: blue; display: inline-block">81.0.4044.0</b> Safari/537.36 <b style="color: blue; display: inline-block">Edg/86.0.597.0</b></code><br>or<br><code>Mozilla/5.0 (Windows NT <b style="color: blue; display: inline-block">6.1</b>; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/<b style="color: blue; display: inline-block">81.0.4044.0</b> Safari/537.36 <b style="color: blue; display: inline-block">Edge/12.10240</b></code></div>
+		<div><h6 style="display: inline-block">Linux</h6><br><code>Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/<b style="color: blue; display: inline-block">81.0.4044.0</b> Safari/537.36 <b style="color: blue; display: inline-block">Edg/88.0.705.9</b></code></div>
+		<div><h6 style="display: inline-block">Mac OS X</h6><br><code>Mozilla/5.0 (Macintosh; Intel Mac OS X <b style="color: blue; display: inline-block">10_16_2</b>) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/<b style="color: blue; display: inline-block">82.0.4085.0</b> Safari/537.36 <b style="color: blue; display: inline-block">Edg/84.0.522.15</b></code>
+	</ol>
+	<u><h4>Opera</h4></u>
+	<ol>
+		Any part of the UA revealing Opera will result in automatic denial when trying to access 
+		the media on the embed page. So we need to obfuscate those:<br>
+		<code style="color: red">OPR/</code> --> <code>OP/</code> or <code style="color: red">Opera</code> --> <code>Oper</code><br>
+		<div><h6 style="display: inline-block">Windows</h6><br><code>Mozilla/5.0 (Windows NT <b style="color: blue; display: inline-block">10.0</b>; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/<b style="color: blue; display: inline-block">86.0.4240.111</b> Safari/537.36 OP/<b style="color: blue; display: inline-block">71.0.3770.97</b></code></div>
+		<div><h6 style="display: inline-block">Linux</h6><br>
+		<code>Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/<b style="color: blue; display: inline-block">86.0.4240.111</b> Safari/537.36 OP/<b style="color: blue; display: inline-block">71.0.3770.97</b></code></div>
+		<div><h6 style="display: inline-block">Mac OS X</h6><br><code>Mozilla/5.0 (Macintosh; Intel Mac OS X <b style="color: blue; display: inline-block">10_12_6</b>) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/<b style="color: blue; display: inline-block">80.0.3987.122</b> Safari/537.36 OP/<b style="color: blue; display: inline-block">67.0.3575.53</b></code></div>
+	</ol>
+	<u><h4>Yandex</h4></u>
+	<ol>
+		<div><h6 style="display: inline-block">Windows</h6><br><code>Mozilla/5.0 (Windows NT <b style="color: blue; display: inline-block">6.3</b>; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/<b style="color: blue; display: inline-block">78.0.3904.97</b> YaBrowser/19.12.0.769 Yowser/2.5 Safari/537.36</code></div>
+		<div><h6 style="display: inline-block">Linux</h6><br><code>Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/<b style="color: blue; display: inline-block">80.0.3987.122</b> YaBrowser/19.12.0.769 Yowser/2.5 Safari/537.36</code></div>
+		<div><h6 style="display: inline-block">Mac OS X</h6><br><code>Mozilla/5.0 (Macintosh; Intel Mac OS X <b style="color: blue; display: inline-block">10_14_6</b>) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/<b style="color: blue; display: inline-block">78.0.3904.97</b> YaBrowser/19.12.0.769 Yowser/2.5 Safari/537.36</code></div>
+	</ol><br>
 		<b><strong>Pro:</strong></b> the alternative player can play videos which are otherwise blocked from view 
 		in embedded frames.<br>
 		<b><strong>Con:</strong></b> due to a YT limitation, you can only access the first 200 videos on an "embed" 
@@ -362,29 +376,40 @@ older ones. It may be crucial regarding its functionality.)
 	<h1>
 		Classic YouTube layout fix
 	</h1>
-		For certain browsers (such as Firefox) installing one of the "Old YouTube" addons may not 
-		be enough. You also need to make sure that the word <b><strong>Googlebot</strong></b> is included 
-		somewhere in the browser's User-Agent string.
+		Installing one of the <div style="background-color: orange; display: inline-block">(Good) Old YouTube</div> addons may not be enough. 
 	<br><br>
-		There are User-Agent spoofer addons specifically made for this, such as <div style="color: green; display: inline-block">User-Agent Switcher and Manager</div> for <a href="https://addons.mozilla.org/en-US/firefox/addon/user-agent-string-switcher/">Firefox</a>, <a href="https://chrome.google.com/webstore/detail/user-agent-switcher-and-m/bhchdcejhohfmigjafbampogmaanbfkg">Chrome</a> and <a href="https://microsoftedge.microsoft.com/addons/detail/useragent-switcher-and-m/cnjkedgepfdpdbnepgmajmmjdjkjnifa">Edge</a> (sadly useless with the
-		latest Firefox for linux or MS Edge Canary for Windows 7, see the rant above for the 
-		alternatives). But you can also try to do it on a Firefox-variant's internal configuration page 
-		<b><strong>about:config</strong></b> by adding or if it exists, editing the preference key 
-		<code>general.useragent.override</code> and simply give it a string value like
-<br>
-	<pre>Mozilla/5.0 (Windows NT 10.0; rv:83.0) Gecko/20100101 Firefox/83.0 <b><strong>Googlebot</strong></b></pre>
-<br>
-		Warning: this may give you the old YouTube layout back, but on other sites (such as 
-		reddit, for instance) that one word may be the reason why access to content will be denied 
-		for you, given your browser is now identified as a bot. Until you change the User-Agent 
-		to something else.
+		YT has increasingly become more and more picky and restrictive about <b><strong>User-Agent strings</strong></b> 
+		in the latter half of 2020.
 	<br><br>
-		To fix the Classic layout's Yt spf issue mentioned earlier, I've created a userscript -- usable 
-		with the ~Whatnot~monkey and other similar addons -- which reinstates the Yt spf. This 
-		task must be done very early in the webpage parsing process, hence can't be 
-		accomplished as part of the Yt6 script.
+		A well known error symptom is when a small and useless text file called <b><strong>json.txt</strong></b> is served 
+		for download instead of displaying the actual YT page in the old layout. It indicates that YT "doesn't like" your 
+		browser's current User-Agent string -- may it be the original one or one spoofed by an 
+		extension or a Firefox-veriant's built-in related setting such as<br>
+		<code>general.useragent.override</code><br>
+		or<br>
+		<code>privacy.resistFingerprinting</code><br>
+	<br>
+		Just a few weeks ago, if the old layout was broken with the json.txt error, it could be fixed 
+		by manually adding the word <b><strong>Googlebot</strong></b> to the UA. Trying to do the same thing now will 
+		break the layout for sure.
 	<br><br>
-		So here it is:<br>
+		Good news is, the User-Agent strings that I have collected to make the embed page work 
+		(all listed in the previous Legacy browsers section) seem to also work for the old layout. 
+		You can pick any one of them, copy it to the input field of your chosen User-Agent spoofer, 
+		apply the change, refresh the page, and the json.txt problem will be gone with the Classic 
+		layout ready to use.
+	<br><br>
+		As for the Yt spf issue mentioned earlier, I've created a userscript which reinstates the 
+		polyfill. (The userscript can be used with addons like <div style="background-color: orange; display: inline-block">[Grease|Tamper|Violent]monkey</div>.) Since this task 
+		must be done very early in the webpage parsing process, it cannot be accomplished as 
+		part of the Yt6 script.
+	<br><br>
+		The point of the Yt spf polyfill was to merely update differing parts of old-style YT pages 
+		when navigation happens. Unfortunately, if you're logged in on the Classic layout, YT is 
+		now forcing a full page refresh on each new page, no matter what, so the only way to see 
+		the benefits of YT spf is to stay logged out of YouTube.
+	<br><br>
+		Here is the userscript:<br>
 	<pre>
 // ==UserScript==
 // @name         Yt spf
