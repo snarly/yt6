@@ -1930,7 +1930,7 @@ yt6.tmp = ""+
 
 yt6.tmp = "yt6.durl = function(ypsi) {"+
 "var durl = Object.values(ypsi).filter(\
-  x => ((x.includes('videoplayback?') || x.includes('videoplayback%253F') || x.includes('videoplayback%3F')) && !x.includes('range=') && !x.includes('{'))\
+  x => ((x.includes('videoplayback?') || x.includes('videoplayback%253F') || x.includes('videoplayback%3F') || (!yt6.manifest.mpd && x.includes('manifest.googlevideo'))) && !x.includes('range=') && !x.includes('{'))\
 );\
 return durl }"; eval(yt6.tmp)
 
@@ -2257,12 +2257,16 @@ function test_4(peek) {//console.log('test-4')
 	//for (var eurl of durl) {
 	var test_itags = []
 	for (k=0;k < durl.length;k++) {
-	  var eurl = durl[k];
+	  var eurl = durl[k]; 
 	  var c = conf('args')
 	  //if ((yt6.mobile || yt6.ytm) && !(c[0] && c[1] && c[1].url_encoded_fmt_stream_map)) { //yt6.encrypted = true
 	    if (!c[0]) { ytplayer.config = {}; ytplayer.config.args = {} }
 	    if (!c[1]) { ytplayer.config.args = {} }
 	    var c = conf('args')
+	    if (eurl.split('manifest.googlevideo')[1]) {
+	      if (!yt6.manifest.mpd && eurl.split('dash/')[1]) yt6.manifest.mpd = eurl
+	      if (!yt6.manifest.hls && eurl.split('hls_variant')[1]) yt6.manifest.hls = eurl
+	    }
 	    if (eurl && eurl.indexOf('itag') != -1) {
 	      itag = eurl.split('itag=')[1] || eurl.split('itag/')[1] || eurl.split('itag%3D')[1]
 	      itag = (itag) ? 1 * (itag.split('&')[0].split('&amp;')[0]) : null
@@ -10743,13 +10747,13 @@ if (typeof html.splice != 'function') return void 0;
   if (b == 'ie') b = 'edge'
 
   if (b == 'chromium' || b == 'brave' || b == 'vivaldi' || b == 'yandex' || b == 'dragon') b = 'chrome'
-  if (!browserIcon) {ev_log('A')
+  if (!browserIcon) {
     var browserIcon = ['firefox','chrome','opera','edgium','edge','safari']
-    var output_log = '\\n\'+ yt6d.log +\''
     b = (browserIcon.indexOf(b) > -1) ? '<img src=&quot;https://www.youtube.com/img/desktop/supported_browsers/'+ b +'.png&quot;>' : ''
-  } else {ev_log('B')
+  } else {
       b = browserIcon
     }
+  var output_log = ''//'\\n\'+ yt6d.log +\''
   b = b +'<div><div><b style=&quot;font-size: 20px; color: white; background-color: darkslateblue&quot;><strong>'+ browserName +' on '+ (navigator.oscpu || navigator.platform) +'</strong></b></div><br><textarea style=&quot;width: 280px; height: auto; background-color: white&quot;>' + navigator.userAgent + output_log +'</textarea></div>\''
 
   html.splice(1,0,'Direct links to YouTube media<br>for IP address: '+ expire_date()[0])
@@ -11646,8 +11650,9 @@ function mep_run() {
 						switch_players()
 					      } else if (yt6.ytg) yt6.errcount = 0
 					    } else limit = 11
+					    if (yt6.live) limit = 2 * limit
 
-					    //console.log('retry: '+ yt6.retry +' limit:'+ limit +' current:'+ yt6.current + ' failed_itags2:'+ yt6.failed_itags2 +' failed_itags:' + yt6.failed_itags);
+					    console.log('retry: '+ yt6.retry +' limit:'+ limit +' current:'+ yt6.current + ' failed_itags2:'+ yt6.failed_itags2 +' failed_itags:' + yt6.failed_itags);
 
 
 					    if ( yt6.retry >= limit) if (yt6.failed_itags2 < 5) { yt6.retry = 0; yt6.failed_itags = []; yt6.failed_itags2++ } else { }//autoplay(false) && 
@@ -11677,6 +11682,7 @@ function mep_run() {
 
 						var itag_ = (!yt6.failed_itags[yt6.failed_itags.length-1] || limit.length < 2) ? 1*itag(me.src) : yt6.fmts_fallback_uniq[(yt6.fmts_fallback_uniq.indexOf(1 * yt6.failed_itags[yt6.failed_itags.length-1]) + 1)]
 
+					      if (!yt6.live && yt6.retry % 2 != 0) {
 					      //console.log(yt6.fmts_fallback_uniq); console.log(itag_)
 					      for(j=0;j<yt6.fmts_fallback_uniq.length;j++){
 						if (yt6.fmts_fallback_uniq[j] == itag_ ) {
@@ -11737,6 +11743,8 @@ function mep_run() {
 						  }
 					        }
 					      }
+					      } else if (yt6.live) { var x = yt6.current, itag_ = yt6.current; if (itag_ == 241) itag_ = 278  }
+
 					      if (!dash) dash = gid(mep_x('mep_') + '_sourcechooser_' +  x); //console.log(itag_+' '+yt6.linx[itag_])
 
 					      if (dash && itag_) {
@@ -11950,7 +11958,7 @@ function mep_run() {
 					    if (me.currentTime != 0) {
 						var ct = clone(me.currentTime); yt6.ct = ct
 						yt6.player1.setCurrentTime(0.1);
-						try {
+						if (yt6.browser_tab == 'visible') try {
 						  yt6.player1.load();
 						  yt6.player2.setSrc(me.src);
 						  yt6.player2.media.load();
@@ -12533,7 +12541,8 @@ function mep_run() {
 					  } else {//live broadcast
 					      function resync_live(){
 						if (yt6.live && typeof yt6.live == 'number') { yt6.live = (yt6.live + 1); //console.log(yt6.live)
-						  if (gid('yt6-mpd')) { gid('yt6-mpd').innerHTML = 'DASH Manifest ... last sq=' + yt6.live; gid('yt6-mpd').sq = yt6.live }
+						  var z = gid('yt6-mpd')
+						  if ( z && yt6.live > z.sq ) { z.innerHTML = 'DASH Manifest ... last sq=' + yt6.live; z.sq = clone(yt6.live) }
 						  if (typeof me.src == 'string') me.src1 = me.src.split('&sq=')[0] + '&sq=' + yt6.live
 						  if (typeof player2.src == 'string') me.src2 = player2.src.split('&sq=')[0] + '&sq=' + yt6.live
 						} else {
