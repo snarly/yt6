@@ -11652,7 +11652,7 @@ function mep_run() {
 					    } else limit = 11
 					    if (yt6.live) limit = 2 * limit
 
-					    console.log('retry: '+ yt6.retry +' limit:'+ limit +' current:'+ yt6.current + ' failed_itags2:'+ yt6.failed_itags2 +' failed_itags:' + yt6.failed_itags);
+					    //console.log('retry: '+ yt6.retry +' limit:'+ limit +' current:'+ yt6.current + ' failed_itags2:'+ yt6.failed_itags2 +' failed_itags:' + yt6.failed_itags);
 
 
 					    if ( yt6.retry >= limit) if (yt6.failed_itags2 < 5) { yt6.retry = 0; yt6.failed_itags = []; yt6.failed_itags2++ } else { }//autoplay(false) && 
@@ -11682,7 +11682,8 @@ function mep_run() {
 
 						var itag_ = (!yt6.failed_itags[yt6.failed_itags.length-1] || limit.length < 2) ? 1*itag(me.src) : yt6.fmts_fallback_uniq[(yt6.fmts_fallback_uniq.indexOf(1 * yt6.failed_itags[yt6.failed_itags.length-1]) + 1)]
 
-					      if (!yt6.live && yt6.retry % 2 != 0) {
+					      if (!(yt6.live && yt6.retry % 6 < 5)) { // leave some room for decoding errors in higher resolution live streams
+
 					      //console.log(yt6.fmts_fallback_uniq); console.log(itag_)
 					      for(j=0;j<yt6.fmts_fallback_uniq.length;j++){
 						if (yt6.fmts_fallback_uniq[j] == itag_ ) {
@@ -11694,6 +11695,7 @@ function mep_run() {
 						      var itag_ = yt6.fmts_fallback_uniq[k]; if (itag_ == 241) itag_ = 278; //console.log(k +' '+ itag_)
 						      //if (yt6.md && yt6.browser_tab == 'hidden' && (Array.isArray(yt6.yt_otf) && typeof yt6.yt_otf[itag_] != 'undefined')) { yt6.failed_itags.push(itag_); continue }
 						      var dash = gid(mep_x('mep_') + '_sourcechooser_' + itag_); //console.log(dash)
+						      if (yt6.live && dash && itag_ < 103) continue
 						      if (!dash && !yt6.fmts_fallback.V[yt6.prefer_fmt].includes(itag_)) { yt6.failed_itags.push(itag_); //itag_ = qual[itag_]['a'];
 							dash = gid(mep_x('mep_') + '_sourcechooser_' + qual[itag_]['a'])
 						      }
@@ -11726,6 +11728,7 @@ function mep_run() {
 							  var itag_ = yt6.fmts_fallback_uniq[k]; if (itag_ == 241) itag_ = 278; //console.log(k +' '+ itag_)
 							  //if (yt6.md && yt6.browser_tab == 'hidden' && (Array.isArray(yt6.yt_otf) && typeof yt6.yt_otf[itag_] != 'undefined')) { yt6.failed_itags.push(itag_); continue }
 							  var dash = gid(mep_x('mep_') + '_sourcechooser_' + itag_); //console.log(dash)
+							  if (yt6.live && dash && itag_ < 103) continue
 							  if (!dash && !yt6.fmts_fallback.V[yt6.prefer_fmt].includes(itag_)) { yt6.failed_itags.push(itag_); //itag_ = qual[itag_]['a'];
 							    dash = gid(mep_x('mep_') + '_sourcechooser_' + qual[itag_]['a'])
 							  }
@@ -11743,7 +11746,8 @@ function mep_run() {
 						  }
 					        }
 					      }
-					      } else if (yt6.live) { var x = yt6.current, itag_ = yt6.current; if (itag_ == 241) itag_ = 278  }
+
+					      } else if (yt6.live) { var x = yt6.current, itag_ = x; if (itag_ == 241) itag_ = 278; player2.play(); me.play() }
 
 					      if (!dash) dash = gid(mep_x('mep_') + '_sourcechooser_' +  x); //console.log(itag_+' '+yt6.linx[itag_])
 
