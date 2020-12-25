@@ -2263,6 +2263,10 @@ function test_4(peek) {//console.log('test-4')
 	    if (!c[0]) { ytplayer.config = {}; ytplayer.config.args = {} }
 	    if (!c[1]) { ytplayer.config.args = {} }
 	    var c = conf('args')
+	    if (eurl.split('manifest.googlevideo')[1]) {
+	      if (!yt6.manifest.mpd && eurl.split('dash/')[1]) yt6.manifest.mpd = eurl
+	      if (!yt6.manifest.hls && eurl.split('hls_variant')[1]) yt6.manifest.hls = eurl
+	    }
 	    if (eurl && eurl.indexOf('itag') != -1) {
 	      itag = eurl.split('itag=')[1] || eurl.split('itag/')[1] || eurl.split('itag%3D')[1]
 	      itag = (itag) ? 1 * (itag.split('&')[0].split('&amp;')[0]) : null
