@@ -2263,9 +2263,10 @@ function test_4(peek) {//console.log('test-4')
 	    if (!c[0]) { ytplayer.config = {}; ytplayer.config.args = {} }
 	    if (!c[1]) { ytplayer.config.args = {} }
 	    var c = conf('args')
-	    if (eurl.split('manifest.googlevideo')[1]) {
-	      if (!yt6.manifest.mpd4 && eurl.split('dash/')[1]) yt6.manifest.mpd4 = eurl
-	      if (!yt6.manifest.hls4 && eurl.split('hls_variant')[1]) yt6.manifest.hls4 = eurl
+	    if (eurl && typeof eurl == 'string' && eurl.split('manifest.googlevideo')[1]) {
+	      if (!yt6.manifest.mpd && eurl.split('dash/')[1]) yt6.manifest.mpd = eurl
+	      if (!yt6.manifest.hls && eurl.split('hls_variant')[1]) yt6.manifest.hls = eurl
+	      continue
 	    }
 	    if (eurl && eurl.indexOf('itag') != -1) {
 	      itag = eurl.split('itag=')[1] || eurl.split('itag/')[1] || eurl.split('itag%3D')[1]
@@ -5336,8 +5337,8 @@ function ageless_verification(spfpc) { //console.log('age '+ yt6.age.v)
 	}
 
 	var z = unescape(arguments)
-	if (z.split('"dashManifestUrl":"')[1]) { yt6.manifest.mpd = z.split('"dashManifestUrl":"')[1].split('"')[0] } else if (!yt6.manifest.mpd && yt6.manifest.mpd4) yt6.manifest.mpd = yt6.manfiest.mpd4
-	if (z.split('"hlsManifestUrl":"')[1]) { yt6.manifest.hls = z.split('"hlsManifestUrl":"')[1].split('"')[0] } else if (!yt6.manifest.hls && yt6.manifest.hls4) yt6.manifest.hls = yt6.manifest.hls4
+	if (z.split('"dashManifestUrl":"')[1]) yt6.manifest.mpd = z.split('"dashManifestUrl":"')[1].split('"')[0]
+	if (z.split('"hlsManifestUrl":"')[1]) yt6.manifest.hls = z.split('"hlsManifestUrl":"')[1].split('"')[0]
 
 	if (ytplayer.config.loaded_from != 'page_source' && !yt6.ytm) ytplayer.config.loaded_from = 'video_info'
 
