@@ -2264,8 +2264,8 @@ function test_4(peek) {//console.log('test-4')
 	    if (!c[1]) { ytplayer.config.args = {} }
 	    var c = conf('args')
 	    if (eurl.split('manifest.googlevideo')[1]) {
-	      if (!yt6.manifest.mpd) if (eurl.split('dash/')[1]) { yt6.manifest.mpd = eurl; continue }
-	      if (!yt6.manifest.hls) if (eurl.split('hls_variant')[1]) { yt6.manifest.hls = eurl; continue }
+	      if (typeof yt6.manifest['mpd'] == 'undefined') if (eurl.split('dash\/')[1]) { yt6.manifest['mpd'] = clone(eurl); continue }
+	      //if (!yt6.manifest.hls) if (eurl.split('hls_variant')[1]) { yt6.manifest.hls = eurl; continue }
 	    }
 	    if (eurl && eurl.indexOf('itag') != -1) {
 	      itag = eurl.split('itag=')[1] || eurl.split('itag/')[1] || eurl.split('itag%3D')[1]
