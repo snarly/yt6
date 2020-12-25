@@ -1930,7 +1930,7 @@ yt6.tmp = ""+
 
 yt6.tmp = "yt6.durl = function(ypsi) {"+
 "var durl = Object.values(ypsi).filter(\
-  x => ((x.includes('videoplayback?') || x.includes('videoplayback%253F') || x.includes('videoplayback%3F')) && !x.includes('range=') && !x.includes('{'))\
+  x => ((x.includes('videoplayback?') || x.includes('videoplayback%253F') || x.includes('videoplayback%3F') || (!yt6.manifest.mpd && x.includes('manifest.googlevideo'))) && !x.includes('range=') && !x.includes('{'))\
 );\
 return durl }"; eval(yt6.tmp)
 
