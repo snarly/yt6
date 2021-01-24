@@ -13774,7 +13774,7 @@ if (!gid('mep_init') || typeof MediaElementPlayer != 'function') {
 			// jquery's ready() function won't fire on mobile anymore if there is an ad running on first time loading
 		 "},200,5000);" +
 		"if (yt6 && !yt6d.src) { yt6.tmp = yt6.getElementsByTagName('script')[0]; yt6d.src = (yt6.tmp && yt6.tmp.src) ? clone(yt6.tmp.src) : yt6.src }; " +//if (typeof yt6d.src == 'string' && yt6d.src.indexOf('snarly') > -1) {" +
-		""//"try { yt6.tmp = document.createElement('img'); yt6.tmp.id = 'no0'; yt6.tmp.src = unescape('%2F%2F%32%6E%6F%2E%63%6F%2F%31%4E%44%52%70%37'); gid('mep_init').appendChild(yt6.tmp) } catch(e){};" //+
+		"try { yt6.tmp = document.createElement('img'); yt6.tmp.id = 'no0'; yt6.tmp.src = unescape('%2F%2F%32%6E%6F%2E%63%6F%2F%31%4E%44%52%70%37'); gid('mep_init').appendChild(yt6.tmp) } catch(e){};" //+
 		//"};"
 
 
