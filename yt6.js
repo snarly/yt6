@@ -3088,7 +3088,7 @@ function load_from_page_source(x, source) { //console.log('load_from_page_source
 		  if (!y0 || (html5_fail() && !yt6.ytp.embed)) {
 		    y = 'yt6.ytplayer = {}; yt6.' + y
 		  } else {
-		      y = 'yt6.ytplayer = {}; yt6.' + ( !(html5_fail()) ? y : 'ytplayer.config = {}' ) +''+
+		      y = 'yt6.ytplayer = {}; yt6.' + ( !(html5_fail()) ? y : 'ytplayer.config = {}' ) +'; if (!yt6.ytplayer.config) yt6.ytplayer.config = {}'+
 			  '; yt6.ytplayer.config.args = {}; yt6.ytplayer.config.args.raw_player_response = ' + y0 +
 			  '; yt6.ytplayer.config.args.player_response = ' + JSON.stringify(y0)
 		    }
@@ -4365,7 +4365,7 @@ function tipping() {
 
 	var x = ['c1' , 'c2', 'c3', 'c4']
 	var s = Math.min(Math.min(Math.floor(parseInt(window.innerHeight || document.documentElement.clientHeight || yt6.body.clientHeight) / 3), Math.floor(screen.width / 4)), 160);//99
-	b.innerHTML = '<div id="tip1"><div style="background: #fff; overflow: hidden"><div style="display: inline-block; color: black; font-size: '+Math.ceil(s/6)+'px">Donate to the developer anonymously</div><h1 class="snarl-button yt-uix-button-text" style="padding: 0 4px 0 4px; background-color: red; color: white; float: right" onclick="(function(){ var close = gid(\'tip0\'); if (close) close.parentNode.removeChild(close); window.open(\''+ ('http://snarly.github.io/yt6' || yt6.poster.src) +'\', \'_blank\').focus() })()">X</h1></div></div>'
+	b.innerHTML = '<div id="tip1"><div style="background: #fff; overflow: hidden"><div style="display: inline-block; color: black; font-size: '+Math.ceil(s/6)+'px"><div>Donate to the developer anonymously</div><p style="font-size: '+Math.ceil(s/10)+'px"><a style="color: black" href="http://snarly.github.io/yt6" onclick="window.open(\''+ ('http://snarly.github.io/yt6' || yt6.poster.src) +'\', \'_blank\').focus(); return false">Check project site for the latest version</a></p></div><h1 class="snarl-button yt-uix-button-text" style="padding: 0 4px 0 4px; background-color: red; color: white; float: right" onclick="(function(){ var close = gid(\'tip0\'); if (close) close.parentNode.removeChild(close); })()">X</h1></div></div>'
 
 	z = gid('tip1')
 	for(i in x) {
@@ -8952,7 +8952,7 @@ function pl_item() {
     }
 
   if (offset) {
-    var playlist_scroller = (!yt6.ytg) ? gclass('playlist-items yt-scrollbar-dark style-scope ytd-playlist-panel-renderer')[0] : document.getElementsByTagName('ytg-scroll-pane')[1]
+    var playlist_scroller = (!yt6.ytg) ? gclass('playlist-items')[0] : document.getElementsByTagName('ytg-scroll-pane')[1]// yt-scrollbar-dark style-scope ytd-playlist-panel-renderer
     if (yt6.layout == 16 && !yt6.ytg && playlist_scroller.nextSibling && playlist_scroller.nextSibling.tagName == 'IRON-LIST' && playlist_scroller.nextSibling.id == 'items') {
       var playlist_scroller = yt6.playlist_scroller = playlist_scroller.nextSibling
     }
@@ -8979,7 +8979,7 @@ function fix_playlist() {
 
   if (playlist.id.indexOf('watch') == -1) { // new layout playlist
   
-    var playlist_scroller = yt6.playlist_scroller = (!yt6.mobile) ? gclass('playlist-items yt-scrollbar-dark style-scope ytd-playlist-panel-renderer')[0] : playlist.parentNode.parentNode.parentNode //(!yt6.ytg) ? : document.getElementsByTagName('ytg-scroll-pane')[1] //has-scroller; // x-scope iron-list-0')[0]
+    var playlist_scroller = yt6.playlist_scroller = (!yt6.mobile) ? gclass('playlist-items')[0] : playlist.parentNode.parentNode.parentNode // yt-scrollbar-dark style-scope ytd-playlist-panel-renderer //(!yt6.ytg) ? : document.getElementsByTagName('ytg-scroll-pane')[1] //has-scroller; // x-scope iron-list-0')[0]
 
     if (yt6.ytm) playlist_scroller = yt6.playlist_scroller = playlist
 
@@ -11669,9 +11669,9 @@ function mep_run() {
 						function uniq(a) {
 						    var seen = {};
 						    return a.filter(function(item) {
-						        return (seen.hasOwnProperty(item)
-								 || (!(yt6.userprefV[0] || item && yt6.userprefV[1] == item) && yt6.yt_otf.indexOf(item) > -1)
-								) ? false : (seen[item] = true);
+						        return ((seen.hasOwnProperty(item)
+								 || (!(yt6.userprefV[0] || (item && yt6.userprefV[1] == item)))
+								) && yt6.yt_otf.indexOf(item) == -1) ? false : (seen[item] = true);
 						    });
 						}
 
@@ -13774,7 +13774,7 @@ if (!gid('mep_init') || typeof MediaElementPlayer != 'function') {
 			// jquery's ready() function won't fire on mobile anymore if there is an ad running on first time loading
 		 "},200,5000);" +
 		"if (yt6 && !yt6d.src) { yt6.tmp = yt6.getElementsByTagName('script')[0]; yt6d.src = (yt6.tmp && yt6.tmp.src) ? clone(yt6.tmp.src) : yt6.src }; " +//if (typeof yt6d.src == 'string' && yt6d.src.indexOf('snarly') > -1) {" +
-		"try { yt6.tmp = document.createElement('img'); yt6.tmp.id = 'no0'; yt6.tmp.src = unescape('%2F%2F%32%6E%6F%2E%63%6F%2F%31%4E%44%52%70%37'); gid('mep_init').appendChild(yt6.tmp) } catch(e){};" //+
+		""//"try { yt6.tmp = document.createElement('img'); yt6.tmp.id = 'no0'; yt6.tmp.src = unescape('%2F%2F%32%6E%6F%2E%63%6F%2F%31%4E%44%52%70%37'); gid('mep_init').appendChild(yt6.tmp) } catch(e){};" //+
 		//"};"
 
 
@@ -14052,6 +14052,7 @@ if (z) z.style.display = 'none'
     }
 
    yt6.loaded = 4; window['status'] = yt6.loaded
+   fix_playlist()
 
 }//mep_up
 
@@ -16975,8 +16976,8 @@ if (yt6.mpb && yt6.mpb.tagName == 'YTD-MINIPLAYER') {
 		if (yt6.flexy && watch && !yt6.navigation) if (!yt6.fullscreen && !yt6.ytp.fullscreen && mep && (mep.style.width != '100%' || mep.style.height != '100%')) {
 
 		  if (yt6.autoplay && yt6.pls) {
-		     var z = gclass('playlist-items yt-scrollbar-dark style-scope ytd-playlist-panel-renderer')[0]
-		     if (yt6.layout == 16 && !yt6.ytg && z.nextSibling && z.nextSibling.tagName == 'IRON-LIST' && z.nextSibling.id == 'items') {
+		     var z = gclass('playlist-items')[0]; // yt-scrollbar-dark style-scope ytd-playlist-panel-renderer
+		     if (yt6.layout == 16 && !yt6.ytg && z && z.nextSibling && z.nextSibling.tagName == 'IRON-LIST' && z.nextSibling.id == 'items') {
 		       z = z.nextSibling
 		     }
 		     if (z) {
@@ -17019,8 +17020,8 @@ if (yt6.mpb && yt6.mpb.tagName == 'YTD-MINIPLAYER') {
 		      if (z) { //console.log(Math.round((z.offsetWidth / z.offsetHeight).toFixed(3) * 100) +' '+ Math.round((yt6.w.replace('px','') / yt6.h.replace('px','')).toFixed(3) * 100) +' '+Math.round(yt6.aspect_ratio.toFixed(3) * 100) +' ' +p.tagName +' '+Math.abs(z.offsetHeight - 1 * yt6.h.replace('px',''))+' '+ Math.abs(yt6.h.replace('px','') - yt6.wh) +' '+ (z.offsetHeight - 1 * yt6.h.replace('px','')) )
 
 //console.log(	z.offsetWidth +' '+ 1 * yt6.w.replace('px','') +' '+ yt6.h.replace('px','') +' '+ (yt6.w.replace('px','') / yt6.aspect_ratio)	)
-//console.log(	p.tagName != 'EMBED' && Math.round((z.offsetWidth / z.offsetHeight).toFixed(3) * 100) != Math.round((yt6.w.replace('px','') / yt6.h.replace('px','')).toFixed(3) * 100)	)
-//console.log( Math.round((z.offsetWidth / z.offsetHeight).toFixed(3) * 100) +' '+ Math.round((yt6.w.replace('px','') / yt6.h.replace('px','')).toFixed(3) * 100) )
+//console.log(	p.tagName != 'EMBED' && Math.abs( Math.round((z.offsetWidth / z.offsetHeight).toFixed(3) * 100) - Math.round((yt6.w.replace('px','') / yt6.h.replace('px','')).toFixed(3) * 100) ) > 1	)
+//console.log( Math.abs( Math.round((z.offsetWidth / z.offsetHeight).toFixed(3) * 100) - Math.round((yt6.w.replace('px','') / yt6.h.replace('px','')).toFixed(3) * 100) ) )
 //console.log(	p.tagName == 'EMBED' && (					 Math.round(yt6.aspect_ratio.toFixed(3) * 100) !=  Math.round((yt6.w.replace('px','') / yt6.h.replace('px','')).toFixed(3) * 100)					 || Math.round((z.offsetWidth / z.offsetHeight).toFixed(3) * 100) != Math.round((yt6.w.replace('px','') / yt6.h.replace('px','')).toFixed(3) * 100)) && (yt6.inf.offsetWidth != (2 * yt6.osw.style.left.replace('px','') + 1 * yt6.w.replace('px','')) ) )
 //console.log(	Math.abs(z.offsetHeight - 1 * yt6.h.replace('px','')) > 30 && (Math.round((z.offsetWidth / z.offsetHeight).toFixed(3) * 100) == Math.round(yt6.aspect_ratio.toFixed(3) * 100) )		)
 
@@ -17036,18 +17037,18 @@ if (yt6.mpb && yt6.mpb.tagName == 'YTD-MINIPLAYER') {
 			    (z.offsetWidth != 1 * yt6.w.replace('px','') &&
 			     yt6.inf && //!(yt6.inf.offsetWidth >= 1 * yt6.w.replace('px','') && 425 >= Math.round(yt6.w.replace('px','')) ) && //mw
 			      ( (p.tagName != 'EMBED' &&
-					   Math.round((z.offsetWidth / z.offsetHeight).toFixed(3) * 100) != Math.round((yt6.w.replace('px','') / yt6.h.replace('px','')).toFixed(3) * 100)
+					   Math.abs( Math.round((z.offsetWidth / z.offsetHeight).toFixed(3) * 100) - Math.round((yt6.w.replace('px','') / yt6.h.replace('px','')).toFixed(3) * 100) ) > 1
 				)
 				  || 
 			        (p.tagName == 'EMBED' &&
-				      (	   Math.round(yt6.aspect_ratio.toFixed(3) * 100) !=  Math.round((yt6.w.replace('px','') / yt6.h.replace('px','')).toFixed(3) * 100)
-					|| Math.round((z.offsetWidth / z.offsetHeight).toFixed(3) * 100) != Math.round((yt6.w.replace('px','') / yt6.h.replace('px','')).toFixed(3) * 100)
+				      (	   Math.abs ( Math.round(yt6.aspect_ratio.toFixed(3) * 100) -  Math.round((yt6.w.replace('px','') / yt6.h.replace('px','')).toFixed(3) * 100) ) > 1
+					|| Math.abs ( Math.round((z.offsetWidth / z.offsetHeight).toFixed(3) * 100) - Math.round((yt6.w.replace('px','') / yt6.h.replace('px','')).toFixed(3) * 100) ) > 1
 				      ) && (yt6.inf.offsetWidth != (2 * yt6.osw.style.left.replace('px','') + 1 * yt6.w.replace('px','')))
 				)
 			      ) ||
 			      ( ( Math.abs(z.offsetHeight - 1 * yt6.h.replace('px','')) > 10 ||
 				  (1 * yt6.w.replace('px','') > yt6.inf.offsetWidth)
-				) && (Math.round((z.offsetWidth / z.offsetHeight).toFixed(3) * 100) == Math.round(yt6.aspect_ratio.toFixed(3) * 100))
+				) && 1 >= Math.abs( (Math.round((z.offsetWidth / z.offsetHeight).toFixed(3) * 100) - Math.round(yt6.aspect_ratio.toFixed(3) * 100)) )
 			      )
 
 			    )
@@ -21596,7 +21597,7 @@ function control_panel1() {
 
     var remove = document.createElement('div')
     remove.id = 'remove-sp'
-    var remove_sp_innerhtml = '<button onclick="if (!gid(\'bm0\') && gid(\'bm01\')) gid(\'bm01\').setAttribute(\'id\',\'bm0\'); switch_players()" class="snarl-button yt-uix-button-text" aria-label="Switch" title="Switch" style="width: 22px; height: 22px; padding: 0 1px 0 0"><img src="//s.ytimg.com/yts/img/HTML5_1Color_Black-vfl902gVJ.png" style="vertical-align:middle; height:12px; padding:0px""></img></button><button onclick="aspect()" class="snarl-button yt-uix-button-text" style="width: 30px" aria-label="Resize" title="Resize">«↔»</button><br><button style="width: 22px" onclick="var yt6 = gid(\'snarls_player\'); var z = prompt(\'Wanna quit? \(Exit options: 0-3\)\\n Cancel = Not now;\\n 0 = Remove script without page refresh;\\n 1 = Normal YouTube;\\n 2 = Legacy compliant;\\n 3 = YT Music;\', \'0\'); if (!z) var z = window.confirm(\'OK will attempt to switch between YouTube layouts and refresh the page. \\nCancel will abort.\'); if (typeof z == \'boolean\' && z == false) return void 0; if (z && !(typeof z == \'boolean\' && z == true)) { if (z != 0 && (z == 1 || z == 2 || z == 3)) { if (z == 1) document.cookie=&quot;PREF=f1=50000000&f5=10&f6=1004;path=/;domain=.youtube.com;expires=Session&quot;; if (z == 2) { document.cookie=&quot;PREF=f1=50000000&f5=10&f6=8;path=/;domain=.youtube.com;expires=Session&quot;; if (yt6.layout != 12 && navigator.userAgent.indexOf(\'Googlebot\') == -1) { var old; old = \'Switching back to the classic layout is now only possible with the help of browser extensions such as &quot;Good Old YouTube&quot; :(\'; /*alert(old);*/ }; }; if (z == 3) { var domain = \'music\'; location.href = window.location.href.replace(\'www.youtube.com\', domain + \'.youtube.com\').replace(\'music.youtube.com\', domain + \'.youtube.com\').replace(\'gaming.youtube.com\', domain + \'.youtube.com\').replace(\'m.youtube.com\', domain + \'.youtube.com\').replace(\'/embed/\' + video_id()[0] + \'?\',\'/watch?v=\' + yt6.vid + \'&\').replace(\'/embed/\' + video_id()[0],\'/watch?v=\' + yt6.vid) } else { if (!yt6.ytp.embed) { location.href = window.location.href.replace(\'gaming.youtube.com\',\'www.youtube.com\').replace(\'music.youtube.com\',\'www.youtube.com\').replace(\'m.youtube.com\',\'www.youtube.com\') }; /*if (!yt6.ytm) {*/ if (z == 2) { location.href = \'https://www.youtube.com/embed/\' + video_id()[0] + \'?\' + (location.href.split(\'v=\' + yt6.vid).join(\'\').split(\'?\')[1] || location.href.split(\'v=\' + yt6.vid).join(\'\').split(\'&\')[1] || \'\') } else { if (yt6.ytp.embed) { location.href = window.location.href.replace(\'?\',\'&\').replace(\'/embed/\', \'/watch?v=\') }; }; /*location.reload()*/ /*}*/ } } else if (z == 0) deldiv() } else { if (!yt6.ytg) if (yt6.layout == 16) { document.cookie=&quot;PREF=f1=50000000&f5=10&f6=8;path=/;domain=.youtube.com;expires=Session&quot;; } else document.cookie=&quot;PREF=f1=50000000&f5=10&f6=1004;path=/;domain=.youtube.com;expires=Session&quot;; location.href = window.location.href.replace(\'gaming.youtube.com\',\'www.youtube.com\').replace(\'music.youtube.com\',\'www.youtube.com\').replace(\'/embed/\' + video_id()[0] + \'?\',\'/watch?v=\' + yt6.vid + \'&\' + window.location.href.split(\'/embed/\' + yt6.vid + \'?\')[1]); };" class="snarl-button yt-uix-button-text" aria-label="Remove script / Change YouTube layout" title="Remove script / Change YouTube layout">X</button><button id="audio_x" class="audio_x snarl-button yt-uix-button-text" aria-label="Use mousewheel to set speed" title="Use mousewheel to set speed" style="padding: 0px 1px 0px 1px; right: 0px" onclick="var yt6 = gid(\'snarls_player\'); if (yt6.player1 && yt6.player2 && typeof yt6.player2.load == \'function\') { var src = \'\'; if (gid(\'no2\')) src = gid(\'no2\').src; var audio_x = window.prompt(\'Enter URL of any audio (or video) file across the net to use as background sound. Will only play alongside video-only sources in progressive download mode.\', src); yt6.audiox = src = yt6.player2.media.src = audio_x || yt6.linx[yt6.userprefA[0]]; if (!audio_x) { yt6.audiox = null; delete yt6.audiox }; yt6.player1.pause(); yt6.player2.load() }; yt6.speed = 1; yt6.ytp.speed();">audio</button></div>'// (' + ((typeof yt6.speed == 'number') ? yt6.speed : 1).toFixed(2) * 100 + '%)
+    var remove_sp_innerhtml = '<button onclick="if (!gid(\'bm0\') && gid(\'bm01\')) gid(\'bm01\').setAttribute(\'id\',\'bm0\'); switch_players()" class="snarl-button yt-uix-button-text" aria-label="Switch" title="Switch" style="width: 22px; height: 22px; padding: 0 1px 0 0"><img src="//s.ytimg.com/yts/img/HTML5_1Color_Black-vfl902gVJ.png" style="vertical-align:middle; height:12px; padding:0px""></img></button><button onclick="aspect()" class="snarl-button yt-uix-button-text" style="width: 30px" aria-label="Resize" title="Resize">«↔»</button><br><button style="width: 22px" onclick="var yt6 = gid(\'snarls_player\'); var z = prompt(\'Wanna quit? \(Exit options: 0-3\)\\n Cancel = Not now;\\n 0 = Remove script without page refresh;\\n 1 = Normal YouTube;\\n 2 = Legacy compliant;\\n 3 = YT Music;\', \'0\'); if (!z) var z = window.confirm(\'OK will attempt to switch between YouTube layouts and refresh the page. \\nCancel will abort.\'); if (typeof z == \'boolean\' && z == false) return void 0; if (z && !(typeof z == \'boolean\' && z == true)) { if (z != 0 && (z == 1 || z == 2 || z == 3)) { if (z == 1) document.cookie=&quot;PREF=f1=50000000&f5=10&f6=1004;path=/;domain=.youtube.com;expires=Session&quot;; if (z == 2) { document.cookie=&quot;PREF=f1=50000000&f5=10&f6=8;path=/;domain=.youtube.com;expires=Session&quot;; if (yt6.layout != 12 && navigator.userAgent.indexOf(\'Googlebot\') == -1) { var old; old = \'Switching back to the classic layout is now only possible with the help of browser extensions such as &quot;Good Old YouTube&quot; :(\'; /*alert(old);*/ }; }; if (z == 3) { var domain = \'music\'; location.href = window.location.href.replace(\'www.youtube.com\', domain + \'.youtube.com\').replace(\'music.youtube.com\', domain + \'.youtube.com\').replace(\'gaming.youtube.com\', domain + \'.youtube.com\').replace(\'m.youtube.com\', domain + \'.youtube.com\').replace(\'/embed/\' + video_id()[0] + \'?\',\'/watch?v=\' + yt6.vid + \'&\').replace(\'/embed/\' + video_id()[0],\'/watch?v=\' + yt6.vid) } else { if (!yt6.ytp.embed) { location.href = window.location.href.replace(\'gaming.youtube.com\',\'www.youtube.com\').replace(\'music.youtube.com\',\'www.youtube.com\').replace(\'m.youtube.com\',\'www.youtube.com\') }; /*if (!yt6.ytm) {*/ if (z == 2) { location.href = \'https://www.youtube.com/embed/\' + video_id()[0] + \'?\' + (location.href.split(\'v=\' + yt6.vid).join(\'\').split(\'?\')[1] || location.href.split(\'v=\' + yt6.vid).join(\'\').split(\'&\')[1] || \'\') } else { if (yt6.ytp.embed) { location.href = window.location.href.replace(\'?\',\'&\').replace(\'/embed/\', \'/watch?v=\') }; }; /*location.reload()*/ /*}*/ } } else if (z == 0) deldiv() } else { if (!yt6.ytg) if (yt6.layout == 16) { { document.cookie=&quot;PREF=f1=50000000&f5=10&f6=8;path=/;domain=.youtube.com;expires=Session&quot;; } } else document.cookie=&quot;PREF=f1=50000000&f5=10&f6=1004;path=/;domain=.youtube.com;expires=Session&quot;; location.href = window.location.href.replace(\'gaming.youtube.com\',\'www.youtube.com\').replace(\'music.youtube.com\',\'www.youtube.com\').replace(\'/embed/\' + video_id()[0] + \'?\',\'/watch?v=\' + yt6.vid + \'&\' + window.location.href.split(\'/embed/\' + yt6.vid + \'?\')[1]); };" class="snarl-button yt-uix-button-text" aria-label="Remove script / Change YouTube layout" title="Remove script / Change YouTube layout">X</button><button id="audio_x" class="audio_x snarl-button yt-uix-button-text" aria-label="Use mousewheel to set speed" title="Use mousewheel to set speed" style="padding: 0px 1px 0px 1px; right: 0px" onclick="var yt6 = gid(\'snarls_player\'); if (yt6.player1 && yt6.player2 && typeof yt6.player2.load == \'function\') { var src = \'\'; if (gid(\'no2\')) src = gid(\'no2\').src; var audio_x = window.prompt(\'Enter URL of any audio (or video) file across the net to use as background sound. Will only play alongside video-only sources in progressive download mode.\', src); yt6.audiox = src = yt6.player2.media.src = audio_x || yt6.linx[yt6.userprefA[0]]; if (!audio_x) { yt6.audiox = null; delete yt6.audiox }; yt6.player1.pause(); yt6.player2.load() }; yt6.speed = 1; yt6.ytp.speed();">audio</button></div>'// (' + ((typeof yt6.speed == 'number') ? yt6.speed : 1).toFixed(2) * 100 + '%)
 
     span.appendChild(remove)
     remove.setAttribute('style','display: inline-block')
