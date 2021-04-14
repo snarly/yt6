@@ -59,10 +59,10 @@
 
 
 	<h3>
-	<a href="javascript:(function(){var v='23383e960ffb5bcdb8c4735169a4148e049c12c6/yt6.js',w=window,d=w.document,h=d.location.href,yt6=w.yt6||{},yt6d=w.yt6d||{};if(yt6d.loaded>=4)return void 0;if(h.split('youtube.com/watch')[1]||h.split('youtube.com/embed')[1]||h.split('/base.j')[1]=='s'){var id='snarls_player',e='script',q;yt6.loaded=0;function s(x){x=x||id;return d.getElementById(x)};function c(e){return d.createElement(e)};function a(q){s().appendChild(q);s().add_subs='en,hu,de';yt6d.src=q.src};function r(){if(s()){var x;try{x=s().querySelector('#'+id)}catch(e){x=s().firstChild};if(x)s().removeChild(x)}};function b(){var i,j,o,x;o=['.githack','git','js'];for(j,x,i=o.length;i;j=Math.floor(Math.random()*i),x=o[--i],o[i]=o[j],o[j]=x);if(yt6d.src!=1)o.splice(0,0,'.githubusercontent');q=c('div');q.id=id;if(q!=s())d.body.appendChild(q);var src='https://raw'+o[0]+'.com/snarly/yt6/'+v,src0='https://cdn.jsdelivr.net/gh/snarly/yt6@'+v;function oc(ox,oy,sr){return(oy!='js')?sr.replace(ox,oy):src0};q=c(e);q.id=id;q.src=(o[0]!='js')?src:src0;q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[1],src);q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[2],src);q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[3],src);q.onerror=function(){q=c(e);q.id=id;q.src=src.replace('https','http')};a(q);r();};a(q);r();};a(q);r();};try{a(q);}catch(f){a(q)};};function g(){try{deldiv()}catch(f){r()};yt6d.src=1;b()};if(!s()){b()};setTimeout(function(){var t=w.yt6;if(t)t.loaded=t.loaded||window['status'];if(!t||(t&&(!t.body||(t.loaded<3))))g()},3000);}else{void 0};})()/*202101240630*/">Yt6 -- Snarl's YouTube Video Player (bookmarklet)</a>
+	<a href="javascript:(function(){var v='c33a81112932e1ba43a09ef2f0ca4e440020caf6/yt6.js',w=window,d=w.document,h=d.location.href,yt6=w.yt6||{},yt6d=w.yt6d||{};if(yt6d.loaded>=4)return void 0;if(h.split('youtube.com/watch')[1]||h.split('youtube.com/embed')[1]||h.split('/base.j')[1]=='s'){var id='snarls_player',e='script',q;yt6.loaded=0;function s(x){x=x||id;return d.getElementById(x)};function c(e){return d.createElement(e)};function a(q){s().appendChild(q);s().add_subs='en,hu,de';yt6d.src=q.src};function r(){if(s()){var x;try{x=s().querySelector('#'+id)}catch(e){x=s().firstChild};if(x)s().removeChild(x)}};function b(){var i,j,o,x;o=['.githack','git','js'];for(j,x,i=o.length;i;j=Math.floor(Math.random()*i),x=o[--i],o[i]=o[j],o[j]=x);if(yt6d.src!=1)o.splice(0,0,'.githubusercontent');q=c('div');q.id=id;if(q!=s())d.body.appendChild(q);var src='https://raw'+o[0]+'.com/snarly/yt6/'+v,src0='https://cdn.jsdelivr.net/gh/snarly/yt6@'+v;function oc(ox,oy,sr){return(oy!='js')?sr.replace(ox,oy):src0};q=c(e);q.id=id;q.src=(o[0]!='js')?src:src0;q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[1],src);q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[2],src);q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[3],src);q.onerror=function(){q=c(e);q.id=id;q.src=src.replace('https','http')};a(q);r();};a(q);r();};a(q);r();};try{a(q);}catch(f){a(q)};};function g(){try{deldiv()}catch(f){r()};yt6d.src=1;b()};if(!s()){b()};setTimeout(function(){var t=w.yt6;if(t)t.loaded=t.loaded||window['status'];if(!t||(t&&(!t.body||(t.loaded<3))))g()},3000);}else{void 0};})()/*202104140310*/">Yt6 -- Snarl's YouTube Video Player (bookmarklet)</a>
 	</h3>
 	<h4>
-		Last updated on Jan 24, 2021 06:30
+		Last updated on Apr 14, 2021 03:10
 	</h4>
 		(Please check back from time to time to try the latest version, and if it works well, dump the 
 older ones. It may be crucial regarding its functionality.)
@@ -95,33 +95,31 @@ older ones. It may be crucial regarding its functionality.)
 		<li class="feat">bypass age verification (only if video embedding is enabled by the content owner); 
 		<ol>
 		Examples: <a href="https://www.youtube.com/watch?v=07FYdnEawAQ)">Tunnel Vision (signatures encrypted)</a>, <a href="https://www.youtube.com/watch?v=UqPsrqpwLmU">Cobra (signatures unencrypted)</a><br>
-		If you encounter videos like these on a playlist (while also being logged out or 
-		ineligible to watch), the site's new layout will automatically throw you to the next 
-		entry -- the script, however, will retain the age-restricted video's data and let you 
-		continue to play it until it ends or you push the "next" button, upon which events the 
-		video data for the current page should load,
+		Since the end of 2020, videos with stronger copyright protection (1st example), are 
+		no longer playable in embedded frames, so the script won't work on them either. On 
+		playlists, the new layout will automatically throw you to the next entry, the script 
+		however will (try to) retain the age-restricted video's data and let you continue to play 
+		it until it ends or you push the "next" button, upon which events the video data for the 
+		current page should load,
 		</ol>
 		</li>
 		<li class="feat">facilitate background play while your mobile is in sleep mode (experimental)</li>
 		<li class="feat">change between YouTube layouts by setting the cookie on exit no longer works :( 
 		<ol>
-		YouTube stopped honoring the setting in July 2020 -- use a suitable browser 
-		extension such as <div style="background-color: orange; display: inline-block">Good Old YouTube</div> (for <a href="https://addons.mozilla.org/en/firefox/addon/good-old-youtube/">Firefox</a> and <a href="https://chrome.google.com/webstore/detail/good-old-youtube/klkejolkjcefmocpgpjiefbpmgofahmh">Chrome</a>) or <div style="background-color: orange; display: inline-block">Old YouTube</div> (for <a href="https://addons.mozilla.org/en-US/firefox/addon/old-youtube/">Firefox</a>) if you want the 
-		classic layout back.<br>
-		Meanwhile, YT's spf js has also been deliberately deactivated, which means all 
-		navigation on the old UI will now draw a full page refresh, making the site's -- not to 
-		mention the script's -- usage feel thoroughly impractical and outdated. This issue can 
-		be fixed though. More about it in the Classic YouTube layout fix section below.
+		YouTube stopped honoring the setting in July 2020 and shut down its classic layout for good early December. Browser 
+		extensions such as <b><strong>Good Old YouTube</strong></b> (for <a href="https://addons.mozilla.org/en/firefox/addon/good-old-youtube/">Firefox</a> and <a href="https://chrome.google.com/webstore/detail/good-old-youtube/klkejolkjcefmocpgpjiefbpmgofahmh">Chrome</a>) or <b><strong>Old YouTube</strong></b> (for <a href="https://addons.mozilla.org/en-US/firefox/addon/old-youtube/">Firefox</a>) are useless now, since the site simply won't produces the old-style html code anymore.<br>
+		I wrote a userscript that partially restores it though. See the <a href="#classic_layout">YouTube Classic layout</a> section for details.
 		</ol>
 		</li>
 	</ol>
 	<br>
 		Keep in mind that this is not a browser extension. If anything, it's an extension of the 
-		YouTube video page. Any event resulting in a browser page refresh -- such as leaving the 
-		current YT subdomain, typing URLs directly to the address bar instead of following links, 
-		or even just navigating between two points in your browsing history where a full page 
-		refresh happened once already -- will cause the program code to be removed from 
-		memory and you would need to reload it.
+		YouTube video page. Any event resulting in a browser page refresh such as<br>
+		 - leaving the current YT subdomain, <br>
+		 - typing URLs directly to the address bar (instead of following links), <br>
+		 - or even just navigating between two points in your browsing history where a full page 
+		refresh has already taken place <br>
+		will cause the program code to be removed from memory and you would need to reload it.
 	<br><br>
 
 	<h1>
@@ -148,7 +146,7 @@ older ones. It may be crucial regarding its functionality.)
 	<br>
 	<p>
 	<code>
-		javascript:(function(){var v='23383e960ffb5bcdb8c4735169a4148e049c12c6/yt6.js',w=window,d=w.document,h=d.location.href,yt6=w.yt6||{},yt6d=w.yt6d||{};if(yt6d.loaded>=4)return void 0;if(h.split('youtube.com/watch')[1]||h.split('youtube.com/embed')[1]||h.split('/base.j')[1]=='s'){var id='snarls_player',e='script',q;yt6.loaded=0;function s(x){x=x||id;return d.getElementById(x)};function c(e){return d.createElement(e)};function a(q){s().appendChild(q);s().add_subs='en,hu,de';yt6d.src=q.src};function r(){if(s()){var x;try{x=s().querySelector('#'+id)}catch(e){x=s().firstChild};if(x)s().removeChild(x)}};function b(){var i,j,o,x;o=['.githack','git','js'];for(j,x,i=o.length;i;j=Math.floor(Math.random()*i),x=o[--i],o[i]=o[j],o[j]=x);if(yt6d.src!=1)o.splice(0,0,'.githubusercontent');q=c('div');q.id=id;if(q!=s())d.body.appendChild(q);var src='https://raw'+o[0]+'.com/snarly/yt6/'+v,src0='https://cdn.jsdelivr.net/gh/snarly/yt6@'+v;function oc(ox,oy,sr){return(oy!='js')?sr.replace(ox,oy):src0};q=c(e);q.id=id;q.src=(o[0]!='js')?src:src0;q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[1],src);q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[2],src);q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[3],src);q.onerror=function(){q=c(e);q.id=id;q.src=src.replace('https','http')};a(q);r();};a(q);r();};a(q);r();};try{a(q);}catch(f){a(q)};};function g(){try{deldiv()}catch(f){r()};yt6d.src=1;b()};if(!s()){b()};setTimeout(function(){var t=w.yt6;if(t)t.loaded=t.loaded||window['status'];if(!t||(t&&(!t.body||(t.loaded<3))))g()},3000);}else{void 0};})()/*202101240630*/
+		javascript:(function(){var v='c33a81112932e1ba43a09ef2f0ca4e440020caf6/yt6.js',w=window,d=w.document,h=d.location.href,yt6=w.yt6||{},yt6d=w.yt6d||{};if(yt6d.loaded>=4)return void 0;if(h.split('youtube.com/watch')[1]||h.split('youtube.com/embed')[1]||h.split('/base.j')[1]=='s'){var id='snarls_player',e='script',q;yt6.loaded=0;function s(x){x=x||id;return d.getElementById(x)};function c(e){return d.createElement(e)};function a(q){s().appendChild(q);s().add_subs='en,hu,de';yt6d.src=q.src};function r(){if(s()){var x;try{x=s().querySelector('#'+id)}catch(e){x=s().firstChild};if(x)s().removeChild(x)}};function b(){var i,j,o,x;o=['.githack','git','js'];for(j,x,i=o.length;i;j=Math.floor(Math.random()*i),x=o[--i],o[i]=o[j],o[j]=x);if(yt6d.src!=1)o.splice(0,0,'.githubusercontent');q=c('div');q.id=id;if(q!=s())d.body.appendChild(q);var src='https://raw'+o[0]+'.com/snarly/yt6/'+v,src0='https://cdn.jsdelivr.net/gh/snarly/yt6@'+v;function oc(ox,oy,sr){return(oy!='js')?sr.replace(ox,oy):src0};q=c(e);q.id=id;q.src=(o[0]!='js')?src:src0;q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[1],src);q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[2],src);q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[3],src);q.onerror=function(){q=c(e);q.id=id;q.src=src.replace('https','http')};a(q);r();};a(q);r();};a(q);r();};try{a(q);}catch(f){a(q)};};function g(){try{deldiv()}catch(f){r()};yt6d.src=1;b()};if(!s()){b()};setTimeout(function(){var t=w.yt6;if(t)t.loaded=t.loaded||window['status'];if(!t||(t&&(!t.body||(t.loaded<3))))g()},3000);}else{void 0};})()/*202104140310*/
 	</code>
 	</p>
 	<p>__</p>
@@ -160,32 +158,29 @@ older ones. It may be crucial regarding its functionality.)
 	<br><br>
 		<b><strong>On mobile, tap the browser's URL-address bar first </strong></b> (NOT the YouTube search bar!). 
 		After that, the browser should suggest it as an available option once you start <b><strong>typing</strong></b> either 
-		<b><strong>its name</strong></b> ("Yt6" or whatever you named it) or the prefix "javascript:" to narrow down the 
-		search to bookmarklets only. <b><strong>Tapping on the correct entry</strong></b> shall initiate the call.
+		<b><strong>its name</strong></b> ("Yt6" or whatever you named it) or the prefix "javascript:" to narrow the 
+		search down to bookmarklets only. <b><strong>Tapping on the correct entry</strong></b> shall initiate the call.
 	<br><br>
 		Automatic playback depends on the state of YouTube's own "Repeat / Loop Playlist" 
-		button on user-created playlists. 
+		(the circular arrows) button on user-created playlists. 
 	<br><br>
 		Use the HTML5 emblem on the control panel to switch between the native and this 
 		alternative player.
 	<br><br>
-		It is also possible to use the bookmarklet code (minus the "javascript:" header) as a 
-		<b><strong>userscript</strong></b> with addons like
+		It is possible to use the bookmarklet code (minus the "javascript:" header) as a 
+		userscript with addons like
 	<ol>
-		<div style="background-color:orange; display: inline-block">Greasemonkey</div> (for <a href="https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/">Firefox</a>),<br>
-		<div style="background-color:orange; display: inline-block">Tampermonkey</div> (for <a href="https://addons.mozilla.org/en-US/firefox/addon/tampermonkey/">Firefox</a>, <a href="https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo">Chrome</a>, <a href="https://microsoftedge.microsoft.com/addons/detail/tampermonkey/iikmkjmpaadaobahmlepeloendndfphd">Edge</a> and <a href="https://addons.opera.com/hu/extensions/details/tampermonkey-beta/">Opera</a>) or <br>
-		<div style="background-color:orange; display: inline-block">Violentmonkey</div> (for <a href="https://addons.mozilla.org/en-US/firefox/addon/violentmonkey/">Firefox</a>, <a href=" https://chrome.google.com/webstore/detail/violentmonkey/jinjaccalgkegednnccohejagnlnfdag">Chrome</a> and <a href="https://microsoftedge.microsoft.com/addons/detail/violentmonkey/eeagobfjdenkkddmbclomhiblgggliao">Edge</a>)<br>
+		<b><strong>Greasemonkey</strong></b> (for <a href="https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/">Firefox</a>),<br>
+		<b><strong>Tampermonkey</strong></b> (for <a href="https://addons.mozilla.org/en-US/firefox/addon/tampermonkey/">Firefox</a>, <a href="https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo">Chrome</a>, <a href="https://microsoftedge.microsoft.com/addons/detail/tampermonkey/iikmkjmpaadaobahmlepeloendndfphd">Edge</a> and <a href="https://addons.opera.com/hu/extensions/details/tampermonkey-beta/">Opera</a>) or <br>
+		<b><strong>Violentmonkey</strong></b> (for <a href="https://addons.mozilla.org/en-US/firefox/addon/violentmonkey/">Firefox</a>, <a href=" https://chrome.google.com/webstore/detail/violentmonkey/jinjaccalgkegednnccohejagnlnfdag">Chrome</a> and <a href="https://microsoftedge.microsoft.com/addons/detail/violentmonkey/eeagobfjdenkkddmbclomhiblgggliao">Edge</a>)<br>
 	</ol>
-	<ol style="font-size: 13px; display: none">
-		<div style="color: red; display: inline-block">Notice:</div> Firefox is not the only browser affected by possible malfunction if the userscript finishes loading 
-		before some important YouTube page elements could. I've added <b><strong>1000ms idle time</strong></b> before the call to the 
-		main script. If your computer is too slow, you can up the value.<br>
-	</ol>
+		However I would not recommend to use it this way, because all it does is save you the time of one or two clicks/taps, while it may cause undesirable network traffic in case of an error.
+	<br><br>
 
 <pre>// ==UserScript==
 // @name         Yt6 -- Snarl's YouTube Video Player (userscript)
 // @namespace    yt6
-// @version      202101240630
+// @version      202104140310
 // @author       Snarl
 // @description  Auto-Load Yt6 script as soon as possible
 // @match        https://*.youtube.com/watch*
@@ -204,8 +199,8 @@ older ones. It may be crucial regarding its functionality.)
   var idle_time = 1000 // wait some time before running the bookmarklet part
 
   var onComplete = function(){setTimeout( //javascript:(
-    function(){var v='23383e960ffb5bcdb8c4735169a4148e049c12c6/yt6.js',w=window,d=w.document,h=d.location.href,yt6=w.yt6||{},yt6d=w.yt6d||{};if(yt6d.loaded>=4)return void 0;if(h.split('youtube.com/watch')[1]||h.split('youtube.com/embed')[1]||h.split('/base.j')[1]=='s'){var id='snarls_player',e='script',q;yt6.loaded=0;function s(x){x=x||id;return d.getElementById(x)};function c(e){return d.createElement(e)};function a(q){s().appendChild(q);s().add_subs='en,hu,de';yt6d.src=q.src};function r(){if(s()){var x;try{x=s().querySelector('#'+id)}catch(e){x=s().firstChild};if(x)s().removeChild(x)}};function b(){var i,j,o,x;o=['.githack','git','js'];for(j,x,i=o.length;i;j=Math.floor(Math.random()*i),x=o[--i],o[i]=o[j],o[j]=x);if(yt6d.src!=1)o.splice(0,0,'.githubusercontent');q=c('div');q.id=id;if(q!=s())d.body.appendChild(q);var src='https://raw'+o[0]+'.com/snarly/yt6/'+v,src0='https://cdn.jsdelivr.net/gh/snarly/yt6@'+v;function oc(ox,oy,sr){return(oy!='js')?sr.replace(ox,oy):src0};q=c(e);q.id=id;q.src=(o[0]!='js')?src:src0;q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[1],src);q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[2],src);q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[3],src);q.onerror=function(){q=c(e);q.id=id;q.src=src.replace('https','http')};a(q);r();};a(q);r();};a(q);r();};try{a(q);}catch(f){a(q)};};function g(){try{deldiv()}catch(f){r()};yt6d.src=1;b()};if(!s()){b()};setTimeout(function(){var t=w.yt6;if(t)t.loaded=t.loaded||window['status'];if(!t||(t&&(!t.body||(t.loaded<3))))g()},3000);}else{void 0};}
-    //)()/*202101240630*/
+    function(){var v='c33a81112932e1ba43a09ef2f0ca4e440020caf6/yt6.js',w=window,d=w.document,h=d.location.href,yt6=w.yt6||{},yt6d=w.yt6d||{};if(yt6d.loaded>=4)return void 0;if(h.split('youtube.com/watch')[1]||h.split('youtube.com/embed')[1]||h.split('/base.j')[1]=='s'){var id='snarls_player',e='script',q;yt6.loaded=0;function s(x){x=x||id;return d.getElementById(x)};function c(e){return d.createElement(e)};function a(q){s().appendChild(q);s().add_subs='en,hu,de';yt6d.src=q.src};function r(){if(s()){var x;try{x=s().querySelector('#'+id)}catch(e){x=s().firstChild};if(x)s().removeChild(x)}};function b(){var i,j,o,x;o=['.githack','git','js'];for(j,x,i=o.length;i;j=Math.floor(Math.random()*i),x=o[--i],o[i]=o[j],o[j]=x);if(yt6d.src!=1)o.splice(0,0,'.githubusercontent');q=c('div');q.id=id;if(q!=s())d.body.appendChild(q);var src='https://raw'+o[0]+'.com/snarly/yt6/'+v,src0='https://cdn.jsdelivr.net/gh/snarly/yt6@'+v;function oc(ox,oy,sr){return(oy!='js')?sr.replace(ox,oy):src0};q=c(e);q.id=id;q.src=(o[0]!='js')?src:src0;q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[1],src);q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[2],src);q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[3],src);q.onerror=function(){q=c(e);q.id=id;q.src=src.replace('https','http')};a(q);r();};a(q);r();};a(q);r();};try{a(q);}catch(f){a(q)};};function g(){try{deldiv()}catch(f){r()};yt6d.src=1;b()};if(!s()){b()};setTimeout(function(){var t=w.yt6;if(t)t.loaded=t.loaded||window['status'];if(!t||(t&&(!t.body||(t.loaded<3))))g()},3000);}else{void 0};}
+    //)()/*202104140310*/
   , idle_time)
   }
 
@@ -248,15 +243,16 @@ older ones. It may be crucial regarding its functionality.)
 		screen, it would also raise the chance of playback failure significanty. There are some 
 		browsers which don't like playing audio on its own that much though.
 	<br><br>
-		Drawbacks: the jump forward button on the locked screen's media control panel will never 
+		Drawbacks:<br>
+		 - the jump forward button on the locked screen's media control panel will never 
 		work (by design, because they do not want you to use their site for continuous background 
-		play on mobile). Plus, since there is no way to view age-restricted videos on 
+		play on mobile)<br>
+		 - since there is no way to view age-restricted videos on 
 		this UI without being logged in, you would have to manually skip those after you unlocked 
-		the screen.
-	<br><br>
-		The media controls over the screen lock provide real access to the original player only. 
-		When the alternative player is the active one, the panel's play button is merely able to 
-		kickstart it, but can't pause it or seek forward or backward on its time rail.
+		the screen.<br>
+		 - the media controls over the screen lock provide real access only to the original player, 
+		thus when the alternative player is the active one, the panel's play button is merely able to 
+		kickstart it, but you can't pause it or seek forward or backward on its time rail.
 
 	<br><br>
 	<h1>
@@ -265,11 +261,11 @@ older ones. It may be crucial regarding its functionality.)
 		<b><strong>On Desktop</strong></b>, the script should work with almost any browser now. The only criteria is that 
 		they must support the usage of bookmarklets, which most of them do.
 	<br><br>
-		Below is a ranking of popular <b><strong>Mobile browsers</strong></b> based on how well they work under the 
-		following conditions
+		Below is a ranking of popular <b><strong>Mobile browsers</strong></b> based on how well they work <u>under the 
+		following conditions</u>
 <ol>
 		- using the script's alternative player<br>
-		- on YouTube's mobile interface (m.youtube.com domain)<br>
+		- on YouTube's mobile interface (m.youtube.com)<br>
 		- while the device is in actual sleep mode (screen turned off and with no connection to 
 		any external power source through cable)<br>
 </ol>
@@ -278,36 +274,36 @@ older ones. It may be crucial regarding its functionality.)
 		Good ones (for Android)
 	</h5>
 		<li><a href="https://play.google.com/store/apps/details?id=com.vivaldi.browser">Vivaldi</a>
-		<li><a href="https://play.google.com/store/apps/details?id=com.brave.browser">Brave</a>
+		<li><a href="https://play.google.com/store/apps/details?id=com.brave.browser">Brave</a> can use the mobile UI for backgorund play without the help of this script
 		<li>Google Chrome
 	<h5>
 		So-so
 	</h5>
-		<li><a href="https://play.google.com/store/apps/details?id=com.kiwibrowser.browser">Kiwi</a> (performs well in incognito mode only. where it has its extensions disabled)
-		<li><a href="https://play.google.com/store/apps/details?id=com.yandex.browser">Yandex</a> (will break its own sound output until a page refresh if audio-only or legacy AV format is being used for playback -- use VP9 or DASH video instead)
+		<li><a href="https://play.google.com/store/apps/details?id=com.kiwibrowser.browser">Kiwi</a> performs well in incognito mode only. where its extensions are disabled
+		<li><a href="https://play.google.com/store/apps/details?id=com.yandex.browser">Yandex</a> will break its own sound output until a page refresh if audio-only or legacy AV format is being used for backgrounded playback -- use VP9 or DASH video instead
 	<h5>
-		Bad ones (will play max 3-4 videos in a row)
+		Bad ones (will play max 3-4 videos in a row in sleep mode)
 	</h5>
-		<li><a href="https://play.google.com/store/apps/details?id=com.opera.browser">Opera</a>
 		<li><a href="https://play.google.com/store/apps/details?id=com.microsoft.emmx">Edge</a>
 		<li>Epic
 		<li>Dolphin
-		<li>Firefox</strong></b> (version <a href="https://www.apkmirror.com/apk/mozilla/firefox/firefox-68-11-0-release/">68.11.0</a> only, the newer one doesn't even support bookmarklets anymore)
+		<li>Firefox</strong></b> version <a href="https://www.apkmirror.com/apk/mozilla/firefox/firefox-68-11-0-release/">68.11.0</a> was the last one which supported bookmarklets but it's too sluggish now, the new one on the other hand is the only mobile browser beside Brave which lets you use the mobile UI in the background natively
+		<li>Opera Mobile stopped supporting bookmarklets with a recent update (just like Firefox did last August) -- one less reason to use it
 	</ol></li>
 		
 	</p></ol>
 		Of course it's possible to rank them differently with other aspects or conditions in mind.
+		Their performance changes with every system-, application- or script-update which makes 
+		it  difficult to pinpoint the cause of a problem newly arisen or seemingly solved. The list 
+		reflects a general impression after about half a year of testing on an Android phone.
 	<br><br>
-		Useless to go into detail as to how one is better than the other. Their performance 
-		changes with every system-, application- or script-update, and it's difficult to pinpoint the 
-		cause of a problem newly arisen or seemingly solved. The list reflects a general 
-		impression after about half a year of testing on an Android phone.
-
+		Also, I recommend to empty your device's cache before starting to use the program. It 
+		seems to have a positive effect on the browser's performance.
 	<br><br>
 		Regardless of platform, the default "noname" browsers that come pre-installed on various 
 		systems typically have no support for bookmarklets. If your chosen browser's response to 
 		your attempt to use the bookmarklet is to pull a web search on words found on the 
-		bookmarklet line, it is safe to say that it doesn't support it.
+		bookmarklet line, it is safe to say it doesn't support it.
 
 	<br><br>
 	<h1>
@@ -318,10 +314,10 @@ older ones. It may be crucial regarding its functionality.)
 		YouTube enforces its bug-filled new layout, they broke compatibility with them.
 	<br><br>
 		Still, I found a way to make use of this script with outdated browsers anyway.<br>
-		It's obviously discouraged now to use them because of the myriad of security holes	that 
-		can be found in such old sowftware, not to mention that the development of Adobe Flash 
-		will also end officially in 2020. But in case you have no other option, the possibility is 
-		there.
+		It's obviously discouraged to use them because of the myriad of security holes that can be 
+		found in such old sowftware, not to mention that the development of Adobe Flash also 
+		ended officially in 2020. It is possible to <a href="https://gist.github.com/KuromeSan/56d8b724c0696b54f9f81994ae3591d1">reactivate Flash</a>, although only Firefox 84, Edge 87, Chrome 87 and older browsers will acknowledge the presence of the plugin now. But 
+		in case you have no other option, the possibility is there.
 	<br><br>
 		The trick is to visit the "embed" page which contains a stripped-down code normally used 
 		to create an embedded video on other websites. There is literally nothing on these pages 
@@ -335,6 +331,7 @@ older ones. It may be crucial regarding its functionality.)
 		The "embed" variant to enter on the address bar<br>
 	<code>https://www.youtube.com/<b><strong><div style="color: red; display: inline-block">embed/</div></strong></b>BJPKUw8QIlk<b><strong><div style="color: red; display: inline-block">?</div></strong></b>list=PLXlj3dvMsYiLWcmENQsUHEQr8Snw1PH3X&index=1022</code>
 
+	<div style="display: none">
 	<br><br>
 		Then you just load the script like you would on a watch page.
 	<br><br>
@@ -406,16 +403,23 @@ older ones. It may be crucial regarding its functionality.)
 		<div><h6 style="display: inline-block">Windows</h6><br><code>Mozilla/5.0 (Windows NT <b style="color: blue; display: inline-block">6.3</b>; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/<b style="color: blue; display: inline-block">78.0.3904.97</b> YaBrowser/19.12.0.769 Yowser/2.5 Safari/537.36</code></div>
 		<div><h6 style="display: inline-block">Linux</h6><br><code>Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/<b style="color: blue; display: inline-block">80.0.3987.122</b> YaBrowser/19.12.0.769 Yowser/2.5 Safari/537.36</code></div>
 		<div><h6 style="display: inline-block">Mac OS X</h6><br><code>Mozilla/5.0 (Macintosh; Intel Mac OS X <b style="color: blue; display: inline-block">10_14_6</b>) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/<b style="color: blue; display: inline-block">78.0.3904.97</b> YaBrowser/19.12.0.769 Yowser/2.5 Safari/537.36</code></div>
-	</ol><br>
+	</ol>
+	</div>
+	
+	<br><br>
 		<b><strong>Pro:</strong></b> the alternative player can play videos which are otherwise blocked from view 
 		in embedded frames.<br>
-		<b><strong>Con:</strong></b> due to a YT limitation, you can only access the first 200 videos on an "embed" 
+		<b><strong>Con:</strong></b> due to a YT limitation, you can only access the first 200 videos on an embedded 
 		playlist. The example above is the 1023th entry (indexed 1022) on the list, and it will load 
 		fine. But once you try to navigate, there will be no way to watch anything above index 199.
 	<br><br>
-	<h1>
-		Classic YouTube layout fix
+
+
+	<h1 id="classic_layout">
+		Classic YouTube layout
 	</h1>
+
+	<div style="display: none">
 		Installing one of the <div style="background-color: orange; display: inline-block">(Good) Old YouTube</div> addons may not be enough. 
 	<br><br>
 		Actually, at the time of this update (Dec 11, 2020), neither of them seem to work anymore. 
@@ -456,53 +460,44 @@ older ones. It may be crucial regarding its functionality.)
 		when navigation happened. Unfortunately, if you're logged in over the Classic layout, YT is 
 		now forcing a full page refresh on every page, no matter what, so the only way to see the 
 		benefits of YT spf is to stay logged out of YouTube.
+	</div>
+
+
+		The html code of the old layout is no longer being produced by YouTube's php servers 
+		(the javascript and css belonging to it is still accessible). That means we will only ever see 
+		the classic layout again if we produce that html ourselves.
 	<br><br>
-		Here is the userscript:<br>
-<pre>// ==UserScript==
-// @name         Yt spf
-// @namespace    Yt spf
-// @version      202012110714
-// @author       Snarl
-// @description  Use spf-based navigation on Classic YouTube
-// @match        https://*.youtube.com/*
-// @match        http://*.youtube.com/*
-// @grant        none
-// @run-at       document-start
-// @icon         https://yt3.ggpht.com/-afBnHVG_R6E/AAAAAAAAAAI/AAAAAAAAAAA/LtE5kbPkZvE/s27-c-k-no-mo-rj-c0xffffff/photo.jpg
-// ==/UserScript==
-
-(function() {
-		'use strict';
-
-		var d = window.document
-		// earliest stage of loading the yt page
-		if (d.readyState == 'loading' && !(typeof ytspf != 'undefined' && ytspf.enabled == true) && typeof Proxy == 'function') {
-
-				var s = d.createElement('script')
-				s.id = 'ytspf'
-				var h = d.lastChild.firstChild // <head> element already exists
-
-				// code to define the ytspf object as it once used to be, before the new yt code has a chance to do it differently
-				var code = "var ytspf = {};ytspf.enabled = true;ytspf.config = {'reload-identifier': 'spfreload'};ytspf.config['request-headers'] = {'X-YouTube-Ad-Signals': {toString: function() {return (window['yt'] && yt['ads_'] && yt.ads_['signals_'] &&yt.ads_.signals_['getAdSignalsString']) ?yt.ads_.signals_.getAdSignalsString() :'';}},'X-YouTube-Identity-Token': null};ytspf.config['experimental-request-headers'] = ytspf.config['request-headers'];ytspf.config['cache-max'] = 50;ytspf.config['navigate-limit'] = 50;ytspf.config['navigate-lifetime'] = 64800000;"
-
-				// then wrap the ytspf object around a proxy of the same name with a "set"-trap to deny the re-definition attempt by yt
-				code = code + "ytspf = new Proxy(ytspf, { set(target, prop, val) { return false } });"
-
-				if (h.lastChild.previousSibling && (typeof h.lastChild.previousSibling.getAttribute != 'function' || h.lastChild.previousSibling.toString() == '[object Text]'))
-				// append the script element to the document head
-				try {
-					s.appendChild(document.createTextNode(code))
-					h.appendChild(s)
-				} catch (e) {
-						try {
-							s.text = code
-							h.appendChild(s)
-						} catch (e) {}
-					}
-
-		}
-})()</pre>
-	<br>
+		Based on a few backup copies of YouTube page sources, I wrote a <a href="/yt6/yt_classic.txt">userscript</a> which 
+		attempts to recreate the old html structures and inject them into the current page to make 
+		the two layouts co-exist at the same time. Unfortunately, most of the server functionality 
+		related to the old stuff were shut down, so there is a dependency on the new layout, which 
+		makes the homemade html more like a skin than a standalone interface. It still has a few 
+		advantages over the material design, such as the exact number of likes and video views, 
+		or its well-defined frames.
+	<br><br>
+		Sadly I never made any backup copy of the html source code while being logged in to the 
+		site. Those pages obviously looked and worked differently than the ones shown to 
+		anonymous visitors. Searching the web for such html content left me with very limited 
+		results. So don't be surprised if not everything feels exactly the way it used to be.
+	<br><br>
+		Most bugs are attributed to the fact that the two layouts use different methods to deal with 
+		browser navigation. One notable bug occurs on old-style playlists: the player keeps 
+		jumping back to the video entry we started off from each time the second video ends. This 
+		bug can be eliminated partially by clicking the playlist's "Shuffle" button (crossed arrows). 
+		The shuffle can be turned off right after it's been activated (it would not have its intended 
+		effect on the player anyway), and even though the displayed old html content may belong 
+		to a different video, at least the playback will work fine from then on, 
+	<br><br>
+		This script can be used independently from the main project script. In fact, things can get 
+		more complicated if you use both of them together (the Yt6 code was written to work with 
+		one layout or the other, but not both at the same time). Especially when toying with the 
+		YouTube player's theater/wide view mode. I'm in the process of fixing stuff but it is far from 
+		done.
+	<br><br>
+		<b><strong>And lastly, don't use it on Mobile.</strong></b> Kiwi and Yandex will let you install browser 
+		extensions capable of running userscripts, but the two desktop layouts working 
+		concurrently just drains the battery too fast. It's not worth it.
+	<br><br>
 	<h1>
 		Stream capturing
 	</h1>
@@ -523,7 +518,7 @@ older ones. It may be crucial regarding its functionality.)
 		(YouTube may occassionally replace the stream URLs with traditional media URLs. Typically happens when 
 		a video reaches a certain level of popularity.)
 	</div></ol>
-		And here is the <a href="https://www.youtube.com/watch?v=f0cGgOv3l4c">"yt_live_broadcast"</a> type.
+		And here is the <a href="https://www.youtube.com/watch?v=DIeivH_um64">"yt_live_broadcast"</a> type.
 	<br><br> 
 		I wrote a small <b><strong>bash shell script</strong></b> called <code style="background-color: yellow; color: red">yt_streamcat</code> which makes it possible to save 
 		the media behind those type of URLs as well. It's a Command Line Interface (CLI) utility  
@@ -545,8 +540,8 @@ older ones. It may be crucial regarding its functionality.)
 	<br><br>
 		Under Linux, newly created or downloaded files cannot be run by default, regardless of 
 		whether they are meant to be executables or not. Technically speaking they are not 
-		getting marked as executable, for security reasons. In order to make a file executable for 
-		your own user only, you must run the following command at the shell prompt:<br>
+		marked as executable, for security reasons. In order to make a file executable for your 
+		own user only, you must run the following command at the shell prompt:<br>
 	<code>chmod u+x [path to file/]filename</code>
 
 	<br><br>
@@ -578,7 +573,7 @@ older ones. It may be crucial regarding its functionality.)
 			<ol>is the number of the ending segment, or if it's less than the previous number, it will 
 			be interpreted as the number of segments to download</ol>
 		<code>"2nd_stream_URL"</code> (optional)
-			<ol>to save another track parallel to the first one (the audio source, maybe?). Must be 
+			<ol>to save another track parallel to the first one (an audio stream, maybe?). Must be 
 			between quotes as well. (You must specify the previous two options in order to be 
 			able to specify this fifth one.)</ol>
 	<br>
