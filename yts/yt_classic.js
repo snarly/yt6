@@ -228,58 +228,7 @@ function script_copy() {
         //"window.onload = script_copy;"+
 
 
-        // monitor elements newly being added to the document body by the YT engine, react when necessary and disconnect when ready
-        let body2 = new MutationObserver((mutations) => {
-                    mutations.forEach((mutation) => {
-                    if (!mutation.addedNodes) return;
-                      for (var i = 0; i < mutation.addedNodes.length; i++) {
 
-                        var node = mutation.addedNodes[i]; if (!node.parentNode) continue;
-                        var a = document.getElementById('player-api'), p = document.getElementById('movie_player');
-
-                        if (a && p && a != p.parentNode) { //a.insertBefore(p, a.firstChild);
-
-                          body2.disconnect_('2');//try { p.destroy() } catch(e){ p.parentNode.removeChild(p); };"+
-//        "                  var b = document.getElementsByClassName('ytp-prev-button')[1], c = document.getElementsByClassName('ytp-next-button')[0];"+
-//        "                  if (b && c) t = document.getElementsByClassName('ytp-left-controls')[0]; if (t) {"+
-//        "                    t.insertBefore(b.nextSibling.nextSibling, c); t.insertBefore(b, c.previousSibling.previousSibling); t.removeChild(document.getElementsByClassName('ytp-next-button')[1]);"+
-//        "                    a.appendChild(p);"+
-//        "                  }"+// var z = document.getElementsByTagName('ytd-page-manager')[0]; if (z) { var y = document.createElement('ytd-watch'); z.appendChild(y); y.setAttribute('class','style-scope ytd-page-manager hide-skeleton'); y.setAttribute('video-id', z.firstElementChild.getAttribute('video_id')); y.setAttribute('js-panel-height_',''); y.setAttribute('player-touch-gestures',''); y.setAttribute('is-four-three-to-sixteen-nine-video',''); y.setAttribute('is-two-columns',''); y.setAttribute('large-window',''); y.setAttribute('role','main'); y.setAttribute('playlist',''); y.setAttribute('style','--ytd-watch-scrollbar-width:15px; --ytd-watch-panel-max-height:502px; --ytd-watch-chat-max-height:661px; --ytd-watch-width-ratio:1; --ytd-watch-height-ratio:0.75;'); if (z.getElementsByTagName('ytd-watch-flexy')[0]) z.removeChild(z.getElementsByTagName('ytd-watch-flexy')[0]) } };"+
-                          if (typeof node.className == 'string' && node.className.indexOf('html5-video-player') > -1) { try { a.insertBefore(node.parentNode.parentNode, a.firstChild); p.nextSibling.destroy() } catch(e){ if (p.nextSibling) p.parentNode.removeChild(p.nextSibling); }; body2.disconnect() };
-                        };
-
-                        if (!(typeof node.tagName == 'string' && node.tagName.indexOf('SCRIPT') > -1)) continue;
-                        var src = (typeof node.getAttribute == 'function' && node.getAttribute('src')) ? node.getAttribute('src') : ' ', sText = (node.innerHTML && node.innerHTML.toString()) ? node.innerHTML.toString() : '';//src.indexOf('/desktop_polymer')
-                        if (src == ' ') { var conf = node.innerHTML.toString(); if (document.getElementById('player-api') && document.getElementById('player-api').getElementsByTagName('script')[0]) document.getElementById('player-api').getElementsByTagName('script')[0].innerHTML = conf; };
-                        if (sText) {
-                          if (sText.indexOf('var ytInitialData') == 0) { node.id = 'ytInitialData-script' };
-                        };
-                        if (src)// && ( src == ' ' || (src.indexOf('/desktop_polymer') > -1 || src.split('spf-vflset/spf')[1] || sText.split('_spf_state')[1] || sText.split('spf.script.path')[1] || sText.split('yt.setConfig')[1]) ) && node.parentNode == document.getElementsByTagName('body')[1])"+//
-                          {
-                             if (document.getElementsByTagName('body')[1]) document.getElementsByTagName('body')[1].style.display = 'none'; //body2.disconnect(); "+ //document.lastChild.removeChild(document.getElementsByTagName('body')[1]);
-                             if (src.indexOf('player_ias.vflset') > -1 && src.indexOf('/base.js') > -1) { body2.base = src };
-        //"                     console.log(sText); console.log(node);"+
-    //    "                     if ((node.parentNode == document.getElementsByTagName('body')[1] || node.parentNode == document.getElementsByTagName('head')[0]))"+
-                               if ( sText.indexOf('ytcfg.set({\"CSI_SERVICE_NAME') > -1 && !body2.base && !(document.getElementsByTagName('ytd-app')[0] && document.getElementsByTagName('ytd-app')[0].querySelector('#content'))  ) { // ytplayer.web_player_context_config =
-        //"                         document.lastChild.removeChild(document.getElementsByTagName('body')[1]); window.stop(); "+
-                                 body2.disconnect_('1')
-                               }
-                               else if (sText.indexOf('ytInitialPlayerResponse') == -1 ) { if (a && p && a == p.parentNode) body2.disconnect_('0');//node.parentNode.innerHTML = ''; console.log('!');
-        //"                            } else { body2.disconnect_('0'); var p = document.getElementsByClassName('html5-video-player')[0]; if (p) { p.id = 'movie_player'; p.setAttribute('name','movie_player') } "+//if (node.parentNode && (node.parentNode.tagName == 'HEAD' || (node.parentNode.tagName == 'BODY' && sText.indexOf('ytInitialPlayerResponse') == -1)) ) { node.parentNode.innerHTML = '' }; }"+// //if (window.classic) { var head = window.classic.head, body = window.classic.body; document.write( head + body) };
-                               }
-                          }
-
-                      }
-                    })
-        });
-        body2.postponed_scripts = [];
-        body2.disconnect_ = function(x) {//if (document.getElementById('ytInitialData-script')) { console.log('disconnect-' + x);
-          body2.disconnect()// };
-        };
-
-        body2.observe(document.lastChild, {
-          childList: true, subtree: true, attributes: false, characterData: false
-        });
 
 
 
