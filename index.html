@@ -469,7 +469,16 @@ older ones. It may be crucial regarding its functionality.)
 	<br><br>
 		Based on a few backup copies of YouTube page sources, I wrote a <a href="/yt6/yt_classic.txt">userscript</a> which 
 		attempts to recreate the old html structures and inject them into the current page to make 
-		the two layouts co-exist at the same time. Unfortunately, most of the server functionality 
+		the two layouts co-exist at the same time.
+	<br><br>
+	<ol><div style="font-size: 13px">
+		Note: I'm not going to update this info page every time I update the script. The above link will take you 
+		directly to the plain text userscript file -- which, by the way, does absolutely nothing until you feed its text to 
+		a suitable browser extension (preferably Tampermonkey). The version number in its header is the date of 
+		the last edit. Update your copy if it is older than that.
+	</div></ol>
+	<br>
+		Unfortunately, most of the server functionality 
 		related to the old stuff were shut down, so there is a dependency on the new layout, which 
 		makes the homemade html more like a skin than a standalone interface. It still has a few 
 		advantages over the material design, such as the exact number of likes and video views, 
@@ -478,7 +487,7 @@ older ones. It may be crucial regarding its functionality.)
 		Sadly I never made any backup copy of the html source code while being logged in to the 
 		site. Those pages obviously looked and worked differently than the ones shown to 
 		anonymous visitors. Searching the web for such html content left me with very limited 
-		results. So don't be surprised if not everything feels exactly the way it used to be.
+		results. So don't be surprised if not everything feels exactly the way it used to.
 	<br><br>
 		Most bugs are attributed to the fact that the two layouts use different methods to deal with 
 		browser navigation. One notable bug occurs on old-style playlists: the player keeps 
@@ -509,7 +518,7 @@ older ones. It may be crucial regarding its functionality.)
 		media -- hardly usable in the old-fashioned way -- meant to be streamed by a player 
 		capable of streaming. You can recognize these URLs as video- or audio-only sources 
 		which have no file size displayed next to them. Since a recent update of the yt6 
-		code, along with the stream URLs appears a link to a "DASH Manifest" also, and in case of 
+		code, along with the stream URLs appears a link to a "DASH Manifest", and in case of 
 		live streams, a "HLS Manifest" too, which are XML documents containing info on 
 		the streamable bits.
 	<br><br>
@@ -523,10 +532,10 @@ older ones. It may be crucial regarding its functionality.)
 		I wrote a small <b><strong>bash shell script</strong></b> called <code style="background-color: yellow; color: red">yt_streamcat</code> which makes it possible to save 
 		the media behind those type of URLs as well. It's a Command Line Interface (CLI) utility  
 		which relies on a widely used binary program called <b><strong>wget</strong></b> to be installed on the system. 
-		Having <b><strong>ffmpeg</strong></b>, the "swiss army knife of Internet Streaming" installed is a huge bonus, but 
-		is only truly required for reconstructing MPEG-DASH live streams into playable singular 
-		files. (And in case ffmpeg produces broken media, you may need an alternative tool 
-		capable of media muxing, such as <b><strong>mencoder</strong></b>, to process the ffmpeg-produced file 
+		Having <b><strong>ffmpeg</strong></b>, "The swiss army knife of Internet Streaming" installed is a huge bonus, 
+		but is only truly required for reconstructing MPEG-DASH live streams into playable 
+		singular files. (And in case ffmpeg produces broken media, you may need an alternative 
+		tool capable of media muxing, such as <b><strong>mencoder</strong></b>, to process the ffmpeg-produced file 
 		and fix it for good.)
 	<br><br>
 		The script is supplementary code to do the job which is not possible for the yt6 main 
