@@ -5,7 +5,7 @@ window.classic.playlist_index = (window.classic.playlist && location.href.split(
 window.classic.navigation = {}
 
 
-window.classic.new_base = ""//"/s/player/a09205f7/player_ias.vflset/en_US/base.js" // new /s/player/d2ff46c3/player_ias.vflset/en_US/base.js
+window.classic.new_base = "/s/player/e0d06a61/player_ias.vflset/en_US/base.js"//"/s/player/a09205f7/player_ias.vflset/en_US/base.js" // new /s/player/d2ff46c3/player_ias.vflset/en_US/base.js
 //			 || "/yts/jsbin/player_ias-vfl5eNx6Z/en_US/base.js"; // old
 
 
@@ -687,13 +687,18 @@ window.classic.convert = function(data) {
 	if(data && typeof data.responseText == "string") {
 	  if (data.responseText.indexOf("var ytInitialData = ") >-1 ){
 
+		window.classic.spfresponse = data.responseText
 		e = document.getElementById('spf-navigation-response')
-		if (e) { e.innerHTML = data.responseText } else window.classic.spfresponse = data.responseText
+		if (location.href.indexOf("youtube.com/results?search_query=") == -1) {
+		  if (e) e.innerHTML = data.responseText
+		} else {
+		    try { document.getElementsByTagName('body')[0].querySelector('#movie_player').stopVideo(); document.getElementsByTagName('body')[1].querySelector('#movie_player').stopVideo() } catch(e) {}
+		  }
 
 		e = document.getElementsByTagName('body')[1]
 		if (e) { e = e.querySelector('#watch7-content')
 		  z = data.responseText.split('watch7-content')[1]
-		  if (z) { z = z.split('</div>')[0].split('"http://schema.org/VideoObject">')[1]; e.innerHTML = z; }
+		  if (z) { z = z.split('</div>')[0].split('"http://schema.org/VideoObject">')[1]; if (e) e.innerHTML = z; }
 		}
 
 		e = data.responseText.split('var ytplayer = ytplayer || {}; ')[1] || data.responseText.split('var ytplayer = ytplayer || {};')[1]
@@ -701,6 +706,7 @@ window.classic.convert = function(data) {
 
 		f = findClosingBracketMatchIndex(data.responseText.split("var ytInitialData = ")[1], 0);
 		z = (f != -1) ? data.responseText.split("var ytInitialData = ")[1].substring(0,(f+1)) : "";
+
 		if (z) eval("ytInitialData = " + z); //if (e) eval(e);
 		data = clone(ytInitialData);
 		window.classic.video_id = (location.href.split('v=')[1] || location.href.split('v/')[1] || '').split('&')[0].split('/')[0].split('#')[0];
@@ -719,7 +725,6 @@ window.classic.convert = function(data) {
           //      console.log( JSON.parse( yt.getConfig('RELATED_PLAYER_ARGS').watch_next_response.replace(/\t/g, ' ') ))
           //    } catch(err){ console.log(err) };//.responseContext.serviceTrackingParams[1].params[0].value );
 
-              try { var p = document.getElementsByTagName('body')[1].getElementById('movie_player').stopVideo() } catch(e) {};
 
 
 
@@ -956,7 +961,8 @@ window.classic.convert = function(data) {
 
 	try {
 	//	if (location.href.indexOf(data.currentVideoEndpoint.watchEndpoint.videoId) == -1) 
-		data.currentVideoEndpoint.watchEndpoint.videoId = classic.video_id;
+		if (!(data && data.currentVideoEndpoint && data.currentVideoEndpoint.watchEndpoint)) { data.currentVideoEndpoint = {}; data.currentVideoEndpoint.watchEndpoint = {}; window.classic.video_id = 'GbevQH1B9ic' }
+		data.currentVideoEndpoint.watchEndpoint.videoId = classic.video_id
 
 
 		yt.setConfig( { //eval('{'+
@@ -977,7 +983,7 @@ window.classic.convert = function(data) {
 		})
 	    }
 
-	} catch(err){}
+	} catch(err){  }
 
 	//yt.setConfig( {'RELATED_PLAYER_ARGS': {"autoplay_count":1,"watch_next_response": JSON.stringify(window.classic.cfg), "rvs":"" }} )
 
@@ -1034,7 +1040,10 @@ window.classic.elements.info = function(data){
 	//e.setAttribute('aria-label', e.title)
 
 
-        var d0 = (ytInitialPlayerResponse) ? ytInitialPlayerResponse.videoDetails : ytplayer.config.args.raw_player_response.videoDetails
+        var d0
+	if (typeof ytInitialPlayerResponse != 'undefined' && ytInitialPlayerResponse) d0 = ytInitialPlayerResponse.videoDetails
+	if (!d0 && ytplayer.config.args && ytplayer.config.args.raw_player_response) d0 = ytplayer.config.args.raw_player_response.videoDetails
+
 
 	var title; try { title = d.title.runs[0].text } catch(err) { title = d0.title }
         document.getElementById('eow-title').innerHTML = title
@@ -1523,7 +1532,7 @@ window.classic.elements.playlist = function(data){
 	  e.innerHTML = (d.shortBylineText.runs) ? d.title : '<span class="playlist-mix-icon"></span>' + d.title
 	  e.href = (d.endpoint) ? '/playlist?list=' + d.endpoint.browseEndpoint.browseId.substring(2,d.endpoint.browseEndpoint.browseId.length) : window.location.href
 	  e = document.getElementsByClassName('author-attribution')[0].getElementsByTagName('a')[0]
-	  e.innerHTML = d.ownerName.simpleText
+	  e.innerHTML = (d.ownerName) ? d.ownerName.simpleText : ((d.shortBylineText) ? d.shortBylineText.runs[0].text : '')
 	  if (d.shortBylineText.runs) {
 	    document.getElementsByClassName('playlist-progress')[0].style.display = ''
 	    e.href = d.shortBylineText.runs[0].navigationEndpoint.browseEndpoint.canonicalBaseUrl
@@ -1851,7 +1860,8 @@ window.classic.elements.search_results = function(data){
 	    
 	  }
 
-	x = location.href.split('/results?search_query=')[1]
+	x = location.href.split('/results?search_query=')[1]; x = (x) ? x.split('&')[0] : ''
+	e = document.getElementById('masthead-search-term'); if (e) { e.value = x.split('&')[0].split('+').join(' ') }
 	e = document.body.getElementsByClassName('search-header')[0]
 	if (e) e.innerHTML =
 '                      <div class="filter-top">'+
@@ -1877,35 +1887,35 @@ window.classic.elements.search_results = function(data){
 '                          </h4>'+
 '                          <ul>'+
 '                            <li>'+
-'                              <a class="filter  spf-link " title="Search for '+ x +', Last hour" href="/results?search_query='+ x +'&lclk=hour&filters=hour">'+
+'                              <a class="filter  spf-link " title="Search for '+ x +', Last hour" href="/results?search_query='+ x +'&lclk=hour&filters=hour&sp=CAISBAgBEAE%253D">'+
 '                                <span class="filter-text filter-ghost">'+
 '                                  Last hour'+
 '                                </span>'+
 '                              </a>'+
 '                            </li>'+
 '                            <li>'+
-'                              <a class="filter  spf-link " title="Search for '+ x +', Today" href="/results?search_query='+ x +'&lclk=today&filters=today">'+
+'                              <a class="filter  spf-link " title="Search for '+ x +', Today" href="/results?search_query='+ x +'&lclk=today&filters=today&sp=CAISBAgCEAE%253D">'+
 '                                <span class="filter-text filter-ghost">'+
 '                                  Today'+
 '                                </span>'+
 '                              </a>'+
 '                            </li>'+
 '                            <li>'+
-'                              <a class="filter  spf-link " title="Search for '+ x +', This week" href="/results?search_query='+ x +'&lclk=week&filters=week">'+
+'                              <a class="filter  spf-link " title="Search for '+ x +', This week" href="/results?search_query='+ x +'&lclk=week&filters=week&sp=CAISBAgDEAE%253D">'+
 '                                <span class="filter-text filter-ghost">'+
 '                                  This week'+
 '                                </span>'+
 '                              </a>'+
 '                            </li>'+
 '                            <li>'+
-'                              <a class="filter  spf-link " title="Search for '+ x +', This month" href="/results?search_query='+ x +'&lclk=month&filters=month">'+
+'                              <a class="filter  spf-link " title="Search for '+ x +', This month" href="/results?search_query='+ x +'&lclk=month&filters=month&sp=CAISBAgEEAE%253D">'+
 '                                <span class="filter-text filter-ghost">'+
 '                                  This month'+
 '                                </span>'+
 '                              </a>'+
 '                            </li>'+
 '                            <li>'+
-'                              <a class="filter  spf-link " title="Search for '+ x +', This year" href="/results?search_query='+ x +'&lclk=year&filters=year">'+
+'                              <a class="filter  spf-link " title="Search for '+ x +', This year" href="/results?search_query='+ x +'&lclk=year&filters=year&sp=CAISBAgFEAE%253D">'+
 '                                <span class="filter-text filter-ghost">'+
 '                                  This year'+
 '                                </span>'+
@@ -1919,35 +1929,35 @@ window.classic.elements.search_results = function(data){
 '                          </h4>'+
 '                          <ul>'+
 '                            <li>'+
-'                              <a class="filter  spf-link " title="Search for '+ x +', Video" href="/results?search_query='+ x +'&lclk=video&filters=video">'+
+'                              <a class="filter  spf-link " title="Search for '+ x +', Video" href="/results?search_query='+ x +'&lclk=video&filters=video&sp=CAI%253D">'+
 '                                <span class="filter-text filter-ghost">'+
 '                                  Video'+
 '                                </span>'+
 '                              </a>'+
 '                            </li>'+
 '                            <li>'+
-'                              <a class="filter  spf-link " title="Search for '+ x +', Channel" href="/results?search_query='+ x +'&lclk=channel&filters=channel">'+
+'                              <a class="filter  spf-link " title="Search for '+ x +', Channel" href="/results?search_query='+ x +'&lclk=channel&filters=channel&sp=CAISAhAC">'+
 '                                <span class="filter-text filter-ghost">'+
 '                                  Channel'+
 '                                </span>'+
 '                              </a>'+
 '                            </li>'+
 '                            <li>'+
-'                              <a class="filter  spf-link " title="Search for '+ x +', Playlist" href="/results?search_query='+ x +'&lclk=playlist&filters=playlist">'+
+'                              <a class="filter  spf-link " title="Search for '+ x +', Playlist" href="/results?search_query='+ x +'&lclk=playlist&filters=playlist&sp=CAISAhAD">'+
 '                                <span class="filter-text filter-ghost">'+
 '                                  Playlist'+
 '                                </span>'+
 '                              </a>'+
 '                            </li>'+
 '                            <li>'+
-'                              <a class="filter  spf-link " title="Search for '+ x +', Movie" href="/results?search_query='+ x +'&lclk=movie&filters=movie">'+
+'                              <a class="filter  spf-link " title="Search for '+ x +', Movie" href="/results?search_query='+ x +'&lclk=movie&filters=movie&sp=CAISAhAE">'+
 '                                <span class="filter-text filter-ghost">'+
 '                                  Movie'+
 '                                </span>'+
 '                              </a>'+
 '                            </li>'+
 '                            <li>'+
-'                              <a class="filter  spf-link " title="Search for '+ x +', Show" href="/results?search_query='+ x +'&lclk=show&filters=show">'+
+'                              <a class="filter  spf-link " title="Search for '+ x +', Show" href="/results?search_query='+ x +'&lclk=show&filters=show&sp=CAISAhAF">'+
 '                                <span class="filter-text filter-ghost">'+
 '                                  Show'+
 '                                </span>'+
@@ -1961,14 +1971,14 @@ window.classic.elements.search_results = function(data){
 '                          </h4>'+
 '                          <ul>'+
 '                            <li>'+
-'                              <a class="filter  spf-link " title="Search for '+ x +', Short (~4 minutes)" href="/results?search_query='+ x +'&lclk=short&filters=short">'+
+'                              <a class="filter  spf-link " title="Search for '+ x +', Short (~4 minutes)" href="/results?search_query='+ x +'&lclk=short&filters=short&sp=CAISBBABGAE%253D">'+
 '                                <span class="filter-text filter-ghost">'+
 '                                  Short (~4 minutes)'+
 '                                </span>'+
 '                              </a>'+
 '                            </li>'+
 '                            <li>'+
-'                              <a class="filter  spf-link " title="Search for '+ x +', Long (20~ minutes)" href="/results?search_query='+ x +'&lclk=long&filters=long">'+
+'                              <a class="filter  spf-link " title="Search for '+ x +', Long (20~ minutes)" href="/results?search_query='+ x +'&lclk=long&filters=long&sp=CAISBBABGAI%253D">'+
 '                                <span class="filter-text filter-ghost">'+
 '                                  Long (20~ minutes)'+
 '                                </span>'+
@@ -1982,42 +1992,77 @@ window.classic.elements.search_results = function(data){
 '                          </h4>'+
 '                          <ul>'+
 '                            <li>'+
-'                              <a class="filter  spf-link " title="Search for '+ x +', HD (high definition)" href="/results?search_query='+ x +'&lclk=hd&filters=hd">'+
-'                                <span class="filter-text filter-ghost">'+
-'                                  HD (high definition)'+
-'                                </span>'+
-'                              </a>'+
-'                            </li>'+
-'                            <li>'+
-'                              <a class="filter  spf-link " title="Search for '+ x +', CC (closed caption)" href="/results?search_query='+ x +'&lclk=cc&filters=cc">'+
-'                                <span class="filter-text filter-ghost">'+
-'                                  CC (closed caption)'+
-'                                </span>'+
-'                              </a>'+
-'                            </li>'+
-'                            <li>'+
-'                              <a class="filter  spf-link " title="Search for '+ x +', Creative Commons" href="/results?search_query='+ x +'&lclk=creativecommons&filters=creativecommons">'+
-'                                <span class="filter-text filter-ghost">'+
-'                                  Creative Commons'+
-'                                </span>'+
-'                              </a>'+
-'                            </li>'+
-'                            <li>'+
-'                              <a class="filter  spf-link " title="Search for '+ x +', 3D" href="/results?search_query='+ x +'&lclk=3d&filters=3d">'+
-'                                <span class="filter-text filter-ghost">'+
-'                                  3D'+
-'                                </span>'+
-'                              </a>'+
-'                            </li>'+
-'                            <li>'+
-'                              <a class="filter  spf-link " title="Search for '+ x +', Live" href="/results?search_query='+ x +'&lclk=live&filters=live">'+
+'                              <a class="filter  spf-link " title="Search for '+ x +', Live" href="/results?search_query='+ x +'&lclk=live&filters=live&sp=EgJAAQ%253D%253D">'+
 '                                <span class="filter-text filter-ghost">'+
 '                                  Live'+
 '                                </span>'+
 '                              </a>'+
 '                            </li>'+
 '                            <li>'+
-'                              <a class="filter  spf-link " title="Search for '+ x +', Purchased" href="/results?search_query='+ x +'&lclk=purchased&filters=purchased">'+
+'                              <a class="filter  spf-link " title="Search for '+ x +', 4K (high resolution)" href="/results?search_query='+ x +'&lclk=4k&filters=4k&sp=CAISBBABcAE%253D">'+
+'                                <span class="filter-text filter-ghost">'+
+'                                  4K (high resolution)'+
+'                                </span>'+
+'                              </a>'+
+'                            </li>'+
+'                            <li>'+
+'                              <a class="filter  spf-link " title="Search for '+ x +', HD (high definition)" href="/results?search_query='+ x +'&lclk=hd&filters=hd&sp=EgIgAQ%253D%253D">'+
+'                                <span class="filter-text filter-ghost">'+
+'                                  HD (high definition)'+
+'                                </span>'+
+'                              </a>'+
+'                            </li>'+
+'                            <li>'+
+'                              <a class="filter  spf-link " title="Search for '+ x +', CC (closed caption)" href="/results?search_query='+ x +'&lclk=cc&filters=cc&sp=EgIoAQ%253D%253D">'+
+'                                <span class="filter-text filter-ghost">'+
+'                                  CC (closed caption)'+
+'                                </span>'+
+'                              </a>'+
+'                            </li>'+
+'                            <li>'+
+'                              <a class="filter  spf-link " title="Search for '+ x +', Creative Commons" href="/results?search_query='+ x +'&lclk=cc&filters=cclclk=creativecommons&filters=creativecommons&sp=EgIwAQ%253D%253D">'+
+'                                <span class="filter-text filter-ghost">'+
+'                                  Creative Commons'+
+'                                </span>'+
+'                              </a>'+
+'                            </li>'+
+'                            <li>'+
+'                              <a class="filter  spf-link " title="Search for '+ x +', 360°" href="/results?search_query='+ x +'&lclk=360&filters=360&sp=CAISBBABeAE%253D">'+
+'                                <span class="filter-text filter-ghost">'+
+'                                  360°'+
+'                                </span>'+
+'                              </a>'+
+'                            </li>'+
+'                            <li>'+
+'                              <a class="filter  spf-link " title="Search for '+ x +', VR180" href="/results?search_query='+ x +'&lclk=vr180&filters=vr180&sp=CAISBRAB0AEB">'+
+'                                <span class="filter-text filter-ghost">'+
+'                                  VR180'+
+'                                </span>'+
+'                              </a>'+
+'                            </li>'+
+'                            <li>'+
+'                              <a class="filter  spf-link " title="Search for '+ x +', 3D" href="/results?search_query='+ x +'&lclk=3d&filters=3d&sp=EgI4AQ%253D%253D">'+
+'                                <span class="filter-text filter-ghost">'+
+'                                  3D'+
+'                                </span>'+
+'                              </a>'+
+'                            </li>'+
+'                            <li>'+
+'                              <a class="filter  spf-link " title="Search for '+ x +', HDR (High Dynamic Range)" href="/results?search_query='+ x +'&lclk=hdr&filters=hdr&sp=CAISBRAByAEB">'+
+'                                <span class="filter-text filter-ghost">'+
+'                                  HDR (high dynamic range)'+
+'                                </span>'+
+'                              </a>'+
+'                            </li>'+
+'                            <li>'+
+'                              <a class="filter  spf-link " title="Search for '+ x +', Location" href="/results?search_query='+ x +'&lclk=location&filters=location&sp=CAISBRABuAEB">'+
+'                                <span class="filter-text filter-ghost">'+
+'                                  Location'+
+'                                </span>'+
+'                              </a>'+
+'                            </li>'+
+'                            <li>'+
+'                              <a class="filter  spf-link " title="Search for '+ x +', Purchased" href="/results?search_query='+ x +'&lclk=purchased&filters=purchased&sp=EgJIAQ%253D%253D">'+
 '                                <span class="filter-text filter-ghost">'+
 '                                  Purchased'+
 '                                </span>'+
@@ -2038,21 +2083,21 @@ window.classic.elements.search_results = function(data){
 '                              </span>'+
 '                            </li>'+
 '                            <li>'+
-'                              <a class="filter filter-sort  spf-link " href="/results?search_query='+ x +'&search_sort=video_date_uploaded">'+
+'                              <a class="filter filter-sort  spf-link " href="/results?search_query='+ x +'&search_sort=video_date_uploaded&sp=CAI%253D">'+
 '                                <span class="filter-text ">'+
 '                                  Upload date'+
 '                                </span>'+
 '                              </a>'+
 '                            </li>'+
 '                            <li>'+
-'                              <a class="filter filter-sort  spf-link " href="/results?search_query='+ x +'&search_sort=video_view_count">'+
+'                              <a class="filter filter-sort  spf-link " href="/results?search_query='+ x +'&search_sort=video_view_count&sp=CAM%253D">'+
 '                                <span class="filter-text ">'+
 '                                  View count'+
 '                                </span>'+
 '                              </a>'+
 '                            </li>'+
 '                            <li>'+
-'                              <a class="filter filter-sort  spf-link " href="/results?search_query='+ x +'&search_sort=video_avg_rating">'+
+'                              <a class="filter filter-sort  spf-link " href="/results?search_query='+ x +'&search_sort=video_avg_rating&sp=CAE%253D">'+
 '                                <span class="filter-text ">'+
 '                                  Rating'+
 '                                </span>'+
@@ -2165,17 +2210,18 @@ window.classic.elements.search_results = function(data){
 	  }
 	  d = data.contents.twoColumnSearchResultsRenderer.primaryContents.sectionListRenderer.contents[0].itemSectionRenderer.contents;
 	  if (d && d[0].carouselAdRenderer) // we got served a block of ads, move to the next element
-	    d = data.contents.twoColumnSearchResultsRenderer.primaryContents.sectionListRenderer.contents[1].itemSectionRenderer.contents;
-	  if (d) { var innerHTML = '', key, videoId
+	    d = data.contents.twoColumnSearchResultsRenderer.primaryContents.sectionListRenderer.contents[1].itemSectionRenderer.contents; console.log(d); 
+	  if (d) { var innerHTML = '', key, videoId//, e = null
 	    for (var i=0; i < d.length; i++) {
-		if (d[i].videoRenderer) { e = d[i].videoRenderer; key = 'video'; videoId = e.videoId }
-		if (d[i].movieRenderer) { e = d[i].videoRenderer; key = 'movie'; videoId = e.videoId }
-		if (d[i].playlistRenderer) { e = d[i].playlistRenderer; key = 'playlist'; videoId = e.videos[0].childVideoRenderer.videoId + '&list='+ e.playlistId }
-		if (d[i].radioRenderer) { e = d[i].radioRenderer; key = 'radio'; videoId = e.videos[0].childVideoRenderer.videoId + '&list='+ e.playlistId }
+		if (d[i].videoRenderer) { e = d[i].videoRenderer; key = 'video'; if (e) videoId = e.videoId }
+		if (d[i].movieRenderer) { e = d[i].videoRenderer; key = 'movie'; if (e) videoId = e.videoId }
+		if (d[i].playlistRenderer) { e = d[i].playlistRenderer; key = 'playlist'; if (e) videoId = e.videos[0].childVideoRenderer.videoId + '&list='+ e.playlistId }
+		if (d[i].radioRenderer) { e = d[i].radioRenderer; key = 'radio'; if (e) videoId = e.videos[0].childVideoRenderer.videoId + '&list='+ e.playlistId }
 		if (d[i].horizontalCardListRenderer) {}
-		console.log(e); if (!e) continue
+		if (!e) continue
 
-	      innerHTML = innerHTML + search_results( videoId, ((e.title.runs) ? e.title.runs[0].text : e.title.simpleText), ((e.longBylineText.runs) ? e.longBylineText.runs[0].text : e.longBylineText.simpleText), ((e.longBylineText.runs) ? e.longBylineText.runs[0].navigationEndpoint.browseEndpoint.canonicalBaseUrl : ''), ((e.longBylineText.runs) ? e.longBylineText.runs[0].clickTrackingParams : ''), ((e.thumbnail) ? e.thumbnail.thumbnails[0].url : e.thumbnails[0].thumbnails[0].url ), ((e.lengthText) ? e.lengthText.simpleText : ''), ((e.publishedTimeText) ? e.publishedTimeText.simpleText : ''), ((e.viewCountText) ? e.viewCountText.simpleText : ''), ((e.descriptionSnippet) ? e.descriptionSnippet.runs[0].text : ''), e.trackingParams, key )
+	      if (key) 
+		innerHTML = innerHTML + search_results( videoId, ((e.title.runs) ? e.title.runs[0].text : e.title.simpleText), ((e.longBylineText.runs) ? e.longBylineText.runs[0].text : e.longBylineText.simpleText), ((e.longBylineText.runs) ? e.longBylineText.runs[0].navigationEndpoint.browseEndpoint.canonicalBaseUrl : ''), ((e.longBylineText.runs) ? e.longBylineText.runs[0].clickTrackingParams : ''), ((e.thumbnail) ? e.thumbnail.thumbnails[0].url : e.thumbnails[0].thumbnails[0].url ), ((e.lengthText) ? e.lengthText.simpleText : ''), ((e.publishedTimeText) ? e.publishedTimeText.simpleText : ''), ((e.viewCountText) ? e.viewCountText.simpleText : ''), ((e.descriptionSnippet) ? e.descriptionSnippet.runs[0].text : ''), e.trackingParams, key )
 	    }
 	    e = document.getElementById('gh-activityfeed').getElementsByClassName('section-list')[0]
 	    if (e) e.innerHTML = innerHTML
@@ -4586,7 +4632,7 @@ window.classic.related = function() {
    return (
 //'	{"autoplay_count":1,'+
 //'	 "watch_next_response":'+ 
-	( (window.classic.cfg) ? window.classic.cfg : //+',') : 
+	( (window.classic.cfg && location.href.indexOf('/watch') > -1) ? window.classic.cfg : //+',') : 
 
 	z
 
