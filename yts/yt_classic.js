@@ -59,7 +59,7 @@ body  yt.setConfig({  GAPI_HINT_PARAMS
 
 
 
-
+/*
 function script_copy() {
 
 
@@ -226,7 +226,7 @@ function script_copy() {
 
 
         //"window.onload = script_copy;"+
-
+*/
 
 
 
@@ -775,8 +775,13 @@ window.classic.convert = function(data) {
 
 	// search feed?
 	var s = data.contents.twoColumnSearchResultsRenderer
-
 	e = document.getElementsByClassName('branded-page-v2-container')[0]; if (e) e.style.display = (s) ? 'block' : 'none'
+
+	e = document.getElementsByClassName('branded-page-v2-top-row')[0]; if (e) e.style.display = 'none'
+	e = document.getElementById('browse-items-primary'); if (e) e.style.display = 'none'
+
+	e = document.getElementById('feed'); if (e) e.style.display = 'none'
+
 	e = document.getElementsByClassName('watch7-container')[0]; if (e) e.style.display = (s) ? 'none' : ''
 	e = document.getElementById('watch7-container'); if (e) e.style.display = (s) ? 'none' : ''
 	e = document.getElementById('placeholder-player'); if (e) e.style.display = (s) ? 'none' : ''
@@ -951,7 +956,7 @@ window.classic.convert = function(data) {
 	if (p[0] && typeof p[0].getVideoUrl == 'function' && p[0].getVideoUrl().indexOf(classic.video_id) == -1) {
 	  p[0].loadVideoById(classic.video_id)
 	  if (classic.playlist) { //console.log(classic.playlist +' '+classic.playlist_index)
-	    p[0].cuePlaylist({
+	    p[0].loadPlaylist({
 		listType: 'playlist',
 		list: classic.playlist,
 		index: classic.playlist_index || 0
@@ -3570,6 +3575,9 @@ window.classic.head =
 '  <link rel="stylesheet" href="/yts/cssbin/www-core-webp-vfl-xmSjh.css" name="www-core" class="css-httpswwwyoutubecomytscssbinwwwcorewebpvflxmSjhcss">'+
 '  <link rel="stylesheet" href="/yts/cssbin/player-vflC4ZS07/www-player-webp.css" name="player/www-player" class="css-httpswwwyoutubecomytscssbinplayervflC4ZS07wwwplayerwebpcss">'+
 '  <link rel="stylesheet" href="/yts/cssbin/www-pageframe-webp-vflO2nkM9.css" name="www-pageframe" class="css-httpswwwyoutubecomytscssbinwwwpageframewebpvflO2nkM9css">'+
+'  <link rel="stylesheet" href="/yts/cssbin/www-home-c4-vfl182B0f.css" name="www-home-c4" class="css-httpswwwyoutubecomytscssbinwwwhomec4vfl182B0fcss">'+
+//'  <link rel="stylesheet" href="//s.ytimg.com/yts/cssbin/www-home-c4-vflTXXCTm.css" name="www-home-c4">'+
+
 //'  <script>ytimg.preload("https:\\/\\/r1---sn-qpbpu8-c0qd.googlevideo.com\\/generate_204?conn2");ytimg.preload("https:\\/\\/r1---sn-qpbpu8-c0qd.googlevideo.com\\/generate_204");</script>'+
 //'  <title>Daryl Hall &amp; John Oates - Maneater (Lyrics) - YouTube</title>'+<link rel="canonical" href="https://www.youtube.com/watch?v=GbevQH1B9ic&amp;list=PL02wfScOeN5elXiqO32ldHwxGOilEgrnS&amp;index=86"><link rel="alternate" media="handheld" href="https://m.youtube.com/watch?v=GbevQH1B9ic"><link rel="alternate" media="only screen and (max-width: 640px)" href="https://m.youtube.com/watch?v=GbevQH1B9ic">      <meta name="title" content="Daryl Hall &amp; John Oates - Maneater (Lyrics)">'+
 
@@ -4347,7 +4355,7 @@ window.classic.related = function() {
 '							 {\\"playlistPanelVideoRenderer\\":{\\"title\\":{\\"simpleText\\":\\"Holding My Thoughts in My Heart (Piano)\\"},\\"longBylineText\\":{\\"runs\\":[{\\"text\\":\\"TKlavier\\",\\"navigationEndpoint\\":{\\"clickTrackingParams\\":\\"CBcQyCAYlgIiEwjtvLG9v8_nAhUPcuAKHfmlC3U=\\",\\"browseEndpoint\\":{\\"browseId\\":\\"UCd1gsJpReI72LCKnbXeUWaQ\\",\\"canonicalBaseUrl\\":\\"\\/user\\/TKlavier\\"}}}]},\\"thumbnail\\":{\\"thumbnails\\":[{\\"url\\":\\"https:\\/\\/i.ytimg.com\\/vi\\/QU_D_2pHmPM\\/hqdefault.jpg?sqp=-oaymwEYCKgBEF5IVfKriqkDCwgBFQAAiEIYAXAB\\\\u0026rs=AOn4CLAIDx9HJ51dYww14Yru_SlbMJqeBg\\",\\"width\\":168,\\"height\\":94},{\\"url\\":\\"https:\\/\\/i.ytimg.com\\/vi\\/QU_D_2pHmPM\\/hqdefault.jpg?sqp=-oaymwEYCMQBEG5IVfKriqkDCwgBFQAAiEIYAXAB\\\\u0026rs=AOn4CLCpOYDCz8fhGuxVVR6bO0-lToJAMg\\",\\"width\\":196,\\"height\\":110},{\\"url\\":\\"https:\\/\\/i.ytimg.com\\/vi\\/QU_D_2pHmPM\\/hqdefault.jpg?sqp=-oaymwEZCPYBEIoBSFXyq4qpAwsIARUAAIhCGAFwAQ==\\\\u0026rs=AOn4CLDcEuQDVfevu8Z85vk1P0cIQluryA\\",\\"width\\":246,\\"height\\":138},{\\"url\\":\\"https:\\/\\/i.ytimg.com\\/vi\\/QU_D_2pHmPM\\/hqdefault.jpg?sqp=-oaymwEZCNACELwBSFXyq4qpAwsIARUAAIhCGAFwAQ==\\\\u0026rs=AOn4CLD7_YPJO2mn-JVMLbGIISuyoFikCg\\",\\"width\\":336,\\"height\\":188}]},\\"lengthText\\":{\\"accessibility\\":{\\"accessibilityData\\":{\\"label\\":\\"3 minutes, 57 seconds\\"}},\\"simpleText\\":\\"3:57\\"},\\"indexText\\":{\\"simpleText\\":\\"279\\"},\\"selected\\":false,\\"navigationEndpoint\\":{\\"clickTrackingParams\\":\\"CBcQyCAYlgIiEwjtvLG9v8_nAhUPcuAKHfmlC3UyA0JGYUin7Ifqh-jr2xk=\\",\\"watchEndpoint\\":{\\"videoId\\":\\"QU_D_2pHmPM\\",\\"playlistId\\":\\"PL02wfScOeN5elXiqO32ldHwxGOilEgrnS\\",\\"index\\":278,\\"params\\":\\"OAE%3D\\"}},\\"videoId\\":\\"QU_D_2pHmPM\\",\\"shortBylineText\\":{\\"runs\\":[{\\"text\\":\\"TKlavier\\",\\"navigationEndpoint\\":{\\"clickTrackingParams\\":\\"CBcQyCAYlgIiEwjtvLG9v8_nAhUPcuAKHfmlC3U=\\",\\"browseEndpoint\\":{\\"browseId\\":\\"UCd1gsJpReI72LCKnbXeUWaQ\\",\\"canonicalBaseUrl\\":\\"\\/user\\/TKlavier\\"}}}]},\\"trackingParams\\":\\"CBcQyCAYlgIiEwjtvLG9v8_nAhUPcuAKHfmlC3U=\\"}},'+
 '							 {\\"playlistPanelVideoRenderer\\":{\\"title\\":{\\"simpleText\\":\\"Collateral (1\\/9) Movie CLIP - Nobody Notices (2004) HD\\"},\\"longBylineText\\":{\\"runs\\":[{\\"text\\":\\"Movieclips\\",\\"navigationEndpoint\\":{\\"clickTrackingParams\\":\\"CBYQyCAYlwIiEwjtvLG9v8_nAhUPcuAKHfmlC3U=\\",\\"browseEndpoint\\":{\\"browseId\\":\\"UC3gNmTGu-TTbFPpfSs5kNkg\\",\\"canonicalBaseUrl\\":\\"\\/user\\/movieclips\\"}}}]},\\"thumbnail\\":{\\"thumbnails\\":[{\\"url\\":\\"https:\\/\\/i.ytimg.com\\/vi\\/_syPeFclyN8\\/hqdefault.jpg?sqp=-oaymwEYCKgBEF5IVfKriqkDCwgBFQAAiEIYAXAB\\\\u0026rs=AOn4CLC12kaus7MvzAToDS-fJeLX6HETBQ\\",\\"width\\":168,\\"height\\":94},{\\"url\\":\\"https:\\/\\/i.ytimg.com\\/vi\\/_syPeFclyN8\\/hqdefault.jpg?sqp=-oaymwEYCMQBEG5IVfKriqkDCwgBFQAAiEIYAXAB\\\\u0026rs=AOn4CLBEhSaD1XShpUkzYxkTLS7uNxlcWg\\",\\"width\\":196,\\"height\\":110},{\\"url\\":\\"https:\\/\\/i.ytimg.com\\/vi\\/_syPeFclyN8\\/hqdefault.jpg?sqp=-oaymwEZCPYBEIoBSFXyq4qpAwsIARUAAIhCGAFwAQ==\\\\u0026rs=AOn4CLABoCk2nv828bhxA8WSz0YgyiLLeA\\",\\"width\\":246,\\"height\\":138},{\\"url\\":\\"https:\\/\\/i.ytimg.com\\/vi\\/_syPeFclyN8\\/hqdefault.jpg?sqp=-oaymwEZCNACELwBSFXyq4qpAwsIARUAAIhCGAFwAQ==\\\\u0026rs=AOn4CLB7UclYbmddKiQ8s9CLGhVxoqmKhA\\",\\"width\\":336,\\"height\\":188}]},\\"lengthText\\":{\\"accessibility\\":{\\"accessibilityData\\":{\\"label\\":\\"2 minutes, 17 seconds\\"}},\\"simpleText\\":\\"2:17\\"},\\"indexText\\":{\\"simpleText\\":\\"280\\"},\\"selected\\":false,\\"navigationEndpoint\\":{\\"clickTrackingParams\\":\\"CBYQyCAYlwIiEwjtvLG9v8_nAhUPcuAKHfmlC3UyA0JGYUin7Ifqh-jr2xk=\\",\\"watchEndpoint\\":{\\"videoId\\":\\"_syPeFclyN8\\",\\"playlistId\\":\\"PL02wfScOeN5elXiqO32ldHwxGOilEgrnS\\",\\"index\\":279,\\"params\\":\\"OAE%3D\\"}},\\"videoId\\":\\"_syPeFclyN8\\",\\"shortBylineText\\":{\\"runs\\":[{\\"text\\":\\"Movieclips\\",\\"navigationEndpoint\\":{\\"clickTrackingParams\\":\\"CBYQyCAYlwIiEwjtvLG9v8_nAhUPcuAKHfmlC3U=\\",\\"browseEndpoint\\":{\\"browseId\\":\\"UC3gNmTGu-TTbFPpfSs5kNkg\\",\\"canonicalBaseUrl\\":\\"\\/user\\/movieclips\\"}}}]},\\"trackingParams\\":\\"CBYQyCAYlwIiEwjtvLG9v8_nAhUPcuAKHfmlC3U=\\"}},'+
 '							 {\\"playlistPanelVideoRenderer\\":{\\"title\\":{\\"simpleText\\":\\"TPR - On Our Way (Kalm town theme) - A Melancholy Tribute To Final Fantasy VII\\"},\\"longBylineText\\":{\\"runs\\":[{\\"text\\":\\"TPR\\",\\"navigationEndpoint\\":{\\"clickTrackingParams\\":\\"CBUQyCAYmAIiEwjtvLG9v8_nAhUPcuAKHfmlC3U=\\",\\"browseEndpoint\\":{\\"browseId\\":\\"UCI_zZeg9XmJzQx2S7HrfdcA\\",\\"canonicalBaseUrl\\":\\"\\/user\\/phoenixrisemusic\\"}}}]},\\"thumbnail\\":{\\"thumbnails\\":[{\\"url\\":\\"https:\\/\\/i.ytimg.com\\/vi\\/7fH1e-Mlb6Y\\/hqdefault.jpg?sqp=-oaymwEYCKgBEF5IVfKriqkDCwgBFQAAiEIYAXAB\\\\u0026rs=AOn4CLBWoP5w3lGNH4f7HfTxqVpFmyb1Hw\\",\\"width\\":168,\\"height\\":94},{\\"url\\":\\"https:\\/\\/i.ytimg.com\\/vi\\/7fH1e-Mlb6Y\\/hqdefault.jpg?sqp=-oaymwEYCMQBEG5IVfKriqkDCwgBFQAAiEIYAXAB\\\\u0026rs=AOn4CLALM6uPdWh9zrkSEi8RdQhDfU5asQ\\",\\"width\\":196,\\"height\\":110},{\\"url\\":\\"https:\\/\\/i.ytimg.com\\/vi\\/7fH1e-Mlb6Y\\/hqdefault.jpg?sqp=-oaymwEZCPYBEIoBSFXyq4qpAwsIARUAAIhCGAFwAQ==\\\\u0026rs=AOn4CLBjXFQ4rJzVawj9ZpTjMgbh6_eHmg\\",\\"width\\":246,\\"height\\":138},{\\"url\\":\\"https:\\/\\/i.ytimg.com\\/vi\\/7fH1e-Mlb6Y\\/hqdefault.jpg?sqp=-oaymwEZCNACELwBSFXyq4qpAwsIARUAAIhCGAFwAQ==\\\\u0026rs=AOn4CLCM3N0xawHUY8bm0MDMIs1HMjJc1w\\",\\"width\\":336,\\"height\\":188}]},\\"lengthText\\":{\\"accessibility\\":{\\"accessibilityData\\":{\\"label\\":\\"2 minutes, 22 seconds\\"}},\\"simpleText\\":\\"2:22\\"},\\"indexText\\":{\\"simpleText\\":\\"281\\"},\\"selected\\":false,\\"navigationEndpoint\\":{\\"clickTrackingParams\\":\\"CBUQyCAYmAIiEwjtvLG9v8_nAhUPcuAKHfmlC3UyA0JGYUin7Ifqh-jr2xk=\\",\\"watchEndpoint\\":{\\"videoId\\":\\"7fH1e-Mlb6Y\\",\\"playlistId\\":\\"PL02wfScOeN5elXiqO32ldHwxGOilEgrnS\\",\\"index\\":280,\\"params\\":\\"OAE%3D\\"}},\\"videoId\\":\\"7fH1e-Mlb6Y\\",\\"shortBylineText\\":{\\"runs\\":[{\\"text\\":\\"TPR\\",\\"navigationEndpoint\\":{\\"clickTrackingParams\\":\\"CBUQyCAYmAIiEwjtvLG9v8_nAhUPcuAKHfmlC3U=\\",\\"browseEndpoint\\":{\\"browseId\\":\\"UCI_zZeg9XmJzQx2S7HrfdcA\\",\\"canonicalBaseUrl\\":\\"\\/user\\/phoenixrisemusic\\"}}}]},\\"trackingParams\\":\\"CBUQyCAYmAIiEwjtvLG9v8_nAhUPcuAKHfmlC3U=\\"}},'+
-'							 {\\"playlistPanelVideoRenderer\\":{\\"title\\":{\\"simpleText\\":\\"Die Toten Hosen \\/\\/ „Zehn kleine Jägermeister“ [Offizielles Musikvideo]\\"},\\"longBylineText\\":{\\"runs\\":[{\\"text\\":\\"DIE TOTEN HOSEN\\",\\"navigationEndpoint\\":{\\"clickTrackingParams\\":\\"CBQQyCAYmQIiEwjtvLG9v8_nAhUPcuAKHfmlC3U=\\",\\"browseEndpoint\\":{\\"browseId\\":\\"UCzQaHdbeofGzUvzUsLyvUIg\\",\\"canonicalBaseUrl\\":\\"\\/channel\\/UCzQaHdbeofGzUvzUsLyvUIg\\"}}}]},\\"thumbnail\\":{\\"thumbnails\\":[{\\"url\\":\\"https:\\/\\/i.ytimg.com\\/vi\\/tR4vamT51Nw\\/hqdefault.jpg?sqp=-oaymwEYCKgBEF5IVfKriqkDCwgBFQAAiEIYAXAB\\\\u0026rs=AOn4CLAn3iZNLbIJcMkYvja2-vIaqcef6g\\",\\"width\\":168,\\"height\\":94},{\\"url\\":\\"https:\\/\\/i.ytimg.com\\/vi\\/tR4vamT51Nw\\/hqdefault.jpg?sqp=-oaymwEYCMQBEG5IVfKriqkDCwgBFQAAiEIYAXAB\\\\u0026rs=AOn4CLBzOfvCREzyvmCAdIlLEy77YJpr5Q\\",\\"width\\":196,\\"height\\":110},{\\"url\\":\\"https:\\/\\/i.ytimg.com\\/vi\\/tR4vamT51Nw\\/hqdefault.jpg?sqp=-oaymwEZCPYBEIoBSFXyq4qpAwsIARUAAIhCGAFwAQ==\\\\u0026rs=AOn4CLAoDLQoH9rTiOFeqUlxpXQAi39TtQ\\",\\"width\\":246,\\"height\\":138},{\\"url\\":\\"https:\\/\\/i.ytimg.com\\/vi\\/tR4vamT51Nw\\/hqdefault.jpg?sqp=-oaymwEZCNACELwBSFXyq4qpAwsIARUAAIhCGAFwAQ==\\\\u0026rs=AOn4CLDCGjUPpkygbUJeWoEYf_CXCWzFZA\\",\\"width\\":336,\\"height\\":188}]},\\"lengthText\\":{\\"accessibility\\":{\\"accessibilityData\\":{\\"label\\":\\"4 minutes, 26 seconds\\"}},\\"simpleText\\":\\"4:26\\"},\\"indexText\\":{\\"simpleText\\":\\"282\\"},\\"selected\\":false,\\"navigationEndpoint\\":{\\"clickTrackingParams\\":\\"CBQQyCAYmQIiEwjtvLG9v8_nAhUPcuAKHfmlC3UyA0JGYUin7Ifqh-jr2xk=\\",\\"watchEndpoint\\":{\\"videoId\\":\\"tR4vamT51Nw\\",\\"playlistId\\":\\"PL02wfScOeN5elXiqO32ldHwxGOilEgrnS\\",\\"index\\":281,\\"params\\":\\"OAE%3D\\"}},\\"videoId\\":\\"tR4vamT51Nw\\",\\"shortBylineText\\":{\\"runs\\":[{\\"text\\":\\"DIE TOTEN HOSEN\\",\\"navigationEndpoint\\":{\\"clickTrackingParams\\":\\"CBQQyCAYmQIiEwjtvLG9v8_nAhUPcuAKHfmlC3U=\\",\\"browseEndpoint\\":{\\"browseId\\":\\"UCzQaHdbeofGzUvzUsLyvUIg\\",\\"canonicalBaseUrl\\":\\"\\/channel\\/UCzQaHdbeofGzUvzUsLyvUIg\\"}}}]},\\"trackingParams\\":\\"CBQQyCAYmQIiEwjtvLG9v8_nAhUPcuAKHfmlC3U=\\"}},'+
+'							 {\\"playlistPanelVideoRenderer\\":{\\"title\\":{\\"simpleText\\":\\"Die Toten Hosen \\/\\/ „Zehn kleine Jägermeister" [Offizielles Musikvideo]\\"},\\"longBylineText\\":{\\"runs\\":[{\\"text\\":\\"DIE TOTEN HOSEN\\",\\"navigationEndpoint\\":{\\"clickTrackingParams\\":\\"CBQQyCAYmQIiEwjtvLG9v8_nAhUPcuAKHfmlC3U=\\",\\"browseEndpoint\\":{\\"browseId\\":\\"UCzQaHdbeofGzUvzUsLyvUIg\\",\\"canonicalBaseUrl\\":\\"\\/channel\\/UCzQaHdbeofGzUvzUsLyvUIg\\"}}}]},\\"thumbnail\\":{\\"thumbnails\\":[{\\"url\\":\\"https:\\/\\/i.ytimg.com\\/vi\\/tR4vamT51Nw\\/hqdefault.jpg?sqp=-oaymwEYCKgBEF5IVfKriqkDCwgBFQAAiEIYAXAB\\\\u0026rs=AOn4CLAn3iZNLbIJcMkYvja2-vIaqcef6g\\",\\"width\\":168,\\"height\\":94},{\\"url\\":\\"https:\\/\\/i.ytimg.com\\/vi\\/tR4vamT51Nw\\/hqdefault.jpg?sqp=-oaymwEYCMQBEG5IVfKriqkDCwgBFQAAiEIYAXAB\\\\u0026rs=AOn4CLBzOfvCREzyvmCAdIlLEy77YJpr5Q\\",\\"width\\":196,\\"height\\":110},{\\"url\\":\\"https:\\/\\/i.ytimg.com\\/vi\\/tR4vamT51Nw\\/hqdefault.jpg?sqp=-oaymwEZCPYBEIoBSFXyq4qpAwsIARUAAIhCGAFwAQ==\\\\u0026rs=AOn4CLAoDLQoH9rTiOFeqUlxpXQAi39TtQ\\",\\"width\\":246,\\"height\\":138},{\\"url\\":\\"https:\\/\\/i.ytimg.com\\/vi\\/tR4vamT51Nw\\/hqdefault.jpg?sqp=-oaymwEZCNACELwBSFXyq4qpAwsIARUAAIhCGAFwAQ==\\\\u0026rs=AOn4CLDCGjUPpkygbUJeWoEYf_CXCWzFZA\\",\\"width\\":336,\\"height\\":188}]},\\"lengthText\\":{\\"accessibility\\":{\\"accessibilityData\\":{\\"label\\":\\"4 minutes, 26 seconds\\"}},\\"simpleText\\":\\"4:26\\"},\\"indexText\\":{\\"simpleText\\":\\"282\\"},\\"selected\\":false,\\"navigationEndpoint\\":{\\"clickTrackingParams\\":\\"CBQQyCAYmQIiEwjtvLG9v8_nAhUPcuAKHfmlC3UyA0JGYUin7Ifqh-jr2xk=\\",\\"watchEndpoint\\":{\\"videoId\\":\\"tR4vamT51Nw\\",\\"playlistId\\":\\"PL02wfScOeN5elXiqO32ldHwxGOilEgrnS\\",\\"index\\":281,\\"params\\":\\"OAE%3D\\"}},\\"videoId\\":\\"tR4vamT51Nw\\",\\"shortBylineText\\":{\\"runs\\":[{\\"text\\":\\"DIE TOTEN HOSEN\\",\\"navigationEndpoint\\":{\\"clickTrackingParams\\":\\"CBQQyCAYmQIiEwjtvLG9v8_nAhUPcuAKHfmlC3U=\\",\\"browseEndpoint\\":{\\"browseId\\":\\"UCzQaHdbeofGzUvzUsLyvUIg\\",\\"canonicalBaseUrl\\":\\"\\/channel\\/UCzQaHdbeofGzUvzUsLyvUIg\\"}}}]},\\"trackingParams\\":\\"CBQQyCAYmQIiEwjtvLG9v8_nAhUPcuAKHfmlC3U=\\"}},'+
 '							 {\\"playlistPanelVideoRenderer\\":{\\"title\\":{\\"simpleText\\":\\"Transformers G1 Soundtrack- Infiltrating Teletraan 1 \\/\\/ Cartoon Soundtrack\\"},\\"longBylineText\\":{\\"runs\\":[{\\"text\\":\\"Antronus Nexus\\",\\"navigationEndpoint\\":{\\"clickTrackingParams\\":\\"CBMQyCAYmgIiEwjtvLG9v8_nAhUPcuAKHfmlC3U=\\",\\"browseEndpoint\\":{\\"browseId\\":\\"UCWdTsGH8gzF09DL43Zterdg\\",\\"canonicalBaseUrl\\":\\"\\/user\\/antronusprime\\"}}}]},\\"thumbnail\\":{\\"thumbnails\\":[{\\"url\\":\\"https:\\/\\/i.ytimg.com\\/vi\\/s9ph2S0Agjo\\/hqdefault.jpg?sqp=-oaymwEYCKgBEF5IVfKriqkDCwgBFQAAiEIYAXAB\\\\u0026rs=AOn4CLAIuxcVXRW720FUeJ-HmZv4VnMFFg\\",\\"width\\":168,\\"height\\":94},{\\"url\\":\\"https:\\/\\/i.ytimg.com\\/vi\\/s9ph2S0Agjo\\/hqdefault.jpg?sqp=-oaymwEYCMQBEG5IVfKriqkDCwgBFQAAiEIYAXAB\\\\u0026rs=AOn4CLCRj_NnwNiQDagn8CywdaGCrmzIwA\\",\\"width\\":196,\\"height\\":110},{\\"url\\":\\"https:\\/\\/i.ytimg.com\\/vi\\/s9ph2S0Agjo\\/hqdefault.jpg?sqp=-oaymwEZCPYBEIoBSFXyq4qpAwsIARUAAIhCGAFwAQ==\\\\u0026rs=AOn4CLCERqurcmQm6G918GePnCbYvsGc5g\\",\\"width\\":246,\\"height\\":138},{\\"url\\":\\"https:\\/\\/i.ytimg.com\\/vi\\/s9ph2S0Agjo\\/hqdefault.jpg?sqp=-oaymwEZCNACELwBSFXyq4qpAwsIARUAAIhCGAFwAQ==\\\\u0026rs=AOn4CLAe1_wTHcenTZ83rzyaXccnKVRlaA\\",\\"width\\":336,\\"height\\":188}]},\\"lengthText\\":{\\"accessibility\\":{\\"accessibilityData\\":{\\"label\\":\\"102 seconds\\"}},\\"simpleText\\":\\"1:42\\"},\\"indexText\\":{\\"simpleText\\":\\"283\\"},\\"selected\\":false,\\"navigationEndpoint\\":{\\"clickTrackingParams\\":\\"CBMQyCAYmgIiEwjtvLG9v8_nAhUPcuAKHfmlC3UyA0JGYUin7Ifqh-jr2xk=\\",\\"watchEndpoint\\":{\\"videoId\\":\\"s9ph2S0Agjo\\",\\"playlistId\\":\\"PL02wfScOeN5elXiqO32ldHwxGOilEgrnS\\",\\"index\\":282,\\"params\\":\\"OAE%3D\\"}},\\"videoId\\":\\"s9ph2S0Agjo\\",\\"shortBylineText\\":{\\"runs\\":[{\\"text\\":\\"Antronus Nexus\\",\\"navigationEndpoint\\":{\\"clickTrackingParams\\":\\"CBMQyCAYmgIiEwjtvLG9v8_nAhUPcuAKHfmlC3U=\\",\\"browseEndpoint\\":{\\"browseId\\":\\"UCWdTsGH8gzF09DL43Zterdg\\",\\"canonicalBaseUrl\\":\\"\\/user\\/antronusprime\\"}}}]},\\"trackingParams\\":\\"CBMQyCAYmgIiEwjtvLG9v8_nAhUPcuAKHfmlC3U=\\"}},'+
 '							 {\\"playlistPanelVideoRenderer\\":{\\"title\\":{\\"simpleText\\":\\"Transformers G1 Soundtrack- Under Siege \\/\\/ Cartoon Soundtrack\\"},\\"longBylineText\\":{\\"runs\\":[{\\"text\\":\\"Antronus Nexus\\",\\"navigationEndpoint\\":{\\"clickTrackingParams\\":\\"CBIQyCAYmwIiEwjtvLG9v8_nAhUPcuAKHfmlC3U=\\",\\"browseEndpoint\\":{\\"browseId\\":\\"UCWdTsGH8gzF09DL43Zterdg\\",\\"canonicalBaseUrl\\":\\"\\/user\\/antronusprime\\"}}}]},\\"thumbnail\\":{\\"thumbnails\\":[{\\"url\\":\\"https:\\/\\/i.ytimg.com\\/vi\\/RvPbc4yTiyY\\/hqdefault.jpg?sqp=-oaymwEYCKgBEF5IVfKriqkDCwgBFQAAiEIYAXAB\\\\u0026rs=AOn4CLAOFeDEhKU4Zb-VvN6Ff4BImGmQPQ\\",\\"width\\":168,\\"height\\":94},{\\"url\\":\\"https:\\/\\/i.ytimg.com\\/vi\\/RvPbc4yTiyY\\/hqdefault.jpg?sqp=-oaymwEYCMQBEG5IVfKriqkDCwgBFQAAiEIYAXAB\\\\u0026rs=AOn4CLCb6aOL1TsIhUL959mY3UO-_rFinA\\",\\"width\\":196,\\"height\\":110},{\\"url\\":\\"https:\\/\\/i.ytimg.com\\/vi\\/RvPbc4yTiyY\\/hqdefault.jpg?sqp=-oaymwEZCPYBEIoBSFXyq4qpAwsIARUAAIhCGAFwAQ==\\\\u0026rs=AOn4CLBNxakOozJlT7BWWNrrDT4BNpHRuw\\",\\"width\\":246,\\"height\\":138},{\\"url\\":\\"https:\\/\\/i.ytimg.com\\/vi\\/RvPbc4yTiyY\\/hqdefault.jpg?sqp=-oaymwEZCNACELwBSFXyq4qpAwsIARUAAIhCGAFwAQ==\\\\u0026rs=AOn4CLBDH19_QLlsa-okzYkxLu8zg7Xl1Q\\",\\"width\\":336,\\"height\\":188}]},\\"lengthText\\":{\\"accessibility\\":{\\"accessibilityData\\":{\\"label\\":\\"99 seconds\\"}},\\"simpleText\\":\\"1:39\\"},\\"indexText\\":{\\"simpleText\\":\\"284\\"},\\"selected\\":false,\\"navigationEndpoint\\":{\\"clickTrackingParams\\":\\"CBIQyCAYmwIiEwjtvLG9v8_nAhUPcuAKHfmlC3UyA0JGYUin7Ifqh-jr2xk=\\",\\"watchEndpoint\\":{\\"videoId\\":\\"RvPbc4yTiyY\\",\\"playlistId\\":\\"PL02wfScOeN5elXiqO32ldHwxGOilEgrnS\\",\\"index\\":283,\\"params\\":\\"OAE%3D\\"}},\\"videoId\\":\\"RvPbc4yTiyY\\",\\"shortBylineText\\":{\\"runs\\":[{\\"text\\":\\"Antronus Nexus\\",\\"navigationEndpoint\\":{\\"clickTrackingParams\\":\\"CBIQyCAYmwIiEwjtvLG9v8_nAhUPcuAKHfmlC3U=\\",\\"browseEndpoint\\":{\\"browseId\\":\\"UCWdTsGH8gzF09DL43Zterdg\\",\\"canonicalBaseUrl\\":\\"\\/user\\/antronusprime\\"}}}]},\\"trackingParams\\":\\"CBIQyCAYmwIiEwjtvLG9v8_nAhUPcuAKHfmlC3U=\\"}},'+
 '							 {\\"playlistPanelVideoRenderer\\":{\\"title\\":{\\"simpleText\\":\\"Battle Stations- Transformers G1 Soundtrack \\/\\/ Cartoon Soundtrack\\"},\\"longBylineText\\":{\\"runs\\":[{\\"text\\":\\"Antronus Music Nexus\\",\\"navigationEndpoint\\":{\\"clickTrackingParams\\":\\"CBEQyCAYnAIiEwjtvLG9v8_nAhUPcuAKHfmlC3U=\\",\\"browseEndpoint\\":{\\"browseId\\":\\"UCPZVbv0kfAxeEkDv2k1MOTA\\"}}}]},\\"thumbnail\\":{\\"thumbnails\\":[{\\"url\\":\\"https:\\/\\/i.ytimg.com\\/vi\\/kM0YZKDPo1M\\/hqdefault.jpg?sqp=-oaymwEYCKgBEF5IVfKriqkDCwgBFQAAiEIYAXAB\\\\u0026rs=AOn4CLCwsUCxJT-92v95ji-yPf_OOYDj4w\\",\\"width\\":168,\\"height\\":94},{\\"url\\":\\"https:\\/\\/i.ytimg.com\\/vi\\/kM0YZKDPo1M\\/hqdefault.jpg?sqp=-oaymwEYCMQBEG5IVfKriqkDCwgBFQAAiEIYAXAB\\\\u0026rs=AOn4CLDtRz0y2JTZIWtf4lzTr7_lFwLb3A\\",\\"width\\":196,\\"height\\":110},{\\"url\\":\\"https:\\/\\/i.ytimg.com\\/vi\\/kM0YZKDPo1M\\/hqdefault.jpg?sqp=-oaymwEZCPYBEIoBSFXyq4qpAwsIARUAAIhCGAFwAQ==\\\\u0026rs=AOn4CLDUZH77QDVT7ajeKrmCTtg9b-7Mww\\",\\"width\\":246,\\"height\\":138},{\\"url\\":\\"https:\\/\\/i.ytimg.com\\/vi\\/kM0YZKDPo1M\\/hqdefault.jpg?sqp=-oaymwEZCNACELwBSFXyq4qpAwsIARUAAIhCGAFwAQ==\\\\u0026rs=AOn4CLDNREmDqEXji4ZJDSHNCXPr0ZGryA\\",\\"width\\":336,\\"height\\":188}]},\\"lengthText\\":{\\"accessibility\\":{\\"accessibilityData\\":{\\"label\\":\\"65 seconds\\"}},\\"simpleText\\":\\"1:05\\"},\\"indexText\\":{\\"simpleText\\":\\"285\\"},\\"selected\\":false,\\"navigationEndpoint\\":{\\"clickTrackingParams\\":\\"CBEQyCAYnAIiEwjtvLG9v8_nAhUPcuAKHfmlC3UyA0JGYUin7Ifqh-jr2xk=\\",\\"watchEndpoint\\":{\\"videoId\\":\\"kM0YZKDPo1M\\",\\"playlistId\\":\\"PL02wfScOeN5elXiqO32ldHwxGOilEgrnS\\",\\"index\\":284,\\"params\\":\\"OAE%3D\\"}},\\"videoId\\":\\"kM0YZKDPo1M\\",\\"shortBylineText\\":{\\"runs\\":[{\\"text\\":\\"Antronus Music Nexus\\",\\"navigationEndpoint\\":{\\"clickTrackingParams\\":\\"CBEQyCAYnAIiEwjtvLG9v8_nAhUPcuAKHfmlC3U=\\",\\"browseEndpoint\\":{\\"browseId\\":\\"UCPZVbv0kfAxeEkDv2k1MOTA\\"}}}]},\\"trackingParams\\":\\"CBEQyCAYnAIiEwjtvLG9v8_nAhUPcuAKHfmlC3U=\\"}}'+
@@ -5613,6 +5621,83 @@ window.classic.body =
 
 
 '        <div id="yt-masthead-content">'+
+
+'      <div class="alerts-wrapper" style="float: right; margin-top: -10px; max-width: 44px; max-height: 34px; display: inline;">'+
+'        <div id="alerts" class="content-alignment" onclick="(function(){ switch_layout() })();">'+
+
+'          <div class="yt-alert yt-alert-default yt-alert-info  " id="old-browser-alert">'+//yt-alert-warn
+'            <div class="yt-alert-icon">'+
+'              <span class="icon master-sprite yt-sprite"></span>'+
+'            </div>'+
+'            <div class="yt-alert-content" role="alert">'+
+'              <div class="yt-alert-message" tabindex="0">'+
+//'                This version of YouTube is going away soon. <a href="https://www.youtube.com/new">Switch to the new YouTube</a>'+
+'                The old version of YouTube is here to stay. <a href="#" onclick="switch_layout(); return false;">Switch between layouts</a>'+
+//'                We'll stop supporting this browser soon. For the best experience please <a href="/supported_browsers">update your browser</a>.'+
+'              </div>'+
+'            </div>'+
+'            <div class="yt-alert-buttons"></div>'+
+'          </div>'+
+
+'          <div id="editor-progress-alert-container"></div>'+
+
+'          <div class="yt-alert yt-alert-default yt-alert-warn hid " id="editor-progress-alert-template">'+
+'            <div class="yt-alert-icon">'+
+'              <span class="icon master-sprite yt-sprite"></span>'+
+'            </div>'+
+'            <div class="yt-alert-content" role="alert"></div>'+
+//
+'            <div class="yt-alert-buttons">'+
+'              <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-close close yt-uix-close" type="button" onclick=";return false;" aria-label="Close" data-close-parent-class="yt-alert">'+
+'                <span class="yt-uix-button-content">'+
+'                  Close'+
+'                </span>'+
+'              </button>'+
+'            </div>'+
+'          </div>'+
+
+'          <div id="edit-confirmation-alert"></div>'+
+'          <div class="yt-alert yt-alert-actionable yt-alert-info hid " id="edit-confirmation-alert-template">'+
+'            <div class="yt-alert-icon">'+
+'              <span class="icon master-sprite yt-sprite"></span>'+
+'            </div>'+
+'            <div class="yt-alert-content" role="alert">'+
+'              <div class="yt-alert-message" tabindex="0"></div>'+
+'            </div>'+
+//
+'            <div class="yt-alert-buttons">'+
+//
+'              <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-alert-info yt-uix-button-has-icon edit-confirmation-yes" type="button" onclick=";return false;">'+
+'                <span class="yt-uix-button-icon-wrapper">'+
+'                  <span class="yt-uix-button-icon yt-uix-button-icon-watch-like-invert yt-sprite"></span>'+
+'                </span>'+
+'                <span class="yt-uix-button-content">'+
+'                  Yeah, keep it'+
+'                </span>'+
+'              </button>'+
+'              <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-alert-info yt-uix-button-has-icon edit-confirmation-no" type="button" onclick=";return false;">'+
+'                <span class="yt-uix-button-icon-wrapper">'+
+'                  <span class="yt-uix-button-icon yt-uix-button-icon-watch-unlike-invert yt-sprite"></span>'+
+'                </span>'+
+'                <span class="yt-uix-button-content">'+
+'                  Undo'+
+'                </span>'+
+'              </button>'+
+//
+'              <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-close close yt-uix-close" type="button" onclick=";return false;" aria-label="Close" data-close-parent-class="yt-alert">'+
+'                <span class="yt-uix-button-content">'+
+'                  Close'+
+'                </span>'+
+'              </button>'+
+'            </div>'+
+
+'          </div>'+
+'        </div>'+
+
+'      </div>'+//alerts wrapper
+
+
+
 '          <form id="masthead-search" class="search-form consolidated-form" action="/results" onsubmit="if (document.getElementById(\'masthead-search-term\').value == \'\') return false;" data-clicktracking="CAEQ7VAiEwih7669v8_nAhWUa-AKHX0KBKwo-B0" data-visibility-tracking="CAEQ7VAiEwih7669v8_nAhWUa-AKHX0KBKwo-B0">'+
 '            <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-default search-btn-component search-button" type="submit" onclick="if (document.getElementById(\'masthead-search-term\').value == \'\') return false; document.getElementById(\'masthead-search\').submit(); return false;;return true;" id="search-btn" tabindex="2" dir="ltr">'+
 '              <span class="yt-uix-button-content">'+
@@ -6046,79 +6131,7 @@ window.classic.body =
 
 '      </div>'+//guide
 
-'      <div class="alerts-wrapper">'+
-'        <div id="alerts" class="content-alignment">'+
-
-'          <div class="yt-alert yt-alert-default yt-alert-info  " id="old-browser-alert">'+//yt-alert-warn
-'            <div class="yt-alert-icon">'+
-'              <span class="icon master-sprite yt-sprite"></span>'+
-'            </div>'+
-'            <div class="yt-alert-content" role="alert">'+
-'              <div class="yt-alert-message" tabindex="0">'+
-//'                This version of YouTube is going away soon. <a href="https://www.youtube.com/new">Switch to the new YouTube</a>'+
-'                The old version of YouTube is here to stay. <a href="#" onclick="switch_layout(); return false;">Switch between layouts</a>'+
-//'                We'll stop supporting this browser soon. For the best experience please <a href="/supported_browsers">update your browser</a>.'+
-'              </div>'+
-'            </div>'+
-'            <div class="yt-alert-buttons"></div>'+
-'          </div>'+
-
-'          <div id="editor-progress-alert-container"></div>'+
-
-'          <div class="yt-alert yt-alert-default yt-alert-warn hid " id="editor-progress-alert-template">'+
-'            <div class="yt-alert-icon">'+
-'              <span class="icon master-sprite yt-sprite"></span>'+
-'            </div>'+
-'            <div class="yt-alert-content" role="alert"></div>'+
-//
-'            <div class="yt-alert-buttons">'+
-'              <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-close close yt-uix-close" type="button" onclick=";return false;" aria-label="Close" data-close-parent-class="yt-alert">'+
-'                <span class="yt-uix-button-content">'+
-'                  Close'+
-'                </span>'+
-'              </button>'+
-'            </div>'+
-'          </div>'+
-
-'          <div id="edit-confirmation-alert"></div>'+
-'          <div class="yt-alert yt-alert-actionable yt-alert-info hid " id="edit-confirmation-alert-template">'+
-'            <div class="yt-alert-icon">'+
-'              <span class="icon master-sprite yt-sprite"></span>'+
-'            </div>'+
-'            <div class="yt-alert-content" role="alert">'+
-'              <div class="yt-alert-message" tabindex="0"></div>'+
-'            </div>'+
-//
-'            <div class="yt-alert-buttons">'+
-//
-'              <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-alert-info yt-uix-button-has-icon edit-confirmation-yes" type="button" onclick=";return false;">'+
-'                <span class="yt-uix-button-icon-wrapper">'+
-'                  <span class="yt-uix-button-icon yt-uix-button-icon-watch-like-invert yt-sprite"></span>'+
-'                </span>'+
-'                <span class="yt-uix-button-content">'+
-'                  Yeah, keep it'+
-'                </span>'+
-'              </button>'+
-'              <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-alert-info yt-uix-button-has-icon edit-confirmation-no" type="button" onclick=";return false;">'+
-'                <span class="yt-uix-button-icon-wrapper">'+
-'                  <span class="yt-uix-button-icon yt-uix-button-icon-watch-unlike-invert yt-sprite"></span>'+
-'                </span>'+
-'                <span class="yt-uix-button-content">'+
-'                  Undo'+
-'                </span>'+
-'              </button>'+
-//
-'              <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-close close yt-uix-close" type="button" onclick=";return false;" aria-label="Close" data-close-parent-class="yt-alert">'+
-'                <span class="yt-uix-button-content">'+
-'                  Close'+
-'                </span>'+
-'              </button>'+
-'            </div>'+
-
-'          </div>'+
-'        </div>'+
-
-'      </div>'+//alerts wrapper
+//'      <div class="alerts-wrapper"></div>'+
 
 '      <div id="header"></div>'+
 
@@ -7050,7 +7063,7 @@ window.classic.body =
 '                  </button>'+
 '                </div>'+
 
-'                <div id="watch-discussion" class="branded-page-box yt-card scrolldetect" data-scrolldetect-callback="comments-delay-load">'+
+'                <div id="watch-discussion" class="branded-page-box yt-card scrolldetect hid" data-scrolldetect-callback="comments-delay-load">'+
 /*
 '                  <div class="action-panel-loading">'+
 '                    <p class="yt-spinner ">'+
@@ -7107,7 +7120,229 @@ window.classic.body =
 
 '        </div>'+//watch7-container
 
-'        <div class="branded-page-v2-container branded-page-base-bold-titles branded-page-v2-container-flex-width branded-page-v2-secondary-column-hidden">'+
+'        <div class="branded-page-v2-container branded-page-base-bold-titles branded-page-v2-container-flex-width branded-page-v2-has-top-row branded-page-v2-secondary-column-hidden" id="c4-overview-tab">'+
+
+           //channel
+'          <div class="branded-page-v2-top-row" style="display: none">'+
+'            <div class="branded-page-v2-header channel-header yt-card">'+
+
+'              <div id="gh-banner">'+
+
+'                <style>'+
+'                  #c4-header-bg-container {'+
+'                    background-image: url(//lh4.googleusercontent.com/-nvia49vJ6FA/Ur26an_o3GI/AAAAAAAAAPU/20qE4hRqKBA/w1060-fcrop64=1,00005a57ffffa5a8-nd/channels4_banner.jpg);'+
+'                  }'+
+'                  @media screen and (-webkit-min-device-pixel-ratio: 1.5),'+
+'                  screen and (min-resolution: 1.5dppx) {'+
+'                    #c4-header-bg-container {'+
+'                      background-image: url(//lh4.googleusercontent.com/-nvia49vJ6FA/Ur26an_o3GI/AAAAAAAAAPU/20qE4hRqKBA/w2120-fcrop64=1,00005a57ffffa5a8-nd/channels4_banner.jpg);'+
+'                    }'+
+'                  }'+
+'                  #c4-header-bg-container .hd-banner-image {'+
+'                    background-image: url(//lh4.googleusercontent.com/-nvia49vJ6FA/Ur26an_o3GI/AAAAAAAAAPU/20qE4hRqKBA/w2120-fcrop64=1,00005a57ffffa5a8-nd/channels4_banner.jpg);'+
+'                  }'+
+'                </style>'+
+
+'                <div id="c4-header-bg-container" class="c4-visible-on-hover-container  has-custom-banner">'+
+'                  <div class="hd-banner">'+
+'                    <div class="hd-banner-image"></div>'+
+'                  </div>'+
+
+'                  <div id="header-links">'+
+'                    <ul class="about-secondary-links">'+//about-network-links
+'                      <li class="channel-links-item">'+
+'                        <a href="https://plus.google.com/114407182308042596122" rel="me nofollow" target="_blank" title="https://plus.google.com/114407182308042596122" class="about-channel-link yt-uix-redirect-link about-channel-link-with-icon">'+
+'                          <img src="//s2.googleusercontent.com/s2/favicons?domain=plus.google.com&amp;feature=youtube_channel" class="about-channel-link-favicon" alt="" width="16" height="16">'+
+'                        </a>'+
+'                      </li>'+
+'                      <li class="channel-links-item">'+
+'                        <a href="https://twitter.com/#!/lazygamereviews" rel="me nofollow" target="_blank" title="https://twitter.com/#!/lazygamereviews" class="about-channel-link yt-uix-redirect-link about-channel-link-with-icon">'+
+'                          <img src="//s2.googleusercontent.com/s2/favicons?domain=twitter.com&amp;feature=youtube_channel" class="about-channel-link-favicon" alt="" width="16" height="16">'+
+'                        </a>'+
+'                      </li>'+
+'                      <li class="channel-links-item">'+
+'                        <a href="http://www.facebook.com/LazyGameReviews" rel="me nofollow" target="_blank" title="http://www.facebook.com/LazyGameReviews" class="about-channel-link yt-uix-redirect-link about-channel-link-with-icon">'+
+'                          <img src="//s2.googleusercontent.com/s2/favicons?domain=www.facebook.com&amp;feature=youtube_channel" class="about-channel-link-favicon" alt="" width="16" height="16">'+
+'                        </a>'+
+'                      </li>'+
+'                      <li class="channel-links-item">'+
+'                        <a href="http://lazygamereviews.wordpress.com/" rel="me nofollow" target="_blank" title="http://lazygamereviews.wordpress.com/" class="about-channel-link yt-uix-redirect-link about-channel-link-with-icon">'+
+'                          <img src="//s2.googleusercontent.com/s2/favicons?domain=lazygamereviews.wordpress.com&amp;feature=youtube_channel" class="about-channel-link-favicon" alt="" width="16" height="16">'+
+'                        </a>'+
+'                      </li>'+
+'                    </ul>'+
+'                    <ul class="about-custom-links">'+
+'                      <li class="channel-links-item">'+
+'                        <a href="http://www.patreon.com/LazyGameReviews" rel="me nofollow" target="_blank" title="Support LGR on Patreon" class="about-channel-link yt-uix-redirect-link about-channel-link-with-icon">'+
+'                          <img src="//s2.googleusercontent.com/s2/favicons?domain=patreon.com&amp;feature=youtube_channel" class="about-channel-link-favicon" alt="" width="16" height="16">'+
+'                          <span class="about-channel-link-text">'+
+'                            Support LGR on Patreon'+
+'                          </span>'+
+'                        </a>'+
+'                      </li>'+
+'                    </ul>'+
+'                  </div>'+//header-links
+
+'                  <a class="channel-header-profile-image-container spf-link" href="/user/phreakindee">'+
+'                    <img class="channel-header-profile-image" src="https://yt3.ggpht.com/-CsHahRaj2wE/AAAAAAAAAAI/AAAAAAAAAAA/3PP6XFMR-wk/s100-c-k-no/photo.jpg" title="Lazy Game Reviews" alt="Lazy Game Reviews">'+
+'                  </a>'+
+'                </div>'+
+
+'              </div>'+//gh-banner
+
+'              <div class="">'+
+'                <div class="primary-header-contents clearfix" id="c4-primary-header-contents">'+
+'                  <div class="primary-header-actions clearfix">'+
+'                    <span class="channel-header-subscription-button-container yt-uix-button-subscription-container with-preferences"><button class="yt-uix-button yt-uix-button-size-default yt-uix-button-subscribe-branded yt-uix-button-has-icon yt-uix-subscription-button yt-can-buffer" type="button" onclick=";return false;" aria-busy="false" aria-role="button" aria-live="polite" data-sessionlink="ei=2irfU-_mEonm-QPqv4Bg&amp;ved=CLUDEJsr&amp;feature=channels4" data-channel-external-id="UCLx053rWZxCiYWsBETgdKrQ" data-style-type="branded" data-href="https://accounts.google.com/ServiceLogin?passive=true&amp;service=youtube&amp;uilel=3&amp;hl=en&amp;continue=http%3A%2F%2Fwww.youtube.com%2Fsignin%3Faction_handle_signin%3Dtrue%26feature%3Dsubscribe%26continue_action%3DQUFFLUhqa2tqaEZSSndrYnNuZmh2eG9mbFhmb3lsY1llUXxBQ3Jtc0tuVEphUk1kNzJEYlBzb003SjVLSXR1cU1GTnJwaVdVRW56UW9BbGtGNURtSWhZV0tmOU55cDVIaDRlTjVycEVXaVdmcHdJT2o5WktOdUxBX2duQllsWlppQkt0Q0o0WGxwTk16dVctVGtLWDVSUkNtb2ZWaFBxNGU2OFdvZDYwX05la3lQNWhMa1pqS2RHdC1VMzNIbnpRZU5vbTVzbnhjSDZ5YVhhSklRNlh5UlJlNnkwcFpOYlVwSVRHRzVBcnNqanRTMHc%253D%26next%3D%252Fchannel%252FUCLx053rWZxCiYWsBETgdKrQ%26hl%3Den%26app%3Ddesktop"><span class="yt-uix-button-icon-wrapper">'+
+'                      <img src="//www.youtube.com/yts/img/pixel-vfl3z5WfW.gif" alt="" class="yt-uix-button-icon yt-uix-button-icon-subscribe yt-sprite"></span>'+
+'                        <span class="yt-uix-button-content">'+
+'                          <span class="subscribe-label" aria-label="Subscribe">'+
+'                            Subscribe'+
+'                          </span>'+
+'                          <span class="subscribed-label" aria-label="Unsubscribe">'+
+'                            Subscribed'+
+'                          </span>'+
+'                          <span class="unsubscribe-label" aria-label="Unsubscribe">'+
+'                            Unsubscribe'+
+'                          </span>'+
+'                        </span>'+
+'                      </button>'+
+'                      <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-default yt-uix-button-empty yt-uix-button-has-icon yt-uix-subscription-preferences-button" type="button" onclick=";return false;" data-channel-external-id="UCLx053rWZxCiYWsBETgdKrQ">'+
+'                        <span class="yt-uix-button-icon-wrapper">'+
+'                          <img src="//www.youtube.com/yts/img/pixel-vfl3z5WfW.gif" alt="" class="yt-uix-button-icon yt-uix-button-icon-subscription-preferences yt-sprite">'+
+'                        </span>'+
+'                      </button>'+
+'                      <span class="yt-subscription-button-subscriber-count-branded-horizontal subscribed" title="194,302">'+
+'                        194,302'+
+'                      </span>'+
+'                      <span class="yt-subscription-button-disabled-mask" title=""></span>'+
+'                      <div class="yt-uix-overlay " data-overlay-style="primary" data-overlay-shape="tiny">'+
+'                        <div class="yt-dialog hid ">'+
+'                          <div class="yt-dialog-base">'+
+'                            <span class="yt-dialog-align"></span>'+
+'                            <div class="yt-dialog-fg">'+
+'                              <div class="yt-dialog-fg-content">'+
+'                                <div class="yt-dialog-header">'+
+'                                  <h2 class="yt-dialog-title">'+
+'                                    Subscription preferences'+
+'                                  </h2>'+
+'                                </div>'+
+'                                <div class="yt-dialog-loading">'+
+'                                  <div class="yt-dialog-waiting-content">'+
+'                                    <div class="yt-spinner-img"></div>'+
+'                                    <div class="yt-dialog-waiting-text">'+
+'                                      Loading...'+
+'                                    </div>'+
+'                                  </div>'+
+'                                </div>'+
+'                                <div class="yt-dialog-content">'+
+'                                  <div class="subscription-preferences-overlay-content-container">'+
+'                                    <div class="subscription-preferences-overlay-loading ">'+
+'                                      <p class="yt-spinner">'+
+'                                        <img src="//www.youtube.com/yts/img/pixel-vfl3z5WfW.gif" alt="Loading icon" class="yt-spinner-img yt-sprite">'+
+'                                        <span class="yt-spinner-message">'+
+'                                          Loading...'+
+'                                        </span>'+
+'                                      </p>'+
+'                                    </div>'+
+'                                    <div class="subscription-preferences-overlay-content"></div>'+
+'                                  </div>'+
+'                                </div>'+
+'                                <div class="yt-dialog-working">'+
+'                                  <div class="yt-dialog-working-overlay"></div>'+
+'                                  <div class="yt-dialog-working-bubble">'+
+'                                    <div class="yt-dialog-waiting-content">'+
+'                                      <div class="yt-spinner-img"></div>'+
+'                                      <div class="yt-dialog-waiting-text">'+
+'                                        Working...'+
+'                                      </div>'+
+'                                    </div>'+
+'                                  </div>'+
+'                                </div>'+
+'                              </div>'+
+'                            </div>'+
+'                          </div>'+
+'                        </div>'+
+'                      </div>'+
+'                    </span>'+
+'                  </div>'+
+
+'                  <h1 class="branded-page-header-title">'+
+'                    <span class="qualified-channel-title ellipsized">'+
+'                      <span class="qualified-channel-title-wrapper">'+
+'                        <span dir="ltr" class="qualified-channel-title-text">'+
+'                          <a dir="ltr" href="/user/phreakindee" class="spf-link branded-page-header-title-link yt-uix-sessionlink" title="Lazy Game Reviews" data-sessionlink="ei=2irfU-_mEonm-QPqv4Bg">'+
+'                            Lazy Game Reviews'+
+'                          </a>'+
+'                        </span>'+
+'                      </span>'+
+'                    </span>'+
+'                  </h1>'+
+
+'                </div>'+
+
+'                <div id="channel-subheader" class="clearfix branded-page-gutter-padding appbar-content-trigger">'+
+'                  <ul id="channel-navigation-menu" class="clearfix">'+
+'                    <li>'+
+'                      <h2 class="epic-nav-item-heading ">'+
+'                        Home'+
+'                      </h2>'+
+'                    </li>'+
+'                    <li>'+
+'                      <a href="/user/phreakindee/videos" class="yt-uix-button  spf-link  yt-uix-sessionlink yt-uix-button-epic-nav-item yt-uix-button-size-default" data-sessionlink="ei=2irfU-_mEonm-QPqv4Bg">'+
+'                        <span class="yt-uix-button-content">'+
+'                          Videos '+
+'                        </span>'+
+'                      </a>'+
+'                    </li>'+
+'                    <li>'+
+'                      <a href="/user/phreakindee/playlists" class="yt-uix-button  spf-link  yt-uix-sessionlink yt-uix-button-epic-nav-item yt-uix-button-size-default" data-sessionlink="ei=2irfU-_mEonm-QPqv4Bg">'+
+'                        <span class="yt-uix-button-content">'+
+'                          Playlists '+
+'                        </span>'+
+'                      </a>'+
+'                    </li>'+
+'                    <li>'+
+'                      <a href="/user/phreakindee/channels" class="yt-uix-button  spf-link  yt-uix-sessionlink yt-uix-button-epic-nav-item yt-uix-button-size-default" data-sessionlink="ei=2irfU-_mEonm-QPqv4Bg">'+
+'                        <span class="yt-uix-button-content">'+
+'                          Channels '+
+'                        </span>'+
+'                      </a>'+
+'                    </li>'+
+'                    <li>'+
+'                      <a href="/user/phreakindee/discussion" class="yt-uix-button  spf-link  yt-uix-sessionlink yt-uix-button-epic-nav-item yt-uix-button-size-default" data-sessionlink="ei=2irfU-_mEonm-QPqv4Bg">'+
+'                        <span class="yt-uix-button-content">'+
+'                          Discussion '+
+'                        </span>'+
+'                      </a>'+
+'                    </li>'+
+'                    <li>'+
+'                      <a href="/user/phreakindee/about" class="yt-uix-button  spf-link  yt-uix-sessionlink yt-uix-button-epic-nav-item yt-uix-button-size-default" data-sessionlink="ei=2irfU-_mEonm-QPqv4Bg">'+
+'                        <span class="yt-uix-button-content">'+
+'                          About '+
+'                        </span>'+
+'                      </a>'+
+'                    </li>'+
+'                    <li>'+
+'                      <div id="channel-search">'+
+'                        <label class="show-search epic-nav-item secondary-nav" for="channels-search-field">'+
+'                          <img src="//www.youtube.com/yts/img/pixel-vfl3z5WfW.gif" alt="" class="epic-nav-item-heading-icon yt-sprite">'+
+'                        </label>'+
+'                        <form class="search-form epic-nav-item secondary-nav" action="/user/phreakindee/search" method="get">'+
+'                          <span class=" yt-uix-form-input-container yt-uix-form-input-text-container ">'+
+'                            <input class="yt-uix-form-input-text search-field" name="query" id="channels-search-field" type="text" placeholder="Search Channel" maxlength="100" autocomplete="off">'+
+'                          </span>'+
+'                        </form>'+
+'                      </div>'+
+'                    </li>'+
+'                  </ul>'+
+'                </div>'+
+'              </div>'+
+'            </div>'+
+'          </div>'+//branded-page-v2-top-row
+           //channel
+
+
 '          <div class="branded-page-v2-col-container">'+
 '            <div class="branded-page-v2-col-container-inner">'+
 
@@ -7116,7 +7351,8 @@ window.classic.body =
 '                <div class="   yt-card  clearfix">'+
 
 '                  <div class="branded-page-v2-primary-col-header-container branded-page-v2-primary-column-content"></div>'+
-'                  <div class="branded-page-v2-body branded-page-v2-primary-column-content" id="gh-activityfeed">'+
+
+'                  <div class="branded-page-v2-body branded-page-v2-primary-column-content" id="gh-activityfeed">'+//channel: id="gh-overviewtab"/"" , search: id="gh-activityfeed"
 
                      //searchhtm
 '                    <div class="search-header yt-uix-expander yt-uix-expander-collapsed">'+
@@ -7411,8 +7647,176 @@ window.classic.body =
 '                    </div>'+//search-pager
 
 
+                     //channel
+'                    <ul id="browse-items-primary" style="display: none">'+
 
-'                    <div id="feed" class="">'+
+'                      <script type="application/ld+json">'+
+'                        {"@context":"http:\\/\\/schema.org","itemListElement":[{"position":1,"item":{"itemListElement":[{"position":1,"url":"http:\\/\\/www.youtube.com\\/watch?v=j5mPBhx4_B4","@type":"ListItem"},{"position":2,"url":"http:\\/\\/www.youtube.com\\/watch?v=iHzQ39n2dtw","@type":"ListItem"},{"position":3,"url":"http:\\/\\/www.youtube.com\\/watch?v=OJDffyYp3jg","@type":"ListItem"},{"position":4,"url":"http:\\/\\/www.youtube.com\\/watch?v=8yb4_s9TC0c","@type":"ListItem"},{"position":5,"url":"http:\\/\\/www.youtube.com\\/watch?v=fZPcvdy_LaQ","@type":"ListItem"},{"position":6,"url":"http:\\/\\/www.youtube.com\\/watch?v=zosU_DNBCyE","@type":"ListItem"}],"url":"https:\\/\\/www.youtube.com\\/channel\\/UCH1dpzjCEiGAt8CXkryhkZg","@type":"ItemList"},"@type":"ListItem"},{"position":2,"item":{"itemListElement":[{"position":1,"url":"http:\\/\\/www.youtube.com\\/watch?v=xhNDesEq3NU","@type":"ListItem"},{"position":2,"url":"http:\\/\\/www.youtube.com\\/watch?v=rNb3Y23TQzg","@type":"ListItem"},{"position":3,"url":"http:\\/\\/www.youtube.com\\/watch?v=A07_eY1SFq0","@type":"ListItem"},{"position":4,"url":"http:\\/\\/www.youtube.com\\/watch?v=avP9VbFxDVU","@type":"ListItem"},{"position":5,"url":"http:\\/\\/www.youtube.com\\/watch?v=_JEHzxeuynQ","@type":"ListItem"},{"position":6,"url":"http:\\/\\/www.youtube.com\\/watch?v=fgL2eLat2kA","@type":"ListItem"},{"position":7,"url":"http:\\/\\/www.youtube.com\\/watch?v=wRuilBl_w_I","@type":"ListItem"},{"position":8,"url":"http:\\/\\/www.youtube.com\\/watch?v=kdNEPyh4FHc","@type":"ListItem"},{"position":9,"url":"http:\\/\\/www.youtube.com\\/watch?v=gKPaWPsTz9E","@type":"ListItem"},{"position":10,"url":"http:\\/\\/www.youtube.com\\/watch?v=hHBXL2YlQ68","@type":"ListItem"},{"position":11,"url":"http:\\/\\/www.youtube.com\\/watch?v=y0KMtZHCYio","@type":"ListItem"},{"position":12,"url":"http:\\/\\/www.youtube.com\\/watch?v=QAT8D3X60zI","@type":"ListItem"}],"url":"https:\\/\\/www.youtube.com\\/channel\\/UCH1dpzjCEiGAt8CXkryhkZg","@type":"ItemList"},"@type":"ListItem"},{"position":3,"item":{"itemListElement":[{"position":1,"url":"http:\\/\\/www.youtube.com\\/watch?v=tSLKEo0x9g0","@type":"ListItem"},{"position":2,"url":"http:\\/\\/www.youtube.com\\/watch?v=XazY5j6Fbos","@type":"ListItem"},{"position":3,"url":"http:\\/\\/www.youtube.com\\/watch?v=Qvmw44TZMtk","@type":"ListItem"},{"position":4,"url":"http:\\/\\/www.youtube.com\\/watch?v=snbaiVyomYg","@type":"ListItem"},{"position":5,"url":"http:\\/\\/www.youtube.com\\/watch?v=EUyfLiNCi3Q","@type":"ListItem"},{"position":6,"url":"http:\\/\\/www.youtube.com\\/watch?v=nfvyG3TstdM","@type":"ListItem"},{"position":7,"url":"http:\\/\\/www.youtube.com\\/watch?v=2m8Ijm4J6_s","@type":"ListItem"},{"position":8,"url":"http:\\/\\/www.youtube.com\\/watch?v=fARW2YwerTc","@type":"ListItem"},{"position":9,"url":"http:\\/\\/www.youtube.com\\/watch?v=_g0jbWtWY3k","@type":"ListItem"},{"position":10,"url":"http:\\/\\/www.youtube.com\\/watch?v=WQvHsnM130w","@type":"ListItem"},{"position":11,"url":"http:\\/\\/www.youtube.com\\/watch?v=X7_4vCvky-8","@type":"ListItem"},{"position":12,"url":"http:\\/\\/www.youtube.com\\/watch?v=wR8XeYwydyQ","@type":"ListItem"}],"url":"https:\\/\\/www.youtube.com\\/channel\\/UCH1dpzjCEiGAt8CXkryhkZg","@type":"ItemList"},"@type":"ListItem"},{"position":4,"item":{"itemListElement":[{"position":1,"url":"http:\\/\\/www.youtube.com\\/watch?v=iZflgOwE8kQ","@type":"ListItem"},{"position":2,"url":"http:\\/\\/www.youtube.com\\/watch?v=EHps9UsJsko","@type":"ListItem"},{"position":3,"url":"http:\\/\\/www.youtube.com\\/watch?v=p1ubTsrZFBU","@type":"ListItem"},{"position":4,"url":"http:\\/\\/www.youtube.com\\/watch?v=5avtfMXeh40","@type":"ListItem"}],"url":"https:\\/\\/www.youtube.com\\/channel\\/UCH1dpzjCEiGAt8CXkryhkZg","@type":"ItemList"},"@type":"ListItem"},{"position":5,"item":{"itemListElement":[{"position":1,"url":"http:\\/\\/www.youtube.com\\/watch?v=BZ5TW07ff2o","@type":"ListItem"},{"position":2,"url":"http:\\/\\/www.youtube.com\\/watch?v=0-GFlD1aiGs","@type":"ListItem"},{"position":3,"url":"http:\\/\\/www.youtube.com\\/watch?v=3mu-K6da4Os","@type":"ListItem"},{"position":4,"url":"http:\\/\\/www.youtube.com\\/watch?v=fceqaq6_YLc","@type":"ListItem"},{"position":5,"url":"http:\\/\\/www.youtube.com\\/watch?v=YufHFz5UKh4","@type":"ListItem"},{"position":6,"url":"http:\\/\\/www.youtube.com\\/watch?v=OGRR83pMx-Q","@type":"ListItem"},{"position":7,"url":"http:\\/\\/www.youtube.com\\/watch?v=t-sAlO95mPI","@type":"ListItem"},{"position":8,"url":"http:\\/\\/www.youtube.com\\/watch?v=tg5gfKqcFv8","@type":"ListItem"},{"position":9,"url":"http:\\/\\/www.youtube.com\\/watch?v=-HDd0GYjjz0","@type":"ListItem"},{"position":10,"url":"http:\\/\\/www.youtube.com\\/watch?v=mkn9Nzy20uI","@type":"ListItem"},{"position":11,"url":"http:\\/\\/www.youtube.com\\/watch?v=hpauI9rdwRc","@type":"ListItem"},{"position":12,"url":"http:\\/\\/www.youtube.com\\/watch?v=9FjNogjMLPk","@type":"ListItem"}],"url":"https:\\/\\/www.youtube.com\\/channel\\/UCH1dpzjCEiGAt8CXkryhkZg","@type":"ItemList"},"@type":"ListItem"},{"position":6,"item":{"itemListElement":[{"position":1,"url":"http:\\/\\/www.youtube.com\\/watch?v=DDGf39NkZe0","@type":"ListItem"},{"position":2,"url":"http:\\/\\/www.youtube.com\\/watch?v=qHlJnAMgg3g","@type":"ListItem"},{"position":3,"url":"http:\\/\\/www.youtube.com\\/watch?v=7BSgNY-UAuo","@type":"ListItem"},{"position":4,"url":"http:\\/\\/www.youtube.com\\/watch?v=y9o3UcBXgQE","@type":"ListItem"},{"position":5,"url":"http:\\/\\/www.youtube.com\\/watch?v=P9i4OG29tvk","@type":"ListItem"},{"position":6,"url":"http:\\/\\/www.youtube.com\\/watch?v=hVZujmrWAlw","@type":"ListItem"},{"position":7,"url":"http:\\/\\/www.youtube.com\\/watch?v=mbVLTg36k5U","@type":"ListItem"},{"position":8,"url":"http:\\/\\/www.youtube.com\\/watch?v=X1Ph9wXs3nM","@type":"ListItem"},{"position":9,"url":"http:\\/\\/www.youtube.com\\/watch?v=tJ19wFgEfz4","@type":"ListItem"},{"position":10,"url":"http:\\/\\/www.youtube.com\\/watch?v=JUAZjA9NkTA","@type":"ListItem"},{"position":11,"url":"http:\\/\\/www.youtube.com\\/watch?v=rbtgZDkvTMk","@type":"ListItem"},{"position":12,"url":"http:\\/\\/www.youtube.com\\/watch?v=siBC10M3M_E","@type":"ListItem"}],"url":"https:\\/\\/www.youtube.com\\/channel\\/UCH1dpzjCEiGAt8CXkryhkZg","@type":"ItemList"},"@type":"ListItem"},{"position":7,"item":{"itemListElement":[{"position":1,"url":"http:\\/\\/www.youtube.com\\/watch?v=a64eXXASZaw","@type":"ListItem"},{"position":2,"url":"http:\\/\\/www.youtube.com\\/watch?v=L4foNqXlsC4","@type":"ListItem"},{"position":3,"url":"http:\\/\\/www.youtube.com\\/watch?v=RgsadiM7NRE","@type":"ListItem"},{"position":4,"url":"http:\\/\\/www.youtube.com\\/watch?v=Y_TFecOfNZM","@type":"ListItem"},{"position":5,"url":"http:\\/\\/www.youtube.com\\/watch?v=MUMaOzH5QdU","@type":"ListItem"},{"position":6,"url":"http:\\/\\/www.youtube.com\\/watch?v=Tz48E8hzUX4","@type":"ListItem"},{"position":7,"url":"http:\\/\\/www.youtube.com\\/watch?v=YYTuBf4yolU","@type":"ListItem"},{"position":8,"url":"http:\\/\\/www.youtube.com\\/watch?v=Nb8c46I3FK8","@type":"ListItem"},{"position":9,"url":"http:\\/\\/www.youtube.com\\/watch?v=bcvAbM5X9CQ","@type":"ListItem"},{"position":10,"url":"http:\\/\\/www.youtube.com\\/watch?v=bKYzr2q2huY","@type":"ListItem"},{"position":11,"url":"http:\\/\\/www.youtube.com\\/watch?v=B0zSwJaNdrQ","@type":"ListItem"},{"position":12,"url":"http:\\/\\/www.youtube.com\\/watch?v=smb9ofQDzr0","@type":"ListItem"}],"url":"https:\\/\\/www.youtube.com\\/channel\\/UCH1dpzjCEiGAt8CXkryhkZg","@type":"ItemList"},"@type":"ListItem"},{"position":8,"item":{"itemListElement":[{"position":1,"url":"http:\\/\\/www.youtube.com\\/watch?v=eF0wxBQUMEc","@type":"ListItem"},{"position":2,"url":"http:\\/\\/www.youtube.com\\/watch?v=txPOUQbsdhs","@type":"ListItem"},{"position":3,"url":"http:\\/\\/www.youtube.com\\/watch?v=5gcY2Fhr5wo","@type":"ListItem"},{"position":4,"url":"http:\\/\\/www.youtube.com\\/watch?v=a64eXXASZaw","@type":"ListItem"},{"position":5,"url":"http:\\/\\/www.youtube.com\\/watch?v=L4foNqXlsC4","@type":"ListItem"},{"position":6,"url":"http:\\/\\/www.youtube.com\\/watch?v=RgsadiM7NRE","@type":"ListItem"},{"position":7,"url":"http:\\/\\/www.youtube.com\\/watch?v=phajOtD6L70","@type":"ListItem"},{"position":8,"url":"http:\\/\\/www.youtube.com\\/watch?v=Rv_m3n2eiQU","@type":"ListItem"},{"position":9,"url":"http:\\/\\/www.youtube.com\\/watch?v=IckwaUkr2Dc","@type":"ListItem"},{"position":10,"url":"http:\\/\\/www.youtube.com\\/watch?v=Y_TFecOfNZM","@type":"ListItem"},{"position":11,"url":"http:\\/\\/www.youtube.com\\/watch?v=tm7cvaEFl7c","@type":"ListItem"},{"position":12,"url":"http:\\/\\/www.youtube.com\\/watch?v=MUMaOzH5QdU","@type":"ListItem"}],"url":"https:\\/\\/www.youtube.com\\/channel\\/UCH1dpzjCEiGAt8CXkryhkZg","@type":"ItemList"},"@type":"ListItem"}],"url":"https:\\/\\/www.youtube.com\\/channel\\/UCH1dpzjCEiGAt8CXkryhkZg","@type":"ItemList"}'+
+'                      </script>'+
+'                      <li>'+
+'                        <div class="video-player-view-component branded-page-box">'+
+'                          <div class="video-content clearfix ">'+
+
+'                            <div class="c4-player-container  c4-flexible-player-container">'+
+
+'                              <div class="c4-flexible-height-setter"></div>'+
+
+'                              <div id="upsell-video" class="c4-flexible-player-box" data-video-id="YufHFz5UKh4" data-swf-config="">'+
+'                              </div>'+
+
+'                            </div>'+ //c4-flexible-height-setter
+
+'                            <div class="video-detail ">'+
+'                              <h3 class="title yt-ui-ellipsis yt-ui-ellipsis-2">'+
+'                                <a href="https://www.youtube.com/watch?v=YufHFz5UKh4" class=" yt-uix-sessionlink      spf-link " data-sessionlink="ei=LERgXpDKKJCJ8gOFn6XYDA">Our Aspiration</a>'+
+'                              </h3>'+
+'                              <div class="view-count">'+
+'                                <span class="count">'+
+'                                  233&nbsp;746 megtekintés'+
+'                                </span>'+
+'                                <span class="content-item-time-created">'+
+'                                  4 hónapja'+
+'                                </span>'+
+'                              </div>'+
+'                              <div class="description yt-uix-expander yt-uix-expander-ellipsis yt-ui-ellipsis-10 yt-uix-expander-collapsed">'+
+'                                <div class="yt-ui-ellipsis yt-ui-ellipsis-10">'+
+'                                  "What makes Senator Sanders very different is that his aspiration is our aspiration. That\'s the kind of leadership that I think we need right now." – Rep. Alexandria Ocasio-Cortez'+
+'                                  <a class="yt-uix-expander-head">'+
+'                                    Kevesebb megjelenítése'+
+'                                  </a>'+
+'                                </div>'+
+'                                <a class="yt-uix-expander-head">'+
+'                                  Bővebben'+
+'                                </a>'+
+'                              </div>'+
+'                            </div>'+
+'                            <div class="video-content-info"></div>'+
+
+'                          </div>'+ //c4-player-container
+
+'                        </div>'+ //video-content
+
+'                      </li>'+
+
+'                      <li class="feed-item-container yt-section-hover-container browse-list-item-container branded-page-box" data-sessionlink="ei=LERgXpDKKJCJ8gOFn6XYDA">'+
+'                        <div class="feed-item-dismissable ">'+
+'                          <div class="feed-item-main feed-item-no-author">'+
+'                            <div class="feed-item-main-content">'+
+
+'                              <div class="shelf-wrapper clearfix">'+
+
+'                                <div class="compact-shelf shelf-item yt-uix-shelfslider yt-uix-shelfslider-at-head clearfix c4-visible-on-hover-container yt-section-hover-container fluid-shelf yt-uix-tdl yt-uix-shelfslider-at-tail" data-sessionlink="ei=LERgXpDKKJCJ8gOFn6XYDA&amp;ved=CA8Q3BwYASITCJCQisKGgugCFZCEfAodhU8JyyibHA">'+
+'                                  <h2 class="branded-page-module-title">'+
+'                                    <a href="https://www.youtube.com/playlist?list=PL_2NQfDP0JsO4N8HUhWJiOB3BXtJSN6p5" class="yt-uix-sessionlink branded-page-module-title-link spf-nolink" data-sessionlink="ei=LERgXpDKKJCJ8gOFn6XYDA&amp;ved=CBwQzh4iEwiQkIrChoLoAhWQhHwKHYVPCcsomxw">'+
+'                                      <span class="branded-page-module-title-text">'+
+'                                        <span class="">Bernie\'s Damn Bill feat. H. Jon Benjamin</span>'+
+'                                      </span>'+
+'                                    </a>'+
+'                                    <a href="https://www.youtube.com/watch?v=j5mPBhx4_B4&amp;list=PL_2NQfDP0JsO4N8HUhWJiOB3BXtJSN6p5" class="yt-uix-button  shelves-play play-all-icon-btn yt-uix-sessionlink yt-uix-button-default yt-uix-button-size-small yt-uix-button-has-icon no-icon-markup" data-sessionlink="ei=LERgXpDKKJCJ8gOFn6XYDA">'+
+'                                      <span class="yt-uix-button-content">'+
+'                                        Összes lejátszása'+
+'                                      </span>'+
+'                                    </a>'+
+'                                  </h2>'+
+'                                  <div class="shelf-description yt-ui-ellipsis yt-ui-ellipsis-2">'+
+'                                    From Roosevelt\'s attempt to create a New Deal national health insurance program, to the Trump administration\'s repeal of the Obamacare individual mandate--the three-part "Bernie\'s Damn Bill" video series reveals how decades of influence by greedy special interests have led to the present health care crisis. <br><br>Bernie has waged a four decades-long fight to implement Medicare for All and explains how his administration will take on corporations and the billionaire class to finally make it happen.<br><br>The series is narrated by H. Jon Benjamin, the accomplished voice actor who stars as Bob Belcher in Fox\'s Bob\'s Burgers and Sterling Archer in FX\'s Archer. Benjamin is an outspoken progressive advocate who is endorsing Bernie\'s presidential campaign.'+
+'                                  </div>'+
+
+'                                  <div class="compact-shelf-content-container">'+
+'                                    <div class="yt-uix-shelfslider-body">'+
+'                                      <ul class="yt-uix-shelfslider-list">'+
+
+'                                        <li class="channels-content-item yt-shelf-grid-item yt-uix-shelfslider-item ">'+
+'                                          <div class="yt-lockup clearfix  yt-lockup-video yt-lockup-grid vve-check" data-context-item-id="j5mPBhx4_B4" data-visibility-tracking="CHcQlDUYACITCPTRjMKGgugCFQPcVQodxnUGFUCe-OPj4eDjzI8B">'+
+'                                            <div class="yt-lockup-dismissable">'+
+'                                              <div class="yt-lockup-thumbnail">'+
+'                                                <span class=" spf-link  ux-thumb-wrap contains-addto">'+
+'                                                  <a href="https://www.youtube.com/watch?v=j5mPBhx4_B4" class="yt-uix-sessionlink" aria-hidden="true" data-sessionlink="ei=LERgXpDKKJCJ8gOFn6XYDA&amp;feature=c4-overview">'+
+'                                                    <span class="video-thumb  yt-thumb yt-thumb-196">'+
+'                                                      <span class="yt-thumb-default">'+
+'                                                        <span class="yt-thumb-clip">'+
+'                                                          <img aria-hidden="true" data-ytimg="1" data-thumb="https://i.ytimg.com/vi/j5mPBhx4_B4/hqdefault.jpg?sqp=-oaymwEiCMQBEG5IWvKriqkDFQgBFQAAAAAYASUAAMhCPQCAokN4AQ==&amp;rs=AOn4CLDXz66V2H6VeotpFTlgUKrl6DUe8Q" alt="" onload=";window.__ytRIL &amp;&amp; __ytRIL(this)" src="./Bernie Sanders - YouTube_files/pixel-vfl3z5WfW.gif" width="196">'+
+'                                                          <span class="vertical-align"></span>'+
+'                                                        </span>'+
+'                                                      </span>'+
+'                                                    </span>'+
+'                                                  </a>'+
+'                                                  <span class="video-time" aria-hidden="true">'+
+'                                                    <span aria-label="27 másodperc">'+
+'                                                      0:27'+
+'                                                    </span>'+
+'                                                  </span>'+
+'                                                  <span class="thumb-menu dark-overflow-action-menu video-actions"></span>'+
+'                                                  <button class="yt-uix-button yt-uix-button-size-small yt-uix-button-default yt-uix-button-empty yt-uix-button-has-icon no-icon-markup addto-button video-actions spf-nolink hide-until-delayloaded addto-watch-later-button-sign-in yt-uix-tooltip" type="button" onclick=";return false;" role="button" title="Megnézendő videók" data-button-menu-id="shared-addto-watch-later-login" data-video-ids="j5mPBhx4_B4">'+
+'                                                    <span class="yt-uix-button-arrow yt-sprite"></span>'+
+'                                                  </button>'+
+'                                                </span>'+
+'                                              </div>'+
+'                                              <div class="yt-lockup-content">'+
+'                                                <h3 class="yt-lockup-title ">'+
+'                                                  <a class="yt-uix-sessionlink yt-uix-tile-link  spf-link  yt-ui-ellipsis yt-ui-ellipsis-2" dir="ltr" title="Trailer: Bernie\'s Damn Bill feat. H. Jon Benjamin" aria-describedby="description-id-940055" data-sessionlink="ei=LERgXpDKKJCJ8gOFn6XYDA&amp;feature=c4-overview" href="https://www.youtube.com/watch?v=j5mPBhx4_B4" rel="nofollow">'+
+'                                                    Trailer: Bernie\'s Damn Bill feat. H. Jon Benjamin'+
+'                                                  </a>'+
+'                                                  <span class="accessible-description" id="description-id-940055">'+
+'                                                     - Időtartam: 27 másodperc.'+
+'                                                  </span>'+
+'                                                </h3>'+
+'                                                <div class="yt-lockup-byline">'+
+'                                                  <a href="https://www.youtube.com/channel/UCH1dpzjCEiGAt8CXkryhkZg" class="yt-uix-sessionlink yt-user-name  spf-link " aria-label="Ugrás Bernie Sanders felhasználói oldalára" data-sessionlink="ei=LERgXpDKKJCJ8gOFn6XYDA&amp;feature=c4-overview&amp;ved=CBEQwRsiEwiQkIrChoLoAhWQhHwKHYVPCcsomxw" dir="ltr">'+
+'                                                    Bernie Sanders'+
+'                                                  </a>'+
+'                                                  <span data-tooltip-text="Ellenőrizve" class="yt-channel-title-icon-verified yt-uix-tooltip yt-sprite" aria-label="Ellenőrizve"></span>'+
+'                                                </div>'+
+'                                                <div class="yt-lockup-meta">'+
+'                                                  <ul class="yt-lockup-meta-info">'+
+'                                                    <li>'+
+'                                                      33&nbsp;049 megtekintés'+
+'                                                    </li>'+
+'                                                    <li>'+
+'                                                      1 hónapja'+
+'                                                    </li>'+
+'                                                  </ul>'+
+'                                                </div>'+
+'                                              </div>'+
+'                                            </div>'+
+'                                            <div class="yt-lockup-notifications-container hid" style="height:110px"></div>'+
+'                                          </div>'+
+'                                        </li>'+
+
+'                                      </ul>'+
+'                                    </div>'+
+
+'                                    <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-shelf-slider-pager yt-uix-shelfslider-prev" type="button" onclick=";return false;">'+
+'                                      <span class="yt-uix-button-content">'+
+'                                        <span data-tooltip-text="Előző" class="yt-uix-shelfslider-prev-arrow yt-uix-tooltip yt-sprite" aria-label="Előző"></span>'+
+'                                      </span>'+
+'                                    </button>'+
+'                                    <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-shelf-slider-pager yt-uix-shelfslider-next" type="button" onclick=";return false;">'+
+'                                      <span class="yt-uix-button-content">'+
+'                                        <span data-tooltip-text="Következő" class="yt-uix-shelfslider-next-arrow yt-uix-tooltip yt-sprite" aria-label="Következő"></span>'+
+'                                      </span>'+
+'                                    </button>'+
+'                                  </div>'+
+
+'                                </div>'+ // compact-shelf shelf-item
+
+'                                <div class="menu-container"></div>'+
+
+'                              </div>'+ // shelf-wrapper
+'                            </div>'+
+'                          </div>'+
+
+'                        </div>'+
+
+'                        <div class="feed-item-dismissal-notices"><div class="feed-item-dismissal feed-item-dismissal-hide hid">Az elem el van rejtve</div></div>'+
+
+'                      </li>'+
+
+'                    </ul>'+
+                     //channel
+
+                     //main page
+'                    <div id="feed" class="" style="display: none">'+
 
 '                      <div id="feed-main-what_to_watch" class="individual-feed" data-feed-name="what_to_watch" data-feed-type="main">'+
 '                        <ol id="section-list-534669" class="section-list">'+
@@ -7533,9 +7937,133 @@ window.classic.body =
 
 '                </div>'+//   yt-card  clearfix
 
+
 '              </div>'+//branded-page-v2-primary-col
 
+
+
 '              <div class="branded-page-v2-secondary-col">'+
+
+
+                 //channel
+'                <div class="branded-page-related-channels branded-page-box  yt-card">'+
+'                  <h2 class="branded-page-module-title" dir="ltr">'+
+'                    <a href="/user/phreakindee/channels?view=60">'+
+'                      Want More Awesome?'+
+'                    </a>'+
+'                  </h2>'+
+'                  <ul class="branded-page-related-channels-list">'+
+'                    <li class="branded-page-related-channels-item  spf-link  clearfix" data-external-id="UCEeuSJaNA3WsdEkCnb-fhDg">'+
+'                      <span class="yt-lockup clearfix  yt-lockup-channel yt-lockup-mini">'+
+'                        <div class="yt-lockup-thumbnail" style="width: 34px;">'+
+'                          <a href="/user/ClanOfTheGrayWolf" class="ux-thumb-wrap yt-uix-sessionlink  spf-link " data-sessionlink="ei=2irfU-_mEonm-QPqv4Bg&amp;ved=CDAQwBs&amp;feature=rc-feat">'+
+'                            <span class="video-thumb  yt-thumb yt-thumb-34 g-hovercard" data-ytid="UCEeuSJaNA3WsdEkCnb-fhDg">'+
+'                              <span class="yt-thumb-square">'+
+'                                <span class="yt-thumb-clip">'+
+'                                  <img alt="" aria-hidden="true" data-thumb="https://yt3.ggpht.com/-7YjDLEcdLkM/AAAAAAAAAAI/AAAAAAAAAAA/hHipNH7x3A8/s176-c-k-no/photo.jpg" src="https://yt3.ggpht.com/-7YjDLEcdLkM/AAAAAAAAAAI/AAAAAAAAAAA/hHipNH7x3A8/s176-c-k-no/photo.jpg" data-group-key="thumb-group-0" width="34" height="34">'+
+'                                  <span class="vertical-align"></span>'+
+'                                </span>'+
+'                              </span>'+
+'                            </span>'+
+'                          </a>'+
+'                        </div>'+
+'                        <div class="yt-lockup-content">'+
+'                          <h3 class="yt-lockup-title">'+
+'                            <a class="yt-uix-sessionlink yt-uix-tile-link  spf-link " dir="ltr" title="ClanOfTheGrayWolf" data-sessionlink="ei=2irfU-_mEonm-QPqv4Bg&amp;ved=CC8Qvxs&amp;feature=rc-feat" href="/user/ClanOfTheGrayWolf">'+
+'                              ClanOfTheGrayWolf'+
+'                            </a>'+
+'                          </h3>'+
+'                          <div class="yt-lockup-meta spf-nolink">'+
+'                            <span class=" yt-uix-button-subscription-container">'+
+'                              <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-subscribe-unbranded yt-uix-button-has-icon yt-uix-subscription-button yt-can-buffer yt-uix-hovercard yt-uix-tooltip" type="button" onclick=";return false;" aria-busy="false" aria-role="button" title="64,760 subscribers" aria-live="polite" data-sessionlink="ei=2irfU-_mEonm-QPqv4Bg&amp;ved=CC4Qmys&amp;feature=rc-feat" data-channel-external-id="UCEeuSJaNA3WsdEkCnb-fhDg" data-subscriber-count-tooltip="True" data-subscriber-count-title="64,760 subscribers" data-style-type="unbranded" data-href="https://accounts.google.com/ServiceLogin?passive=true&amp;service=youtube&amp;uilel=3&amp;hl=en&amp;continue=http%3A%2F%2Fwww.youtube.com%2Fsignin%3Faction_handle_signin%3Dtrue%26feature%3Dsubscribe%26continue_action%3DQUFFLUhqbXBkNk56a1lWNDdka2pDR3ZQS1VET2JVd3A1Z3xBQ3Jtc0tuX3lBRGxvRm5iV0k4eTBwVGpPU3NUOGJjdU1VZEtUYVpPOXNqU3lFZ1BhYmVQQzFoMnNsb1B6LUJlWk9pMVRrVF9XSC1KdjRwb25ieDcxV2YxSURHcmdzbE1keTRHNUJSeGY5c2g4Tnk5Z3FrSFNhWjdWOWxtRWlXSU1aMjJjaV90TG1rUTRKc1F1RDlSWk9iV25OY3d1TElOcElWYWp0Q2MyWUVXRk5wdUhSMkhReHpiNERJTEUwMUZmRWRxeEFreFBHOXQ%253D%26next%3D%252Fchannel%252FUCEeuSJaNA3WsdEkCnb-fhDg%26hl%3Den%26app%3Ddesktop" data-tooltip-text="64,760 subscribers">'+
+'                                <span class="yt-uix-button-icon-wrapper">'+
+'                                  <img src="//www.youtube.com/yts/img/pixel-vfl3z5WfW.gif" alt="64,760 subscribers" class="yt-uix-button-icon yt-uix-button-icon-subscribe yt-sprite">'+
+'                                </span>'+
+'                                <span class="yt-uix-button-content">'+
+'                                  <span class="subscribe-label" aria-label="Subscribe">'+
+'                                    Subscribe'+
+'                                  </span>'+
+'                                  <span class="subscribed-label" aria-label="Unsubscribe">'+
+'                                    Subscribed'+
+'                                  </span>'+
+'                                  <span class="unsubscribe-label" aria-label="Unsubscribe">'+
+'                                    Unsubscribe'+
+'                                  </span>'+
+'                                </span>'+
+'                              </button>'+
+'                              <span class="yt-subscription-button-disabled-mask" title=""></span>'+
+'                            </span>'+
+'                          </div>'+
+'                        </div>'+
+'                      </span>'+
+'                    </li>'+
+'                  </ul>'+
+
+'                  <p class="branded-page-related-channels-see-more">'+
+'                    <a href="/user/phreakindee/channels?view=60">'+
+'                      See all'+
+'                    </a>'+
+'                  </p>'+
+
+'                  <div class="branded-page-related-channels branded-page-box  yt-card">'+
+'                    <h2 class="branded-page-module-title yt-uix-tooltip" data-tooltip-text="These recommendations have been automatically generated by YouTube." dir="ltr">'+
+'                      Related channels on YouTube'+
+'                    </h2>'+
+'                    <ul class="branded-page-related-channels-list">'+
+'                      <li class="branded-page-related-channels-item  spf-link  clearfix" data-external-id="UC-lHJZR3Gqxm24_Vd_AJ5Yw">'+
+'                        <span class="yt-lockup clearfix  yt-lockup-channel yt-lockup-mini">'+
+'                          <div class="yt-lockup-thumbnail" style="width: 34px;">'+
+'                            <a href="/user/PewDiePie" class="ux-thumb-wrap yt-uix-sessionlink  spf-link " data-sessionlink="ei=2irfU-_mEonm-QPqv4Bg&amp;ved=CBcQwBs&amp;feature=rc-rel">'+
+'                              <span class="video-thumb  yt-thumb yt-thumb-34 g-hovercard" data-ytid="UC-lHJZR3Gqxm24_Vd_AJ5Yw">'+
+'                                <span class="yt-thumb-square">'+
+'                                  <span class="yt-thumb-clip">'+
+'                                    <img alt="" aria-hidden="true" data-thumb="https://yt3.ggpht.com/-rJq9gk1QIis/AAAAAAAAAAI/AAAAAAAAAAA/Kx4wkvKOfxY/s176-c-k-no/photo.jpg" src="https://yt3.ggpht.com/-rJq9gk1QIis/AAAAAAAAAAI/AAAAAAAAAAA/Kx4wkvKOfxY/s176-c-k-no/photo.jpg" data-group-key="thumb-group-1" width="34" height="34">'+
+'                                    <span class="vertical-align"></span>'+
+'                                  </span>'+
+'                                </span>'+
+'                              </span>'+
+'                            </a>'+
+'                          </div>'+
+'                          <div class="yt-lockup-content">'+
+'                            <h3 class="yt-lockup-title">'+
+'                              <a class="yt-uix-sessionlink yt-uix-tile-link  spf-link " dir="ltr" title="PewDiePie" data-sessionlink="ei=2irfU-_mEonm-QPqv4Bg&amp;ved=CBYQvxs&amp;feature=rc-rel" href="/user/PewDiePie">'+
+'                                PewDiePie'+
+'                                <span class="qualified-channel-title-badge">'+
+'                                  <img src="//www.youtube.com/yts/img/pixel-vfl3z5WfW.gif" alt="" data-tooltip-text="Verified" class="yt-channel-title-icon-verified yt-uix-tooltip yt-sprite">'+
+'                                </span>'+
+'                              </a>'+
+'                            </h3>'+
+'                            <div class="yt-lockup-meta spf-nolink">'+
+'                              <span class=" yt-uix-button-subscription-container">'+
+'                                <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-subscribe-unbranded yt-uix-button-has-icon yt-uix-subscription-button yt-can-buffer yt-uix-hovercard yt-uix-tooltip" type="button" onclick=";return false;" aria-busy="false" aria-role="button" title="29,314,646 subscribers" aria-live="polite" data-sessionlink="ei=2irfU-_mEonm-QPqv4Bg&amp;ved=CBUQmys&amp;feature=rc-rel" data-channel-external-id="UC-lHJZR3Gqxm24_Vd_AJ5Yw" data-subscriber-count-tooltip="True" data-subscriber-count-title="29,314,646 subscribers" data-style-type="unbranded" data-href="https://accounts.google.com/ServiceLogin?passive=true&amp;service=youtube&amp;uilel=3&amp;hl=en&amp;continue=http%3A%2F%2Fwww.youtube.com%2Fsignin%3Faction_handle_signin%3Dtrue%26feature%3Dsubscribe%26continue_action%3DQUFFLUhqa2p5WkhQdkVFS0xHME5lOXpobHVsSms1TE1ad3xBQ3Jtc0ttdldvYUlfRV9sMW5raHpFWEFDUVM2dHdLZ1NHdEVPTHUyX05fZDNHdmFHbHhlN01SMmxuMWx0SkJXTnJWdV9nS1pXTjlUd1p5MkdObDdDNUFXbUJaYXczWUdJeGc3ai1VSll5am9mR3R3QlJmNGJadGR4RkMtYmdzWVRycUlVX3RDa0JnMExiZFE5cW5NME50NHBpX09fdEx3VlFNR2tseW92MlF6emcxN2VFQjNPRDRtQllQeVZMV0lNa3NJYkM5NjVxLVE%253D%26next%3D%252Fchannel%252FUC-lHJZR3Gqxm24_Vd_AJ5Yw%26hl%3Den%26app%3Ddesktop">'+
+'                                  <span class="yt-uix-button-icon-wrapper">'+
+'                                    <img src="//www.youtube.com/yts/img/pixel-vfl3z5WfW.gif" alt="29,314,646 subscribers" class="yt-uix-button-icon yt-uix-button-icon-subscribe yt-sprite">'+
+'                                  </span>'+
+'                                  <span class="yt-uix-button-content">'+
+'                                    <span class="subscribe-label" aria-label="Subscribe">'+
+'                                      Subscribe'+
+'                                    </span>'+
+'                                    <span class="subscribed-label" aria-label="Unsubscribe">'+
+'                                      Subscribed'+
+'                                    </span>'+
+'                                    <span class="unsubscribe-label" aria-label="Unsubscribe">'+
+'                                      Unsubscribe'+
+'                                    </span>'+
+'                                  </span>'+
+'                                </button>'+
+'                                <span class="yt-subscription-button-disabled-mask" title=""></span>'+
+'                              </span>'+
+'                            </div>'+
+'                          </div>'+
+'                        </span>'+
+'                      </li>'+
+'                    </ul>'+
+'                  </div>'+
+'                </div>'+
+
+
+
+                 //search
 '                <div id="search-secondary-col-contents">'+
 '                  <div id="ad_creative_1" class="ad-div " style="z-index: 1">'+
 '                    <div id="ad_creative_div_1">'+
@@ -7558,9 +8086,12 @@ window.classic.body =
 '              </div>'+//branded-page-v2-secondary-col
 
 
-'            </div>'+
-'          </div>'+
-'        </div>'+
+'            </div>'+//branded-page-v2-col-container-inner
+'          </div>'+//branded-page-v2-col-container
+
+
+
+'        </div>'+//branded-page-v2-container
 
 
 
@@ -7675,7 +8206,7 @@ window.classic.body =
 '          Help'+
 '        </span>'+
 '      </button>'+
-'      <div id="yt-picker-language-footer" class="yt-picker">'+
+'      <div id="yt-picker-language-footer" class="yt-picker" style="display: none">'+
 '        <p class="yt-spinner ">'+
 '          <span class="yt-spinner-img  yt-sprite" title="Loading icon"></span>'+
 '          <span class="yt-spinner-message">'+
