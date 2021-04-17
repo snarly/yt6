@@ -497,13 +497,9 @@ older ones. It may be crucial regarding its functionality.)
 		effect on the player anyway), and even though the displayed old html content may belong 
 		to a different video, at least the playback will work fine from then on, 
 	<br><br>
-		This script can be used independently from the main project script. In fact, things can get 
-		more complicated if you use both of them together (the Yt6 code was written to work with 
-		one layout or the other, but not both at the same time). Especially when toying with the 
-		YouTube player's theater/wide view mode. I'm in the process of fixing stuff but it is far from 
-		done.
+		This script can be used independently from the main project script.
 	<br><br>
-		<b><strong>And lastly, don't use it on Mobile.</strong></b> Kiwi and Yandex will let you install browser 
+		<b><strong>But do not use it on Mobile.</strong></b> Kiwi and Yandex will let you install browser 
 		extensions capable of running userscripts, but the two desktop layouts working 
 		concurrently just drains the battery too fast. It's not worth it.
 	<br><br>
@@ -654,6 +650,16 @@ older ones. It may be crucial regarding its functionality.)
 
 	<br>
 	<ol>
+	<li>
+	<p>
+		<b style="color: red"><strong>On videos with strong copyright protection</strong></b>, it is often the case that YouTube 
+		sends deliberately wrong signature decryption keys on the first try. I did not 
+		implement a fully automatic update of video signatures because of the high risk of 
+		infinite loop on repeated failure. <b style="color: red"><strong>You MUST switch over to the alternative player 
+		to manually initiate playback on multiple formats in the Sourcechooser box</strong></b> till 
+		enough errors occur for the updating procedure to fire. The video can be 
+		downloaded as soon as it becomes playable on the alt-player. The appearing blue 
+		gauge on its time rail will show that the video data has arrived and is buffering.
 	<li>
 	<p>
 		If you use add-ons like NoScript (a recommended practice), make sure to
