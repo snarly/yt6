@@ -6,8 +6,6 @@
 // @description  Classic YouTube layout
 // @match        https://www.youtube.com/watch*
 // @match        http://www.youtube.com/watch*
-// @match        https://www.youtube.com/results*
-// @match        http://www.youtube.com/results*
 // @match        https://www.youtube.com/channel*
 // @match        http://www.youtube.com/channel*
 // @match        https://www.youtube.com/user*
@@ -305,8 +303,10 @@
         "            })"+
         "});"+
         "body2.postponed_scripts = [];"+
-        "body2.disconnect_ = function(x) {"+//if (document.getElementById('ytInitialData-script')) { console.log('disconnect-' + x);
-        "  body2.disconnect()"+// };
+        "body2.disconnect_ = function(x) {"+
+        //"  if (document.getElementById('ytInitialData-script')) { console.log('disconnect-'+ x +' '+ body2.base);"+
+        "    body2.disconnect()"+
+        //"  };"+
         "};"+
 
         "body2.observe(document.lastChild, {"+
@@ -467,7 +467,7 @@
 
           "  var s = document.createElement('script');"+
           "  s.id = 'yt-classic-html';"+
-          "  s.src = 'https://cdn.jsdelivr.net/gh/snarly/yt6@a31948904ef94a0e6b5e1f2c35326b47b1efa385/yts/yt_classic.js';"+
+          "  s.src = 'https://cdn.jsdelivr.net/gh/snarly/yt6@2c66827f704150abe483112a7b1c359761eb7624/yts/yt_classic.js';"+
           "  s.onload = classic_yt;"+
           "  document.lastChild.appendChild(s);"+
 
