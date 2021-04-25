@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Yt Classic
 // @namespace    Yt Classic
-// @version      202104210433
+// @version      202104260029
 // @author       Snarl
 // @description  Classic YouTube layout
 // @match        https://www.youtube.com/watch*
