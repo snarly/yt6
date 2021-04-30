@@ -5264,11 +5264,12 @@ function ageless_verification(spfpc) { //console.log('age '+ yt6.age.v)
 	  // in new layout, this call is only useful when we started off from a bare-bones blocked video page -- it will set up fundamental data environment for the yt player
 
 	  
-
-	    if (!yt6.ytm) {
-	      var watch = gid('page') || document.getElementsByTagName('ytd-app')[0] || gid('mainContainer') || document.getElementsByTagName('ytg-watch-footer')[0]
-	      watch = (watch && ((typeof watch.getAttribute('class') == 'string' && watch.getAttribute('class').indexOf('watch') > -1) || watch.hasAttribute('is-watch-page'))) ? true : false
-	    } else if (location.href.indexOf('watch?v=') > -1) watch = true
+	//
+	//    if (!yt6.ytm) {
+	//      var watch = gid('page') || document.getElementsByTagName('ytd-app')[0] || gid('mainContainer') || document.getElementsByTagName('ytg-watch-footer')[0]
+	//      watch = (watch && ((typeof watch.getAttribute('class') == 'string' && watch.getAttribute('class').indexOf('watch') > -1) || watch.hasAttribute('is-watch-page'))) ? true : false
+	//    } else 
+		var watch = (location.href.indexOf('watch') > -1) ? true : false
 
 
 	    if (watch) {
@@ -7347,7 +7348,7 @@ true) { yt6.btn.playlist.click() }
 
 if (!yt6.ytp.embed) {
 var autoplay = gid('watch-appbar-playlist')
-if (autoplay != null) {
+if (!(yt6.body2 && yt6.layout == 16) && autoplay != null) {
   var autoplay = gclass('yt-uix-button-icon-watch-appbar-autoplay')
   if (autoplay != undefined) {
     var autoplay = gc('playlist-nav-controls')[0] || gc('appbar-playlist-controls clearfix')[0]
@@ -7917,7 +7918,7 @@ function getReferenceObjects() {
   if (yt6.mobile) {
     yt6.top = yt6.inf = document.getElementsByTagName('ytm-single-column-watch-next-results-renderer')[0]//gc('watch-content')[0]
   }
-  if (yt6.wna && yt6.wna.getAttribute('id') == 'watch-header') yt6.wna = yt6.wna2 = gid('watch7-notification-area')
+  if (yt6.wna && yt6.wna.getAttribute('id') == 'watch-header') { yt6.wna = gid('watch7-notification-area'); if (!yt6.body2) yt6.wna2 = yt6.wna }
 
 
   if (yt6.osw.getAttribute('id') == 'player' && !yt6.ytp.embed) {
@@ -8012,7 +8013,7 @@ function getReferenceObjects() {
     yt6.top = gid('player')
     if (!yt6.ytp.embed) {
       yt6.inf = yt6.con = yt6.man = gid('info-container') || document.getElementsByTagName('ytd-app')[0]
-      yt6.wna = yt6.wna2 = gid('messages')
+      yt6.wna = gid('messages'); if (!yt6.body2) yt6.wna2 = yt6.wna
     }
   }
 
@@ -16784,12 +16785,13 @@ if (yt6 != null) if (yt6.loaded >= 4) {//&& typeof yt6.loaded == 'boolean') {
 	}
 
 
-	if (!yt6.ytm && !yt6.mobile) {
+	//if (!yt6.ytm && !yt6.mobile) {
 
-	  watch = (yt6.layout == 12) ? gid('page') || document.getElementsByTagName('ytg-watch-footer')[0] : document.getElementsByTagName('ytd-app')[0] || gid('mainContainer')
-	  watch = (watch && ((typeof watch.getAttribute('class') == 'string' && watch.getAttribute('class').indexOf('watch') > -1) || watch.hasAttribute('is-watch-page'))) ? true : false
+	//  watch = (yt6.layout == 12) ? gid('page') || document.getElementsByTagName('ytg-watch-footer')[0] : document.getElementsByTagName('ytd-app')[0] || gid('mainContainer')
+	//  watch = (watch && ((typeof watch.getAttribute('class') == 'string' && watch.getAttribute('class').indexOf('watch') > -1) || watch.hasAttribute('is-watch-page'))) ? true : false
 
-	} else if (location.href.indexOf('watch') > -1) watch = true
+	//} else
+	    var watch = (location.href.indexOf('watch') > -1) ? true : false
 
 
 	if (c[0] && c[0].html5 == false && player()) {
@@ -21606,7 +21608,7 @@ function control_panel1() {
      if (!yt6.ytp.embed) {
        z.parentNode.insertBefore(js, z)
      } else z.insertBefore(js, z.firstChild)
-     yt6.wna = yt6.wna2 = gid('watch7-notification-area')
+     yt6.wna = gid('watch7-notification-area'); if (!yt6.body2) yt6.wna2 = yt6.wna
      delete js;
   }
 
