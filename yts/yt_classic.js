@@ -633,9 +633,13 @@ window.classic.userinfo = function() {
 	  var a = document.getElementById('yt-masthead-signin'); a.style.display = 'none'
 	  var a = document.getElementById('yt-masthead-user'); a.style.display = 'block'
 
-	if (a && (!a.firstElementChild || (avatar && a.getElementsByClassName('yt-thumb-clip')[0] && a.getElementsByClassName('yt-thumb-clip')[0].getElementsByTagName('img')[0] && a.getElementsByClassName('yt-thumb-clip')[0].getElementsByTagName('img')[0].src.indexOf(avatar) == -1)) ) {if (a.getElementsByClassName('yt-thumb-clip')[0])  console.log(a.getElementsByClassName('yt-thumb-clip')[0].getElementsByTagName('img')[0].src.indexOf(avatar)); console.log(a.firstElementChild)
-	  a.innerHTML =
+	if (a && (!a.firstElementChild || (avatar && a.getElementsByClassName('yt-thumb-clip')[0] && a.getElementsByClassName('yt-thumb-clip')[0].getElementsByTagName('img')[0] && a.getElementsByClassName('yt-thumb-clip')[0].getElementsByTagName('img')[0].src.indexOf(avatar) == -1)) ) {
+	  if (a.getElementsByClassName('yt-thumb-clip')[0]) {
+	    console.log(a.getElementsByClassName('yt-thumb-clip')[0].getElementsByTagName('img')[0].src.indexOf(avatar))
+	    console.log(a.firstElementChild)
+	  }
 
+	  a.innerHTML =
 '          <a href="/upload" class="yt-uix-button   create-channel-lightbox yt-uix-sessionlink yt-uix-button-default yt-uix-button-size-default" data-sessionlink="ei=OhDFV7jeCYLBoAPE-rTwCw&amp;feature=mhsb" id="upload-btn" data-upsell="upload" onclick="try { document.getElementsByTagName(\'ytd-topbar-menu-button-renderer\')[0].getElementsByTagName(\'button\')[0].click() } catch(e){} ;return false;">'+
 '            <span class="yt-uix-button-content">'+
 '              Upload'+
@@ -1247,7 +1251,7 @@ function runztext(e) { var z = '', y
 	      for (y=0; y < e.runs.length; y++)	z = z + e.runs[y].text
 	    }
 	}
-	return z
+	return z.split('"').join('&quot;')
 }
 
 
@@ -1904,7 +1908,7 @@ window.classic.elements.related = function(data) {
 		if (d[i].compactVideoRenderer) { e = d[i].compactVideoRenderer; key = 'video'; viewCountText = (e.viewCountText) ? e.viewCountText.simpleText : ''; lengthText = (e.lengthText) ? e.lengthText.simpleText : '';
 
 		  if (f == null && !window.classic.playlist) try {
-		    if (data.contents.twoColumnWatchNextResults.autoplay.autoplay.sets[0].autoplayVideo.watchEndpoint.videoId == e.videoId) {
+		    if (data.contents.twoColumnWatchNextResults.autoplay && data.contents.twoColumnWatchNextResults.autoplay.autoplay.sets[0].autoplayVideo.watchEndpoint.videoId == e.videoId) {
 			f = d[i].compactAutoplayRenderer = {}; f.contents = []; f.contents[0] = {}; f.contents[0].compactVideoRenderer = clone(e); e = f.contents[0].compactVideoRenderer; key = 'auto'
 			f.title = {"simpleText":"Up next"},
 			f.toggleDescription = {"runs":[{"text":"Autoplay"}]},
@@ -1913,7 +1917,7 @@ window.classic.elements.related = function(data) {
 			f.trackingParams = "CIcBEKZgGAAiEwj5rYfOzqPvAhXXV-AKHdK6DGM="
 			i = (i-1); continue//suggested_item( e.videoId, e.title.simpleText, e.viewCountText.simpleText, e.lengthText.simpleText, e.thumbnail.thumbnails[0].url, e.shortBylineText.runs[0].text, key, f.title.simpleText, f.toggleDescription.runs[0].text, f.infoText.runs[0].text); alert()
 		    }
-		  } catch(err){alert(err)}
+		  } catch(err){}
 
 		}
 
@@ -2660,16 +2664,40 @@ window.classic.elements.channel_page = function(data) {//channel
 
 		    function gridRenderer(e) { x = ''
 
-		      for (k=0; k < e.length; k++) { var key
-			f = e[k].gridVideoRenderer; if (f) { key = 'v' } else { f = e[k].gridPlaylistRenderer; if (f) { key = 'p' } else { f = e[k].gridChannelRenderer; key = 'c' }; if (!f) { console.log(e[k]); continue } }
+		      for (k=0; k < e.length; k++) { var key = '', f = ''
+			if (!f) { f = e[k].gridVideoRenderer; if (f) key = 'v' }
+			if (!f) { f = e[k].gridPlaylistRenderer; if (f) key = 'p' }
+			if (!f) { f = e[k].gridChannelRenderer; if (f) key = 'c' }
+			if (!f) { f = e[k].continuationItemRenderer;
+				if (f) {
+				x = x +
+'                                 <button class="yt-uix-button yt-uix-button-size-default yt-uix-button-default load-more-button yt-uix-load-more browse-items-load-more-button" type="button" onclick=";return false;" aria-label="Load More" data-uix-load-more-target-id="channels-browse-content-grid" data-uix-load-more-href="/browse_ajax?action_continuation=1&amp;direct_render=1&amp;continuation='+ f.continuationEndpoint.continuationCommand.token +'">'+
+'                                   <span class="yt-uix-button-content">'+
+'                                     <span class="load-more-loading hid">'+
+'                                       <span class="yt-spinner">'+
+'                                         <span class="yt-spinner-img  yt-sprite" title="Load icon"></span>'+
+'                                           Loading...'+
+'                                         </span>'+
+'                                       </span>'+
+'                                       <span class="load-more-text">'+
+'                                         Load more'+
+'                                       </span>'+
+'                                     </span>'+
+'                                   </button>';//console.log(e[k]);
+				return x; continue
+				} else continue
+			}
+
+
+
 			x = x +
 '                                        <li class="channels-content-item yt-shelf-grid-item yt-uix-shelfslider-item ">'+
-'                                          <div class="yt-lockup clearfix  yt-lockup-video yt-lockup-grid vve-check" data-context-item-id="j5mPBhx4_B4" data-visibility-tracking="CHcQlDUYACITCPTRjMKGgugCFQPcVQodxnUGFUCe-OPj4eDjzI8B">'+
+'                                          <div class="yt-lockup clearfix  yt-lockup-video yt-lockup-grid vve-check" data-context-item-id="'+ f.videoId +'" data-visibility-tracking="CHcQlDUYACITCPTRjMKGgugCFQPcVQodxnUGFUCe-OPj4eDjzI8B">'+
 '                                            <div class="yt-lockup-dismissable">'+
 '                                              <div class="yt-lockup-thumbnail">'+
 						((key == 'v') ?
 '                                                <span class=" spf-link  ux-thumb-wrap contains-addto">' : '') +
-'                                                  <a href="https://www.youtube.com'+ ((key != 'c') ? '/watch?v='+ (f.videoId || f.navigationEndpoint.watchEndpoint.videoId) : f.navigationEndpoint.browseEndpoint.canonicalBaseUrl) +'" class="'+ ((key == 'p') ? 'yt-pl-thumb-link yt-uix-sessionlink spf-link' : 'yt-uix-sessionlink') +'" aria-hidden="true" data-sessionlink="ei=LERgXpDKKJCJ8gOFn6XYDA&amp;feature=c4-overview">'+
+'                                                  <a href="https://www.youtube.com'+ ((key != 'c') ? '/watch?v='+ (f.videoId || f.navigationEndpoint.watchEndpoint.videoId + ((key == 'p') ? '&list='+ f.navigationEndpoint.watchEndpoint.playlistId : '') ) : f.navigationEndpoint.browseEndpoint.canonicalBaseUrl) +'" class="'+ ((key == 'p') ? 'yt-pl-thumb-link yt-uix-sessionlink spf-link' : 'yt-uix-sessionlink') +'" aria-hidden="true" data-sessionlink="ei=LERgXpDKKJCJ8gOFn6XYDA&amp;feature=c4-overview">'+
 							((key == 'p') ?
 '                                                  <span class="  yt-pl-thumb">' : '') +
 '                                                    <span class="video-thumb  yt-thumb yt-thumb-196">'+
@@ -2712,7 +2740,7 @@ window.classic.elements.channel_page = function(data) {//channel
 '                                                    </span>'+
 '                                                  </span>'+
 '                                                  <span class="thumb-menu dark-overflow-action-menu video-actions"></span>'+
-'                                                  <button class="yt-uix-button yt-uix-button-size-small yt-uix-button-default yt-uix-button-empty yt-uix-button-has-icon no-icon-markup addto-button video-actions spf-nolink hide-until-delayloaded addto-watch-later-button-sign-in yt-uix-tooltip" type="button" onclick=";return false;" role="button" title="Megnézendő videók" data-button-menu-id="shared-addto-watch-later-login" '+ ((key != 'c') ? ' data-video-ids="'+ (f.videoId || f.navigationEndpoint.watchEndpoint.videoId) +'"' : '') +'>'+
+'                                                  <button class="yt-uix-button yt-uix-button-size-small yt-uix-button-default yt-uix-button-empty yt-uix-button-has-icon no-icon-markup addto-button video-actions spf-nolink hide-until-delayloaded addto-watch-later-button-sign-in yt-uix-tooltip" type="button" onclick=";return false;" role="button" title="Videos to watch" data-button-menu-id="shared-addto-watch-later-login" '+ ((key != 'c') ? ' data-video-ids="'+ (f.videoId || f.navigationEndpoint.watchEndpoint.videoId) +'"' : '') +'>'+
 '                                                    <span class="yt-uix-button-arrow yt-sprite"></span>'+
 '                                                  </button>'+
 '                                                </span>'
@@ -2755,7 +2783,7 @@ window.classic.elements.channel_page = function(data) {//channel
 '                                                    <li>'+
 							f.publishedTimeText.simpleText +
 '                                                    </li>' : '')
-						 : f.subscriberCountText.simpleText) +
+						 : ((f.subscriberCountText) ? f.subscriberCountText.simpleText : '') ) +
 '                                                  </ul>'+
 '                                                </div>'+
 '                                              </div>'+
@@ -2771,7 +2799,7 @@ window.classic.elements.channel_page = function(data) {//channel
 
 		  if (d.content) {
 
-		    e = d.content.horizontalListRenderer.items
+		    e = (d.content.horizontalListRenderer) ? d.content.horizontalListRenderer.items : d.content
 
 		    if (e && e.length) {
 
@@ -2885,15 +2913,37 @@ window.classic.elements.channel_page = function(data) {//channel
 '                            <span class="yt-uix-button-icon yt-uix-button-icon-channel-back yt-sprite"></span>'+
 '                          </span>'+
 '                        </a>'+
-'                        <span class="branded-page-module-title">'+
-			   tabTitle
-'                        </span>'+
+'                        <button class="subnav-view-menu yt-uix-button yt-uix-button-default yt-uix-button-size-default" aria-expanded="false" onclick=";return false;" type="button" aria-haspopup="true" data-button-menu-indicate-selected="true">'+
+'                          <span class="yt-uix-button-content">'+
+			     tabTitle +
+'                          </span>'+
+'                          <span class="yt-uix-button-arrow yt-sprite"></span>'+
+'                          <ul class=" yt-uix-button-menu yt-uix-button-menu-default hid" role="menu" aria-haspopup="true">'+
+'                            <li role="menuitem">'+
+'                              <span class=" yt-uix-button-menu-item spf-link" href="'+ h.navigationEndpoint.browseEndpoint.canonicalBaseUrl +'/videos?view=1&amp;flow=grid" onclick=";yt.window.navigate(this.getAttribute(\'href\'));return false;">'+
+'                                All '+ tabTitle.toLowerCase() +
+'                              </span>'+
+'                            </li>'+
+'                            <li role="menuitem">'+
+'                              <span class=" yt-uix-button-menu-item spf-link" href="'+ h.navigationEndpoint.browseEndpoint.canonicalBaseUrl +'/videos?view=2&amp;flow=grid" onclick=";yt.window.navigate(this.getAttribute(\'href\'));return false;">'+
+'                                Live streams'+
+'                              </span>'+
+'                            </li>'+
+'                          </ul>'+
+'                        </button>'+
+//'                        <span class="branded-page-module-title">'+
+//			   tabTitle +
+//'                        </span>'+
+
 '                      </li>'+
-'                      <ul id="channels-browse-content-grid" class="channels-browse-content-grid branded-page-gutter-padding grid-lockups-container">';
+'                      <li>'+
+'                        <ul id="channels-browse-content-grid" class="channels-browse-content-grid branded-page-gutter-padding grid-lockups-container">';
 
 		      x = x + gridRenderer(e)
 
-		      x = x + '</ul>'
+		      x = x +
+'                        </ul>'+
+'                      </li>';
 		   }
 
 
@@ -2972,6 +3022,9 @@ window.classic.elements.channel_page = function(data) {//channel
 		'DISMISS_THROUGH_IT': true
 		})
 		} catch(err){ alert(err) }
+
+		var scrollTo = document.getElementsByTagName('html')[0].scrollTop
+		window.scrollTo(0, (scrollTo + 2)); window.scrollTo(0, scrollTo)
 
 	};
 
@@ -8467,7 +8520,7 @@ window.classic.body =
 '                                                    </div>'+
 '                                                  </a>'+
 '                                                  <span class="thumb-menu dark-overflow-action-menu video-actions"></span>'+
-'                                                  <button class="yt-uix-button yt-uix-button-size-small yt-uix-button-default yt-uix-button-empty yt-uix-button-has-icon no-icon-markup addto-button video-actions spf-nolink hide-until-delayloaded addto-watch-later-button-sign-in yt-uix-tooltip" type="button" onclick=";return false;" role="button" title="Megnézendő videók" data-button-menu-id="shared-addto-watch-later-login" data-video-ids="3dBn3fW1ijU">'+
+'                                                  <button class="yt-uix-button yt-uix-button-size-small yt-uix-button-default yt-uix-button-empty yt-uix-button-has-icon no-icon-markup addto-button video-actions spf-nolink hide-until-delayloaded addto-watch-later-button-sign-in yt-uix-tooltip" type="button" onclick=";return false;" role="button" title="Videos to watch" data-button-menu-id="shared-addto-watch-later-login" data-video-ids="3dBn3fW1ijU">'+
 '                                                    <span class="yt-uix-button-arrow yt-sprite"></span>'+
 '                                                  </button>'+
 '                                                </div>'+
