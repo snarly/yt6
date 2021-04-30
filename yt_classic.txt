@@ -1,15 +1,17 @@
 // ==UserScript==
 // @name         Yt Classic
 // @namespace    Yt Classic
-// @version      202104260029
+// @version      202104300557
 // @author       Snarl
 // @description  Classic YouTube layout
 // @match        https://www.youtube.com/watch*
 // @match        http://www.youtube.com/watch*
-// @match        https://www.youtube.com/channel*
-// @match        http://www.youtube.com/channel*
-// @match        https://www.youtube.com/user*
-// @match        http://www.youtube.com/user*
+// @match        https://www.youtube.com/channel/*
+// @match        http://www.youtube.com/channel/*
+// @match        https://www.youtube.com/user/*
+// @match        http://www.youtube.com/user/*
+// @match        https://www.youtube.com/c/*
+// @match        http://www.youtube.com/c/*
 // @grant        none
 // @run-at       document-start
 // @icon         https://yt3.ggpht.com/-afBnHVG_R6E/AAAAAAAAAAI/AAAAAAAAAAA/LtE5kbPkZvE/s27-c-k-no-mo-rj-c0xffffff/photo.jpg
@@ -467,7 +469,7 @@
 
           "  var s = document.createElement('script');"+
           "  s.id = 'yt-classic-html';"+
-          "  s.src = 'https://cdn.jsdelivr.net/gh/snarly/yt6@2c66827f704150abe483112a7b1c359761eb7624/yts/yt_classic.js';"+
+          "  s.src = 'https://cdn.jsdelivr.net/gh/snarly/yt6@d2f9c4d9d9fbbc784964fa63570977af79d7367e/yts/yt_classic.js';"+
           "  s.onload = classic_yt;"+
           "  document.lastChild.appendChild(s);"+
 
