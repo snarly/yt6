@@ -2806,7 +2806,7 @@ function player_response() {
 
 	  if (z.indexOf('"status":"ERROR"') > -1) ytplayer.config.args.status = 'error'; //console.log('?'+ytplayer.config.args.url_encoded_fmt_stream_map)
 
-	  if (z.indexOf('"status":"UNPLAYABLE"') > -1 && ((!yt6.blocked && yt6.html5_fail) || !ytplayer.config.args.adaptive_fmts) ) { // && !ytplayer.config.args.url_encoded_fmt_stream_map
+	  if (z.indexOf('"status":"UNPLAYABLE"') > -1 && ( (!yt6.blocked && yt6.html5_fail) || (!yt6.mobile && !ytplayer.config.args.adaptive_fmts) ) ) { // && !ytplayer.config.args.url_encoded_fmt_stream_map
 	    ytplayer.config.args.status = 'unplayable'
 	  } else ytplayer.config.args.status = 'ok'
 
@@ -3021,7 +3021,7 @@ function player_response() {
 	        // Postpone feeding the value to the proper object, store it for later use instead
 	      if (yt6.x && yt6.browser_tab == 'hidden') {
 		// Except when the player's tab is unseen -- then do it anyway to prevent playback from apparent stalling?
-		ytplayer.config.args.adaptive_fmts = formats
+		ytplayer.config.args.adaptive_fmts = formats;
 	      }
 	      yt6.adaptive_fmts = formats
 	    }
@@ -3037,6 +3037,13 @@ function player_response() {
 	}
 
   if (ytplayer.config.args.adaptive_fmts || ytplayer.config.args.url_encoded_fmt_stream_map) {
+     if (yt6.blocked_m && yt6.x && yt6.browser_tab == 'hidden') {
+	buildObject(ytplayer)
+	redo_dl_button(  yt6.args,  yt6.html,  yt6.href)
+	yt6d.mep_up()
+	yt6d.mep_renew()
+	delete yt6.blocked_m;
+    }
     return false //yt6.missing_source = false
   } else if (yt6.reason) { ytplayer.config.args.status = 'unplayable'; yt6.status = 'unplayable'; return true }
 
@@ -6160,7 +6167,11 @@ function me_flash_up(file, ib){
 
 	if (yt6.mobile) { // it would be counterproductive to set the blocked flag on age-restricted videos on mobile, just hide the elements which get in the way
 	  r = gc('playability-status-signin-button')[0];
-	  if (r && r.firstElementChild && r.firstElementChild.innerHTML != undefined && yt6.api && typeof yt6.api.hasAttribute == 'function' && yt6.api.hasAttribute('playable')) yt6.api.removeAttribute('playable')
+	  if (r && r.firstElementChild && r.firstElementChild.innerHTML != undefined && yt6.api) {
+	    if (typeof yt6.api.hasAttribute == 'function' && (yt6.api.hasAttribute('playable') || yt6.api.parentNode.getAttribute('playable') == 'false') ) {
+	      yt6.blocked_m = true; try { yt6.api.removeAttribute('playable') } catch(e){}; 
+	    }
+	  }
 	}
 
 //console.log('check: ' +yt6.age.v +' '+ yt6.status +' '+ yt6.blocked +' '+ yt6.age.blocked +' '+yt6.age.count +' '+yt6.vid)//!(!yt6.age.count || (typeof yt6.age.count == 'number' && yt6.age.count > 4)) +' '+ 
@@ -9134,21 +9145,21 @@ function fix_playlist() {
 		if ((yt6.playlist_scroller.scrollTop != yt6.scrollT) || yt6.playlist_scroller.scrollTop == 0) { return true }
 	    },
 	    function() {
-	      var x = 0 //(!yt6.pl_previous || (yt6.vid && gid('player1') && yt6.vid == yt6d.init)) ? 0 : 1;
+	      var x = yt6.playlist_scroller.getElementsByTagName('ytd-playlist-panel-video-renderer').length || 0 //(!yt6.pl_previous || (yt6.vid && gid('player1') && yt6.vid == yt6d.init)) ? 0 : 1;
 	      yt6.scrollT = playlist_videoitems()[0]
-	      if (yt6.pl_index > 100) { // && yt6.pl_length - yt6.pl_index >=  100
+	      if (x == 400) { console.log(yt6.pl_index)// && yt6.pl_length - yt6.pl_index >=  100
 		//if (yt6.playlist_scroller.scrollTop == 0) {
-		  yt6.pl_index = 100
-		  yt6.playlist_scroller.scrollTop = 64 * (yt6.pl_index - 1 + x) //-1
+		  var pl_index = 213
+		  yt6.playlist_scroller.scrollTop = 64 * pl_index //(pl_index - 1 + x); console.log(yt6.playlist_scroller.scrollTop) //-1
 		//} else {
 		//    yt6.pl_index = 100
 		//    yt6.playlist_scroller.scrollTop = 64 * yt6.pl_index
 		//  }
 	      } else {
-		  yt6.playlist_scroller.scrollTop = 64 * Math.abs(x - 1) //-1
+		  yt6.playlist_scroller.scrollTop = 64 * yt6.pl_index //Math.abs(x - 1) //-1
 		}
 
-
+/*
 	      $waitUntil(function() {
 		  //var z = playlist_videoitems()
 //for(k=0;k<z.length;k++){
@@ -9188,7 +9199,7 @@ function fix_playlist() {
 		  //yt6.playlist_scroller[0].scrollTop = 64 * yt6.pl_index
 		},200,1400
 	      )
-
+*/
 	    },200,1600)
 
 
@@ -9702,7 +9713,7 @@ function mute_ad(p) {
 
 
 
-function buildObject(ytplayer){
+function buildObject(ytplayer){ //console.log('build')
 
   getReferenceObjects()
   getScrollbarWidth()
@@ -11139,6 +11150,8 @@ if (!gid('bm4')) {
       }
     }
 
+    if (yt6.mobile && yt6.api && typeof yt6.api.hasAttribute == 'function' && yt6.api.hasAttribute('playable')) yt6.age.check() //yt6.api.removeAttribute('playable')
+
     if  (video_title()[1] && window.ytplayer &&
 	 window.ytplayer.config &&
 	 bm0 &&
@@ -11656,7 +11669,7 @@ function mep_run() {
 						//if (autoplay(false)) autoplay(true)
 					    }
 
-					    function decryption_failure(){ console.log('df')
+					    function decryption_failure(){ //console.log('df')
 
 					      if (yt6.status == 'unplayable' && player() && yt6.p.tagName == 'IFRAME') { return void 0; } // take no action in this case
 					      var z = gc('mejs-overlay-error');
@@ -11664,7 +11677,7 @@ function mep_run() {
 					        z[0][yt6.txt] = 'Video signature decryption failed!';
 					        z[0].parentNode.style.setProperty('display','block','')
 					      }
-							console.log('Boo!');
+							//console.log('Boo!');
 
 						var z = gc('ytassetsjs-0'); z = (z) ? z.length : 0
 						if (typeof yt6.errcount == 'undefined') yt6.errcount = 0;
@@ -11678,7 +11691,7 @@ function mep_run() {
 							gc('yt6-proxy-error').length < (1 * proxies.length) &&
 							(1 + 1 * proxies.length) >= yt6.errcount
 						      )
-						   ) { console.log('?')// && !yt6.ytg
+						   ) { // && !yt6.ytg
 						//if (gc('yt6-proxy-error') && gc('yt6-proxy-error').length < proxies.length && yt6.errcount < proxies.length + 1) {// && !yt6.ytg
 							ajax1(true, yt6.ytg)
 							yt6.error = ''
@@ -11689,7 +11702,7 @@ function mep_run() {
 							  yt6d.mep_renew()
 							}
 
-						} else {  console.log('t40')
+						} else {  //console.log('t40')
 						    var t4 = gid('test-4')
 						    if (t4 != null && t4.innerHTML != ''){//console.log('t41')
 						      var dls = gid('bm3')
@@ -16656,7 +16669,7 @@ addEL(window, 'yt-navigate-start', yt6.body.yt_navigate_start, false)
 				  var s = p.getPlayerState()
 				  if (s == 2) { return true } else try { p.playVideo(); p.pauseVideo() } catch(e){}
 				}
-			      },function() { yt6.ytp.speed(); yt6.p.playVideo() }, 100,5000)
+			      },function() { if (typeof yt6.ytp.speed == 'function') yt6.ytp.speed(); yt6.p.playVideo() }, 100,5000)
 		} catch(e){}
 	      } else {
 		  yt6.pre_ad = '?'
