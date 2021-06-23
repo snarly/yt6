@@ -59,10 +59,10 @@
 
 
 	<h3>
-	<a href="javascript:(function(){var v='9de966460f543656bbf81ec18cc1e9e9a6b9d347/yt6.js',w=window,d=w.document,h=d.location.href,yt6=w.yt6||{},yt6d=w.yt6d||{};if(yt6d.loaded>=4)return void 0;if(h.split('youtube.com/watch')[1]||h.split('youtube.com/embed')[1]||h.split('/base.j')[1]=='s'){var id='snarls_player',e='script',q;yt6.loaded=0;function s(x){x=x||id;return d.getElementById(x)};function c(e){return d.createElement(e)};function a(q){s().appendChild(q);s().add_subs='en,hu,de';yt6d.src=q.src};function r(){if(s()){var x;try{x=s().querySelector('#'+id)}catch(e){x=s().firstChild};if(x)s().removeChild(x)}};function b(){var i,j,o,x;o=['.githack','git','js'];for(j,x,i=o.length;i;j=Math.floor(Math.random()*i),x=o[--i],o[i]=o[j],o[j]=x);if(yt6d.src!=1)o.splice(0,0,'.githubusercontent');q=c('div');q.id=id;if(q!=s())d.body.appendChild(q);var src='https://raw'+o[0]+'.com/snarly/yt6/'+v,src0='https://cdn.jsdelivr.net/gh/snarly/yt6@'+v;function oc(ox,oy,sr){return(oy!='js')?sr.replace(ox,oy):src0};q=c(e);q.id=id;q.src=(o[0]!='js')?src:src0;q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[1],src);q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[2],src);q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[3],src);q.onerror=function(){q=c(e);q.id=id;q.src=src.replace('https','http')};a(q);r();};a(q);r();};a(q);r();};try{a(q);}catch(f){a(q)};};function g(){try{deldiv()}catch(f){r()};yt6d.src=1;b()};if(!s()){b()};setTimeout(function(){var t=w.yt6;if(t)t.loaded=t.loaded||window['status'];if(!t||(t&&(!t.body||(t.loaded<3))))g()},3000);}else{void 0};})()/*202106160748*/">Yt6 -- Snarl's YouTube Video Player (bookmarklet)</a>
+	<a href="javascript:(function(){var v='8e15914f3a03b835c18364e7528289407953577c/yt6.js',w=window,d=w.document,h=d.location.href,yt6=w.yt6||{},yt6d=w.yt6d||{};if(yt6d.loaded>=4)return void 0;if(h.split('youtube.com/watch')[1]||h.split('youtube.com/embed')[1]||h.split('/base.j')[1]=='s'){var id='snarls_player',e='script',q;yt6.loaded=0;function s(x){x=x||id;return d.getElementById(x)};function c(e){return d.createElement(e)};function a(q){s().appendChild(q);s().add_subs='en,hu,de';yt6d.src=q.src};function r(){if(s()){var x;try{x=s().querySelector('#'+id)}catch(e){x=s().firstChild};if(x)s().removeChild(x)}};function b(){var i,j,o,x;o=['.githack','git','js'];for(j,x,i=o.length;i;j=Math.floor(Math.random()*i),x=o[--i],o[i]=o[j],o[j]=x);if(yt6d.src!=1)o.splice(0,0,'.githubusercontent');q=c('div');q.id=id;if(q!=s())d.body.appendChild(q);var src='https://raw'+o[0]+'.com/snarly/yt6/'+v,src0='https://cdn.jsdelivr.net/gh/snarly/yt6@'+v;function oc(ox,oy,sr){return(oy!='js')?sr.replace(ox,oy):src0};q=c(e);q.id=id;q.src=(o[0]!='js')?src:src0;q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[1],src);q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[2],src);q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[3],src);q.onerror=function(){q=c(e);q.id=id;q.src=src.replace('https','http')};a(q);r();};a(q);r();};a(q);r();};try{a(q);}catch(f){a(q)};};function g(){try{deldiv()}catch(f){r()};yt6d.src=1;b()};if(!s()){b()};setTimeout(function(){var t=w.yt6;if(t)t.loaded=t.loaded||window['status'];if(!t||(t&&(!t.body||(t.loaded<3))))g()},3000);}else{void 0};})()/*202106230419*/">Yt6 -- Snarl's YouTube Video Player (bookmarklet)</a>
 	</h3>
 	<h4>
-		Last updated on Jun 16, 2021 07:48
+		Last updated on Jun 23, 2021 04:19
 	</h4>
 		(Please check back from time to time to try the latest version, and if it works well, dump the 
 older ones. It may be crucial regarding its functionality.)
@@ -92,24 +92,19 @@ older ones. It may be crucial regarding its functionality.)
 		of your choice,
 		</ol>
 		</li>
-		<li class="feat">bypass age verification (only if video embedding is enabled by the content owner); 
+		<li class="feat">facilitate background play while your mobile is in sleep mode (experimental)</li>
+		<br>
+		<li class="feat">bypass age verification (used to work when video embedding was allowed by the content owner)
 		<ol>
 		Examples: <a href="https://www.youtube.com/watch?v=07FYdnEawAQ)">Tunnel Vision (signatures encrypted)</a>, <a href="https://www.youtube.com/watch?v=UqPsrqpwLmU">Cobra (signatures unencrypted)</a><br>
-		Since the end of 2020, videos with stronger copyright protection (1st example), are 
-		no longer playable in embedded frames, thus the script won't work on them either. On 
-		playlists, the new layout will automatically throw you to the next entry, the script 
-		however will (try to) retain the age-restricted video's data and let you continue to play 
-		it until it ends or you push the "next" button, upon which events the video data for the 
-		current page should load,
+		In June 2021, YouTube shut down its old <b><strong>get_video_info</strong></b> data interface which was 
+		helpful in bypassing the age-gate, thus the script has lost this feature for now even for 
+		videos with less copyright protection (2nd example). :(
 		</ol>
 		</li>
-		<li class="feat">facilitate background play while your mobile is in sleep mode (experimental)</li>
 		<li class="feat">change between YouTube layouts by setting the cookie on exit no longer works :( 
 		<ol>
 		YouTube stopped honoring the setting in July 2020 and shut down its classic layout for good early December.
-	<div style="display: none">
-		Browser extensions such as <b><strong>Good Old YouTube</strong></b> (for <a href="https://addons.mozilla.org/en/firefox/addon/good-old-youtube/">Firefox</a> and <a href="https://chrome.google.com/webstore/detail/good-old-youtube/klkejolkjcefmocpgpjiefbpmgofahmh">Chrome</a>) or <b><strong>Old YouTube</strong></b> (for <a href="https://addons.mozilla.org/en-US/firefox/addon/old-youtube/">Firefox</a>) are useless now, since the site simply won't produces the old-style html code anymore.<br>
-	</div>
 		I wrote a userscript that partially restores it though. See the <a href="#classic_layout">YouTube Classic layout</a> section for details.
 		</ol>
 		</li>
@@ -148,7 +143,7 @@ older ones. It may be crucial regarding its functionality.)
 	<br>
 	<p>
 	<code>
-		javascript:(function(){var v='9de966460f543656bbf81ec18cc1e9e9a6b9d347/yt6.js',w=window,d=w.document,h=d.location.href,yt6=w.yt6||{},yt6d=w.yt6d||{};if(yt6d.loaded>=4)return void 0;if(h.split('youtube.com/watch')[1]||h.split('youtube.com/embed')[1]||h.split('/base.j')[1]=='s'){var id='snarls_player',e='script',q;yt6.loaded=0;function s(x){x=x||id;return d.getElementById(x)};function c(e){return d.createElement(e)};function a(q){s().appendChild(q);s().add_subs='en,hu,de';yt6d.src=q.src};function r(){if(s()){var x;try{x=s().querySelector('#'+id)}catch(e){x=s().firstChild};if(x)s().removeChild(x)}};function b(){var i,j,o,x;o=['.githack','git','js'];for(j,x,i=o.length;i;j=Math.floor(Math.random()*i),x=o[--i],o[i]=o[j],o[j]=x);if(yt6d.src!=1)o.splice(0,0,'.githubusercontent');q=c('div');q.id=id;if(q!=s())d.body.appendChild(q);var src='https://raw'+o[0]+'.com/snarly/yt6/'+v,src0='https://cdn.jsdelivr.net/gh/snarly/yt6@'+v;function oc(ox,oy,sr){return(oy!='js')?sr.replace(ox,oy):src0};q=c(e);q.id=id;q.src=(o[0]!='js')?src:src0;q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[1],src);q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[2],src);q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[3],src);q.onerror=function(){q=c(e);q.id=id;q.src=src.replace('https','http')};a(q);r();};a(q);r();};a(q);r();};try{a(q);}catch(f){a(q)};};function g(){try{deldiv()}catch(f){r()};yt6d.src=1;b()};if(!s()){b()};setTimeout(function(){var t=w.yt6;if(t)t.loaded=t.loaded||window['status'];if(!t||(t&&(!t.body||(t.loaded<3))))g()},3000);}else{void 0};})()/*202106160748*/
+		javascript:(function(){var v='8e15914f3a03b835c18364e7528289407953577c/yt6.js',w=window,d=w.document,h=d.location.href,yt6=w.yt6||{},yt6d=w.yt6d||{};if(yt6d.loaded>=4)return void 0;if(h.split('youtube.com/watch')[1]||h.split('youtube.com/embed')[1]||h.split('/base.j')[1]=='s'){var id='snarls_player',e='script',q;yt6.loaded=0;function s(x){x=x||id;return d.getElementById(x)};function c(e){return d.createElement(e)};function a(q){s().appendChild(q);s().add_subs='en,hu,de';yt6d.src=q.src};function r(){if(s()){var x;try{x=s().querySelector('#'+id)}catch(e){x=s().firstChild};if(x)s().removeChild(x)}};function b(){var i,j,o,x;o=['.githack','git','js'];for(j,x,i=o.length;i;j=Math.floor(Math.random()*i),x=o[--i],o[i]=o[j],o[j]=x);if(yt6d.src!=1)o.splice(0,0,'.githubusercontent');q=c('div');q.id=id;if(q!=s())d.body.appendChild(q);var src='https://raw'+o[0]+'.com/snarly/yt6/'+v,src0='https://cdn.jsdelivr.net/gh/snarly/yt6@'+v;function oc(ox,oy,sr){return(oy!='js')?sr.replace(ox,oy):src0};q=c(e);q.id=id;q.src=(o[0]!='js')?src:src0;q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[1],src);q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[2],src);q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[3],src);q.onerror=function(){q=c(e);q.id=id;q.src=src.replace('https','http')};a(q);r();};a(q);r();};a(q);r();};try{a(q);}catch(f){a(q)};};function g(){try{deldiv()}catch(f){r()};yt6d.src=1;b()};if(!s()){b()};setTimeout(function(){var t=w.yt6;if(t)t.loaded=t.loaded||window['status'];if(!t||(t&&(!t.body||(t.loaded<3))))g()},3000);}else{void 0};})()/*202106230419*/
 	</code>
 	</p>
 	<p>__</p>
@@ -176,13 +171,13 @@ older ones. It may be crucial regarding its functionality.)
 		<b><strong>Violentmonkey</strong></b> (for <a href="https://addons.mozilla.org/en-US/firefox/addon/violentmonkey/">Firefox</a>, <a href=" https://chrome.google.com/webstore/detail/violentmonkey/jinjaccalgkegednnccohejagnlnfdag">Chrome</a> and <a href="https://microsoftedge.microsoft.com/addons/detail/violentmonkey/eeagobfjdenkkddmbclomhiblgggliao">Edge</a>)<br>
 	</ol>
 		However I would not recommend this because all it does is save you the time of one or 
-		two more clicks/taps, while it may cause undesirable network traffic in case of an error.
+		two clicks/taps, while it may cause unnecessary network traffic in case of an error.
 	<br><br>
 
 <pre>// ==UserScript==
 // @name         Yt6 -- Snarl's YouTube Video Player (userscript)
 // @namespace    yt6
-// @version      202106160748
+// @version      202106230419
 // @author       Snarl
 // @description  Auto-Load Yt6 script as soon as possible
 // @match        https://*.youtube.com/watch*
@@ -201,8 +196,8 @@ older ones. It may be crucial regarding its functionality.)
   var idle_time = 1000 // wait some time before running the bookmarklet part
 
   var onComplete = function(){setTimeout( //javascript:(
-    function(){var v='9de966460f543656bbf81ec18cc1e9e9a6b9d347/yt6.js',w=window,d=w.document,h=d.location.href,yt6=w.yt6||{},yt6d=w.yt6d||{};if(yt6d.loaded>=4)return void 0;if(h.split('youtube.com/watch')[1]||h.split('youtube.com/embed')[1]||h.split('/base.j')[1]=='s'){var id='snarls_player',e='script',q;yt6.loaded=0;function s(x){x=x||id;return d.getElementById(x)};function c(e){return d.createElement(e)};function a(q){s().appendChild(q);s().add_subs='en,hu,de';yt6d.src=q.src};function r(){if(s()){var x;try{x=s().querySelector('#'+id)}catch(e){x=s().firstChild};if(x)s().removeChild(x)}};function b(){var i,j,o,x;o=['.githack','git','js'];for(j,x,i=o.length;i;j=Math.floor(Math.random()*i),x=o[--i],o[i]=o[j],o[j]=x);if(yt6d.src!=1)o.splice(0,0,'.githubusercontent');q=c('div');q.id=id;if(q!=s())d.body.appendChild(q);var src='https://raw'+o[0]+'.com/snarly/yt6/'+v,src0='https://cdn.jsdelivr.net/gh/snarly/yt6@'+v;function oc(ox,oy,sr){return(oy!='js')?sr.replace(ox,oy):src0};q=c(e);q.id=id;q.src=(o[0]!='js')?src:src0;q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[1],src);q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[2],src);q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[3],src);q.onerror=function(){q=c(e);q.id=id;q.src=src.replace('https','http')};a(q);r();};a(q);r();};a(q);r();};try{a(q);}catch(f){a(q)};};function g(){try{deldiv()}catch(f){r()};yt6d.src=1;b()};if(!s()){b()};setTimeout(function(){var t=w.yt6;if(t)t.loaded=t.loaded||window['status'];if(!t||(t&&(!t.body||(t.loaded<3))))g()},3000);}else{void 0};}
-    //)()/*202106160748*/
+    function(){var v='8e15914f3a03b835c18364e7528289407953577c/yt6.js',w=window,d=w.document,h=d.location.href,yt6=w.yt6||{},yt6d=w.yt6d||{};if(yt6d.loaded>=4)return void 0;if(h.split('youtube.com/watch')[1]||h.split('youtube.com/embed')[1]||h.split('/base.j')[1]=='s'){var id='snarls_player',e='script',q;yt6.loaded=0;function s(x){x=x||id;return d.getElementById(x)};function c(e){return d.createElement(e)};function a(q){s().appendChild(q);s().add_subs='en,hu,de';yt6d.src=q.src};function r(){if(s()){var x;try{x=s().querySelector('#'+id)}catch(e){x=s().firstChild};if(x)s().removeChild(x)}};function b(){var i,j,o,x;o=['.githack','git','js'];for(j,x,i=o.length;i;j=Math.floor(Math.random()*i),x=o[--i],o[i]=o[j],o[j]=x);if(yt6d.src!=1)o.splice(0,0,'.githubusercontent');q=c('div');q.id=id;if(q!=s())d.body.appendChild(q);var src='https://raw'+o[0]+'.com/snarly/yt6/'+v,src0='https://cdn.jsdelivr.net/gh/snarly/yt6@'+v;function oc(ox,oy,sr){return(oy!='js')?sr.replace(ox,oy):src0};q=c(e);q.id=id;q.src=(o[0]!='js')?src:src0;q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[1],src);q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[2],src);q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[3],src);q.onerror=function(){q=c(e);q.id=id;q.src=src.replace('https','http')};a(q);r();};a(q);r();};a(q);r();};try{a(q);}catch(f){a(q)};};function g(){try{deldiv()}catch(f){r()};yt6d.src=1;b()};if(!s()){b()};setTimeout(function(){var t=w.yt6;if(t)t.loaded=t.loaded||window['status'];if(!t||(t&&(!t.body||(t.loaded<3))))g()},3000);}else{void 0};}
+    //)()/*202106230419*/
   , idle_time)
   }
 
@@ -252,6 +247,16 @@ older ones. It may be crucial regarding its functionality.)
 		 - the media controls over the screen lock provide real access only to the original player, 
 		thus when the alternative player is the active one, the panel's play button is merely able to 
 		kickstart it, but you can't pause it or seek forward or backward on its time rail.
+	<br><br>
+		I recommend to empty the device's cache before starting, it should have a positive effect 
+		on performance.	You can also check memory consumption with the memory cleaner app 
+		without actually starting the cleaning procedure. If the memory occupied by the browser 
+		has grown too big, just open a new tab and close the one you've been using till now to 
+		start out fresh.
+	<br><br>
+		It's interesting to note that having YouTube opened with Desktop view mode requested 
+		on one tab while also having the default Mobile version on another tab of the same browser 
+		may cause the script to fail (at least in Firefox). So close one or the other before trying.
 
 	<br><br>
 	<h1>
@@ -272,16 +277,16 @@ older ones. It may be crucial regarding its functionality.)
 	<h5>
 		Good ones (for Android)
 	</h5>
-		<li><b><strong><a href="https://play.google.com/store/apps/details?id=com.vivaldi.browser">Vivaldi</a></strong></b>
-		<li><b><strong><a href="https://play.google.com/store/apps/details?id=com.brave.browser">Brave</a></strong></b> can use the mobile UI effectively without the help of this script
+		<li><b><strong><a href="https://play.google.com/store/apps/details?id=com.brave.browser">Brave</a></strong></b> can use the mobile UI without the help of this script
+		<li><b><strong><a href="https://play.google.com/store/apps/details?id=com.vivaldi.browser">Vivaldi</a></strong></b> uses more memory than the others, and has become a bit slower with recent updates
 		<li><b><strong>Google Chrome</strong></b> -- the ad-flooding can be neutralized fairly well now
 		<li><b><strong><a href="https://play.google.com/store/apps/details?id=org.mozilla.firefox">Firefox</a></strong></b>'s bookmarklet support is back again <div style="display: inline; font-size: 13px">(note: last Desktop-based version was <a href="https://www.apkmirror.com/apk/mozilla/firefox/firefox-68-11-0-release/">68.11.0</a>)</div>
 	<h5>
 		So-so (playback may fail after a few videos)
 	</h5>
-		<li><b><strong><a href="https://play.google.com/store/apps/details?id=com.kiwibrowser.browser">Kiwi</a></strong></b> has fallen behind on speed
-		<li><b><strong><a href="https://play.google.com/store/apps/details?id=com.microsoft.emmx">Edge</a></strong></b> has improved a lot, still too eager to cancel playback in sleep mode
-		<li><b><strong><a href="https://play.google.com/store/apps/details?id=com.yandex.browser">Yandex</a></strong></b>'s sound can break on video page changes if audio-only or legacy AV formats are being used -- use VP9 or DASH video to avoid this bug
+		<li><b><strong><a href="https://play.google.com/store/apps/details?id=com.kiwibrowser.browser">Kiwi</a></strong></b> has fallen behind on speed and its video-ad filter appears to be useless now
+		<li><b><strong><a href="https://play.google.com/store/apps/details?id=com.microsoft.emmx">Edge</a></strong></b> has improved a lot, still too eager to cancel playback when the app goes background
+		<li><b><strong><a href="https://play.google.com/store/apps/details?id=com.yandex.browser">Yandex</a></strong></b> started crashing on background play recently 
 	<h5>
 		Bad ones (no media playback in sleep mode at all)
 	</h5>
@@ -294,15 +299,12 @@ older ones. It may be crucial regarding its functionality.)
 		Of course it's possible to rank them differently with other aspects or conditions in mind.
 		Their performance changes with every system-, application- or script-update which makes 
 		it  difficult to pinpoint the cause of a problem newly arisen or seemingly solved. The list 
-		reflects a general impression after about half a year of testing on an Android phone.
-	<br><br>
-		Also, I recommend to empty your device's cache before starting to use the program. It 
-		seems to have a positive effect on the browser's performance.
+		reflects a general impression after about a year of testing on an Android phone.
 	<br><br>
 		Regardless of platform, the default "noname" browsers that come pre-installed on various 
 		systems typically have no support for bookmarklets. If your chosen browser's response to 
 		your attempt to use the bookmarklet is to pull a web search on words found on the 
-		bookmarklet line, it is safe to say it doesn't support it.
+		bookmarklet line, it is safe to say it doesn't support it. 
 
 	<br><br>
 	<h1>
