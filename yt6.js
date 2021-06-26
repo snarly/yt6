@@ -9655,6 +9655,7 @@ function mute_ad(p) {
 		      } catch(e) { if (!p.isMuted()) yt6.ad_muted = false }
 		  } //mute_button.click()
 		  yt6.pre_ad = true
+		  if (!yt6d.ad && gc('ytp-ad-persistent-progress-bar-container')[0] && gc('ytp-ad-persistent-progress-bar-container')[0].style.display != 'none') { yt6d.ad = true; yt6d.mep_reload(); yt6d.mep_reload() }//yt6d.init == yt6.vid && 
 		} else {
 		    yt6.pre_ad = '?' // may be a false alarm at page change
 		    yt6.real_media_duration_ = clone(yt6.real_media_duration) // define a 2nd variable merely to delay muting one more cycle
@@ -10038,7 +10039,8 @@ if (c[1]) {
 
   var html = [new Date().toLocaleString(),
     //'Click to switch streams in both native (HTML5) and alternative player. Right click & "Save as" to download.<br>'
-    'Left-click will cancel YT\'s <i>Adaptive Streaming</i> and force <i>Progressive Download</i> to attempt to load the file into both players. If you just want to download the file, use Right-click & "Save as..."<br>'+
+    'Left-click will initiate playback in <i>Progressive Download</i> mode. Use Right-click & "Save as..." to download.<br>'+
+	'<div id="encrypted_signatures_warning" style="display: none; color: red">Video with encrypted signatures! <br>If the links do not work, switch over to the alternative player and try to load the video in various formats & resolutions. Once it becomes playable there, we\'re good.</div>'+
 	'<button id="hide-links" class="snarl-button yt-uix-button-text" onclick="var a, b, c;'+
 	'if (typeof gid == \'function\') { a = gid(\'yt6-links\'), b = gid(\'alt-links\'), c = gid(\'bm3\'), d = gid(\'bm4\') };'+
 	'if (a) if (a.hasAttribute(\'hidden\')) { a.removeAttribute(\'hidden\'); this.innerHTML = \'<b><u>Used for playback</u></b> / Alternatives\'; if (b) b.setAttribute(\'hidden\',\'\')'+
@@ -10105,8 +10107,10 @@ if (c[1]) {
 	  var l, a_r
 	  // look for differing video durations, may be advertisement
 
-	  var ei = z[j].split('&ei=')[1] || z[j].split('?ei=')[1] || z[j].split('%26ei%3D')[1] || z[j].split('%3Fei%3D')[1]
+	  var ei
+	  ei = z[j].split('&ei=')[1] || z[j].split('?ei=')[1] || z[j].split('%26ei%3D')[1] || z[j].split('%3Fei%3D')[1]
 	  if (ei) ei = ei.split('&')[0].split('%26')[0]
+
 	  if (qs.dur) { dur = qs.dur } else { dur = qs.dur = z[j].split('dur%3D')[1]; if (qs.dur) qs.dur = qs.dur.split('%26')[0] }
 	  if (dur) dur = 1 * dur.split('%')[0] - 0; //console.log(dur +' '+qs.itag)
 	  if (dur) { 
@@ -10871,7 +10875,8 @@ if (typeof html.splice != 'function') return void 0;
 
    '</div><br>' +
 
-   'Note: Flash player can only be used with legacy AV formats which may not be available. When decryption key update fails, no valid media links occur. To fix it, remove and reload the script manually.<br><br>If you like the program, feel free to send me some cash through the following link for whatever you think it\'s worth.<br>'
+   //'Note: Flash player can only be used with legacy AV formats which may not be available. When decryption key update fails, no valid media links occur. To fix it, remove and reload the script manually.<br><br>'+
+   'If you like the program, feel free to send me some cash through the following link for whatever you think it\'s worth.<br>'
   )
   gid('bm2').innerHTML = html.join('<br>')
 
@@ -11551,6 +11556,9 @@ function mep_run() {
 					    return void 0;
 					  me.loaded = false; var ct = (yt6.ct) ? clone(yt6.ct) : 0
 					  try { yt6.player1.media.currentTime = yt6.player2.media.currentTime = player2.currentTime = yt6.ct = ct } catch(e){}//yt6.ct = 0
+
+					  if (yt6.encrypted) { var z = gid('encrypted_signatures_warning'); if (z) z.style.display = 'block' }
+
 					  if (typeof yt6.failed_itags == 'undefined') { yt6.failed_itags = []; yt6.failed_itags2 = 1 }
 					  try { yt6.ytp.speed() } catch(e){}
 					  if (yt6.x) {
@@ -12157,6 +12165,7 @@ function mep_run() {
 					      },500,5000)
 					  }
 					  if (yt6.size == 'media' && !yt6.ytp.embed) Mqch()
+					  if (yt6.encrypted) { var z = gid('encrypted_signatures_warning'); if (z) z.style.display = 'none' }
 					});
 					addEL(me, 'loadeddata', function() { ev = '1loadeddata'; //ev_log(ev); //console.log(ev)
 					  if ( yt6 && yt6.player1 && !yt6.navigation && (yt6.timer == 999999999 || me.src == 'https://www.youtube.com/ptracking' || yt6.player1.media.src != me.src))
@@ -14883,6 +14892,7 @@ if (!t.sourcechooserButton) {//console.log('error')
 	    yt6.age.v = null
 	    yt6.errcount = 0
 	    yt6.manifest = {}
+	    if (yt6d.ad) delete yt6d.ad
 
 	    if (yt6.layout == 12 && typeof yt6.x_ == 'number') { try { yt6.player1.setVolume(yt6.x_) } catch(e){}; yt6.x_ = null }
 
