@@ -814,7 +814,7 @@ function reverseArr(input) {
 	yt6.fmts_fallback.V3D.h264,
 	yt6.fmts_fallback.V3D.webm,
 	yt6.fmts_fallback.V.all,
-	yt6.fmts_fallback.A.all,
+	//yt6.fmts_fallback.A.all, // mirroring this may cause audio-only playback to falter when falling back from webm to aac (on mobile)
 	yt6.fmts_fallback.V3D.all
   ]
   for (i=0; i<z.length; i++) {
@@ -2469,7 +2469,7 @@ function test_4(peek) {//console.log('test-4')
 		//window.ytplayer.config.args.url_encoded_fmt_stream_map = undefined
 		//window.ytplayer.config.args.adaptive_fmts = ''
 	}
-  player_response()
+  if (!yt6.pre_ad) player_response()
 
 }
 
@@ -12362,7 +12362,7 @@ function mep_run() {
 						} else yt6.ct = 0
 					      } catch(e) { yt6.ct = 0 }
 
-					      if (yt6.mobile && yt6.x && yt6.browser_tab == 'hidden' && (yt6.A_[itag(me.src)] || (itag(me.src) >= 103 && yt6.fmts_fallback.A.all[itag(me.src)] ))) yt6.ct = (yt6.ct + 0.05)
+					      //if (yt6.mobile && yt6.x && yt6.browser_tab == 'hidden' && (yt6.A_[itag(me.src)] || (itag(me.src) >= 103 && yt6.fmts_fallback.A.all[itag(me.src)] ))) yt6.ct = (yt6.ct + 0.05)
 
 					    } else { yt6.ct = (yt6.ct) ? clone(yt6.ct) : 0 }
 
