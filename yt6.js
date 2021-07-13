@@ -4457,7 +4457,7 @@ function tipping() {
 
 	var x = ['c1' , 'c2', 'c3', 'c4']
 	var s = Math.min(Math.min(Math.floor(parseInt(window.innerHeight || document.documentElement.clientHeight || yt6.body.clientHeight) / 3), Math.floor(screen.width / 4)), 160);//99
-	b.innerHTML = '<div id="tip1"><div style="background: #fff; overflow: hidden"><div style="display: inline-block; color: black; font-size: '+Math.ceil(s/6)+'px"><div>Donate to the developer anonymously</div><p style="font-size: '+Math.ceil(s/10)+'px"><a style="color: black" href="http://snarly.github.io/yt6" onclick="window.open(\''+ ('http://snarly.github.io/yt6' || yt6.poster.src) +'\', \'_blank\').focus(); return false">Check project site for the latest version</a></p></div><h1 class="snarl-button yt-uix-button-text" style="padding: 0 4px 0 4px; background-color: red; color: white; float: right" onclick="(function(){ var close = gid(\'tip0\'); if (close) close.parentNode.removeChild(close); })()">X</h1></div></div>'
+	b.innerHTML = '<div id="tip1"><div style="background: #fff; overflow: hidden"><div style="display: inline-block; color: black; font-size: '+Math.ceil(s/6)+'px"><div><a style="color: black" href="http://snarly.github.io/yt6" onclick="window.open(\''+ ('http://snarly.github.io/yt6/' || yt6.poster.src) +'\', \'_blank\').focus(); return false">Link to project site to check for updates</a></div><p style="font-size: '+Math.ceil(s/10)+'px">Donate to the developer anonymously</p></div><h1 class="snarl-button yt-uix-button-text" style="padding: 0 4px 0 4px; background-color: red; color: white; float: right" onclick="(function(){ var close = gid(\'tip0\'); if (close) close.parentNode.removeChild(close); })()">X</h1></div></div>'
 
 	z = gid('tip1')
 	for(i in x) {
@@ -8937,30 +8937,30 @@ yt6d.mep_renew = function() {
 	  }
 	}
 
-    if (yt6.mobile && yt6.layout == 16 && !yt6.api) yt6.api = gid('player-container-id').firstElementChild
+      if (yt6.mobile && yt6.layout == 16 && !yt6.api) yt6.api = gid('player-container-id').firstElementChild
 
 
-    var bm0 = gid('bm0')
-    if (bm0) {
-      if (!(yt6.layout == 12 && (yt6d.init || yt6.status == 'error' || (yt6.xhr.async && !yt6.xhr.completed && yt6.blocked)) ) ) {
-	unhide(bm0) //unhide-1
-      } else {
-	  if (yt6.status != 'error' && yt6.x) {
-	    $waitUntil(function(){ if (yt6.p && !(yt6.ytm && yt6.p.tagName == 'EMBED') && typeof yt6.p.getVideoUrl == 'function') { if (yt6.p.getVideoUrl().indexOf(yt6.vid) > -1) { return true }} }, function(){ unhide(gid('bm0')); setTimeout(function(){ unhide(gid('bm0')) }, 1000) }, 500, 7000)
+      var bm0 = gid('bm0')
+      if (bm0) {
+	if (!(yt6.layout == 12 && (yt6d.init || yt6.status == 'error' || (yt6.xhr.async && !yt6.xhr.completed && yt6.blocked)) ) ) {
+	  unhide(bm0) //unhide-1
+	} else {
+	    if (yt6.status != 'error' && yt6.x) {
+	      $waitUntil(function(){ if (yt6.p && !(yt6.ytm && yt6.p.tagName == 'EMBED') && typeof yt6.p.getVideoUrl == 'function') { if (yt6.p.getVideoUrl().indexOf(yt6.vid) > -1) { return true }} }, function(){ unhide(gid('bm0')); setTimeout(function(){ unhide(gid('bm0')) }, 1000) }, 500, 7000)
+	    }
 	  }
-	}
-    }
-    if (yt6.flash.forced) {
-      if (!gc('forced flashplayer')[0] && yt6.p.parentNode != yt6.api) {
-	var fmp = forceFlashplayerObject(), p0 = getElementsByAttribute(yt6,'div','id','movie_player0')
-	if (fmp) {
-	  yt6.api.insertBefore(fmp, yt6.api.firstChild || yt6.api.firstElementChild)
-	  fmp.setAttribute('name','movie_player1')
-	  fmp.style.display = ''; p = player()
-	}
-	if (p0 && p0[1]) { p0[1].parentNode.removeChild(p0[0]) }
       }
-    } else {// remove the unused initial flash object
+      if (yt6.flash.forced) {
+	if (!gc('forced flashplayer')[0] && yt6.p.parentNode != yt6.api) {
+	  var fmp = forceFlashplayerObject(), p0 = getElementsByAttribute(yt6,'div','id','movie_player0')
+	  if (fmp) {
+	    yt6.api.insertBefore(fmp, yt6.api.firstChild || yt6.api.firstElementChild)
+	    fmp.setAttribute('name','movie_player1')
+	    fmp.style.display = ''; p = player()
+	  }
+	  if (p0 && p0[1]) { p0[1].parentNode.removeChild(p0[0]) }
+	}
+      } else {// remove the unused initial flash object
 	var z = gid('movie_player_to_dispose').getElementsByTagName('embed')[0] || gid('movie_player_to_dispose').getElementsByTagName('object')[0]
 	if (z && z != yt6.p) z.parentNode.removeChild(z)
 	if (yt6.layout == 12 && player() && yt6.p.tagName == 'IFRAME') {
@@ -8993,6 +8993,8 @@ yt6d.mep_renew = function() {
       } catch(e) { yt6.navigation = false }
 
       if (yt6d.ad) { delete yt6d.ad; } //yt6d.mep_reload() }
+
+      aspect(yt6.size)
 
     }//preload
 
@@ -10199,7 +10201,7 @@ if (c[1]) {
   var html = [new Date().toLocaleString(),
     //'Click to switch streams in both native (HTML5) and alternative player. Right click & "Save as" to download.<br>'
     'Left-click will initiate playback in <i>Progressive Download</i> mode. Use Right-click & "Save as..." to download.<br>'+
-	'<div id="encrypted_signatures_warning" style="display: none; color: red">Video with encrypted signatures! <br>If the links do not work, switch over to the alternative player and try to load the video in various formats & resolutions. Once it becomes playable there, we\'re good.</div>'+
+	'<div id="encrypted_signatures_warning" style="display: none; color: red">Video with encrypted signatures! <br>If the links do not work, switch over to the alternative player and try to start the video in various formats & resolutions. Once it becomes playable there, we\'re good.</div>'+
 	'<button id="hide-links" class="snarl-button yt-uix-button-text" onclick="var a, b, c;'+
 	'if (typeof gid == \'function\') { a = gid(\'yt6-links\'), b = gid(\'alt-links\'), c = gid(\'bm3\'), d = gid(\'bm4\') };'+
 	'if (a) if (a.hasAttribute(\'hidden\')) { a.removeAttribute(\'hidden\'); this.innerHTML = \'<b><u>Used for playback</u></b> / Alternatives\'; if (b) b.setAttribute(\'hidden\',\'\')'+
@@ -10629,7 +10631,7 @@ if (c[1]) {
               } else if (x.indexOf('k ') != -1) var m = 'A'
               sizeq = ' title="'+ m +' ('+itag_+')" aria-label="'+ m +' ('+itag_+')"'
 
-	      if (href.indexOf('yt_live_broadcast') == -1 && (m == 'V' || m == 'A')) { console.log(m +' '+itag_); yt6.yt_otf.push(1*itag_) }//m == 'V'
+	      if (href.indexOf('yt_live_broadcast') == -1 && (m == 'V' || m == 'A')) { yt6.yt_otf.push(1*itag_) }//m == 'V'; //console.log(m +' '+itag_); 
 
             } 
 
@@ -11040,7 +11042,7 @@ if (typeof html.splice != 'function') return void 0;
    '</div><br>' +
 
    //'Note: Flash player can only be used with legacy AV formats which may not be available. When decryption key update fails, no valid media links occur. To fix it, remove and reload the script manually.<br><br>'+
-   'If you like the program, feel free to send me some cash through the following link for whatever you think it\'s worth.<br>'
+   'If you like the program, feel free to throw me some coins under the link for whatever you think it\'s worth.<br>'
   )
   gid('bm2').innerHTML = html.join('<br>')
 
@@ -11167,7 +11169,7 @@ if (typeof html.splice != 'function') return void 0;
 
   var dw = document.createElement('button')
   dw.id = "bm5";
-  dw.innerHTML = 'Homepage & tipping'
+  dw.innerHTML = 'Homepage'
   gid('bm2').appendChild(dw)
   gid('bm5').setAttribute('style','height: 24px; font-size: 15px; float: left; text-align: left; color: #EE0000')
   gid('bm5').setAttribute('class','snarl-button yt-uix-button-text')
@@ -12364,12 +12366,13 @@ function mep_run() {
 
 					      //if (yt6.mobile && yt6.x && yt6.browser_tab == 'hidden' && (yt6.A_[itag(me.src)] || (itag(me.src) >= 103 && yt6.fmts_fallback.A.all[itag(me.src)] ))) yt6.ct = (yt6.ct + 0.05)
 
-					    } else { yt6.ct = (yt6.ct) ? clone(yt6.ct) : 0 }
+					    } else { yt6.ct = (yt6.ct) ? yt6.ct : 0 }
 
 					    //if (!yt6.live)
 					    if (!(!me.currentTime && yt6.ct)) { yt6.player1.setCurrentTime(yt6.ct) } else me.currentTime = clone(yt6.ct)
 
 					  } else {
+					      if (yt6.mobile && yt6.x && yt6.browser_tab == 'hidden' && (yt6.A_[itag(me.src)] || (itag(me.src) >= 103 && yt6.fmts_fallback.A.all[itag(me.src)] ))) yt6.ct = (yt6.ct + 0.1)
 						if (!me.currentTime && yt6.ct) me.currentTime = clone(yt6.ct)
 						//if (yt6.ct) me.setCurrentTime(yt6.ct)
 					    }
@@ -16677,10 +16680,14 @@ addEL(window, 'yt-navigate-start', yt6.body.yt_navigate_start, false)
 	wide_view()
 
 
-	if ((!yt6.x || yt6.newvideo) && !yt6.ad_ && yt6.linx && !yt6.linx.length && !(yt6.layout == 16 && c[1] && (c[1].url_encoded_fmt_stream_map || c[1].adaptive_fmts)) && p && yt6.pls && yt6.status && yt6.status != 'unplayable' && !(yt6.ytm) && !(yt6.xhr.async && !yt6.xhr.completed))//yt6.status != 'error' && 
-	try { //console.log('jump to next ' + yt6.status + ' '+yt6.linx.length +' '+ yt6.ad_)
-	  yt6.ad_ = 1; fix_playlist(); try { yt6.pl_next.click() } catch(e){ FireEvent2(yt6.pl_next, 'click') }
-	} catch(e) { }
+	if ((!yt6.x || yt6.newvideo) && !yt6.ad_ && yt6.linx && !yt6.linx.length && !(yt6.layout == 16 && c[1] && (c[1].url_encoded_fmt_stream_map || c[1].adaptive_fmts)) && p && yt6.pls && yt6.status && yt6.status != 'unplayable' && !(yt6.ytm) && !(yt6.xhr.async && !yt6.xhr.completed)) {//yt6.status != 'error' && 
+	  try { //console.log('jump to next ' + yt6.status + ' '+yt6.linx.length +' '+ yt6.ad_)
+	    yt6.ad_ = 1; fix_playlist(); try { yt6.pl_next.click() } catch(e){ FireEvent2(yt6.pl_next, 'click') }
+	  } catch(e) { }
+	} else if (yt6.mobile && yt6.pls && !yt6.x && !(yt6.wna && yt6.wna.parentNode)) {
+		scrollToCurrentVideo()
+		set_controls()
+	  }
 
 
 	if (p && p.tagName == 'DIV') {
