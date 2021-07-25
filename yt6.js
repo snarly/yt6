@@ -1223,7 +1223,7 @@ if (!window.onchange) {
 	500,5000
       )
 	// to store the very first manual choice also, set this to false
-      yt6.no_default = (yt6.userprefV.toString() == '397,244,134,43,18') ? true : false; //console.log(yt6.userprefV +' '+ yt6.no_default)
+      yt6.no_default = (yt6.userprefV.toString() == '397,244,134,43,18') ? false : true; //console.log(yt6.userprefV +' '+ yt6.no_default)
     }
 
 
@@ -13025,9 +13025,7 @@ function mep_run() {
 
 					    me.loaded = false; if (browserName == 'Safari' || browserName == 'IE') yt6.player2.isLoaded = false
 					    yt6.retry++;
-					    yt6.player2.setSrc(me.src);
-					    Seek = 1;
-					    yt6.player2.load();
+
 					    if (!yt6.player1.media.paused) {
 						yt6.player1.pause()
 						$waitUntil(function() { if ( (yt6.player1.media.loaded && yt6.player1.media.paused) || (yt6.player2.media.currentTime > 1) ) return true }, //m2
@@ -13038,6 +13036,12 @@ function mep_run() {
 						yt6.player2.load();
 						if (yt6.autoplay) { yt6.player1.play(); yt6.player2.play() }
 					      }
+					    var src = clone(me.src); //console.log(src)
+					    yt6.player2.setSrc('https://www.youtube.com/ptracking');
+					    yt6.player2.load();
+					    yt6.player2.setSrc(src);
+					    Seek = 1;
+					    yt6.player2.load();
 					  } else { Seek = 0 }
 					});
 					addEL(me, 'loadedmetadata', function() { ev = '2loadedmetadata'; //ev_log(ev); //console.log(ev)
