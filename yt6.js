@@ -12536,7 +12536,7 @@ function mep_run() {
 						} else yt6.ct = 0
 					      } catch(e) { yt6.ct = 0 }
 
-					      if (yt6.mobile && yt6.x && yt6.browser_tab == 'hidden' && (yt6.A_[itag(me.src)] || (itag(me.src) >= 103 && yt6.fmts_fallback.A.all[itag(me.src)] ))) { me.currentTime = (yt6.ct + 1.05); yt6.ct = 0 }
+					      if (yt6.mobile && yt6.x && yt6.browser_tab == 'hidden' && (yt6.A_[itag(me.src)] || (itag(me.src) >= 103 && yt6.fmts_fallback.A.all[itag(me.src)] ))) { yt6.ct = 0.05 }
 
 					    } else { yt6.ct = (yt6.ct) ? yt6.ct : 0 }
 
