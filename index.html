@@ -62,7 +62,7 @@
 	<a href="javascript:(function(){var v='d3de9d19c1c463a3932abd77fc5bcaf0ba3a546c/yt6.js',w=window,d=w.document,h=d.location.href,yt6=w.yt6||{},yt6d=w.yt6d||{};if(yt6d.loaded>=4)return void 0;if(h.split('youtube.com/watch')[1]||h.split('youtube.com/embed')[1]||h.split('/base.j')[1]=='s'){var id='snarls_player',e='script',q;yt6.loaded=0;function s(x){x=x||id;return d.getElementById(x)};function c(e){return d.createElement(e)};function a(q){s().appendChild(q);s().add_subs='en,hu,de';yt6d.src=q.src};function r(){if(s()){var x;try{x=s().querySelector('#'+id)}catch(e){x=s().firstChild};if(x)s().removeChild(x)}};function b(){var i,j,o,x;o=['rawcdn.githack','cdn.rawgit','js'];for(j,x,i=o.length;i;j=Math.floor(Math.random()*i),x=o[--i],o[i]=o[j],o[j]=x);if(yt6d.src==-1)o.splice(0,0,'raw.githubusercontent');q=c('div');q.id=id;if(q!=s())d.body.appendChild(q);var src='https://'+o[0]+'.com/snarly/yt6/'+v,src0='https://cdn.jsdelivr.net/gh/snarly/yt6@'+v;function oc(ox,oy,sr){return(oy!='js')?sr.replace(ox,oy):src0};q=c(e);q.id=id;q.src=(o[0]!='js')?src:src0;q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[1],src);q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[2],src);q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[3],src);q.onerror=function(){q=c(e);q.id=id;q.src=src.replace('https','http')};a(q);r();};a(q);r();};a(q);r();};try{a(q);}catch(f){a(q)};};function g(){try{deldiv()}catch(f){r()};yt6d.src=1;b()};if(!s()){b()};setTimeout(function(){var t=w.yt6;if(t)t.loaded=t.loaded||window['status'];if(!t||(t&&(!t.body||(t.loaded<3))))g()},3000);}else{void 0};})()/*202108030640*/">Yt6 -- Snarl's YouTube Video Player (bookmarklet)</a>
 	</h3>
 	<h4>
-		Last updated on Aug 8, 2021 06:40
+		Last updated on Aug 3, 2021 06:40
 	</h4>
 		Please note: a bookmarklet cannot update itself. You either come back here once in a 
 		while to create a new instance for yourself, or the ever evolving YouTube site will 
@@ -127,7 +127,9 @@
 
 	<ol>
 		<li>Right click / hold your finger on the Yt6 link above, and "Copy link address". If you 
-		have no such option, the code is written below in plain text, select and copy it manually</li>
+		have no such option or, in case of newer browsers such as Vivaldi, if you notice that the 
+		browser replaced the copied link address with a simple "about:blank" line (for security 
+		reasons), the code is written below in plain text also, select and copy it manually</li>
 		<li>Bookmark any web page (this one for example)</li>
 		<li>Edit the created bookmark's Properties / Location: delete its URL-address entirely, 
 		and paste this snippet of javascript code in its place. (Optionally, you can give it a name 
@@ -300,8 +302,8 @@
 	<h5>
 		Good ones (for Android)
 	</h5>
+		<li><b><strong><a href="https://play.google.com/store/apps/details?id=com.vivaldi.browser">Vivaldi</a></strong></b>'s built-in Tracker and Ad Blocking can sometimes be painfully slow on YouTube, making it a severe hindrance for background play. If that's the case, you can try improving performance by adding an exception for youtube.com ("No blocking"), and let the script handle ads
 		<li><b><strong><a href="https://play.google.com/store/apps/details?id=com.brave.browser">Brave</a></strong></b> can use the mobile UI without the help of this script
-		<li><b><strong><a href="https://play.google.com/store/apps/details?id=com.vivaldi.browser">Vivaldi</a></strong></b>'s built-in Tracker and Ad Blocking can sometimes be painfully slow on YouTube, making it a severe hindrance for background play. To improve performance, you can add an exception for youtube.com ("No blocking"), and let the script handle ads
 		<li><b><strong>Google Chrome</strong></b> -- its ad-flood can be neutralized fairly well now
 	<h5>
 		So-so (playback may fail after a few videos)
@@ -412,6 +414,9 @@
 		use this one on Mobile.</strong></b> Kiwi and Yandex would let you install browser extensions 
 		capable of running userscripts like this, but the two desktop layouts working concurrently 
 		just drains the battery too fast. It's not worth it.
+	<br><br>
+		<b><strong>Heads-up: This additional userscript was broken by YouTube and/or up-to-date 
+		browsers around mid-2021. Needs heavy rewriting.</strong></b> 
 	<br><br>
 	<h1>
 		Stream capturing
