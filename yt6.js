@@ -1563,12 +1563,26 @@ function find_key(rpt){
 
 	    var array = rpt.split('=function(a){a=a.split("")')
 	    if (array == rpt) { var alt = 1; array = rpt.split('(a){a=a.split("")') } else var alt = 0
-	    if (array.length) for (i=0;i<array.length;i++) {
+	    if (array.length)
+	    for (i=0;i<array.length;i++) {
 	      var x = array[i], y = array[i+1]; //console.log(x);
 	      if (y && y.indexOf(';var ') == 0) {
 		fcnm = null; continue
-	      } else {
-		  fcnm = (x) ? x.substr(x.length-2,3) : null; x = null; y = null; break
+	      } else if (x && x.indexOf('}') > -1) {
+		  y = x.substr(x.lastIndexOf('}'), x.length)
+		  if (y) {
+		    if (y.split(';')[1]) y = y.substr(y.lastIndexOf(';'), x.length)
+		    if (y.split(' ')[1]) y = y.split(' ')[1]
+		    x = y
+		  }
+		  if (x) {
+		    if (x.length == 2) {
+		      fcnm = x.substr(x.length-2,3) // 2-letters long
+		    } else
+		      fcnm = x.substr(x.length-3,4) // 3-letters long func name
+		    
+		  } else { x = null; y = null }
+		  break
 		}
 	    }
 
@@ -1587,7 +1601,7 @@ function find_key(rpt){
   }
 
   try {
-
+      //console.log(fcnm)
       var fs = new RegExp(    sprintf('function %s[^}]+}[^}]+}', fcnm.replace('$', '\\$'))  );
       if (rpt.match(fs) == null) {
 	var fs = new RegExp(    sprintf('var %s=function[^}]+};', fcnm.replace('$', '\\$'))  );
@@ -1646,8 +1660,8 @@ function find_key(rpt){
 
   if (fs) {
 
-    var f1 = fcobj()[0]; //regular expression including the object name
-    var f2 = fcobj()[1]; //object name
+    var f1 = fcobj()[0]; //console.log('regular expression including the object name: '+ f1)
+    var f2 = fcobj()[1]; //console.log('object name: '+ f2)
 
     var decrypt0 = rpt.match(f1)[0].split(" " + f2 + "=").join(" dekrypt0=")
     if (fs && fs.split(';')[0] && fs.split(';')[0].indexOf('function') == -1 && fs.split(';')[1].indexOf('function') != -1) {
@@ -12553,7 +12567,7 @@ function mep_run() {
 
 					  } else {
 
-					      if (yt6.mobile && yt6.x && browserName == 'Firefox' && yt6.browser_tab == 'hidden' && (yt6.A_[itag(me.src)] || (itag(me.src) >= 103 && yt6.fmts_fallback.A.all[itag(me.src)] ))) { yt6.ct = (yt6.ct + 0.05) }
+					      if (yt6.mobile && yt6.x && yt6.browser_tab == 'hidden' && (yt6.A_[itag(me.src)] || (itag(me.src) >= 103 && yt6.fmts_fallback.A.all[itag(me.src)] ))) { yt6.ct = (yt6.ct + 0.05) }// && browserName == 'Firefox'
 
 						if (!me.currentTime && yt6.ct) me.currentTime = clone(yt6.ct)
 						//if (yt6.ct) me.setCurrentTime(yt6.ct)
@@ -15747,7 +15761,8 @@ if (!t.sourcechooserButton) {//console.log('error')
 		yt6.player1.media.isLoaded = false
 		yt6.player2.media.isLoaded = false
 		//if (yt6.browser_tab == 'hidden') yt6.player1.media.currentTime = yt6.player2.media.currentTime = player2.currentTime = yt6.ct = 0
-		if (yt6.mobile || yt6.browser_tab == 'hidden') yt6.player1.media.currentTime = yt6.ct = 0
+		yt6.player1.media.pause()
+		if (yt6.browser_tab == 'hidden') yt6.player1.media.currentTime = yt6.ct = 0 //if (yt6.mobile || 
 	    } catch(e) {
 	        //yt6.player1.media.currentTime = 0;
 	      };
