@@ -1606,7 +1606,7 @@ function find_key(rpt){
       if (rpt.match(fs) == null) {
 	var fs = new RegExp(    sprintf('var %s=function[^}]+};', fcnm.replace('$', '\\$'))  );
 	if (rpt.match(fs) == null) {
-	  var fs = new RegExp(    sprintf('\\W+%s=function[^}]+}', fcnm.replace('$', '\\$'))  );//latest
+	  var fs = new RegExp(    sprintf('[^\\w.]+%s=function[^}]+}', fcnm.replace('$', '\\$'))  );//\\W does not suffice, have to exclude the possibility of a leading dot as well
 	}
       }
     //console.log('fs='+rpt.match(fs))
@@ -8991,6 +8991,7 @@ yt6d.mep_renew = function() {
 
       }//find_the_source
 
+      yt6.loaded = 5; window['status'] = yt6.loaded
       yt6.mep = 'running'
 
       yt6.newvideo = true
@@ -12271,7 +12272,7 @@ function mep_run() {
 						//if (!yt6.ytg || (yt6.ytg && yt6.x && (typeof yt6.errcount == 'undefined' || yt6.errcount == 0))) { decryption_failure() }
 
 
-					  	//if (!yt6.alt_links_used) {
+					  	if (yt6.loaded == 5 || yt6d.init) {//if (!yt6.alt_links_used) {
 						  //console.log('Attempting to replace unusable links with the alternative set')
 						  var bm3 = gid('bm3'), a, b, l, m, alt_link, new_link = []
 						  if (bm3) {
@@ -12315,7 +12316,7 @@ function mep_run() {
 						      }
 						    } else { return void 0 }
 						  }
-						//}
+						}
 
 
 
@@ -12412,7 +12413,9 @@ function mep_run() {
 						    },250,5000);
 
 						  } else { //encrypted
-							if (yt6.x) { switch_players(); window.yt6_swapped = 1; if (yt6.ytg) yt6.ytg.swapped = 1 } else if (!(yt6.html5_fail || html5_fail) && p.tagName == 'EMBED' && !window.yt6_swapped && !yt6.swapped) { back2html5() }
+							if (yt6.x && (yt6.loaded == 5 || yt6d.init)) {
+							  switch_players(); window.yt6_swapped = 1; if (yt6.ytg) yt6.ytg.swapped = 1; try { yt6.p.playVideo() } catch(e){}
+							} else if (!(yt6.html5_fail || html5_fail) && p.tagName == 'EMBED' && !window.yt6_swapped && !yt6.swapped) { back2html5() }
 							//var z = gid('ytassetsjs')
 							//if (!(html5_fail && yt6.html5_fail)) if (z) z.parentNode.removeChild(z) // not good, causes endless loop
 							if (yt6.encrypted && !gid('ytassetsjs')) { yt6.errcount = 0; hand_axe() } else {
@@ -15278,11 +15281,11 @@ if (!t.sourcechooserButton) {//console.log('error')
 
 	var mep_reload = yt6d.mep_reload = function(){ //console.log('mep_reload '+yt6.reload)
 
-	    var c = conf('args'), p = player(), p = yt6.p
+	    var c = conf('args'), p = player(), p = yt6.p, x = (window.yt6_swapped || yt6.swapped)
 
 	    yt6.change = true
 	    yt6d.source = false
-	    yt6d.log = []
+	    //yt6d.log = []
 	    yt6.age.v = null
 	    yt6.errcount = 0
 	    yt6.manifest = {}
@@ -15293,7 +15296,7 @@ if (!t.sourcechooserButton) {//console.log('error')
 
 	    if (yt6.layout == 16 && !yt6.ytm && !yt6.ytg) {
 
-	        if (yt6.mobile && yt6.swapped) try { delete yt6.swapped; if (!yt6.x) switch_players() } catch(e){}
+	        if (yt6.mobile && x) try { delete x; if (!yt6.x) switch_players() } catch(e){}
 		//yt6.aspect2 = true
 		var z = gid(yt_alert_message)
 		if (z && z.parentNode == yt6.wna) { // destroy the control panel before the new yt code does it inside the alerts div at an inconvenient time
@@ -20562,7 +20565,7 @@ if (yt6.flexy) {
 
 	      } //else console.log('! '+ windowwidth + ' '+w +' '+yt6.osw.style.left)
 
-	      if (!playlist) yt6.wsb.style.marginTop = h + 'px'
+	      if (!playlist) yt6.wsb.style.marginTop = (h + 10) + 'px'
 	    }
 
 
@@ -20923,7 +20926,7 @@ if ((p1 != null) && (yt6.x)){
 	z.style.position = (yt6.wallpaper && !yt6.wide) ? 'absolute' : ''
 	z.style.marginTop = (yt6.wallpaper && !yt6.wide && (yt6.size != 'default' || !yt6.pls)) ? yt6.h : ''
 	if (!yt6.wide) {
-	  if (yt6.wsb && !yt6.pls) yt6.wsb.style.marginTop = (yt6.wallpaper || (!yt6.wallpaper && yt6.size == 'default')) ? '' : yt6.h
+	  if (yt6.wsb && !yt6.pls) yt6.wsb.style.marginTop = (yt6.wallpaper || (!yt6.wallpaper && yt6.size == 'default')) ? '' : (1 * yt6.h.replace('px','') + 10) + 'px'
 	  //if (yt6.pls) yt6.pls.style.marginTop = (yt6.wallpaper || (!yt6.wallpaper && yt6.size == 'default')) ? '' : yt6.h
 	}
       }
