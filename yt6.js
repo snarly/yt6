@@ -3274,8 +3274,9 @@ function player_response() {
 	}
 
   if (ytplayer.config.args.adaptive_fmts || ytplayer.config.args.url_encoded_fmt_stream_map) {
-    if (yt6.blocked_m) {
+    if (yt6.blocked_m && !yt6.blocked_m2) {
       if (yt6.x && yt6.browser_tab == 'hidden') {
+	yt6.blocked_m2 = true // to ensure this part runs only once
 	buildObject(ytplayer)
 	redo_dl_button(  yt6.args,  yt6.html,  yt6.href)
 	yt6d.mep_up()
@@ -6424,12 +6425,15 @@ function me_flash_up(file, ib){
 
 	if (yt6.p && (yt6.p.tagName == 'IFRAME' || (!yt6.blocked || yt6.age.blocked)) && p0 && yt6.p != p0 && !(yt6.ytm && yt6.flash.forced) && typeof p0.getPlayerState == 'function' && p0.getPlayerState() == 1) try { p0.pauseVideo(); p0.seekTo(0) } catch(e){}
 
-	if (yt6.mobile) { // it would be counterproductive to set the blocked flag on age-restricted videos on mobile, just hide the elements which get in the way
-	  r = gc('playability-status-signin-button')[0];
+	if (yt6.mobile) {
+	  r = gc('playability-status-signin-button')[0]
+	  if (yt6.browser_tab == 'hidden' && !r) yt6.blocked_m = true // on a backgrounded mobile tab, r will be undefined on first try
 	  if (r && r.firstElementChild && r.firstElementChild.innerHTML != undefined && yt6.api) {
 	    if (typeof yt6.api.hasAttribute == 'function' && (yt6.api.hasAttribute('playable') || yt6.api.parentNode.getAttribute('playable') == 'false') ) {
-	      yt6.blocked_m = true; try { yt6.api.removeAttribute('playable') } catch(e){};
-	      try { gid('player-thumbnail-overlay').setAttribute('width','0%') } catch(e){}
+	      yt6.blocked_m = true
+		// "hide" the elements which get in the way when the video is age-blocked
+		try { yt6.api.removeAttribute('playable') } catch(e){};
+		try { gid('player-thumbnail-overlay').setAttribute('width','0%') } catch(e){}
 	    }
 	  }
 	}
@@ -11149,7 +11153,8 @@ if (yt6.oldbrowser) {
 	)
       )) ||
       (!yt6.xhr.async) || yt6.ytm ) { return true }
-    //else console.log('no video data yet '+ yt6.status + ' '+yt6.reason)
+    else if (yt6.mobile && yt6.browser_tab == 'hidden' && yt6.blocked_m) { return true }
+	 //else console.log('no video data yet '+ yt6.status + ' '+yt6.reason)
 
 
 }//buildObject
@@ -13099,7 +13104,7 @@ function mep_run() {
 							  if (yt6.mobile) {
 							    if (yt6.pls) {
 							      var z = gc('playlist-controls-primary')[0]
-								      if (z) {
+								if (z) {
 								z = z.getElementsByTagName('c3-material-button')[1]
 							        if (z) {
 								  z = z.getElementsByClassName('c3-material-button-button')[0]
@@ -13505,7 +13510,7 @@ function mep_run() {
 							  if (yt6.mobile) {
 							    if (yt6.pls) {
 							      var z = gc('playlist-controls-primary')[0]
-								      if (z) {
+								if (z) {
 								z = z.getElementsByTagName('c3-material-button')[1]
 							        if (z) {
 								  z = z.getElementsByClassName('c3-material-button-button')[0]
@@ -15884,6 +15889,7 @@ if (!t.sourcechooserButton) {//console.log('error')
 	        //yt6.player1.media.currentTime = 0;
 	      };
 
+	    if (yt6.blocked_m) delete yt6.blocked_m; if (yt6.blocked_m2) delete yt6.blocked_m2
 	    var webgl = get_webgl(), c = conf('args')
 	    ///if (!webgl) try { gc('video-stream html5-main-video')[0].pause() } catch(e) {};
 
@@ -20981,11 +20987,10 @@ if (p1 && p1.parentNode) if (strLeft || strTop) {//console.log('propUpdate')
 
   if (yt6.player1 && typeof yt6.player1.showControls == 'function') try {
     if (yt6.x) {
-      //yt6.player1.showControls(true)
       if (!yt6.player1.media.paused) {
 	var bp = gclass("mejs-overlay-play")[0]
 	//if (bp) bp.style.visibility = 'hidden'
-      }
+      } else yt6.player1.showControls(true)
     } else yt6.player1.hideControls(false)
   } catch(e){}
 
