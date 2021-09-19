@@ -3276,7 +3276,7 @@ function player_response() {
   if (ytplayer.config.args.adaptive_fmts || ytplayer.config.args.url_encoded_fmt_stream_map) {
     if (yt6.blocked_m && !yt6.blocked_m2) {
       if (yt6.x && yt6.browser_tab == 'hidden') {
-	yt6.blocked_m2 = true // to ensure this part runs only once
+	yt6.blocked_m2 = (yt6.pre_ad != true) ? true : false // to ensure this part runs only once
 	buildObject(ytplayer)
 	redo_dl_button(  yt6.args,  yt6.html,  yt6.href)
 	yt6d.mep_up()
@@ -6427,7 +6427,7 @@ function me_flash_up(file, ib){
 
 	if (yt6.mobile) {
 	  r = gc('playability-status-signin-button')[0]
-	  if (yt6.browser_tab == 'hidden' && !r) yt6.blocked_m = true // on a backgrounded mobile tab, r will be undefined on first try
+	  if ((yt6.browser_tab == 'hidden' && !r) || yt6.pre_ad) yt6.blocked_m = true // on a backgrounded mobile tab, r will be undefined on first try
 	  if (r && r.firstElementChild && r.firstElementChild.innerHTML != undefined && yt6.api) {
 	    if (typeof yt6.api.hasAttribute == 'function' && (yt6.api.hasAttribute('playable') || yt6.api.parentNode.getAttribute('playable') == 'false') ) {
 	      yt6.blocked_m = true
@@ -12831,7 +12831,7 @@ function mep_run() {
 						    if (typeof playPromise.then == 'function') {
 						      me.p = gc('mejs-button mejs-playpause-button')[0]
 						      me.pp = 'yt6.player1.media.pp = function(){ playPromise.then(function () {\
-						          yt6.newvideo = false; \/\*console.log("Playing....")\*\/;\
+						          if (me.currentTime > 0 && !me.paused) yt6.newvideo = false; \/\*console.log("Playing....")\*\/;\
 						      }).catch(function (error) {\
 							  if (yt6.player1.media.paused ) { var src = yt6.player1.media.src; yt6.player1.setSrc(\'https://www.youtube.com/ptracking\'); yt6.player1.load(); yt6.player1.setSrc(src); yt6.player1.load(); if (yt6.player1.media.p) try { yt6.player1.media.p.click() } catch(e){} }; \
 						          yt6.newvideo = true; \/\*console.log("Failed to play...." + error)\*\/ ;\
