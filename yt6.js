@@ -10126,9 +10126,7 @@ function mute_ad(p) {
 
 	    if (ads0 != 4) yt6.loaded_media_duration = ads0; //console.log(ads0 + ' '+yt6.real_media_duration +' '+yt6.loaded_media_duration)
 
-	  } else { yt6.ad_ = ads0 // delay one cycle
-	console.log('?')
-	    }
+	  } else yt6.ad_ = ads0 // delay one cycle
 
 
 	} else {
@@ -14011,7 +14009,23 @@ function nop(){//    } else {
   }
 
 var p1 = gid('player1')
-var A = [],V = [],AV = [];    var linx = []; linx = yt6.linx;  var html = []; html = yt6.html
+var A = [],V = [],AV = [];    var linx = []; linx = yt6.linx;  var html = []; html = yt6.html; var adv = []
+if (linx[1140] || linx[1018]) { var a = 0, b = 0
+  for (i=0;i<999;i++) {
+    if (linx[i]) {
+      a = (a + i)
+      if (linx[i].indexOf('&title=Advertisement') > -1) { b = (b + i); adv[i] = linx[i] }
+    }
+  }
+  if (a && b && a == b) { // all media links below index 1000 belong to an ad -- swap the values
+    for (i=0;i<999;i++) {
+      if (linx[(1000 + i)]) {
+	linx[i] = linx[(1000 + i)]; linx[(1000 + i)] = adv[i]
+      }
+    }
+    adv = null
+  }
+}
 if (typeof linx[160] === 'string') { linx.splice(132, 1, linx[160])}
   for (i=0;i<999;i++) {//linx
     var z = getElementsByAttribute(p1,'source','name',i)[0]
