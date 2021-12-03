@@ -13032,7 +13032,7 @@ function mep_run() {
 					  //}
 					  //console.log(Seek +' '+yt6.Seek +' '+yt6.Seeked2)
 					});
-					addEL(me, 'timeupdate', function() {if (yt6.newvideo) ev_log(yt6.ct)
+					addEL(me, 'timeupdate', function() {
 					  if ( yt6 && yt6.player1 && !yt6.navigation && (yt6.timer == 999999999 || me.src == 'https://www.youtube.com/ptracking' || yt6.player1.media.src != me.src))
 					    return void 0;
 					  if (yt6.browser_tab == 'visible' && yt6.Seek == 6) {
