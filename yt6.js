@@ -3899,9 +3899,9 @@ function getPoster(){
       z.firstChild.src = ''
     }
     img.onload = function(){
-      $waitUntil(function() { var img = gid('test_poster2'); yt6.timer = yt6.timer + 1
+      $waitUntil(function() { var img = gid('test_poster2'), img2 = gc('mejs-poster mejs-layer')[0]; yt6.timer = yt6.timer + 1
 	  if (yt6.timer > 50 && img && img.parentNode) img.parentNode.parentNode.removeChild(img.parentNode)
-	  if (!(yt6.xhr.async && yt6.mep != 'running') && gc('mejs-poster mejs-layer')[0] && img && img.naturalWidth == 120 && img.naturalHeight == 90) return true
+	  if (!(yt6.xhr.async && yt6.mep != 'running') && img && img2 && img2.firstChild && ((img.naturalWidth == 120 && img.naturalHeight == 90) || (img2.firstChild.naturalWidth == 120 && img2.firstChild.naturalHeight == 90)) ) return true
 	},
         function() { var img = gid('test_poster2')
 	  //img.src = '//yt3.ggpht.com/-afBnHVG_R6E/AAAAAAAAAAI/AAAAAAAAAAA/LtE5kbPkZvE/s27-c-k-no-mo-rj-c0xffffff/photo.jpg'
@@ -3918,7 +3918,7 @@ function getPoster(){
 	    var img = gid('test_poster2')
 	    if (img) try { img.parentNode.removeChild(img) } catch(e){}
 	  }
-        },200,10000
+        },500,10000
       )
       if (gid('test_poster')) gid('test_poster').appendChild(img)
       delete img
@@ -12939,7 +12939,7 @@ function mep_run() {
 						    if (typeof playPromise.then == 'function') {
 						      me.p = gc('mejs-button mejs-playpause-button')[0]
 						      me.pp = 'yt6.player1.media.pp = function(){ playPromise.then(function () {\
-						          if (me.currentTime > 0) { if (!me.paused) yt6.newvideo = false; } else yt6.player1.play(); \/\*console.log("Playing....")\*\/;\
+						          if (me.currentTime > 0) { if (!me.paused) yt6.newvideo = false; } else if (yt6.browser_tab == "hidden") yt6.player1.play(); \/\*console.log("Playing....")\*\/;\
 						      }).catch(function (error) {\
 							  if (yt6.player1.media.paused ) { var src = yt6.player1.media.src; yt6.player1.setSrc(\'https://www.youtube.com/ptracking\'); yt6.player1.load(); yt6.player1.setSrc(src); yt6.player1.load(); if (yt6.player1.media.p) try { yt6.player1.media.p.click() } catch(e){} }; \
 						          yt6.newvideo = true; \/\*console.log("Failed to play...." + error)\*\/ ;\
@@ -13745,7 +13745,7 @@ function mep_run() {
 						  if (!yt6.player1.media.paused || yt6d.init) { //console.log(me.loaded); console.log(yt6.player2.media.loaded); console.log(yt6.player1.media.loaded)
 						    //if (yt6.diff != 0) me.loaded = 1
 						    if (typeof me.loaded == 'number') {
-						      me.loaded = true; //Seek = 1; 
+						      me.loaded = true; Seek = 1; 
 							player1.pause(); //Seek = 1
 						      //try { gc('mejs-overlay mejs-layer mejs-overlay-play')[0].click() } catch(e){ try { gid('player1').click() } catch(e){} }
 						      if (!yt6.player1.media.paused) { Seek = 2 } else { Seek = null; yt6.Seeked2 = (!yt6d.init) ? true : false } // Seek = 2 may cause infinite loop, Seeked2 must be set to false initially
