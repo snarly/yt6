@@ -561,7 +561,7 @@ function fix_old_description() {
 }
 
 
-yt6.ads_off = false //true
+yt6.ads_off = true
 yt6.no_cards = true
 yt6.mute_on = true
 
