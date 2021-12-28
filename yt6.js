@@ -674,8 +674,8 @@ function clone(obj) {
 
 
 
-yt6.userprefV = [397,244,134,43,18]
-yt6.userprefA = [251,140,258,256,141,172,171,250,249,139,600,599]
+yt6.userprefV = [397,244,134,43,18]; yt6.userprefV_bak = []
+yt6.userprefA = [251,140,258,256,141,172,171,250,249,139,600,599]; yt6.userprefA_bak = []
 yt6.prev_media = []
 
   var qual = {
@@ -8984,7 +8984,7 @@ yt6d.mep_renew = function() {
 	    var alt_pool = (x == 'webm') ? 'aac' : 'webm'
 	//for(i=0;i<pool0.length;i++){
 	    for(j=0;j<yt6.fmts_fallback.A[alt_pool].length;j++){
-	      if (yt6.fmts_fallback.A[alt_pool][j] == parseInt(yt6.userprefV[i]) && sotf(yt6.fmts_fallback.A[alt_pool][j]) && yt6.yt_otf.indexOf(pool1[yt6.prefer_fmt][j]) == -1 && gid(mep + '_sourcechooser_' + yt6.fmts_fallback.A1[alt_pool][j]) ){//&& !(yt6.prefer_fmt !== 'all' && !gid(mep + '_sourcechooser_' + pool1[alt_pool][j]) ) ) {
+	      if (yt6.fmts_fallback.A[alt_pool][j] == parseInt(yt6.userprefV[i]) && sotf(yt6.fmts_fallback.A[alt_pool][j]) && yt6.yt_otf.indexOf(pool1[yt6.prefer_fmt][j]) == -1 && gid(mep + '_sourcechooser_' + yt6.fmts_fallback.A[alt_pool][j]) ){//&& !(yt6.prefer_fmt !== 'all' && !gid(mep + '_sourcechooser_' + pool1[alt_pool][j]) ) ) {
 		var index = (alt_pool == 'aac') ? j-1 : j-2
 		var fmt_pool = yt6.fmts_fallback.A[alt_pool]
 		break;
@@ -12256,24 +12256,30 @@ function mep_run() {
 						}
 
 						//console.log(Math.round(sauce.length / 1) - A_V.length - A_.length +' - '+ yt6.current)
-					      var fmt = 'all'//null
+					      var fmt = 'all', fallback
 					      if ( //!( yt6.current == 132 && (Math.round(sauce.length / 1) - A_V.length - A_.length < 5 || yt6d.init == yt6.vid) ) && 
 						   //!(yt6.failed_itags.includes(132) && yt6.current == 132) &&
 						   !(yt6.failed_itags.includes(600) && yt6.failed_itags.includes(599)) &&
 						   (yt6.userprefA[0] !== yt6.userprefV[0] || !yt6.fmts_fallback.A.all.includes(itag(me.src)) )) {
 
-						yt6.fmts_fallback_uniq = (!yt6.errcount) ? uniq(yt6.fmts_fallback.V.uniq[yt6.prefer_fmt]) : uniq(yt6.fmts_fallback.V.revers[yt6.prefer_fmt]) //uniq()
 						if (yt6.prefer_fmt == 'webm') fmt = 'dash'
 						if (yt6.prefer_fmt == 'dash') fmt = 'webm'
+						yt6.fmts_fallback_uniq = (!yt6.errcount && fmt == 'all') ? uniq(yt6.fmts_fallback.V.uniq[yt6.prefer_fmt]) : uniq(yt6.fmts_fallback.V.revers[yt6.prefer_fmt]) //uniq()
+						fallback = clone(yt6.fmts_fallback.V[fmt])
+						if (yt6.md && yt6.browser_tab == 'hidden') {
+						  yt6.fmts_fallback_uniq = yt6.fmts_fallback_uniq.splice(yt6.fmts_fallback_uniq.indexOf(18), 1).splice(yt6.fmts_fallback_uniq.indexOf(22), 1)
+						  fallback = fallback.splice(yt6.fmts_fallback_uniq.indexOf(18), 1).splice(yt6.fmts_fallback_uniq.indexOf(22), 1)
+						}
 						//if (fmt) {
-						  yt6.fmts_fallback_uniq.push.apply(yt6.fmts_fallback_uniq, yt6.fmts_fallback.V[fmt]); //console.log(yt6.fmts_fallback_uniq)
+						  yt6.fmts_fallback_uniq.push.apply(yt6.fmts_fallback_uniq, fallback); //console.log(yt6.fmts_fallback_uniq)
 						//}
-						yt6.fmts_fallback_uniq.push.apply(yt6.fmts_fallback_uniq, yt6.fmts_fallback.A.all)
+						yt6.fmts_fallback_uniq.push.apply(yt6.fmts_fallback_uniq, yt6.fmts_fallback.A.revers[yt6.prefer_fmt])
+						yt6.fmts_fallback_uniq.push.apply(yt6.fmts_fallback_uniq, yt6.fmts_fallback.A.revers[fmt])
 						var x = yt6.userprefV[0]
 					      } else {
-						  yt6.fmts_fallback_uniq = (!yt6.errcount) ? uniq(yt6.fmts_fallback.A.uniq[yt6.prefer_fmt]) : uniq(yt6.fmts_fallback.A.revers['all']) //uniq()
 						  if (yt6.prefer_fmt == 'webm') fmt = 'dash'
 						  if (yt6.prefer_fmt == 'dash') fmt = 'webm'
+						  yt6.fmts_fallback_uniq = (!yt6.errcount && fmt == 'all') ? uniq(yt6.fmts_fallback.A.uniq[yt6.prefer_fmt]) : uniq(yt6.fmts_fallback.A.revers['all']) //uniq()
 						  //if (fmt) {
 						    yt6.fmts_fallback_uniq.push.apply(yt6.fmts_fallback_uniq, yt6.fmts_fallback.A[fmt])
 						  //}
@@ -12363,6 +12369,7 @@ function mep_run() {
 
 					      if (dash && itag_) {
 						if (!(yt6.navigation && !yt6.linx[itag_]) || (yt6.navigation && (!yt6.linx.length || (yt6.linx.length && 3 >= yt6.linx.length))) ) {
+						  if (yt6.userprefV[0] == itag_) yt6.userprefV_bak.push(itag_); if (yt6.userprefA[0] == itag_) yt6.userprefA_bak.push(itag_)
 						  no_default(itag_, 'V'); if (yt6.A_.indexOf(itag_) > -1) no_default(itag_, 'A'); yt6.retry++
 						  dash.setAttribute('checked','checked'); dash.checked = 'true'
 						  if (me.currentTime) { yt6.decoding_error = true; yt6.autoplay = true }// || yt6d.init == yt6.vid
@@ -12376,7 +12383,7 @@ function mep_run() {
 
 						  //console.log('play ' +itag_ +' '+ yt6.decoding_error)
 						  try { dash.click() } catch(e){}; player1.load()
-						  if (yt6.fmts_fallback.V.all.indexOf(itag_) > -1) { no_default(itag_, 'V') } else no_default(itag_, 'A')
+						  //if (yt6.fmts_fallback.V.all.indexOf(itag_) > -1) { no_default(itag_, 'V') } else no_default(itag_, 'A')
 						  if (yt6.V_[itag_]) //if (!(yt6.player2.media.loaded && yt6.player2.media.currentTime > 0)) {
 						    player2.load()
 						  //} else yt6.ct = yt6.player2.media.currentTime//m2
@@ -12674,7 +12681,9 @@ function mep_run() {
 					addEL(me, 'loadedmetadata', function() { ev = '1loadedmetadata'; //ev_log(ev); //console.log(ev)
 					  if ( yt6 && yt6.player1 && !yt6.navigation && (yt6.timer == 999999999 || me.src == 'https://www.youtube.com/ptracking' || yt6.player1.media.src != me.src))
 					    return void 0;
-					  if (!yt6.live && me.duration === Infinity) { media_error_handler(me) } //!(yt6.mobile && yt6.browser_tab == 'hidden') &&  // unplayable (h264) media urls no longer produce a network error event, have to call the error handler manually
+					  if (!yt6.live && (me.duration === Infinity || isNaN(me.duration)) ) { media_error_handler(me) } //!(yt6.mobile && yt6.browser_tab == 'hidden') &&  // unplayable (h264) media urls no longer produce a network error event, have to call the error handler manually
+					  for (k=0;k < yt6.userprefV_bak.length; k++) { yt6.userprefV.unshift(yt6.userprefV_bak[k]); if (k == yt6.userprefV_bak.length - 1) yt6.userprefV_bak = [] }
+					  for (k=0;k < yt6.userprefA_bak.length; k++) { yt6.userprefA.unshift(yt6.userprefA_bak[k]); if (k == yt6.userprefA_bak.length - 1) yt6.userprefA_bak = [] }
 					  var mep = gid(mep_x("mep_")), w = this.videoWidth, h = this.videoHeight
 					  me.p = gc('mejs-button mejs-playpause-button')[0]
 					  yt6.current = 1 * itag(me.src)
@@ -12815,7 +12824,7 @@ function mep_run() {
 						} else yt6.ct = 0
 					      } catch(e) { yt6.ct = 0 }
 
-					      //if (yt6.mobile && yt6.x && yt6.browser_tab == 'hidden' && !yt6.pre_ad && me.currentTime < 1 && (yt6.A_[itag(me.src)] || (itag(me.src) >= 103 && yt6.fmts_fallback.A.all[itag(me.src)] ))) { yt6.ct = (yt6.ct + 0.4) }
+					      //if (yt6.mobile && yt6.x && yt6.browser_tab == 'hidden' && yt6.navigation && !yt6.pre_ad && me.currentTime < 1 && (yt6.A_[itag(me.src)] || (itag(me.src) >= 103 && yt6.fmts_fallback.A.all[itag(me.src)] ))) { yt6.ct = (yt6.ct + 0.1) }
 
 					    } else { //console.log(yt6.ct +' '+me.currentTime +' '+player2.currentTime);
 						yt6.ct = (!yt6.live && yt6.ct) ? ((player2 && typeof player2.currentTime == 'number') ? yt6.ct = player2.currentTime : yt6.ct) : 0;
@@ -12827,7 +12836,7 @@ function mep_run() {
 
 					  } else {
 
-					      //if (yt6.mobile && yt6.x && yt6.browser_tab == 'hidden' && !yt6.pre_ad && me.currentTime < 1 && (yt6.A_[itag(me.src)] || (itag(me.src) >= 103 && yt6.fmts_fallback.A.all[itag(me.src)] )) && me.paused) { yt6.ct = (yt6.ct + 0.4) }// && browserName == 'Firefox'
+					      //if (yt6.mobile && yt6.x && yt6.browser_tab == 'hidden' && yt6.navigation && !yt6.pre_ad && me.currentTime < 1 && (yt6.A_[itag(me.src)] || (itag(me.src) >= 103 && yt6.fmts_fallback.A.all[itag(me.src)] )) && me.paused) { yt6.ct = (yt6.ct + 0.1) }// && browserName == 'Firefox'
 
 						if (!me.currentTime && yt6.ct) me.currentTime = clone(yt6.ct)
 						//if (yt6.ct) me.setCurrentTime(yt6.ct)
@@ -17239,7 +17248,7 @@ addEL(window, 'yt-navigate-start', yt6.body.yt_navigate_start, false)
 	     } catch(e){}
 	  }
 	}
-	if ( (yt6.mobile && yt6.x && yt6.browser_tab == 'hidden') ) {//(yt6.mute_on && yt6.pre_ad) || 
+	if ( (yt6.mobile && yt6.x && yt6.browser_tab == 'hidden' && browserName != 'Firefox' && (yt6.mute_on || yt6.pre_ad)) ) {// ff mobile is too slow on page change in the background, keep the original player unmuted till the alt-player is ready to take over
 	  if (typeof p.isMuted == 'function' && !(yt6.ytm && p.tagName == 'EMBED') && !p.isMuted()) { p.mute(); yt6.ad_muted = true }
 	}
 
