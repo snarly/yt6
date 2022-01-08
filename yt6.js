@@ -10138,7 +10138,7 @@ function mute_ad(p) {
 
 		//if (typeof mute_button != 'undefined') {
 		//if ( !yt6.navigation && ((yt6.pre_ad == '?' && !yt6.real_media_duration_) || (yt6.real_media_duration_ && Math.abs(yt6.ad_duration - (yt6.loaded_media_duration || dur)) < 1)  || (ads1 && !yt6.ad_muted) ) ) { //|| yt6.real_media_duration_ == yt6.real_media_duration
-		if ( !yt6.navigation && ((yt6.pre_ad == '?' && !yt6.real_media_duration_ && !yt6.mobile) || (yt6.real_media_duration_ === yt6.real_media_duration && (!isNaN(1 * yt6.real_media_duration_m) && Math.abs(1 * yt6.real_media_duration_m - yt6.loaded_media_duration) > 1.5)) ) || (ads1 && !yt6.ad_muted) ) { // mute the ad
+		if ( !yt6.navigation && ((yt6.pre_ad == '?' && !yt6.real_media_duration_ && !yt6.mobile) || (yt6.real_media_duration_ === yt6.real_media_duration && (!isNaN(1 * yt6.real_media_duration_m) && Math.abs(1 * yt6.real_media_duration_m - yt6.loaded_media_duration) > 1.5)) ) ) { //|| (ads1 && !yt6.ad_muted) ) { // mute the ad
 		  if ( !yt6.live && typeof p.isMuted == 'function') {// && !p.isMuted()
 		    if (!(yt6.ytm && yt6.ytp.fullscreen))
 		      try {
