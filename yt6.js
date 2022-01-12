@@ -1382,7 +1382,7 @@ try { var mouseEvt, mouseEvt = document.createEvent("MouseEvents") } catch(e) {}
 
 
 yt6.cdn_ = function(){
-  yt6.cdns = ['//cdn.jsdelivr.net/gh/snarly/yt6@','//cdn.jsdelivr.net/gh/snarly/yt6@','//cdn.rawgit.com/snarly/yt6/']//'//rawcdn.githack.com/snarly/yt6/',
+  yt6.cdns = ['//cdn.jsdelivr.net/gh/snarly/yt6@','//cdn.jsdelivr.net/gh/snarly/yt6@','//rawcdn.githack.com/snarly/yt6/','//cdn.rawgit.com/snarly/yt6/']
   var cdns = clone(yt6.cdns)
   yt6.cdn2 = shuffle(cdns.slice(0,-1))
   yt6.cdn = shuffle(yt6.cdns); yt6.cdn = yt6.cdn[Math.floor(Math.random() * yt6.cdn.length)]
@@ -2035,7 +2035,7 @@ if (!gid('video-hide')) {
 	    if (xhr2.readyState == 4 && xhr2.status == 200 && xhr2.responseText) {
 	      var y = xhr2.responseText.toString()
 	      y = y.split('var ytplayer = ytplayer || {};')[1] || y.split('window.ytplayer = window.ytplayer || {}; window.')[1]
-	      if (y) { y = 'window.ytplayer = {}; window.' + y.split(';(function()')[0].split(';(function ')[0]; eval(y) }
+	      if (y) { y = 'window.ytplayer = window.ytplayer || {}; window.' + y.split(';(function()')[0].split(';(function ')[0]; eval(y) }
 	    }
 	  }
 	  try { xhr2.send('') } catch(e){ }
@@ -10221,6 +10221,7 @@ function buildObject(ytplayer){ //console.log('build')
 
 
   yt6.cdn_()
+  yt6.ttsurl = null
 
 
   var c = conf('args'), missing_source
