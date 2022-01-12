@@ -1382,7 +1382,7 @@ try { var mouseEvt, mouseEvt = document.createEvent("MouseEvents") } catch(e) {}
 
 
 yt6.cdn_ = function(){
-  yt6.cdns = ['//cdn.jsdelivr.net/gh/snarly/yt6@','//rawcdn.githack.com/snarly/yt6/','//cdn.rawgit.com/snarly/yt6/']
+  yt6.cdns = ['//cdn.jsdelivr.net/gh/snarly/yt6@','//cdn.jsdelivr.net/gh/snarly/yt6@','//cdn.rawgit.com/snarly/yt6/']//'//rawcdn.githack.com/snarly/yt6/',
   var cdns = clone(yt6.cdns)
   yt6.cdn2 = shuffle(cdns.slice(0,-1))
   yt6.cdn = shuffle(yt6.cdns); yt6.cdn = yt6.cdn[Math.floor(Math.random() * yt6.cdn.length)]
