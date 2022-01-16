@@ -7527,10 +7527,10 @@ if (player()) {
 			    if (yt6.p && yt6.p.tagName != 'EMBED') try {
 				dur = yt6.p.getDuration()
 				vid = vID(yt6.p.getVideoUrl())
-				ct = (!(yt6.md && yt6.browser_tab == 'hidden') || browserName == 'Firefox') ? yt6.p.getCurrentTime() : 0
+				ct = (!(yt6.mute_on && yt6.ad_muted) || (yt6.md && browserName == 'Firefox' && yt6.browser_tab == 'hidden')) ? yt6.p.getCurrentTime() : 0
 			    } catch(e){ dur = 0; vid = yt6.vid; dur = yt6.player1.media.duration; ct = yt6.player1.media.currentTime }
 			    if (yt6.player1.media.loaded_vid == vid) { 
-			      if (yt6.newvideo && typeof yt6.ytp.ct == 'number' && yt6.ytp.ct) { if (!(yt6.mute_on && yt6.ad_muted)) { yt6.player1.setCurrentTime(yt6.ytp.ct); yt6.player2.setCurrentTime(yt6.ytp.ct) } else { yt6.player1.setCurrentTime(ct); yt6.player2.setCurrentTime(ct) }; try { yt6.p.pauseVideo() } catch(e){} }
+			      if (yt6.newvideo && typeof yt6.ytp.ct == 'number' && yt6.ytp.ct) { if (!(yt6.mute_on && yt6.ad_muted)) { yt6.player1.setCurrentTime(yt6.ytp.ct); yt6.player2.setCurrentTime(yt6.ytp.ct) }; try { yt6.p.pauseVideo() } catch(e){} }
 			      yt6.player1.play(); //console.log('start background play via the lock screen\'s media play button, may require multiple quick taps')
 			      break;
 			    }
@@ -7565,10 +7565,10 @@ if (player()) {
 			    if ((vid && (location.href.indexOf(vid) > -1 || yt6.player1.media.loaded_vid == vid)) || (yt6.player1.media.loaded_vid == yt6.vid)) { //console.log(yt6.player1.media.currentTime)
 			      try {
 				dur = yt6.p.getDuration()
-				ct = (!(yt6.md && yt6.browser_tab == 'hidden') || browserName == 'Firefox') ? yt6.p.getCurrentTime() : 0
+				ct = (!(yt6.mute_on && yt6.ad_muted) || (yt6.md && browserName == 'Firefox' && yt6.browser_tab == 'hidden')) ? yt6.p.getCurrentTime() : 0
 			      } catch(e){ dur = 0; vid = yt6.vid; dur = yt6.player1.media.duration; ct = yt6.player1.media.currentTime }
 			      yt6.player1.play(); //console.log('start background play via the lock screen\'s media play button, may require multiple quick taps')
-			      if (yt6.newvideo && typeof yt6.ytp.ct == 'number' && yt6.ytp.ct) { if (!(yt6.mute_on && yt6.ad_muted)) { yt6.player1.setCurrentTime(yt6.ytp.ct); yt6.player2.setCurrentTime(yt6.ytp.ct) } else { yt6.player1.setCurrentTime(ct); yt6.player2.setCurrentTime(ct) }; try { yt6.p.pauseVideo() } catch(e){} }
+			      if (yt6.newvideo && typeof yt6.ytp.ct == 'number' && yt6.ytp.ct) { if (!(yt6.mute_on && yt6.ad_muted)) { yt6.player1.setCurrentTime(yt6.ytp.ct); yt6.player2.setCurrentTime(yt6.ytp.ct) }; try { yt6.p.pauseVideo() } catch(e){} }
 			      break;
 			    }
 			  }
@@ -12845,15 +12845,16 @@ function mep_run() {
 					    if ((yt6.mobile || yt6.x_) && yt6.browser_tab == 'hidden' && yt6.p && yt6.p.parentNode && yt6.p.tagName != 'EMBED' && typeof yt6.p.getCurrentTime == 'function') {
 					      try { var ct = yt6.ct = yt6.p.getCurrentTime()
 						if (typeof ct == 'number') {
-						  yt6.ct = (!(yt6.mute_on && yt6.ad_muted)) ? ( (typeof yt6.ytp.strCt == 'number') ? clone(yt6.ytp.strCt) : ct ) || 0 : 0;
-						} else yt6.ct = 0
-					      } catch(e) { yt6.ct = 0 }
-
+						  yt6.ct = (!(yt6.mute_on && yt6.ad_muted)) ? ( (typeof yt6.ytp.strCt == 'number') ? clone(yt6.ytp.strCt) : ct + 0.1 ) || 0.1 : 0.1;
+						} else yt6.ct = 0.1
+					      } catch(e) { yt6.ct = 0.1 }
+ev_log('A '+ yt6.ct)
 					      if (yt6.mobile && yt6.x && yt6.browser_tab == 'hidden' && yt6.navigation && me.currentTime < 1 && (yt6.A_[itag(me.src)] || (itag(me.src) >= 103 && yt6.fmts_fallback.A.all[itag(me.src)] ))) { yt6.ct = (yt6.ct + 0.05) }// && !yt6.pre_ad
 
 					    } else { //console.log(yt6.ct +' '+me.currentTime +' '+player2.currentTime);
 						yt6.ct = (!yt6.live && yt6.ct) ? ((player2 && typeof player2.currentTime == 'number') ? yt6.ct = player2.currentTime : yt6.ct) : 0;
 						yt6.ct = 0; //console.log(yt6.ct)
+ev_log('B '+ yt6.ytp.strCt)
 					      }
 
 					    //if (!yt6.live)
@@ -21634,7 +21635,7 @@ function nop(){//    } else {
     //var yt = gc('html5-video-content')[0].style
 
 
-    var v = v_(p) || gc('video-stream html5-main-video')[0]
+    var v = gc('video-stream html5-main-video')[0]
 
 
     if (v && yt6.loaded >= 4) {//== true) {
