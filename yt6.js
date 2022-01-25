@@ -9788,7 +9788,7 @@ function wallpaper(){
     var $wallp = (yt6.layout == 12) ? $('#theater-background') : $("#theater-right");
     var wallp = (yt6.layout == 12) ? gid('theater-background') : gid('theater-right')
     var maxWidth = parseInt(window.innerWidth || document.documentElement.clientWidth || yt6.body.clientWidth) - yt6.sb; //$wallp.width() + 100;
-    var width; try { width = wallp.style.width || yt6.tbg.style.width } catch(e) { width = '100%' }
+    var width = '100%'; //try { width = wallp.style.width || yt6.tbg.style.width } catch(e) { width = '100%' }
     var size = 200;
     var time = 0;
     var backImage = $wallp.css("background-image"); if (backImage == 'none') backImage = ''
@@ -10057,6 +10057,7 @@ function wallpaper(){
       if (z) {
 	z.style.position = (yt6.wallpaper && !yt6.wide) ? 'absolute' : ''
 	z.style.marginTop = (yt6.wallpaper && !yt6.wide && (yt6.size != 'default' || !yt6.pls)) ? yt6.h : ''
+	z.style.width = (yt6.wallpaper) ? '422px' : ''
 	if (!yt6.wide) {
 	  if (yt6.pls && yt6.wallpaper && yt6.size != 'default' && typeof yt6.wallpaper != 'string') yt6.pls.style.marginTop = ''
 	  if (yt6.wsb && !yt6.pls) {
@@ -12873,7 +12874,7 @@ ev_log('B '+ yt6.ytp.strCt)
 					  if (yt6.speed) {
 					    yt6.player2.media.playbackRate = me.playbackRate = yt6.speed;
 					    var z = gid('displaySpeed')
-					    if (z) try { z.innerHTML = "Speed " + Math.round(yt6.speed * 100) + "%" } catch(e){}
+					    if (z) try { z.innerHTML = '<span style="font-size: 10px">Speed</span> ' + Math.round(yt6.speed * 100) + '%' } catch(e){}
 					  }
 
 					  //if (yt6.player2.media.loaded || Seek == 0) { yt6.newvideo = false }
@@ -12946,7 +12947,7 @@ ev_log('B '+ yt6.ytp.strCt)
 								} else {
 								    yt6.sync_timer = 0
 								  }
-								if (yt6.player1.getCurrentTime() < 0.4) me.play()
+								if (yt6.player1.getCurrentTime() < 0.4) { me.play() }
 							      }
 							  }
 						      },
@@ -13006,7 +13007,7 @@ ev_log('B '+ yt6.ytp.strCt)
 						    }
 						  }
 
-						} else if (yt6.browser_tab == 'visible') {
+						} else { //if (yt6.browser_tab == 'visible') {
 						    //if (yt6.autoplay && me.currentTime < 3) { me.play() }// && (yt6.speed > 1.7 || yt6.encrypted) //m2
 
 						    var playPromise = me.play(); // AV or A
@@ -13029,19 +13030,19 @@ ev_log('B '+ yt6.ytp.strCt)
 						    if (me.src == player2.src) {
 						      Seek = null; if (!yt6.player2.media.paused) yt6.player2.pause()
 						    }*/
-					          } else {
+					//	} else {
 					              //if (yt6.browser_tab == "hidden" && parseFloat(yt6.diff) > 0.3) {
 					               //   yt6.ct = player2.currentTime = yt6.player1.media.currentTime = (me.currentTime + parseFloat(yt6.diff)); Seek = 1;
 					              //} else {
-					              if (!player2.paused) {
+					//              if (!player2.paused) {
 					              // pause call seemingly isn't enough to stop player2 in this case? src must be rewritten in order to make it stop
-					              player2.pause()
-					              var src = player2.src
-					              try { yt6.player2.setSrc('') } catch(e) { player2.src = '' }
-					              try { yt6.player2.setSrc(src) } catch(e) { player2.src = src }
-					              }
+					//              player2.pause()
+					//              var src = player2.src
+					//              try { yt6.player2.setSrc('') } catch(e) { player2.src = '' }
+					//              try { yt6.player2.setSrc(src) } catch(e) { player2.src = src }
+					//              }
 					              //}
-					            }
+					          } //}
 					    if (Seek == 3 ) { Seek = null }
 					    //if (yt6.p && yt6.p.tagName == 'DIV' && typeof yt6.p.pauseVideo == 'function' && yt6.p.getPlayerState() != 2) try { yt6.p.pauseVideo() } catch(e){} //m2
 
@@ -13094,7 +13095,7 @@ ev_log('B '+ yt6.ytp.strCt)
 					      if (Seek == 3) try { yt6.player2.pause() } catch(e) {};
 					      //if (Seek === 0) { me.play() };
 					      if (yt6.A_V[itag(me.src)] && Seek != 1 && me.playbackRate == yt6.player2.media.playbackRate) { yt6.player1.setCurrentTime(me.currentTime) } else yt6.player2.media.playbackRate = me.playbackRate;
-					      if (!yt6.player2.media.paused) try { yt6.player2.media.pause()
+					      if (!yt6.player2.media.paused) try { yt6.player2.media.pause(); if (!yt6.Seeked2 && Seek == 1) { yt6.Seeked = true; me.pause() }
 						yt6.player2.media.currentTime = me.currentTime; //if (me.loaded && yt6.player2.media.loaded && Seek == 0) Seek = null;
 					      } catch(e) {}
 					    }
@@ -13375,7 +13376,7 @@ ev_log('B '+ yt6.ytp.strCt)
 					    if (player2.paused) { yt6.player2.play() }//Seek = 1; 
 					  }
 					  if (Seek == 1 && yt6.browser_tab == 'visible' && (!yt6.mobile || (typeof me.currentTime == 'number' && me.currentTime > 1)) ) {
-					    if (Math.abs(yt6.player1.getCurrentTime() - player2.currentTime) < 0.6) { Seek = null }//(yt6.V_[itag(me.src)]) ? 2 : null }
+					    if (Math.abs(yt6.player1.getCurrentTime() - player2.currentTime) < 0.6) { Seek = (yt6.V_[itag(me.src)]) ? 2 : null }
 					    if (yt6.V_[itag(me.src)] ) {
 					      //if (Seek === null) me.play()
 					      //if (Seek === 2 && yt6.player2.isLoaded && player2.paused) me.play()
@@ -13549,7 +13550,7 @@ ev_log('B '+ yt6.ytp.strCt)
 						}
 					      }
 					    } else {//console.log('2seeked-b')
-						Seek = 2; if (yt6.x && me.paused) yt6.Seeked2 = true
+						Seek = 2; if (yt6.x && me.paused && yt6.player1.currentTime) yt6.Seeked2 = true
 						//if ( !me.paused && player1.media.paused && yt6.x ) {
 						//  player1.setCurrentTime( me.currentTime )
 						//}
@@ -13581,7 +13582,7 @@ ev_log('B '+ yt6.ytp.strCt)
 					      }
 					    if (loop) { player1.play() } //Seek = 5; 
 					  } else {
-					      Seek = yt6.Seek = 3; //me.pause(); player1.pause()
+					      Seek = yt6.Seek = 3; me.currentTime = player1.currentTime = me.duration //me.pause(); //player1.pause()
 					      if (yt6.ytp.embed) { var mp = original(yt6.p), bt = clone(yt6.browser_tab)//browser_tab must be set to visible!
 						try { yt6.browser_tab = 'visible'; mp.nextVideo(); mp.playVideoAt((yt6.pl_index + 1)); yt6.ytp.loaded_vid = clone(yt6.vid);
 						  // cannot continue playback reliably with two sources in the background, load audio into primary player and play sound only
@@ -13838,7 +13839,7 @@ ev_log('B '+ yt6.ytp.strCt)
 						      if (!yt6.player1.media.paused) { Seek = 2 } else { Seek = null; yt6.Seeked2 = (!yt6d.init) ? true : false } // Seek = 2 may cause infinite loop, Seeked2 must be set to false initially
 						      if (yt6d.init) delete yt6d.init
 						      yt6.player1.play()
-						      if (me.paused) try { gc('mejs-overlay mejs-layer mejs-overlay-play')[0].click() } catch(e){ try { gid('player1').click() } catch(e){} }
+						      //if (me.paused) try { gc('mejs-overlay mejs-layer mejs-overlay-play')[0].click() } catch(e){ try { gid('player1').click() } catch(e){} }
 						    }; //console.log('2')
 						    //player1.media.play()
 						  } else {
@@ -15270,7 +15271,7 @@ if (!t.sourcechooserButton) {//console.log('error')
 		speedSelector = null,
 		playbackSpeed = null,
 //display-playback-speed
-		html = '<div class="mejs-button mejs-speed-button" style="width: 34px"><div id="displaySpeed" style="width: 34px; padding: 2px 2px 2px 2px; color: white;">Speed 100%</div>' + 
+		html = '<div class="mejs-button mejs-speed-button" style="width: 34px"><div id="displaySpeed" style="width: 38px; padding: 2px 1px 1px 1px; color: white;"><span style="font-size: 10px">Speed</span> 100%</div>' + 
 								'<button type="button" aria-label="' + t.options.speedText + '" title="' + t.options.speedText + '">' + t.options.defaultSpeed + t.options.speedChar + '</button>' + 
 								'<div class="mejs-speed-selector" style="width: 110px; left: -30px;">' + 
 								'<ul style="display: inline-block">';
@@ -15320,10 +15321,10 @@ if (!t.sourcechooserButton) {//console.log('error')
 
 				media.playbackRate = parseFloat(newSpeed); yt6.speed = media.playbackRate;
 
-				if ((typeof player1 != 'undefined') && (typeof player1.src == 'string') && (player1.src != null) && (parseInt(itag(player1.src)) > 102) && ((player1.src.indexOf('mime=audio') == -1) && (player1.src.indexOf('mime/audio') == -1)) ) { player1.currentTime = player1.currentTime }
+				if ((typeof player1 != 'undefined') && (typeof player1.src == 'string') && (player1.src != null) && (parseInt(itag(player1.src)) > 102) && ((player1.src.indexOf('mime=audio') == -1) && (player1.src.indexOf('mime/audio') == -1)) ) { yt6.player1.setCurrentTime( player1.currentTime ) }
 
-				gid('displaySpeed').innerHTML = "Speed " + Math.round(media.playbackRate * 100) + "%";
-				//speedButton.find('button').html("Speed " + Math.round(media.playbackRate * 100) + "%");//newSpeed + t.options.speedChar);
+				gid('displaySpeed').innerHTML = '<span style="font-size: 10px">Speed</span> ' + Math.round(media.playbackRate * 100) + '%';
+				//speedButton.find('button').html('<span style="font-size: 10px">Speed</span> ' + Math.round(media.playbackRate * 100) + '%');//newSpeed + t.options.speedChar);
 				speedButton.find('.mejs-speed-selected').removeClass('mejs-speed-selected');
 				speedButton.find('input[type="radio"]:checked').next().addClass('mejs-speed-selected');
 
@@ -15345,7 +15346,7 @@ if (!t.sourcechooserButton) {//console.log('error')
 
 
 //            var displaySpeed =
-//                $('<div class="display-playback-speed hidden">Speed 100%</div> ')
+//                $('<div class="display-playback-speed hidden"><span style="font-size: 10px">Speed</span> 100%</div> ')
 //                    .appendTo(controls);
 
 	    var btnheight = Math.floor((speedSelector.height() ) / 2) || 100
@@ -15373,9 +15374,9 @@ if (!t.sourcechooserButton) {//console.log('error')
                             //if ((typeof player1 != 'undefined') && (typeof player1.src == 'string') && (player1.src != null) && (parseInt(itag(player1.src)) > 102) && ((player1.src.indexOf('mime=audio') == -1) && (player1.src.indexOf('mime/audio') == -1)) ) { player1.currentTime = player1.currentTime }
 
                             //media.play();
-			    //gid('displaySpeed').innerHTML = 'Speed ' + Math.round(media.playbackRate * 100) + '%';
+			    //gid('displaySpeed').innerHTML = '<span style="font-size: 10px">Speed</span> ' + Math.round(media.playbackRate * 100) + '%';
 			    yt6.ytp.speed(e)
-			    //speedButton.find('button').html("Speed " + Math.round(media.playbackRate * 100) + "%");
+			    //speedButton.find('button').html('<span style="font-size: 10px">Speed</span> ' + Math.round(media.playbackRate * 100) + '%');
 			   } else return true, function(){ return false; }, 500
 	  		  })
                             //return false;
@@ -15409,9 +15410,9 @@ if (!t.sourcechooserButton) {//console.log('error')
                             //if ((typeof player1 != 'undefined') && (typeof player1.src == 'string') && (player1.src != null) && (parseInt(itag(player1.src)) > 102) && ((player1.src.indexOf('mime=audio') == -1) && (player1.src.indexOf('mime/audio') == -1)) ) { player1.currentTime = player1.currentTime }
 
                             //media.play();
-			    //gid('displaySpeed').innerHTML = 'Speed ' + Math.round(media.playbackRate * 100) + '%';
+			    //gid('displaySpeed').innerHTML = '<span style="font-size: 10px">Speed</span> ' + Math.round(media.playbackRate * 100) + '%';
 			    yt6.ytp.speed(e)
-			    //speedButton.find('button').html("Speed " + Math.round(media.playbackRate * 100) + "%");
+			    //speedButton.find('button').html('<span style="font-size: 10px">Speed</span> ' + Math.round(media.playbackRate * 100) + '%');
 			   } else return true, function(){ return false; }, 500
 	  		  })
                             //return false;
@@ -16727,7 +16728,7 @@ yt6.body.yt_navigate_finish = function() {
 
 	try {
 	  yt6.osw.style = ''; var p = player(), w = yt6.osw.offsetWidth + 'px', h = yt6.osw.offsetHeight + 'px', v = v_(p);
-	  if (v) { v.style.width = w; v.style.height = h; v.style.left = ''; v.style.top = '' }; if (p) { p.style.width = w; p.style.height = h }; if (!yt6.wide) resize_layers(p.offsetWidth + 'px', p.offsetHeight + 'px')
+	  if (v) { v.style.width = w; v.style.height = h; v.style.left = ''; v.style.top = '' }; if (p) { p.style.width = w; p.style.height = h }; if (!yt6.wide && !yt6.body2) resize_layers(p.offsetWidth + 'px', p.offsetHeight + 'px')
 	} catch(e){}
 
 	$waitUntil(function(){ var c = conf('args'); if (yt6.title != document.title || (c[1] && !(c[1].title && yt6.title == c[1].title))) return true},
@@ -19401,6 +19402,7 @@ function resize_layers(w,h,me_aspect){ //console.log('resize '+w+' x '+h)
 
   if (yt6.layout == 12 && !video_title()[1] && !yt6.ytp.embed) return void 0
   if (yt6 && (!yt6.top || !yt6.osw || !yt6.mhp)) getReferenceObjects()
+  if (!yt6.sb) getScrollbarWidth()
 
   var p = player()//, p = yt6.p
   wide_view()
@@ -21080,6 +21082,7 @@ if (yt6.flexy) {
     }
   }
 
+  e.width = e.width.replace('px','') - 1 + 'px'
 
 
   // cloneNodes modifications applied to original
@@ -23342,7 +23345,7 @@ var CtrlS = function (stage,v){
   var x = gid('control_panel'), y = gid('control_panel2')
 
   var yt_speed = yt6.ytp.speed = function(a) {
-    if (a && typeof a.preventDefault == 'function') a.preventDefault()
+      if (a && typeof a.preventDefault == 'function') a.preventDefault()
       try {
 	var yts
 	if (yt6.p && !(yt6.ytm && yt6.p.tagName == 'EMBED')) {
@@ -23365,7 +23368,7 @@ var CtrlS = function (stage,v){
 	var percent = (s == parseFloat(parseFloat(25 - parseFloat(24000/1001)) / parseFloat(24000/1001) + 1).toFixed(11) ||
 			s == parseFloat(parseFloat(parseFloat(24000/1001) - 25) / 25 + 1).toFixed(11))
 			? (s * 100).toFixed(2) : Math.round(s * 100)
-	var ds = gid('displaySpeed'); if (ds) ds.innerHTML = 'Speed ' + percent + '%'
+	var ds = gid('displaySpeed'); if (ds) ds.innerHTML = '<span style="font-size: 10px">Speed</span> ' + percent + '%'
 
 	if (yt6.p && !(yt6.ytm && yt6.p.tagName == 'EMBED') && yts != s) try {
 
@@ -23396,7 +23399,8 @@ var CtrlS = function (stage,v){
 	if (yt6.x) yt6.player1.showControls(true)
 	//console.log(yt6.speed); console.log(v_(yt6.p).playbackRate +' '+yt6.p.getPlaybackRate())
       } catch (e) {}
-    }
+
+  }
 
   if (x && !x.added) {
     if (gclass('audio_x','button',x)[0]) {
