@@ -3108,7 +3108,7 @@ if (typeof jQuery != 'undefined') {
 		},
 		onkeydown: function(player, media, e) {
 			if (player.hasFocus && player.options.enableKeyboard) {
-				var p = yt6.original || p_(yt6.p)
+				var p = yt6.original || original(yt6.p)
 				if (p && typeof p.getPlayerState == 'function') {
 				   var s = p.getPlayerState(); if (s != -1 && s != 5) { p.stopVideo() }
 				}
