@@ -3767,13 +3767,15 @@ if (typeof jQuery != 'undefined') {
 		},
 		
 		updateDuration: function() {
-			var t = this;
+			var t = this, dur = (1 * t.media.duration);
 
 			//Toggle the long video class if the video is longer than an hour.
 			t.container.toggleClass("mejs-long-video", t.media.duration > 3600);
+
+			if ((t.options.duration == -1 || dur == Infinity) && typeof yt6 == 'object' && typeof yt6.loaded_media_duration == 'number') dur = (1 * yt6.loaded_media_duration)
 			
 			if (t.durationD && (t.options.duration > 0 || t.media.duration)) {
-				t.durationD.html(mejs.Utility.secondsToTimeCode(t.options.duration > 0 ? t.options.duration : t.media.duration, t.options.alwaysShowHours, t.options.showTimecodeFrameCount, t.options.framesPerSecond || 25));
+				t.durationD.html(mejs.Utility.secondsToTimeCode(t.options.duration > 0 ? t.options.duration : dur, t.options.alwaysShowHours, t.options.showTimecodeFrameCount, t.options.framesPerSecond || 25));
 			}		
 		}
 	});
