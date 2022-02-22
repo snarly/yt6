@@ -7822,10 +7822,25 @@ if (!(yt6.body2 && yt6.layout == 16) && autoplay != null) {
 	  if (autoplay0[0] || autoplay1[0]) ie = true
 	}
 
-      // the first element picked up may belong to the miniplayer, skip to the next one if that's the case
-      if (autoplay0[0] && autoplay0[0].parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode == yt6.mpb ||
-	  autoplay1[0] && autoplay1[0].parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode == yt6.mpb)
-	  n = 1;
+	function check_(obj1, obj2) {
+	  if (obj1 && obj2 && (
+		(obj1.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode == obj2 // initially on playlist
+		||
+		obj1.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode == obj2)	// returned to playlist
+		&&
+		obj1.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode !== obj2) // miniplayer
+	    ) return obj1
+	}
+
+
+      // elements picked up may belong to dismissed miniplayers, skip to the next one if that's the case
+      if (autoplay0.length) {
+	for(n=0;n < autoplay0.length; n++) {
+	  if ( check_(autoplay0[n], yt6.mpb) || check_(autoplay1[n], yt6.mpb) ) { // not good
+	  } else if ( check_(autoplay0[n], autoplay) || check_(autoplay1[n], autoplay) ) break
+	}
+      }
+
 
 	if (ie) {
 	  var a1 = autoplay1[n]
@@ -7840,8 +7855,8 @@ if (!(yt6.body2 && yt6.layout == 16) && autoplay != null) {
 	}
 
       if (//autoplay0[0].parentNode.parentNode.parentNode.id == 'top-level-buttons'
-	(autoplay0[n] && autoplay0[n].parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode == autoplay && !autoplay0[n].parentNode.parentNode.parentNode.parentNode.hasAttribute('hidden')) ||
-	(autoplay1[n] && autoplay1[n].parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode == autoplay && !autoplay1[n].parentNode.parentNode.parentNode.parentNode.hasAttribute('hidden'))
+	(check_(autoplay0[n], autoplay) && !autoplay0[n].parentNode.parentNode.parentNode.parentNode.hasAttribute('hidden')) ||
+	(check_(autoplay1[n], autoplay) && !autoplay1[n].parentNode.parentNode.parentNode.parentNode.hasAttribute('hidden'))
 	) {
 
 	buttons = []
@@ -7866,7 +7881,7 @@ if (!(yt6.body2 && yt6.layout == 16) && autoplay != null) {
 	}
 
 	// check the current state of these buttons
-	if (autoplay1[n] && autoplay1[n].parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode == autoplay) { //console.log('active')
+	if (check_(autoplay1[n], autoplay)) { //console.log('active')
 	  if (!autoplay1[n].parentNode.parentNode.previousSibling) { //console.log('if "null", the loop button is active for sure')
 	    yt6.autoplay = true;
 	    autoplay2 = {}; delete autoplay2[n]
@@ -12984,7 +12999,7 @@ function mep_run() {
 						    $waitUntil(
 						      function() {
 							yt6.diff = Math.abs(parseFloat(me.currentTime - player2.currentTime)); //console.log(yt6.diff);console.log(yt6.sync_timer);
-						        if (yt6.diff > 0.3 && yt6.sync_timer < 8 || !yt6.V_[itag(me.src)]) { return true }
+						        if ((yt6.diff > 0.3 && yt6.sync_timer < 8) || !yt6.V_[itag(me.src)]) { return true }
 							  else {
 							    if (yt6.newvideo) {
 							      if (yt6.player2 && yt6.player2.media && typeof yt6.player2.setCurrentTime == 'function'){// || browserName == 'Edge' || browserName == 'IE') {
@@ -13070,14 +13085,14 @@ function mep_run() {
 							me.p = gc("mejs-button mejs-playpause-button")[0]
 							me.pp2 = 'yt6.player1.media.pp2 = function(){ \
 							playPromise2.then(function () {\
-							  if (yt6.x) if (me == yt6.player1.media && me.timer > 6) { \/\*console.log("Playing...")\*\/; me.pp2.ok = (typeof me.pp2.ok == "boolean") ? !me.pp2.ok : true;\
+							  if (yt6.x) if (me == yt6.player1.media && me.timer > 4) { \/\*console.log("Playing...")\*\/; me.pp2.ok = (typeof me.pp2.ok == "boolean") ? !me.pp2.ok : true;\
 							    if (!me.currentTime && !me.paused) me.timer = (typeof me.timer == "number") ? (me.timer + 1) : 0;\
-							    if ( (!me.currentTime && me.timer > 16) || (!me.loaded && me.pp2.ok) ) { Seek = 1; if (!me.loaded || !player2.loaded) { me.pause(); player2.pause(); me.load(); yt6.ct = 0; player2.load() }; me.timer = 0; me.play() };\
+							    if ( (!me.currentTime && me.timer > 7) || (!me.loaded && me.pp2.ok) ) { me.timer = 0; if (!me.loaded || !player2.loaded) { yt6.ct = 0; player2.load(); if (!me.loaded) me.load() }; me.play() };\
 							  } else { me.timer = (typeof me.timer == "number") ? (me.timer + 1) : 0; Seek = 1 }\
 							}).catch(function (error) {\
-							  if (yt6.x) if (me == yt6.player1.media && me.timer > 6) { \/\*console.log("Failed to play... "+ me.timer)\*\/; me.pp2.ok = (typeof me.pp2.ok == "boolean") ? !me.pp2.ok : true;\
+							  if (yt6.x) if (me == yt6.player1.media && me.timer > 4) { \/\*console.log("Failed to play... "+ me.timer)\*\/; me.pp2.ok = (typeof me.pp2.ok == "boolean") ? !me.pp2.ok : true;\
 							    if (!me.currentTime && !me.paused) me.timer = (typeof me.timer == "number") ? (me.timer + 1) : 0;\
-							    if ( (!me.currentTime && me.timer > 16) || (!me.loaded && me.pp2.ok) ) { Seek = 1; if (!me.loaded || !player2.loaded) { me.pause(); player2.pause(); me.load(); yt6.ct = 0; player2.load(); }; me.timer = 0; me.play() };\
+							    if ( (!me.currentTime && me.timer > 7) || (!me.loaded && me.pp2.ok) ) { me.timer = 0; if (!me.loaded || !player2.loaded) { yt6.ct = 0; player2.load(); if (!me.loaded) me.load() }; me.play() };\
 							  } else { me.timer = (typeof me.timer == "number") ? (me.timer + 1) : 0; Seek = 1 }\
 							}) };'; try { eval(me.pp2) } catch(e){ yt6.newvideo = false; }; if (typeof me.pp2 == 'function') me.pp2()
 						      } else me.pp2()
@@ -13095,11 +13110,11 @@ function mep_run() {
 \
 							function very_simple_playback_duh(){\
 							  if (yt6.x && me == yt6.player1.media) { me.pp.ok = (typeof me.pp.ok == "boolean") ? !me.pp.ok : true; \/\*console.log(me.timer +" "+ me.loaded + " ???? "+ me.paused +" " + yt6.pt +" "+me.pastTime +" "+ me.currentTime);\*\/\
-							    if (me.loaded && me.timer < 1) { if (me.currentTime == me.pastTime) yt6.player1.media.setCurrentTime((me.currentTime || 0) + 0.01);\
+							    if (me.loaded && (me.timer < 1 || (me.timer == 1 && me.paused) || (yt6.mobile && yt6.browser_tab == "hidden" && !me.currentTime)) ) { if (!(yt6.mobile && yt6.browser_tab == "hidden" && !me.currentTime) && me.currentTime == me.pastTime) yt6.player1.media.setCurrentTime((me.currentTime || 0) + 0.01);\
 							    \/\*if (me.p) if (me.currentTime != yt6.pt)\*\/;\
 							      $waitUntil(function(){ if (me.loaded) { return true } else me.load() }, function(){ \
 								if (me.paused || (!me.paused && ( me.currentTime == me.pastTime || (me.currentTime).toFixed(6) == (me.pastTime + 0.01).toFixed(6) ) )) { \/\*console.log("...failed / paused? "+ me.paused)\*\/;\
-								  if (yt6.x && !yt6.live) { try { me.p.click(); if (me.paused) me.p.click() } catch(e){ yt6.player2.play() }; }\
+								  if (yt6.x && !yt6.live && me.paused) { try { me.p.click(); if (me.paused) me.p.click() } catch(e){ yt6.player2.play() }; }\
 								} \/\*else console.log("Playing.... "+me.currentTime); console.log(me.currentTime +" "+ me.pastTime +" "+ me.paused)\*\/\
 							      },40,400);\
 							      if (!me.paused) if (Math.abs(me.currentTime - me.pastTime).toFixed(2) == 0.01) {\
@@ -13108,7 +13123,7 @@ function mep_run() {
 							    } else { if (yt6.x && yt6.live && !me.loaded && me.src != player2.src) { Seek = 0; yt6.player1.pause(); Seek = 0 }; \/\*console.log("! " + me.timer)\*\/;\
 								if ((!me.loaded || (!me.paused && Math.abs(player2.currentTime - me.currentTime) > 3)) && me.timer < 2) { player2.load(); \/\*console.log("load")\*\/;\
 								}; me.timer = (typeof me.timer == "number") ? (me.timer + 1) : 0; \/\*console.log("!! "+ me.timer)\*\/;\
-								if (me.timer > 2) me.timer = 0; if (!yt6.live && me.currentTime == me.pastTime) me.timer = (me.timer + 1)\
+								if (me.timer > 3) me.timer = 0; if (!yt6.live && me.currentTime == me.pastTime) me.timer = (me.timer + 1)\
 							      };\
 							  }\
 							};\
@@ -13159,8 +13174,8 @@ function mep_run() {
 
 					    if (!me.paused && !yt6.live)
 					    if (yt6.browser_tab == 'visible' && typeof player2.loaded != 'number') { //m2
-					      yt6.player1.showControls(true)
-					      if (!yt6.A_[itag(me.src)]) yt6.player1.hideControls(true)
+					      if (me.currentTime) yt6.player1.showControls(true)
+					      if (!yt6.A_[itag(me.src)] && me.currentTime > 3) yt6.player1.hideControls(true)
 					      //try { document.activeElement.blur() } catch(e) {}
 					    } else if (yt6.mobile) if (yt6.A_[itag(me.src)]) player2.loaded = true
 
@@ -13486,7 +13501,7 @@ function mep_run() {
 					    return void 0;
 //if (yt6.md && yt6.browser_tab == 'hidden') return void 0
 					  //if (!yt6.A_[itag(me.src)]) yt6.player1.hideControls(true)
-					  if (yt6.decoding_error) delete yt6.decoding_error
+					  if (yt6.decoding_error) delete yt6.decoding_error; me.timer = 0
 					  if (yt6.V_[itag(me.src)]) {//m2
 					    if (player2.paused) try { yt6.player2.play() } catch(e){}//Seek = 1; 
 					  }
@@ -13522,7 +13537,7 @@ function mep_run() {
 					      };
 					    if (Math.abs(me.currentTime - player2.currentTime) > 0.3) {
 					      if (player2.duration != player2.currentTime && !(yt6.player1.media.currentTime > player2.duration)) {
-						me.pause()
+						if (Seek == 1) if ((!me.currentTime && yt6.Seek == 2) || !(yt6.Seek == 2 && !yt6.Seeked2)) { me.pause() } else { yt6.Seek = 1; player2.currentTime = me.currentTime }
 					      }
 					    }
 					  }
@@ -13561,7 +13576,7 @@ function mep_run() {
 					  //if (typeof me.loaded == 'number') me.loaded = false
 					  me.aborted = true; //me.isLoaded = false
 					});
-					addEL(me, 'error', function(e) { ev = '2error'; //ev_log(ev); //console.log(ev)
+					addEL(me, 'error', function(e) { ev = '2error'; //ev_log(ev); console.log(ev)
 					  if ( yt6 && yt6.player2 && !yt6.navigation && (yt6.timer == 999999999 || me.src == 'https://www.youtube.com/ptracking' || yt6.player2.media.src != me.src))
 					    return void 0;
 					  if ((me.networkState == 1 || me.networkState == 3) && yt6.retry < yt6.limit) {
@@ -13570,21 +13585,21 @@ function mep_run() {
 					    //yt6.retry++;
 
 					    if (!yt6.player1.media.paused) {
-						yt6.player1.pause()
+						yt6.player1.pause(); yt6.player1.media.pause()
 						$waitUntil(function() { if ( (yt6.player1.media.loaded && yt6.player1.media.paused) || (yt6.player2.media.currentTime > 1) ) return true }, //m2
-						function() { yt6.player1.play(); yt6.player2.play() },250,2500);
+						function() { Seek = 0; yt6.player1.play() },250,2500);
 					    } else {
 					    	yt6.player2.setSrc(me.src +'&');
 						Seek = 0;
-						yt6.player2.load();
+						yt6.player2.media.load();
 						if (yt6.autoplay) { yt6.player1.play(); yt6.player2.play() }
 					      }
 					    var src = clone(me.src); //console.log(src)
 					    yt6.player2.setSrc('https://www.youtube.com/ptracking');
-					    yt6.player2.load();
+					    yt6.player2.media.load();
 					    yt6.player2.setSrc(src);
-					    Seek = 1;
-					    yt6.player2.load();
+					    Seek = 0;
+					    yt6.player2.media.load();
 					  } else { Seek = 0 }
 					});
 					addEL(me, 'loadedmetadata', function() { ev = '2loadedmetadata'; //ev_log(ev); console.log(ev)
@@ -13631,7 +13646,7 @@ function mep_run() {
 					  if (!yt6.mobile && !yt6.live) {
 					    if (me.pastTime) if (me.currentTime > me.pastTime) { me.aborted = false } //else me.aborted = true
 					    me.pastTime = yt6.player2.getCurrentTime()
-					    if (me.paused && !player1.media.paused) yt6.player1.media.pause()
+					    //if (me.paused && !player1.media.paused) yt6.player1.media.pause()
 					  }
 					});
 					addEL(me, 'seeked', function() { ev = '2seeked'; //ev_log(ev); //console.log(ev)
@@ -13929,7 +13944,7 @@ function mep_run() {
 						  if (me.loaded_itag >= 103) { if (yt6.player1.media.paused) yt6.player1.play() } else { Seek = 0; me.pause() }
 						} catch(e){}
 					      }
-					      resync_live()
+					      if (player1.media.paused) { resync_live() } else player1.currentTime = player2.duration
 					    }
 					  } else if (yt6.x) { //yt6.audiox //m2
 						   if (yt6.browser_tab == 'hidden' || (parseFloat(player1.media.duration - player1.media.currentTime) > 0.03 && parseFloat(player1.media.currentTime / me.currentTime).toString().split('.')[1].substring(0,4) < '0'+ 100 * yt6.speed) ) {
@@ -13955,11 +13970,11 @@ function mep_run() {
 					  }
 					  if (yt6.x || (player() && typeof yt6.p.getPlayerState != 'function')) {
 					    if (yt6.player2.media.currentTime != player2.currentTime) {  yt6.player2.media.pause(); }
-					    if (!player1.media.paused && !yt6.Seeked2) try { yt6.player2.pause() } catch(e) {} //player2 not typo
+					    //if (!player1.media.paused && !yt6.Seeked2) try { yt6.player2.pause() } catch(e) {} //player2 not typo
 					    if (yt6.x) if (Seek == 4) { //console.log('AV format selected, separate audio paused')
 					      player1.play()
 					    } else if (!(Seek == 1 && !yt6.Seeked2) && !yt6.md && yt6.browser_tab != 'hidden') {//!(yt6d.init && !yt6.Seeked2) &&  && !yt6.player1.media.paused
-						if (!yt6.md) { player1.pause() } // pausing via space button needs this, otherwise it can initially cause infinite loop
+						//if (!yt6.md) { player1.pause() } // pausing via space button needs this, otherwise it can initially cause infinite loop
 					      }
 					    if ((Seek != 4 && !player1.media.paused) || (Seek == 2 && me.duration != me.currentTime && !(yt6.player1.media.currentTime > me.duration)) ) {
 					      if (!player1.media.paused) { Seek = (!yt6.navigation) ? 2 : 1 } else Seek = null
@@ -13983,7 +13998,7 @@ function mep_run() {
 						    //if (yt6.diff != 0) me.loaded = 1
 						    if (typeof me.loaded == 'number') { //if (yt6.mobile || yt6.live) 
 						      me.loaded = true; //Seek = 1;
-							player1.pause(); //Seek = 1
+							if (!yt6.player1.media.paused) player1.pause(); //Seek = 1
 						      if (!yt6.player1.media.paused) { Seek = 2 } else { Seek = null; yt6.Seeked2 = (!yt6d.init) ? true : false } // Seek = 2 may cause infinite loop, Seeked2 must be set to false initially
 						      if (yt6d.init) delete yt6d.init
 						      //if (me.paused) try { gc('mejs-overlay mejs-layer mejs-overlay-play')[0].click() } catch(e){ try { gid('player1').click() } catch(e){} } 
@@ -18163,8 +18178,8 @@ if (yt6.mpb && yt6.mpb.tagName == 'YTD-MINIPLAYER') {
 		      } else {
 
 			  if (yt6.inf.offsetWidth != (2 * yt6.osw.style.left.replace('px','') + 1 * yt6.w.replace('px','')) )
-			  if (yt6.aspect_ratio > 1) {
-			    if (yt6.osw.style.left != '0px') { yt6.osw.style.left = '0px' }
+			  if (yt6.aspect_ratio >= 1) {
+			    if (yt6.aspect_ratio > 1 && yt6.osw.style.left != '0px') { yt6.osw.style.left = '0px' }
 			  } else if (yt6.osw.style.left != (yt6.inf.offsetWidth - 1 * yt6.w.replace('px','')) / 2 + 'px') {
 			      yt6.osw.style.left = (yt6.inf.offsetWidth - 1 * yt6.w.replace('px','')) / 2 + 'px'
 			    }
