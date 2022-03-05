@@ -13136,12 +13136,12 @@ function mep_run() {
 							me.p = gc("mejs-button mejs-playpause-button")[0]
 							me.pp2 = 'yt6.player1.media.pp2 = function(){ \
 							playPromise2.then(function () {\
-							  if (yt6.x) if (me == yt6.player1.media && me.timer > 2) { console.log("Playing..."); me.pp2.ok = (typeof me.pp2.ok == "boolean") ? !me.pp2.ok : true;\
+							  if (yt6.x) if (me == yt6.player1.media && me.timer > 2) { \/\*console.log("Playing...")\*\/; me.pp2.ok = (typeof me.pp2.ok == "boolean") ? !me.pp2.ok : true;\
 							    if (!me.currentTime && !me.paused) me.timer = (typeof me.timer == "number") ? (me.timer + 1) : 0;\
 							    if ( (!me.currentTime && me.timer > 3) || (!me.loaded && me.pp2.ok) ) { me.timer = 0; if (!me.loaded || !player2.loaded) { yt6.ct = 0; player2.load(); if (!me.loaded) me.load() }; me.play() };\
 							  } else { me.timer = (typeof me.timer == "number") ? (me.timer + 1) : 0; Seek = 1 }\
 							}).catch(function (error) {\
-							  if (yt6.x) if (me == yt6.player1.media && me.timer > 2) { console.log("Failed to play... "+ me.timer +" "+me.currentTime +" "+me.pastTime); me.pp2.ok = (typeof me.pp2.ok == "boolean") ? !me.pp2.ok : true;\
+							  if (yt6.x) if (me == yt6.player1.media && me.timer > 2) { \/\*console.log("Failed to play... "+ me.timer +" "+me.currentTime +" "+me.pastTime)\*\/; me.pp2.ok = (typeof me.pp2.ok == "boolean") ? !me.pp2.ok : true;\
 							    if (!me.currentTime && !me.paused) me.timer = (typeof me.timer == "number") ? (me.timer + 1) : 0;\
 							    if ( (!me.currentTime && me.timer > 3) || (!me.loaded && me.pp2.ok) ) { me.timer = 0; if (!me.loaded || !player2.loaded) { yt6.ct = 0; player2.load(); if (!me.loaded) me.load() }; me.play() };\
 							  } else { me.timer = (typeof me.timer == "number") ? (me.timer + 1) : 0; Seek = 1 }\
