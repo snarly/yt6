@@ -5903,7 +5903,7 @@ function ageless_verification(spfpc) {
 
 
 	  if (yt6.blocked && !(yt6.layout == 12 && !yt6d.previous.linx.length)) {
-	    if (p0 && !p0) {
+	    if (p0) {
 		gid('movie_player_to_dispose').insertBefore(p0, gid('movie_player_to_dispose').firstchild)
 		//v_(p0).setAttribute('class','video-stream html5-main-video')
 		p0.setAttribute('name','original')
