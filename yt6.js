@@ -8466,27 +8466,37 @@ yt6d.mep_renew = function() {
 		    if (yt6.player1 && yt6.player1.media) {
 
 			//if (yt6.mobile && yt6.browser_tab == 'hidden') setTimeout(function(){ yt6.player1.play(); setTimeout(function(){ if (yt6.player1.media.paused) { yt6.player1.play() } },2500) },700)
+			yt6.player1.media.timer = 0; yt6.sync_timer = 0
+
 		      function autoplay_trigger(t) {
 
-			$waitUntil(function(){ yt6.sync_timer = 0
+			$waitUntil(function(){
 			  if (yt6.player1.media.loaded) { return true }
 			    else {
 			      if (yt6.browser_tab == 'hidden') {
-				setTimeout(function(){ if (!yt6.player1.media.loaded && yt6.browser_tab == 'hidden')
+				setTimeout(function(){ if (typeof yt6.player1.media.timer == 'number') yt6.player1.media.timer++; //ev_log(yt6.player1.media.timer +' '+ yt6.player1.media.loaded +' '+ yt6.player1.media.paused +' '+ yt6.sync_timer)
+				  if (yt6.browser_tab == 'hidden' && (!yt6.player1.media.loaded || yt6.player1.media.timer > 4)) {
 				  try {
 				    if (yt6.player1.media.paused) { gc("mejs-button mejs-playpause-button")[0].click() }
 				    setTimeout(function(){
-				      if (!yt6.player1.media.loaded) {
+				      if (!yt6.player1.media.loaded || yt6.player1.media.timer > 6) {
 				        yt6.sync_timer++
 					if (yt6.sync_timer > 1) {
-					  yt6.sync_timer = 0
-					  yt6.player1.setSrc("https://www.youtube.com/ptracking"); yt6.player1.load()
-					  try { if (gid(mep + '_sourcechooser_' + yt6.current)) t = gid(mep + '_sourcechooser_' + yt6.current); t.click() } catch(e){ z.click() }
-					  autoplay_trigger(t)
-					} else yt6.player1.load()
-				      }
+					  yt6.player1.media.timer = 0; yt6.sync_timer = 0
+					  if (!(yt6.player1.media.loaded && yt6.player1.media.paused)) { yt6.player1.setSrc("https://www.youtube.com/ptracking"); yt6.player1.load(); yt6.player1.isLoaded = false }
+					  if (!yt6.player1.isLoaded) {
+					    try { if (gid(mep + '_sourcechooser_' + yt6.current)) t = gid(mep + '_sourcechooser_' + yt6.current); t.click(); //ev_log(t.id +' '+ yt6.player1.media.loaded);
+					      if (yt6.player1.media.loaded) { yt6.player1.isLoaded = true; yt6.player1.media.timer = 0; yt6.player1.media.play() }
+					    } catch(e){ z.click(); yt6.player1.isLoaded = true }
+					    setTimeout(function(){ autoplay_trigger(t) }, 1400)
+					  } else yt6.player1.play()
+					} else { yt6.player1.load() }
+				      } else if (yt6.browser_tab == 'visible' && yt6.player1.media.loaded && yt6.player1.media.paused) { yt6.player1.play() } 
 				    },700)
 				  } catch(e){ yt6.player1.play() }
+				  } else { yt6.player1.media.timer = 0; //ev_log('play '+ yt6.player1.isLoaded +' '+ yt6.player1.media.loaded);
+				      yt6.player1.play()
+				    }
 				},700)
 			      } else {
 				  yt6.player1.setSrc("https://www.youtube.com/ptracking"); yt6.player1.load()
@@ -15519,6 +15529,7 @@ if (!t.sourcechooserButton) {//console.log('error')
 		yt6.player1.media.loaded = false
 		yt6.player1.media.isLoaded = false
 		yt6.player2.media.isLoaded = false
+		yt6.player1.media.timer = 0
 		//if (yt6.browser_tab == 'hidden') yt6.player1.media.currentTime = yt6.player2.media.currentTime = player2.currentTime = yt6.ct = 0
 		yt6.player1.media.pause()
 		//if (yt6.browser_tab == 'hidden') 
