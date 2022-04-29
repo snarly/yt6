@@ -8481,7 +8481,7 @@ yt6d.mep_renew = function() {
 		      function autoplay_trigger(t, itagx) {
 
 			$waitUntil(function(){
-			  if (yt6.player1.media.loaded || yt6.current != itagx) { return true }
+			  if (yt6.player1.media.loaded) { return true }
 			    else {
 			      if (yt6.browser_tab == 'hidden') {
 				setTimeout(function(){ if (typeof yt6.player1.media.timer == 'number') yt6.player1.media.timer++; //ev_log(yt6.player1.media.timer +' '+ yt6.player1.media.loaded +' '+ yt6.player1.media.paused +' '+ yt6.sync_timer)
@@ -8517,7 +8517,7 @@ yt6d.mep_renew = function() {
 			    }
 			  },
 			function(){
-			  $waitUntil(function(){ if (yt6.player1.media.loaded || yt6.current != itagx) { return true } }, function(){ if (yt6.player1.media.paused) { yt6.player1.play() } },250,2500)
+			  $waitUntil(function(){ if (yt6.player1.media.loaded) { return true } }, function(){ if (yt6.player1.media.paused) { yt6.player1.play() } },250,2500)
 			},1500,9000)
 
 		      }; autoplay_trigger(z, itagx)
@@ -12248,9 +12248,9 @@ function mep_run() {
 					      }
 
 					    var itag_ = itag(me.src)
-					    if (itag_ && 1 * itag_ != yt6.userprefA[0]) {
-					      if (!yt6.no_default || yt6d.init) {
-						if (!yt6.newvideo && !(typeof yt6.fmt_bak2 == 'number' && (gid(mep.getAttribute('id') + '_sourcechooser_' + yt6.fmt_bak2) && yt6.yt_otf.indexOf(yt6.fmt_bak2) > -1)) ) {
+					    if (itag_ && (1 * itag_ != yt6.userprefA[0] || 1 * itag_ != yt6.userprefV[0])) {
+					      if (!yt6.no_default) {
+						if ((!yt6.newvideo || yt6d.init) && !(typeof yt6.fmt_bak2 == 'number' && (gid(mep.getAttribute('id') + '_sourcechooser_' + yt6.fmt_bak2) && yt6.yt_otf.indexOf(yt6.fmt_bak2) > -1)) ) {
 						  if (typeof yt6.fmt_bak2 == 'number') { if (!gid(mep.getAttribute('id') + '_sourcechooser_' + yt6.fmt_bak2)) { itag_ = (1* yt6.fmt_bak2); } else yt6.fmt_bak = itag_; yt6.fmt_bak2 = null } //else yt6.fmt_bak = itag_; 
 
 						  if (yt6.fmts_fallback.A[yt6.prefer_fmt].indexOf(itag_) > -1) {
@@ -16703,10 +16703,10 @@ addEL(window, 'yt-navigate-start', yt6.body.yt_navigate_start, false)
 	  //console.log('ads0: '+ ads0)
 	}
 
-	if ((ads && ads.lastChild && ads != ads0 && yt6.ads_noskip_m != 1) || (yt6.mobile && !yt6d.init && !yt6.navigation && location.href.indexOf('list=PL') > -1 && !yt6.pls && c[1] && typeof (c[1] && c[1].list) == 'string' && !(c[1] && c[1].list).split('"')[1] && yt6.ads_noskip_m != 2) ) { //if (yt6.mobile && !yt6d.init && !yt6.navigation && location.href.indexOf('list=PL') > -1 && !yt6.pls && c[1] && typeof (c[1] && c[1].list) == 'string' && !(c[1] && c[1].list).split('"')[1]) ev_log('? '+ yt6.ads_noskip_m)
+	if ((ads && ads.lastChild && ads != ads0 && yt6.ads_noskip_m != 1) || (yt6.mobile && !yt6d.init && !yt6.navigation && location.href.indexOf('list=PL') > -1 && !yt6.pls && c[1] && typeof (c[1] && c[1].list) == 'string' && !(c[1] && c[1].list).split('"')[1] && yt6.ads_noskip_m != 2) ) { if (yt6.mobile && !yt6d.init && !yt6.navigation && location.href.indexOf('list=PL') > -1 && !yt6.pls && c[1] && typeof (c[1] && c[1].list) == 'string' && !(c[1] && c[1].list).split('"')[1]) ev_log('? '+ yt6.ads_noskip_m)
 	  ads = gc('ytp-ad-skip-ad-slot')[0] // unskippable = gc('ytp-ad-toggle-button ytp-ad-instream-user-sentiment-dislike-button')[0]
 	  if (yt6.mobile)
-	  if (!ads) { //if (yt6.mobile && !yt6d.init && !yt6.navigation && location.href.indexOf('list=PL') > -1 && !yt6.pls && c[1] && typeof (c[1] && c[1].list) == 'string' && !(c[1] && c[1].list).split('"')[1]) ev_log('!'+ yt6.ads_noskip_m)
+	  if (!ads) { if (yt6.mobile && !yt6d.init && !yt6.navigation && location.href.indexOf('list=PL') > -1 && !yt6.pls && c[1] && typeof (c[1] && c[1].list) == 'string' && !(c[1] && c[1].list).split('"')[1]) ev_log('!'+ yt6.ads_noskip_m)
 		// on m.youtube, we can create our own "skip button" (a link to the current page which will semi-reload it)
 		// but try it only once per video because YT may keep throwing unskippable ads with no end in sight
 		// save for when YT "forgets" to put the playlist structures back on the page, in which case this is the way to fix it
