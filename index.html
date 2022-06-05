@@ -126,6 +126,12 @@
 		end, looking like this: /*2022-06-04-2138*/
 	<br><br>
 
+	<h5>
+		!!! For the Google security issues experienced since the latter half of May 2022, please see the <a href="#attention">last paragraph</a> of important notes!!!
+	</h5>
+
+	<br>
+
 	<h1>
 		Setup
 	</h1>
@@ -631,7 +637,31 @@
 	</p>
 	</li>
 	</ol>
+
 	<br>
+	<h1 id="attention">
+		Attention!
+	</h1>
+
+	<ol>
+Since late May 2022, many up-to-date Chromium-based browsers started to show a warning message when you tried to load the script. The message states that your device was about to connect to a site known for malicious activities, hence loading was aborted. The domain name highlighted in the message is an alias for a well-known site providing free tools for basic internet traffic analytics<br><br>
+I have been using a logger from this 3rd party site as the only free solution to see how frequently the program was being used, without having to run a server machine 24/7 myself just to call back to. I do not care about IPs or locations and have wiped the logs clear on a regular basis. But unfortunately there are enough indecent people with bad intentions to get the service's domain names blacklisted.<br><br>
+To prove that my own code has nothing to do with what Google's security warning would suggest, I present a barely modified version of the one from April 29, which won't trigger any warning. The difference is only 4 characters, by which I commented a single line out (<a href="https://github.com/snarly/yt6/blob/91be8ce0c40728565342b83e888cdd0b1ba760a7/yt6.js">line number 14175</a>), thereby preventing the attempt to load the 3rd party stuff (a 1x1 pixel image). So, this way we got rid of the tracker, I know nothing about usage stats and Google security does not complain.<br>
+	<br>
+	Modified version, free of this particular issue:
+	<div>Yt6 file: <a href="https://raw.githubusercontent.com/snarly/yt6/91be8ce0c40728565342b83e888cdd0b1ba760a7/yt6.js">/*2022-04-29-1900-alt*/</a></div>
+	<div style="font-size: 13px; display: inline-block">Test bookmarklet:</div>
+<pre>javascript:(function(){var v='91be8ce0c40728565342b83e888cdd0b1ba760a7/yt6.js',y='youtube.com/',w=window,d=w.document,h=d.location.href,yt6=w.yt6||{},yt6d=w.yt6d||{};if(yt6d.loaded>=4)return void 0;if(h.split(y+'watch')[1]||h.split(y+'shorts')[1]||h.split(y+'embed')[1]||h.split('/base.j')[1]=='s'){var id='snarls_player',e='script',q;yt6.loaded=0;function s(x){x=x||id;return d.getElementById(x)};function c(e){return d.createElement(e)};function a(q){s().appendChild(q);s().add_subs='en,hu,de';yt6d.src=q.src};function r(){if(s()){var x;try{x=s().querySelector('#'+id)}catch(e){x=s().firstChild};if(x)s().removeChild(x)}};function b(){var i,j,o,x;o=['js','rawcdn.githack','cdn.rawgit','js'];for(j,x,i=o.length;i;j=Math.floor(Math.random()*i),x=o[--i],o[i]=o[j],o[j]=x);if(yt6d.src==-1)o.splice(0,0,'raw.githubusercontent');q=c('div');q.id=id;if(q!=s())d.body.appendChild(q);var src='https://'+o[0]+'.com/snarly/yt6/'+v,src0='https://cdn.jsdelivr.net/gh/snarly/yt6@'+v;function oc(ox,oy,sr){return(oy!='js')?sr.replace(ox,oy):src0};q=c(e);q.id=id;q.src=(o[0]!='js')?src:src0;q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[1],src);q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[2],src);q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[3],src);q.onerror=function(){q=c(e);q.id=id;q.src=src.replace('https','http')};a(q);r();};a(q);r();};a(q);r();};try{a(q);}catch(f){a(q)};};function g(){try{deldiv()}catch(f){r()};yt6d.src=1;b()};if(!s()){b()};setTimeout(function(){var t=w.yt6;if(t)t.loaded=t.loaded||window['status'];if(!t||(t&&(!t.body||(t.loaded<3))))g()},3000);}else{void 0};})()/*2022-04-29-1900-alt*/</pre>
+
+	<br>
+	The original, which Google started screaming about.
+	<br>
+	<div>Yt6 file: <a href="https://raw.githubusercontent.com/snarly/yt6/061efac41f9a75bc2b33fbf479de05fb5121ebcf/yt6.js">/*2022-04-29-1900*/</a>  (just for comparison)</div>
+	<div style="font-size: 13px">Test bookmarklet:</div>
+<pre>javascript:(function(){var v='061efac41f9a75bc2b33fbf479de05fb5121ebcf/yt6.js',y='youtube.com/',w=window,d=w.document,h=d.location.href,yt6=w.yt6||{},yt6d=w.yt6d||{};if(yt6d.loaded>=4)return void 0;if(h.split(y+'watch')[1]||h.split(y+'shorts')[1]||h.split(y+'embed')[1]||h.split('/base.j')[1]=='s'){var id='snarls_player',e='script',q;yt6.loaded=0;function s(x){x=x||id;return d.getElementById(x)};function c(e){return d.createElement(e)};function a(q){s().appendChild(q);s().add_subs='en,hu,de';yt6d.src=q.src};function r(){if(s()){var x;try{x=s().querySelector('#'+id)}catch(e){x=s().firstChild};if(x)s().removeChild(x)}};function b(){var i,j,o,x;o=['js','rawcdn.githack','cdn.rawgit','js'];for(j,x,i=o.length;i;j=Math.floor(Math.random()*i),x=o[--i],o[i]=o[j],o[j]=x);if(yt6d.src==-1)o.splice(0,0,'raw.githubusercontent');q=c('div');q.id=id;if(q!=s())d.body.appendChild(q);var src='https://'+o[0]+'.com/snarly/yt6/'+v,src0='https://cdn.jsdelivr.net/gh/snarly/yt6@'+v;function oc(ox,oy,sr){return(oy!='js')?sr.replace(ox,oy):src0};q=c(e);q.id=id;q.src=(o[0]!='js')?src:src0;q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[1],src);q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[2],src);q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[3],src);q.onerror=function(){q=c(e);q.id=id;q.src=src.replace('https','http')};a(q);r();};a(q);r();};a(q);r();};try{a(q);}catch(f){a(q)};};function g(){try{deldiv()}catch(f){r()};yt6d.src=1;b()};if(!s()){b()};setTimeout(function(){var t=w.yt6;if(t)t.loaded=t.loaded||window['status'];if(!t||(t&&(!t.body||(t.loaded<3))))g()},3000);}else{void 0};})()/*2022-04-29-1900*/</pre>
+
+	<br><br>
+	If something like this were to happen again in the future, at least you know what's going on. Hopefully I will find a better solution by then.
 
 
       </section>
