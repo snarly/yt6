@@ -7523,9 +7523,9 @@ if (!(yt6.body2 && yt6.layout == 16) && autoplay != null) {
 
 	  }
 
-      } else { ev_log('?????'); yt6.autoplay = (!(yt6.mobile && yt6.pls)) ? false : true; ev_log('????'+yt6.autoplay) }
+      } else { yt6.autoplay = (!(yt6.mobile && yt6.pls)) ? false : true }
 
-    } else if (!yt6.mobile) { ev_log('!!!!! '+yt6.autoplay +'-'+yt6.pls); yt6.autoplay = false }
+    } else if (!yt6.mobile) { yt6.autoplay = false }
 
   }
 
@@ -8518,7 +8518,7 @@ yt6d.mep_renew = function() {
 		//z.parentNode.parentNode.removeChild(z.parentNode); find_the_source()
 	    //} else {
 	      yt6.me_flash_source = z;
-	      if ((yt6.autoplay || autoplay()) && (yt6.x || (!yt6.x && v_(yt6.p) && v_(yt6.p).src && v_(yt6.p).src.indexOf('http') == 0) || yt6.browser_tab == 'hidden' || !yt6d.previous.linx.length) ) {// && !yt6.ytm
+	      if (autoplay() && (yt6.x || (!yt6.x && v_(yt6.p) && v_(yt6.p).src && v_(yt6.p).src.indexOf('http') == 0) || yt6.browser_tab == 'hidden' || !yt6d.previous.linx.length) ) {// && !yt6.ytm
 		z.setAttribute('checked','checked'); z.checked = 'true'
 		yt6.player1.setSrc(yt6.linx[itagx])
 		if (1 * itagx != 1 * yt6.userprefV[i] && !yt6d.init) {
