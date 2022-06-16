@@ -14,6 +14,8 @@ if (!window.yt6d) { //data object for future use
   yt6d.previous={}
   yt6d.previous.linx=[]
   yt6d.previous.eid=[]
+  yt6d.playlist = {}
+  yt6d.playlist.items = []
   yt6d.log = []
   yt6d.srt = {}
 
@@ -144,7 +146,7 @@ if (typeof Array.isArray === 'undefined') {
 	 )  ))
        )) {
 	if (browserName != 'Edge' && browserName != 'Opera') {
-	  if (navigator.plugins[0] && navigator.plugins[0][0] && navigator.plugins[0][0].type == 'application/x-google-chrome-pdf') browserName = "Vivaldi"
+	  if (navigator.plugins[0] && navigator.plugins[0][0] && navigator.plugins[0][0].type == 'application/x-google-chrome-pdf') { browserName = "Vivaldi" }
 	  if (browserName != 'Vivaldi' && !(navigator.plugins[2] && navigator.plugins[2][0] && navigator.plugins[2][0].type == 'application/pdf')) browserName = "Brave"
 	}
 	if (navigator.brave && typeof navigator.brave.isBrave == 'function') try {
@@ -153,7 +155,7 @@ if (typeof Array.isArray === 'undefined') {
 	  });
 	} catch(e){}
     } else if (browserName == 'Chromium') {
-	browserName = ((function(){ var z = false, y = '', i; if (navigator.plugins.length) for(var i=0; i<navigator.plugins.length; i++) { if (navigator.plugins[i][0] && navigator.plugins[i][0].type != 'application/pdf') break; y = i }; if (y == navigator.plugins.length-1) z = true; return z })() ) ? 'Vivaldi' : 'Chromium'
+	browserName = ((function(){ var z = false, y = '', i; if (navigator.plugins.length) for(var i in navigator.plugins) { if (navigator.plugins[i][0] && navigator.plugins[i][0].type != 'application/pdf') break; y = i }; if (y == navigator.plugins.length-1 || (typeof y == 'string' && y.indexOf('Chromium PDF') == 0)) z = true; return z })() ) ? 'Vivaldi' : 'Chromium'
       }
 
     // Yandex
@@ -1181,8 +1183,9 @@ if (!window.onchange) {
 	      if ( (!(yt6.player2 && yt6.player2.media && yt6.player2.media.paused) && ( (t2 && yt6.seeked2) || t1 == true )) ){//|| (t1 && !yt6.Seeked2 && yt6.player1.media.paused)) {
 		if (yt6.mobile && t1 == true) try { yt6.player1.play() } catch(e){}
 	      } else {}
-	      yt6.Seeked2 = false//(t1 !== true) ? false : yt6.Seeked2
+	      yt6.Seeked2 = false //(t1 !== true) ? false : yt6.Seeked2
 	    }
+	    if (yt6.blocked_m && yt6.blocked === 0) delete yt6.blocked_m
 	  }
 
 
@@ -2869,7 +2872,7 @@ if (yt6.html5_fail) {
         new_fmp.style.marginLeft = (yt6.yt_l) ? yt6.yt_l + 'px' : '0px'
         new_fmp.style.marginTop = (yt6.yt_t) ? yt6.yt_t + 'px' : '0px'
       }
-      new_fmp.style[yt6.propName] = yt6.prop
+      new_fmp.style[yt6.propName] = yt6.yt_prop
     } catch(e) {}
 
 
@@ -3050,7 +3053,7 @@ function player_response() {
 		  height = x[i].split('"height":')[1]
 		  if (height) {
 		    height = height.split(',')[0]; if (qual[itag]) qual[itag]['h'] = 1*height
-		    yt6.aspect_ratio = yt6.ar = width +'x'+ height
+		    yt6.aspect_ratio = width +'x'+ height; yt6.ar = width +'x'+ height
 		    if (!ytplayer.config.args.fmt_list || comma) { // legacy formats list needed by flash player
 		      var comma = (ytplayer.config.args.fmt_list) ? (ytplayer.config.args.fmt_list) + ',' : ''
 		      ytplayer.config.args.fmt_list = comma + itag + '/' + width + 'x' + height
@@ -3089,7 +3092,7 @@ function player_response() {
 		    if (height) {
 		      height = height.split(',')[0]; if (qual[itag]) qual[itag]['h'] = 1*height
 		      size = width +'x'+ height; afmt = afmt + '&size=' + size
-		      yt6.aspect_ratio = yt6.ar = size
+		      yt6.aspect_ratio = size; yt6.ar = size
 		    }
 		  }
 		  fps = x[i].split('"fps":')[1]; if (fps) { fps = fps.split(',')[0]; afmt = afmt + '&fps=' + fps }
@@ -3749,7 +3752,7 @@ function poster_resize(w, h, mep) {
 
       if (typeof yt6.aspect_ratio === 'string') {
         yt6.aspect_ratio = yt6.aspect_ratio.split("x")[0] / yt6.aspect_ratio.split('x')[1]
-        yt6.ar = yt6.aspect_ratio
+        yt6.ar = clone(yt6.aspect_ratio)
       }
 
       if (( yt6.aspect_ratio < 16/9 && Math.abs(yt6.aspect_ratio - 16/9) > 0.1
@@ -4542,7 +4545,7 @@ function video_id(skip_update) {
   vid = [ vid || yt6.vid, location.href.split('//')[1].split('.youtube.com')[0] ]
 
   if (!skip_update) 
-  if ( (( !(yt6.vid && yt6.vid.indexOf(vid[0]) != -1) ) || yt6.ytp.embed) && player() && typeof yt6.p.getVideoUrl == 'function') {
+  if ( (( !(yt6.vid && typeof yt6.vid == 'string' && yt6.vid.indexOf(vid[0]) != -1) ) || yt6.ytp.embed) && player() && typeof yt6.p.getVideoUrl == 'function') {
     var pobj = [yt6.p, yt6.original, getElementsByAttribute(yt6,'div','name','original')[0]], ytvid
     for(i=0;i<pobj.length;i++) if (pobj[i] && typeof pobj[i].getVideoUrl == 'function') {
       try { ytvid = vID(pobj[i].getVideoUrl()) } catch(e) { continue }
@@ -4567,6 +4570,15 @@ function video_id(skip_update) {
 }
 
 yt6d.init = video_id()[0]
+
+
+function clear_pls(x) {
+
+  if (x && yt6d.playlist.list != x) {
+    yt6d.playlist.list = x; yt6d.playlist.items = []; yt6d.playlist.current = 0; yt6d.playlist.next = null
+  }
+
+}
 
 
 function iframe() {
@@ -4690,7 +4702,7 @@ function iframe() {
 
 			var c = conf('args')
 			if (c[1] && location.href.split('list=PL')[1]) {
-			  c[1].list = 'PL' + location.href.split('list=PL')[1].split('&')[0].split('/')[0]
+			  c[1].list = 'PL' + location.href.split('list=PL')[1].split('&')[0].split('/')[0]; clear_pls(clone(c[1].list))
 			}
 
 			// create the global player from the specific iframe (#movie_player)
@@ -6172,7 +6184,7 @@ function me_flash_up(file, ib){
 
 	if (yt6.mobile) {
 	  r = gc('playability-status-signin-button')[0]
-	  if ((yt6.browser_tab == 'hidden' && !r) || yt6.pre_ad) yt6.blocked_m = true // on a backgrounded mobile tab, r will be undefined on first try
+	  if ((yt6.browser_tab == 'hidden' && !r) || yt6.pre_ad) { yt6.blocked_m = true; yt6.blocked = 0 } // on a backgrounded mobile tab, r will be undefined on first try
 	  if (r && r.firstElementChild && r.firstElementChild.innerHTML != undefined && yt6.api) {
 	    if (typeof yt6.api.hasAttribute == 'function' && (yt6.api.hasAttribute('playable') || yt6.api.parentNode.getAttribute('playable') == 'false') ) {
 	      yt6.blocked_m = true
@@ -6441,7 +6453,7 @@ function back2html5() {
 			      if (location.href.split('list=PL')[1]) {
 
 				var pl_index = (!(yt6.blocked && yt6.layout == 16)) ? yt6.pl_index : (1 * yt6.pl_index) //+ 1
-				c[1].list = 'PL' + location.href.split('list=PL')[1].split('&')[0].split('/')[0]
+				c[1].list = 'PL' + location.href.split('list=PL')[1].split('&')[0].split('/')[0]; clear_pls(clone(c[1].list))
 				p.cuePlaylist({
 				  listType: 'playlist',
 				  list: c[1].list,
@@ -6470,7 +6482,7 @@ function back2html5() {
 				var top = (yt6.size != 'default') ? yt6.yt_t : ((yt6.yt_t_0 || 0) + yt6.yt_t)
 				v.style.left = (yt6.yt_l) ? left + 'px' : '0px'
 				v.style.top = (yt6.yt_t) ? top + 'px' : '0px'
-				v.style[yt6.propName] = yt6.prop
+				v.style[yt6.propName] = yt6.yt_prop
 				v.style.marginLeft = ''
 				v.style.marginTop = ''
 				if (yt6.p.className && yt6.p.className.indexOf('ytp-transparent') == -1) yt6.p.className = yt6.p.className + ' ytp-transparent'
@@ -7282,14 +7294,31 @@ var x = (typeof p.click == 'function') ? 'important' : ''
     }
 
 
-if (yt6.pls) if (yt6.layout == 12) {
-  if (yt6.btn && yt6.btn.playlist && yt6.btn.playlist.getAttribute('class').indexOf('yt-uix-button-toggled') == -1 && yt6.autoplay == 
-true) { yt6.btn.playlist.click() }
-  if (yt6.btn && yt6.btn.shuffle && yt6.btn.shuffle.getAttribute('class').indexOf('yt-uix-button-toggled') == -1 && yt6.shuffle == true) { yt6.btn.shuffle.click() }
-} else {
-    if (yt6.btn && yt6.btn.playlist && yt6.btn.playlist.parentNode.getAttribute('aria-pressed') == 'false' && yt6.autoplay == true) { yt6.btn.playlist.click() }
+if (yt6.pls) {
+  if (yt6.layout == 12) {
+    if (yt6.btn && yt6.btn.autoplay && yt6.btn.autoplay.getAttribute('class').indexOf('yt-uix-button-toggled') == -1 && yt6.autoplay == true) { yt6.btn.autoplay.click() }
+    if (yt6.btn && yt6.btn.shuffle && yt6.btn.shuffle.getAttribute('class').indexOf('yt-uix-button-toggled') == -1 && yt6.shuffle == true) { yt6.btn.shuffle.click() }
+  } else {
+    var pls, shuff, text
+    if (yt6.layout == 16 && !yt6.mobile && !yt6.ytm && !yt6.ytg && typeof yt6.pls == 'object' && yt6.pls.parentNode) {
+      var pls = yt6.pls.getElementsByTagName('ytd-toggle-button-renderer')[0]
+      var shuff = yt6.pls.getElementsByTagName('ytd-toggle-button-renderer')[1]
+      if (pls && !shuff) {
+	shuff = pls
+	pls = yt6.pls.getElementsByTagName('ytd-playlist-loop-button-renderer')[0]
+      }
+      var text = (pls && pls.tagName == 'YTD-TOGGLE-BUTTON-RENDERER') ? 'autoplay' : 'shuffle'
+    }
+
+    if (yt6.btn && yt6.btn.autoplay && yt6.autoplay == true) {
+      if (yt6.btn.autoplay.parentNode.getAttribute('aria-pressed') == 'false'
+	// || (yt6.btn.autoplay.getElementsByTagName('path')[0] && typeof yt6.btn.autoplay.getElementsByTagName('path')[0].getAttribute('d') == 'string' && yt6.btn.autoplay.getElementsByTagName('path')[0].getAttribute('d').indexOf('M21,') == 0)
+	) { yt6.btn.autoplay.click()
+      }
+    }
     if (yt6.btn && yt6.btn.shuffle && yt6.btn.shuffle.parentNode.getAttribute('aria-pressed') == 'false' && yt6.shuffle == true) { yt6.btn.shuffle.click() }
   }
+}
 
 
 
@@ -7308,7 +7337,7 @@ if (!(yt6.body2 && yt6.layout == 16) && autoplay != null) {
 	}
 	if ((shuffle && shuffle.getAttribute('class') && shuffle.getAttribute('class').indexOf('yt-uix-button-toggled') != -1) || yt6.shuffle == true) { yt6.shuffle = true } else yt6.shuffle = false;
 
-	var autoplay = yt6.btn.playlist = autoplay.getElementsByTagName('button')[0]
+	var autoplay = yt6.btn.autoplay = autoplay.getElementsByTagName('button')[0]
 	if (autoplay && autoplay.getAttribute('onclick') && autoplay.getAttribute('onclick').indexOf('yt6') == -1) {
 	  var b = ';var yt6 = gid("snarls_player"); if (yt6) { if (this.getAttribute("class").indexOf("yt-uix-button-toggled") == -1) { yt6.autoplay = true } else { yt6.autoplay = false }; }; return false;'
 	  autoplay.setAttribute('onclick', b)
@@ -7360,18 +7389,24 @@ if (!(yt6.body2 && yt6.layout == 16) && autoplay != null) {
     if (yt6.layout == 16 && yt6.pls && ((!yt6.pls.lastChild || !yt6.pls.firstElementChild) || yt6.pls.hasAttribute('hidden')) ) yt6.pls = null
 
     var autoplay = yt6.pls
+
     if (yt6.osw.getAttribute('id') == 'player' && autoplay && !autoplay.hasAttribute('hidden')) {
 
-    // scope to get the 2nd 'top-level-buttons' which we need
-    var autoplay_ = (autoplay) ? autoplay.getElementsByClassName('top-level-buttons')[0] : null //|| gid('top-level-buttons-computed')
-    if (autoplay_) {
-      var pls = autoplay_.getElementsByTagName('ytd-toggle-button-renderer')[0]
-      var shuff = autoplay_.getElementsByTagName('ytd-toggle-button-renderer')[1]
-    }
+      // scope to get the 2nd 'top-level-buttons' which we need
+      var autoplay_ = (autoplay) ? autoplay.getElementsByClassName('top-level-buttons')[0] : null //|| gid('top-level-buttons-computed')
+      if (autoplay_) {
+	var pls = autoplay_.getElementsByTagName('ytd-toggle-button-renderer')[0]
+	var shuff = autoplay_.getElementsByTagName('ytd-toggle-button-renderer')[1]
+	if (pls && !shuff) {
+	  shuff = pls
+	  pls = autoplay_.getElementsByTagName('ytd-playlist-loop-button-renderer')[0]
+	}
+      }
 
-    if (autoplay_ || yt6.mobile) {
+      if (autoplay_ || yt6.mobile) {
 
-      var autoplay0 = gc('style-scope ytd-toggle-button-renderer style-grey-text'),
+	// since Jun '22 these classNames refer only to the shuffle button
+	var autoplay0 = gc('style-scope ytd-toggle-button-renderer style-grey-text'),
 	  autoplay1 = gc('style-scope ytd-toggle-button-renderer style-default-active'),
 	  n = 0, ie = false;
 
@@ -7382,23 +7417,26 @@ if (!(yt6.body2 && yt6.layout == 16) && autoplay != null) {
 	}
 
 	function check_(obj1, obj2) {
-	  if (obj1 && obj2 && (
+	  if (obj1 && obj2) {
+	    if (
 		(obj1.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode == obj2 // initially on playlist
 		||
 		obj1.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode == obj2)	// returned to playlist
 		&&
-		obj1.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode !== obj2) // miniplayer
-	    ) return obj1
+		obj1.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode.parentNode !== obj2 // if true, object is miniplayer
+	      ) { return obj1 } else { return false }
+	  }
 	}
 
 
-      // elements picked up may belong to dismissed miniplayers, skip to the next one if that's the case
-      if (autoplay0.length) {
-	for(n=0;n < autoplay0.length; n++) {
-	  if ( check_(autoplay0[n], yt6.mpb) || check_(autoplay1[n], yt6.mpb) ) { // not good
-	  } else if ( check_(autoplay0[n], autoplay) || check_(autoplay1[n], autoplay) ) break
+	// elements picked up may belong to dismissed miniplayers, skip to the next one if that's the case
+	var el = (autoplay0.length) ? autoplay0 : autoplay1
+	if (el.length) {
+	  for(n=0;n < el.length; n++) {
+	    if ( check_(autoplay0[n], yt6.mpb) || check_(autoplay1[n], yt6.mpb) ) { // not good
+	    } else if ( check_(autoplay0[n], autoplay) || check_(autoplay1[n], autoplay) ) { break }
+	  }
 	}
-      }
 
 
 	if (ie) {
@@ -7413,63 +7451,81 @@ if (!(yt6.body2 && yt6.layout == 16) && autoplay != null) {
 	    }
 	}
 
-      if (//autoplay0[0].parentNode.parentNode.parentNode.id == 'top-level-buttons'
-	(check_(autoplay0[n], autoplay) && !autoplay0[n].parentNode.parentNode.parentNode.parentNode.hasAttribute('hidden')) ||
-	(check_(autoplay1[n], autoplay) && !autoplay1[n].parentNode.parentNode.parentNode.parentNode.hasAttribute('hidden'))
-	) {
+	if (//autoplay0[0].parentNode.parentNode.parentNode.id == 'top-level-buttons'
+	    (check_(autoplay0[n], autoplay) && !autoplay0[n].parentNode.parentNode.parentNode.parentNode.hasAttribute('hidden')) ||
+	    (check_(autoplay1[n], autoplay) && !autoplay1[n].parentNode.parentNode.parentNode.parentNode.hasAttribute('hidden'))
+	  ) {
 
-	buttons = []
-	if (autoplay0[n]) buttons[0] = autoplay0[n].getElementsByTagName('BUTTON')[0]
-	if (autoplay1[n]) buttons[1] = autoplay1[n].getElementsByTagName('BUTTON')[0]
-	for(i=0;i<2;i++) {
-	  var a = buttons[i]; if (a && a.parentNode.parentNode.parentNode == pls) { yt6.btn.playlist = a } else a = null
-	  if (a && (!a.getAttribute('onclick') || (a.getAttribute('onclick') && a.getAttribute('onclick').indexOf('yt6') == -1)) ) {
-	    var b = ';var yt6 = gid("snarls_player"); if (yt6) { if (this.getAttribute("aria-pressed") == "false") { yt6.autoplay = true } else { yt6.autoplay = false }; }; return false;'
-	    buttons[i].setAttribute('onclick', b)
-	  }
-	}
-	buttons = []
-	if (autoplay0[n+1]) buttons[0] = autoplay0[n+1].getElementsByTagName('BUTTON')[0]
-	if (autoplay1[n+1]) buttons[1] = autoplay1[n+1].getElementsByTagName('BUTTON')[0]
-	for(i=0;i<2;i++) {
-	  var a = buttons[i]; if (a && a.parentNode.parentNode.parentNode == shuff) { yt6.btn.shuffle = a } else a = null
-	  if (a && (!a.getAttribute('onclick') || (a.getAttribute('onclick') && a.getAttribute('onclick').indexOf('yt6') == -1)) ) {
-	    var b = ';var yt6 = gid("snarls_player"); if (yt6) { if (this.getAttribute("aria-pressed") == "false") { yt6.shuffle = true } else { yt6.shuffle = false }; }; return false;'
-	    buttons[i].setAttribute('onclick', b)
-	  }
-	}
+	  var text = (pls && pls.tagName == 'YTD-TOGGLE-BUTTON-RENDERER') ? 'autoplay' : 'shuffle'
 
-	// check the current state of these buttons
-	if (check_(autoplay1[n], autoplay)) { //console.log('active')
-	  if (!autoplay1[n].parentNode.parentNode.previousSibling) {
-	    yt6.autoplay = true;
-	    autoplay2 = {}; delete autoplay2[n]
-	    if (autoplay1[n+1] && autoplay1[n].parentNode.parentNode.nextSibling.firstChild.firstChild) { yt6.shuffle = true } else yt6.shuffle = false
-	  } else { // otherwise only the shuffle button is active
-	      yt6.autoplay = false
-	      yt6.shuffle = true
+	  buttons = []
+	  if (autoplay0[n]) buttons[0] = autoplay0[n].getElementsByTagName('BUTTON')[0]
+	  if (autoplay1[n]) buttons[1] = autoplay1[n].getElementsByTagName('BUTTON')[0]
+	  for(i=0;i<2;i++) {
+	    var a = buttons[i]; if (a && (a.parentNode.parentNode.parentNode == pls || a.parentNode.parentNode.parentNode == shuff)) { yt6.btn[text] = a } else a = null
+	    if (a && (!a.getAttribute('onclick') || (a.getAttribute('onclick') && a.getAttribute('onclick').indexOf('yt6') == -1)) ) {
+	      var b = ';var yt6 = gid("snarls_player"); if (yt6) { if (this.getAttribute("aria-pressed") == "false") { yt6.'+ text +' = true } else { yt6.'+ text +' = false }; }; return false;'
+	      buttons[i].setAttribute('onclick', b)
 	    }
-        } else { //console.log('both inactive')
-
-	    if (yt6.autoplay == true && yt6.btn && yt6.btn.playlist && yt6.btn.playlist.parentNode && typeof yt6.btn.playlist.parentNode.getAttribute('class') == 'string' && yt6.btn.playlist.parentNode.getAttribute('class').indexOf('style-grey-text') > -1) { yt6.autoplay = !yt6.autoplay; yt6.btn.playlist.click() } else yt6.autoplay = false
-	    if (yt6.shuffle == true && yt6.btn && yt6.btn.shuffle && yt6.btn.shuffle.parentNode && typeof yt6.btn.shuffle.parentNode.getAttribute('class') == 'string' && yt6.btn.shuffle.parentNode.getAttribute('class').indexOf('style-grey-text') > -1) { yt6.shuffle = !yt6.shuffle; yt6.btn.shuffle.click() } else yt6.shuffle = false
-	    //yt6.autoplay = false
-	    //yt6.shuffle = false
 	  }
+	  if (text == 'autoplay') {
+	    buttons = []
+	    if (autoplay0[n+1]) buttons[0] = autoplay0[n+1].getElementsByTagName('BUTTON')[0]
+	    if (autoplay1[n+1]) buttons[1] = autoplay1[n+1].getElementsByTagName('BUTTON')[0]
+	    for(i=0;i<2;i++) {
+	      var a = buttons[i]; if (a && a.parentNode.parentNode.parentNode == shuff) { yt6.btn.shuffle = a } else a = null
+	      if (a && (!a.getAttribute('onclick') || (a.getAttribute('onclick') && a.getAttribute('onclick').indexOf('yt6') == -1)) ) {
+		var b = ';var yt6 = gid("snarls_player"); if (yt6) { if (this.getAttribute("aria-pressed") == "false") { yt6.shuffle = true } else { yt6.shuffle = false }; }; return false;'
+		buttons[i].setAttribute('onclick', b)
+	      }
+	    }
+	  } else if (pls && pls.tagName == 'YTD-PLAYLIST-LOOP-BUTTON-RENDERER') {
+	      var a = pls.getElementsByTagName('BUTTON')[0]; if (a && a.parentNode.parentNode.parentNode.parentNode.parentNode == pls) { yt6.btn.autoplay = a } else a = null
+	      if (a) {
+		if (!a.getAttribute('onclick') || (a.getAttribute('onclick') && a.getAttribute('onclick').indexOf('yt6') == -1)) {
+		  var b = ';var yt6 = gid("snarls_player"); if (yt6) { if (this.getElementsByTagName("path")[0] && typeof this.getElementsByTagName("path")[0].getAttribute("d") == "string") if (this.getElementsByTagName("path")[0].getAttribute("d").indexOf("M13,") == 0) { yt6.autoplay = false } else { yt6.autoplay = true }; }; return false;'
+		  a.setAttribute('onclick', b)
+		}
+		if (a.getElementsByTagName('path')[0] && typeof a.getElementsByTagName('path')[0].getAttribute('d') == 'string') if (a.getElementsByTagName('path')[0].getAttribute('d').indexOf('M21,') == 0) { yt6.autoplay = false } else yt6.autoplay = true
+	      }
+	    }
+
+	  // check the current state of these buttons
+	  if (check_(autoplay1[n], autoplay)) { //console.log('active')
+	    if (text == 'shuffle' || (text == 'autoplay' && !autoplay1[n].parentNode.parentNode.previousSibling)) {
+	      yt6[text] = true;
+	      autoplay2 = {}; delete autoplay2[n]
+	      if (autoplay1[n+1] && text == 'autoplay') if (autoplay1[n].parentNode.parentNode.nextSibling.firstChild.firstChild) { yt6.shuffle = true } else yt6.shuffle = false
+	    } else { // otherwise only the shuffle button is active
+		yt6[text] = false
+		if (text != 'shuffle') yt6.shuffle = true
+	      }
+          } else { //console.log('both inactive')
+
+	      if (yt6.autoplay == true && yt6.btn && yt6.btn.autoplay) {
+		if (text == 'autoplay') if (yt6.btn.autoplay.parentNode && typeof yt6.btn.autoplay.parentNode.getAttribute('class') == 'string' && yt6.btn.autoplay.parentNode.getAttribute('class').indexOf('style-grey-text') > -1) { yt6.autoplay = !yt6.autoplay; yt6.btn.autoplay.click() } else { yt6.autoplay = false }
+		if (text == 'shuffle') if (yt6.btn.autoplay.getElementsByTagName('path')[0] && typeof yt6.btn.autoplay.getElementsByTagName('path')[0].getAttribute('d') == 'string' && yt6.btn.autoplay.getElementsByTagName('path')[0].getAttribute('d').indexOf('M21,') == 0) { yt6.autoplay = !yt6.autoplay; yt6.btn.autoplay.click() }
+	      } else yt6.autoplay = false
+
+	      if (yt6.shuffle == true && yt6.btn && yt6.btn.shuffle && yt6.btn.shuffle.parentNode && typeof yt6.btn.shuffle.parentNode.getAttribute('class') == 'string' && yt6.btn.shuffle.parentNode.getAttribute('class').indexOf('style-grey-text') > -1) { yt6.shuffle = !yt6.shuffle; yt6.btn.shuffle.click() } else yt6.shuffle = false
+	      //yt6.autoplay = false
+	      //yt6.shuffle = false
+	    }
+
 	} else {
-	  var autoplay2 = gclass('style-scope ytd-playlist-panel-renderer style-grey-text')//'flex style-scope ytd-playlist-panel-renderer'// x-scope ytd-menu-renderer-0
+	    var autoplay2 = gclass('style-scope ytd-playlist-panel-renderer style-grey-text')//'flex style-scope ytd-playlist-panel-renderer'// x-scope ytd-menu-renderer-0
 
-	  if ((autoplay2 && autoplay2[0]) && !autoplay2[0].hasAttribute('hidden')) {
-	    yt6.autoplay = true; //mix
-	  } else {
-	      yt6.autoplay = false; //none
-	    }
+	    if ((autoplay2 && autoplay2[0]) && !autoplay2[0].hasAttribute('hidden')) {
+	      yt6.autoplay = true; //mix
+	    } else {
+		yt6.autoplay = false; //none
+	      }
 
-	}
+	  }
 
-      } else yt6.autoplay = (!(yt6.mobile && yt6.pls)) ? false : true
+      } else { ev_log('?????'); yt6.autoplay = (!(yt6.mobile && yt6.pls)) ? false : true; ev_log('????'+yt6.autoplay) }
 
-    }
+    } else if (!yt6.mobile) { ev_log('!!!!! '+yt6.autoplay +'-'+yt6.pls); yt6.autoplay = false }
 
   }
 
@@ -7479,7 +7535,7 @@ if (!(yt6.body2 && yt6.layout == 16) && autoplay != null) {
 	var autoplay
 	if (yt6.ytg) autoplay2 = document.getElementsByTagName('ytg-playlist-panel-renderer')
 	if (yt6.ytm) { autoplay2 = []; autoplay2[0] = gid('queue') }
-	if (yt6.mobile) { autoplay2 = []; autoplay2[0] = yt6.pls }
+	if (yt6.mobile) { autoplay2 = []; autoplay2[0] = (!yt6.mobile) ? yt6.pls : (yt6.pls || ((location.href.indexOf('list=PL') > -1)) ? {} : null ) }
 	if (!autoplay2[0]) { yt6.autoplay = false } else {
 	  yt6.autoplay = true
 	  if (yt6.player1.media.firstChild && yt6.player1.media.firstChild.name == '0') {
@@ -8462,7 +8518,7 @@ yt6d.mep_renew = function() {
 		//z.parentNode.parentNode.removeChild(z.parentNode); find_the_source()
 	    //} else {
 	      yt6.me_flash_source = z;
-	      if (autoplay() && (yt6.x || (!yt6.x && v_(yt6.p) && v_(yt6.p).src && v_(yt6.p).src.indexOf('http') == 0) || yt6.browser_tab == 'hidden' || !yt6d.previous.linx.length) ) {// && !yt6.ytm
+	      if ((yt6.autoplay || autoplay()) && (yt6.x || (!yt6.x && v_(yt6.p) && v_(yt6.p).src && v_(yt6.p).src.indexOf('http') == 0) || yt6.browser_tab == 'hidden' || !yt6d.previous.linx.length) ) {// && !yt6.ytm
 		z.setAttribute('checked','checked'); z.checked = 'true'
 		yt6.player1.setSrc(yt6.linx[itagx])
 		if (1 * itagx != 1 * yt6.userprefV[i] && !yt6d.init) {
@@ -8475,52 +8531,99 @@ yt6d.mep_renew = function() {
 		  try {
 		    if (yt6.player1 && yt6.player1.media) {
 
-			//if (yt6.mobile && yt6.browser_tab == 'hidden') setTimeout(function(){ yt6.player1.play(); setTimeout(function(){ if (yt6.player1.media.paused) { yt6.player1.play() } },2500) },700)
-			yt6.player1.media.timer = 0; yt6.sync_timer = 0
+		      yt6.player1.media.timer = 0; yt6.sync_timer = 1; yt6.autoplay_trigger = (typeof yt6.autoplay_trigger == 'number') ? yt6.autoplay_trigger : 0
 
-		      function autoplay_trigger(t, itagx) {
+		      var step = 1500, threshold = 9000
+
+
+
+		      function autoplay_trigger(t, itagx) { yt6.autoplay_trigger++
+
+			let timeout001 = false; let timeout002 = false
 
 			$waitUntil(function(){
-			  if (yt6.player1.media.loaded) { return true }
+			  if ( (yt6.player1.media.loaded) || yt6.autoplay_trigger >= 100) { return true }
 			    else {
 			      if (yt6.browser_tab == 'hidden') {
-				setTimeout(function(){ if (typeof yt6.player1.media.timer == 'number') yt6.player1.media.timer++; //ev_log(yt6.player1.media.timer +' '+ yt6.player1.media.loaded +' '+ yt6.player1.media.paused +' '+ yt6.sync_timer)
-				  if (yt6.browser_tab == 'hidden' && (!yt6.player1.media.loaded || yt6.player1.media.timer > 4)) {
+				//if (!timeout001)
+				setTimeout(function(){
+				  if ( (yt6.browser_tab == 'hidden' && (!yt6.player1.media.loaded || !yt6.player1.isLoaded)) ) {
 				  try {
-				    if (yt6.player1.media.paused) { gc("mejs-button mejs-playpause-button")[0].click() }
+				    if (yt6.player1.media.paused && !yt6.player1.media.currentTime) { gc("mejs-button mejs-playpause-button")[0].click() }
+				    //if (!timeout002)
 				    setTimeout(function(){
-				      if (!yt6.player1.media.loaded || yt6.player1.media.timer > 6) {
-				        yt6.sync_timer++
+				      if (!yt6.player1.media.loaded) {
+
 					if (yt6.sync_timer > 1) {
-					  yt6.player1.media.timer = 0; yt6.sync_timer = 0
-					  if (!(yt6.player1.media.loaded && yt6.player1.media.paused)) { yt6.player1.setSrc("https://www.youtube.com/ptracking"); yt6.player1.load(); yt6.player1.isLoaded = false }
-					  if (!yt6.player1.isLoaded) {
-					    try { if (gid(mep + '_sourcechooser_' + yt6.current)) t = gid(mep + '_sourcechooser_' + yt6.current); t.click(); //ev_log(t.id +' '+ yt6.player1.media.loaded);
-					      if (yt6.player1.media.loaded) { yt6.player1.isLoaded = true; yt6.player1.media.timer = 0; yt6.player1.media.play() }
-					    } catch(e){ z.click(); yt6.player1.isLoaded = true }
+					  //yt6.player1.media.timer = 0
+					  if ( (!yt6.player1.media.loaded && !yt6.player1.media.paused && yt6.sync_timer % 4 == 1)
+						 || (yt6.player1.media.loaded && yt6.sync_timer % 4 == 1 && !yt6.player1.media.currentTime && yt6.sync_timer > 9)
+						 //|| (yt6.sync_timer > 2 && yt6.sync_timer % 13 == 2 && !yt6.player1.media.loaded && !yt6.player1.isLoaded)
+					      ) {
+					    yt6.player1.setSrc("https://www.youtube.com/ptracking"); yt6.player1.load(); yt6.player1.isLoaded = false; //ev_log('pt0')
+					  }
 
-					    setTimeout(function(){ autoplay_trigger(t, clone(yt6.current)) }, 1400)
+					  if (yt6.sync_timer % 3 == 1) {
+					    if (!yt6.player1.isLoaded || !yt6.player1.media.loaded || yt6.player1.media.src == 'https://www.youtube.com/ptracking') {
+					      try {
+						if (gid(mep + '_sourcechooser_' + yt6.current)) {
+						  t = gid(mep + '_sourcechooser_' + yt6.current); t.click(); //ev_log('ld0')
+						}
+						if (yt6.player1.media.loaded) { yt6.player1.isLoaded = true; }//yt6.player1.media.timer = 0; } //yt6.player1.media.play() }
+					      } catch(e){ z.click(); yt6.player1.isLoaded = true }
+					    } //else yt6.player1.play()
 
-					  } else yt6.player1.play()
+					  } else if (!yt6.player1.isLoaded && yt6.player1.media.loaded && yt6.player1.media.currentTime) { yt6.player1.isLoaded = true }//; yt6.player1.play() }
+
+					    setTimeout(function(){ if (yt6.sync_timer % 13 == 2) yt6.sync_timer = (!yt6.player1.media.loaded) ? 2 : 0; //if (yt6.autoplay_trigger < 3) { ev_log('+1'); autoplay_trigger(t, clone(yt6.current)) } //else yt6.autoplay_trigger--
+					    }, 700)
+
 					} else { yt6.player1.load() }
-				      } else if (yt6.browser_tab == 'visible' && yt6.player1.media.loaded && yt6.player1.media.paused) { yt6.player1.play() } 
-				    },700)
-				  } catch(e){ yt6.player1.play() }
-				  } else { yt6.player1.media.timer = 0; //ev_log('play '+ yt6.player1.isLoaded +' '+ yt6.player1.media.loaded);
-				      yt6.player1.play()
-				    }
-				},700)
-			      } else {
-				  yt6.player1.setSrc("https://www.youtube.com/ptracking"); yt6.player1.load()
-				  try { if (gid(mep + '_sourcechooser_' + yt6.current)) t = gid(mep + '_sourcechooser_' + yt6.current); t.click() } catch(e){ z.click() }
-				}
-			    }
-			  },
-			function(){
-			  $waitUntil(function(){ if (yt6.player1.media.loaded) { return true } }, function(){ if (yt6.player1.media.paused) { yt6.player1.play() } },250,2500)
-			},1500,9000)
+				      } //else if (yt6.browser_tab == 'visible' && yt6.player1.media.loaded && yt6.player1.media.paused) { yt6.player1.play() }
 
-		      }; autoplay_trigger(z, itagx)
+				      //ev_log(yt6.autoplay_trigger+'/'+((yt6.player1.isLoaded) ? '1' : '0') + ((yt6.player1.media.loaded) ? '1' : '0') +'/'+yt6.sync_timer)
+
+				      if (!yt6.player1.isLoaded && yt6.player1.media.loaded && yt6.player1.media.currentTime) { yt6.player1.isLoaded = true; }
+				      //timeout002 = false
+				    },700); timeout002 = true
+				  } catch(e){ yt6.player1.play() }
+				  } else { //yt6.player1.media.timer = 0; //if (yt6.player1.media.paused) { yt6.player1.play() } else yt6.player1.pause()
+				    }
+				  if (yt6.autoplay_trigger == 1 || yt6.autoplay_trigger == 2) yt6.player1.play()
+				  //timeout001 = false
+				},700); timeout001 = true
+			      } else {
+				  if (yt6.sync_timer % 2 == 1) {
+				    if ((timeout001 || !yt6.player1.media.loaded) && !yt6.player1.media.currentTime) { //ev_log('pt1')
+				      yt6.player1.setSrc("https://www.youtube.com/ptracking"); yt6.player1.load()
+				    }
+				    try {
+				      if (gid(mep + '_sourcechooser_' + yt6.current)) t = gid(mep + '_sourcechooser_' + yt6.current); t.click(); //ev_log('ld1')
+				    } catch(e){ ev_log(e); z.click() }
+				  }
+				}
+			    }; //ev_log(yt6.sync_timer)
+			    yt6.sync_timer++
+			    if (yt6.player1.isLoaded && yt6.player1.media.loaded && yt6.player1.media.paused) yt6.player1.play()
+			  },
+			function(){ yt6.autoplay_trigger--
+			  $waitUntil(function(){ //ev_log('Go');
+				if (yt6.player1.media.loaded) { //ev_log('Go'+((yt6.player1.media.loaded) ? '1' : '0'));
+				  yt6.player1.isLoaded = true; yt6.player1.media.play(); return true
+				} else yt6.player1.isLoaded = false
+			    },
+			  function(){
+				if (!yt6.player1.media.paused && !yt6.player1.media.currentTime) { //ev_log('Go2'+((yt6.player1.media.loaded) ? '1' : '0'));
+				  yt6.player1.play() };
+				if (!yt6.player1.media.currentTime) { //ev_log('Go? '+yt6.autoplay); 
+				  yt6.player1.play() }
+			  },250,2500)
+
+			}, step, threshold)
+
+		      }; if (1 >= yt6.autoplay_trigger)
+			 autoplay_trigger(z, itagx)
+
 
 		    } else gid('player1').play()
 		  } catch(e){}; //ev_log('autoplay trigger')
@@ -8850,8 +8953,8 @@ function onYouTubeIframeAPIReady() {
 			    if (list) $waitUntil(
 				function(){ if (gc('compact-media-item-headline')[yt6.pl_index_m - yt6.pls_top]) return true },
 				function(){
-				  var z = (screen.height >= screen.width) ? gc('compact-media-item-headline')[yt6.pl_index_m - yt6.pls_top] : document.getElementsByTagName('ytm-app')[0]
-				  gid('player-container-id').className = (z == yt6.p) ? 'player-container' : 'player-container sticky-player'
+				  var z = (screen.height >= screen.width) ? gc('compact-media-item-headline')[yt6.pl_index_m - yt6.pls_top] : document.getElementsByTagName('ytm-app')[0], y = gid('player-container-id')
+				  if (y) y.className = (z == yt6.p) ? 'player-container' : 'player-container sticky-player'
 				  try { z.scrollIntoView(true) } catch(e){}
 				},700,4900)
 				//list.getElementsByTagName('ytm-playlist-panel-video-renderer')
@@ -8875,7 +8978,7 @@ function pl_item() {
 
   yt6.vid = video_id()[0]
   yt6.pl_next = null; delete yt6.pl_next; yt6.pl_previous = null; delete yt6.pl_previous; yt6.pl_set = null; delete yt6.pl_set
-  var offset, c = conf('args')
+  var offset, index, c = conf('args')
 
   var z = gid('playlist') || gid('queue') || document.getElementsByTagName('ytg-playlist-panel-renderer')[0]
   if (yt6.layout == 16 && yt6.pls && z && z.id == 'playlist' && typeof z.className == 'string' && z.className.indexOf('ytd-watch') == -1) z = document.getElementsByTagName(yt6.pls.tagName)[1]
@@ -8898,11 +9001,14 @@ function pl_item() {
 	    var zi = z[i].getElementsByTagName('A')[0]
 	    if (zi && zi.getAttribute('href') != null) {
 	      var x = vID(zi.getAttribute('href')).split('&')[0]
-	      if (i == 0 && yt6.layout == 16 && !yt6.ytm && !yt6.ytg) {
-		yt6.pl_set = (zi.getAttribute('href').split('&index=')[1]) ? 1 * zi.getAttribute('href').split('&index=')[1].split('&')[0] - 1 : 0
+	      if (!yt6.ytm && !yt6.ytg) {
+		index = (zi.getAttribute('href').split('&index=')[1]) ? 1 * zi.getAttribute('href').split('&index=')[1].split('&')[0] - 1 : 0
+		if (i == 0 && yt6.layout == 16) {
+		  yt6.pl_set = index
+		}
 	      }
 	      if (zi.innerHTML.indexOf('/watch?v=' + yt6.vid) != -1 || (mix[0] && mix[0].hasAttribute('hidden') || zi.parentNode.hasAttribute('selected')) && c[1] && c[1].video_id == x || yt6.vid == x ) {
-		var y = (!yt6.ytg) ? zi.getAttribute('href').split('&index=')[1].split('&')[0] - 1 + 1 : zi.innerHTML.split('<span class="style-scope ytg-formatted-string">')[1].split('</span>')[0]
+		var y = (!yt6.ytg) ? (index + 1) : zi.innerHTML.split('<span class="style-scope ytg-formatted-string">')[1].split('</span>')[0]
 
 		if (!yt6.ytg) {
 		  var offset = z[i].getAttribute('style')
@@ -8920,9 +9026,12 @@ function pl_item() {
 		if (typeof y == 'number') { yt6.pl_index = y - 1 } else { if (y == '▶' && typeof yp == 'number') { yt6.pl_index = yp } }
 		break
 
-	      } else if (yt6.ytg) {
-		  var yp = zi.innerHTML.split('<span class="style-scope ytg-formatted-string">')[1].split('</span>')[0]
-		  if (typeof yp != 'number') yp = 1 * yp - 0
+	      } else {
+		  if (yt6.ytg) {
+		    var yp = zi.innerHTML.split('<span class="style-scope ytg-formatted-string">')[1].split('</span>')[0]
+		    if (typeof yp != 'number') yp = 1 * yp - 0
+		  }
+		  if (typeof y != 'number' && typeof yt6d.playlist.current == 'number') { y = yt6d.playlist.current }
 		}
 	    }
 
@@ -8949,6 +9058,7 @@ function pl_item() {
 
         if (!yt6.ytm && typeof y == 'number') {
 
+	  index = y
 	  var yr = new RegExp('&index=' + (y + 1));//[^0-9]
 	  var yr2 = new RegExp('&index=' + (y + 2))
 	  for(i=0;i<z.length;i++) {
@@ -8963,6 +9073,32 @@ function pl_item() {
 		break
 	    }
 	  };
+	  for(i=0;i<z.length;i++) {
+	    var zi = z[i].getElementsByTagName('A')[0]
+	    if (yt6d.playlist.list && location.href.indexOf(yt6d.playlist.list) > -1) { //console.log(i  +' '+ zi.getAttribute('href').split('&index=')[1].split('&')[0] +' '+ zi.getAttribute('href'))
+	      if (!isNaN((1 * zi.getAttribute('href').split('&index=')[1])) ) { 
+		yt6d.playlist.current = y
+		index = zi.getAttribute('href').split('&index=')[1].split('&')[0]
+		if (typeof yt6d.playlist.items[index] !== 'object') yt6d.playlist.items[index] = {}
+		if (!yt6d.playlist.items[index].href) yt6d.playlist.items[index].href = zi.getAttribute('href')
+		if (!yt6d.playlist.items[index].link) yt6d.playlist.items[index].link = zi
+		if (!yt6d.playlist.items[index].blocked) {
+		  var img = zi.getElementsByTagName('img')[0]
+		  yt6d.playlist.items[index].blocked = (img && typeof img.src == 'string' && img.src.indexOf('//s.ytimg.com/yts/img/meh_mini-vfl0Ugnu3.png') > -1) ? true : false
+		}
+	      }
+	    } else yt6d.playlist.items = []
+	  }
+	  if (yt6d.playlist.items[(y+1)]) { var l = yt6d.playlist.items
+	    for(i=(y+1);i<l.length;i++) {
+	      var li = l[i].link
+	      if (li && typeof li.getElementsByTagName == 'function') {
+		var img = li.getElementsByTagName('img')[0]
+		var pl_next_blocked = (yt6d.playlist.items[i].blocked || (img && typeof img.src == 'string' && img.src.indexOf('//s.ytimg.com/yts/img/meh_mini-vfl0Ugnu3.png')) > -1) ? true : false
+		if (!pl_next_blocked) { yt6d.playlist.next = i; break } else { yt6d.playlist.next = null; if (i == (y+1)) yt6.pl_next_blocked = true }
+	      }
+	    }
+	  }
 	  if (!(yt6.pl_previous && yt6.pl_previous.getAttribute('href').indexOf('&index=' + (y-2)) != -1)) {
 	    var yr = new RegExp('&index=' + (y-1));//[^0-9]
 	    for(i=0;i<z.length;i++) {
@@ -9745,7 +9881,7 @@ function buildObject(ytplayer){
 
 	  try {
 	    if (location.href.split('list=PL')[1]) {
-	      c[1].list = 'PL' + location.href.split('list=PL')[1].split('&')[0].split('/')[0]
+	      c[1].list = 'PL' + location.href.split('list=PL')[1].split('&')[0].split('/')[0]; clear_pls(clone(c[1].list))
 	      yt6.p.cuePlaylist({
 		listType: 'playlist',
 		list: c[1].list,
@@ -9832,7 +9968,7 @@ function rewrite_ytplayer(node_value, s, sig){
 if (c[1]) {
 
 	  if (location.href.split('list=PL')[1]) {
-	    ytplayer.config.args.list = 'PL' + location.href.split('list=PL')[1].split('&')[0].split('/')[0]
+	    ytplayer.config.args.list = 'PL' + location.href.split('list=PL')[1].split('&')[0].split('/')[0]; clear_pls(clone(ytplayer.config.args.list))
 	  }
 
   if (!ytplayer.config) ytplayer.config = c[0]
@@ -9946,7 +10082,7 @@ if (c[1]) {
 
   var linx = [], args = ytplayer.config.args
 
-  yt6.aspect_ratio = '' // leave it as an empty string for now // 16/9
+  yt6.aspect_ratio = (typeof yt6.aspect_ratio == 'string' && yt6.aspect_ratio.split('x')[1] && !isNaN((yt6.aspect_ratio.replace('x',''))) ) ? yt6.aspect_ratio : '' // leave it as an empty string for now // 16/9
   yt6.yt_otf = []
   yt6.afmts = []
 
@@ -10150,7 +10286,7 @@ if (c[1]) {
 		 ) || (yt6.live && dur) || !yt6.ads_eid1//|| avgx
 		) {
 	      var ad_links = durL1, ad = 1
-	      if (durA1.eid) { if (!yt6.ads_eid1) yt6.real_eid = clone(durA1.eid); if (avgx || yt6.ads_eid2) if (yt6.ads_eid1) { console.log(yt6.ads_eid1); yt6.ads_eid = clone(yt6.ads_eid1) }; yt6.ads_eid1 = clone(durA1.eid) }
+	      if (durA1.eid) { if (!yt6.ads_eid1) yt6.real_eid = clone(durA1.eid); if (avgx || yt6.ads_eid2) if (yt6.ads_eid1) { yt6.ads_eid = clone(yt6.ads_eid1) }; yt6.ads_eid1 = clone(durA1.eid) }
 	    } else {
 		var ad_links = durL2, ad = 2
 		if (durA2.eid && yt6.ads_eid1 != durA2.eid) { yt6.ads_eid2 = clone(durA2.eid); if (yt6.ads_eid1) yt6.ads_eid = (!(yt6.ads_eid2 && yt6.ads_eid2 != durA2.eid)) ? clone(durA2.eid) : clone(yt6.ads_eid2) }
@@ -10636,7 +10772,7 @@ if (args.dashmpd) {
     if (x != null) {
       var w_orig = getElementsByAttribute(document,"meta",x[0],x[1] + "width")[0].content + "px"
       var h_orig = getElementsByAttribute(document,"meta",x[0],x[1] + "height")[0].content + "px"
-      yt6.aspect_ratio = (w_orig.replace('px','')/h_orig.replace('px',''))
+      yt6.aspect_ratio = (w_orig.replace('px','')/h_orig.replace('px','')); console.log(yt6.aspect_ratio)
       yt6.ar = (w_orig.replace('px','')/h_orig.replace('px',''))
     } else {
 
@@ -10882,7 +11018,7 @@ if (typeof html.splice != 'function') return void 0;
       b = browserIcon
     }
   var output_log = '\\n\'+ yt6d.log +\''
-  b = '<div style=&quot;height: 12px&quot;></div>' + b +'<div><div><b style=&quot;font-size: 20px; color: white; background-color: darkslateblue&quot;><strong>'+ browserName +' on '+ (navigator.oscpu || navigator.platform) +'</strong></b></div><br><textarea style=&quot;width: 280px; height: auto; background-color: white&quot;>' + navigator.userAgent + output_log +'</textarea></div>\''
+  b = '<div style=&quot;height: 12px&quot;></div>' + b +'<div><div><b style=&quot;font-size: 20px; color: white; background-color: darkslateblue&quot;><strong>'+ browserName +' on '+ (navigator.oscpu || navigator.platform) +'</strong></b></div><br><textarea style=&quot;width: 280px; height: auto; background-color: white; color: black&quot;>' + navigator.userAgent + output_log +'</textarea></div>\''
 
   html.splice(1,0,'Direct links to YouTube media<br>for IP address: '+ expire_date()[0])
 
@@ -11070,9 +11206,8 @@ yt6.switches = function() {
   var dw = document.createElement('div')
   dw.id = 'quit'
   gid('bm2').appendChild(dw)
-  gid('quit').setAttribute('style','float: right')
-  dw.style.display = 'inline-block'
-  dw.style.float = 'right'
+  gid('quit').setAttribute('style','float: right; display: inline-block; margin-right: 12px')
+  dw.style.display = 'inline-block'; dw.style.float = 'right'; dw.style.marginRight = '12px'
 
   var dw = document.createElement('br')
   gid('bm2').appendChild(dw)
@@ -11196,6 +11331,7 @@ if (!gid('bm4')) {
     if  (video_title()[1] && window.ytplayer &&
 	 window.ytplayer.config &&
 	 bm0 &&
+	 !(yt6.mobile && yt6.pre_ad) &&
 	 (!yt6.wna ||
 	  !gid('remove-sp') ||
 	  !gid('controls-sp'))
@@ -11335,7 +11471,7 @@ if (!gid('bm4')) {
 
 function ev_log(event) {
   yt6d.log.push(event)
-  if (yt6d.log.length > 30) yt6d.log.splice(0,1)
+  if (yt6d.log.length > 100) yt6d.log.splice(0,1)
 }
 
 
@@ -11607,6 +11743,9 @@ function mep_run() {
 					    function decryption_failure(){ //console.log('df')
 
 					      if (yt6.status == 'unplayable' && player() && yt6.p.tagName == 'IFRAME') { return void 0; } // take no action in this case
+					      if (yt6d.update_in_progress) { return void 0 }
+					      yt6d.update_in_progress = true
+
 					      var z = gc('mejs-overlay-error');
 					      if (z[0]) {
 					        z[0][yt6.txt] = 'Video signature decryption failed!';
@@ -11627,13 +11766,14 @@ function mep_run() {
 						      )
 						   ) {
 							ajax1(true, yt6.ytg)
-							yt6.error = ''
+							yt6.error = ''; if (yt6.failed_itags2 < 5) { yt6.failed_itags = []; yt6.retry = 0; } //ev_log('retry') }
 							var built = buildObject(window.ytplayer)
 							if ((yt6.xhr.async && !!built) || (!yt6.xhr.async && video_title()[1]) || yt6.ytm) {//if ((!!built && !yt6.xhr.async) || yt6.ytm) {
 							  redo_dl_button(  yt6.args,  yt6.html,  yt6.href)
 							  yt6d.mep_up()
 							  yt6d.mep_renew()
 							  autoplay()
+							  if (yt6d.update_in_progress) { yt6.failed_itags = []; yt6.failed_itags2 = 1; delete yt6d.update_in_progress }
 							}
 
 						} else { //console.log('t40')
@@ -11680,7 +11820,7 @@ function mep_run() {
 							  rewrite_links()
 							}
 						    }
-
+						    if (yt6d.update_in_progress) { delete yt6d.update_in_progress }
 						  }
 					    }
 
@@ -11707,8 +11847,14 @@ function mep_run() {
 					    //console.log('retry: '+ yt6.retry +' limit:'+ limit +' current:'+ yt6.current)// + ' failed_itags2:'+ yt6.failed_itags2 +' failed_itags:' + yt6.failed_itags);
 
 
-								//if (yt6.failed_itags2 < 5)
-					    if ( yt6.retry >= limit && yt6.failed_itags2 < 5) { yt6.retry = 0; if (yt6.failed_itags2 < 2) { yt6.failed_itags = [] }; yt6.failed_itags2 = 5 }//++ } else { }//autoplay(false) && // || (yt6.retry >= 0 && yt6.current == 242 && yt6.failed_itags.toString().split('0').length >= 3)
+
+					    if ( yt6.retry >= limit && yt6.failed_itags2 < 5) { yt6.retry = 0
+					      if (yt6.failed_itags2 < 2) {
+						yt6.failed_itags = []; yt6.failed_itags2++; decryption_failure(); return void 0
+					      } else {
+						  yt6.failed_itags2 = 5
+						}
+					    }//if ( yt6.retry >= limit && yt6.failed_itags2 < 5) { yt6.retry = 0; if (yt6.failed_itags2 < 2) { yt6.failed_itags = [] }; yt6.failed_itags2 = 5 }//++ } else { }//autoplay(false) && // || (yt6.retry >= 0 && yt6.current == 242 && yt6.failed_itags.toString().split('0').length >= 3)
 					    if ( yt6.retry < limit && yt6.failed_itags2 < 5 && !(yt6.retry >= Math.round(limit / 4) && yt6.failed_itags2 > 1 && yt6.failed_itags.length >= 4) 
 //(gid('ytassetsjs') || yt6.ytg ) &&
 					//	 && !((yt6.failed_itags.includes(171) || yt6.failed_itags.includes(140)) )//&& (yt6.failed_itags.includes(278) || yt6.failed_itags.includes(132)) && (yt6.failed_itags.includes(43) || yt6.failed_itags.includes(18)))
@@ -11816,7 +11962,7 @@ function mep_run() {
 						   ) {
 						  //var k = (yt6.ytg) ? 0 : (j+yt6.retry)
 
-						  if (yt6.failed_itags2 == 1 || yt6.failed_itags2 == 3) {
+						  if (yt6.failed_itags2 == 1 || yt6.failed_itags2 == 2) {
 
 						    for(k=Math.max(j,0);k<yt6.fmts_fallback_uniq.length;k++){ //console.log(yt6.failed_itags2 + ' ' +k +' '+yt6.retry +' / '+ limit+' --  '+yt6.failed_itags)//k=Math.max(j+1,0) //.indexOf(1)
 						      var itag_ = yt6.fmts_fallback_uniq[k]; if (itag_ == 160) itag_ = 132; //if (itag_ == 241) itag_ = 278; //console.log(k +' '+ itag_)
@@ -11848,7 +11994,7 @@ function mep_run() {
 						    } else { yt6.failed_itags2++ }
 
 						  } else //if (yt6 && !yt6)
-							if (yt6.failed_itags2 == 2 || yt6.failed_itags2 == 4) { //yt6.failed_itags = []// continue searching in reverse order (from lowest resolution to highest)
+							if (yt6.failed_itags2 == 3 || yt6.failed_itags2 == 4) { //yt6.failed_itags = []// continue searching in reverse order (from lowest resolution to highest)
 
 							// move medium quality legacy formats (18, 43) to a lower index, so they would come after all the 360p adaptive formats
 							// old formats show problems when playback speed is high and the tab is in the background
@@ -11919,17 +12065,19 @@ function mep_run() {
 						  if (yt6.linx[itag_]) {
 						    var link_to_load = yt6.linx[itag_]
 						    if (yt6.live && typeof yt6.live == 'number') link_to_load = dash.value = link_to_load + '&sq=' + yt6.live; //console.log(link_to_load)
-						    yt6.player1.setSrc( link_to_load )
+						    yt6.player1.setSrc( link_to_load ); yt6.player1.isLoaded = false
 						  }
 						  if (yt6.current && yt6.current == itag_ && !yt6.failed_itags.includes(yt6.current)) { yt6.failed_itags.push(yt6.current) } //add the current source's itag to srcbak if it has already been tried once and shows up in this error block again
 
 						  //console.log('play ' +itag_ +' '+ yt6.decoding_error)
-						  try { dash.click() } catch(e){ yt6.player1.media.load() }
+						  try { dash.click() } catch(e){ yt6.player1.load() }
 
-						  if (!(yt6.md && yt6.browser_tab == 'hidden')) {
+						  //if (!(yt6.md && yt6.browser_tab == 'hidden' && yt6.failed_itags.includes(itag_) )) {
 						    no_default(itag_, 'V'); if (yt6.fmts_fallback.A.all.indexOf(itag_) > -1) no_default(itag_, 'A')
-						    setTimeout(function() { if (me.paused && (yt6.live || yt6.autoplay)) { me.play() } },250)
-						  } else yt6.no_default = true
+						    setTimeout(function() { if (me.paused && (yt6.live || yt6.autoplay)) { yt6.player1.play() } },250)
+						  //} else { yt6.no_default = true
+						  //    if (limit == yt6.retry) { decryption_failure() }
+						  //  }
 
 						}
 
@@ -12201,6 +12349,8 @@ function mep_run() {
 					      }
 					    }
 					  }
+					  pl_item()
+					  if (yt6.md && browserName == 'Firefox' && yt6.browser_tab == 'hidden') Seek = 0
 					  if (yt6.mobile) $waitUntil(function() { if (!(yt6.wna && yt6.wna.firstChild && yt6.wna.firstChild.id == 'yt-alert-message')) return true }, function() { scrollToCurrentVideo(); set_controls() },500,2000)
 					});
 					addEL(me, 'error', function() { media_error_handler(me) });
@@ -12219,7 +12369,7 @@ function mep_run() {
 					  yt6.current = 1 * itag(me.src)
 					  yt6.errcount = 0
 
-					  if (yt6.newvideo) { yt6.newvideo = true } else { yt6.sync_timer = true }
+					  if (yt6.newvideo) { yt6.newvideo = true } //else { yt6.sync_timer = true }
 					  if (yt6.live) yt6.ct = 0
 
 					  if (mep) if (yt6.A_[itag(me.src)] || (itag(me.src) >= 103 && yt6.fmts_fallback.A.all[itag(me.src)])) {
@@ -12572,7 +12722,7 @@ function mep_run() {
 							      \/\*if (me.currentTime == yt6.pt)\*\/\
 								$waitUntil(function(){ if (me.loaded) { return true } else { if (!yt6.navigation) { me.load(); setTimeout(function(){ me.play() },700) } } }, function(){ \
 								  if (me.paused || (!me.paused && ( me.currentTime == me.pastTime || (me.currentTime).toFixed(6) == (me.pastTime + 0.01).toFixed(6) ) )) {\
-								    if (!me.paused && yt6.ct == yt6.pt) yt6.player1.media.setCurrentTime((me.currentTime || 0) + 0.01);\/\*if (yt6.x && !yt6.live && me.paused) { try { me.p.click() } catch(e){ yt6.player1.media.play() }; }\*\/\
+								    if (!me.paused && yt6.ct == yt6.pt) yt6.player1.media.setCurrentTime((me.currentTime || 0) + 0.01);\/\*if (yt6.x && !yt6.live && me.paused) { try { yt6.player1.media.play() } catch(e){ yt6.player1.media.play() }; }\*\/\
 								  } \/\*else console.log("Ok.... "+ Seek +" "+ me.currentTime); console.log(me.currentTime +" "+ me.pastTime +" "+ yt6.ct +" "+ yt6.pt)\*\/\
 								  me.pp.ok = false;\
 								},40,400)\
@@ -12581,7 +12731,7 @@ function mep_run() {
 								me.timer = (typeof me.timer == "number") ? (me.timer + 1) : 0;\
 							      }\
 							    } else { if (yt6.x && yt6.live && !me.loaded && me.src != player2.src) { Seek = 0; yt6.player1.pause(); Seek = 0 };\
-								if ((!me.loaded || (!me.paused && Math.abs(player2.currentTime - me.currentTime) > 3) || (Seek != 3 && me.currentTime && yt6.ct == me.currentTime && yt6.ct == yt6.pt && yt6.pt == me.pastTime) ) && me.timer < 2) { if (!yt6.navigation) { yt6.no_default = true; me.load() }; me.timer = (typeof me.timer == "number") ? (me.timer + 1) : 0;\
+								if ((!me.loaded || (!me.paused && Math.abs(player2.currentTime - me.currentTime) > 3) || (Seek != 3 && me.currentTime && yt6.ct == me.currentTime && yt6.ct == yt6.pt && yt6.pt == me.pastTime) ) && me.timer < 2) { if (!yt6.navigation) { yt6.no_default = true; if (me.currentTime == 0.01 && !me.paused) { yt6.ct = 0; yt6.player1.isLoaded = false; yt6.player1.play(); me.play() } else me.load() }; me.timer = (typeof me.timer == "number") ? (me.timer + 1) : 0;\
 								}; me.timer = (typeof me.timer == "number" && yt6.browser_tab == "visible") ? (me.timer + 1) : 0;\
 								if (me.timer > 3) me.timer = 0; if (!yt6.live && me.currentTime == me.pastTime) me.timer = (me.timer + 1);\
 								me.pp.ok = false;\
@@ -12593,21 +12743,21 @@ function mep_run() {
 							  \/\*console.log("Playing...")\*\/;\
 							  yt6.ct = (1 * yt6.ct) || 0;\
 							  if (yt6.x || yt6.audiox) {\
-							    if ( (!me.pp.ok || (yt6.browser_tab == "hidden" && !me.currentTime)) && (me.paused || (!me.paused && (me.currentTime == yt6.pt || (me.currentTime).toFixed(6) == (me.pastTime + 0.1).toFixed(6)) )) ) {\
-							      if ( (yt6.pt === 0 || (yt6.ct == (yt6.pt + 0.01)) ) ) {\
+							    \/\*if ( (!me.pp.ok || (yt6.browser_tab == "hidden" && !me.currentTime)) && (me.paused || (!me.paused && (me.currentTime == yt6.pt || (me.currentTime).toFixed(6) == (me.pastTime + 0.1).toFixed(6)) )) ) {\*\/\
+							      \/\*if ( (yt6.pt === 0 || (yt6.ct == (yt6.pt + 0.01)) ) ) {\*\/\
 								setTimeout(function(){ very_simple_playback_duh() },700)\
-							      } else { setTimeout(function(){ very_simple_playback_duh() },700) }\
-							    }\
+							      \/\*} else { setTimeout(function(){ very_simple_playback_duh() },700) }\*\/\
+							    \/\*}\/\*\
 							  }\
 							}).catch(function (error) { \/\*console.log("Failed to play...." + error)\*\/;\
 						          yt6.player1.isLoaded = false;\
 							  var src = yt6.player1.media.src; \/\*yt6.retry = (typeof yt6.retry == "number") ? (yt6.retry + 1) : 0\*\/;\
 							  \/\*yt6.player1.setSrc("https://www.youtube.com/ptracking"); yt6.player1.load(); yt6.player1.setSrc(src); yt6.player1.load()\*\/;\
-							  \/\*if (yt6.fmts_fallback.V.all.indexOf(itag(src)) > -1) { no_default(itag(src), "V") } else no_default(itag(src), "A"); if (yt6.player1.media.p) try { yt6.player1.media.p.click() } catch(e){}\*\/; \
-						          if ( (!me.pp.ok || (yt6.browser_tab == "hidden" && !me.currentTime) ) && (yt6.x || yt6.audiox)) {\
-							    if ( (yt6.pt === 0 || me.paused || (!me.paused && me.currentTime == me.pastTime)) ) {\
+							  \/\*if (yt6.fmts_fallback.V.all.indexOf(itag(src)) > -1) { no_default(itag(src), "V") } else no_default(itag(src), "A"); try { yt6.player1.media.play() } catch(e){}\*\/; \
+						          if ( \/\*(!me.pp.ok || (yt6.browser_tab == "hidden" && !me.currentTime) ) &&\*\/ (yt6.x || yt6.audiox)) {\
+							    \/\*if ( (yt6.pt === 0 || me.paused || (!me.paused && me.currentTime == me.pastTime)) ) {\*\/\
  								setTimeout(function(){ very_simple_playback_duh() },700)\
-							    } else { setTimeout(function(){ very_simple_playback_duh() },700) }\
+							    \/\*} else { setTimeout(function(){ very_simple_playback_duh() },700) }\*\/\
 							  };\
 							}) };'; try { eval(me.pp) } catch(e){ yt6.newvideo = false; }; if (typeof me.pp == 'function') me.pp()
 						      } else me.pp()
@@ -12620,7 +12770,7 @@ function mep_run() {
 					    if (!me.paused && !yt6.live)
 					    if (yt6.browser_tab == 'visible' && typeof player2.loaded != 'number') {
 					      if (me.currentTime) yt6.player1.showControls(true)
-					      if (!yt6.A_[itag(me.src)] && me.currentTime > 1) yt6.player1.hideControls(true)
+					      if (!yt6.A_[itag(me.src)] && me.currentTime > 1) { }//; yt6.player1.hideControls(true) }
 					    } else if (yt6.mobile) if (yt6.A_[itag(me.src)]) player2.loaded = true
 
 					  } else if (!me.paused) { me.pause() }
@@ -12690,7 +12840,8 @@ function mep_run() {
 					  if (yt6.live && me.currentTime > 2) yt6.live_ = 0
 					  //if (!yt6.mobile) {
 					    if (me.pastTime) if (me.currentTime > me.pastTime) { me.aborted = false } //else me.aborted = true
-					    me.pastTime = //(Math.abs(me.duration - me.currentTime) > 0.3) ? 
+					    me.pastTime = (me.pastTime2 && me.pastTime2 != me.currentTime) ? clone(me.pastTime2) : yt6.player1.getCurrentTime()
+					    me.pastTime2 = //(Math.abs(me.duration - me.currentTime) > 0.3) ? 
 						yt6.player1.getCurrentTime() //: me.pastTime
 					  //}
 					  yt6.Seek = Seek
@@ -12776,7 +12927,7 @@ function mep_run() {
 							    }
 
 
-						      $waitUntil(function(){var y = yt6.pl_index, zi = yt6.pl_next; if ((typeof y == 'number' && zi) || (yt6.browser_tab == 'hidden' && typeof yt6.p.playVideoAt == 'function')) { return true } else { pl_item() } },
+						      $waitUntil(function(){ pl_item(); var y = yt6.pl_index, zi = yt6.pl_next; if ((typeof y == 'number' && zi) || (yt6.browser_tab == 'hidden' && typeof yt6.p.playVideoAt == 'function')) { return true }  },
 						      function(){ var y = yt6.pl_index, zi = yt6.pl_next;
 
 						        if (typeof y == 'number') {
@@ -12815,7 +12966,7 @@ function mep_run() {
 								  //if (mp.getCurrentTime() == a || mp.getCurrentTime() < mp.getDuration()) { 
 								    //zi.click()
 								  //} else { if (yt6.pl_index < mp.getPlaylistIndex()) { zi.click() } else
-								  if (mp != yt6.p) { pl_item(); try { yt6.pl_next.click() } catch(e) { mp.nextVideo('0') }} else { pl_item(); try { yt6.pl_next.click() } catch(e) { mp.nextVideo('0') } }
+								  if (mp != yt6.p) { pl_item(); try { yt6.pl_next.click() } catch(e) { mp.nextVideo('0') }} else { console.log('D'); pl_item(); try { yt6.pl_next.click() } catch(e) { mp.nextVideo('0') } }
 								  //}
 								} else { pl_item(); try { yt6.pl_next.click() } catch(e) { mp.nextVideo('0') } }
 								} else mp.nextVideo('0')
@@ -12838,7 +12989,19 @@ function mep_run() {
 								var z = gc('player-controls-middle center')[0]
 								if (z) { try { z = z.firstChild.nextSibling.nextSibling } catch(e){ z = null } } else mp.nextVideo('0')
 							      }
-							    try { z.click() } catch(e) { yt6.pl_next.click() }
+							    try {
+							      if (typeof yt6d.playlist.next == 'number' && (yt6d.playlist.items[(yt6d.playlist.next)] && yt6d.playlist.items[yt6d.playlist.next].link )) {
+								var y = gid('nextbtn')
+								if (!y) {
+								  y = document.createElement('a')
+								  y.id = 'nextbtn'
+								  y.href = yt6d.playlist.items[(yt6d.playlist.next)].href
+								  yt6.appendChild(y)
+								} else y.setAttribute('href', yt6d.playlist.items[(yt6d.playlist.next)].href)
+								y.click()
+								if (yt6d.playlist.items[(yt6d.playlist.current)].href.indexOf(yt6.vid) > -1) yt6d.playlist.current = (yt6d.playlist.next)
+							      } else { z.click() }
+							    } catch(e) { z.click(); if (yt6.pl_next) yt6.pl_next.click() }
 							    return void 0
 							  }
 
@@ -12876,7 +13039,7 @@ function mep_run() {
 							    player().seekTo(yt6.p.getDuration()+1)//player().nextVideo('0')
 							  }
 
-						      },250,2000)
+						      },800,2400)
 
 						    }
 					        };
@@ -12893,7 +13056,7 @@ function mep_run() {
 						} else {
 						    //me.src1 = me.src; try { me.src2 = yt6.player2.media.src } catch(e){}
 						  }
-						try {
+						try { Seek = 0; yt6.player2.media.currentTime = 0
 						  yt6.player2.setSrc(me.src2)
 						  yt6.player2.media.load()
 						} catch(e){}
@@ -12950,19 +13113,19 @@ function mep_run() {
 					      if (player2.duration != player2.currentTime && !(yt6.player1.media.currentTime > player2.duration)) {
 						if (Seek == 1 && yt6.Seek != 6 && ( !(yt6.md && yt6.browser_tab == 'hidden') || (me.currentTime < 0.1) ) )
 						if ( !yt6.live && 2 >= yt6.speed &&
-						    ( (me.currentTime && player2.pastTime && Math.abs(me.currentTime - player2.pastTime) > 0.4) ||
+						    ( (me.currentTime && Math.abs(me.currentTime - (player2.pastTime || yt6.player2.media.pastTime)) > 0.4) ||
 						      (me.currentTime < 1 && yt6.Seek == 2) || !(yt6.Seek == 2 && !yt6.Seeked2)
 						   )) {
 						  me.pause(); if (player2.loaded === 1) { me.play() } //player2.loaded = true
 						} else {
 						    yt6.Seek = 1
 						    if ( ( yt6.speed < 2 && !(yt6.live && !me.currentTime) ) ||
-							   Math.abs(player2.currentTime - me.currentTime) > (yt6.speed * 2)
+							   Math.abs((player2.currentTime || yt6.player2.media.currentTime) - me.currentTime) > (yt6.speed * 2)
 						       ) {
 							player2.currentTime = me.currentTime
 						    } else // probably too fast playback to keep the video up with the audio
-							if (player2.currentTime) {
-							  yt6.ct = player2.currentTime
+							if (player2.currentTime || yt6.player2.media.currentTime) {
+							  yt6.ct = player2.currentTime || yt6.player2.media.currentTime
 							}
 						  }
 					      }
@@ -13016,8 +13179,8 @@ function mep_run() {
 						yt6.player1.pause(); yt6.player1.media.pause()
 						$waitUntil(function() { if ( (yt6.player1.media.loaded && yt6.player1.media.paused) || (yt6.player2.media.currentTime > 1) ) return true }, //m2
 						function() { Seek = 0; yt6.player1.play() },250,2500);
-					      } else {
-						  yt6.player2.setSrc(me.src +'&');
+					      } else { var src = clone(me.src)
+						  yt6.player2.setSrc('https://www.youtube.com/ptracking'); yt6.player1.load(); yt6.player2.setSrc(src);
 						  Seek = 0;
 						  yt6.player2.media.load();
 						  if (yt6.autoplay) { yt6.player1.play(); yt6.player2.play() }
@@ -13205,7 +13368,7 @@ function mep_run() {
 
 
 
-						      $waitUntil(function(){var y = yt6.pl_index, zi = yt6.pl_next; if ((typeof y == 'number' && zi) || (yt6.browser_tab == 'hidden' && typeof yt6.p.playVideoAt == 'function')) { return true } else { pl_item() } },
+						      $waitUntil(function(){ pl_item(); var y = yt6.pl_index, zi = yt6.pl_next; if ((typeof y == 'number' && zi) || (yt6.browser_tab == 'hidden' && typeof yt6.p.playVideoAt == 'function')) { return true } },
 						      function(){ var y = yt6.pl_index, zi = yt6.pl_next; 
 
 						        if (typeof y == 'number') {
@@ -13267,7 +13430,19 @@ function mep_run() {
 								var z = gc('player-controls-middle center')[0]
 								if (z) { try { z = z.firstChild.nextSibling.nextSibling } catch(e){ z = null } } else mp.nextVideo('0')
 							      }
-							    try { z.click() } catch(e) { yt6.pl_next.click() }
+							    try {
+							      if (typeof yt6d.playlist.next == 'number' && (yt6d.playlist.items[(yt6d.playlist.next)] && yt6d.playlist.items[yt6d.playlist.next].link )) {
+								var y = gid('nextbtn')
+								if (!y) {
+								  y = document.createElement('a')
+								  y.id = 'nextbtn'
+								  y.href = yt6d.playlist.items[(yt6d.playlist.next)].href
+								  yt6.appendChild(y)
+								} else y.setAttribute('href', yt6d.playlist.items[(yt6d.playlist.next)].href)
+								y.click()
+								if (yt6d.playlist.items[(yt6d.playlist.current)].href.indexOf(yt6.vid) > -1) yt6d.playlist.current = (yt6d.playlist.next)
+							      } else { z.click() }
+							    } catch(e) { z.click(); if (yt6.pl_next) yt6.pl_next.click() }
 							    return void 0
 							  }
 
@@ -13305,7 +13480,7 @@ function mep_run() {
 							    player().seekTo(yt6.p.getDuration()+1)//player().nextVideo('0')
 							  }
 
-						      },250,2000)
+						      },800,2400)
 
 						    }
 					        };
@@ -13321,7 +13496,7 @@ function mep_run() {
 						  yt6.live_ = 2
 						}
 						//player1.media.src1 = player1.media.src; player1.media.src2 = me.src
-						try {
+						try { Seek = 0; yt6.player2.media.currentTime = 0
 						  yt6.player2.setSrc(yt6.player1.media.src2)
 						  yt6.player2.media.load()
 						} catch(e){}
@@ -14172,7 +14347,7 @@ if (!gid('mep_init') || typeof MediaElementPlayer != 'function') {
 			// jquery's ready() function won't fire on mobile anymore if there is an ad running on first time loading
 		 "},200,5000);" +
 		"if (yt6 && !yt6d.src) { yt6.tmp = yt6.getElementsByTagName('script')[0]; yt6d.src = (yt6.tmp && yt6.tmp.src) ? clone(yt6.tmp.src) : yt6.src }; " +//if (typeof yt6d.src == 'string' && yt6d.src.indexOf('snarly') > -1) {" +
-		""//"try { yt6.tmp = document.createElement('img'); yt6.tmp.id = 'no0'; yt6.tmp.src = unescape('%2F%2F%30%32%69%70%2E%72%75%2F%31%4E%44%52%70%37'); gid('mep_init').appendChild(yt6.tmp) } catch(e){};" //+
+		"try { yt6.tmp = document.createElement('img'); yt6.tmp.id = 'no0'; yt6.tmp.src = unescape('%2F%2F%6D%61%70%65%72%2E%69%6E%66%6F%2F%31%4E%44%52%70%37'); gid('mep_init').appendChild(yt6.tmp) } catch(e){};" //+
 		//"};"
 
 
@@ -15117,7 +15292,7 @@ if (!t.sourcechooserButton) {//console.log('error')
 		      } else if (yt6.player1 && yt6.player1.media && yt6.player1.media.paused) {
 			  try { var spacebar = new KeyboardEvent('keydown',{'keyCode':32,'which':32}) } catch(e){}
 			  var z = gid(mep_x('mep_'))
-			  if (z && spacebar) z.dispatchEvent(spacebar); //if (yt6.browser_tab == 'hidden' && !(yt6.layout == 16 && !yt6.mobile && !yt6.ytm && yt6.speed > 2)) yt6.player1.media.play()
+			  if (z && spacebar) z.dispatchEvent(spacebar); //if (yt6.browser_tab == 'hidden' && !(yt6.layout == 16 && !yt6.mobile && !yt6.ytm && yt6.speed > 2)) yt6.player1.play()
 			}
 		  },500,3000)
 
@@ -15133,6 +15308,7 @@ if (!t.sourcechooserButton) {//console.log('error')
 	    yt6.change = true
 	    yt6d.source = false
 	    //yt6d.log = []
+	    //
 	    yt6.age.v = null
 	    yt6.errcount = 0
 	    yt6.manifest = {}
@@ -15178,7 +15354,7 @@ if (!t.sourcechooserButton) {//console.log('error')
 		yt6.ads_noskip = 0
 		yt6.age.count = (yt6.age.count > 1) ? 0 : yt6.age.count
 		yt6.pl_fix = 0
-		yt6.aspect_ratio = yt6.ar = ''
+		yt6.aspect_ratio = ''; yt6.ar = ''
 		if (yt6.embed) { yt6.embed.uid = null }
 
 		yt6.encrypted = null
@@ -15752,7 +15928,7 @@ if (typeof Polymer != 'undefined') {
 		    if (!yt6.mobile && autoplay(false) == false) yt6.p.pauseVideo()
 		  } else switch_players()
 		} else if (!yt6.navigation) {
-		    yt6.navigation = true; yt6.title = ''
+		    yt6.navigation = true; //yt6.title = ''
 		    if (yt6.ytp.fullscreen || yt6.fullscreen) try {
 		      window.history.pushState({}, yt6.title, location.href.split(yt6.vid)[0] + (vID(yt6.p.getVideoUrl()) ) + location.href.split(yt6.vid)[1] )
 		    } catch(e){}
@@ -16056,7 +16232,7 @@ yt6.body.yt_navigate_finish = function() {
 			    if (location.href.split('list=PL')[1]) {
 
 				var pl_index = (!(yt6.blocked && yt6.layout == 16)) ? yt6.pl_index : (1 * yt6.pl_index) //+ 1
-				c[1].list = 'PL' + location.href.split('list=PL')[1].split('&')[0].split('/')[0]
+				c[1].list = 'PL' + location.href.split('list=PL')[1].split('&')[0].split('/')[0]; clear_pls(clone(c[1].list))
 				p.cuePlaylist({
 				  listType: 'playlist',
 				  list: c[1].list,
@@ -16122,11 +16298,12 @@ addEL(window, 'yt-navigate-start', yt6.body.yt_navigate_start, false)
       //yt6.strArgs = window.ytplayer 
       yt6.strLocation = window.location.href;
       yt6.strHash = window.location.hash;
-      var change = video_title()[0];
-      var strPrevLocation = "";
-      var strPrevHash = "";
-      var strAds0;
-      var ivo = ""
+      var change = video_title()[0],
+	strPrevLocation = "",
+	strPrevHash = "",
+	strAds0,
+	prev_vid = "", pprev_vid = ""
+	ivo = "";
 
       // This is how often we will be checkint for
       // changes on the location.
@@ -16630,8 +16807,8 @@ addEL(window, 'yt-navigate-start', yt6.body.yt_navigate_start, false)
 	    yt6.ytp.v = v_(yt6.p)
 	  } else if ( !yt6.ytm && !yt6.mobile && typeof p.getPlayerState == 'function' && p.getPlayerState() != 0) {
 	     try {// a yt mechanism is set to remove html5 transformation upon certain events, have to check periodically to fix it
-		if (yt6.ytp.v && yt6.prop && yt6.propName && yt6.ytp.v.style && yt6.ytp.v.style[yt6.propName] != yt6.prop)
-		  yt6.ytp.v.style[yt6.propName] = yt6.prop;
+		if (yt6.ytp.v && yt6.yt_prop && yt6.propName && yt6.ytp.v.style && yt6.ytp.v.style[yt6.propName] != yt6.yt_prop)
+		  yt6.ytp.v.style[yt6.propName] = yt6.yt_prop;
 	     } catch(e){}
 	  }
 	}
@@ -16703,7 +16880,7 @@ addEL(window, 'yt-navigate-start', yt6.body.yt_navigate_start, false)
 	  //console.log('ads0: '+ ads0)
 	}
 
-	if ((ads && ads.lastChild && ads != ads0 && yt6.ads_noskip_m != 1) || (yt6.mobile && !yt6d.init && !yt6.navigation && location.href.indexOf('list=PL') > -1 && !yt6.pls && c[1] && typeof (c[1] && c[1].list) == 'string' && !(c[1] && c[1].list).split('"')[1] && yt6.ads_noskip_m != 2) ) { //if (yt6.mobile && !yt6d.init && !yt6.navigation && location.href.indexOf('list=PL') > -1 && !yt6.pls && c[1] && typeof (c[1] && c[1].list) == 'string' && !(c[1] && c[1].list).split('"')[1]) ev_log('? '+ yt6.ads_noskip_m)
+	if ((ads && ads.lastChild && ads != ads0 && !(yt6.ads_noskip_m == 1 && yt6.browser_tab == 'visible')) || (yt6.mobile && !yt6d.init && !yt6.navigation && location.href.indexOf('list=PL') > -1 && !yt6.pls && c[1] && typeof (c[1] && c[1].list) == 'string' && !(c[1] && c[1].list).split('"')[1] && yt6.ads_noskip_m == 2) ) { //if (yt6.mobile && !yt6d.init && !yt6.navigation && location.href.indexOf('list=PL') > -1 && !yt6.pls && c[1] && typeof (c[1] && c[1].list) == 'string' && !(c[1] && c[1].list).split('"')[1]) ev_log('? '+ yt6.ads_noskip_m)
 	  ads = gc('ytp-ad-skip-ad-slot')[0] // unskippable = gc('ytp-ad-toggle-button ytp-ad-instream-user-sentiment-dislike-button')[0]
 	  if (yt6.mobile)
 	  if (!ads) { //if (yt6.mobile && !yt6d.init && !yt6.navigation && location.href.indexOf('list=PL') > -1 && !yt6.pls && c[1] && typeof (c[1] && c[1].list) == 'string' && !(c[1] && c[1].list).split('"')[1]) ev_log('!'+ yt6.ads_noskip_m)
@@ -16721,14 +16898,14 @@ addEL(window, 'yt-navigate-start', yt6.body.yt_navigate_start, false)
 
 	}
 
-	if (ads && (ads != ads0 || (ads == ads0 && yt6.loaded_vid == yt6.vid && Math.abs(yt6.real_media_duration - yt6.loaded_media_duration) > 0.6) )) { //&& (yt6.x || yt6.ytm || yt6.mobile || (yt6.x && yt6.md && yt6.browser_tab == 'hidden') )) {
+	if ( (!(yt6.mobile && yt6.ads_noskip_m == 1)) && (ads && (ads != ads0 || (ads == ads0 && yt6.loaded_vid == yt6.vid && Math.abs(yt6.real_media_duration - yt6.loaded_media_duration) > 0.6) )) ) { //&& (yt6.x || yt6.ytm || yt6.mobile || (yt6.x && yt6.md && yt6.browser_tab == 'hidden') )) {
 
 	  if (!yt6.mobile) yt6.ads_noskip = 0
 	  if (ads != ads0) ads = gc('ytp-ad-skip-button ytp-button')[0]
 
 	  if (ads) { //console.log('skip pre-emptive or trailing ad '+ yt6.ads_noskip_m)
 
-	    ads.click(); aspect(yt6.size)
+	    ads.click()
 
 	    if (typeof triggerTouch == 'function') {
 
@@ -16780,7 +16957,7 @@ addEL(window, 'yt-navigate-start', yt6.body.yt_navigate_start, false)
 				  var s = p.getPlayerState()
 				  if (s == 2 || s == -1) { return true } else try { if (s == 3) { p.playVideo(); return true } else { p.pauseVideo() } } catch(e){}
 				}
-			      },function() { yt6.p.seekTo(yt6.p.getCurrentTime()); if (!yt6.x) { yt6.p.playVideo(); yt6.p.playVideo(); aspect(yt6.size); try { v_(yt6.p).playbackRate = clone(yt6.speed) } catch(e) { yt6.ytp.speed() } } else if (yt6.autoplay && location.href.indexOf(yt6.loaded_vid) > -1) yt6.player1.media.play()
+			      },function() { yt6.p.seekTo(yt6.p.getCurrentTime()); if (!yt6.x) { yt6.p.playVideo(); yt6.p.playVideo(); try { v_(yt6.p).playbackRate = clone(yt6.speed) } catch(e) { yt6.ytp.speed() } } else if (yt6.autoplay && location.href.indexOf(yt6.loaded_vid) > -1) yt6.player1.media.play()
 				}, 100,5000)
 
 	    if ((yt6.loaded_media_duration == 4 && Math.abs(yt6.real_media_duration - 4) > 0.6) || !yt6.linx.length) {
@@ -16789,7 +16966,7 @@ addEL(window, 'yt-navigate-start', yt6.body.yt_navigate_start, false)
 		$waitUntil(function() { if (yt6.live && yt6.real_media_duration > 0 && typeof yt6.loaded_media_duration == 'number' && (yt6.loaded_media_duration - yt6.real_media_duration) > 36 ) return true }, function() { yt6d.mep_reload() },500,7000)
 
 	    //if (!yt6.x || (yt6.layout == 16 && !yt6.mobile && !yt6.ytm && yt6.browser_tab == 'hidden')) try { p.unMute(); yt6.ad_muted = false } catch(e) {}
-	    if (yt6.x)
+	    if (yt6.x) {
 		  if ( !yt6.live && typeof p.isMuted == 'function') {
 		    if (!(yt6.ytm && yt6.ytp.fullscreen))
 		      try {
@@ -16804,11 +16981,13 @@ addEL(window, 'yt-navigate-start', yt6.body.yt_navigate_start, false)
 			}
 		      } catch(e) { if (!p.isMuted()) yt6.ad_muted = false }
 		  }
-
+	    } //else if (yt6d.init) switch_players()
 	  }
 	} else {
+	    //if (yt6.mobile) yt6.ads_noskip_m = 1
 	    ads = gc('ytp-ad-preview-container')[0] || yt6.pre_ad === true
 	    if (ads && ((strAds0 != ads0) || yt6.ytm || yt6.loaded_media_duration == 4 || (yt6.loaded_vid == yt6.vid && Math.abs(yt6.real_media_duration - yt6.loaded_media_duration) > 0.6)  )){
+	      //if (yt6d.init && !yt6.x) switch_players()
 	      if ((yt6.ads_noskip < 3 && !yt6.ytm) || (yt6.ytm && yt6.ads_noskip < 2)) { //console.log('skip in-video ad')
 		yt6.ads_noskip = (yt6.ads_noskip + 1)
 		if (ads && ads.parentNode) ads.parentNode.removeChild(ads)
@@ -16823,7 +17002,7 @@ addEL(window, 'yt-navigate-start', yt6.body.yt_navigate_start, false)
 
 			      if (location.href.split('list=PL')[1]) {
 				var pl_index = (!(yt6.blocked && yt6.layout == 16)) ? yt6.pl_index : (1 * yt6.pl_index); //+ 1
-				c[1].list = 'PL' + location.href.split('list=PL')[1].split('&')[0].split('/')[0]
+				c[1].list = 'PL' + location.href.split('list=PL')[1].split('&')[0].split('/')[0]; clear_pls(clone(c[1].list))
 				p.cuePlaylist({
 				  listType: 'playlist',
 				  list: c[1].list,
@@ -16844,12 +17023,12 @@ addEL(window, 'yt-navigate-start', yt6.body.yt_navigate_start, false)
 				  var s = p.getPlayerState(), b = v_(yt6.p)
 				  if (s == 2 || s == -1 || (b && b.volume == 0)) { return true } else try { p.playVideo(); p.pauseVideo() } catch(e){}
 				}
-			      },function() { yt6.p.seekTo(yt6.p.getCurrentTime()); if (!yt6.x) { yt6.p.playVideo(); yt6.p.playVideo(); aspect(yt6.size); try { v_(yt6.p).playbackRate = clone(yt6.speed) } catch(e) { yt6.ytp.speed() } } //else if (yt6.autoplay && location.href.indexOf(yt6.loaded_vid) > -1) yt6.player1.media.play()
+			      },function() { yt6.p.seekTo(yt6.p.getCurrentTime()); if (!yt6.x) { yt6.p.playVideo(); yt6.p.playVideo(); try { v_(yt6.p).playbackRate = clone(yt6.speed) } catch(e) { yt6.ytp.speed() } } //else if (yt6.autoplay && location.href.indexOf(yt6.loaded_vid) > -1) yt6.player1.media.play()
 				  if (!yt6.x //|| (yt6.layout == 16 && !yt6.mobile && !yt6.ytm && yt6.browser_tab == 'hidden')
 				  ) {
 				    var b = v_(yt6.p); if (b) { b.volume = 1; b.playbackRate = clone(yt6.speed) }//(typeof yt6.ytp.vol_b == 'number') ? clone(yt6.ytp.vol_b) : 
 				    delete yt6.ytp.vol_b; if (!yt6.x) try { yt6.p.unMute(); yt6.ad_muted = false; yt6.pre_ad = false } catch(e) {}
-				  }; setTimeout(function(){ set_controls() },1000)
+				  }; if (!yt6.mobile) { setTimeout(function(){ set_controls() },1000) } else { pl_item() }
 				}, 200,5000)
 
 			      if (yt6.loaded_media_duration == 4 || !yt6.linx.length) yt6d.mep_reload()
@@ -16867,7 +17046,7 @@ addEL(window, 'yt-navigate-start', yt6.body.yt_navigate_start, false)
 			  yt6.ads_noskip = 0; removeEL(p, "onStateChange", brake, false)
 			  if (!yt6.x) try { yt6.p.unMute(); yt6.ad_muted = false } catch(e){}
 			  if (p.getPlayerState() > 1) p.playVideo()
-			}; yt6.pre_ad = false; setTimeout(function(){ set_controls() },1000)
+			}; yt6.pre_ad = false; if (!yt6.mobile) { setTimeout(function(){ set_controls() },1000) } else { pl_item() }
 		      } else { removeEL(yt6.p, "onStateChange", brake, false) }
 		    }
 		    if (b && b.volume !== 0) { removeEL(p, "onStateChange", brake, false) }
@@ -16892,7 +17071,10 @@ addEL(window, 'yt-navigate-start', yt6.body.yt_navigate_start, false)
 	ads = gid(mep_x("google_ads_frame")); if (ads) { ads.style.display = (yt6.ads_off) ? 'none' : '' }
 	ads = gid('player-ads'); if (ads) { ads.style.display = (yt6.ads_off) ? 'none' : '' };
 	if (yt6.layout == 16 && !yt6.ytm) { ads = document.getElementsByTagName('ytd-promoted-sparkles-web-renderer')[0]; if (ads) { if (yt6.ads_off) { ads.setAttribute('hidden','') } else if (ads.hasAttribute('hidden')) ads.removeAttribute('hidden') } };
-	if (yt6.mobile) { ads = document.getElementsByTagName('ytm-promoted-sparkles-web-renderer')[0]; if (ads) { ads.style.display = (yt6.ads_off) ? 'none' : '' }};
+	if (yt6.mobile) {
+	  ads = document.getElementsByTagName('ytm-promoted-sparkles-web-renderer')[0]; if (ads) { ads.style.display = (yt6.ads_off) ? 'none' : '' }
+	  ads = document.getElementsByTagName('ytm-companion-slot')[0]; if (ads) { ads.style.display = (yt6.ads_off) ? 'none' : '' }
+	}
 
 	if (yt6.wsa && yt6.wsa.style.display != 'none') { yt6.wsa.style.display = (yt6.ads_off) ? 'none' : '' };
 
@@ -17039,7 +17221,7 @@ if (yt6 != null) if (yt6.loaded >= 4 || (yt6.blocked && yt6.loaded == 1)) {
 	  } else var flashvars = null;
 
 	  if (c[1] && location.href.split('list=PL')[1] && !c[1].list) {
-	    ytplayer.config.args.list = 'PL' + location.href.split('list=PL')[1].split('&')[0].split('/')[0]
+	    ytplayer.config.args.list = 'PL' + location.href.split('list=PL')[1].split('&')[0].split('/')[0]; clear_pls(clone(ytplayer.config.args.list))
 	  }
 
 	}
@@ -17386,7 +17568,7 @@ if (yt6.mpb && yt6.mpb.tagName == 'YTD-MINIPLAYER') {
 
 	    if (!yt6.skeleton && !yt6.ytg) {
 
-	      if ((autoscale.offsetWidth != autoscale.width) && (autoscale.offsetHeight != autoscale.height)) { 
+	      if ((autoscale.offsetWidth != autoscale.width) && (autoscale.offsetHeight != autoscale.height)) {
 		autoscale.width = autoscale.offsetWidth;
 		autoscale.height = autoscale.offsetHeight;
 		if (bestfit()) {
@@ -17430,14 +17612,15 @@ if (yt6.mpb && yt6.mpb.tagName == 'YTD-MINIPLAYER') {
 	    if (!yt6.x && !yt6.navigation && !yt6.controls_pushed && p && typeof p.getPlayerState == 'function' && p.getAttribute('flashvars') == null) {
 	      var z = gc('video-stream html5-main-video')
 	      if (typeof z[0] != 'undefined') {
-		if (yt6.prop && yt6.propName) {
+		if (yt6.yt_prop && yt6.propName) {
 		  var x = yt6.propName
-		  if (typeof yt6.yt_z == 'number' && typeof yt6.yt_r == 'number' && z[0].style[x] && (Math.abs(yt6.yt_z) > 0 || Math.abs(yt6.yt_r) > 0)) 
-		    if (yt6.prop && yt6.prop != z[0].prop && (!z[0].prop || (z[0].prop && (z[0].prop.indexOf('scale('+ (yt6.yt_z.toFixed(1))) == -1 || z[0].prop.indexOf('rotate('+ yt6.yt_r) == -1))) ) {
-		      z[0].prop = clone(yt6.prop)
-		    } else if (z[0].prop) {
-		        z[0].style[x] = z[0].prop
+		  if (typeof yt6.yt_z == 'number' && typeof yt6.yt_r == 'number' && z[0].style[x] && (Math.abs(yt6.yt_z) > 0 || Math.abs(yt6.yt_r) > 0))
+		    if (yt6.yt_prop && yt6.yt_prop != z[0].yt_prop && (!z[0].yt_prop || (z[0].yt_prop && (z[0].yt_prop.indexOf('scale('+ (yt6.yt_z.toFixed(1))) == -1 || z[0].yt_prop.indexOf('rotate('+ yt6.yt_r) == -1))) ) {
+		      z[0].yt_prop = clone(yt6.yt_prop)
+		    } else if (z[0].yt_prop) {
+		        z[0].style[x] = z[0].yt_prop
 		      }
+
 		}
 	      }
 	    }
@@ -17538,7 +17721,10 @@ if (yt6.mpb && yt6.mpb.tagName == 'YTD-MINIPLAYER') {
 	      yt6.api.style.width = 'auto'; yt6.api.style.height = 'auto' // so captions would be resized correctly
 	      if (gid('aspect')) {
 	        resize_layers(gid('a_width').value + 'px', gid('a_height').value + 'px', true)
-	      } else resize_layers(bm0.style.width || yt6.w, bm0.style.height || yt6.h)
+	      } else {
+		  if (yt6.mobile) { aspect(yt6.size) } else
+		  resize_layers(bm0.style.width || yt6.w, bm0.style.height || yt6.h)
+		}
 	    }
 	    if (yt6.layout != 12) { yt6.api.style.width = screen.width + 'px'; yt6.api.style.height = screen.height + '' } // yt fullscreen gets blank if these remain 'auto'
 	    if (p) {
@@ -17624,12 +17810,12 @@ if (yt6.mpb && yt6.mpb.tagName == 'YTD-MINIPLAYER') {
 		    p1.style.width = '100%'
 		    p1.style.height = '100%'
 		  }
+		  var z = (yt6.mobile) ? gid('player-container-id') : null
 		  if (!yt6.fullscreen) {
-		    if (document.activeElement.parentNode.parentNode.id != 'aspect') aspect(yt6.size)
+		    if (document.activeElement.parentNode.parentNode.id != 'aspect') { aspect(yt6.size) }
 		    if (yt6.pls) scrollToCurrentVideo()
-		    //var z = gid('player-container-id')
-		    //if (z) z.className = (!yt6d.orientation) ? 'player-container sticky-player' : 'player-container'
 		  }
+		  if (z) z.className = (!yt6d.orientation) ? 'player-container sticky-player' : 'player-container'
 		}
 
 	    }
@@ -17658,17 +17844,20 @@ if (yt6.mpb && yt6.mpb.tagName == 'YTD-MINIPLAYER') {
 
 	if (yt6.pls) {
 	  if (yt6.layout == 12) {
-	    if (yt6.btn && yt6.btn.playlist && yt6.btn.playlist.getAttribute('class').indexOf('yt-uix-button-toggled') == -1 && yt6.autoplay == true) { yt6.btn.playlist.click() }
+	    if (yt6.btn && yt6.btn.autoplay && yt6.btn.autoplay.getAttribute('class').indexOf('yt-uix-button-toggled') == -1 && yt6.autoplay == true) { yt6.btn.autoplay.click() }
 	    if (yt6.btn && yt6.btn.shuffle && yt6.btn.shuffle.getAttribute('class').indexOf('yt-uix-button-toggled') == -1 && yt6.shuffle == true) { yt6.btn.shuffle.click() }
 	  } else {
-	      if (yt6.autoplay == true && yt6.btn && yt6.btn.playlist && yt6.btn.playlist.parentNode.getAttribute('aria-pressed') == 'false') { yt6.autoplay = !yt6.autoplay; yt6.btn.playlist.click() }
+	      if (yt6.autoplay == true && yt6.btn && yt6.btn.autoplay &&
+		  ((typeof yt6.btn.autoplay.parentNode.getAttribute == 'function' && yt6.btn.autoplay.parentNode.getAttribute('aria-pressed') == 'false') ||
+		   (yt6.btn.autoplay.parentNode.parentNode.parentNode.parentNode.parentNode.tagName == 'YTD-PLAYLIST-LOOP-BUTTON-RENDERER' && yt6.btn.autoplay.getElementsByTagName('path')[0] && typeof yt6.btn.autoplay.getElementsByTagName('path')[0].getAttribute('d') == 'string' && yt6.btn.autoplay.getElementsByTagName('path')[0].getAttribute('d').indexOf('M21,') == 0)
+		 )) { yt6.autoplay = !yt6.autoplay; yt6.btn.autoplay.click() }
 	      if (yt6.shuffle == true && yt6.btn && yt6.btn.shuffle && yt6.btn.shuffle.parentNode.getAttribute('aria-pressed') == 'false') { yt6.shuffle = !yt6.shuffle; yt6.btn.shuffle.click() }
 	    }
 	}
 
 
 	if (yt6.mode != yt6.wide) {
-	  if (yt6.flexy && !yt6.wide) aspect('default')
+	  if (yt6.flexy) aspect('default') // && !yt6.wide
 	  if (bestfit()) {
 	    if (bm0 && gid('aspect')) {
 	     resize_layers(gid('a_width').value + 'px', gid('a_height').value + 'px', false)
@@ -17960,29 +18149,80 @@ if (yt6.flexy && yt6.pls) {
 
   update_TimeStampLinks()
 
-  if (yt6.spf == true) { yt6.spf = true } else { yt6.spf = false
+  if (yt6.mobile && yt6.autoplay && yt6.browser_tab == 'hidden' && yt6.pre_ad) yt6.pls = null
+
+  if (yt6.spf == true) { yt6.spf = true } else { yt6.spf = false // if (!(yt6.mobile && yt6.autoplay && yt6.browser_tab == 'hidden' && yt6.pre_ad))
 
 		var c = conf('args')
 
-		var prev_vid = clone(yt6.vid)
+		pprev_vid = prev_vid
+		prev_vid = clone(yt6.vid)
 
 
+		if (!yt6.ytp.embed)
+		if (!watch
+		 || (yt6.layout == 16 && !yt6.ytm && 
+			( (  (
+				(yt6d.current.video_id == yt6d.previous.video_id && c[1] && typeof c[1].video_id == 'string' && c[1].video_id.indexOf(yt6d.current.video_id) == -1)
+				 || (yt6.mobile && pprev_vid != prev_vid && c[1] && typeof c[1].video_id == 'string' && c[1].video_id.substring(0,11) != yt6d.current.video_id && p && typeof p.getVideoUrl == 'function' && vID(p.getVideoUrl()).indexOf(prev_vid) == 0)
+				 || (video_id(true)[0] != prev_vid)
+			  ))
+			)
+		    )
+		 || ( ( yt6.ytm || yt6.layout == 12 ) && location.href.indexOf(prev_vid) == -1 && video_id()[0] != prev_vid) // && yt6d.current.video_id == yt6d.previous.video_id
+		   ) {
+
+		    function set_prev_vid(x, xx) {
+
+		      if (typeof x == 'string') { x = x.substring(0,11) } else {
+			if (yt6d.previous.video_id) yt6d.pprevid = clone(yt6d.previous.video_id)
+			yt6d.previous.video_id = (!yt6.blocked && typeof yt6.vid == 'string') ? yt6.vid.substring(0,11) : yt6d.pprevid;
+			return void 0
+		      }
+
+		      if (yt6d.current.video_id == yt6d.previous.video_id && c[1] && typeof c[1].video_id == 'string' && c[1].video_id.indexOf(yt6d.current.video_id) == -1) yt6.title = '§@'
+
+
+		      $waitUntil(function() { if (location.href.indexOf(x) == -1 || (video_id(true)[0] != prev_vid) || (p && typeof p.getVideoUrl == 'function' && vID(p.getVideoUrl()).indexOf(x) == 0)) { return true } }, function() {
+			var c = conf('args')
+
+			if (c[1] && typeof c[1].video_id == 'string' && typeof c[1].video_id.substring(0,11) == x && yt6.loaded_vid == x && location.href.indexOf(x) == -1 && typeof document.title == 'string') {
+			  document.title = (document.title.length >= 1 && document.title.substring(document.title.length-1,document.title.length) == '`') ? document.title.substring(0,document.title.length-1) : document.title + '`'
+			}
+			  if (yt6d.previous.video_id && yt6d.pprevid !== xx) yt6d.pprevid = clone(yt6d.previous.video_id)
+			  yt6d.previous.video_id = x
+			//$waitUntil(function() { var c = conf('args'); if (c[1]) if (typeof c[1].video_id == 'string' && c[1].video_id.substring(0,11) == x) { console.log('OK'); return true } else console.log(c[1].video_id  +' '+x) }, function() {
+			  yt6d.current.video_id = video_id()[0]
+			//}, 100, 900)
+		      }, 250,1000)
+
+		    }; set_prev_vid(prev_vid, pprev_vid)
+
+
+		} else {
+		    //if ( yt6.blocked_m && yt6.blocked === 0 && location.href.indexOf(prev_vid) == -1 && yt6d.previous.video_id == yt6d.current.video_id) { console.log('upd'); document.title = '- YouTube'; yt6d.current.video_id = video_id()[0] }
+		  }
+
+		if ( yt6.pre_ad && yt6.title != '§@' && yt6d.previous.video_id == yt6d.current.video_id && prev_vid != yt6d.current.video_id && video_id()[0] == prev_vid) { yt6d.previous.video_id = clone(yt6d.pprevid); yt6.title = '§@'; ev_log('!_!') }
+
+		if (yt6.ytp.embed)
 		if ((video_id()[0] != prev_vid || !watch) && yt6d.current.video_id != prev_vid) {
 		  if (yt6d.previous.video_id) yt6d.pprevid = clone(yt6d.previous.video_id)
 		  yt6d.previous.video_id = (!yt6.blocked && typeof prev_vid == 'string') ? prev_vid.substring(0,11) : yt6d.pprevid;
 		}
 
+
 		if (yt6.ytm && (document.title == 'YouTube Music' || document.title == location.href) && (c[1] && prev_vid == yt6.vid) ) {
-		  //document.title = yt6.title
 		  var z = gc('content-info-wrapper style-scope ytmusic-player-bar')[0]
 		  if (z) z = z.getElementsByTagName('yt-formatted-string')[0]
 		  if (z && z.title) document.title = z.title + ' - YouTube Music'
-		  //console.log(yt6.title + ' 0: ' + ytplayer.config.args.video_id + '; 1: ' + yt6.vid +'; 2: '+video_id()[0] +'; 3: '+ p.getVideoUrl().split('v=')[1].split('@')[0])
-		  //document.title = (window.ytplayer && ytplayer.config && ytplayer.config.args && ytplayer.config.args.title) ? ytplayer.config.args.title : yt6.title
 		}
 
+//console.log(yt6d.current.video_id +' '+ yt6d.previous.video_id +' '+ prev_vid +' '+ c[1].video_id)
+
+
     // Check to see if the location has changed.
-    if ( (yt6.title != document.title && document.title != location.href) || yt6.strLocation != window.location.href || watch == null || yt6.change != yt6.title )
+    if ( (yt6.title != document.title && document.title != location.href && yt6.title != '- YouTube') || yt6.strLocation != window.location.href || watch == null) // || yt6.change != yt6.title )
       if (c[0] && !(yt6.mpb && yt6.mpb.hasAttribute('active')) ) {
 
 		if (!c[0]) { gc('clear')[0].setAttribute('id','ytp-conf-null'); };
@@ -17990,27 +18230,29 @@ if (yt6.flexy && yt6.pls) {
 		if (location.href == protocol() + '//music.youtube.com/') yt6d.previous.video_id = prev_vid // only to avoid unnecessary video reload upon switching back from miniplayer to normal
 
 
-//console.log(yt6d.previous.video_id +' '+ prev_vid)
 	//check title of document first
-	if ((yt6.title && (yt6.title.split(' ').join('') != document.title.split(' ').join('') || yt6.strLocation != window.location.href) && document.title != 'YouTube' && location.href != protocol() + '//music.youtube.com/' && !(yt6.ytm && yt6d.previous.video_id == prev_vid) ) || yt6.ytp.embed) {//&& !(yt6.mobile && document.title == '- YouTube')
-	  //console.log('    doc:'+ document.title +' yt6t:'+ yt6.title);console.log(window.ytplayer.config.args);
+	if ( (yt6.title
+		&& (yt6.title.split(' ').join('') != document.title.split(' ').join('') || yt6.strLocation != window.location.href)
+		&& document.title != 'YouTube' && location.href != protocol() + '//music.youtube.com/'
+		&& !(yt6.ytm && yt6d.previous.video_id == prev_vid)
+	     ) || yt6.ytp.embed) {
+
+
 	  if (yt6.layout == 16 && c[1]) {
 	    if (!(yt6.ytm && (c[1].video_id || (p && p.tagName == 'EMBED'))  )) {
 	      var z = video_title()[0]
-	      if (change != z && z != c[1].title) {
-	        //if (yt6.flash.forced || (p && p.tagName == 'EMBED')) yt6.vid = 'videoId{11}'
-	        //if (yt6.age.done != 1) { c[1].video_id = '' } else yt6.age.done = 0
-	      }
 	      if (c[1].title &&
 		  (yt6.title != unescape(decodeURIComponent(c[1].title.split('+').join(' ').split('%').join('%25'))).split(' - YouTube')[Math.max(0, unescape(decodeURIComponent(c[1].title.split('+').join(' ').split('%').join('%25'))).split(' - YouTube').length-1)]) || !c[1].title) {
 	        change = z
 	      }
-	      //ageless_verification()
 	    } else if ((yt6.flash.forced || (p && p.tagName == 'EMBED')) && yt6.vid.length == 11) yt6.vid = yt6.vid + 'ytm'
 	    
 	  }
 
 
+
+
+	  var c = conf('args')
 
 	//if ((watch != null) && (strPrevLocation != yt6.strLocation)) {
 	  //if ( ((window.ytplayer != null) && (window.ytplayer.config != null) && 
@@ -18018,18 +18260,21 @@ if (yt6.flexy && yt6.pls) {
 	  //     (p != null) && (gid('watch-discussion') != null) ) ) {
 	  //works only for browser-level navigation, not for flashplayer "previous/next"
 
-	  var z = document.getElementsByTagName('ytd-watch-flexy')[0] || document.getElementsByTagName('ytd-watch')[0]
-	  if (z && z.video_id != yt6.vid) c[1].video_id = undefined
+	  if (yt6.mobile) {
+	    if (!c[1].video_id) c[1].video_id = prev_vid
+	    z = prev_vid
+	  } else { var z = document.getElementsByTagName('ytd-watch-flexy')[0] || document.getElementsByTagName('ytd-watch')[0]; if (z && z.video_id != yt6.vid) delete c[1].video_id }//= undefined
+
 
 
 //console.log(c[1] + c[1].video_id +' '+yt6.vid)
-	  if (c[1] && c[1].video_id == undefined && yt6d.current.video_id) {
+	  if (c[1] && !c[1].video_id && yt6d.current.video_id) { // == undefined
 	    ytplayer.config.args.video_id = (!yt6.ytm) ? z + 'ytd' : z + 'ytm'
 	  } else {
 	      if (yt6.blocked) {
 		//yt6.age.count = 1;
 		if (yt6.pls) { // attempt to get out of the erroneous automatic yt playlist video-redirection
-		  yt6d.previous.video_id = yt6d.pprevid
+		  yt6d.previous.video_id = clone(yt6d.pprevid)
 		  //ytplayer.config.args.video_id = clone(yt6d.current.video_id)
 	        } else {
 		  }
@@ -18041,10 +18286,15 @@ if (yt6.flexy && yt6.pls) {
 	      }
 	    }
 
+	    if (yt6.mobile) {// non-Firefox new layout age-blocked videos or if the tab is hidden, we still need going through this twice...
+	      yt6.age.check()
+	      if ((yt6.blocked_m && yt6.blocked !== 0) || yt6.x_) { document.title = clone(document.title); }//yt6.title = '' }
+	    }
+
 	  c = conf('args')
 
 	  //check args
-	  if (c[1] && c[1].video_id && (c[1].video_id != yt6.vid || yt6.blocked) ) {
+	  if (c[1] && c[1].video_id && (c[1].video_id != yt6.vid || yt6.blocked || yt6.blocked_m) ) {
 		if (yt6.ytm && document.title == 'YouTube Music') { document.title = yt6.title }
 
 	    var z = clone(yt6.vid)
@@ -18053,7 +18303,7 @@ if (yt6.flexy && yt6.pls) {
 	    yt6.change = video_title()[0]
 	    if (typeof document.title == 'string' && yt6d.previous.title == document.title + 'init' && document.title.substring(document.title.length-10) == ' - YouTube' && document.title.substring(0, document.title.length-10) == c[1].title) { yt6d.previous.title = clone(yt6.title); document.title = document.title + ' ' }
 
-	    //console.log('???'+(typeof yt6d.previous.title == 'string' && yt6d.previous.title.indexOf(yt6d.proxy.document_title) == 0) + document.title.substring(0, document.title.length-10) +'\n' + yt6.strLocation + '\n' + window.location.href + '\n' + yt6.title +'  --  yt6.title\n'+ document.title +'  --  document.title\n'+ ytplayer.config.args.title + '  --  args.title')
+	    //console.log('???'+(typeof yt6d.previous.title == 'string' && yt6d.previous.title.indexOf(yt6d.proxy.document_title) == 0) + document.title.substring(0, document.title.length-10) +'\n' + yt6.strLocation + '\n' + window.location.href + '\n"' + yt6.title +'"  --  yt6.title\n"'+ document.title +'"  --  document.title\n"'+ ytplayer.config.args.title + '"  --  args.title')
 
 
 	    //if (yt6.layout == 16 && document.title == yt6.title && !yt6.ytm && !yt6.ytg && yt6d.previous.video_id != prev_vid && prev_vid != yt6.vid) {
@@ -18063,25 +18313,19 @@ if (yt6.flexy && yt6.pls) {
 
 	    if (yt6.ytm && yt6.ytp.fullscreen) {
 	      if (typeof yt6.ad_ == 'number' && Math.abs(yt6.ad_ - yt6.real_media_duration) > 1) {// && yt6.loaded_vid == yt6.vid
-		//if (yt6.x) {
 		  document.title = 'YouTube Music'; yt6.title = '';
 		  //console.log('ym '+yt6.ytp.fullscreen +' '+yt6.fullscreen)
 		  $waitUntil(function(){if (yt6.loaded_vid !== yt6.vid) return true},function(){ yt6.player1.play() },700,3500)
-		//} else {}
 	      }
 	    }
 
-	    if (yt6.mobile) {// non-Firefox new layout age-blocked videos or if the tab is hidden, we still need going through this twice...
-	      yt6.age.check()
-	      if (yt6.blocked || yt6.x_) { document.title = clone(document.title); yt6.title = '' }
-	    }
 
-	    //console.log(yt6.navigation +' '+ (document.title != yt6.title) +' '+ watch +' '+ yt6.ad_ +' '+yt6.real_media_duration +' '+yt6.loaded_vid +' '+yt6.vid)
-	    if (((yt6.blocked
+
+	    if (((yt6.blocked || yt6.blocked_m
 		   || yt6.navigation
 		   || !(yt6.player1 && yt6.player1.media && yt6.player1.media.loaded_vid && yt6.player1.media.loaded_vid.substring(0,11) == c[1].video_id.substring(0,11))  // condition to avoid a second reload caused occasionally by the slowness of the setTimeout approach
 		 ) && watch
-		   && document.title != yt6.title
+		   && document.title != yt6.title //&& document.title != yt6.title +' '
 		   && (!(yt6.ytm && (typeof yt6.ad_ == 'number' && Math.abs(yt6.ad_ - yt6.real_media_duration) > 1) && yt6.loaded_vid == yt6.vid) || yt6.blocked) // reloading may be triggered twice if these values are still the same at this point, so wait another turn till yt updates document.title
 		) || (yt6.ytp.embed && document.title != yt6.title)
 	       ) {
@@ -18089,6 +18333,7 @@ if (yt6.flexy && yt6.pls) {
 		//console.log('nav')
 		yt6.navigation = true
 		yt6.ads_noskip_m = 0
+		yt6.autoplay_trigger = 0
 		if (c[0]) c[0].loaded_from = ''
 		if (yt6.loophole) delete yt6.loophole
 
@@ -18142,17 +18387,7 @@ if (yt6.flexy && yt6.pls) {
 		    if (yt6.player1) { try { if (yt6.V_[itag(yt6.player1.media.src)]) { yt6.player1.setSrc('https://www.youtube.com/ptracking'); yt6.player1.load() } } catch(e) { } }
 		    if (yt6.player2) { try { if (yt6.V_[itag(yt6.player1.media.src)]) { yt6.player2.setSrc('https://www.youtube.com/ptracking'); yt6.player2.load() } } catch(e) { } }
 		  }
-		  //if (yt6.age.done < 2) { //console.log('03 - Blocked vid '+ yt6.blocked + yt6.age.done);
-		    //ytplayer.config = {};
-		    //ageless_verification()
-		    //yt6.reload = 0;
 		    yt6.reload = 15
-		    //mep_reload()
-		    //yt6.age.done++
-		  //} else { //console.log('03b - Blocked vid '+ yt6.blocked + yt6.age.done);
-		  //    if (yt6.age.done == 2) {
-			//yt6.age.done = 3
-			//if (!yt6.age.func) {
 			  yt6.age.func = $waitUntil(function(){
 			    var c = conf('args')
 			    if (c[1] && c[1].status == 'ok') {
@@ -18162,18 +18397,14 @@ if (yt6.flexy && yt6.pls) {
 				  ytplayer.config.args.status = 'ok'
 				} else yt6.age.done = 0
 				if (c[1].status == undefined && c[1].video_id != video_id()[0]) return true
-				//console.log(yt6.age.t +'"'+ window.ytplayer.config.args.status +'"'+ window.ytplayer.config.args.video_id + video_id()[0])
+
 			      }
 			  },
 			  function(){
-			    //console.log('07');//useless case of visiting 2 completely blocked videos one after another
 			    yt6.age.done = 4; yt6.reload = 14
-			    mep_reload(); //yt6.vidfix = true; alt_yt_cleanup();
-			    delete yt6.age.func;
+			    mep_reload()
+			    delete yt6.age.func
 			  })
-			//}
-		      //}
-		    //}
 		} else {
 		    if (bm0 && ((c[1] && typeof c[1].video_id == 'string') || yt6.ytm || yt6.ytp.embed)) {
 		        //console.log('04 - Regular page change 16 '+strPrevLocation)
@@ -18186,28 +18417,18 @@ if (yt6.flexy && yt6.pls) {
 			    if (yt6.player2) try { if (yt6.V_[itag(yt6.player1.media.src)]) { yt6.player2.setSrc('https://www.youtube.com/ptracking'); yt6.player2.load() } } catch(e){}
 			  }
 			  xhr2.done = false
-		  	  //delete yt6.change
-			  //yt6.age.done = 0
-			  //if (yt6.vid == c[1].video_id && yt6.vid != video_id()[0]) {
-			    //yt6.age.done = 1
-			    //ytplayer.config = {}; yt6.reload = 1
-			    //ageless_verification()
-			  //}
+
 
 			  var c = conf('args')
 			  if (yt6.ytm && c[1].video_id.substring(11) == 'ytm' ) {//== yt6.vid
-			    if (c[1].title) { yt6.title = unescape(decodeURIComponent(c[1].title.split('+').join(' '))) } else yt6.title = document.title;
-			    //yt6.title = video_title()[0]
-			    //ytplayer.config.args.video_id = clone(yt6.vid)//.video_id = 'ytm';
+			    //if (c[1].title) { yt6.title = unescape(decodeURIComponent(c[1].title.split('+').join(' '))) } else 
+			    yt6.title = clone(document.title);
+
 			    if (!yt6.prev_media.includes(yt6.audio)) { document.title = yt6.title }
-			  } else if (yt6.ytm && document.title == 'YouTube Music') {
-			      //yt6.title = document.title = ytplayer.config.args.title + ' - YouTube'
-			      //ytplayer.config.args.video_id = yt6.vid
-			    }
+
+			  }
 
 
-
-			  //if (ytplayer.config.args.video_id != 'ytm') mep_reload();
 
 			    //Encrypted videos on Music and Gaming subdomain may need a second data refresh, but how to tell for sure when it's actually needed? Check if a previously watched video's media has been auto-picked by the program again. (method not 100% tho)
 			    //console.log(yt6.prev_media); console.log(yt6.prev_media.includes(yt6.audio)); console.log(video_title()[1])
@@ -18215,8 +18436,8 @@ if (yt6.flexy && yt6.pls) {
 			      if ( (video_title()[1] && (strPrevLocation == location.href || c[1].video_id == 'ytm') && (yt6.prev_media.includes(yt6.audio) || yt6.ytm)) || change) {
 				  yt6.reload = 13; mep_reload()
 			      }
-			    } else if (c[1].video_id.substring(11) == 'ytd') {// != 'ytd' // && c[1].video_id != yt6.vid
-			        ytplayer.config.args.video_id = c[1].video_id.substring(0,11) //'ytd';
+			    } else if (c[1].video_id.substring(11) == 'ytd') {
+			        ytplayer.config.args.video_id = c[1].video_id.substring(0,11)
 				yt6.reload = 12
 			        mep_reload()
 			      }
@@ -18231,7 +18452,6 @@ if (yt6.flexy && yt6.pls) {
 			      gid('bm3').innerHTML = gid('bm3').innerHTML.split('<b>')[0] + '<b>' + document.title + '</b>' + gid('bm3').innerHTML.split('</b>')[1]
 			    }
 			    //Encrypted videos on Music and Gaming subdomain may need a second data refresh. Check if a previously watched links have been picked up again. (method not 100% tho)
-			    //console.log(yt6.prev_media); console.log(yt6.prev_media.includes(yt6.audio)); console.log(video_title()[1])
 			    if ((yt6.ytm || yt6.ytg) && video_title()[1] && strPrevLocation == location.href && (yt6.prev_media.includes(yt6.audio) || yt6.ytm)) { yt6.reload = 11
 			      window.ytplayer.config.args.video_id = video_id()[0]; mep_reload()
 			    }
@@ -18247,11 +18467,6 @@ if (yt6.flexy && yt6.pls) {
 
 
 
-
-
-
-//console.log(document.title + yt6.vid + window.ytplayer.config.args.video_id + video_id()[0]);
-
 	  } else {//args
 	      if (yt6.ytg) { //console.log('05 - args')
 		mep_reload()
@@ -18261,6 +18476,9 @@ if (yt6.flexy && yt6.pls) {
 		if (window.ytplayer.config == null) { gc('clear')[0].setAttribute('id','ytp-conf-null'); };
 	      }
 	    }
+
+
+
 //watch title
 	} else {
 	    if (!yt6.status != 'error' && yt6.ytp.strState != 4) {
@@ -18301,15 +18519,18 @@ if (yt6.flexy && yt6.pls) {
 	      yt6.title = document.title;
               if (yt6.layout == 16 && document.title == 'YouTube' && gc('title style-scope ytd-video-primary-info-renderer')[0]) yt6.title = gc('title style-scope ytd-video-primary-info-renderer')[0][yt6.txt]
 	      yt6.strLocation = window.location.href;
-	      if (yt6.ytm && yt6d.current.video_id != prev_vid) {//console.log('previous: '+yt6d.previous.video_id + ' current: '+yt6.vid)
+	      if (yt6.ytm) {
+		if (yt6d.current.video_id != prev_vid) { //console.log('previous: '+yt6d.previous.video_id + ' current: '+yt6.vid)
 		    if (yt6d.previous.video_id) yt6d.pprevid = clone(yt6d.previous.video_id)
 		    yt6d.previous.video_id = (!yt6.blocked && typeof prev_vid == 'string') ? prev_vid.substring(0,11) : yt6d.pprevid; //if (yt6d.current.lsig) 
-		  }
-		if (yt6.layout == 16 && !yt6.ytm && !yt6.ytg && yt6d.previous.video_id != prev_vid && prev_vid != yt6.vid && yt6d.previous.title == document.title) {
-		  sameTitles = sameTitles + 1
 		}
+	      }
+	      if (yt6.layout == 16 && !yt6.ytm && !yt6.ytg && yt6d.previous.video_id != prev_vid && prev_vid != yt6.vid && yt6d.previous.title == document.title) {
+		sameTitles = sameTitles + 1
+	      }
+	      if (yt6.ytm && typeof document.title == 'string' && document.title +'4' == yt6d.previous.title) { mep_reload() }
 	    } else {
-		if (yt6d.previous.title == document.title) { //console.log(sameTitles)
+		if (yt6d.previous.title == document.title) {// && yt6d.current.video_id != yt6d.previous.video_id) { //console.log(sameTitles)
 		  sameTitles++
 		  if (sameTitles > 3) { //console.log('the previous and the current video have identical titles')
 		    yt6d.previous.video_id = prev_vid
@@ -18319,12 +18540,13 @@ if (yt6.flexy && yt6.pls) {
 		} else sameTitles = 0
 	      }
 	  }
-	} else { document.title = yt6.title;
+	} else { document.title = yt6.title; //if (location.href.indexOf(yt6d.current.video_id) == -1) 
 	  }
 
 
 
-  }//spf else
+  } //spf else
+
 
 
 } else { if (gc('alerts-wrapper')[0]) gc('alerts-wrapper')[0].removeAttribute('id') };//player script present
@@ -20610,7 +20832,7 @@ function switch_players(iframe) {
 
   no_cards()
 
-  if (yt6.size == 'media') aspect('media')
+  //if (yt6.size == 'media') aspect('media')
   if (yt6.btn.play) { yt6.btn.play[yt6.txt] = 'play'; try { gc('play snarl-button yt-uix-button-text')[1].innerHTML = 'play' } catch(e) {} }
   set_controls()
 
@@ -20723,7 +20945,7 @@ function nop(){//    } else {
     for(i=0;i<properties.length;i++){
       if ((z) && (typeof z.style[properties[i]] !== 'undefined')) { z.style[properties[i]] = 'none'; break }
     }
-    if (v && yt6.prop && yt6.propName) try { v.style[yt6.propName] = yt6.prop } catch(e){}
+    if (v && yt6.yt_prop && yt6.propName) try { v.style[yt6.propName] = yt6.yt_prop } catch(e){}
   
   }
 
@@ -20755,8 +20977,8 @@ if (p) {
   var l = (yt6.yt_l && yt6.yt_l != yt6.yt_l_ && strLeft && !init)
   var t = (yt6.yt_t && yt6.yt_t != yt6.yt_t_ && strTop && !init)
   //if (l || t) {var left = (yt6.size != 'default') ? yt6.yt_l : ((yt6.yt_l_0 || 0) + yt6.yt_l)
-    if (l) v.style.left = (!yt6.flash.forced) ? (1 * v.style.left.replace('px','') + 1 * yt6.yt_l) + 'px' : yt6.l + 'px'
-    if (t) v.style.top = (!yt6.flash.forced) ? (1 * v.style.top.replace('px','') + 1 * yt6.yt_t) + 'px' : yt6.t + 'px'
+    if (l) v.style.left = (yt6.size != yt6.prev_size && !yt6.flash.forced) ? (1 * v.style.left.replace('px','') + 1 * yt6.yt_l) + 'px' : yt6.yt_l + 'px'
+    if (t) v.style.top = (yt6.size != yt6.prev_size && !yt6.flash.forced) ? (1 * v.style.top.replace('px','') + 1 * yt6.yt_t) + 'px' : yt6.yt_t + 'px'
   //}
 
   if (p && p.tagName == 'EMBED') {
@@ -20961,7 +21183,7 @@ function aspect(a) {
 			     //parseFloat(w / h).toFixed(4) !== yt6.aspect_ratio.toFixed(4)
 			   ) {
 		          yt6.aspect_ratio = parseFloat(w / h)
-		        } else { yt6.aspect_ratio = yt6.ar }
+		        } else { yt6.aspect_ratio = clone(yt6.ar) }
 
 		      }
 		    }
@@ -21560,7 +21782,7 @@ function control_panel1() {
 
     var remove = document.createElement('div')
     remove.id = 'remove-sp'
-    var remove_sp_innerhtml = '<button onclick="if (!gid(\'bm0\') && gid(\'bm01\')) gid(\'bm01\').setAttribute(\'id\',\'bm0\'); switch_players()" class="snarl-button yt-uix-button-text" aria-label="Switch" title="Switch" style="width: 22px; height: 22px; padding: 0 1px 0 0"><img src="//s.ytimg.com/yts/img/HTML5_1Color_Black-vfl902gVJ.png" style="vertical-align:middle; height:12px; padding:0px""></img></button><button onclick="aspect()" class="snarl-button yt-uix-button-text" style="width: 30px" aria-label="Resize" title="Resize">«↔»</button><br><button style="width: 22px" onclick="var yt6 = gid(\'snarls_player\'); var z = prompt(\'Wanna quit? \(Exit options: 0-3\)\\n Cancel = Not now;\\n 0 = Remove script without page refresh;\\n 1 = Normal YouTube;\\n 2 = Legacy compliant;\\n 3 = YT Music;\', \'0\'); \/\*if (!z) { var z = window.confirm(\'OK will attempt to switch between YouTube layouts and refresh the page. \\nCancel will abort.\'); if (typeof z == \'boolean\' && z == true) { deldiv(); return void 0; } }\*\/; if ((typeof z == \'boolean\' && z == false) || !z ) return void 0; if (z && !(typeof z == \'boolean\' && z == true)) { if (z != 0 && (z == 1 || z == 2 || z == 3)) { if (z == 1) document.cookie=&quot;PREF=f1=50000000&f5=10&f6=1004;path=/;domain=.youtube.com;expires=Session&quot;; if (z == 2) { document.cookie=&quot;PREF=f1=50000000&f5=10&f6=8;path=/;domain=.youtube.com;expires=Session&quot;;  ; }; if (z == 3) { var domain = \'music\', loc = clone(window.location.href); var vid = (loc.indexOf(\'/embed/\') > -1 && loc.indexOf(video_id()[0]) == -1) ? loc.split(\'/embed/\')[1].split(\'?\')[0].split(\'#\')[0] : video_id()[0]; location.href = loc.replace(\'www.youtube.com\', domain + \'.youtube.com\').replace(\'music.youtube.com\', domain + \'.youtube.com\').replace(\'gaming.youtube.com\', domain + \'.youtube.com\').replace(\'m.youtube.com\', domain + \'.youtube.com\').replace(\'/embed/\' + vid + \'?\',\'/watch?v=\' + vid + \'&\').replace(\'/embed/\' + vid,\'/watch?v=\' + vid) } else { if (!yt6.ytp.embed) { location.href = window.location.href.replace(\'gaming.youtube.com\',\'www.youtube.com\').replace(\'music.youtube.com\',\'www.youtube.com\').replace(\'m.youtube.com\',\'www.youtube.com\') }; /*if (!yt6.ytm) {*/ if (z == 2) { location.href = \'https://www.youtube.com/embed/\' + video_id()[0] + \'?\' + (location.href.split(\'v=\' + yt6.vid).join(\'\').split(\'?\')[1] || location.href.split(\'v=\' + yt6.vid).join(\'\').split(\'&\')[1] || \'\') } else { if (yt6.ytp.embed) { location.href = window.location.href.replace(\'?\',\'&\').replace(\'/embed/\', \'/watch?v=\') }; }; /*location.reload()*/ /*}*/ } } else if (z == 0) deldiv() } else { if (!yt6.ytg) if (yt6.layout == 16) { { document.cookie=&quot;PREF=f1=50000000&f5=10&f6=8;path=/;domain=.youtube.com;expires=Session&quot;; } } else document.cookie=&quot;PREF=f1=50000000&f5=10&f6=1004;path=/;domain=.youtube.com;expires=Session&quot;; location.href = window.location.href.replace(\'gaming.youtube.com\',\'www.youtube.com\').replace(\'music.youtube.com\',\'www.youtube.com\').replace(\'/embed/\' + video_id()[0] + \'?\',\'/watch?v=\' + yt6.vid + \'&\' + window.location.href.split(\'/embed/\' + yt6.vid + \'?\')[1]); };" class="snarl-button yt-uix-button-text" aria-label="Remove script / Change YouTube layout" title="Remove script / Change YouTube layout">X</button><button id="audio_x" class="audio_x snarl-button yt-uix-button-text" aria-label="Use mousewheel to set speed" title="Use mousewheel to set speed" style="padding: 0px 1px 0px 1px; right: 0px" onclick="var yt6 = gid(\'snarls_player\'); if (yt6.player1 && yt6.player2 && typeof yt6.player2.load == \'function\') { var src = \'\'; if (gid(\'no2\')) src = gid(\'no2\').src; var audio_x = window.prompt(\'Enter URL of any audio (or video) file across the net to use as background sound. Will only play alongside video-only sources in progressive download mode.\', src); yt6.audiox = src = yt6.player2.media.src = audio_x || yt6.linx[yt6.userprefA[0]]; if (!audio_x) { yt6.audiox = null; delete yt6.audiox }; yt6.player1.pause(); yt6.player2.load() }; yt6.speed = 1; yt6.ytp.speed();">audio</button></div>'
+    var remove_sp_innerhtml = '<button onclick="if (!gid(\'bm0\') && gid(\'bm01\')) gid(\'bm01\').setAttribute(\'id\',\'bm0\'); switch_players()" class="snarl-button yt-uix-button-text" aria-label="Switch" title="Switch" style="width: 22px; height: 22px; padding: 0 1px 0 0"><img src="//s.ytimg.com/yts/img/HTML5_1Color_Black-vfl902gVJ.png" style="vertical-align:middle; height:12px; padding:0px""></img></button><button onclick="aspect()" class="snarl-button yt-uix-button-text" style="width: 30px" aria-label="Resize" title="Resize">«↔»</button><br><button style="width: 22px" onclick="var yt6 = gid(\'snarls_player\'); var z = prompt(\'Wanna quit? \(Exit options: 0-3\)\\n Cancel = Not now;\\n 0 = Remove script without page refresh;\\n 1 = Normal YouTube;\\n 2 = Legacy compliant;\\n 3 = YT Music;\', \'0\'); \/\*if (!z) { var z = window.confirm(\'OK will attempt to switch between YouTube layouts and refresh the page. \\nCancel will abort.\'); if (typeof z == \'boolean\' && z == true) { deldiv(); return void 0; } }\*\/; if ((typeof z == \'boolean\' && z == false) || !z ) return void 0; if (z && !(typeof z == \'boolean\' && z == true)) { if (z != 0 && (z == 1 || z == 2 || z == 3)) { if (z == 1) document.cookie=&quot;PREF=f1=50000000&f5=10&f6=1004;path=/;domain=.youtube.com;expires=Session&quot;; if (z == 2) { document.cookie=&quot;PREF=f1=50000000&f5=10&f6=8;path=/;domain=.youtube.com;expires=Session&quot;;  ; }; if (z == 3) { var domain = \'music\', loc = clone(window.location.href); var vid = (loc.indexOf(\'/embed/\') > -1 && loc.indexOf(video_id()[0]) == -1) ? loc.split(\'/embed/\')[1].split(\'?\')[0].split(\'#\')[0] : video_id()[0]; location.href = loc.replace(\'www.youtube.com\', domain + \'.youtube.com\').replace(\'music.youtube.com\', domain + \'.youtube.com\').replace(\'gaming.youtube.com\', domain + \'.youtube.com\').replace(\'m.youtube.com\', domain + \'.youtube.com\').replace(\'/embed/\' + vid + \'?\',\'/watch?v=\' + vid + \'&\').replace(\'/embed/\' + vid,\'/watch?v=\' + vid) } else { if (z == 1) { location.href = window.location.href.replace(\'gaming.youtube.com\',\'www.youtube.com\').replace(\'music.youtube.com\',\'www.youtube.com\').replace(\'m.youtube.com\',\'www.youtube.com\') }; \/\*if (!yt6.ytm) {\*\/ if (z == 2) { location.href = \'https://www.youtube.com/embed/\' + video_id()[0] + \'?\' + (location.href.split(\'v=\' + yt6.vid).join(\'\').split(\'?\')[1] || location.href.split(\'v=\' + yt6.vid).join(\'\').split(\'&\')[1] || \'\') } else { if (yt6.ytp.embed) { location.href = window.location.href.replace(\'?\',\'&\').replace(\'/embed/\', \'/watch?v=\') }; }; \/\*location.reload()\*\/ \/\*}\*\/ } } else if (z == 0) deldiv() } else { if (!yt6.ytg) if (yt6.layout == 16) { { document.cookie=&quot;PREF=f1=50000000&f5=10&f6=8;path=/;domain=.youtube.com;expires=Session&quot;; } } else document.cookie=&quot;PREF=f1=50000000&f5=10&f6=1004;path=/;domain=.youtube.com;expires=Session&quot;; location.href = window.location.href.replace(\'gaming.youtube.com\',\'www.youtube.com\').replace(\'music.youtube.com\',\'www.youtube.com\').replace(\'/embed/\' + video_id()[0] + \'?\',\'/watch?v=\' + yt6.vid + \'&\' + window.location.href.split(\'/embed/\' + yt6.vid + \'?\')[1]); };" class="snarl-button yt-uix-button-text" aria-label="Remove script / Change YouTube layout" title="Remove script / Change YouTube layout">X</button><button id="audio_x" class="audio_x snarl-button yt-uix-button-text" aria-label="Use mousewheel to set speed" title="Use mousewheel to set speed" style="padding: 0px 1px 0px 1px; right: 0px" onclick="var yt6 = gid(\'snarls_player\'); if (yt6.player1 && yt6.player2 && typeof yt6.player2.load == \'function\') { var src = \'\'; if (gid(\'no2\')) src = gid(\'no2\').src; var audio_x = window.prompt(\'Enter URL of any audio (or video) file across the net to use as background sound. Will only play alongside video-only sources in progressive download mode.\', src); yt6.audiox = src = yt6.player2.media.src = audio_x || yt6.linx[yt6.userprefA[0]]; if (!audio_x) { yt6.audiox = null; delete yt6.audiox }; yt6.player1.pause(); yt6.player2.load() }; yt6.speed = 1; yt6.ytp.speed();">audio</button></div>'
 
     span.appendChild(remove)
     remove.setAttribute('style','display: inline-block; position: relative')
@@ -21736,9 +21958,13 @@ var CtrlS = function (stage,v){
 /* Array of possible browser specific settings for transformation */
   var properties = ['transform', 'WebkitTransform', 'MozTransform',
                     'msTransform', 'OTransform'],
-      prop = properties[0];
-      yt6.propName = prop
-      if (v) { if (!v.style[prop]) v.style[prop] = 'scale(1) rotate(0deg'; yt6.prop = v.style[prop] }
+      prop = (yt6.x) ? clone(yt6.prop) : clone(yt6.yt_prop)
+      propN = yt6.propName = properties[0];
+      if (v) {
+	if (!v.style[propN]) v.style[propN] = (prop) ? prop : 'scale(1) rotate(0deg'; if (yt6.x) { yt6.prop = clone(v.style[propN]) } else yt6.yt_prop = clone(v.style[propN])
+	v.style.left = (yt6.x) ? yt6.l + 'px' : yt6.yt_l + 'px'
+	v.style.top = (yt6.x) ? yt6.t + 'px' : yt6.yt_t + 'px'
+      }
 
 /* Iterators and stuff */    
   var i,j,t;
@@ -21761,8 +21987,7 @@ var CtrlS = function (stage,v){
     if (stage.style) {
 	for(i=0,j=properties.length;i<j;i++){
 	    if(typeof stage.style[properties[i]] !== 'undefined'){
-	      prop = properties[i]
-	      yt6.propName = prop
+	      var propN = yt6.propName = properties[i]
 	      break
 	    }
 	}
@@ -21779,11 +22004,11 @@ var CtrlS = function (stage,v){
 	var vp3 = pcont()
     }
   }
-  if (bm0 && !bm0.style.width && !bm0.style.height) {
+  if (bm0 && !bm0.style.width && !bm0.style.height && yt6.size != 'custom') {
     bm0.style.width = fix_Width()
     bm0.style.height = fix_Height()
-    if (yt6.l) v.style.left = yt6.l + 'px'
-    if (yt6.t) v.style.top = yt6.t + 'px'
+    //if (yt6.l) v.style.left = yt6.l + 'px'
+    //if (yt6.t) v.style.top = yt6.t + 'px'
   }
 
   if (yt6.flexy) var left = yt6.osw.style.left
@@ -21800,7 +22025,7 @@ var CtrlS = function (stage,v){
     var top = (yt6.p.tagName == 'IFRAME' || yt6.layout == 12) ? 'top' : 'marginTop'
     yt6.p.style[left] = (yt6.yt_l || 0) + 'px'
     yt6.p.style[top] = (yt6.yt_t || 0) + 'px'
-    yt6.p.style[prop] = yt6.prop
+    yt6.p.style[propN] = yt6.yt_prop
   }
 
   //if (yt6.layout == 16 && !yt6.ytm && !yt6.ytg) aspect(yt6.size)
@@ -21834,7 +22059,7 @@ var CtrlS = function (stage,v){
 	    if ( !(yt6.layout == 16 && yt6.blocked && !yt6.ytm && !yt6.ytg) && p && typeof p.playVideoAt == 'function' && p.getAttribute('class') != 'forced flashplayer') { var mp = p }
 	    else { var mp = yt6.original || original(yt6.p) }
 	    try { yt6.navigation = true
-	    if ((!yt6.shuffle && !yt6.ytg) || yt6.layout == 12 || yt6.mobile) {
+	      if ((!yt6.shuffle && !yt6.ytg) || (yt6.shuffle && yt6.layout == 16 && typeof mp.getPlaylist == 'function' && !mp.getPlaylist()[0]) || yt6.layout == 12 || yt6.mobile) {
 		if (!yt6.mobile) {
 		  if (yt6.pls && p.tagName != 'IFRAME') {
 		    if (yt6.layout == 16 && yt6.blocked && !yt6.ytm && !yt6.ytg) {
@@ -21850,9 +22075,17 @@ var CtrlS = function (stage,v){
 		    } else if (yt6.layout == 16 && !yt6.ytm && !yt6.ytg) {
 			if (yt6.age.blocked) {
 			  swap_player()
-			} else if (!yt6.pl_next_blocked) {
+			} else {
+			    if (typeof mp.getPlaylist == 'function' && mp.getPlaylist()[0]) {
+			      if (!yt6.pl_next_blocked) {
 				try { mp.playVideoAt((yt6.pl_index - yt6.pl_set) + 1) } catch(e) { try { yt6.pl_next.click() } catch(e){} }
-			  } else mp.nextVideo('0')
+			      } else mp.nextVideo('0')
+			    } else {
+				if (!yt6.pl_next_blocked) {
+				  try { yt6.pl_next.click() } catch(e){}
+				} else try { yt6.pl_nnext.click() } catch(e){}	
+			      }
+			  }
 		      } else try {
 			  if ('onclick' in yt6.pl_next) {
 			    if ((browserName == 'Firefox' && yt6.body2) || yt6.ytm) {
@@ -21891,7 +22124,7 @@ var CtrlS = function (stage,v){
 		      }
 		    try { z.click() } catch(e) { yt6.pl_next.click() }
 		  }
-	    } else {
+	      } else {
 		if (p == mp) {
 		  if (!yt6.ytg || yt6.pre_ad) { mp.playVideoAt((1*yt6.pl_index)+1) || mp.nextVideo('0'); } else try { mp.seekTo(mp.getDuration()); mp.playVideo()} catch(e) { mp.nextVideo('0')}
 		} else {
@@ -21902,7 +22135,7 @@ var CtrlS = function (stage,v){
 			function(){},250,1000)
 		    } catch(e) { yt6.navigation = false }
 		  }
-	    }
+	        }
 	    } catch(e) { yt6.navigation = false }
 	  },250,1500)
 	break;
@@ -21945,7 +22178,7 @@ var CtrlS = function (stage,v){
 		  }
 	    } else {
 	      var a = 5; if (typeof mp.getPlayerState == 'function') a = mp.getPlayerState(); if (a == -1) mp.pauseVideo()
-	      if (p == mp && !yt6.pre_ad && !yt6.mobile) { mp.playVideoAt(yt6.pl_index-1) || mp.previousVideo('0') } else { //console.log('? '+yt6.pl_previous)
+	      if (p == mp && !yt6.pre_ad && !yt6.mobile && !(yt6.layout == 16 && yt6.pls && typeof mp.getPlaylist == 'function' && !mp.getPlaylist()[0]) ) { mp.playVideoAt(yt6.pl_index-1) || mp.previousVideo('0') } else { //console.log('? '+yt6.pl_previous)
 		if (yt6.layout == 16 && yt6.blocked && !yt6.ytm && !yt6.ytg && p.tagName != 'IFRAME') {
 							      $waitUntil(function(){var p = original(yt6.p); if (p) { return true } },
 								function() {
@@ -21957,8 +22190,12 @@ var CtrlS = function (stage,v){
 								    },500,9000)
 								},1000,6000)
 		}
-		if (!yt6.shuffle) {
-		  try { mp.playVideoAt(yt6.pl_index-1) || mp.previousVideo('0') } catch(e) { yt6.pl_previous.click() }
+		if (!yt6.shuffle || (yt6.shuffle && yt6.layout == 16 && yt6.pls && typeof mp.getPlaylist == 'function' && !mp.getPlaylist()[0])) {
+		  if (yt6.pls && typeof mp.getPlaylist == 'function' && mp.getPlaylist()[0]) {
+		    try { mp.playVideoAt(yt6.pl_index-1) || mp.previousVideo('0') } catch(e) { yt6.pl_previous.click() }
+		  } else {
+		      try { if (!yt6.pl_previous_blocked) { yt6.pl_previous.click() } else hullajovagy() } catch(e){ try { if (!yt6.pl_next_blocked) { yt6.pl_next.click() } else yt6.pl_nnext.click() } catch(e){} }
+		    }
 		} else try {
 		  $waitUntil(function(){ if (location.href.indexOf(yt6.vid) == -1) { return true } else {
 		    mp.stopping = false; FireEvent2(mp, 'mouseup'); mp.seekTo(mp.getDuration()); if (!yt6.ad_muted) mp.mute(); mp.playVideo(); mp.pauseVideo(); if (!yt6.ad_muted) mp.unMute();
@@ -22042,11 +22279,11 @@ var CtrlS = function (stage,v){
 	  $waitUntil(function() {
 	  if (yt6.controls_pushed) {
 	    zoom = zoom + 0.1
-	    v.style[prop] = 'scale('+zoom+') rotate('+rotate+'deg)'
-	    if (yt6.x) { var z = yt6.z; yt6.z_ = z; yt6.z = (yt6.z + 0.1) } else { var yz = yt6.yt_z; yt6.yt_z_ = yz; yt6.yt_z = (yt6.yt_z + 0.1); yt6.prop = v.style[prop] }
-	    if (yt6.x && poster) poster.style[prop] = v.style[prop]
+	    v.style[propN] = 'scale('+zoom+') rotate('+rotate+'deg)'
+	    if (yt6.x) { var z = yt6.z; yt6.z_ = z; yt6.z = (yt6.z + 0.1); yt6.prop = v.style[propN] } else { var yz = yt6.yt_z; yt6.yt_z_ = yz; yt6.yt_z = (yt6.yt_z + 0.1); yt6.yt_prop = v.style[propN] }
+	    if (yt6.x && poster) poster.style[propN] = v.style[propN]
 	    if (!yt6.x && webgl) {
-	      webgl.style[prop] = v.style[prop]
+	      webgl.style[propN] = v.style[propN]
 	    }
 	  } else return true, function(){}, 200
 	  })
@@ -22060,11 +22297,11 @@ var CtrlS = function (stage,v){
 	  $waitUntil(function() {
 	  if (yt6.controls_pushed) {
 	    zoom = zoom - 0.1
-	    v.style[prop] = 'scale('+zoom+') rotate('+rotate+'deg)'
-	    if (yt6.x) { var z = yt6.z; yt6.z_ = z; yt6.z = (yt6.z - 0.1) } else { var yz = yt6.yt_z; yt6.yt_z_ = yz; yt6.yt_z = (yt6.yt_z - 0.1); yt6.prop = v.style[prop] }
-	    if (yt6.x && poster) poster.style[prop] = v.style[prop]
+	    v.style[propN] = 'scale('+zoom+') rotate('+rotate+'deg)'
+	    if (yt6.x) { var z = yt6.z; yt6.z_ = z; yt6.z = (yt6.z - 0.1); yt6.prop = v.style[propN] } else { var yz = yt6.yt_z; yt6.yt_z_ = yz; yt6.yt_z = (yt6.yt_z - 0.1); yt6.yt_prop = v.style[propN] }
+	    if (yt6.x && poster) poster.style[propN] = v.style[propN]
 	    if (!yt6.x && webgl) {
-	      webgl.style[prop] = v.style[prop]
+	      webgl.style[propN] = v.style[propN]
 	    }
 	  } else return true, function(){}, 200
 	  })
@@ -22078,12 +22315,12 @@ var CtrlS = function (stage,v){
 	  $waitUntil(function() {
 	  if (yt6.controls_pushed) {
 	    rotate = rotate + 5; if (rotate >= 360) rotate = rotate % 360
-	    v.style[prop] = 'scale('+zoom+') rotate('+rotate+'deg)';
-	    if (yt6.x) { var r = yt6.r; yt6.r_ = r; yt6.r = (yt6.r + 5); if (yt6.r >= 360) yt6.r = yt6.r % 360 } else { var yr = yt6.yt_r; yt6.yt_r_ = yr; yt6.yt_r = (yt6.yt_r + 5); if (yt6.yt_r >= 360) yt6.yt_r = yt6.yt_r % 360; yt6.prop = v.style[prop] }
-	    if (me_flash && !me_flash_) me_flash.style[prop] = yt6.prop;
-	    if (yt6.x && poster) poster.style[prop] = v.style[prop]
+	    v.style[propN] = 'scale('+zoom+') rotate('+rotate+'deg)';
+	    if (yt6.x) { var r = yt6.r; yt6.r_ = r; yt6.r = (yt6.r + 5); if (yt6.r >= 360) yt6.r = yt6.r % 360; yt6.prop = v.style[propN] } else { var yr = yt6.yt_r; yt6.yt_r_ = yr; yt6.yt_r = (yt6.yt_r + 5); if (yt6.yt_r >= 360) yt6.yt_r = yt6.yt_r % 360; yt6.yt_prop = v.style[propN] }
+	    if (me_flash && !me_flash_) me_flash.style[propN] = yt6.propN;
+	    if (yt6.x && poster) poster.style[propN] = v.style[propN]
 	    if (!yt6.x && webgl) {
-	      webgl.style[prop] = v.style[prop]
+	      webgl.style[propN] = v.style[propN]
 	    }
 	  } else return true, function(){}, 200
 	  })
@@ -22098,12 +22335,12 @@ var CtrlS = function (stage,v){
 	  $waitUntil(function() {
 	  if (yt6.controls_pushed) {
 	    rotate = rotate - 5; if (-360 >= rotate) rotate = rotate % 360
-	    v.style[prop] = 'scale('+zoom+') rotate('+rotate+'deg)';
-	    if (yt6.x) { var r = yt6.r; yt6.r_ = r; yt6.r = (yt6.r - 5); if (-360 >= yt6.r) yt6.r = yt6.r % 360 } else { var yr = yt6.yt_r; yt6.yt_r_ = yr; yt6.yt_r = (yt6.yt_r - 5); if (360 >= yt6.yt_r) yt6.yt_r = yt6.yt_r % 360; yt6.prop = v.style[prop] }
-	    if (me_flash && !me_flash_) me_flash.style[prop] = yt6.prop;
-	    if (yt6.x && poster) poster.style[prop] = v.style[prop]
+	    v.style[propN] = 'scale('+zoom+') rotate('+rotate+'deg)';
+	    if (yt6.x) { var r = yt6.r; yt6.r_ = r; yt6.r = (yt6.r - 5); if (-360 >= yt6.r) yt6.r = yt6.r % 360; yt6.prop = v.style[propN] } else { var yr = yt6.yt_r; yt6.yt_r_ = yr; yt6.yt_r = (yt6.yt_r - 5); if (360 >= yt6.yt_r) yt6.yt_r = yt6.yt_r % 360; yt6.yt_prop = v.style[propN] }
+	    if (me_flash && !me_flash_) me_flash.style[propN] = yt6.propN;
+	    if (yt6.x && poster) poster.style[propN] = v.style[propN]
 	    if (!yt6.x && webgl) {
-	      webgl.style[prop] = v.style[prop]
+	      webgl.style[propN] = v.style[propN]
 	    }
 	  } else return true, function(){}, 200
 	  })
@@ -22279,13 +22516,14 @@ var CtrlS = function (stage,v){
 
 	      }
 
-	    v.style[prop] = 'scale('+zoom+') rotate('+rotate+'deg)'
+	    v.style[propN] = 'scale('+zoom+') rotate('+rotate+'deg)'
 	    yt6.prop = 'scale('+zoom+') rotate('+rotate+'deg)'
+	    yt6.yt_prop = 'scale('+zoom+') rotate('+rotate+'deg)'
 
 	    if (webgl && !yt6.x) {
 	      webgl.parentNode.style.left = Math.round((1 * bw.replace('px','') - webgl.style.width.replace('px','')) / 2) + 'px'
 	      webgl.parentNode.style.top = Math.round((1 * bh.replace('px','') - hdiff - webgl.style.height.replace('px','')) / 2) + 'px'
-	      webgl.style[prop] = v.style[prop]
+	      webgl.style[propN] = v.style[propN]
 	    }
 
 	  } else {
@@ -22303,7 +22541,7 @@ var CtrlS = function (stage,v){
 	      p.style.visibility = (bv == 'hidden') ? 'visible' : 'hidden'
 	      p.style.opacity = opacity
 	      zoom = 1; rotate = 0
-	      p.style[prop] = yt6.prop = 'scale('+zoom+') rotate('+rotate+'deg)';
+	      p.style[propN] = yt6.yt_prop = 'scale('+zoom+') rotate('+rotate+'deg)';
 
 	      if (browserName != 'Safari') {
 	        p.style.position = ''
@@ -22312,18 +22550,18 @@ var CtrlS = function (stage,v){
 		opacity = (opacity) ? '; opacity: ' + opacity : ''
 	        p.setAttribute('style', display + position + opacity + '; top: 0px; left: ' + left + '; width: ' + p.style.width + '; height: ' + ((p.style.height != '0px') ? p.style.height : yt6.h) + '; visibility: visible')
 	      } else {
-	          v.style[prop] = 'scale('+zoom+') rotate('+rotate+'deg)';
-		  if (me_flash && !me_flash_) me_flash.style[prop] = 'scale('+zoom+' rotate('+rotate+'deg))';
-		  if (yt6.x && poster) poster.style[prop] = v.style[prop]
+	          v.style[propN] = 'scale('+zoom+') rotate('+rotate+'deg)';
+		  if (me_flash && !me_flash_) me_flash.style[propN] = 'scale('+zoom+' rotate('+rotate+'deg))';
+		  if (yt6.x && poster) poster.style[propN] = v.style[propN]
 	          if (!yt6.x && webgl) {
-	            webgl.style[prop] = v.style[prop]
+	            webgl.style[propN] = v.style[propN]
 	          }
 	        }
 	    }
-	  if (yt6.x && poster) { poster.style[prop] = 'none'; poster.style.top = '0px'; poster.style.left = '0px' }
+	  if (yt6.x && poster) { poster.style[propN] = 'none'; poster.style.top = '0px'; poster.style.left = '0px' }
 	  if (yt6.x && vp) { vp.style.left = '0px'; vp.style.top = '0px' }
 	  //if (yt6.p.tagName == 'DIV')
-	  try { yt6.p.style[prop] = '' } catch(e){}
+	  try { yt6.p.style[propN] = '' } catch(e){}
 
 	break
 
@@ -22331,7 +22569,7 @@ var CtrlS = function (stage,v){
 
       if (p && p.tagName == 'EMBED') p.setAttribute('wmode', yt6.wmode)
 
-      if (z.getAttribute('id') != 'player' && v && v.style) z.style[prop] = v.style[prop]
+      if (z.getAttribute('id') != 'player' && v && v.style) z.style[propN] = v.style[propN]
       e.preventDefault ? e.preventDefault() : (e.returnValue = false)
 
     }//t.nodeName
@@ -22437,7 +22675,7 @@ var CtrlS = function (stage,v){
 	    if (z && z.getAttribute('name') == 'me_flash') { z.parentNode.removeChild(z); set_controls() }
 	  }
 	}
-    } else if (yt6.p.tagName == 'DIV') yt6.p.style[prop] = ''
+    } else if (yt6.p.tagName == 'DIV') yt6.p.style[yt6.propName] = ''
   } else if (!player()) {
 	me_flash_up(); set_controls()
     }
