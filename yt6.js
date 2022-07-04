@@ -8511,10 +8511,8 @@ yt6d.mep_renew = function() {
 				} else if (ret) { return true } //else ev_log('Go?-'+yt6.browser_tab + ' '+counter)
 			    },
 			  function(){ //ev_log('Go2')
-				if (!yt6.player1.media.paused && !yt6.player1.media.currentTime) { //ev_log('Go2'+((yt6.player1.media.loaded) ? '1' : '0'));
-				  yt6.player1.play() };
-				if (!yt6.player1.media.loaded || (yt6.player1.media.loaded && !yt6.player1.media.currentTime)) { //ev_log('Go!'); 
-				  autoplay_trigger(t, yt6.current) } else yt6.player1.media.play()
+				if (!yt6.player1.media.loaded || (!yt6.player1.media.paused && !yt6.player1.media.currentTime)) { //ev_log('Go2'+((yt6.player1.media.loaded) ? '1' : '0'));
+				  yt6.player1.play() } else yt6.player1.media.play();
 			  },250,2500)
 
 			}, step, threshold)
