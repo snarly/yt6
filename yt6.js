@@ -8453,7 +8453,7 @@ yt6d.mep_renew = function() {
 						 !(yt6.player1.media.loaded && yt6.player1.media.paused) //( !yt6.player1.media.loaded && yt6.sync_timer % 4 == 1 && yt6.sync_timer >= 5)// % 4 == 1
 						|| (yt6.player1.media.loaded && !yt6.player1.media.paused && yt6.sync_timer % 2 == 1)// % 4 == 1  && yt6.sync_timer >= 5
 					      ) { var x = (!(yt6.player1.media.loaded && yt6.player1.media.paused)) ? 1 : 2// % 4 == 1
-					    yt6.player1.setSrc("https://www.youtube.com/ptracking"); yt6.player1.load(); //yt6.player1.isLoaded = false; //ev_log('pt0'+ x +' '+yt6.sync_timer +' '+ yt6.autoplay_trigger )
+					    yt6.player1.setSrc("https://www.youtube.com/ptracking"); yt6.player1.load(); yt6.player1.isLoaded = false; //ev_log('pt0'+ x +' '+yt6.sync_timer +' '+ yt6.autoplay_trigger )
 					  }
 
 					  if (x && (yt6.browser_tab == 'hidden' && yt6.sync_timer % 3 == 1 && yt6.sync_timer > 3) || yt6.player1.media.src == 'https://www.youtube.com/ptracking') {//x &&  % 2 == 1
