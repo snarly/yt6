@@ -4561,52 +4561,6 @@ function video_id(skip_update) {
 
   vid = [ vid || yt6.vid, location.href.split('//')[1].split('.youtube.com')[0] ]
 
-  if (!skip_update || (yt6.ad_skipped == 2 && !(yt6.layout == 16 && yt6.blocked)) ) //(yt6.layout == 16 && yt6.browser_tab == 'hidden' && (yt6.navigation || yt6.ad_skipped == 2)
-  if ( (( !(yt6.vid && typeof yt6.vid == 'string' && yt6.vid.indexOf(vid[0]) > -1) ) || yt6.ytp.embed || yt6.ad_skipped == 2) && player() && typeof yt6.p.getVideoUrl == 'function') {
-    var pobj = [yt6.p, yt6.original, getElementsByAttribute(yt6,'div','name','original')[0]], ytvid
-    for(i=0;i<pobj.length;i++) if (pobj[i] && typeof pobj[i].getVideoUrl == 'function') {
-      try { ytvid = vID(pobj[i].getVideoUrl()) } catch(e) { continue }
-      if (typeof ytvid == 'string') {
-	if (yt6.layout == 16 && yt6.browser_tab == 'hidden' && yt6.navigation && yt6.pls) try { var s = pobj[i].getPlayerState(); if (s != 1) pobj[i].playVideo() } catch(e){}
-        //yt6.vid = ytvid.split('&')[0]
-	ytvid = ytvid.split('&')[0]
-	if (!skip_update || (yt6.ad_skipped == 2 && !(yt6.layout == 16 && yt6.blocked)) ) {
-	  yt6.vid = ytvid
-	  vid = [ ytvid, vid[1] ]
-	}
-	break
-      }
-    }
-  }
-
-  if ( ((vid && Array.isArray(vid) && !vid[0]) || !vid) && location.href.indexOf('.com/embed') > -1) {
-    if (!vid) vid = [yt6.vid, location.href.split('//')[1].split('.youtube.com')[0] ]
-    if (location.href.split('.com/embed/')[1] || location.href.split('.com/embed?')[1]) {
-      vid[0] = clone((location.href.split('.com/embed/')[1] || location.href.split('.com/embed?')[1]).split('?')[0].split('&')[0].split('#')[0])
-    } else vid[0] = clone(vID(location.href))
-    yt6.vid = vid[0]
-  }
-
-  return vid
-}
-
-function video_id(skip_update) {
-
-  var vid
-
-  if (!(yt6.ytp.embed && yt6.vid)) {
-
-  vid = vID(location.href)
-  if (vid) vid = vid.split('&')[0].split('#')[0]
-  if (!vid) {
-    vid = location.href.split('v/')[1]
-    if (vid) vid = vid.split('/')[0]
-  }
-
-  }
-
-  vid = [ vid || yt6.vid, location.href.split('//')[1].split('.youtube.com')[0] ]
-
   if (!skip_update || yt6.ad_skipped == 2) 
   if ( (( !(yt6.vid && typeof yt6.vid == 'string' && yt6.vid.indexOf(vid[0]) != -1) ) || yt6.ytp.embed || yt6.ad_skipped == 2) && player() && typeof yt6.p.getVideoUrl == 'function') {
     var pobj = [yt6.p, yt6.original, getElementsByAttribute(yt6,'div','name','original')[0]], ytvid
