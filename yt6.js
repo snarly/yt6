@@ -13985,7 +13985,7 @@ if (linx[1140] || linx[1018]) { var a = 0, b = 0
 	( (!yt6.ads_eid && !yt6.ads_eid1 && !yt6.ads_eid2) ||
 	  (!yt6.ads_eid && yt6.ads_eid1 && !(linx[i].indexOf(yt6.ads_eid1) > -1 && yt6.live)) ||
 	  ( yt6.ads_eid && yt6.ads_eid1 && yt6.ads_eid1 != yt6.ads_eid
-	    && (linx[i].indexOf(yt6.ads_eid) == -1 || (typeof yt6.ad_duration == 'number' && 1.5 >= Math.abs(yt6.real_media_duration - yt6.ad_duration)) )
+	    && linx[i].indexOf(yt6.ads_eid) == -1
 	    //&& !(yt6.ads_eid2 && linx[i].indexOf(yt6.ads_eid1) == -1 && linx[i].indexOf(yt6.ads_eid2) == -1)
 	  )
 	)
@@ -14041,7 +14041,7 @@ if (linx[1140] || linx[1018]) { var a = 0, b = 0
 	if (p1.lastChild.name == i) p1.lastChild.setAttribute('name',i)
 	delete js
 
-      } else ev_log('?? /' + yt6.real_media_duration +' - '+ yt6.ad_duration + '=' + Math.abs(yt6.real_media_duration - yt6.ad_duration) + '\neid: '+ yt6.ads_eid +'\neid1: '+ yt6.ads_eid1 +'\neid2: '+ yt6.ads_eid2)
+      } //else ev_log('?? /' + yt6.real_media_duration +' - '+ yt6.ad_duration + '=' + Math.abs(yt6.real_media_duration - yt6.ad_duration) + '\neid: '+ yt6.ads_eid +'\neid1: '+ yt6.ads_eid1 +'\neid2: '+ yt6.ads_eid2)
     }
   }
 
