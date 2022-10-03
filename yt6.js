@@ -17063,7 +17063,7 @@ addEL(window, 'yt-navigate-start', yt6.body.yt_navigate_start, false)
 			      },function() { yt6.p.seekTo(yt6.p.getCurrentTime()); if (!yt6.x || yt6.mobile) yt6.p.playVideo(); if (!yt6.x) { yt6.p.playVideo(); try { v_(yt6.p).playbackRate = clone(yt6.speed) } catch(e) { yt6.ytp.speed() } } else if (yt6.autoplay && location.href.indexOf(yt6.loaded_vid) > -1) yt6.player1.media.play()
 				}, 100,5000)
 
-	    if ((yt6.loaded_media_duration == 4 && Math.abs(yt6.real_media_duration - 4) > 0.6) || !yt6.linx.length) {//ev_log('4441-'+yt6.loaded_media_duration)
+	    if (!yt6.linx.length) {//(yt6.loaded_media_duration == 4 && Math.abs(yt6.real_media_duration - 4) > 0.6) || 
 		yt6d.mep_reload()
 	    } else
 		$waitUntil(function() { if (yt6.live && yt6.real_media_duration > 0 && typeof yt6.loaded_media_duration == 'number' && (yt6.loaded_media_duration - yt6.real_media_duration) > 36 ) return true }, function() { yt6d.mep_reload() },500,7000)
@@ -17153,7 +17153,7 @@ addEL(window, 'yt-navigate-start', yt6.body.yt_navigate_start, false)
 			    if (yt6.ad_skipped) { delete yt6.ad_skipped }
 			  }, 200,5000)
 
-			if (yt6.loaded_media_duration == 4 || !yt6.linx.length) { yt6d.mep_reload() }//ev_log('4442-'+yt6.loaded_media_duration);
+			if (!yt6.linx.length) { yt6d.mep_reload() }//yt6.loaded_media_duration == 4 || 
 
 
 			//if (yt6.real_media_duration === 0) yt6.real_media_duration = p.getDuration()
