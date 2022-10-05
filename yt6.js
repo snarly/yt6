@@ -8543,7 +8543,7 @@ yt6d.mep_renew = function() {
 			  function(){
 				if (!yt6.player1.media.loaded || (!yt6.player1.media.paused && !yt6.player1.media.currentTime)) {
 				  yt6.player1.play() } else yt6.player1.media.play();
-				if (!ret && yt6.player1.isLoaded && t6.player1.media.loaded && !yt6.player1.media.paused) { yt6.timeout001 = 0; yt6.timeout002 = 0 }
+				if (!ret && yt6.player1.isLoaded && yt6.player1.media.loaded && !yt6.player1.media.paused) { yt6.timeout001 = 0; yt6.timeout002 = 0 }
 			  },250,2500)
 
 			}, step, threshold)
@@ -12442,7 +12442,7 @@ function mep_run() {
 					    var itag_ = itag(me.src)
 					    if (itag_ && (1 * itag_ != yt6.userprefA[0] || 1 * itag_ != yt6.userprefV[0])) {
 					      if (!yt6.no_default) {
-						if ((!yt6.newvideo || yt6d.init) && !(typeof yt6.fmt_bak2 == 'number' && (gid(mep.getAttribute('id') + '_sourcechooser_' + yt6.fmt_bak2) && yt6.yt_otf.indexOf(yt6.fmt_bak2) > -1)) ) {
+						if ( !(typeof yt6.fmt_bak2 == 'number' && (gid(mep.getAttribute('id') + '_sourcechooser_' + yt6.fmt_bak2) && yt6.yt_otf.indexOf(yt6.fmt_bak2) > -1)) ) { //(!yt6.newvideo || yt6d.init) &&
 						  if (typeof yt6.fmt_bak2 == 'number') { if (!gid(mep.getAttribute('id') + '_sourcechooser_' + yt6.fmt_bak2)) { itag_ = (1* yt6.fmt_bak2); } else yt6.fmt_bak = itag_; yt6.fmt_bak2 = null } //else yt6.fmt_bak = itag_; 
 
 						  if (yt6.fmts_fallback.A[yt6.prefer_fmt].indexOf(itag_) > -1) {
