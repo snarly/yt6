@@ -33,6 +33,9 @@
     <meta name="msapplication-config" content="none"/>
 
     <title>Yt6 -- Snarl's YouTube Video Player</title>
+  <style>
+    .note { font-size: 13px; padding: 0 0 0 20px }
+  </style>
   </head>
 
   <body>
@@ -59,10 +62,10 @@
 
 
 	<h3>
-	<a href="javascript:(function(){var v='3efe62398a5bdbcccca5d4d2273eb0ec9befd2f1/yt6.js',y='youtube.com/',w=window,d=w.document,h=d.location.href,yt6=w.yt6||{},yt6d=w.yt6d||{};if(yt6d.loaded>=4)return void 0;if(h.split(y+'watch')[1]||h.split(y+'shorts')[1]||h.split(y+'embed')[1]||h.split('/base.j')[1]=='s'){var id='snarls_player',e='script',q;yt6.loaded=0;function s(x){x=x||id;return d.getElementById(x)};function c(e){return d.createElement(e)};function a(q){s().appendChild(q);s().add_subs='en,hu,de';yt6d.src=q.src};function r(){if(s()){var x;try{x=s().querySelector('#'+id)}catch(e){x=s().firstChild};if(x)s().removeChild(x)}};function b(){var i,j,o,x;o=['js','rawcdn.githack','cdn.rawgit','js'];for(j,x,i=o.length;i;j=Math.floor(Math.random()*i),x=o[--i],o[i]=o[j],o[j]=x);if(yt6d.src==-1)o.splice(0,0,'raw.githubusercontent');q=c('div');q.id=id;if(q!=s())d.body.appendChild(q);var src='https://'+o[0]+'.com/snarly/yt6/'+v,src0='https://cdn.jsdelivr.net/gh/snarly/yt6@'+v;function oc(ox,oy,sr){return(oy!='js')?sr.replace(ox,oy):src0};q=c(e);q.id=id;q.src=(o[0]!='js')?src:src0;q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[1],src);q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[2],src);q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[3],src);q.onerror=function(){q=c(e);q.id=id;q.src=src.replace('https','http')};a(q);r();};a(q);r();};a(q);r();};try{a(q);}catch(f){a(q)};};function g(){try{deldiv()}catch(f){r()};yt6d.src=1;b()};if(!s()){b()};setTimeout(function(){var t=w.yt6;if(t)t.loaded=t.loaded||window['status'];if(!t||(t&&(!t.body||(t.loaded<3))))g()},3000);}else{void 0};})()/*2022-10-05-0634*/">Yt6 -- Snarl's YouTube Video Player (bookmarklet)</a>
+	<a href="javascript:(function(){var v='e2eb0dfedd80a1533899792121b16fa4d5e06133/yt6.js',y='youtube.com/',w=window,d=w.document,h=d.location.href,yt6=w.yt6||{},yt6d=w.yt6d||{};if(yt6d.loaded>=4)return void 0;if(h.split(y+'watch')[1]||h.split(y+'shorts')[1]||h.split(y+'embed')[1]||h.split('/base.j')[1]=='s'){var id='snarls_player',e='script',q;yt6.loaded=0;function s(x){x=x||id;return d.getElementById(x)};function c(e){return d.createElement(e)};function a(q){s().appendChild(q);s().add_subs='en,hu,de';yt6d.src=q.src};function r(){if(s()){var x;try{x=s().querySelector('#'+id)}catch(e){x=s().firstChild};if(x)s().removeChild(x)}};function b(){var i,j,o,x;o=['js','rawcdn.githack','cdn.rawgit','js'];for(j,x,i=o.length;i;j=Math.floor(Math.random()*i),x=o[--i],o[i]=o[j],o[j]=x);if(yt6d.src==-1)o.splice(0,0,'raw.githubusercontent');q=c('div');q.id=id;if(q!=s())d.body.appendChild(q);var src='https://'+o[0]+'.com/snarly/yt6/'+v,src0='https://cdn.jsdelivr.net/gh/snarly/yt6@'+v;function oc(ox,oy,sr){return(oy!='js')?sr.replace(ox,oy):src0};q=c(e);q.id=id;q.src=(o[0]!='js')?src:src0;q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[1],src);q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[2],src);q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[3],src);q.onerror=function(){q=c(e);q.id=id;q.src=src.replace('https','http')};a(q);r();};a(q);r();};a(q);r();};try{a(q);}catch(f){a(q)};};function g(){try{deldiv()}catch(f){r()};yt6d.src=1;b()};if(!s()){b()};setTimeout(function(){var t=w.yt6;if(t)t.loaded=t.loaded||window['status'];if(!t||(t&&(!t.body||(t.loaded<3))))g()},3000);}else{void 0};})()/*2022-11-04-2344*/">Yt6 -- Snarl's YouTube Video Player (bookmarklet)</a>
 	</h3>
 	<h4>
-		Last updated on 5 Oct 2022, 06:34
+		Last updated on 4 Nov 2022, 23:44
 	</h4>
 
 	<h1>
@@ -80,7 +83,8 @@
 		<li class="feat">resize, zoom, rotate and move around video picture arbitrarily,</li>
 		<li class="feat">select the desired media sequence to loop -- custom loop segments become active once the starting and ending time input fields disappear,</li>
 		<li class="feat">change playback rate ("speed" or tempo) from 0 up to 1600%,</li>
-		<li class="feat">load any external audio file to play alongside the current video,</li>
+		<li class="feat">replace soundtrack with any external audio (or video) file across the net</li>
+		<ol>Works only if you select a video-only format of the youtube video, and play it back with the progressive download method,</ol>
 		<li class="feat">pick your favoured and supported video/audio codec and resolution for playback,</li>
 		<li class="feat">grab media URLs directly from the "shorts" pages,</li>
 		<li class="feat">download the video/audio content,</li>
@@ -89,8 +93,9 @@
 		<ol>
 		On bookmarklet line, you can edit the value 
 		of "add_subs" after the equal sign and between apostrophes (a comma separated list 
-		of ISO 639-1 languge codes, such as <code>'en, de, fr, es, jp'</code>...) to add Google-Translated tracks 
+		of ISO 639-1 languge codes, such as <code>'en, de, fr, es, ja'</code>...) to add Google-Translated tracks 
 		of your choice,
+		<iframe src="/yt6/language_codes" style="width: 400px"></iframe>
 		</ol>
 		</li>
 		<li class="feat">facilitate background play while your mobile is in sleep mode,</li>
@@ -108,25 +113,28 @@
 		</li>
 	</ol>
 	<br>
-		Keep in mind that this is not a browser extension. If anything, it's an extension of the 
+		Keep in mind that this is not a browser extension. If anything it is an extension of the 
 		YouTube video page. Any event resulting in a browser page reload such as<br>
+	<ol>
 		 - leaving the current YT subdomain, <br>
 		 - typing URLs directly to the address bar instead of following links, <br>
 		 - or even just navigating between two points in your browsing history where a full page 
 		refresh has already taken place <br>
+	</ol>
 		will cause the program code to be removed from memory and you would need to reload it.
+
 	<br><br>
+
 		<b><strong><u>Please note</u>: </strong></b>
 	<div style="color: red; display: inline-block">
 		A bookmarklet cannot update itself. You either come back here once in a while to check if 
-		there is a newer version and repeat the steps below, or the ever evolving YouTube site will 
-		eventually break it. 
+		there is a newer version, or the ever evolving YouTube site will eventually break it. 
 	</div> 
 		Version number is the date of the last update, included on the bookmarklet line at its very 
-		end, looking like this: /*2022-10-05-0634*/
+		end, looking like this: /*2022-11-04-2344*/
 	<br><br>
 
-	<h5>
+	<h5 style="display: none">
 		!!! For the Google security issues experienced since the latter half of May 2022, please see the <a href="#attention">last paragraph</a> of important notes!!!
 	</h5>
 
@@ -137,43 +145,55 @@
 	</h1>
 
 	<ol>
-		<li>Right click / hold your finger on the Yt6 link above, and "Copy link address". If you 
-		have no such option, the code is written in plain text below, select and copy it manually</li>
-		<li>Bookmark any web page (this one for example)</li>
-		<li>Edit the created bookmark's Properties / Location: delete its URL-address entirely, 
-		and paste this snippet of javascript code in its place. (Optionally, you can give it a name 
-		of your choice too.)</li>
-		<li>Save the changes, if there is a Save button!</li>
+	<li>	Right click / hold your finger on the Yt6 link above, and "Copy link address".</li>
+	<ol>	If you have no such option, the code is written in plain text below, select and copy it manually
 	</ol>
+	<li>	Bookmark any web page (this one for example)</li>
+	<li>	Edit the created bookmark's Properties / Location: </li>
+	<ol>delete its URL-address entirely, and paste this snippet of javascript code in its place. 
+		(Optionally, you can give it a name of your choice too.)
+	</ol>
+	<li>	Save the changes, if there is a Save button!</li>
+	</ol><br>
 		That's it, your bookmarklet is now ready to use.
-	<br><br>
+	<br><br><br>
 		Also, in many desktop browsers you can simply drag and drop the link to the Bookmarks 
-		Toolbar, or right click on it and select "Bookmark this link" -- some browsers, however, 
-		may automatically replace the dragged or right-clicked link's address with a 
-		useless "about:blank#blocked" line. (It is default precaution for <b><strong>any</strong></b> javascript code behind a link 
-		as this programming language is easy to abuse.) The copy/paste method is your best 
+		Toolbar, or right click on it and select "Bookmark this link" -- however, some browsers may 
+		automatically replace the dragged / right-clicked link's content with a 
+		useless <code>about:blank#blocked</code> line. It is default precaution for <b><strong>any</strong></b> javascript code behind a link 
+		as this programming language is easy to abuse. The copy-paste method is your best 
 		choice.
 
 
 	<br><br>
-		Code in plain text:
-	<br>
+	<h4>
+		CODE IN PLAIN TEXT
+	</h4>
 	<p>
-	<code>javascript:(function(){var v='3efe62398a5bdbcccca5d4d2273eb0ec9befd2f1/yt6.js',y='youtube.com/',w=window,d=w.document,h=d.location.href,yt6=w.yt6||{},yt6d=w.yt6d||{};if(yt6d.loaded>=4)return void 0;if(h.split(y+'watch')[1]||h.split(y+'shorts')[1]||h.split(y+'embed')[1]||h.split('/base.j')[1]=='s'){var id='snarls_player',e='script',q;yt6.loaded=0;function s(x){x=x||id;return d.getElementById(x)};function c(e){return d.createElement(e)};function a(q){s().appendChild(q);s().add_subs='en,hu,de';yt6d.src=q.src};function r(){if(s()){var x;try{x=s().querySelector('#'+id)}catch(e){x=s().firstChild};if(x)s().removeChild(x)}};function b(){var i,j,o,x;o=['js','rawcdn.githack','cdn.rawgit','js'];for(j,x,i=o.length;i;j=Math.floor(Math.random()*i),x=o[--i],o[i]=o[j],o[j]=x);if(yt6d.src==-1)o.splice(0,0,'raw.githubusercontent');q=c('div');q.id=id;if(q!=s())d.body.appendChild(q);var src='https://'+o[0]+'.com/snarly/yt6/'+v,src0='https://cdn.jsdelivr.net/gh/snarly/yt6@'+v;function oc(ox,oy,sr){return(oy!='js')?sr.replace(ox,oy):src0};q=c(e);q.id=id;q.src=(o[0]!='js')?src:src0;q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[1],src);q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[2],src);q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[3],src);q.onerror=function(){q=c(e);q.id=id;q.src=src.replace('https','http')};a(q);r();};a(q);r();};a(q);r();};try{a(q);}catch(f){a(q)};};function g(){try{deldiv()}catch(f){r()};yt6d.src=1;b()};if(!s()){b()};setTimeout(function(){var t=w.yt6;if(t)t.loaded=t.loaded||window['status'];if(!t||(t&&(!t.body||(t.loaded<3))))g()},3000);}else{void 0};})()/*2022-10-05-0634*/
+	<code>javascript:(function(){var v='e2eb0dfedd80a1533899792121b16fa4d5e06133/yt6.js',y='youtube.com/',w=window,d=w.document,h=d.location.href,yt6=w.yt6||{},yt6d=w.yt6d||{};if(yt6d.loaded>=4)return void 0;if(h.split(y+'watch')[1]||h.split(y+'shorts')[1]||h.split(y+'embed')[1]||h.split('/base.j')[1]=='s'){var id='snarls_player',e='script',q;yt6.loaded=0;function s(x){x=x||id;return d.getElementById(x)};function c(e){return d.createElement(e)};function a(q){s().appendChild(q);s().add_subs='en,hu,de';yt6d.src=q.src};function r(){if(s()){var x;try{x=s().querySelector('#'+id)}catch(e){x=s().firstChild};if(x)s().removeChild(x)}};function b(){var i,j,o,x;o=['js','rawcdn.githack','cdn.rawgit','js'];for(j,x,i=o.length;i;j=Math.floor(Math.random()*i),x=o[--i],o[i]=o[j],o[j]=x);if(yt6d.src==-1)o.splice(0,0,'raw.githubusercontent');q=c('div');q.id=id;if(q!=s())d.body.appendChild(q);var src='https://'+o[0]+'.com/snarly/yt6/'+v,src0='https://cdn.jsdelivr.net/gh/snarly/yt6@'+v;function oc(ox,oy,sr){return(oy!='js')?sr.replace(ox,oy):src0};q=c(e);q.id=id;q.src=(o[0]!='js')?src:src0;q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[1],src);q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[2],src);q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[3],src);q.onerror=function(){q=c(e);q.id=id;q.src=src.replace('https','http')};a(q);r();};a(q);r();};a(q);r();};try{a(q);}catch(f){a(q)};};function g(){try{deldiv()}catch(f){r()};yt6d.src=1;b()};if(!s()){b()};setTimeout(function(){var t=w.yt6;if(t)t.loaded=t.loaded||window['status'];if(!t||(t&&(!t.body||(t.loaded<3))))g()},3000);}else{void 0};})()/*2022-11-04-2344*/
 	</code>
 	</p>
 	<p>__</p>
+	<br>
 	<h1>
 		How to use
 	</h1>
 		<b><strong>On Desktop, just click on it on your bookmarks list</strong></b> whenever you enter a YouTube 
 		video you want to play around with, unless you have the code already running.
 	<br><br>
-		<b><strong>On mobile, tap the browser's URL-address bar first </strong></b> (NOT the YouTube search bar!). 
-		After that, the browser should suggest it as an available option once you start <b><strong>typing</strong></b> either 
-		<b><strong>its name</strong></b> ("Yt6" or whatever you named it) or the prefix "javascript:" to narrow the 
-		search down to bookmarklets only. <b><strong>Tapping on the correct entry</strong></b> shall initiate the call.
-	<br><br>
+		<b><strong>On Mobile </strong></b>
+	<ol>
+	<li><b><strong>Tap the browser's address bar first </strong></b> (NOT the YouTube search bar!) </li>
+	<ol>	this will select / highlight the whole address of the current YouTube video page.
+	</ol>
+	<li>	The browser should suggest the bookmarklet as an available option once you </li>
+	<ol>
+		<b><strong>start typing</strong></b> either <b><strong>its name</strong></b> ("Yt6" or whatever you named it) or the prefix 
+		"javascript:" to narrow the search down to bookmarklets only. 
+	</ol>
+	<li><b><strong>Tapping on the correct entry</strong></b> shall initiate the call.</li>
+	</ol>
+	<br>
 		Loading time depends on your internet connection and the current traffic on the storage 
 		servers, but it should be up and running within a few seconds. If it doesn't seem to work, it 
 		may be because of installed script blocker extensions. See the <a href="#important_notes">Important Notes</a> section to 
@@ -185,20 +205,22 @@
 		Use the HTML5 emblem on the control panel to switch between the native and this 
 		alternative player.
 	<br><br>
-		It is possible to use the code as a userscript with the help of addons like
+		It is possible to use the bookmarklet code as a <u><b><strong>userscript</strong></b></u> with the help of add-ons like
 	<ol>
 		<b><strong>Greasemonkey</strong></b> (for <a href="https://addons.mozilla.org/en-US/firefox/addon/greasemonkey/">Firefox</a>),<br>
 		<b><strong>Tampermonkey</strong></b> (for <a href="https://addons.mozilla.org/en-US/firefox/addon/tampermonkey/">Firefox</a>, <a href="https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo">Chrome</a>, <a href="https://microsoftedge.microsoft.com/addons/detail/tampermonkey/iikmkjmpaadaobahmlepeloendndfphd">Edge</a> and <a href="https://addons.opera.com/hu/extensions/details/tampermonkey-beta/">Opera</a>) or <br>
 		<b><strong>Violentmonkey</strong></b> (for <a href="https://addons.mozilla.org/en-US/firefox/addon/violentmonkey/">Firefox</a>, <a href=" https://chrome.google.com/webstore/detail/violentmonkey/jinjaccalgkegednnccohejagnlnfdag">Chrome</a> and <a href="https://microsoftedge.microsoft.com/addons/detail/violentmonkey/eeagobfjdenkkddmbclomhiblgggliao">Edge</a>)<br>
 	</ol>
-		However I would not recommend this because all it does is save you the time of one or 
-		two clicks/taps, while it may cause unnecessary network traffic in case of an error.
+		However, I would not recommend this (except for Yandex, which recently made the length 
+		of its bookmarks restricted to 128 characters) because all it does is save you the time of 
+		one or two clicks or taps, while it may cause unnecessary network traffic in 
+		case of an error.
 	<br><br>
 
 <pre>// ==UserScript==
 // @name         Yt6 -- Snarl's YouTube Video Player (userscript)
 // @namespace    yt6
-// @version      2022-10-05-0634
+// @version      2022-11-04-2344
 // @author       Snarl
 // @description  Auto-Load Yt6 script as soon as possible
 // @match        https://*.youtube.com/watch*
@@ -214,11 +236,11 @@
 
   window['yt6'] = {}; window['yt6d'] = {}; window['yt6'].body = 1
 
-  var idle_time = 1000 // wait some time before running the bookmarklet part
+  var idle_time = 2000 // wait some time before running the bookmarklet part
 
   var onComplete = function(){setTimeout( //javascript:(
-    (function(){var v='3efe62398a5bdbcccca5d4d2273eb0ec9befd2f1/yt6.js',y='youtube.com/',w=window,d=w.document,h=d.location.href,yt6=w.yt6||{},yt6d=w.yt6d||{};if(yt6d.loaded>=4)return void 0;if(h.split(y+'watch')[1]||h.split(y+'shorts')[1]||h.split(y+'embed')[1]||h.split('/base.j')[1]=='s'){var id='snarls_player',e='script',q;yt6.loaded=0;function s(x){x=x||id;return d.getElementById(x)};function c(e){return d.createElement(e)};function a(q){s().appendChild(q);s().add_subs='en,hu,de';yt6d.src=q.src};function r(){if(s()){var x;try{x=s().querySelector('#'+id)}catch(e){x=s().firstChild};if(x)s().removeChild(x)}};function b(){var i,j,o,x;o=['js','rawcdn.githack','cdn.rawgit','js'];for(j,x,i=o.length;i;j=Math.floor(Math.random()*i),x=o[--i],o[i]=o[j],o[j]=x);if(yt6d.src==-1)o.splice(0,0,'raw.githubusercontent');q=c('div');q.id=id;if(q!=s())d.body.appendChild(q);var src='https://'+o[0]+'.com/snarly/yt6/'+v,src0='https://cdn.jsdelivr.net/gh/snarly/yt6@'+v;function oc(ox,oy,sr){return(oy!='js')?sr.replace(ox,oy):src0};q=c(e);q.id=id;q.src=(o[0]!='js')?src:src0;q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[1],src);q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[2],src);q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[3],src);q.onerror=function(){q=c(e);q.id=id;q.src=src.replace('https','http')};a(q);r();};a(q);r();};a(q);r();};try{a(q);}catch(f){a(q)};};function g(){try{deldiv()}catch(f){r()};yt6d.src=1;b()};if(!s()){b()};setTimeout(function(){var t=w.yt6;if(t)t.loaded=t.loaded||window['status'];if(!t||(t&&(!t.body||(t.loaded<3))))g()},3000);}else{void 0};})()
-    //)()/*2022-10-05-0634*/
+    (function(){var v='e2eb0dfedd80a1533899792121b16fa4d5e06133/yt6.js',y='youtube.com/',w=window,d=w.document,h=d.location.href,yt6=w.yt6||{},yt6d=w.yt6d||{};if(yt6d.loaded>=4)return void 0;if(h.split(y+'watch')[1]||h.split(y+'shorts')[1]||h.split(y+'embed')[1]||h.split('/base.j')[1]=='s'){var id='snarls_player',e='script',q;yt6.loaded=0;function s(x){x=x||id;return d.getElementById(x)};function c(e){return d.createElement(e)};function a(q){s().appendChild(q);s().add_subs='en,hu,de';yt6d.src=q.src};function r(){if(s()){var x;try{x=s().querySelector('#'+id)}catch(e){x=s().firstChild};if(x)s().removeChild(x)}};function b(){var i,j,o,x;o=['js','rawcdn.githack','cdn.rawgit','js'];for(j,x,i=o.length;i;j=Math.floor(Math.random()*i),x=o[--i],o[i]=o[j],o[j]=x);if(yt6d.src==-1)o.splice(0,0,'raw.githubusercontent');q=c('div');q.id=id;if(q!=s())d.body.appendChild(q);var src='https://'+o[0]+'.com/snarly/yt6/'+v,src0='https://cdn.jsdelivr.net/gh/snarly/yt6@'+v;function oc(ox,oy,sr){return(oy!='js')?sr.replace(ox,oy):src0};q=c(e);q.id=id;q.src=(o[0]!='js')?src:src0;q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[1],src);q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[2],src);q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[3],src);q.onerror=function(){q=c(e);q.id=id;q.src=src.replace('https','http')};a(q);r();};a(q);r();};a(q);r();};try{a(q);}catch(f){a(q)};};function g(){try{deldiv()}catch(f){r()};yt6d.src=1;b()};if(!s()){b()};setTimeout(function(){var t=w.yt6;if(t)t.loaded=t.loaded||window['status'];if(!t||(t&&(!t.body||(t.loaded<3))))g()},3000);}else{void 0};})()
+    //)()/*2022-11-04-2344*/
   , idle_time)
   }
 
@@ -248,83 +270,105 @@
   },timeout)
 
 })()</pre>
+	<br>
+		Note:
+	<ol>	These "monkey"-scripts only seem to work on normal, non-incognito tabs on mobile.
+	<br><br>
+		If the launched program appears dysfunctional in Desktop view mode, edit the 
+		userscript code through the manager's Dashboard and try to set the <b><strong>idle_time</strong></b> variable 
+		to a higher value (the number is in milliseconds).
+	</ol>
 	<br><br>
 
 	<h1>
 		Background play on Mobile
 	</h1>
 		You won't have to request YouTube's resource-hungry Desktop mode to be able to listen 
-		to videos over a locked screen -- the site's lightweight Mobile version will do just fine. Use 
-		the 48k Opus audio-only format for playback to save as much power as possible. (The 
-		drop in sound quality only becomes noticeable through high-end headphones or on loud
-		sound recordings.) Picking a video format for background play is pretty much pointless and 
-		would also raise the chance of playback failure significantly. There are some browsers which don't like 
-		playing audio on its own that much though (Yandex).
+		to videos over a locked screen -- the site's lightweight Mobile version will do just fine.
 	<br><br>
-		Having Desktop view requested on one tab with the Mobile UI also being used on another tab 
+		I recommend to use the 48k Opus audio-only format for playback to save as much 
+		bandwidth as possible. (The drop in sound quality becomes noticeable only through high-end 
+		headphones or on loud sound recordings.) Picking a video format for background play 
+		is pretty much pointless anyway and would also raise the chance of playback failure 
+		significantly. (Yandex browser doesn't seem to like playing audio on its own, though.)
+	<br><br>
+		Having Desktop view requested on one tab while the Mobile UI also being used on another tab 
 		may cause the script to fail (sent User-Agent / actual layout mismatch, at least on Firefox), 
 		so close one or the other before trying.
 	<br><br>
-		Chromium-based browsers have recently slowed down their execution of javascript 
-		timeouts while the device is sleeping. Navigation between videos and especially 
+		Chromium-based browsers have recently slowed their execution of javascript timeouts 
+		down while the device is sleeping. Navigation between videos and especially 
 		skippiing through ads are hampered by this -- both can now take half a minute (or more) 
-		to complete and may even come to full stop. However, turning the screen on without 
-		unlocking the device may be enough to speed the procedure up again.
+		to complete and may even come to full stop. Just turning the screen on without unlocking it 
+		may sometimes be enough to speed the procedure up.
 		
 		
-	<br><br>
+	<br><br><br>
 	<h1>
 		Supported browsers
 	</h1>
 		<b><strong>On Desktop</strong></b>, the script should work with almost any browser now. The only criteria is that 
-		they must support the usage of bookmarklets, which most of them do.
+		they must support the usage of bookmarklets or have userscript addon capabilities, 
+		which most of them do.
 	<br><br>
-		Below is a ranking of popular <b><strong>Mobile browsers</strong></b> based on how well they work <u>under the 
-		following conditions</u>
+		Below is a ranking of popular <b><strong>Mobile browsers</strong></b> based on how well they work <u><b><strong>under the 
+		following conditions</strong></b></u>
 	<ol>
 		- using the script's alternative player<br>
 		- on YouTube's mobile interface (m.youtube.com)<br>
 		- while the device is in actual sleep mode (screen turned off and with no connection to 
 		any external power source through cable)<br>
 	</ol>
-	<div style="display: inline; font-size: 13px">
-		Note: Firefox and Brave both support background play on the Mobile UI natively, so these two would not even 
-		need the script's help for that paritcular purpose. However, the original YT player (without Premium access) will 
-		only let you play like 5 videos in a row, after that it will throw an alert box in your face to force some 
-		user interaction before playback can continue. The alternative player is unaffected by this.
-	</div>
 </ol>
 	<ol><p>
 	<h5>
 		Good ones (for Android)
 	</h5>
-		<li><b><strong><a href="https://play.google.com/store/apps/details?id=com.brave.browser">Brave</a></strong></b>
-		<li><b><strong><a href="https://play.google.com/store/apps/details?id=com.vivaldi.browser">Vivaldi</a></strong></b>
-		<li><b><strong><a href="https://play.google.com/store/apps/details?id=org.mozilla.firefox">Firefox</a></strong></b> <div style="display: inline; font-size: 13px">(last Desktop-based build was <a href="https://www.apkmirror.com/apk/mozilla/firefox/firefox-68-11-0-release/">68.11.0</a>)</div> 
-
-
+		<li><b><strong><a href="https://play.google.com/store/apps/details?id=org.mozilla.firefox">Firefox</a></strong></b><div style="display: none; font-size: 13px"> (last Desktop-based build was <a href="https://www.apkmirror.com/apk/mozilla/firefox/firefox-68-11-0-release/">68.11.0</a>)</div>
+		<div class="note">slow but reliable when "hardened": the <a href="https://addons.mozilla.org/en-US/firefox/addon/ublock-origin/">uBlock Origin</a> add-on is a must-have to effectively rid ourselves of video commercials</div>
+		<li><b><strong><a href="https://play.google.com/store/apps/details?id=com.kiwibrowser.browser">Kiwi</a></strong></b>
+		<div class="note">works excellent even without a native protection against video ads</div>
 	<h5>
 		So-so (playback may fail after a few videos)
 	</h5>
-		<li><b><strong><a href="https://play.google.com/store/apps/details?id=com.kiwibrowser.browser">Kiwi</a></strong></b>
-		<li><b><strong><a href="https://play.google.com/store/apps/details?id=com.microsoft.emmx">Edge</a></strong></b>
 		<li><b><strong><a href="https://play.google.com/store/apps/details?id=com.android.chrome">Google Chrome</a></strong></b>
+		<div class="note">the fastest one, but also the most aggressively advertising, to the point where it breaks the program</div>
+		<li><b><strong><a href="https://play.google.com/store/apps/details?id=com.vivaldi.browser">Vivaldi</a></strong></b>
+		<div class="note">overcomes ads slower in the background, sometimes excruciatingly slower, yet halts less frequently than Brave</div>
+		<li><b><strong><a href="https://play.google.com/store/apps/details?id=com.brave.browser">Brave</a></strong></b>
+		<div class="note">quick and efficient method to filter ads, ends up stopping the external player too often</div>
+		<li><b><strong><a href="https://play.google.com/store/apps/details?id=com.microsoft.emmx">Edge</a></strong></b>
+		<div class="note">runs ads like Kiwi, stops playback like Brave</div>
+		<li><b><strong><a href="https://play.google.com/store/apps/details?id=com.duckduckgo.mobile.android">DuckDuckGo</a></strong></b>
+
+
 	<h5>
 		Bad ones (playback works, just not in sleep mode)
 	</h5>
 		<li><b><strong><a href="https://play.google.com/store/apps/details?id=com.ecosia.android">Ecosia</a></strong></b>
 		<li><b><strong><a href="https://play.google.com/store/apps/details?id=com.yandex.browser">Yandex</a></strong></b>
+		<div class="note">can only launch the code through one of the monkey userscript managers now</div>
 	<h5>
 		Unsupported
 	</h5>
-		<li><b><strong>Opera</strong></b> for mobile no longer supports bookmarklets -- one less reason to use it
-		<li><b><strong>Firefox Focus, DuckDuckGo, Samsung, Qwant, Mint</strong></b> ...
+		<li><b><strong>Opera</strong></b>
+		<div class="note"> the mobile version no longer supports bookmarklets -- one less reason to use it</div>
+		<li><b><strong>Firefox Focus, Samsung, Qwant, Mint</strong></b> ...
 	</ol></li>
+	<br>
+		With other conditions set -- such as turning the sleep function off -- the ranking would look 
+		much different. For example, if you use the original player, Edge outperforms Kiwi.
+
+	<br><br>
+		Brave and Firefox both support background play on the Mobile UI natively. However the 
+		original YT player (without Premium access) will let you play only a couple of videos in a 
+		row, after that it will throw an alert box in your face to force some user interaction before 
+		playback could continue. The alternative player is unaffected by this.
 	<br><br>
 		Regardless of platform, the default "noname" browsers that come pre-installed on various 
 		systems typically have no support for bookmarklets.
 
-	<br><br>
+	<br><br><br>
 	<h1>
 		Legacy browsers
 	</h1>
@@ -411,7 +455,9 @@
 	<br><br>
 		<b><strong><u>Heads-up</u>: This additional userscript was broken by YouTube / up-to-date browsers 
 		around mid-2021 and needs heavy rewriting.</strong></b> 
-	<br><br>
+
+	<br><br><br>
+
 	<h1>
 		Stream capturing
 	</h1>
@@ -546,12 +592,11 @@
 	</h3>
 	<br>
 		This program is free to use for anyone.<br>
-		But if you would like to, you can tip me anonymously through an option included.
 	</p>
 
 
 	<p>__</p>
-
+	<br>
 
 	<h1 id="important_notes">
 		Important Notes
@@ -569,7 +614,7 @@
 		githubusercontent.com - program code is stored on this site<br>
 		<a href="https://www.jsdelivr.com/">jsdelivr.net</a> - #1 cdn proxy to load the files<br>
 		<a href="https://raw.githack.com">githack.com</a> - #2 (does not always fix the Content-Type header...)<br>
-		<a href="https://rawgit.com">rawgit.com</a> - #3 (redirects to jsdelivr's cdn equivalent)<br>
+		<a href="https://rawgit.com">rawgit.com</a> - #3 (now redirects to jsdelivr's cdn)<br>
 		<!--a href="https://allow-any-origin.appspot.com">allow-any-origin.appspot.com</a> - #1 proxy to get the video signature decryption data<br-->
 		<!--a href="https://cors-anywhere.herokuapp.com">cors-anywhere.herokuapp.com</a> - (not necessary for some time now)<br-->
 		<a href="https://api.codetabs.com/">api.codetabs.com</a> - (should not be necessary but it wouldn't hurt either)<br>
@@ -583,18 +628,18 @@
 		sends deliberately wrong signature decryption keys on the first try. I did not 
 		implement a fully automatic update of video signatures because of the high risk of 
 		infinite loop on repeated failure. <b style="color: red"><strong>You MUST switch over to the alternative player 
-		to manually initiate playback on multiple formats</strong></b> till enough errors occur for the 
+		to initiate playback on multiple formats manually</strong></b> till enough errors occur for the 
 		updating procedure to fire. The video can be downloaded as soon as it becomes 
-		playable on the alt-player. The appearing blue gauge on its time rail will show that 
-		the video data has arrived and is buffering.
+		playable on the alt-player. The appearing blue gauge on its time rail shows that the 
+		video data has arrived and is buffering.
 	</p>
 	</li>
 	<br>
 	<li>
 	<p>
-		The alternative player of Yt6 uses the Progressive Download method to access video & 
-		audio, instead of the Adaptive Streaming YouTube's own player had as the default 
-		since late 2013.
+		The alternative player of Yt6 uses the Progressive Download method to access 
+		video & audio instead of the Adaptive Streaming YouTube's own player had as the 
+		default since late 2013.
 	<br><br>
 
 		Both have their pros and cons. With the former, media is getting piled up in the browser's 
@@ -603,13 +648,13 @@
 		only have tiny slices of the media buffered at all times, which in turn requires higher 
 		CPU-power and constantly fast network speeds.
 	<br>
-		Consequently, for live streams or Ultra-HD videos it's recommended to switch over to 
+		Consequently, for live streams or Ultra-HD videos it is recommended to switch over to 
 		YouTube's native player, as it is much better suited for those.
 	
 	<br><br>
 		To make sure your browser chooses memory over the much slower and/or fragile Hard 
-		Disk / Solid-state drive for temporary storage, <strong><b>use the program in an Incognito / 
-		In-private browser window or tab.</b></strong>
+		Disk / Solid-state drive, <strong><b>use the program in an Incognito / In-private 
+		browser window or tab.</b></strong>
 	</p>
 	</li>
 	<br>
@@ -641,6 +686,8 @@
 	</ol>
 
 	<br>
+
+<div style="display: none">
 	<h1 id="attention">
 		Attention!
 	</h1>
@@ -664,6 +711,7 @@ To prove that my own code has nothing to do with what Google's security warning 
 
 	<br><br>
 	If something like this were to happen again in the future, at least you know what's going on. Hopefully I will find a better solution by then.
+</div>
 
 
       </section>
