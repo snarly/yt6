@@ -164,7 +164,7 @@ if (typeof Array.isArray === 'undefined') {
 	browserName = "Yandex";
 
     // DuckDuckGo
-    if (browserName == "Chrome" && navigator.userAgent.indexOf(' DuckDuckgo/') > -1) browserName = "DuckDuckGo";
+    if (browserName == 'undefined' && navigator.userAgent.indexOf(' DuckDuckgo/') > -1) browserName = "DuckDuckGo";
 
 
 
