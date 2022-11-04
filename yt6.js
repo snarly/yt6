@@ -14357,7 +14357,7 @@ if (ytplayer && ytplayer.config && ytplayer.config.args) {
 	} // state
       } // onreadystatechange
 
-      //if (!shorts()) xhr4.send('')
+      if (!shorts()) xhr4.send('')
 
       if (yt6.srt && yt6.srt.done) break
 
