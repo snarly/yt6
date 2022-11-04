@@ -163,8 +163,6 @@ if (typeof Array.isArray === 'undefined') {
     if (browserName.indexOf('Chrom') == 0 && navigator.userAgent.indexOf(' YaBrowser/') > -1)
 	browserName = "Yandex";
 
-    // DuckDuckGo
-    if (browserName == 'undefined' && navigator.userAgent.indexOf(' DuckDuckgo/') > -1) browserName = "DuckDuckGo";
 
 
 
@@ -395,6 +393,9 @@ if (typeof Array.isArray === 'undefined') {
 
 
     if (browserName == 'undefined') browserName = jscd.browser
+
+    // DuckDuckGo
+    if (browserName == "Chrome" && navigator.userAgent.indexOf(' DuckDuckgo/') > -1) browserName = "DuckDuckGo";
 
     // cannot distinguish between most Chromium-based browsers, especially on mobile (Chrome, Vivaldi, Kiwi, Epic, Dolphine, etc.)
     //if (browserName == 'Chromium' && jscd.mobile) // simply call all of them "Chrome"
