@@ -13375,7 +13375,7 @@ function mep_run() {
 					      var mep = gid(mep_x('mep_'))
 					      if (mep && mep.parentNode) { var i = yt6.err2, sauce = getElementsByAttribute(mep,'input','name',mep.getAttribute('id') + '_sourcechooser')
 						for(i=i;i<sauce.length;i++) { var src2 = getElementsByAttribute(mep,'input','id',mep.getAttribute('id') + '_sourcechooser_' + yt6.fmts_fallback.A[yt6.prefer_fmt][i])[0]
-						  if (src2 && src2.parentNode) { yt6.player2.setSrc(src2.value); yt6.player2.media.load(); ev_log('itag:'+itag(src2.value)); yt6.err2 = (i+1); break }
+						  if (src2 && src2.parentNode) { yt6.player2.setSrc(src2.value); yt6.player2.media.load(); yt6.err2 = (i+1); break }//ev_log('itag:'+itag(src2.value)); 
 						}
 					      }
 					    }
@@ -17215,7 +17215,7 @@ navigation.oncurrententrychange = function(){ //mobile nav
 
 	    yt6.ad_skipped = 1
 
-	  } else if (yt6.ad_skipped == 3) { yt6.ad_skipped = 4 }// not skippable this, get back to fast forwarding
+	  } else if (yt6.ad_skipped == 3) { yt6.ad_skipped = 4 }// not skippable this time, get back to fast forwarding
 
 	} else {
 
