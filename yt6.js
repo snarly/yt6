@@ -18421,10 +18421,10 @@ if (yt6.flexy && yt6.pls) {
 		prev_vid = cur_vid
 
 
-	if (yt6.layout == 16 && !yt6.mobile) {
+	if ((yt6.layout == 16 && !yt6.mobile || yt6.ytp.embed)) {
 
 
-		  cur_vid = (yt6.navigtion || (!yt6.blocked_m && location.href.indexOf(yt6.vid) > -1)) ? clone(yt6.vid) : video_id()[0]
+		  cur_vid = (yt6.navigtion || (!yt6.ytp.embed && !yt6.blocked_m && location.href.indexOf(yt6.vid) > -1)) ? clone(yt6.vid) : video_id()[0]
 		  if (!yt6.ytm && prev_vid == cur_vid) {
 		    //if (yt6d.previous.video_id && yt6d.previous.video_id != prev_vid) 
 		      prev_vid = clone(yt6d.pprevid)
