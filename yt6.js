@@ -10440,7 +10440,7 @@ if (c[1]) {
 
 	  if (!linx[qs.itag] || !(linx[qs.itag] && linx[qs.itag].indexOf('&title=Advertisement') > -1)) {
 
-	    if ( !(yt6.ads_eid && Math.abs(dur - (yt6.real_dur || 0)) > 36)) {//href.indexOf(yt6.ads_eid) > -1 && 
+	    if ( !(yt6.ads_eid && Math.abs(dur - (yt6.real_dur || 0)) > 36) || (yt6d.previous.duration && dur && Math.abs(yt6d.previous.duration - dur) < 1.5)) {//href.indexOf(yt6.ads_eid) > -1 && 
 	    linx[alt_linx(qs.itag, href, length_seconds, dur, eid)] = href } //else ev_log(qs.itag +' '+ Math.abs(dur - (yt6.real_dur || 0)) )
 
 	  } else {
@@ -10747,6 +10747,7 @@ if (c[1]) {
   }//for
 
   if (yt6.ads_eid && ((yt6.ads_eid1 || yt6.ads_eid2) && !(yt6.ads_eid1 && yt6.ads_eid2) && yt6.ads_eid1 == yt6.ads_eid)) yt6.ads_eid = ''
+  if (yt6d.previous.duration && dur && Math.abs(yt6d.previous.duration - dur) < 1.5) { yt6.ads_eid = ''; yt6.ads_eid1 = ''; yt6.ads_eid2 = '' }
   if (!yt6d.init && yt6.ads_eid && yt6.ads_eid1 && !yt6.ads_eid2 && yt6.ads_eid != yt6.ads_eid1) { yt6.ads_eid2 = clone(yt6.ads_eid); yt6.ads_eid = clone(yt6.ads_eid1) }
   //ev_log('\neid1:\n'+ yt6.ads_eid1 +'\neid2:\n'+ yt6.ads_eid2 +'\neid:\n' + yt6.ads_eid)
 
@@ -18562,7 +18563,7 @@ if (yt6.flexy && yt6.pls) {
 //console.log(c[1].video_id.substring(0,11) +' '+ yt6.vid +' '+ _nav +' '+ cur_vid +'/'+ prev_vid)
 	  //check args
 	  if (c[1] && c[1].video_id && (
-		( (c[1].video_id.substring(0,11) != yt6.vid || cur_vid != prev_vid || yt6.blocked_m || _nav )
+		( (c[1].video_id.substring(0,11) != yt6.vid || (!yt6.mobile && !yt6.ytp.embed && cur_vid != prev_vid) || yt6.blocked_m || _nav )
 		  && !(!yt6.ytp.embed && yt6.loaded_vid && location.href.indexOf(yt6.loaded_vid) > -1) // compare loaded_vid too to avoid reloading multiple times
 		) || yt6.blocked || yt6.ytm )
 	     ) { // && yt6.loaded_vid != c[1].video_id.substring(0,11)
@@ -18635,6 +18636,7 @@ if (yt6.flexy && yt6.pls) {
 		if (c[0]) c[0].loaded_from = ''
 		if (yt6.loophole) delete yt6.loophole
 		yt6d.previous.loaded_vid = clone(yt6.loaded_vid)
+		yt6d.previous.duration = clone(yt6.real_media_duration)
 
 		//if (!(yt6.mobile && yt6.browser_tab == 'hidden')) {
 		  yt6d.current.video_id = clone(yt6.vid);
