@@ -4633,7 +4633,7 @@ if (typeof jQuery != 'undefined') {
 	// add extra default options
 	$.extend(mejs.MepDefaults, {
 		// this will automatically turn on a <track>
-		startLanguage: '',
+		startLanguage: [],//'',
 
 		tracksText: mejs.i18n.t('Captions/Subtitles'),
 
@@ -4762,13 +4762,13 @@ if (typeof jQuery != 'undefined') {
 			}
 
 			player.trackToLoad = -1;
-			player.selectedTrack = null;
+			if (!player.selectedTrack) player.selectedTrack = null;
 			player.isLoadingTrack = false;
 
 			// add to list
 			for (i=0; i<player.tracks.length; i++) {
 				if (player.tracks[i].kind == 'subtitles') {
-					player.addTrackButton(player.tracks[i].srclang, player.tracks[i].label, i, player.tracks[i].translated);//yt6
+					player.addTrackButton(player.tracks[i].srclang, player.tracks[i].label, player.tracks[i].id = i, player.tracks[i].translated);//yt6
 				}
 			}
 
@@ -4823,9 +4823,15 @@ if (typeof jQuery != 'undefined') {
 			if (lang == 'none') {
 				t.selectedTrack = null;
 				t.captionsButton.removeClass('mejs-captions-enabled');
+				if (t.options.startLanguage[2]) delete t.options.startLanguage[2];
 			} else {
 				for (i=0; i<t.tracks.length; i++) {
-					if (i == id.split("_")[3]) {//yt6 if (t.tracks[i].srclang == lang) {
+					if (i == id.split("_")[3]) {;//yt6 if (t.tracks[i].srclang == lang) {
+						if (!t.options.startLanguage[2]) {
+							t.options.startLanguage[0] = lang, t.options.startLanguage[1] = id.split("_")[3]
+						} else {							
+							//$('label[for="' + t.id + '_captions_' + lang +'"]').first().prev().prop('checked', true).trigger('click')
+						}
 						if (t.selectedTrack === null)
 							t.captionsButton.addClass('mejs-captions-enabled');
 						t.selectedTrack = t.tracks[i];
@@ -4838,7 +4844,7 @@ if (typeof jQuery != 'undefined') {
 		},
 
 		loadNextTrack: function() {
-			var t = this;
+			var t = this, i, ok = false;
 
 			t.trackToLoad++;
 			if (t.trackToLoad < t.tracks.length) {
@@ -4848,7 +4854,22 @@ if (typeof jQuery != 'undefined') {
 				// add done?
 				t.isLoadingTrack = false;
 
-				t.checkForTracks();
+				if (t.checkForTracks() && t.selectedTrack) {
+
+					for (i=0; i<t.tracks.length; i++) {
+					if (typeof t.options.startLanguage[0] == 'string' && typeof t.tracks[i].srclang == 'string' && (t.options.startLanguage[0].split('-')[0].indexOf(t.tracks[i].srclang.split('-')[0]) > -1 || t.tracks[i].srclang.split('-')[0].indexOf(t.options.startLanguage[0].split('-')[0]) > -1)) {
+						$('label[for="' + t.id + '_captions_' + t.tracks[i].srclang +'"]').first().prev().prop('checked', true).trigger('click');
+						ok = true;
+						break;
+					}
+
+					}
+
+					if (!ok)
+					if (t.tracks[0]) {
+						$('label[for="' + t.id + '_captions_' + t.tracks[0].srclang +'"]').first().prev().prop('checked', true).trigger('click');
+					}
+				}
 			}
 		},
 
@@ -4862,7 +4883,7 @@ if (typeof jQuery != 'undefined') {
 
 					// create button
 					//t.addTrackButton(track.srclang);
-					t.enableTrackButton(track.srclang, track.label);
+					t.enableTrackButton(track.srclang, track.label, track.id);
 
 					t.loadNextTrack();
 
@@ -4902,7 +4923,7 @@ d = ytsubtitle2srt(d, track.srclang, mejs.language.codes[track.srclang], track.t
 			});
 		},
 
-		enableTrackButton: function(lang, label) {
+		enableTrackButton: function(lang, label, id) {//yt6
 			var t = this;
 
 			if (label === '') {
@@ -4927,8 +4948,8 @@ d = ytsubtitle2srt(d, track.srclang, mejs.language.codes[track.srclang], track.t
 			}//yt6
 
 			// auto select
-			if (t.options.startLanguage == lang) {
-				$('#' + t.id + '_captions_' + lang).prop('checked', true).trigger('click');
+			if (t.options.startLanguage[0] == lang && t.options.startLanguage[1] == id) {
+				$('#' + t.id + '_captions_' + id).prop('checked', true).trigger('click');//yt6 lang
 			}
 
 			t.adjustLanguageBox();
@@ -4981,6 +5002,8 @@ d = ytsubtitle2srt(d, track.srclang, mejs.language.codes[track.srclang], track.t
 					t.setControlsSize();
 				}
 			}
+
+			return hasSubtitles
 		},
 
 		displayCaptions: function() {
