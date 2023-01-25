@@ -7706,7 +7706,7 @@ String.prototype.toHHMMSS = function () {
 
 
 function getReferenceObjects() {
-/*
+
 	var z = document.getElementsByTagName('YTD-TWO-COLUMN-BROWSE-RESULTS-RENDERER')
 	// the initial DOM-constructor elements cause other element indexes to change which is problematic for playlist items
 	// So let's move them before that happens
@@ -7723,7 +7723,7 @@ function getReferenceObjects() {
 	      }
 	  }
 	}
-*/
+
   if (!yt6.ytm) {
     yt6.osw = (!(yt6.body2 && yt6.layout == 16)) ? gid('placeholder-player') || gid('player') : gid('player')
     yt6.mhp = (!(yt6.body2 && yt6.layout == 16)) ? gid('masthead-positioner') || gid('logo') || gid('masthead-logo') : gid('logo') || gid('masthead-logo')
