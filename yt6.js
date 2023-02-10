@@ -13015,7 +13015,7 @@ function mep_run() {
 					addEL(me, 'timeupdate', function() {
 					  if ( yt6 && yt6.player1 && !yt6.navigation && (yt6.timer == 999999999 || me.src == pseudoSrc || yt6.player1.media.src != me.src))
 					    return void 0;
-					  if ( (me.duration - ( (yt6.player2 && yt6.player2.media && yt6.player2.media.duration) || player2.duration)) >= -1,5 ) {
+					  //if ( (me.duration - ( (yt6.player2 && yt6.player2.media && yt6.player2.media.duration) || player2.duration)) >= -1,5 ) {
 					    if (!hid() && yt6.Seek == 6) {
 					      if (!yt6.A_[itag(me.src)]) { //if (yt6.V_[itag(me.src)]) {
 						try { yt6.ct = me.currentTime = yt6.player1.media.currentTime = yt6.player2.media.currentTime } catch(e){ yt6.ct = player2.currentTime }
@@ -13025,7 +13025,7 @@ function mep_run() {
 					    if (yt6.x && me.currentTime) {
 					      yt6.ct = me.currentTime
 					    }
-					  } else { Seek = 0; yt6.Seek = 0; return void 0; ev_log('??!!!') }
+					  //} else { Seek = 0; yt6.Seek = 0; return void 0; ev_log('??!!!') }
 
 					  if (yt6.live && me.currentTime > 2) yt6.live_ = 0
 					  //if (!yt6.mobile) {
@@ -14175,7 +14175,7 @@ if (linx[1140] || linx[1018]) { var a = 0, b = 0
 	  linx[i] = linx[(1000 + i)]
 	} else if (linx[i] && linx[i].indexOf('&title=Advertisement') > -1) linx[i] = undefined
 	linx[(1000 + i)] = adv[i]
-      } else ev_log('webm '+ yt6.ads_eid)
+      } //else ev_log('webm '+ yt6.ads_eid)
     }
     adv = null
   }
@@ -18682,7 +18682,7 @@ if (yt6.flexy && yt6.pls) {
 	    if (typeof document.title == 'string' && yt6d.previous.title == document.title + 'init' && document.title.substring(document.title.length-10) == ' - YouTube' && document.title.substring(0, document.title.length-10) == c[1].title) { yt6d.previous.title = clone(yt6.title); document.title = document.title + ' ' }
 
 
-//console.log('??? '+ (yt6.change % 4))
+//ev_log('??? '+ (yt6.change % 4))
 
 
 	    //if (yt6.layout == 16 && document.title == yt6.title && !yt6.ytm && yt6d.previous.video_id != cur_vid && cur_vid != yt6.vid) {
