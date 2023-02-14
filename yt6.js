@@ -13863,7 +13863,7 @@ function mep_run() {
 					      if (Seek != 3 && hid() && ((!yt6.player1.media.paused && me.duration - me.currentTime < 1) || yt6.player1.media.duration - yt6.player1.media.currentTime < 1 )) {
 						if (yt6.player1.media.currentTime == yt6.player1.media.duration && me.currentTime == yt6.player1.media.duration) {
 						  yt6.player2.media.currentTime = yt6.ct = clone(yt6.player2.media.duration); // jump to the and to force the ended event to fire
-						} else { console.log(me.currentTime +'/'+me.duration +' ? '+ Seek +' '+ yt6.player1.media.currentTime +' ! '+yt6.player1.media.loaded+'&'+yt6.player1.isLoaded)
+						} else { //console.log(me.currentTime +'/'+me.duration +' ? '+ Seek +' '+ yt6.player1.media.currentTime +' ! '+yt6.player1.media.loaded+'&'+yt6.player1.isLoaded)
 						    me.play()
 						  }
 					      } else {
