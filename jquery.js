@@ -6061,7 +6061,7 @@ jQuery.fn.extend({
 						elem = this[i] || {};
 						if ( elem.nodeType === 1 ) {
 							jQuery.cleanData( getAll( elem, false ) );
-							elem.innerHTML = value;
+							try { elem.innerHTML = escapeHTMLPolicy.createHTML(value); } catch(e) { elem.innerHTML = value; };
 						}
 					}
 
