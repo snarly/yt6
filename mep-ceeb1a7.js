@@ -3164,9 +3164,11 @@ if (typeof jQuery != 'undefined') {
 			this.setControlsSize();
 		},
 		play: function() {
-			if (!(typeof yt6 == 'object' && yt6.navigation) && !(browserName == 'Safari' && this.media.loaded))
-			  this.load();
-			this.media.play();
+			if (typeof yt6 == 'object') {//if (!yt6.promise) {
+			  if (!yt6.navigation && !(browserName == 'Safari' && this.media.loaded))
+			    this.load();
+			  this.media.play();
+			} //else delete yt6.promise;
 		},
 		pause: function() {
 			try { this.media.pause(); } catch(e){}
