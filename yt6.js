@@ -297,7 +297,7 @@ yt6.brands = function() {
     if (yt6.mobile) if (navigator.userAgent.indexOf('EdgA') > -1 || navigator.userAgent.indexOf('EdgiOS') > -1) browserName = 'Edge'
 
     // DuckDuckGo
-    if (browserName == "Chrome" && navigator.userAgent.indexOf('Mobile DuckDuckGo/') > -1) browserName = "DuckDuckGo";
+    if ((browserName == "undefined" || browserName == "Chrome") && navigator.userAgent.indexOf('Mobile DuckDuckGo/') > -1) browserName = "DuckDuckGo";
 
     if (browserName == "Chromium" && yt6.brands()) browserName = yt6.brands()
 
