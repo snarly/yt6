@@ -363,8 +363,10 @@ if [ -f $header ];
 then
   header=$(tr -d '\0' <$header)
   header=${header//[^A-Za-z0-9-]/}
-  onum=$(echo ${header/#*Finalized-Sequence-Number/})
-  onum=$(echo ${onum/%Finalized-Media-End-Timestamp-Us*/})
+  onum=$(echo ${header/#*First-Frame-Time-Us/})
+  onum=$(echo ${onum/%First-Frame-Uncertainty-Us*/})
+#  onum=$(echo ${header/#*Finalized-Sequence-Number/})
+#  onum=$(echo ${onum/%Finalized-Media-End-Timestamp-Us*/})
   odur=$(echo ${header/#*Target-Duration-Us/})
   odur=$(echo ${odur/%First*/})
   header=""
