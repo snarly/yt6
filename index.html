@@ -63,10 +63,10 @@
 
 
 	<h3>
-	<a href="javascript:(function(){var v='d90eb9b8f9982772b500a4df4873e25d937ef42f/yt6.js',y='youtube.com/',w=window,d=w.document,h=d.location.href,yt6=w.yt6||{},yt6d=w.yt6d||{};if(yt6d.loaded>=4)return void 0;if(h.split(y+'watch')[1]||h.split(y+'embed')[1]||h.split(y+'playlist')[1]||h.split(y+'shorts')[1]||h.split('/base.j')[1]=='s'){var id='snarls_player',e='script',q;yt6.loaded=0;function s(x){x=x||id;return d.getElementById(x)};function c(e){return d.createElement(e)};function a(q){s().appendChild(q);s().add_subs='en,hu,de';s().version='2024-07-31-04:10';yt6d.src=q.src};function r(){if(s()){var x;try{x=s().querySelector('#'+id)}catch(e){x=s().firstChild};if(x)s().removeChild(x)}};function b(){var i,j,o,x;o=['js','rawcdn.githack','js'];for(j,x,i=o.length;i;j=Math.floor(Math.random()*i),x=o[--i],o[i]=o[j],o[j]=x);if(yt6d.src==-1)o.splice(0,0,'raw.githubusercontent');q=c('div');q.id=id;if(q!=s())d.body.appendChild(q);var src='https://'+o[0]+'.com/snarly/yt6/'+v,src0='https://cdn.jsdelivr.net/gh/snarly/yt6@'+v;function oc(ox,oy,sr){return(oy!='js')?sr.replace(ox,oy):src0};q=c(e);q.id=id;q.src=(o[0]!='js')?src:src0; q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[1],src);q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[2],src);q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[3],src);q.onerror=function(){q=c(e);q.id=id;q.src=src.replace('https','http')};a(q);r();};a(q);r();};a(q);r();};try{a(q);}catch(f){a(q)};};function g(){try{deldiv()}catch(f){r()};yt6d.src=1;b()};if(!s()){b()};setTimeout(function(){var t=w.yt6;if(t)t.loaded=t.loaded||window['status'];if(!t||(t&&(!t.body||(t.loaded<3))))g()},3000);}else{void 0};})()/*2024-07-31-04:10*/">Yt6 -- Snarl's YouTube Video Player (bookmarklet)</a>
+	<a href="javascript:(function(){var v='6f82090646b1c3abce383d624c3c95f5469f7fb2/yt6.js',y='youtube.com/',w=window,d=w.document,h=d.location.href,yt6=w.yt6||{},yt6d=w.yt6d||{},t=w.trustedTypes;if(yt6d.loaded>=4)return void 0;if(h.split(y+'watch')[1]||h.split(y+'embed')[1]||h.split('playlist')[1]||h.split(y+'shorts')[1]||h.split('/base.j')[1]=='s'){var id='snarls_player',e='script',q,u=function(s){if(typeof s=='string')return s};try{t.createPolicy('default',{createHTML:u,createScriptURL:u,createScript:u,})}catch(f){};yt6.loaded=0;function s(x){x=x||id;return d.getElementById(x)};function c(e){return d.createElement(e)};function a(q){s().appendChild(q);s().add_subs='en,hu,de';s().version='2024-08-07-02:39';yt6d.src=q.src};function r(){if(s()){var x;try{x=s().querySelector('#'+id)}catch(e){x=s().firstChild};if(x)s().removeChild(x)}};function b(){var i,j,o,x;o=['rawcdn.githack','js','cdn.rawgit'];for(j,x,i=o.length;i;j=Math.floor(Math.random()*i),x=o[--i],o[i]=o[j],o[j]=x);q=c('div');q.id=id;if(q!=s())d.body.appendChild(q);var src='https://'+o[0]+'.com/snarly/yt6/'+v,src0='https://cdn.jsdelivr.net/gh/snarly/yt6@'+v;function oc(ox,oy,sr){return(oy!='js')?sr.replace(ox,oy):src0};q=c(e);q.id=id;q.src=(o[0]!='js')?src:src0; q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[1],src);q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[2],src);q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[3],src);q.onerror=function(){q=c(e);q.id=id;q.src=src.replace('https','http')};a(q);r();};a(q);r();};a(q);r();};try{a(q);}catch(f){a(q)};};function g(){try{deldiv()}catch(f){r()};b()};if(!s()){b()};setTimeout(function(){var t=w.yt6;if(t)t.loaded=t.loaded||window['status'];if(!t||(t&&(!t.body||(t.loaded<3))))g()},3000);}else{void 0};})()/*2024-08-07-02:39*/">Yt6 -- Snarl's YouTube Video Player (bookmarklet)</a>
 	</h3>
 	<h4>
-		Latest version: 2024-07-31-04:10
+		Latest version: 2024-08-07-02:39
 	</h4>
 
 	<h1>
@@ -110,12 +110,14 @@
 		Examples: <a href="https://m.youtube.com/watch?v=VJDgpFLLzOA">Basic Instinct (MON) (STUDIO CANAL)</a>, <a href="https://m.youtube.com/watch?v=Zm25s3T4SDM">The Relic - Trailer</a><br>
 		</ol>
 		</li>
+	<div style="display: none">
 		<li class="feat"><strike>change between YouTube layouts by setting the cookie on exit</strike>
 		<ol>
 		YouTube stopped honoring the setting in July 2020 and shut down its classic layout for good early December.
 		I wrote a userscript that partially restores it though. See the <a href="#classic_layout">YouTube Classic layout</a> section for details.
 		</ol>
 		</li>
+	</div>
 	</ol>
 	<br>
 		Keep in mind that this is not a browser extension. If anything it is an extension of the 
@@ -170,7 +172,7 @@
 		CODE IN PLAIN TEXT
 	</h4>
 	<p>
-	<code>javascript:(function(){var v='d90eb9b8f9982772b500a4df4873e25d937ef42f/yt6.js',y='youtube.com/',w=window,d=w.document,h=d.location.href,yt6=w.yt6||{},yt6d=w.yt6d||{};if(yt6d.loaded>=4)return void 0;if(h.split(y+'watch')[1]||h.split(y+'embed')[1]||h.split(y+'playlist')[1]||h.split(y+'shorts')[1]||h.split('/base.j')[1]=='s'){var id='snarls_player',e='script',q;yt6.loaded=0;function s(x){x=x||id;return d.getElementById(x)};function c(e){return d.createElement(e)};function a(q){s().appendChild(q);s().add_subs='en,hu,de';s().version='2024-07-31-04:10';yt6d.src=q.src};function r(){if(s()){var x;try{x=s().querySelector('#'+id)}catch(e){x=s().firstChild};if(x)s().removeChild(x)}};function b(){var i,j,o,x;o=['js','rawcdn.githack','js'];for(j,x,i=o.length;i;j=Math.floor(Math.random()*i),x=o[--i],o[i]=o[j],o[j]=x);if(yt6d.src==-1)o.splice(0,0,'raw.githubusercontent');q=c('div');q.id=id;if(q!=s())d.body.appendChild(q);var src='https://'+o[0]+'.com/snarly/yt6/'+v,src0='https://cdn.jsdelivr.net/gh/snarly/yt6@'+v;function oc(ox,oy,sr){return(oy!='js')?sr.replace(ox,oy):src0};q=c(e);q.id=id;q.src=(o[0]!='js')?src:src0; q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[1],src);q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[2],src);q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[3],src);q.onerror=function(){q=c(e);q.id=id;q.src=src.replace('https','http')};a(q);r();};a(q);r();};a(q);r();};try{a(q);}catch(f){a(q)};};function g(){try{deldiv()}catch(f){r()};yt6d.src=1;b()};if(!s()){b()};setTimeout(function(){var t=w.yt6;if(t)t.loaded=t.loaded||window['status'];if(!t||(t&&(!t.body||(t.loaded<3))))g()},3000);}else{void 0};})()/*2024-07-31-04:10*/</code>
+	<code>javascript:(function(){var v='6f82090646b1c3abce383d624c3c95f5469f7fb2/yt6.js',y='youtube.com/',w=window,d=w.document,h=d.location.href,yt6=w.yt6||{},yt6d=w.yt6d||{},t=w.trustedTypes;if(yt6d.loaded>=4)return void 0;if(h.split(y+'watch')[1]||h.split(y+'embed')[1]||h.split('playlist')[1]||h.split(y+'shorts')[1]||h.split('/base.j')[1]=='s'){var id='snarls_player',e='script',q,u=function(s){if(typeof s=='string')return s};try{t.createPolicy('default',{createHTML:u,createScriptURL:u,createScript:u,})}catch(f){};yt6.loaded=0;function s(x){x=x||id;return d.getElementById(x)};function c(e){return d.createElement(e)};function a(q){s().appendChild(q);s().add_subs='en,hu,de';s().version='2024-08-07-02:39';yt6d.src=q.src};function r(){if(s()){var x;try{x=s().querySelector('#'+id)}catch(e){x=s().firstChild};if(x)s().removeChild(x)}};function b(){var i,j,o,x;o=['rawcdn.githack','js','cdn.rawgit'];for(j,x,i=o.length;i;j=Math.floor(Math.random()*i),x=o[--i],o[i]=o[j],o[j]=x);q=c('div');q.id=id;if(q!=s())d.body.appendChild(q);var src='https://'+o[0]+'.com/snarly/yt6/'+v,src0='https://cdn.jsdelivr.net/gh/snarly/yt6@'+v;function oc(ox,oy,sr){return(oy!='js')?sr.replace(ox,oy):src0};q=c(e);q.id=id;q.src=(o[0]!='js')?src:src0; q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[1],src);q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[2],src);q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[3],src);q.onerror=function(){q=c(e);q.id=id;q.src=src.replace('https','http')};a(q);r();};a(q);r();};a(q);r();};try{a(q);}catch(f){a(q)};};function g(){try{deldiv()}catch(f){r()};b()};if(!s()){b()};setTimeout(function(){var t=w.yt6;if(t)t.loaded=t.loaded||window['status'];if(!t||(t&&(!t.body||(t.loaded<3))))g()},3000);}else{void 0};})()/*2024-08-07-02:39*/</code>
 	</p>
 
 	<br>
@@ -184,11 +186,13 @@
 	<ol>
 	<li><b><strong>Tap the browser's address bar first </strong></b> (NOT the YouTube search bar!) </li>
 	<ol>	this will select / highlight the whole address of the current YouTube video page.
-	<div class="note">One exception is <b><strong>Microsoft Edge Mobile</strong></b>, whose developers decided recently that a single short tap should immediately get us to line editing mode instead of highlighting the whole line. We don't want to edit the address now, we want to overwrite it, so in the case of Edge you would have to hold your finger for a longer period of time over the address bar (till the system offers the option to "Select all").
+	<div class="note">One exception is <b><strong>Microsoft Edge Mobile</strong></b>, whose developers decided that a single short tap should immediately get us to line editing mode instead of highlighting the whole line. We don't want to edit the address now, we want to completely overwrite it. So in the case of Edge you would need to hold your finger a bit longer on the address bar till the system offers the option to "Select all".
 	</div>
 	</ol>
-	<li>	The browser should suggest the bookmarklet as an available option -- if these type of suggestions are allowed in the settings -- </li>
+	<li>	The browser should suggest the bookmarklet as an available option</li>
 	<ol>
+	<div class="note">-- if these type of suggestions are not allowed, head to the specific part of the browser settings and turn them on --
+	</div>
 		once you <b><strong>start typing</strong></b> either <b><strong>its name</strong></b> ("Yt6" or whatever you named it) or the prefix 
 		"javascript:" to narrow the search down to bookmarklets only. 
 	</ol>
@@ -222,7 +226,7 @@
 <pre>// ==UserScript==
 // @name         Yt6 -- Snarl's YouTube Video Player (userscript)
 // @namespace    yt6
-// @version      2024-07-31-04:10
+// @version      2024-08-07-02:39
 // @author       Snarl
 // @description  Auto-Load Yt6 script as soon as possible
 // @match        https://*.youtube.com/watch*
@@ -241,8 +245,8 @@
   var idle_time = 2000 // wait some time before running the bookmarklet part
 
   var onComplete = function(){setTimeout( //javascript:(
-	(function(){var v='d90eb9b8f9982772b500a4df4873e25d937ef42f/yt6.js',y='youtube.com/',w=window,d=w.document,h=d.location.href,yt6=w.yt6||{},yt6d=w.yt6d||{};if(yt6d.loaded>=4)return void 0;if(h.split(y+'watch')[1]||h.split(y+'embed')[1]||h.split(y+'playlist')[1]||h.split(y+'shorts')[1]||h.split('/base.j')[1]=='s'){var id='snarls_player',e='script',q;yt6.loaded=0;function s(x){x=x||id;return d.getElementById(x)};function c(e){return d.createElement(e)};function a(q){s().appendChild(q);s().add_subs='en,hu,de';s().version='2024-07-31-04:10';yt6d.src=q.src};function r(){if(s()){var x;try{x=s().querySelector('#'+id)}catch(e){x=s().firstChild};if(x)s().removeChild(x)}};function b(){var i,j,o,x;o=['js','rawcdn.githack','js'];for(j,x,i=o.length;i;j=Math.floor(Math.random()*i),x=o[--i],o[i]=o[j],o[j]=x);if(yt6d.src==-1)o.splice(0,0,'raw.githubusercontent');q=c('div');q.id=id;if(q!=s())d.body.appendChild(q);var src='https://'+o[0]+'.com/snarly/yt6/'+v,src0='https://cdn.jsdelivr.net/gh/snarly/yt6@'+v;function oc(ox,oy,sr){return(oy!='js')?sr.replace(ox,oy):src0};q=c(e);q.id=id;q.src=(o[0]!='js')?src:src0; q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[1],src);q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[2],src);q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[3],src);q.onerror=function(){q=c(e);q.id=id;q.src=src.replace('https','http')};a(q);r();};a(q);r();};a(q);r();};try{a(q);}catch(f){a(q)};};function g(){try{deldiv()}catch(f){r()};yt6d.src=1;b()};if(!s()){b()};setTimeout(function(){var t=w.yt6;if(t)t.loaded=t.loaded||window['status'];if(!t||(t&&(!t.body||(t.loaded<3))))g()},3000);}else{void 0};}
-    //)()/*2024-07-31-04:10*/
+	function(){var v='6f82090646b1c3abce383d624c3c95f5469f7fb2/yt6.js',y='youtube.com/',w=window,d=w.document,h=d.location.href,yt6=w.yt6||{},yt6d=w.yt6d||{},t=w.trustedTypes;if(yt6d.loaded>=4)return void 0;if(h.split(y+'watch')[1]||h.split(y+'embed')[1]||h.split('playlist')[1]||h.split(y+'shorts')[1]||h.split('/base.j')[1]=='s'){var id='snarls_player',e='script',q,u=function(s){if(typeof s=='string')return s};try{t.createPolicy('default',{createHTML:u,createScriptURL:u,createScript:u,})}catch(f){};yt6.loaded=0;function s(x){x=x||id;return d.getElementById(x)};function c(e){return d.createElement(e)};function a(q){s().appendChild(q);s().add_subs='en,hu,de';s().version='2024-08-07-02:39';yt6d.src=q.src};function r(){if(s()){var x;try{x=s().querySelector('#'+id)}catch(e){x=s().firstChild};if(x)s().removeChild(x)}};function b(){var i,j,o,x;o=['rawcdn.githack','js','cdn.rawgit'];for(j,x,i=o.length;i;j=Math.floor(Math.random()*i),x=o[--i],o[i]=o[j],o[j]=x);q=c('div');q.id=id;if(q!=s())d.body.appendChild(q);var src='https://'+o[0]+'.com/snarly/yt6/'+v,src0='https://cdn.jsdelivr.net/gh/snarly/yt6@'+v;function oc(ox,oy,sr){return(oy!='js')?sr.replace(ox,oy):src0};q=c(e);q.id=id;q.src=(o[0]!='js')?src:src0; q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[1],src);q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[2],src);q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[3],src);q.onerror=function(){q=c(e);q.id=id;q.src=src.replace('https','http')};a(q);r();};a(q);r();};a(q);r();};try{a(q);}catch(f){a(q)};};function g(){try{deldiv()}catch(f){r()};b()};if(!s()){b()};setTimeout(function(){var t=w.yt6;if(t)t.loaded=t.loaded||window['status'];if(!t||(t&&(!t.body||(t.loaded<3))))g()},3000);}else{void 0};}
+    //)()/*2024-08-07-02:39*/
   , idle_time)
   }
 
@@ -295,13 +299,14 @@
 		is pretty much pointless anyway and would also raise the chance of playback failure 
 		significantly.
 	<br><br>
-		Whenever your device is either locked, the browser isn't the app in the foreground, or the player's tab 
-		simply is not the active one, and navigation occurs in the background, 
-		YouTube may severely restrict access to new media sources to a couple of formats only -- 
-		the ones currently loaded by the original YT player and possibly maybe one or two old-fashioned 
-		AV-formats which were kept for compatibility reasons. 
+		Whenever your device is either locked, the browser isn't the app in the foreground, the 
+		player's tab is not the active one, or for any god-forsaken reason commercial breaks are 
+		being attempted to be skipped, while navigation occurs, YouTube may severely restrict 
+		access to new media sources to a couple of formats only -- the ones currently loaded by 
+		the original YT player and possibly maybe one or two old-fashioned AV-formats which 
+		were kept for compatibility reasons. 
 	<br>	And even these scarce sources may point to an advertisement since the ad-filtering is 
-		never quite 100%:
+		never quite 100% (and is getting worse and worse nowadays rapidly):
 	<ul>
 	<li>	sometimes background play stops because there is only video but no legit audio to 
 		play back, as the YT commercial happens to hog all the available audio formats </li>
@@ -323,24 +328,23 @@
 		be floating over all the other elements on the page -- sometimes stupidly covering even 
 		the player itself.
 	<br><br>
-		The only way I found around this was to lower the playlist object's opacity a little bit. On 
-		one hand, this makes the control panel re-appear on top of the list, but on the other hand, 
-		it reduces the size of the area by which you can grab the list in order to scroll up or 
-		down. If you still can't see the control panel, there is a backup of the panel located at the 
-		lower end of the download box, use that as a last resort. You can also manually toggle 
-		between the opacity values of 1 (default) and 0.99 by either tapping on 
-		the "Used for playback" or the "Alternatives" button.
+		The only way I found around this was to lower the playlist object's opacity a little bit. This 
+		may make the control panel re-appear on top of the list but also reduces the size of the area 
+		by which you can grab the list in order to scroll up or down. If you still can't see the control 
+		panel, there is a backup of the panel located at the lower end of the download box, use that as a 
+		last resort. You can also manually toggle between the opacity values of 1 (default) and 0.99 by 
+		either tapping on the "Used for playback" or the "Alternatives" button.
 	<br><br>
 		Another important change: programmatically we can only move to the next entry of a 
-		playlist if the playlist object is not minimized and the upcoming entry is located in close 
-		proximity of the currently visible part of the list. Every time we "close" the playlist object, 
-		the stored links to other videos become invalid in the sense that using them would trigger 
-		a full page refresh, thereby removing the Yt6 script from memory. Therefore 
+		playlist if the playlist object is not minimized and the upcoming entry is within sight -- i.e. 
+		located in close proximity of the currently visible part of the playlist. Every time we "close" 
+		the playlist object, the stored links to other videos become invalid in the sense that using 
+		them would trigger a full page reload, thereby removing the Yt6 script from memory. Therefore 
 		the program first attempts to automatically open the playlist object when a video is getting 
-		within 10 seconds away from its end, then tries to scroll to the current video on the list to 
-		meet these prerequisites in time, and if they are not met, avoids attempting navigation. For 
-		now, this mechanism is in the test phase and only works if the "Remove ads" radio button 
-		is on.
+		within 10 seconds away from its end, then tries to scroll near the current video on the list to 
+		meet these prerequisites in time, and if they are not met, simply avoids attempting navigation. 
+		For now, this mechanism is in the test phase and only works if the "Remove ads" radio button 
+		is turned on.
 
 	<br><br><br>
 	<h1>
@@ -350,24 +354,16 @@
 		must support the usage of bookmarklets or have userscript add-on capabilities, which 
 		most of them do.
 	<br><br>
-		Below is a ranking of popular <b><strong>Mobile browsers</strong></b> based on how well they work <u><b><strong>under the 
-		following conditions</strong></b></u>
-	<ol>
-		- using the script's alternative player<br>
-		- on YouTube's mobile interface (m.youtube.com)<br>
-		- while the device is in actual sleep mode (screen turned off and with no connection to 
-		any external power source through cable)<br>
-	</ol>
+		Below is a list of popular <b><strong>Mobile browsers</strong></b>. Ranking them is currently a hopeless 
+		venture as recent changes to the YouTube engine broke a lot of things, and now none of the browsers 
+		work particularly well with the script as far as energy-saving background play goes.
 </ol>
 	<ol><p>
-	<h5>
-		Good ones (for Android)
-	</h5>
 		<li><b><strong><a href="https://play.google.com/store/apps/details?id=org.mozilla.firefox">Firefox</a> 
 		<a href="https://apps.apple.com/us/app/firefox-private-safe-browser/id989804926">
 		<span class="apple"><svg height="22" viewBox="0 0 14 44" width="7" xmlns="http://www.w3.org/2000/svg"><path d="m13.0729 17.6825a3.61 3.61 0 0 0 -1.7248 3.0365 3.5132 3.5132 0 0 0 2.1379 3.2223 8.394 8.394 0 0 1 -1.0948 2.2618c-.6816.9812-1.3943 1.9623-2.4787 1.9623s-1.3633-.63-2.613-.63c-1.2187 0-1.6525.6507-2.644.6507s-1.6834-.9089-2.4787-2.0243a9.7842 9.7842 0 0 1 -1.6628-5.2776c0-3.0984 2.014-4.7405 3.9969-4.7405 1.0535 0 1.9314.6919 2.5924.6919.63 0 1.6112-.7333 2.8092-.7333a3.7579 3.7579 0 0 1 3.1604 1.5802zm-3.7284-2.8918a3.5615 3.5615 0 0 0 .8469-2.22 1.5353 1.5353 0 0 0 -.031-.32 3.5686 3.5686 0 0 0 -2.3445 1.2084 3.4629 3.4629 0 0 0 -.8779 2.1585 1.419 1.419 0 0 0 .031.2892 1.19 1.19 0 0 0 .2169.0207 3.0935 3.0935 0 0 0 2.1586-1.1368z"></path></svg></span>
-		</a></strong></b><div style="display: none; font-size: 13px"> (last Desktop-based build was <a href="https://www.apkmirror.com/apk/mozilla/firefox/firefox-68-11-0-release/">68.11.0</a>)</div>
-		<div class="note">slow but reliable when "hardened": the <a href="https://addons.mozilla.org/en-US/firefox/addon/ublock-origin/">uBlock Origin</a> add-on helps getting rid of video commercials</div>
+		</a></strong></b>
+		<div class="note">the <a href="https://addons.mozilla.org/en-US/firefox/addon/ublock-origin/">uBlock Origin</a> add-on was rendered almost useless on mobile</div>
 
 		<li><b><strong><a href="https://f-droid.org/en/packages/us.spotco.fennec_dos/">Mull</a>*</strong></b>
 		<div class="note">Firefox-based</div>
@@ -375,56 +371,49 @@
 		<li><b><strong><a href="https://play.google.com/store/apps/details?id=org.mozilla.fenix">Firefox Nightly</a> 
 		<a href="https://apps.apple.com/us/app/firefox-private-safe-browser/id989804926"></a></strong></b>
 		<div class="note"></div>
-	<h5>
-		So-so (playback may fail after a few videos)
-	</h5>
+
 		<li><b><strong><a href="https://play.google.com/store/apps/details?id=com.brave.browser">Brave</a> 
 		<a href="https://apps.apple.com/us/app/brave-private-web-browser/id1052879175">
 		<span class="apple"><svg height="22" viewBox="0 0 14 44" width="7" xmlns="http://www.w3.org/2000/svg"><path d="m13.0729 17.6825a3.61 3.61 0 0 0 -1.7248 3.0365 3.5132 3.5132 0 0 0 2.1379 3.2223 8.394 8.394 0 0 1 -1.0948 2.2618c-.6816.9812-1.3943 1.9623-2.4787 1.9623s-1.3633-.63-2.613-.63c-1.2187 0-1.6525.6507-2.644.6507s-1.6834-.9089-2.4787-2.0243a9.7842 9.7842 0 0 1 -1.6628-5.2776c0-3.0984 2.014-4.7405 3.9969-4.7405 1.0535 0 1.9314.6919 2.5924.6919.63 0 1.6112-.7333 2.8092-.7333a3.7579 3.7579 0 0 1 3.1604 1.5802zm-3.7284-2.8918a3.5615 3.5615 0 0 0 .8469-2.22 1.5353 1.5353 0 0 0 -.031-.32 3.5686 3.5686 0 0 0 -2.3445 1.2084 3.4629 3.4629 0 0 0 -.8779 2.1585 1.419 1.419 0 0 0 .031.2892 1.19 1.19 0 0 0 .2169.0207 3.0935 3.0935 0 0 0 2.1586-1.1368z"></path></svg></span>
 		</a></strong></b>
-		<div class="note"></div>
-
-		<li><b><strong><a href="https://play.google.com/store/apps/details?id=com.kiwibrowser.browser">Kiwi</a></strong></b>
-		<div class="note"></div>
-
-		<li><b><strong><a href="https://play.google.com/store/apps/details?id=com.android.chrome">Google Chrome</a> 
-		<a href="https://apps.apple.com/us/app/google-chrome/id535886823">
-		<span class="apple"><svg height="22" viewBox="0 0 14 44" width="7" xmlns="http://www.w3.org/2000/svg"><path d="m13.0729 17.6825a3.61 3.61 0 0 0 -1.7248 3.0365 3.5132 3.5132 0 0 0 2.1379 3.2223 8.394 8.394 0 0 1 -1.0948 2.2618c-.6816.9812-1.3943 1.9623-2.4787 1.9623s-1.3633-.63-2.613-.63c-1.2187 0-1.6525.6507-2.644.6507s-1.6834-.9089-2.4787-2.0243a9.7842 9.7842 0 0 1 -1.6628-5.2776c0-3.0984 2.014-4.7405 3.9969-4.7405 1.0535 0 1.9314.6919 2.5924.6919.63 0 1.6112-.7333 2.8092-.7333a3.7579 3.7579 0 0 1 3.1604 1.5802zm-3.7284-2.8918a3.5615 3.5615 0 0 0 .8469-2.22 1.5353 1.5353 0 0 0 -.031-.32 3.5686 3.5686 0 0 0 -2.3445 1.2084 3.4629 3.4629 0 0 0 -.8779 2.1585 1.419 1.419 0 0 0 .031.2892 1.19 1.19 0 0 0 .2169.0207 3.0935 3.0935 0 0 0 2.1586-1.1368z"></path></svg></span>
-		</a></strong></b>
-		<div class="note"></div>
+		<div class="note">definitely the best choice for background play <u>if you don't load the script at all</u></div>
 
 		<li><b><strong><a href="https://play.google.com/store/apps/details?id=com.microsoft.emmx">Edge</a> 
 		<a href="https://apps.apple.com/us/app/microsoft-edge-web-browser/id1288723196">
 		<span class="apple"><svg height="22" viewBox="0 0 14 44" width="7" xmlns="http://www.w3.org/2000/svg"><path d="m13.0729 17.6825a3.61 3.61 0 0 0 -1.7248 3.0365 3.5132 3.5132 0 0 0 2.1379 3.2223 8.394 8.394 0 0 1 -1.0948 2.2618c-.6816.9812-1.3943 1.9623-2.4787 1.9623s-1.3633-.63-2.613-.63c-1.2187 0-1.6525.6507-2.644.6507s-1.6834-.9089-2.4787-2.0243a9.7842 9.7842 0 0 1 -1.6628-5.2776c0-3.0984 2.014-4.7405 3.9969-4.7405 1.0535 0 1.9314.6919 2.5924.6919.63 0 1.6112-.7333 2.8092-.7333a3.7579 3.7579 0 0 1 3.1604 1.5802zm-3.7284-2.8918a3.5615 3.5615 0 0 0 .8469-2.22 1.5353 1.5353 0 0 0 -.031-.32 3.5686 3.5686 0 0 0 -2.3445 1.2084 3.4629 3.4629 0 0 0 -.8779 2.1585 1.419 1.419 0 0 0 .031.2892 1.19 1.19 0 0 0 .2169.0207 3.0935 3.0935 0 0 0 2.1586-1.1368z"></path></svg></span>
 		</a></strong></b>
-		<div class="note"></div>
-
+		<div class="note">slow video handling but currently the second best in eliminating YT ads</div>
 		<li><b><strong><a href="https://play.google.com/store/apps/details?id=com.vivaldi.browser">Vivaldi</a>
 		<a href="https://apps.apple.com/no/app/vivaldi-powerful-web-browser/id1633234600">
 		<span class="apple"><svg height="22" viewBox="0 0 14 44" width="7" xmlns="http://www.w3.org/2000/svg"><path d="m13.0729 17.6825a3.61 3.61 0 0 0 -1.7248 3.0365 3.5132 3.5132 0 0 0 2.1379 3.2223 8.394 8.394 0 0 1 -1.0948 2.2618c-.6816.9812-1.3943 1.9623-2.4787 1.9623s-1.3633-.63-2.613-.63c-1.2187 0-1.6525.6507-2.644.6507s-1.6834-.9089-2.4787-2.0243a9.7842 9.7842 0 0 1 -1.6628-5.2776c0-3.0984 2.014-4.7405 3.9969-4.7405 1.0535 0 1.9314.6919 2.5924.6919.63 0 1.6112-.7333 2.8092-.7333a3.7579 3.7579 0 0 1 3.1604 1.5802zm-3.7284-2.8918a3.5615 3.5615 0 0 0 .8469-2.22 1.5353 1.5353 0 0 0 -.031-.32 3.5686 3.5686 0 0 0 -2.3445 1.2084 3.4629 3.4629 0 0 0 -.8779 2.1585 1.419 1.419 0 0 0 .031.2892 1.19 1.19 0 0 0 .2169.0207 3.0935 3.0935 0 0 0 2.1586-1.1368z"></path></svg></span>
 		</a></strong></b>
-		<div class="note"></div>
+		<div class="note">the builtin ad-filter has become useless in a mobile environment for some time now</div>
+		<li><b><strong><a href="https://play.google.com/store/apps/details?id=com.kiwibrowser.browser">Kiwi</a></strong></b>
+		<div class="note">engulfed by ads</div>
 
+		<li><b><strong><a href="https://play.google.com/store/apps/details?id=com.android.chrome">Google Chrome</a> 
+		<a href="https://apps.apple.com/us/app/google-chrome/id535886823">
+		<span class="apple"><svg height="22" viewBox="0 0 14 44" width="7" xmlns="http://www.w3.org/2000/svg"><path d="m13.0729 17.6825a3.61 3.61 0 0 0 -1.7248 3.0365 3.5132 3.5132 0 0 0 2.1379 3.2223 8.394 8.394 0 0 1 -1.0948 2.2618c-.6816.9812-1.3943 1.9623-2.4787 1.9623s-1.3633-.63-2.613-.63c-1.2187 0-1.6525.6507-2.644.6507s-1.6834-.9089-2.4787-2.0243a9.7842 9.7842 0 0 1 -1.6628-5.2776c0-3.0984 2.014-4.7405 3.9969-4.7405 1.0535 0 1.9314.6919 2.5924.6919.63 0 1.6112-.7333 2.8092-.7333a3.7579 3.7579 0 0 1 3.1604 1.5802zm-3.7284-2.8918a3.5615 3.5615 0 0 0 .8469-2.22 1.5353 1.5353 0 0 0 -.031-.32 3.5686 3.5686 0 0 0 -2.3445 1.2084 3.4629 3.4629 0 0 0 -.8779 2.1585 1.419 1.419 0 0 0 .031.2892 1.19 1.19 0 0 0 .2169.0207 3.0935 3.0935 0 0 0 2.1586-1.1368z"></path></svg></span>
+		</a></strong></b>
+		<div class="note">defined by ads</div>
 		<li><b><strong>Chromium*</strong></b>
-		<div class="note"></div>
+		<div class="note">available for older versions of the Android OS only</div>
 
 		<li><b><strong><a href="https://play.google.com/store/apps/details?id=com.ecosia.android">Ecosia</a> 
 		<a href="https://apps.apple.com/us/app/ecosia/id670881887">
 		<span class="apple"><svg height="22" viewBox="0 0 14 44" width="7" xmlns="http://www.w3.org/2000/svg"><path d="m13.0729 17.6825a3.61 3.61 0 0 0 -1.7248 3.0365 3.5132 3.5132 0 0 0 2.1379 3.2223 8.394 8.394 0 0 1 -1.0948 2.2618c-.6816.9812-1.3943 1.9623-2.4787 1.9623s-1.3633-.63-2.613-.63c-1.2187 0-1.6525.6507-2.644.6507s-1.6834-.9089-2.4787-2.0243a9.7842 9.7842 0 0 1 -1.6628-5.2776c0-3.0984 2.014-4.7405 3.9969-4.7405 1.0535 0 1.9314.6919 2.5924.6919.63 0 1.6112-.7333 2.8092-.7333a3.7579 3.7579 0 0 1 3.1604 1.5802zm-3.7284-2.8918a3.5615 3.5615 0 0 0 .8469-2.22 1.5353 1.5353 0 0 0 -.031-.32 3.5686 3.5686 0 0 0 -2.3445 1.2084 3.4629 3.4629 0 0 0 -.8779 2.1585 1.419 1.419 0 0 0 .031.2892 1.19 1.19 0 0 0 .2169.0207 3.0935 3.0935 0 0 0 2.1586-1.1368z"></path></svg></span>
 		</a></strong></b>
-		<div class="note"></div>
-	<h5>
-		Bad ones (playback works, just not in sleep mode)
-	</h5>
+		<div class="note">seems to be a Brave-clone except much slower</div>
 		<li><b><strong><a href="https://play.google.com/store/apps/details?id=com.duckduckgo.mobile.android">DuckDuckGo</a> <a href="https://apps.apple.com/us/app/duckduckgo-private-browser/id663592361">
 		<span class="apple"><svg height="22" viewBox="0 0 14 44" width="7" xmlns="http://www.w3.org/2000/svg"><path d="m13.0729 17.6825a3.61 3.61 0 0 0 -1.7248 3.0365 3.5132 3.5132 0 0 0 2.1379 3.2223 8.394 8.394 0 0 1 -1.0948 2.2618c-.6816.9812-1.3943 1.9623-2.4787 1.9623s-1.3633-.63-2.613-.63c-1.2187 0-1.6525.6507-2.644.6507s-1.6834-.9089-2.4787-2.0243a9.7842 9.7842 0 0 1 -1.6628-5.2776c0-3.0984 2.014-4.7405 3.9969-4.7405 1.0535 0 1.9314.6919 2.5924.6919.63 0 1.6112-.7333 2.8092-.7333a3.7579 3.7579 0 0 1 3.1604 1.5802zm-3.7284-2.8918a3.5615 3.5615 0 0 0 .8469-2.22 1.5353 1.5353 0 0 0 -.031-.32 3.5686 3.5686 0 0 0 -2.3445 1.2084 3.4629 3.4629 0 0 0 -.8779 2.1585 1.419 1.419 0 0 0 .031.2892 1.19 1.19 0 0 0 .2169.0207 3.0935 3.0935 0 0 0 2.1586-1.1368z"></path></svg></span>
 		</a></strong></b>
+		<div class="note">not sure if it can block anything at all on YT</div>
 		<li><b><strong><a href="https://play.google.com/store/apps/details?id=com.yandex.browser">Yandex</a> <a href="https://apps.apple.com/us/app/yandex-browser/id483693909">
 		<span class="apple"><svg height="22" viewBox="0 0 14 44" width="7" xmlns="http://www.w3.org/2000/svg"><path d="m13.0729 17.6825a3.61 3.61 0 0 0 -1.7248 3.0365 3.5132 3.5132 0 0 0 2.1379 3.2223 8.394 8.394 0 0 1 -1.0948 2.2618c-.6816.9812-1.3943 1.9623-2.4787 1.9623s-1.3633-.63-2.613-.63c-1.2187 0-1.6525.6507-2.644.6507s-1.6834-.9089-2.4787-2.0243a9.7842 9.7842 0 0 1 -1.6628-5.2776c0-3.0984 2.014-4.7405 3.9969-4.7405 1.0535 0 1.9314.6919 2.5924.6919.63 0 1.6112-.7333 2.8092-.7333a3.7579 3.7579 0 0 1 3.1604 1.5802zm-3.7284-2.8918a3.5615 3.5615 0 0 0 .8469-2.22 1.5353 1.5353 0 0 0 -.031-.32 3.5686 3.5686 0 0 0 -2.3445 1.2084 3.4629 3.4629 0 0 0 -.8779 2.1585 1.419 1.419 0 0 0 .031.2892 1.19 1.19 0 0 0 .2169.0207 3.0935 3.0935 0 0 0 2.1586-1.1368z"></path></svg></span>
 </a></a></strong></b>
-		<div class="note">bookmarklet support was removed, Yandex can only launch the code through a userscript manager</div>
+		<div class="note">may only launch the code through a userscript manager</div>
 		<li><b><strong>Bromite*</strong></b>
-		<div class="note"></div>
+		<div class="note">available only for older versions of the Android OS</div>
 	<h5>
 		Unsupported
 	</h5>
@@ -433,27 +422,11 @@
 		<li><b><strong>Firefox Focus, Samsung, Qwant, Mint</strong></b> ...
 	</ol></li>
 	<br>
-		With other conditions set -- such as turning the sleep function off -- the ranking would look 
-		much different.
-	<br><br>
-		*Browsers available through <a href="https://f-droid.org/">F-Droid</a>, an alternative app store for Android. <div style="display: none">The website 
-		has a <a href="https://f-droid.org/en/packages/org.fdroid.fdroid/">client app</a> (APK <a href="https://f-droid.org/F-Droid.apk">download link</a>) that, when installed on your mobile, will let you 
-		browse, install and update other apps from their repository, which by the way is more 
-		carefully inspected for malicious content than the Google Play Store. The Chromium-based 
-		browsers' install page can not be seen from the web -- because parts of that code 
-		is proprietary, thus not entirely open source -- but can be accessed via the client app. 
-		Make sure to check for an update of the F-Droid client itself before you'd attempt to 
-		update anything else, because accomplishing the latter may depend on the former.</div>
-	<br><br>
-		Brave and Vivaldi both support background play on the Mobile UI natively. However, the 
-		YT player (without Premium access) will let you play only a few (typically 6-7) videos in a 
-		row, after that it will throw an alert box in your face to force some user interaction before 
-		playback could continue. The alternative player only remains unaffected by this if you use 
-		a Firefox-based browser because all of the Chromium-family bows to Google's will now.
-	<br><br>
-		Regardless of platform, the default "noname" browsers that come pre-installed on various 
-		systems typically have no support for bookmarklets.
-
+		*Browsers available exclusively through <a href="https://f-droid.org/">F-Droid</a>, an alternative app store for Android. <div style="display: none">The website 
+		has a <a href="https://f-droid.org/en/packages/org.fdroid.fdroid/">client app</a> (APK <a href="https://f-droid.org/F-Droid.apk">download link</a>)
+		when installed on your mobile, it will let you browse, install and update other apps from 
+		their repository.
+	</div>
 	<br><br><br>
 	<h1>
 		Legacy browsers
@@ -490,8 +463,9 @@
 		The example above is the 214th entry and it will load fine as long as you use the alternative player. Just do not let the native one load because from its perspective, the current index does not exist (being outside of the boundary), hence would trigger an automatic jump to the first video, with no way to go above the 200th entry again.
 	</div></ol>
 
-	<br><br>
 
+<div style="display: none">
+	<br><br>
 
 	<h1 id="classic_layout">
 		Classic YouTube layout
@@ -538,8 +512,9 @@
 	<br><br>
 		<b><strong><u>Heads-up</u>: This additional userscript was broken by YouTube / up-to-date browsers 
 		around mid-2021 and needs heavy rewriting.</strong></b> 
-
-	<br><br><br>
+	<br><br>
+</div>
+	<br>
 
 	<h1>
 		Stream capturing
@@ -712,7 +687,7 @@
 		sends deliberately wrong signature decryption keys on the first try. I did not 
 		implement a fully automatic update of video signatures because of the high risk of 
 		infinite loop on repeated failure. <b style="color: red"><strong>You MUST switch over to the alternative player 
-		to initiate playback on multiple formats manually</strong></b> till enough errors occur for the 
+		to manually initiate playback on multiple formats</strong></b> till enough errors occur for the 
 		updating procedure to fire. The video can be downloaded as soon as it becomes 
 		playable on the alt-player. The appearing blue gauge on its time rail shows that the 
 		video data has arrived and is buffering.
@@ -741,6 +716,7 @@
 		browser window or tab.</b></strong>
 	</p>
 	</li>
+<div style="display: none">
 	<br>
 	<li>
 	<p>
@@ -771,31 +747,8 @@
 
 	<br>
 
-<div style="display: none">
-	<h1 id="attention">
-		Attention!
-	</h1>
-
-	<ol>
-Since late May 2022, many up-to-date Chromium-based browsers started to show a warning message when you tried to load the script. The message states that your device was about to connect to a site known for malicious activities, hence loading was aborted. The domain name highlighted in the message is an alias for a well-known site providing free tools for basic internet traffic analytics<br><br>
-I have been using a logger from this 3rd party site as the only free solution to see how frequently the program was being used, without having to run a server machine 24/7 myself just to call back to. I do not care about IPs or locations and have wiped the logs clear on a regular basis. But unfortunately there are enough indecent people with bad intentions to get the service's domain names blacklisted.<br><br>
-To prove that my own code has nothing to do with what Google's security warning would suggest, I present a barely modified version of the one from April 29, which won't trigger any warning. The difference is only 4 characters, by which I commented a single line out (<a href="https://github.com/snarly/yt6/blob/91be8ce0c40728565342b83e888cdd0b1ba760a7/yt6.js">line number 14175</a>), thereby preventing the attempt to load the 3rd party stuff (a 1x1 pixel image). So, this way we got rid of the tracker, I know nothing about usage stats and Google security does not complain.<br>
-	<br>
-	Modified version, free of this particular issue:
-	<div>Yt6 file: <a href="https://raw.githubusercontent.com/snarly/yt6/91be8ce0c40728565342b83e888cdd0b1ba760a7/yt6.js">/*2022-04-29-1900-alt*/</a></div>
-	<div style="font-size: 13px; display: inline-block">Test bookmarklet:</div>
-<pre>javascript:(function(){var v='91be8ce0c40728565342b83e888cdd0b1ba760a7/yt6.js',y='youtube.com/',w=window,d=w.document,h=d.location.href,yt6=w.yt6||{},yt6d=w.yt6d||{};if(yt6d.loaded>=4)return void 0;if(h.split(y+'watch')[1]||h.split(y+'shorts')[1]||h.split(y+'embed')[1]||h.split('/base.j')[1]=='s'){var id='snarls_player',e='script',q;yt6.loaded=0;function s(x){x=x||id;return d.getElementById(x)};function c(e){return d.createElement(e)};function a(q){s().appendChild(q);s().add_subs='en,hu,de';yt6d.src=q.src};function r(){if(s()){var x;try{x=s().querySelector('#'+id)}catch(e){x=s().firstChild};if(x)s().removeChild(x)}};function b(){var i,j,o,x;o=['js','rawcdn.githack','cdn.rawgit','js'];for(j,x,i=o.length;i;j=Math.floor(Math.random()*i),x=o[--i],o[i]=o[j],o[j]=x);if(yt6d.src==-1)o.splice(0,0,'raw.githubusercontent');q=c('div');q.id=id;if(q!=s())d.body.appendChild(q);var src='https://'+o[0]+'.com/snarly/yt6/'+v,src0='https://cdn.jsdelivr.net/gh/snarly/yt6@'+v;function oc(ox,oy,sr){return(oy!='js')?sr.replace(ox,oy):src0};q=c(e);q.id=id;q.src=(o[0]!='js')?src:src0;q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[1],src);q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[2],src);q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[3],src);q.onerror=function(){q=c(e);q.id=id;q.src=src.replace('https','http')};a(q);r();};a(q);r();};a(q);r();};try{a(q);}catch(f){a(q)};};function g(){try{deldiv()}catch(f){r()};yt6d.src=1;b()};if(!s()){b()};setTimeout(function(){var t=w.yt6;if(t)t.loaded=t.loaded||window['status'];if(!t||(t&&(!t.body||(t.loaded<3))))g()},3000);}else{void 0};})()/*2022-04-29-1900-alt*/</pre>
-
-	<br>
-	The original, which Google started screaming about.
-	<br>
-	<div>Yt6 file: <a href="https://raw.githubusercontent.com/snarly/yt6/061efac41f9a75bc2b33fbf479de05fb5121ebcf/yt6.js">/*2022-04-29-1900*/</a>  (just for comparison)</div>
-	<div style="font-size: 13px">Test bookmarklet:</div>
-<pre>javascript:(function(){var v='061efac41f9a75bc2b33fbf479de05fb5121ebcf/yt6.js',y='youtube.com/',w=window,d=w.document,h=d.location.href,yt6=w.yt6||{},yt6d=w.yt6d||{};if(yt6d.loaded>=4)return void 0;if(h.split(y+'watch')[1]||h.split(y+'shorts')[1]||h.split(y+'embed')[1]||h.split('/base.j')[1]=='s'){var id='snarls_player',e='script',q;yt6.loaded=0;function s(x){x=x||id;return d.getElementById(x)};function c(e){return d.createElement(e)};function a(q){s().appendChild(q);s().add_subs='en,hu,de';yt6d.src=q.src};function r(){if(s()){var x;try{x=s().querySelector('#'+id)}catch(e){x=s().firstChild};if(x)s().removeChild(x)}};function b(){var i,j,o,x;o=['js','rawcdn.githack','cdn.rawgit','js'];for(j,x,i=o.length;i;j=Math.floor(Math.random()*i),x=o[--i],o[i]=o[j],o[j]=x);if(yt6d.src==-1)o.splice(0,0,'raw.githubusercontent');q=c('div');q.id=id;if(q!=s())d.body.appendChild(q);var src='https://'+o[0]+'.com/snarly/yt6/'+v,src0='https://cdn.jsdelivr.net/gh/snarly/yt6@'+v;function oc(ox,oy,sr){return(oy!='js')?sr.replace(ox,oy):src0};q=c(e);q.id=id;q.src=(o[0]!='js')?src:src0;q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[1],src);q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[2],src);q.onerror=function(){q=c(e);q.id=id;q.src=oc(o[0],o[3],src);q.onerror=function(){q=c(e);q.id=id;q.src=src.replace('https','http')};a(q);r();};a(q);r();};a(q);r();};try{a(q);}catch(f){a(q)};};function g(){try{deldiv()}catch(f){r()};yt6d.src=1;b()};if(!s()){b()};setTimeout(function(){var t=w.yt6;if(t)t.loaded=t.loaded||window['status'];if(!t||(t&&(!t.body||(t.loaded<3))))g()},3000);}else{void 0};})()/*2022-04-29-1900*/</pre>
-
-	<br><br>
-	If something like this were to happen again in the future, at least you know what's going on. Hopefully I will find a better solution by then.
 </div>
+
 
 
       </section>
