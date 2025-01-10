@@ -18311,7 +18311,7 @@ if (yt6.mpb && yt6.mpb.tagName == 'YTD-MINIPLAYER') {
 
 			  resize_layers(yt6.w, yt6.h, true); //console.log('flexible player dynamic rescaling occurs here: '+yt6.w +' '+yt6.h +' '+yt6.navigation)
 
-			} else { delete yt6.flx; if (!(tablet() && !orient() )) aspect(yt6.size) }//if (v_(yt6.p)) { v_(yt6.p).style.left = '0px'; v_(yt6.p).style.top = '0px' };
+			} else { delete yt6.flx; aspect(yt6.size) }
 
 			if (yt6.mobile) {
 			  restore_cp()
@@ -22355,7 +22355,7 @@ function aspect(a) {
 	    w = yt6.s.width + 'px' //((z) ? Math.min(yt6.s.width, z) : yt6.s.width) + 'px'
 	    h = Math.min(yt6.s.height, ( (ori || tablet() ) ? (window.innerHeight / 100 >>0) * 80 : (!ori && Math.abs(screen.width - elem.offsetWidth) > 2 * Math.abs(yt6.sb)) ? ((window.innerHeight - ((yt6.mhp) ? yt6.mhp.offsetHeight || 0 : 0))) : yt6.s.height)  )
 		// tablet landscape
-	    if (!ori && z) { z = (z / (16/9)); if (!isNaN(z)) h = Math.min(z, h) }
+	    if (!ori && z && !isNaN(z / (16/9)) ) { h = z / (16/9) }
 	    h = h + 'px'
 	  } else {
 	      if (elem) {
@@ -22719,10 +22719,14 @@ function control_panel1() {
       }
 
   if (yt6.mobile && gid('alerts')) { yt6.wna = gid('alerts')
-    var ph = ((yt6.p && yt6.p.offsetHeight) || (gid('bm0') && gid('bm0').offsetHeight) || 0)
-    if (( !orient() && window.innerHeight < ((yt6.mhp && yt6.mhp.offsetHeight) || 0) + 24 + ph ) || (orient() && 10 > Math.abs((window.innerHeight / 100 >>0) * 80 - ph) ) || ( yt6.wna.style.top && 1*(yt6.wna.style.top.replace('px','')) > screen.height) ) {
-      yt6.wna.style.position = 'sticky'; yt6.wna.style.top = ph + 'px' /*(orient()) ? : ''*/; if (gid('aspect')) gid('aspect').style.right = ''; yt6.wna.style.marginBottom = ((!orient()) ? (ph - ((yt6.mhp && yt6.mhp.offsetHeight) || 0) + 207 - screen.height) + 'px' : '');
-    } else { yt6.wna.style.position = 'fixed'; yt6.wna.style.marginBottom = '' }
+    var ph = ((yt6.p && yt6.p.offsetHeight) || (gid('bm0') && gid('bm0').offsetHeight) || 0), ori = orient()
+    if (( !ori && window.innerHeight < ((yt6.mhp && yt6.mhp.offsetHeight) || 0) + 24 + ph ) || (orient() && 10 > Math.abs((window.innerHeight / 100 >>0) * 80 - ph) ) || ( yt6.wna.style.top && 1*(yt6.wna.style.top.replace('px','')) > screen.height) ) {
+      yt6.wna.style.position = 'sticky'; yt6.wna.style.top = ph + 'px' /*(orient()) ? : ''*/; if (gid('aspect')) gid('aspect').style.right = ''; yt6.wna.style.marginBottom = ((!ori) ? (ph - ((yt6.mhp && yt6.mhp.offsetHeight) || 0) + 207 - screen.height) + 'px' : '');
+    } else {
+	yt6.wna.style.position = 'fixed'; yt6.wna.style.marginBottom = ''
+	// tablet landscape
+	if (!ori && tablet() && yt6.size == 'default') { yt6.wna.style.top = '' }
+      }
     yt6.wna.style.zIndex = '2'
   }
 
