@@ -4820,18 +4820,19 @@ if (typeof jQuery != 'undefined') {
 		setTrack: function(lang, id){//yt6
 
 			var t = this,
-				i;
+				i, id2 = id.split("_")[3];
 
 			if (lang == 'none') {
 				t.selectedTrack = null;
 				t.captionsButton.removeClass('mejs-captions-enabled');
-				if (t.options.startLanguage[2]) delete t.options.startLanguage[2];
+				t.options.startLanguage[1] = clone(t.options.startLanguage[2])
+				t.options.startLanguage[2] = false;
 			} else {
 				for (i=0; i<t.tracks.length; i++) {
-					if (i == id.split("_")[3]) {;//yt6 if (t.tracks[i].srclang == lang) {
-						if (!t.options.startLanguage[2]) {
-							t.options.startLanguage[0] = lang, t.options.startLanguage[1] = id.split("_")[3]
-						} else {							
+					if (i == id2) {;//yt6 if (t.tracks[i].srclang == lang) {
+						if (isNaN(t.options.startLanguage[2]) || (!yt6.newvideo)) {
+							t.options.startLanguage[0] = lang, t.options.startLanguage[1] = id2; if (t.options.startLanguage[2] == false) delete t.options.startLanguage[2]
+						} else { t.options.startLanguage[2] == id2
 							//$('label[for="' + t.id + '_captions_' + lang +'"]').first().prev().prop('checked', true).trigger('click')
 						}
 						if (t.selectedTrack === null)
@@ -4950,7 +4951,7 @@ d = ytsubtitle2srt(d, track.srclang, mejs.language.codes[track.srclang], track.t
 			}//yt6
 
 			// auto select
-			if (t.options.startLanguage[0] == lang && t.options.startLanguage[1] == id) {
+			if (t.options.startLanguage[0] == lang && (1*t.options.startLanguage[2]) === id) {
 				$('#' + t.id + '_captions_' + id).prop('checked', true).trigger('click');//yt6 lang
 			}
 
