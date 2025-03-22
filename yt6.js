@@ -1520,7 +1520,7 @@ function find_key(rpt){
       n2 = rpt.match(nreg); //console.log(n2)
       if (n2) {
 	nreg = null; n2 = n2[0]
-	vr = n2.split('.join(')[1]; if (vr && vr.substring(0,2) == '""') vr = ''; //for the older algorithm, keep vr empty
+	vr = n2.split('.join(')[1]; //if (vr && vr.substring(0,2) == '""') vr = ''; //for the older algorithm, keep vr empty
 	n2 = (!vr) ? n2.split(n2.split('.join("")};')[1])[0] : n2.split('.join(')[0] + '.join(' + n2.split('join(')[1].split(';')[0] +';';// 2502 : 2503
 	if (vr && vr.indexOf('[') && vr.indexOf('[') > 1) {
 	  vr = vr.split('[')[0]
@@ -12339,7 +12339,7 @@ function mep_run() {
     var itag1;
 
 					function media_error_handler(me, at) { ev = '1error'; //ev_log(ev +' '+ yt6.current+'_'+ yt6.errcount +'_'+ me.networkState +' '+yt6.failed_itags.indexOf(yt6.current))
-					  if ( yt6 && yt6.player1 && !yt6.navigation && (yt6.timer == 999999999 || yt6.player1.media.src != me.src))//me.src == pseudoSrc || 
+					  if ( yt6 && yt6.player1 && !yt6.navigation && (yt6.timer == 999999999 || (!yt6.update_in_progress && !yt6.errcount && me.src == pseudoSrc) || yt6.player1.media.src != me.src))
 					    return void 0;
 					  if (me.networkState == 1 || me.networkState == 3) {
 
@@ -19206,7 +19206,7 @@ var navi0 = _nav,
 		yt6.ads_noskip_m = 0
 		if (typeof yt6.ad_skipped == 'number') delete yt6.ad_skipped
 		if (typeof yt6.mobile_nav != 'undefined') yt6.mobile_nav = false
-		if (yt6d.init) delete yt6d.init; yt6.failed_itags2 = 1
+		if (yt6d.init) delete yt6d.init; //yt6.failed_itags2 = 1
 		yt6.at = 0; yt6.at2 = ''
 		if (yt6.loophole) delete yt6.loophole
 		if (yt6d.subscriptions) delete yt6d.subscriptions
