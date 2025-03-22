@@ -1520,7 +1520,7 @@ function find_key(rpt){
       n2 = rpt.match(nreg); //console.log(n2)
       if (n2) {
 	nreg = null; n2 = n2[0]
-	vr = n2.split('.join(')[1]; //if (vr && vr.substring(0,2) == '""') vr = ''; //for the older algorithm, keep vr empty
+	vr = n2.split('.join(')[1]; if (vr && vr.substring(0,2) == '""') vr = ''; //for the older algorithm, keep vr empty
 	n2 = (!vr) ? n2.split(n2.split('.join("")};')[1])[0] : n2.split('.join(')[0] + '.join(' + n2.split('join(')[1].split(';')[0] +';';// 2502 : 2503
 	if (vr && vr.indexOf('[') && vr.indexOf('[') > 1) {
 	  vr = vr.split('[')[0]
