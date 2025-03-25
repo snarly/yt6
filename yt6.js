@@ -2062,7 +2062,7 @@ yt6.tmp = ""+
 	    for(j in vi) { vij = vi[j];\
 	      if (_itag) { ok = false; };\
 	      if (!yt6.tmp2 && vij && typeof vij === 'object' && vij.videoData && typeof vij.videoData == 'object')\
-		  for (k in vij.videoData) if (vij.videoData[k] && vij.videoData[k].streamingData && vij.videoData[k].streamingData.adaptiveFormats && vij.videoData[k].streamingData.adaptiveFormats[0] && vij.videoData[k].streamingData.adaptvieFormats[0].url) { yt6.tmp2 = vij.videoData[k]; console.log(yt6.tmp2); yt6.ytplayer = {}; yt6.ytplayer.config = {}; yt6.ytplayer.config.args = clone(ytplayer.config.args); yt6.ytplayer.config.args.raw_player_response = clone(yt6.tmp2); yt6.ytplayer.config.args.player_response = clone(JSON.stringify(yt6.tmp2)); break;\
+		  for (k in vij.videoData) if (vij.videoData[k] && vij.videoData[k].streamingData && vij.videoData[k].streamingData.adaptiveFormats && vij.videoData[k].streamingData.adaptiveFormats[0] && vij.videoData[k].streamingData.adaptvieFormats[0].url) { yt6.tmp2 = vij.videoData[k]; yt6.ytplayer = {}; yt6.ytplayer.config = {}; yt6.ytplayer.config.args = clone(ytplayer.config.args); yt6.ytplayer.config.args.raw_player_response = clone(yt6.tmp2); yt6.ytplayer.config.args.player_response = clone(JSON.stringify(yt6.tmp2)); break;\
 		  };\
 	      if (vij && typeof vij === 'object' && (b || (c && vij[c] && typeof vij[c] == 'object')) && typeof vij.isLivePlayback === 'boolean') { ok = true } else if (!ok) { continue }\
 	      if (ok) for (k in vi) { vik = vi[k]; if (vik && typeof vik == 'object' && (b || (c && vik[c] && typeof vik[c] == 'object')) && typeof vik.isLivePlayback === 'boolean') { if (b && !d) { for(d in vik) if (vik[d] && typeof vik[d] == 'object') for(l in vik[d]) if (vik[d][l] && typeof vik[d][l] == 'object' && vik[d][l].info) { c = d; break; break } }; for (l in vik[c]) if (vik[c][l] && typeof vik[c][l] == 'object' && vik[c][l].info && typeof vik[c][l].info == 'object' && vik[c][l].info.itag) { _itag = vik[c][l].info.itag; if (!list[_itag]) list[_itag] = clone(vik[c][l]); continue } else {} } }; if (list && (_itag > 0 || yt6.mobile)) yt6.list = list;\
@@ -13379,7 +13379,7 @@ if (!(yt6.mobile && hid())) return void 0
 								    };\
 								  me.pp.ok = false;\
 								},40,400);\
-\/\*if (yt6.mobile && hid()) { if (!yt6 && !me.currentTime && me.src != pseudoSrc) { var src2 = clone(me.src); console.log("?"); yt6.player1.setSrc(pseudoSrc); me.currentTime = player2.currentTime = yt6.ct = 0; yt6.player1.setSrc(src2); me.play()}\*\/;\
+\/\*if (yt6.mobile && hid()) { if (!yt6 && !me.currentTime && me.src != pseudoSrc) { var src2 = clone(me.src); yt6.player1.setSrc(pseudoSrc); me.currentTime = player2.currentTime = yt6.ct = 0; yt6.player1.setSrc(src2); me.play()}\*\/;\
 							      ;\
 							      if (!me.paused) {\
 								me.timer = (typeof me.timer == "number") ? (me.timer + 1) : 0;\
