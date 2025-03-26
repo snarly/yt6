@@ -1408,19 +1408,24 @@ function onDownload(x) {
 
 
 
-function findClosingBracketMatchIndex(str, pos, x, y) { if (!x || !y) { x = '{'; y = '}' }
+function findClosingBracketMatchIndex(str, pos, x, y, q) {
+  if (x == '[') y = ']'
+  if (x && !y) y = x;
+  if (!x || !y) { x = '{'; y = '}' }
+
   if (str[pos] != x) {
     return -1;//throw new Error("No '{' at index " + pos);
-  } //else console.log(str.substring(0,20) +'\n'+ '{ '+ str.split('{').length +'\n'+'} '+ str.split('}').length )
+  }
   var depth = 1;
 
   for (i = pos + 1; i < str.length; i++) {
     switch (str[i]) {
     case x:
-      depth++;
+      depth++; if (!q && x == y && str[i-1] != '\\') return i;
       break;
     case y:
-      if (--depth == 0) {
+      if (!q) --depth;
+      if ((depth == 0) || (i > 2 && q && str[i-1] == q && str[i-2] != '\\')) {
         return i;
       }
       break;
@@ -1513,7 +1518,7 @@ function find_key(rpt){
 
     var fs = (rpt.match(fs)) ? rpt.match(fs)[0] : '' //old
 
-    var nreg, n2, vr = '', br = '', cr = ''
+    var nreg, n2, vr = '', br = '', dr = '', q, q2
     if (typeof n == 'string')
     try {
       nreg = new RegExp(	sprintf('%s=function[^}]+}.*', n.replace('$', '\\$'))	); //console.log(nreg)
@@ -1522,13 +1527,16 @@ function find_key(rpt){
 	nreg = null; n2 = n2[0]
 	vr = n2.split('.join(')[1]; if (vr && vr.substring(0,2) == '""') vr = ''; //for the older algorithm, keep vr empty
 	n2 = (!vr) ? n2.split(n2.split('.join("")};')[1])[0] : n2.split('.join(')[0] + '.join(' + n2.split('join(')[1].split(';')[0] +';';// 2502 : 2503
-	if (vr && vr.indexOf('[') && vr.indexOf('[') > 1) {
-	  vr = vr.split('[')[0]
-	  if (rpt.split('var '+ vr +'=')[1]) {
-	    vr = 'var '+ vr +'='+ rpt.split('var '+ vr +'=')[1]
-		br = vr.split('.split(')[1]; if (br) { br = br.substring(0,1); cr = vr.split('.split(' + br)[1].split(br +')')[0] };
-	    vr = vr.split('.split(')[0] + '.split(' + br + cr + br + ')'
-	    n2 = n2.substring(0,23).split('{')[0] + '{'+ vr +'; '+n2.split(n2.substring(0,23).split('{')[0] +'{')[1]; //console.log(vr); console.log(n2)
+	if (vr && vr.indexOf('[') > 1) {
+	  vr = vr.split('[')[0], br = rpt.split('var '+ vr +'=')[1]
+	  if (br) {
+	    q = br.substring(1,2); q = (q == '"' || q == "'") ? q : ''
+
+	    q2 = br.split('.split(')[1]; if (q2) { q2 = q2.substring(0,1); q2 = (q2 == '"' || q2 == "'" || q) ? q2 || q : ''; if (q2) { dr = br.split('.split(' + q2)[1].split(q2 +')')[0] } };
+	    br = br.split('.split(')[0]; //console.log(br.substring(0,1)); console.log(q2); console.log(dr)
+	    vr = 'var '+ vr +'='+ br.substring(0, (findClosingBracketMatchIndex(br, 0, br.substring(0,1), '', q) +1) )
+	    if (rpt.split(vr)[1].substring(0,7) == '.split(') { vr = vr + '.split("' + dr + '")' }; //console.log(vr)
+	    n2 = n2.substring(0,23).split('{')[0] + '{'+ vr +'; '+n2.split(n2.substring(0,23).split('{')[0] +'{')[1]; //console.log(n2)
 	  }
 	}
       }
@@ -3201,6 +3209,11 @@ function player_response() { //if (yt6.xhr.t == 31 && !yt6.blocked_m && !yt6.blo
 }
 
 
+function error_screen(){
+  var z = gid('player-unavailable') || ((yt6.osw) ? gt('yt-playability-error-supported-renderers', yt6.osw)[0] : gt('yt-playability-error-supported-renderers', 1)[1]) //gid('error-screen')
+  return z
+}
+
 
 
 function load_from_page_source(x, source) {
@@ -3293,7 +3306,7 @@ function load_from_page_source(x, source) {
 			//}
 		      } else { // most likely deleted or private video
 			  ytplayer.config.args.status = 'error'; yt6.status = 'error'
-			  var z = gid('player-unavailable') || gid('error-screen')
+			  var z = error_screen()
 			  if (z) z.style.display = ''; yt6.newvideo = true
 			}
 		    } else if (yt6.layout == 16 && yt6.pls && yt6.newin) {
@@ -4430,7 +4443,7 @@ function iframe() {
 
 		  window.yt6.embed.control = function(p3) {
 
-			var z = gid('player-unavailable') || gid('error-screen')
+			var z = error_screen()
 			if (z) z.style.display = 'none'
 
 		      yt6.embed.play = function() {
@@ -4797,7 +4810,7 @@ function alt_yt(vid) {
 		      }
 
 
-		  var z = gid('watch7-player-age-gate-content') || gid('error-screen')
+		  var z = gid('watch7-player-age-gate-content') || error_screen()
 		  if (yt6.layout == 12) {
 		    if (z && z[yt6.txt].replace(/(\r\n|\n|\r)/gm," ").split(' ').join('') != '') {
 		      var z = gid('player-unavailable')
@@ -5456,7 +5469,7 @@ function ageless_verification(spfpc, ios) {
 	    if (!c[1] || yt6.video_info_id) {
 	      $waitUntil(function(){ var c = conf('args'); if (c[1]) { return true } },
 		function(){ parse_video_info(xhr3.responseText);
-		  var z = gid('watch7-player-age-gate-content') || gid('error-screen')
+		  var z = gid('watch7-player-age-gate-content') || error_screen()
 		  if (yt6.layout == 12) {
 		    if (z && z[yt6.txt].replace(/(\r\n|\n|\r)/gm," ").split(' ').join('') != '') {
 		      var z = gid('player-unavailable')
@@ -5467,7 +5480,7 @@ function ageless_verification(spfpc, ios) {
 	    } else {
 		yt6.rpt = xhr3.responseText
 		parse_video_info(xhr3.responseText)
-		  var z = gid('watch7-player-age-gate-content') || gid('error-screen')
+		  var z = gid('watch7-player-age-gate-content') || error_screen()
 		  if (yt6.layout == 12) {
 		    if (z && z[yt6.txt].replace(/(\r\n|\n|\r)/gm," ").split(' ').join('') != '') {
 		      var z = gid('player-unavailable')
@@ -5519,7 +5532,7 @@ function ageless_verification(spfpc, ios) {
 
 	if (yt6.oldbrowser && !yt6.rpt) {
 	  parse_video_info(xhr3.responseText)
-		  var z = gid('watch7-player-age-gate-content') || gid('error-screen')
+		  var z = gid('watch7-player-age-gate-content') || error_screen()
 		  if (yt6.layout == 12) {
 		    if (z && z[yt6.txt].replace(/(\r\n|\n|\r)/gm," ").split(' ').join('') != '') {
 		      var z = gid('player-unavailable')
@@ -5599,7 +5612,7 @@ function ageless_verification(spfpc, ios) {
 	      c[1].status = 'error'; yt6.status = 'error'
 	      if (bm0) gid('movie_player_to_insert').appendChild(bm0)
 	      if (yt6.layout == 12) {
-		var z = gid('watch7-player-age-gate-content') || gid('error-screen')
+		var z = gid('watch7-player-age-gate-content') || error_screen()
 		if (z) z.style.display = ''
 	      }
 	    }
@@ -5737,7 +5750,7 @@ function me_flash_up(file, ib){
   // due to the nature of the newer layout, this approach causes a false positive detection whenever navigating away from an actual blocked page to an accessible video
   yt6.age.check = function() {
 	  yt6.age.count = (!yt6.age.count) ? 0 : yt6.age.count
-	  var r, r0; if (yt6.layout == 16) r = gid('error-screen') || gt('yt-playability-error-supported-renderers', 1)[0] || gt('ytd-playability-error-supported-renderers', 1)[0]; r0 = r
+	  var r, r0; if (yt6.layout == 16) r = error_screen(); r0 = r
 	  yt6.age.t = gid('unavailable-submessage') || r;
 	  if (yt6.age.t) if (yt6.age.t.getAttribute('id') == 'unavailable-submessage') {
 	    if (yt6.age.t.firstChild == yt6.age.t.lastChild) yt6.age.count = 0//-1
@@ -10260,7 +10273,7 @@ if (c[1]) {
       if (!yt6.dummy) { }
 	c[1].adaptive_fmts = ''; c[1].url_encoded_fmt_stream_map = ' '
 /*
-	var z = gid('watch7-player-age-gate-content') || gid('error-screen')
+	var z = gid('watch7-player-age-gate-content') || error_screen()
 	if (yt6.layout == 12) {
 	  if (z && z[yt6.txt].replace(/(\r\n|\n|\r)/gm," ").split(' ').join('') != '') {
 	    var z = gid('player-unavailable')
@@ -16682,7 +16695,7 @@ yt6.body.spfdone = function(e) {
 	      }
 	  }
 
-	  var sorry = gid('player-unavailable') || gid('error-screen')
+	  var sorry = gid('player-unavailable') || error_screen()
 	  sorry.title = z
 	  sorry.setAttribute('aria-label',z)
 	  sorry.setAttribute("onclick","javascript:var z = gid('unavailable-submessage') || gclass('ytd-playability-error-supported-renderers')[0];if(z && z.innerHTML != '') { alert('"+z+"') }");
@@ -16723,7 +16736,7 @@ yt6.body.spfdone = function(e) {
 	  bm2.removeAttribute('onerror')
 	  bm2.innerHTML = ''
 	}
-	var sorry = gid('player-unavailable') || gid('error-screen')
+	var sorry = gid('player-unavailable') || error_screen()
 	sorry.removeAttribute('title')
 	sorry.removeAttribute('aria-label')
 	sorry.removeAttribute('onclick')
@@ -22654,7 +22667,7 @@ function deldiv(){
 
   while (gid('snarls_player') || yt6.retry > 50) try { gid('snarls_player').parentNode.removeChild(gid('snarls_player')); yt6.retry++ } catch(e) {}
 
-  var z = gid('player-unavailable') || gid('error-screen')
+  var z = gid('player-unavailable') || error_screen()
   if (z) { z.style.display = ''; z.removeAttribute('style'); if (!yt6.blocked) z.setAttribute('hidden','') }
 
   try { if (gid('movie_player').getAttribute('class') == 'dummy') gid('movie_player').parentNode.removeChild(gid('movie_player')) } catch(e){}
