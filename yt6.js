@@ -1560,7 +1560,7 @@ function find_key(rpt){
 	if (n2.split('if(typeof ')[1] && n2.split('if(typeof ')[1].split(';try{')[1]) { n2 = n2.split('if(typeof ')[0] + ';try{'+ n2.split('if(typeof ')[1].split(';try{')[1] }
 	eval('yt6d.ndec = ' + n2.replace(n +'=',''))
       }
-    } catch(e) {console.log(e)}
+    } catch(e) {}
 
   } catch(e) {//alert(e)
 
@@ -2328,12 +2328,12 @@ function test_4(peek) {
 			      for (j=0;j<yt6.userprefV.length;j++){
 				if (yt6.userprefV[j] == v) added = true
 			      };
-			      if (!added) yt6.userprefV.unshift(v)
+			      if (!added && yt6.ytp.embed) yt6.userprefV.unshift(v)
 			    } else if ((z.indexOf('itag='+a) > -1 || z.indexOf('itag/'+a) > -1) && (z.indexOf('mime=audio') > -1 || z.indexOf('mime/audio') > -1)) {
 				for (j=0;j<yt6.userprefA.length;j++){
 				  if (yt6.userprefA[j] == a) added = true
 				};
-				if (!added) yt6.userprefA.unshift(a)
+				if (!added && yt6.ytp.embed) yt6.userprefA.unshift(a)
 			      }
 			  }
 			}
@@ -7178,7 +7178,7 @@ function chk_src(me) {
 	if (z) z = z.split('//')[1]
 	if ((yt6 && yt6.timer == 999999999) || me.src == pseudoSrc || y != z) {
 	  if (y != z && y != pseudoSrc && yt6 && yt6.timer != 999999999) {
-	    console.log('chk')//clear_mep(yt6.player2); clear_mep(yt6.player1)
+	    //clear_mep(yt6.player2); clear_mep(yt6.player1)
 	  }
 	  z = false
 	} else z = true
@@ -9014,8 +9014,8 @@ yt6d.mep_renew = function() {
     }//preload
 
     if (yt6.ytp && yt6.ytp.embed) {
-	if (yt6.ytp.V && typeof yt6.ytp.V == 'string' && !isNaN(itag(yt6.ytp.V))) { console.log('V'); if (yt6.userprefV[0] != itag(yt6.ytp.V)) yt6.userprefV.unshift(itag(yt6.ytp.V)) }
-	if (yt6.ytp.A && typeof yt6.ytp.A == 'string' && !isNaN(itag(yt6.ytp.A))) { console.log('A'); if (yt6.userprefA[0] != itag(yt6.ytp.A)) yt6.userprefA.unshift(itag(yt6.ytp.A)) }
+	if (yt6.ytp.V && typeof yt6.ytp.V == 'string' && !isNaN(itag(yt6.ytp.V))) { if (yt6.userprefV[0] != itag(yt6.ytp.V)) yt6.userprefV.unshift(itag(yt6.ytp.V)) }
+	if (yt6.ytp.A && typeof yt6.ytp.A == 'string' && !isNaN(itag(yt6.ytp.A))) { if (yt6.userprefA[0] != itag(yt6.ytp.A)) yt6.userprefA.unshift(itag(yt6.ytp.A)) }
     }
 
     yt6.failed_itags = []
@@ -19349,7 +19349,7 @@ var navi0 = _nav,
 		if (yt6.blocked && video_id(true)[0] != prev_vid){
 		  //yt6d.previous.video_id = prev_vid
 		  //xhr2.done = false;
-		  if (!yt6.age.dl && !yt6.age.sc) {console.log('nav')
+		  if (!yt6.age.dl && !yt6.age.sc) {
 		    //if (yt6.player1) { try { if (yt6.V_[itag(yt6.player1.media.src)]) clear_mep(yt6.player1) } catch(e) { } }
 		    //if (yt6.player2) { try { if (yt6.V_[itag(yt6.player2.media.src)]) clear_mep(yt6.player2) } catch(e) { } }
 		  }
