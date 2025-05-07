@@ -2997,7 +2997,7 @@ if (typeof jQuery != 'undefined') {
 				.bind('click', function() {  // Removed 'touchstart' due issues on Samsung Android devices where a tap on bigPlay started and immediately stopped the video
 					if (t.options.clickToPlayPause) {
 						if (media.paused) {
-							media.play();
+							if (!player.isLoaded) { player.play() } else media.play();
 						} else media.pause()
 					}
 				});
@@ -3165,8 +3165,8 @@ if (typeof jQuery != 'undefined') {
 		},
 		play: function() {
 			if (typeof yt6 == 'object') {//if (!yt6.promise) {
-			  if (!yt6.navigation && !(browserName == 'Safari' && this.media.loaded))
-			    this.load();
+			  //if (!yt6.navigation && !(browserName == 'Safari' && this.media.loaded))
+			    //this.load();
 			  this.media.play();
 			} //else delete yt6.promise;
 		},
