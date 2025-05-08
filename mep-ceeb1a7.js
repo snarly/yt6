@@ -3165,8 +3165,8 @@ if (typeof jQuery != 'undefined') {
 		},
 		play: function() {
 			if (typeof yt6 == 'object') {//if (!yt6.promise) {
-			  //if (!yt6.navigation && !(browserName == 'Safari' && this.media.loaded))
-			    //this.load();
+			  if (!yt6.navigation && !(browserName == 'Safari' && this.media.loaded))
+			    this.load();	//Firefox may need this
 			  this.media.play();
 			} //else delete yt6.promise;
 		},
@@ -3342,7 +3342,7 @@ if (typeof jQuery != 'undefined') {
 					e.preventDefault();
 				
 					if (media.paused) {
-						media.play();
+						if (!player.isLoaded) { player.play() } else media.play();
 					} else {
 						media.pause();
 					}
