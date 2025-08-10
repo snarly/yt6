@@ -4817,33 +4817,43 @@ if (typeof jQuery != 'undefined') {
 			}
 		},
 
-		setTrack: function(lang, id){//yt6
+		setTrack: function(lang, id, a){//yt6
 
 			var t = this,
-				i, id2 = id.split("_")[3];
+				i, id2 = 1 * id.split("_")[3], j, a = t.options.startLanguage[2], b = (a && a.indexOf(' -> '+ lang) > -1) ? true : false, c, x;
+
+			function check(c) {
+				x = t.captionsButton.find('input[checked=checked]')
+				x.removeAttr('checked'); x.removeProp('checked')
+				c.attr('checked','checked'); c.prop('checked',true)
+			}
 
 			if (lang == 'none') {
 				t.selectedTrack = null;
 				t.captionsButton.removeClass('mejs-captions-enabled');
-				t.options.startLanguage[1] = clone(t.options.startLanguage[2])
-				t.options.startLanguage[2] = false;
+				if (a) delete t.options.startLanguage[2];
+				t.options.startLanguage[0] = 'none';
+				check( t.captionsButton.find('input[value=none]') )
 			} else {
 				for (i=0; i<t.tracks.length; i++) {
-					if (i == id2) {;//yt6 if (t.tracks[i].srclang == lang) {
-						if (isNaN(t.options.startLanguage[2]) || (!yt6.newvideo)) {
-							t.options.startLanguage[0] = lang, t.options.startLanguage[1] = id2; if (t.options.startLanguage[2] == false) delete t.options.startLanguage[2]
-						} else { t.options.startLanguage[2] == id2
-							//$('label[for="' + t.id + '_captions_' + lang +'"]').first().prev().prop('checked', true).trigger('click')
-						}
+					if (i == id2) {
+
+
+						t.options.startLanguage[0] = lang
+						t.options.startLanguage[1] = id2
+						if (!a) t.options.startLanguage[2] = t.tracks[id2].label || lang
+
 						if (t.selectedTrack === null)
 							t.captionsButton.addClass('mejs-captions-enabled');
-						t.selectedTrack = t.tracks[i];
+						t.selectedTrack = t.tracks[id2];
 						t.captions.attr('lang', t.selectedTrack.srclang);
 						t.displayCaptions();
 						break;
 					}
 				}
+				check( $('#' + t.id + '_captions_' + id2) );
 			}
+
 		},
 
 		loadNextTrack: function() {
@@ -4859,19 +4869,28 @@ if (typeof jQuery != 'undefined') {
 
 				if (t.checkForTracks() && t.selectedTrack) {
 
-					for (i=0; i<t.tracks.length; i++) {
-					if (typeof t.options.startLanguage[0] == 'string' && typeof t.tracks[i].srclang == 'string' && (t.options.startLanguage[0].split('-')[0].indexOf(t.tracks[i].srclang.split('-')[0]) > -1 || t.tracks[i].srclang.split('-')[0].indexOf(t.options.startLanguage[0].split('-')[0]) > -1)) {
-						$('label[for="' + t.id + '_captions_' + t.tracks[i].srclang +'"]').first().prev().prop('checked', true).trigger('click');
-						ok = true;
-						break;
+					//yt6 auto_select
+					var a = (typeof t.options.startLanguage[2] == 'string') ? t.options.startLanguage[2] : '', b = (a && a.indexOf(' -> ') > -1) ? true : false, c, d, lang, id;
+
+					function auto_select() {
+						for (i=0; i<t.tracks.length; i++) {
+							lang = t.tracks[i].srclang, id = t.id + '_captions_' + t.tracks[i].id, c = $('#' + id), d = c.next().attr('translated')
+							if (b && a == t.tracks[i].label && a.indexOf(d) > -1) { t.setTrack(lang, id, true); return true }
+						}
+						for (i=0; i<t.tracks.length; i++) {
+							lang = t.tracks[i].srclang, id = t.id + '_captions_' + t.tracks[i].id, c = $('#' + id), d = c.prop('value')
+							if (b && a.split(' -> ')[1] == d) { t.setTrack(lang, id, true); return true }
+						}
+						for (i=0; i<t.tracks.length; i++) {
+							lang = t.tracks[i].srclang, id = t.id + '_captions_' + t.tracks[i].id, c = $('#' + id), d = c.prop('value')
+							if (!b && d == a) { t.setTrack(lang, id, true); return true }
+						}
+						if (t.tracks[0]) t.setTrack(t.tracks[0].srclang, t.tracks[0].id, true);
 					}
 
-					}
+					if (a) auto_select()
 
-					if (!ok)
-					if (t.tracks[0]) {
-						$('label[for="' + t.id + '_captions_' + t.tracks[0].srclang +'"]').first().prev().prop('checked', true).trigger('click');
-					}
+
 				}
 			}
 		},
@@ -4897,7 +4916,8 @@ if (typeof jQuery != 'undefined') {
 				url: track.src,
 				dataType: "text",
 				success: function(d) {
-d = ytsubtitle2srt(d, track.srclang, mejs.language.codes[track.srclang], track.translated) //yt6
+
+					if (track && track.srclang) { d = ytsubtitle2srt(d, track.srclang, mejs.language.codes[track.srclang], track.translated) }//yt6
 
 					// parse the loaded file
 					if (typeof d == "string" && (/<tt\s+xml/ig).exec(d)) {
@@ -4950,10 +4970,6 @@ d = ytsubtitle2srt(d, track.srclang, mejs.language.codes[track.srclang], track.t
 			  }
 			}//yt6
 
-			// auto select
-			if (t.options.startLanguage[0] == lang && (1*t.options.startLanguage[2]) === id) {
-				$('#' + t.id + '_captions_' + id).prop('checked', true).trigger('click');//yt6 lang
-			}
 
 			t.adjustLanguageBox();
 		},
