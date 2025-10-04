@@ -17,7 +17,7 @@ if (!window.yt6d) { //data object for future use
   yt6d.previous.eid=[]
   yt6d.playlist = {}
   yt6d.playlist.items = []
-  yt6d.log = []
+  yt6d.log = []; yt6d.arg = {}
   yt6d.srt = {}; yt6d.srt.tracks = []
   yt6d.mediaUrlText = []
   yt6d.src_hid = 0; yt6d.src_hid2 = 0
@@ -913,12 +913,12 @@ function rp(tx) {
 }
 
 
-function dc(sg) {
-  var z
-  try { z = fcnm(sg); return z } catch(e) {
+function dc(num, sg) {
+  var z; if (!sg) sg = num
+  try { z = fcnm(num, sg); return z } catch(e) {
     if ((gid('ytassetsjs') != null) && (typeof gid('ytassetsjs').fcnm != 'undefined')) {
       var fcnm = gid('ytassetsjs').fcnm
-      return fcnm(sg);
+      return fcnm(num, sg);
     } else return sg
   }
 }
@@ -956,7 +956,7 @@ function def_link(){
 	  sig += '&' + signame + '=' + qs[signame];
 	}
 	if (qs.s) {//alert('Encrypted content! '+ qs.s + dc(qs.s) + gid('ytassetsjs').fcnm )
-	  href += '&' + signame + '=' + dc(qs.s);
+	  href += '&' + signame + '=' + dc(yt6d.arg.s, qs.s);
 	  //yt6.encrypted = true // outdated
 	}
 	if (href.indexOf("&ratebypass=yes") == -1) { href += '&ratebypass=yes'}
@@ -1490,22 +1490,18 @@ function find_key(rpt){
 
 	  }
 
-	var fcn = getFunctionName('=function(a){a=a.split("")')
-
-	var n = getFunctionName('=function(a){var b=a.split(""),c=') //old
-	if (!n) n = getFunctionName('=function(a){var b=String.prototype.split.call(a,') //new #1 //""),c= //("","")),c=
-	if (!n) n = getFunctionName('=function(a){var b=a.split(a.slice(0,0)') //new #2
-
-	//variable names randomized since Dec 2024
-	if (!fcn) { fcn0 = rpt.split(',encodeURIComponent(')[0].slice(-50)
-	  if (fcn0 && fcn0.split('(decodeURIComponent(')[1]) { fcn = fcn0.split('(decodeURIComponent(')[0].split('=')[1] } else fcn = ''
+	var fcn, fcn0, fcn1, n, n1
+	//var names randomized since Dec 2024
+	var i = 0; for(i;i<rpt.split(',encodeURIComponent(').length-1;i++)
+	{ fcn0 = rpt.split(',encodeURIComponent(')[i].slice(-50)
+	  if (fcn0 && fcn0.lastIndexOf('=') > -1 && fcn0.lastIndexOf('=') < fcn0.indexOf('decodeURIComponent(')) { fcn = fcn0.substring((fcn0.lastIndexOf('=')+1)), fcn1 = fcn.split('(')[1]; fcn1 = yt6d.arg.s = (fcn1) ? 1*(fcn1.split(',')[0]) : 0; fcn = fcn.split('(')[0] } else fcn = '' //.split('decodeURIComponent(')[0].split('=')[1]
 	}
 
-	if (!n) { var n0 = (rpt.split('{this.segments.push(')[1]) ? rpt.split('{this.segments.push(')[0] : ''
-	  if (n0) { n0 = n0.slice(-50).split('=[')[1]; if (n0) n = n0.split(']')[0] }
-	}
+	var n0 = (rpt.split('{this.segments.push(')[1]) ? rpt.split('{this.segments.push(')[0] : ''
+	if (n0) { n0 = n0.slice(-50).split('=[')[1]; if (n0) { n = n0.split(']')[0]; n1 = n } }
 
-	//console.log(fcn); console.log(n)
+
+	//console.log('fcn='+fcn); console.log('n='+n)
 
 
 
@@ -1522,57 +1518,134 @@ function find_key(rpt){
       if (rpt.match(fs) == null) {
 	var fs = new RegExp(    sprintf('var %s=function[^}]+};', fcn.split('$').join('\\$'))  );
 	if (rpt.match(fs) == null) {
-	  var fs = new RegExp(    sprintf('[^\\w.]+%s=function[^}]+}', fcn.split('$').join('\\$'))  );//\\W does not suffice, have to exclude the possibility of a leading dot as well
+	var fs = new RegExp(    sprintf('[^\\w.]%s=function[^}].+?(?=};)', fcn.split('$').join('\\$'))  );//\\W does not suffice, have to exclude the possibility of a leading dot as well
 	}
       }
-    //console.log('fs='+rpt.match(fs))
-    //var fs = new RegExp('function ' + fcn.replace('\$','\\$') + '[^}]+}[^}]+}');
 
-    var fs = (rpt.match(fs)) ? rpt.match(fs)[0] : '' //old
+    //var fs = new RegExp('function ' + fcn.replace('\$','\\$') + '[^}]+}[^}]+}');  //old
 
-    var nreg, n2, n3, vr = '', br = '', cr = '', index
+    var fs = (rpt.match(fs)) ? rpt.match(fs)[0] + '};' : ''
+
+    var nreg, n2, n3, n4, vr0, vr1, vr = '', br = '', cr = '', index
     if (typeof n == 'string')
     try {
-      nreg = new RegExp(	sprintf('%s=function[^}]+}.*', n.split('$').join('\\$'))	); //console.log(nreg)
-      n2 = rpt.match(nreg); //console.log(n2)
+      nreg = new RegExp(	sprintf('%s=function[^}]+}.*', n.split('$').join('\\$'))	)
+      n2 = rpt.match(nreg)
       if (n2) {
-	nreg = null; n2 = n2[0], n3 = n2.split('{')[0].split(')')[0].split('(')[1]
-	vr = n2.split('.join(')[0]
-	if (vr.indexOf(G+'.') > -1) {
-		vr = n2.split(G+'.')[0]
-		vr = ' '+ vr.substring(vr.lastIndexOf('[')-4).split('(')[1]
-	} else {
-		vr = n2.split('.join(')[1]
-		if (vr && vr.substring(0,2) == '""') vr = ''; //for the older algorithm, keep vr empty
-		n2 = (!vr) ? n2.split(n2.split('.join("")};')[1])[0] : n2.split('.join(')[0] + '.join(' + n2.split('join(')[1].split(';')[0] +';';// 2502 : 2503
-	  }
-	if (vr && vr.indexOf('[') && vr.indexOf('[') > 1) {
-	  vr = vr.split('[')[0].split(' ').join('')
-	  if (rpt.split('var '+ vr +'=')[1]) {
+	nreg = null; n3 = n2[0].split('{')[0].split(')')[0].split('(')[1]
+	n4 = n2[0].split('function('+n3+'){return ')[1]; //n alt
+	if (n4 && n2[0].indexOf('}') > n2[0].indexOf(n4) && n2[0].indexOf('}') < 50 && n4.split('(this,')[0].slice(-2) == ']]') {
+		n3 = n4.split('(this,')[1]; if (n3) n3 = n3.split(')')[0]; yt6d.arg.n = 1*(n3.split(',')[0])
+		n = n4.split('[')[0]
+		vr = n4.split('[')[1]; if (vr) vr = vr.split('[')[0]
+		if (rpt.indexOf("'use strict';var ") > -1 && rpt.indexOf("'use strict';var "+ vr) == -1) vr = rpt.split("'use strict';var ")[1].split('=')[0]
+		if (vr) vr0 = vr
+		nreg = new RegExp(	sprintf('%s=function[^}]+}.*', n.split('$').join('\\$'))	); 
+		n2 = rpt.match(nreg)[0]
+	} else { n2 = n2[0]; }
+	n3 = n2.split('{')[0] + '{'
+
+	if (rpt.split('var '+ vr +'=')[1]) {
 	    cr = rpt.split('var '+ vr +'=')[1].substring(0,1)
 	    vr = 'var '+ vr +'='+ rpt.split('arguments')[0].split('return function')[0].split('var '+ vr +'=')[1]
 		br = vr.split('.split(')[1]
 		if (br) {
 			br = br.substring(0,1); cr = vr.split('.split(' + br)[1].split(br +')')[0]
 			vr = vr.split('.split(')[0] + '.split(' + br + cr + br + ')'
-			n2 = n2.substring(0,23).split('{')[0] + '{'+ vr +'; '+n2.split(n2.substring(0,23).split('{')[0] +'{')[1]
+			n2 = n2.split('{')[0] + '{'+ vr +'; /*teszt*/;'+n2.split(n3)[1]
 		} else {
 			index = (findClosingBracketMatchIndex(vr.substring(vr.indexOf(cr)), 0, cr) + 1)
 			vr = vr.split('=')[0] + '=' + vr.substring(vr.indexOf(cr)).substring(0, index)
 		}
-		//console.log(vr); console.log(n2)
-	  }
 	}
       }
-      if (n2) {
-	//if (n2.split('if(typeof ')[1] && n2.split('if(typeof ')[1].split(';try{')[1]) { n2 = n2.split('if(typeof ')[0] + ';try{'+ n2.split('if(typeof ')[1].split(';try{')[1] }
-	n2 = n2.split(G+'.')[0]; if (n2.split('return '+ n3 +';')[1]) n2 = n2.split('return '+ n3 +';').join('{}')//;console.log('+vr.split(' ')[1].split('=')[0]+');');
-	n2 = n2.split('{')[0] + '{' + vr +';'+ n2.split(n2.split('{')[0]+'{')[1]
-	eval('yt6d.ndec = ' + n2.replace(n +'=',''))
-      }
-    } catch(e) {console.log(e)}
 
-  } catch(e) {//alert(e)
+      try { //var VAR = 'yt6d.__'+vr0; eval((VAR) +'='+ vr.replace('var '+ vr0 +'=','')); 
+	eval('var '+ (vr0) +'='+ vr.replace('var '+ vr0 +'=',''));
+	n3 = rpt.split('=['+ n1 +']')[0].slice(-6) + '=[yt6d.ndec]'; n3 = 'var'+ n3.substring(n3.lastIndexOf(' '), n3.length+1)
+	//eval('('+ VAR +')();')
+      } catch(e){}
+
+      if (n2) {
+	n2 = n2.replace(n +'=',''); n2 = n2.substring(0, n2.indexOf('=function(')); n2 = n2.substring(0, n2.lastIndexOf(' '));
+
+	try {
+
+	var dex = n2.split('=['), dex0 = [], dxh
+	for(i=0;i < dex.length;i++)
+	if (i && dex[i].lastIndexOf(',-') != dex[i].indexOf(',-')) {
+	  dxh = dex[i-1].slice(-5); dxh = dxh.split(',')[1] || dxh.split(' ')[1] || dxh.split(';')[1]; dxh = dxh +'=['+ dex[i].split(',')[0];
+	  dex = dxh + n2.split(dxh)[1]
+	  vr1 = dex.split(';else{try{try')[0]; vr1 = (vr1.replace(dxh.split('[')[0],'').replace('[','')).split(','); vr0 = (vr1.length-1)
+	  dex = (dex.replace(dxh.split('[')[0],'').replace('[','')).split(','); dxh = false;
+	  //for(j=0;j < vr0;j++) console.log('dex['+j+'] = '+ dex[j]);
+	  break
+	}
+
+	if (Array.isArray(vr1) && vr1[vr0] && vr1[vr0].indexOf('];') < 14) { dex[vr0] = vr1[vr0].split('];')[0]; vr1 = vr1[vr0].split('typeof ')[1]; if (vr1) vr1 = 'var '+ vr1.split('===')[0] }
+
+	for(i=0;i<dex.length;i++) if (isNaN(dex[i])) {
+	  if (dex[i].indexOf('function(')>-1 || dex[i].indexOf('{')>-1) dxh = true;
+	  if ((dex[i].indexOf('{')>-1 || dex[i].indexOf('}')>-1) && dex[i].split('}').length >= dex[i].split('{').length) dxh = false;
+	  if (dxh || dex[i].indexOf('[')>-1 || dex[i].indexOf('null')>-1 || dex[i].length == 1 || n2.indexOf(dex[i]) < n2.lastIndexOf(dex[i])) { //console.log('Skipped '+ dex[i]);
+	    continue
+	  }; dex0.push(dex[i].split(' ').join(''))
+	}
+
+	var dex1 = n2.split(';else{try{try{var ')[1]; if (dex1) { vr0 = dex1.split('('); 
+	  dex1 = dex1.split('=')[1]; dex1 = dex1.split('(')[0]; if (dex1) dex0.push(dex1);
+	  for(i=0;i<vr0.length-1;i++){
+	    if(vr0[i].charAt(1)=='=' && vr0[i].charAt(2)!='=') { vr0[i] = vr0[i].split('=')[1]; if (vr0[i] && vr0[i].length == 3 && /[a-zA-Z0-9_\$]/.test(vr0[i])) { dex0.push(vr0[i]); break } }
+	  }
+	}
+
+
+	dex1 = ';var '+ G +' = _yt_player;'+ n3 +';';
+	dex = new RegExp(    sprintf('[^\\w.]%s=[^}].+?(?=;)', vr1.split('$').join('\\$'))  ); dex = rpt.match(dex); dex = (dex) ? dex[0] : ''; dex1 = dex1 + dex +';';
+	dex = new RegExp(    sprintf('[^\\w.]=function[^}].+?(?=%s)', '"Trusted Stream URL"\\\)\\\};')    ); dex = rpt.match(dex)[0].slice(-66); dex = dex.substring(dex.indexOf(' ')+1) +'"Trusted Stream URL")};';
+	if (rpt.indexOf(dex) > 0) { vr0 = dex.split('=')[0]; dex0.push(vr0);
+	  vr0 = dex.split('return ')[1]; if (vr0 && vr0.indexOf('(') < vr0.indexOf(',')) {
+	    dex0.push(vr0.split('(')[0]); vr0 = vr0.substring(vr0.indexOf('(')+1)
+	    if (vr0.indexOf('(') < vr0.indexOf(',')) {
+	      dex0.push(vr0.split('(')[0]); vr0 = vr0.substring(vr0.indexOf(',')+1); if (vr0.split(')')[1]) {
+		vr0 = vr0.split(')')[0];
+		dex = new RegExp(    sprintf('%s=RegExp.+?(?=\=RegExp)', vr0.split('$').join('\\$'))  ); dex = rpt.match(dex); dex = (dex) ? dex[0].substring(0,dex[0].lastIndexOf(',')) : ''; dex1 = dex1 + dex +';';
+	      }
+	    }
+	  }
+	}
+
+	} catch(e){}
+
+
+
+	for(i=0;i<dex0.length;i++) if (typeof dex0[i] == 'string' && dex0[i] != n) { //console.log(i +'/'+ dex0.length +' '+ dex0[i]);
+	  try { try { eval('var '+ dex0[i]); } catch(e){ //console.log('Error '+ dex0[i]);
+	    continue };
+	    dex = new RegExp(    sprintf('[^\\w.]%s=function[^}].+?(?<!{)(?=};)', dex0[i].split('$').join('\\$'))  ); dex = rpt.match(dex)[0] +'};';
+	    if (dex) { dxh = dex.split('){return ')[1]; dxh = (dxh) ? dxh.split('[')[0]: ''; 
+	      if (dex.indexOf('){return '+ dxh +'[') > -1) {
+	        if (dxh == fcn || dxh == n) {
+	          dex = dex.split('){return '+ ((dxh == fcn) ? fcn : n) +'[').join('){return '+ ((dxh == fcn) ? 'fcnm' : 'yt6d.ndec') +'[')
+	        } else if (dex0.indexOf(dxh) == -1) { dex0.push(dxh); }
+	      }
+	    };
+	    var dxh = dex.split('=function(')[1].split(')')[0];
+	    dex1 = dex1 + 'var '+ dex; 
+	    eval('var '+ (dex0[i]) +'= new Function(dxh, dex.split(dex.substring(0, dex.indexOf("{")+1))[1].slice(0,-2))')
+	  } catch(e) {}
+	}
+
+	n2 = n2.replace('/*teszt*/', dex1 +'/*teszt*/'+
+'')
+
+
+
+	eval('yt6d.ndec = ' + n2)
+      }
+    } catch(e) {}
+
+  } catch(e) {
 
     }
 
@@ -1584,22 +1657,23 @@ function find_key(rpt){
       if (mch[j] === "$") {
         mch[j]="\\$"
       }
-    };
-    mch = mch.join('').split('\;');
+    }; var dr = [';',','], er = [], rx = new RegExp('[a-zA-Z0-9\$\[\.]')
+    for(j=0;j<dr.length;j++){ mch = mch.join('').split(dr[j]);
     for (i=0;i<mch.length;i++) {
-      zzx = mch[i].substring(0,3) // the name is either 2 letter, in which case the 3rd character must be a dot
-      if (zzx == zzy && (zzx.charAt(2)=='.' || zzx.charAt(2) == '[')) var zzz = zzy.substring(0,2)
-      //if (zzx.charAt(0).match(/[^\[\]\(\)\{\}\\,\.;][a-zA-Z0-9_\$]/g) && zzx.charAt(1).match(/[^\[\]\(\)\{\}\\,\.;][a-zA-Z0-9_\$]/g) && zzx.charAt(2) == '[') var zzz = zzy.substring(0,3)
-      zzy = zzx
+      zzx = mch[i].substring(0,3); // the name is either 2 letter, in which case the 3rd character must be a dot
+      if (!(/^[a-zA-Z\$\.\[]*$/.test(zzx))) continue;
+      if (zzx.charAt(2)=='.' || zzx.charAt(2) == '[') { zzy = zzx.substring(0,2); er.push(zzy) }
+      if (er.indexOf(zzx) > -1 && er.lastIndexOf(zzy) > er.indexOf(zzy)) zzz = zzy
     }
     if (typeof zzz === 'undefined') {
       for (i=0;i<mch.length;i++) {
-        zzx = mch[i].substring(0,4) // or it is 3 letter, and the 4th char is the dot
-	if (zzx == zzy && (zzx.charAt(3)=='.' || zzx.charAt(3) == '[')) var zzz = zzy.substring(0,3)
-	//if (zzx.charAt(0).match(/[^\[\]\(\)\{\}\\,\.;][a-zA-Z0-9_\$]/g) && zzx.charAt(1).match(/[^\[\]\(\)\{\}\\,\.;][a-zA-Z0-9_\$]/g) && zzx.charAt(2).match(/[^\[\]\(\)\{\}\\,\.;][a-zA-Z0-9_\$]/g) && zzx.charAt(3) == '[') var zzz = zzy.substring(0,3)
-	zzy = zzx
+	zzx = mch[i].substring(0,4); // or it is 3 letter, and the 4th char is the dot
+	if (!(/^[a-zA-Z\$\.\[]*$/.test(zzx))) continue;
+	if (zzx.charAt(3)=='.' || zzx.charAt(3) == '[') { zzy = zzx.substring(0,3); er.push(zzy) }
+	if (er.indexOf(zzy) > -1 && er.lastIndexOf(zzy) > er.indexOf(zzy)) zzz = zzy
       }
-    }
+    }; if (typeof zzz != 'undefined') break
+	}
     var mch = new RegExp('var ' + zzz + '=[^}]+}[^}]+}[^}]+}};'); if (mch) try { var mch2 = mch.split("return a.join('')}")[0] + "return a.join('')}"; mch = mch2 } catch(e){}//[^a-zA-Z0-9\$]
 
     return [mch,zzz]
@@ -1610,35 +1684,31 @@ function find_key(rpt){
     var f1 = fcobj()[0]; //console.log('regular expression including the object name: '+ f1)
     var f2 = fcobj()[1]; //console.log('object name: '+ f2)
 
-    var fs0, fs1, fs2 = '', fs3, dekrypt0 = rpt.match(f1)[0]//.split(" " + f2 + "=").join(" dekrypt0=")
+    var fs0, fs1, fs2 = '', fs3, dekrypt0 = rpt.match(f1)[0]
     if (fs && fs.split(';')[0] && fs.split(';')[0].indexOf('function') == -1 && fs.split(';')[1] && fs.split(';')[1].indexOf('function') != -1) {
       fs0 = (fs.match(/;/g) || []).length
       fs1 = fs.split(';')
       for(i=1;i<fs0+1;i++){
         fs2 = fs2 + fs1[i] + ';'
-      };
+      }
     } else {
 	var index = findClosingBracketMatchIndex(fs,fs.indexOf('{')), fs2 = ''
 	if (typeof index == 'number' && index != -1) fs2 = fs.substring(0,(index + 1))
       }
 
-    fs2 = fs2//.split(f2).join('dekrypt0')
-	     .replace(/(\r\n|\n|\r)/gm,"")
+    fs2 = fs2.replace(/(\r\n|\n|\r)/gm,"")
     fs3 = fs2.split("(")[1].split(")")[0]
 
-    var fcn = 'function fcnm(' + fs3 + '){' + ((vr) ? (' '+ vr +'; ') : '') + dekrypt0 + '; '
-	+ fs2.substring(fs2.indexOf('{')+1,fs2.lastIndexOf('}')) + '}'
-	//.split(f2+".").join("dekrypt0.").split(f2+"['").join("dekrypt0['").split(f2+"[\"").join("dekrypt0['").split("\"").join("'").split("){")[1]
+    var fcn = 'function fcnm(' + fs3 + '){' + ((vr) ? (' '+ vr +'; ') : '') + dekrypt0 + '; try {'
+	+ fs2.substring(fs2.indexOf('{')+1,fs2.lastIndexOf('}')) + ' } catch(e){ e = e.toString(); console.log("fcnm "+ e) } }'
+
     var fcn = "function fcnm(" + fcn.split("function fcnm(")[1]
 
   } else var fcn = "function fcnm(a) { yt6.dummy = true; return a; };"
 
-  eval(fcn) // should produce the signature decrypting function "fcnm" for later use, but since 2024-08-05 it does not?
+  eval(fcn)
 
-  //if (typeof window.fcnm == 'undefined') {
-    window.fcnm = //(typeof fcnm == 'function') ? fcnm : 
-	new Function(fs3, fcn.substring(fcn.indexOf('{'), (findClosingBracketMatchIndex(fcn,fcn.indexOf('{'))+1)) )
-  //}
+    window.fcnm = new Function(fs3, fcn.substring(fcn.indexOf('{'), (findClosingBracketMatchIndex(fcn,fcn.indexOf('{'))+1)) )
 
   return fcnm
 
@@ -2611,8 +2681,10 @@ function test_4(peek) {
 		      }
 		    }
 		  }
-		  furl = obj.url
-		  if (obj.s && obj.sp) { yt6.encrypted = true; furl = furl + '&' + obj.sp + '=' + dc(obj.s).split('D3%').join('') } //else yt6.encrypted = false
+		  try {
+		    furl = obj.url; var fur = (obj.s) ? dc(yt6d.arg.s, obj.s.split('%3D','=')) : ''
+		    if (fur && obj.sp) { yt6.encrypted = true; furl = furl + '&' + obj.sp + '=' + fur }
+		  } catch(e){}
 		} else {
 
 		  }
@@ -3932,7 +4004,7 @@ function correct_flashvars(a) { // prepare the flash player object's flashvars v
 		    sig = sig2
 		  } else sig = undefined
 		} else {//encrypted
-		    sig = dc(qs.s).split('=').join('%253D').split('%3D').join('%253D') // .join('@@@@3D') was used for testing
+		    sig = dc(yt6d.arg.s, qs.s).split('=').join('%253D').split('%3D').join('%253D') // .join('@@@@3D') was used for testing
 		  }
 	    }
 	  } else {
@@ -3941,7 +4013,7 @@ function correct_flashvars(a) { // prepare the flash player object's flashvars v
 		if (sig) { sig = sig.split('=').join('%253D').split('%253D').join('%253D') }
 	      } else {
 		  var signame = 'signature'
-		  var sig = dc(qs.s)
+		  var sig = dc(yt6d.arg.s, qs.s)
 		}
 	    }
 
@@ -7891,11 +7963,21 @@ function getReferenceObjects() {
 	yt6.style.left = '2px'
 	yt6.style.zIndex = '2101'
 	yt6.style.width = '0px'
-	var y = gt('ytm-watch', 1)[0]
+
+	var y = gt('ytm-watch', 1)[0], ac = null, pc = null
+	if (yt6.mobile) {
+	  pc = gt('panel-container', 1)[0]
+	  if (pc && !gc('alerts-container')[0]) {
+	    ac = document.createElement('div')
+	    ac.className = 'alerts-container'
+	    gt('ytm-app', 1)[0].insertBefore(ac, pc)
+	    ac = gc('alerts-container')[0]
+	  }
+	}
 	if (y && !gid('alerts')) {
 	  var z = document.createElement('div')
 	  z.id = (yt6.layout == 16) ? 'alerts' : 'watch-header'
-	  y.insertBefore(z, y.firstChild.nextSibling)
+	  if (!ac) { y.insertBefore(z, y.firstChild.nextSibling) } else ac.appendChild(z)
 	}
       }
   }
@@ -9370,14 +9452,14 @@ function pl_item(update, bclick) {
 		yt6.aye.x = x = yt6.aye.y.previousElementSibling
 		if (x) {
 		  var xi = 1
-		  while (x.previousElementSibling && yt6d.playlist.items[(yt6d.playlist.current-xi)].blocked) { yt6.aye.x = x = yt6.aye.x.previousElementSibling; xi++ }
+		  while (x.previousElementSibling && yt6d.playlist.items[(yt6d.playlist.current-xi)] && yt6d.playlist.items[(yt6d.playlist.current-xi)].blocked) { yt6.aye.x = x = yt6.aye.x.previousElementSibling; xi++ }
 		  yt6.aye.z = z = gt('a', yt6.aye.x)[0]; if (z) { if (yt6.aye.f(yt6.pl_prev_btn = z, yt6.pl_previous = z)) pl_item() }
 		} } else {  }
 		yt6.aye.y = y = getElementsByAttribute(gt('lazy-list', yt6.pls)[0],'ytm-playlist-panel-video-renderer','aria-selected','true'); if (y && y[0]) { yt6.aye.y = y = yt6.aye.y[0]
 		yt6.aye.x = x = yt6.aye.y.nextElementSibling
 		if (x) {
 		  var xi = 1
-		  while (x.nextElementSibling && yt6d.playlist.items[(yt6d.playlist.current+xi)].blocked) { yt6.aye.x = x = yt6.aye.x.nextElementSibling; xi++ }
+		  while (x.nextElementSibling && yt6d.playlist.items[(yt6d.playlist.current+xi)] && yt6d.playlist.items[(yt6d.playlist.current+xi)].blocked) { yt6.aye.x = x = yt6.aye.x.nextElementSibling; xi++ }
 		  yt6.aye.z = z = gt('a', yt6.aye.x)[0]; if (z) { if (yt6.aye.f( yt6.pl_next_btn = z, yt6.pl_next = z)) pl_item() }
 		} } else {  }
 	      } catch(e){ console.log(e.toString()) }
@@ -10485,7 +10567,7 @@ if (c[1]) {
 
 
   var ft = [args.url_encoded_fmt_stream_map, args.adaptive_fmts || yt6.adaptive_fmts ], sighead, oeid,
-      fn, a_r, ad = 0, ad2, dur, dur2, durA1 = {}, durA2 = {}, durL1 = [], durL2 = [], ad_links = [], avg1, avg2, avgx, durA1k, durA2k, length_seconds = args.length_seconds, n_length = 0, n_value, n_decoded, ndc
+      fn, a_r, ad = 0, ad2, dur, dur2, durA1 = {}, durA2 = {}, durL1 = [], durL2 = [], ad_links = [], avg1, avg2, avgx, durA1k, durA2k, length_seconds = args.length_seconds, n_length = 0, n_value, n_decoded, ndc, s = ''
 
 
   durA1.A = []; durA2.A = []; yt6.eidA = []
@@ -10564,7 +10646,7 @@ if (c[1]) {
 
 	// set n-parameter to unthrottle yt a/v data traffic
 
-	if (!ok && typeof yt6d.ndec == 'function' && qs.n) { n_value = clone(qs.n); n_decoded = (ndc || yt6d.ndec(n_value)); //console.log(qs.itag +' '+ n_value +' '+ n_decoded +' '+location.href )
+	if (!ok && typeof yt6d.ndec == 'function' && qs.n) { n_value = clone(qs.n); try { n_decoded = (ndc || yt6d.ndec(yt6d.arg.n, n_value)) } catch(e){ n_decoded = n_value; console.log(e.toString()) }
 	  var ld = ((typeof yt6.ytp.V == 'string' && yt6.ytp.V.indexOf(href) > -1) || (typeof yt6.ytp.A == 'string' && yt6.ytp.A.indexOf(href) > -1)) ? true : false
 	  if (qs.n.length >= n_length) n_length = 1 * qs.n.length; if (qs.n.length == 14) { ndc = n_decoded = n_value }
 	  if (!ld)
@@ -10582,12 +10664,12 @@ if (c[1]) {
 	  if (qs.signature){
 	    href += '&' + signame + '=' + qs[signame]
 	  } else
-	    if (qs.s) {
-	      href += '&' + signame + '=' + ((qs.s.indexOf('AJfQ') == 0) ? qs.s : dc(qs.s))
+	    if (qs.s) { var s = (qs.s.indexOf('AJfQ') == 0) ? qs.s : dc(yt6d.arg.s, qs.s)
+	      href += '&' + signame + '=' + s; //console.log(qs.itag +'\n'+ qs.s +'\n'+ s)
 	    }
 	}
 
-if (yt6.encrypted && href.indexOf('&'+ signame +'=AJfQ') == -1) continue
+	if (yt6.encrypted && href.indexOf('&'+ signame +'=AJfQ') == -1) continue
 
 
 	var fn = yt6.fn = '';
@@ -12180,7 +12262,7 @@ if (!gid('bm4')) {
 
 
   function publive() {
-    if (Array.isArray(yt6d.path)) { try { var xc = '', app; for(i=0;i<yt6d.path.length;i++) { xc = xc +"['"+yt6d.path[i]+"']"; if (yt6d.path[i] == 'app') app = xc }; xc = new Function('a', 'yt6d.pub = ((typeof ytPubsubPubsubInstance != "undefined") ? ytPubsubPubsubInstance : _yt_player); yt6d.videoData = yt6d.pub'+ xc +'.videoData; yt6d.cpn = yt6d.videoData.clientPlaybackNonce; if (yt6d.pub && yt6d.pub'+ app +' && yt6d.pub'+ app +') yt6d.pubApp = yt6d.pub'+ app +'; yt6d.pot = ((typeof yt6.pot == "string") ? yt6.pot.split("&pot=")[1] : ""); return yt6d.videoData.isLivePlayback'); return (xc() || false) } catch(e){ console.log(e.toString()); return false }
+    if (Array.isArray(yt6d.path)) { try { var xc = '', app; for(i=0;i<yt6d.path.length;i++) { xc = xc +"['"+yt6d.path[i]+"']"; if (yt6d.path[i] == 'app') app = xc }; xc = new Function('a', 'yt6d.pub = ((typeof ytPubsubPubsubInstance != "undefined") ? ytPubsubPubsubInstance : _yt_player); yt6d.videoData = yt6d.pub'+ xc +'.videoData; yt6d.cpn = (yt6d.videoData) ? yt6d.videoData.clientPlaybackNonce : ""; if (yt6d.pub && yt6d.pub'+ app +' && yt6d.pub'+ app +') yt6d.pubApp = yt6d.pub'+ app +'; yt6d.pot = (yt6.pot && (typeof yt6.pot == "string") ? yt6.pot.split("&pot=")[1] : ""); return ((yt6d.cpn) ? yt6d.videoData.isLivePlayback : false)'); return (xc() || false) } catch(e){ console.log(e.toString()); return false }
     } else return false
   }
 
@@ -15058,7 +15140,7 @@ if (ytplayer && ytplayer.config && ytplayer.config.args) {
 		var count = (k[i].getAttribute('src').match(regex) || []).length
 		if (count == 1) {
 		  k[i].setAttribute('translated', k[i].getAttribute('title') + ' -> ')
-		  k[i].setAttribute('label', k[i].getAttribute('title') + ' -> ' + lang)
+		  k[i].setAttribute('label', lang)//k[i].getAttribute('title') + ' -> ' + 
 		  if (yt6d.srt.subpot) k[i].src += '&c=' + ((yt6.mobile) ? 'M' : '') + 'WEB&potc=1&pot=' + yt6d.srt.subpot;
 		}
 		var ok = true
@@ -16668,7 +16750,8 @@ if (!t.sourcechooserButton && !yt6.blocked_m) { //console.log('error')
 	    if (yt6.mobile && !yt6.at2 && yt6.autoplay && video_title()[1]) try { ajax1(true) } catch(e){}
 
 
-	    autorebuild()
+	    var msg = (yt6.mobile) ? '' : '_'
+	    autorebuild(msg)
 
 
 	    if (yt6.layout == 12 && bm0 && yt6.age.check()) {
@@ -22957,8 +23040,15 @@ function control_panel1() {
      if (yt6.ytp.embed) { z.position = 'fixed'; z.overflowY = 'hidden' }
   }
 
-  var y = gt('ytm-watch', 1)[0]
+  var y = gt('ytm-watch', 1)[0], ac = null, pc = null
   if (yt6.mobile) {
+    pc = gt('panel-container', 1)[0]
+    if (pc && !gc('alerts-container')[0]) {
+      ac = document.createElement('div')
+      ac.className = 'alerts-container'
+      gt('ytm-app', 1)[0].insertBefore(ac, pc)
+      ac = gc('alerts-container')[0]
+    }
     try { gid('player').setAttribute('loading','false') } catch(e){};
     if (!y) { //fix this f*ckup
 	z = gid('error-container')
@@ -22982,11 +23072,12 @@ function control_panel1() {
     }
   }
 
+  //where to put alerts
       y = gt('ytm-watch', 1)[0]
       if (y && !gid('alerts')) {
 	var z = document.createElement('div')
 	z.id = (yt6.layout == 16) ? 'alerts' : 'watch-header'
-	y.insertBefore(z, y.firstChild.nextSibling)
+	if (!ac) { y.insertBefore(z, y.firstChild.nextSibling) } else ac.appendChild(z)
 	yt6.wna = gid(z.id)
       }
 
