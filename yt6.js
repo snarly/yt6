@@ -1501,7 +1501,7 @@ function find_key(rpt){
 	if (n0) { n0 = n0.slice(-50).split('=[')[1]; if (n0) { n = n0.split(']')[0]; n1 = n } }
 
 
-	//console.log('fcn='+fcn); console.log('n='+n)
+	//console.log('fcn='+fcn); console.log('n='+n);
 
 
 
@@ -1529,7 +1529,7 @@ function find_key(rpt){
     var nreg, n2, n3, n4, vr0, vr1, vr = '', br = '', cr = '', index
     if (typeof n == 'string')
     try {
-      nreg = new RegExp(	sprintf('%s=function[^}]+}.*', n.split('$').join('\\$'))	)
+      nreg = new RegExp(	sprintf('[^\\w.]%s=function[^}]+}.*', n.split('$').join('\\$'))	)
       n2 = rpt.match(nreg)
       if (n2) {
 	nreg = null; n3 = n2[0].split('{')[0].split(')')[0].split('(')[1]
@@ -1540,8 +1540,8 @@ function find_key(rpt){
 		vr = n4.split('[')[1]; if (vr) vr = vr.split('[')[0]
 		if (rpt.indexOf("'use strict';var ") > -1 && rpt.indexOf("'use strict';var "+ vr) == -1) vr = rpt.split("'use strict';var ")[1].split('=')[0]
 		if (vr) vr0 = vr
-		nreg = new RegExp(	sprintf('%s=function[^}]+}.*', n.split('$').join('\\$'))	); 
-		n2 = rpt.match(nreg)[0]
+		nreg = new RegExp(	sprintf('[^\\w.]%s=function[^}]+}.*', n.split('$').join('\\$'))	);
+		n2 = rpt.match(nreg)[0];
 	} else { n2 = n2[0]; }
 	n3 = n2.split('{')[0] + '{'
 
@@ -1552,7 +1552,7 @@ function find_key(rpt){
 		if (br) {
 			br = br.substring(0,1); cr = vr.split('.split(' + br)[1].split(br +')')[0]
 			vr = vr.split('.split(')[0] + '.split(' + br + cr + br + ')'
-			n2 = n2.split('{')[0] + '{'+ vr +'; /*teszt*/;'+n2.split(n3)[1]
+			n2 = n2.split('{')[0] + '{'+ vr +'; /*teszt*/;'+n2.split(fcn).join('fcnm').split(n3)[1]
 		} else {
 			index = (findClosingBracketMatchIndex(vr.substring(vr.indexOf(cr)), 0, cr) + 1)
 			vr = vr.split('=')[0] + '=' + vr.substring(vr.indexOf(cr)).substring(0, index)
@@ -1600,7 +1600,12 @@ function find_key(rpt){
 	}
 
 
-	dex1 = ';var '+ G +' = _yt_player;'+ n3 +';';
+	dex1 = ';var '+ G +' = _yt_player;'+ n3 +';var '+ n +'=yt6d.ndec;';
+	try {
+	  dex = rpt.split('return '+ fcn +'[')[1]; if (dex) dex = rpt.substring(rpt.split('return '+ fcn +'[')[0].lastIndexOf(';')+1, rpt.indexOf(dex) + dex.indexOf(';')+1); if (dex) { if (dex.indexOf('var') == -1) dex = 'var '+ dex; dex1 = dex1 + dex.split(fcn).join('fcnm') +';' }
+	  dex = rpt.split('document.location.hostname);document.location.port')[1]; if (dex) dex = rpt.substring(rpt.split('document.location.hostname);document.location.port')[0].lastIndexOf('};')+2, rpt.indexOf(dex) + dex.indexOf('};')+2); if (dex) { if (dex.indexOf('var') == -1) dex = 'var '+ dex; dex1 = dex1 + dex +';' }
+	  dex = rpt.split('("cipher")')[1]; if (dex) dex = rpt.substring(rpt.split('("cipher")')[0].lastIndexOf(';')+1, rpt.indexOf(dex) + dex.indexOf(';')+1); if (dex) dex1 = dex1 + dex + ';'; 
+	} catch(e){}
 	dex = new RegExp(    sprintf('[^\\w.]%s=[^}].+?(?=;)', vr1.split('$').join('\\$'))  ); dex = rpt.match(dex); dex = (dex) ? dex[0] : ''; dex1 = dex1 + dex +';';
 	dex = new RegExp(    sprintf('[^\\w.]=function[^}].+?(?=%s)', '"Trusted Stream URL"\\\)\\\};')    ); dex = rpt.match(dex)[0].slice(-66); dex = dex.substring(dex.indexOf(' ')+1) +'"Trusted Stream URL")};';
 	if (rpt.indexOf(dex) > 0) { vr0 = dex.split('=')[0]; dex0.push(vr0);
@@ -1609,7 +1614,7 @@ function find_key(rpt){
 	    if (vr0.indexOf('(') < vr0.indexOf(',')) {
 	      dex0.push(vr0.split('(')[0]); vr0 = vr0.substring(vr0.indexOf(',')+1); if (vr0.split(')')[1]) {
 		vr0 = vr0.split(')')[0];
-		dex = new RegExp(    sprintf('%s=RegExp.+?(?=\=RegExp)', vr0.split('$').join('\\$'))  ); dex = rpt.match(dex); dex = (dex) ? dex[0].substring(0,dex[0].lastIndexOf(',')) : ''; dex1 = dex1 + dex +';';
+		dex = new RegExp(    sprintf('%s=RegExp.+?(?=\=RegExp)', vr0.split('$').join('\\$'))  ); dex = rpt.match(dex); dex = (dex) ? 'var '+ dex[0].substring(0,dex[0].lastIndexOf(',')) : ''; dex1 = dex1 + dex +';';
 	      }
 	    }
 	  }
@@ -1636,8 +1641,8 @@ function find_key(rpt){
 	  } catch(e) {}
 	}
 
-	n2 = n2.replace('/*teszt*/', dex1 +'/*teszt*/'+
-'')
+	n2 = n2.replace('/*teszt*/', dex1 +
+'/**/')
 
 
 
@@ -1652,6 +1657,7 @@ function find_key(rpt){
 
 
   function fcobj(){ // find the variable name which refers to the object with the signature-descrambling methods
+
     var mch = fs, mch = mch.split(''), zzx, zzy, zzz;
     for (j=0;j<mch.length;j++) {
       if (mch[j] === "$") {
@@ -1661,15 +1667,15 @@ function find_key(rpt){
     for(j=0;j<dr.length;j++){ mch = mch.join('').split(dr[j]);
     for (i=0;i<mch.length;i++) {
       zzx = mch[i].substring(0,3); // the name is either 2 letter, in which case the 3rd character must be a dot
-      if (!(/^[a-zA-Z\$\.\[]*$/.test(zzx))) continue;
-      if (zzx.charAt(2)=='.' || zzx.charAt(2) == '[') { zzy = zzx.substring(0,2); er.push(zzy) }
-      if (er.indexOf(zzx) > -1 && er.lastIndexOf(zzy) > er.indexOf(zzy)) zzz = zzy
+      if (!(/^[a-zA-Z0-9_\$\.\[]*$/.test(zzx))) continue;
+      if (zzx.indexOf('.') == 2 || zzx.indexOf('[') == 2) { zzy = zzx.substring(0,2); er.push(zzy) }
+      if (er.indexOf(zzy) > -1 && er.lastIndexOf(zzy) > er.indexOf(zzy)) zzz = zzy
     }
     if (typeof zzz === 'undefined') {
       for (i=0;i<mch.length;i++) {
 	zzx = mch[i].substring(0,4); // or it is 3 letter, and the 4th char is the dot
-	if (!(/^[a-zA-Z\$\.\[]*$/.test(zzx))) continue;
-	if (zzx.charAt(3)=='.' || zzx.charAt(3) == '[') { zzy = zzx.substring(0,3); er.push(zzy) }
+	if (!(/^[a-zA-Z0-9_\$\.\[]*$/.test(zzx))) continue;
+	if (zzx.indexOf('.') == 2  || zzx.indexOf('[') == 3) { zzy = zzx.substring(0,3); er.push(zzy) }
 	if (er.indexOf(zzy) > -1 && er.lastIndexOf(zzy) > er.indexOf(zzy)) zzz = zzy
       }
     }; if (typeof zzz != 'undefined') break
@@ -1699,7 +1705,7 @@ function find_key(rpt){
     fs2 = fs2.replace(/(\r\n|\n|\r)/gm,"")
     fs3 = fs2.split("(")[1].split(")")[0]
 
-    var fcn = 'function fcnm(' + fs3 + '){' + ((vr) ? (' '+ vr +'; ') : '') + dekrypt0 + '; try {'
+    var fcn = 'function fcnm(' + fs3 + '){' + ((vr) ? (' '+ vr +'; ') : '') + dekrypt0 + ';' + dex1 +'; try {'
 	+ fs2.substring(fs2.indexOf('{')+1,fs2.lastIndexOf('}')) + ' } catch(e){ e = e.toString(); console.log("fcnm "+ e) } }'
 
     var fcn = "function fcnm(" + fcn.split("function fcnm(")[1]
