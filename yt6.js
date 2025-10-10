@@ -1576,13 +1576,17 @@ function find_key(rpt){
 	if (i && dex[i].lastIndexOf(',-') != dex[i].indexOf(',-')) {
 	  dxh = dex[i-1].slice(-5); dxh = dxh.split(',')[1] || dxh.split(' ')[1] || dxh.split(';')[1]; dxh = dxh +'=['+ dex[i].split(',')[0];
 	  dex = dxh + n2.split(dxh)[1]
-	  vr1 = dex.split(';else{try{try')[0]; vr1 = (vr1.replace(dxh.split('[')[0],'').replace('[','')).split(','); vr0 = (vr1.length-1)
-	  dex = (dex.replace(dxh.split('[')[0],'').replace('[','')).split(','); dxh = false;
+	  index = (findClosingBracketMatchIndex(dex.substring(dex.indexOf('[')), 0, '[') + 1)
+	  vr1 = dex.replace(dxh.split('[')[0],'').replace('[','').split('{try{')[0].split(','); vr0 = (vr1.length-1)
+	  dex = dex.substring(dex.indexOf('[')+1, index).split(',')
+	  //dex = (dex.replace(dxh.split('[')[0],'').replace('[','')).split(',');
+	  dxh = false;
 	  //for(j=0;j < vr0;j++) console.log('dex['+j+'] = '+ dex[j]);
 	  break
 	}
 
-	if (Array.isArray(vr1) && vr1[vr0] && vr1[vr0].indexOf('];') < 14) { dex[vr0] = vr1[vr0].split('];')[0]; vr1 = vr1[vr0].split('typeof ')[1]; if (vr1) vr1 = 'var '+ vr1.split('===')[0] }
+	if (Array.isArray(vr1) && vr1[vr0] && vr1[vr0].indexOf('];') < 14) { //dex[vr0] = vr1[vr0].split('];')[0]; 
+	vr1 = vr1[vr0].split('typeof ')[1]; if (vr1) vr1 = 'var '+ vr1.split('===')[0] }
 
 	for(i=0;i<dex.length;i++) if (isNaN(dex[i])) {
 	  if (dex[i].indexOf('function(')>-1 || dex[i].indexOf('{')>-1) dxh = true;
@@ -1605,8 +1609,8 @@ function find_key(rpt){
 	  dex = rpt.split('return '+ fcn +'[')[1]; if (dex) dex = rpt.substring(rpt.split('return '+ fcn +'[')[0].lastIndexOf(';')+1, rpt.indexOf(dex) + dex.indexOf(';')+1); if (dex) { if (dex.indexOf('var') == -1) dex = 'var '+ dex; dex1 = dex1 + dex.split(fcn).join('fcnm') +';' }
 	  dex = rpt.split('document.location.hostname);document.location.port')[1]; if (dex) dex = rpt.substring(rpt.split('document.location.hostname);document.location.port')[0].lastIndexOf('};')+2, rpt.indexOf(dex) + dex.indexOf('};')+2); if (dex) { if (dex.indexOf('var') == -1) dex = 'var '+ dex; dex1 = dex1 + dex +';' }
 	  dex = rpt.split('("cipher")')[1]; if (dex) dex = rpt.substring(rpt.split('("cipher")')[0].lastIndexOf(';')+1, rpt.indexOf(dex) + dex.indexOf(';')+1); if (dex) dex1 = dex1 + dex + ';'; 
-	} catch(e){}
-	dex = new RegExp(    sprintf('[^\\w.]%s=[^}].+?(?=;)', vr1.split('$').join('\\$'))  ); dex = rpt.match(dex); dex = (dex) ? dex[0] : ''; dex1 = dex1 + dex +';';
+	} catch(e){console.log(e.toString())}
+	if (vr1) {dex = new RegExp(    sprintf('[^\\w.]%s=[^}].+?(?=;)', vr1.split('$').join('\\$'))  ); dex = rpt.match(dex); dex = (dex) ? dex[0] : ''; dex1 = dex1 + dex +';' }
 	dex = new RegExp(    sprintf('[^\\w.]=function[^}].+?(?=%s)', '"Trusted Stream URL"\\\)\\\};')    ); dex = rpt.match(dex)[0].slice(-66); dex = dex.substring(dex.indexOf(' ')+1) +'"Trusted Stream URL")};';
 	if (rpt.indexOf(dex) > 0) { vr0 = dex.split('=')[0]; dex0.push(vr0);
 	  vr0 = dex.split('return ')[1]; if (vr0 && vr0.indexOf('(') < vr0.indexOf(',')) {
@@ -1628,6 +1632,9 @@ function find_key(rpt){
 	  try { try { eval('var '+ dex0[i]); } catch(e){ //console.log('Error '+ dex0[i]);
 	    continue };
 	    dex = new RegExp(    sprintf('[^\\w.]%s=function[^}].+?(?<!{)(?=};)', dex0[i].split('$').join('\\$'))  ); dex = rpt.match(dex)[0] +'};';
+	    if (dex) { var dxh = dex.split('{').length - dex.split('}').length;
+		if (dxh > 1) { vr0 = ''; vr1 = ''; for(j=0;j<dxh;j++) { vr0 = rpt.split(dex)[1].split('}')[j] +'}'; if (vr0.indexOf('{') > -1) dxh++; vr1 = vr1 + vr0 }; dex = dex + vr1 +';' }
+	    }
 	    if (dex) { dxh = dex.split('){return ')[1]; dxh = (dxh) ? dxh.split('[')[0]: ''; 
 	      if (dex.indexOf('){return '+ dxh +'[') > -1) {
 	        if (dxh == fcn || dxh == n) {
@@ -1636,7 +1643,7 @@ function find_key(rpt){
 	      }
 	    };
 	    var dxh = dex.split('=function(')[1].split(')')[0];
-	    dex1 = dex1 + 'var '+ dex; 
+	    dex1 = dex1 + 'var '+ dex;
 	    eval('var '+ (dex0[i]) +'= new Function(dxh, dex.split(dex.substring(0, dex.indexOf("{")+1))[1].slice(0,-2))')
 	  } catch(e) {}
 	}
@@ -1648,7 +1655,7 @@ function find_key(rpt){
 
 	eval('yt6d.ndec = ' + n2)
       }
-    } catch(e) {}
+    } catch(e) {console.log(e.toString())}
 
   } catch(e) {
 
@@ -6272,13 +6279,13 @@ function ajax1(update){
         var px = spx[0]
         var rpt = spx[1]
 
-        gid('ytassetsjs').fcnm = gid('ytassetsjs').innerHTML = find_key(rpt)
+        gid('ytassetsjs').fcnm = find_key(rpt); gid('ytassetsjs').innerHTML = gid('ytassetsjs').fcnm.toString().split('<').join('&lt;')
       }
 
 
   } else {
       var rpt = ytassetsjs.innerHTML;
-      gid('ytassetsjs').fcnm = gid('ytassetsjs').innerHTML = find_key(rpt)
+      gid('ytassetsjs').fcnm = find_key(rpt); gid('ytassetsjs').innerHTML = gid('ytassetsjs').fcnm.toString().split('<').join('&lt;')
     }
 
   if (typeof fcnm == 'undefined' && gid('ytassetsjs') && typeof gid('ytassetsjs').fcnm == 'function') fcnm = clone(gid('ytassetsjs').fcnm)
@@ -8079,6 +8086,7 @@ function getReferenceObjects() {
 
 	} else yt6.flexy = false
 
+	if (yt6.inf && !yt6.inf.offsetWidth) yt6.inf = gc('style-scope ytd-watch-metadata')[0]
 
   } else {
 
@@ -16218,7 +16226,7 @@ if (!t.sourcechooserButton && !yt6.blocked_m) { //console.log('error')
     };
 
 
-    loadScript(yt6.cdn + "5cd8979d8b2210c0b376d5e4d8f851411b4956e0/mep-ceeb1a7.js", jq1)
+    loadScript(yt6.cdn + "693222e153dcee3875cd959b3c984b4305ce3d3f/mep-ceeb1a7.js", jq1)
 
 
 
