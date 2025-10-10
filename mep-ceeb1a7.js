@@ -4817,7 +4817,7 @@ if (typeof jQuery != 'undefined') {
 			}
 		},
 
-		setTrack: function(lang, id, a){//yt6
+		setTrack: function(lang, id, a){ if (typeof id != 'string') return void 0;//yt6
 
 			var t = this,
 				i, id2 = 1 * id.split("_")[3], j, a = t.options.startLanguage[2], b = (a && a.indexOf(' -> '+ lang) > -1) ? true : false, c, x;
