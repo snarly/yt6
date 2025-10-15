@@ -1494,33 +1494,38 @@ function find_key(rpt){
 	//var names randomized since Dec 2024
 	var i = 0; for(i;i<rpt.split(',encodeURIComponent(').length-1;i++)
 	{ fcn0 = rpt.split(',encodeURIComponent(')[i].slice(-50)
-	  if (fcn0 && fcn0.lastIndexOf('=') > -1 && fcn0.lastIndexOf('=') < fcn0.indexOf('decodeURIComponent(')) { fcn = fcn0.substring((fcn0.lastIndexOf('=')+1)), fcn1 = fcn.split('(')[1]; fcn1 = yt6d.arg.s = (fcn1) ? 1*(fcn1.split(',')[0]) : 0; fcn = fcn.split('(')[0] } else fcn = '' //.split('decodeURIComponent(')[0].split('=')[1]
+	  if (fcn0 && fcn0.lastIndexOf('=') > -1 && fcn0.lastIndexOf('=') < fcn0.indexOf('decodeURIComponent(')) { fcn = fcn0.substring((fcn0.lastIndexOf('=')+1)), fcn1 = fcn.split('(')[1]; fcn1 = (fcn1) ? 1*(fcn1.split(',')[0]) : 0; yt6d.arg.s = fcn1; fcn = fcn.split('(')[0] } else fcn = '' //.split('decodeURIComponent(')[0].split('=')[1]
 	}
 
-	var n0 = (rpt.split('{this.segments.push(')[1]) ? rpt.split('{this.segments.push(')[0] : ''
+	var n0 = (rpt.split('{this.segments.push(')[1]) ? rpt.split('{this.segments.push(')[0] : ''; // from 202510 on, n-decryption key moved to random location
 	if (n0) { n0 = n0.slice(-50).split('=[')[1]; if (n0) { n = n0.split(']')[0]; n1 = n } }
+
+
+	function sprintf(nw) {
+	  var i = 0;
+	  while (/%s/.test(nw))
+	    nw = nw.replace('%s', arguments[++i])
+	  return nw;
+	}
+
+      n0 = '[a-zA-Z0-9_\\\$]'
+
+      if (!n) {
+	var n1 = new RegExp(	sprintf('var '+ n0 + n0 + n0 +'\=\\\[%s\\\];', n0 + n0 + n0)	);
+	n1 = rpt.match(n1)[0]
+	if (n1) { n1 = n1.split(']')[0].split('=[')[1]; n = n1 }
+      }
 
 
 	//console.log('fcn='+fcn); console.log('n='+n);
 
 
-
-  function sprintf(nw) {
-    var i = 0;
-    while (/%s/.test(nw))
-      nw = nw.replace('%s', arguments[++i])
-    return nw;
-  }
-
   try {
 
-      var fs = new RegExp(    sprintf('function %s[^}]+}[^}]+}', fcn.split('$').join('\\$'))  );
-      if (rpt.match(fs) == null) {
-	var fs = new RegExp(    sprintf('var %s=function[^}]+};', fcn.split('$').join('\\$'))  );
-	if (rpt.match(fs) == null) {
-	var fs = new RegExp(    sprintf('[^\\w.]%s=function[^}].+?(?=};)', fcn.split('$').join('\\$'))  );//\\W does not suffice, have to exclude the possibility of a leading dot as well
-	}
-      }
+	//new RegExp(    sprintf('function %s[^}]+}[^}]+}', fcn.split('$').join('\\$'))  );
+	//new RegExp(    sprintf('var %s=function[^}]+};', fcn.split('$').join('\\$'))  );
+
+    var fs = new RegExp(    sprintf('[^\\w.]%s=function[^}].+?(?=};)', fcn.split('$').join('\\$'))  );//\\W does not suffice, have to exclude the possibility of a leading dot as well
 
     //var fs = new RegExp('function ' + fcn.replace('\$','\\$') + '[^}]+}[^}]+}');  //old
 
@@ -1552,11 +1557,11 @@ function find_key(rpt){
 		if (br) {
 			br = br.substring(0,1); cr = vr.split('.split(' + br)[1].split(br +')')[0]
 			vr = vr.split('.split(')[0] + '.split(' + br + cr + br + ')'
-			n2 = n2.split('{')[0] + '{'+ vr +'; /*teszt*/;'+n2.split(fcn).join('fcnm').split(n3)[1]
 		} else {
 			index = (findClosingBracketMatchIndex(vr.substring(vr.indexOf(cr)), 0, cr) + 1)
 			vr = vr.split('=')[0] + '=' + vr.substring(vr.indexOf(cr)).substring(0, index)
 		}
+		n2 = n2.split('{')[0] + '{'+ vr +'; /*teszt*/;'+n2.split(fcn).join('fcnm').split(n3)[1]
 	}
       }
 
@@ -1608,8 +1613,10 @@ function find_key(rpt){
 	try {
 	  dex = rpt.split('return '+ fcn +'[')[1]; if (dex) dex = rpt.substring(rpt.split('return '+ fcn +'[')[0].lastIndexOf(';')+1, rpt.indexOf(dex) + dex.indexOf(';')+1); if (dex) { if (dex.indexOf('var') == -1) dex = 'var '+ dex; dex1 = dex1 + dex.split(fcn).join('fcnm') +';' }
 	  dex = rpt.split('document.location.hostname);document.location.port')[1]; if (dex) dex = rpt.substring(rpt.split('document.location.hostname);document.location.port')[0].lastIndexOf('};')+2, rpt.indexOf(dex) + dex.indexOf('};')+2); if (dex) { if (dex.indexOf('var') == -1) dex = 'var '+ dex; dex1 = dex1 + dex +';' }
-	  dex = rpt.split('("cipher")')[1]; if (dex) dex = rpt.substring(rpt.split('("cipher")')[0].lastIndexOf(';')+1, rpt.indexOf(dex) + dex.indexOf(';')+1); if (dex) dex1 = dex1 + dex + ';'; 
-	} catch(e){console.log(e.toString())}
+	  dex = rpt.split('("cipher")')[1]; if (dex) { dex = rpt.substring(rpt.split('("cipher")')[0].lastIndexOf(';')+1, //rpt.indexOf(dex) + dex.indexOf(';')+1);
+		rpt.split('("cipher")')[0].lastIndexOf('=')+1); if (dex) dex = dex + 'new Object({"name":"cipher"})'
+		if (dex) dex1 = dex1 + dex + ';'; }
+	} catch(e){}
 	if (vr1) {dex = new RegExp(    sprintf('[^\\w.]%s=[^}].+?(?=;)', vr1.split('$').join('\\$'))  ); dex = rpt.match(dex); dex = (dex) ? dex[0] : ''; dex1 = dex1 + dex +';' }
 	dex = new RegExp(    sprintf('[^\\w.]=function[^}].+?(?=%s)', '"Trusted Stream URL"\\\)\\\};')    ); dex = rpt.match(dex)[0].slice(-66); dex = dex.substring(dex.indexOf(' ')+1) +'"Trusted Stream URL")};';
 	if (rpt.indexOf(dex) > 0) { vr0 = dex.split('=')[0]; dex0.push(vr0);
@@ -1645,6 +1652,12 @@ function find_key(rpt){
 	    var dxh = dex.split('=function(')[1].split(')')[0];
 	    dex1 = dex1 + 'var '+ dex;
 	    eval('var '+ (dex0[i]) +'= new Function(dxh, dex.split(dex.substring(0, dex.indexOf("{")+1))[1].slice(0,-2))')
+
+	    function dive(dxh) {
+	      for(j=0;j<dxh.length;j++) { var cell = dxh[j].split('(')[0].split(' ').join(''); if (cell.length > 1 && cell.length < 4 && /[a-zA-Z0-9_\$]/.test(cell) && !(/[\&\,\.\!\?\+\*\/\|\(\)\{\}\[\]]/.test(cell)) && isNaN(cell) && dex0.indexOf(cell) == -1) { dex0.push(cell) } }
+	    }
+	    dive(dex.split('=')); dive(dex.split(','))
+
 	  } catch(e) {}
 	}
 
@@ -1655,7 +1668,7 @@ function find_key(rpt){
 
 	eval('yt6d.ndec = ' + n2)
       }
-    } catch(e) {console.log(e.toString())}
+    } catch(e) {}
 
   } catch(e) {
 
@@ -12286,7 +12299,7 @@ if (!gid('bm4')) {
 
     var built = null
 
-    if (!yt6d.init && (!yt6d.src_hid || yt6.navigation || msg)) {
+    if ((!yt6d.init || (yt6.mobile && yt6d.init)) && (!yt6d.src_hid || yt6.navigation || msg)) {
 	built = buildObject(window.ytplayer)
 	redo_dl_button(  yt6.args,  yt6.html,  yt6.href)
     }
