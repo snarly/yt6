@@ -1519,17 +1519,54 @@ function find_key(rpt){
 
 	//console.log('fcn='+fcn); console.log('n='+n);
 
+  function fcobj(){ // find the variable name which refers to the object with the signature-descrambling methods
+
+    var mch = fs, mch = mch.split(''), zzx, zzy, zzz;
+    for (j=0;j<mch.length;j++) {
+      if (mch[j] === "$") {
+        mch[j]="\\$"
+      }
+    }; var dr = [';',','], er = [], rx = new RegExp('[a-zA-Z0-9\$\[\.]')
+    for(j=0;j<dr.length;j++){ mch = mch.join('').split(dr[j]);
+    for (i=0;i<mch.length;i++) {
+      zzx = mch[i].substring(0,3); // the name is either 2 letter, in which case the 3rd character must be a dot
+      if (!(/^[a-zA-Z0-9_\$\.\[]*$/.test(zzx))) continue;
+      if (zzx.indexOf('.') == 2 || zzx.indexOf('[') == 2) { zzy = zzx.substring(0,2); er.push(zzy) }
+      if (er.indexOf(zzy) > -1 && er.lastIndexOf(zzy) > er.indexOf(zzy)) zzz = zzy
+    }
+    if (typeof zzz === 'undefined') {
+      for (i=0;i<mch.length;i++) {
+	zzx = mch[i].substring(0,4); // or it is 3 letter, and the 4th char is the dot
+	if (!(/^[a-zA-Z0-9_\$\.\[]*$/.test(zzx))) continue;
+	if (zzx.indexOf('.') == 2  || zzx.indexOf('[') == 3) { zzy = zzx.substring(0,3); er.push(zzy) }
+	if (er.indexOf(zzy) > -1 && er.lastIndexOf(zzy) > er.indexOf(zzy)) zzz = zzy
+      }
+    }; if (typeof zzz != 'undefined') break
+	}
+    var mch = new RegExp('var ' + zzz + '=[^}]+}[^}]+}[^}]+}};'); if (mch) try { var mch2 = mch.split("return a.join('')}")[0] + "return a.join('')}"; mch = mch2 } catch(e){}//[^a-zA-Z0-9\$]
+
+    return [mch,zzz]
+  }
+
 
   try {
 
 	//new RegExp(    sprintf('function %s[^}]+}[^}]+}', fcn.split('$').join('\\$'))  );
 	//new RegExp(    sprintf('var %s=function[^}]+};', fcn.split('$').join('\\$'))  );
 
+    var f1, f2
     var fs = new RegExp(    sprintf('[^\\w.]%s=function[^}].+?(?=};)', fcn.split('$').join('\\$'))  );//\\W does not suffice, have to exclude the possibility of a leading dot as well
 
     //var fs = new RegExp('function ' + fcn.replace('\$','\\$') + '[^}]+}[^}]+}');  //old
 
     var fs = (rpt.match(fs)) ? rpt.match(fs)[0] + '};' : ''
+
+    if (fs) {
+      f1 = fcobj()[0]; //console.log('regular expression including the object name: '+ f1)
+      f2 = fcobj()[1]; //console.log('object name: '+ f2)
+	}
+
+    var dekrypt0 = (f1) ? rpt.match(f1)[0] : ''
 
     var nreg, n2, n3, n4, vr0, vr1, vr = '', br = '', cr = '', index
     if (typeof n == 'string')
@@ -1548,6 +1585,7 @@ function find_key(rpt){
 		nreg = new RegExp(	sprintf('[^\\w.]%s=function[^}]+}.*', n.split('$').join('\\$'))	);
 		n2 = rpt.match(nreg)[0];
 	} else { n2 = n2[0]; }
+
 	n3 = n2.split('{')[0] + '{'
 
 	if (rpt.split('var '+ vr +'=')[1]) {
@@ -1561,7 +1599,7 @@ function find_key(rpt){
 			index = (findClosingBracketMatchIndex(vr.substring(vr.indexOf(cr)), 0, cr) + 1)
 			vr = vr.split('=')[0] + '=' + vr.substring(vr.indexOf(cr)).substring(0, index)
 		}
-		n2 = n2.split('{')[0] + '{'+ vr +'; /*teszt*/;'+n2.split(fcn).join('fcnm').split(n3)[1]
+		n2 = n2.split('{')[0] + '{'+ vr +'; /*teszt*/;'+ n2.split(n3)[1].split(fcn).join('fcnm'); 
 	}
       }
 
@@ -1572,7 +1610,7 @@ function find_key(rpt){
       } catch(e){}
 
       if (n2) {
-	n2 = n2.replace(n +'=',''); n2 = n2.substring(0, n2.indexOf('=function(')); n2 = n2.substring(0, n2.lastIndexOf(' '));
+	n2 = n2.replace(n +'=','').split('return '+ G +'.')[0]; n2 = n2.substring(0, n2.indexOf('=function(')); n2 = n2.substring(0, n2.lastIndexOf(' '));
 
 	try {
 
@@ -1635,34 +1673,38 @@ function find_key(rpt){
 
 
 
-	for(i=0;i<dex0.length;i++) if (typeof dex0[i] == 'string' && dex0[i] != n) { //console.log(i +'/'+ dex0.length +' '+ dex0[i]);
+	for(i=0;i<dex0.length;i++) if (typeof dex0[i] == 'string' && dex0[i] != n && dex1.indexOf('var '+ dex0[i]) == -1 && dex1.indexOf('var  '+ dex0[i]) == -1) { //console.log(i +'/'+ dex0.length +' '+ dex0[i]);
 	  try { try { eval('var '+ dex0[i]); } catch(e){ //console.log('Error '+ dex0[i]);
 	    continue };
-	    dex = new RegExp(    sprintf('[^\\w.]%s=function[^}].+?(?<!{)(?=};)', dex0[i].split('$').join('\\$'))  ); dex = rpt.match(dex)[0] +'};';
+	    dex = new RegExp(    sprintf('[^\\w.]%s=function[^}].+?(?<!{)(?=};)', dex0[i].split('$').join('\\$'))  ); dex = rpt.match(dex); dex = (dex) ? dex[0] +'};' : '';
 	    if (dex) { var dxh = dex.split('{').length - dex.split('}').length;
 		if (dxh > 1) { vr0 = ''; vr1 = ''; for(j=0;j<dxh;j++) { vr0 = rpt.split(dex)[1].split('}')[j] +'}'; if (vr0.indexOf('{') > -1) dxh++; vr1 = vr1 + vr0 }; dex = dex + vr1 +';' }
-	    }
-	    if (dex) { dxh = dex.split('){return ')[1]; dxh = (dxh) ? dxh.split('[')[0]: ''; 
-	      if (dex.indexOf('){return '+ dxh +'[') > -1) {
-	        if (dxh == fcn || dxh == n) {
-	          dex = dex.split('){return '+ ((dxh == fcn) ? fcn : n) +'[').join('){return '+ ((dxh == fcn) ? 'fcnm' : 'yt6d.ndec') +'[')
-	        } else if (dex0.indexOf(dxh) == -1) { dex0.push(dxh); }
-	      }
-	    };
-	    var dxh = dex.split('=function(')[1].split(')')[0];
-	    dex1 = dex1 + 'var '+ dex;
-	    eval('var '+ (dex0[i]) +'= new Function(dxh, dex.split(dex.substring(0, dex.indexOf("{")+1))[1].slice(0,-2))')
+		dxh = dex.split('){return ')[1]; dxh = (dxh) ? dxh.split('[')[0]: ''; 
+		if (dex.indexOf('){return '+ dxh +'[') > -1) {
+		  if (dxh == fcn || dxh == n) {
+		    dex = dex.split('){return '+ ((dxh == fcn) ? fcn : n) +'[').join('){return '+ ((dxh == fcn) ? 'fcnm' : 'yt6d.ndec') +'[')
+		  } else if (dex0.indexOf(dxh) == -1) { dex0.push(dxh); }
+		}
 
-	    function dive(dxh) {
-	      for(j=0;j<dxh.length;j++) { var cell = dxh[j].split('(')[0].split(' ').join(''); if (cell.length > 1 && cell.length < 4 && /[a-zA-Z0-9_\$]/.test(cell) && !(/[\&\,\.\!\?\+\*\/\|\(\)\{\}\[\]]/.test(cell)) && isNaN(cell) && dex0.indexOf(cell) == -1) { dex0.push(cell) } }
+	      var dxh = dex.split('=function(')[1].split(')')[0];
+	      dex1 = dex1 + 'var '+ dex;
+	      eval('var '+ (dex0[i]) +'= new Function(dxh, dex.split(dex.substring(0, dex.indexOf("{")+1))[1].slice(0,-2))')
+
+	    } else { dex = new RegExp(    sprintf('[^\\w]%s=[^=].+?(?=;)', dex0[i].split('$').join('\\$'))  ); dex = rpt.match(dex); dex = (dex) ? dex[0] : '';
+		if (dex) dex1 = dex1 + 'var '+ dex.substring(dex.indexOf(dex0[i])) +';'
+	      }
+
+
+	    function dive(dxh, br) {
+	      for(j=0;j<dxh.length;j++) { var cell = dxh[j].split(br)[0].split(' ').join(''); if (cell.length > 1 && cell.length < 4 && /[a-zA-Z0-9_\$]/.test(cell) && !(/[\,\.\;\!\?\+\-\*\/\=\&\|\(\)\{\}\[\]\<\>]/.test(cell)) && isNaN(cell) && dex0.indexOf(cell) == -1) dex0.push(cell) }
 	    }
-	    dive(dex.split('=')); dive(dex.split(','))
+	    var deep = ['=',',',' ',':',';']; for(k=0;k < deep.length;k++) { dive(dex.split(deep[k]),'('); dive(dex.split(deep[k]),')'); dive(dex.split(deep[k]),'?'); dive(dex.split(deep[k]),'='); dive(dex.split(deep[k]),'.hasOwnProperty(') }
 
 	  } catch(e) {}
 	}
 
 	n2 = n2.replace('/*teszt*/', dex1 +
-'/**/')
+(dekrypt0 || '/**/'))
 
 
 
@@ -1676,41 +1718,10 @@ function find_key(rpt){
 
 
 
-  function fcobj(){ // find the variable name which refers to the object with the signature-descrambling methods
-
-    var mch = fs, mch = mch.split(''), zzx, zzy, zzz;
-    for (j=0;j<mch.length;j++) {
-      if (mch[j] === "$") {
-        mch[j]="\\$"
-      }
-    }; var dr = [';',','], er = [], rx = new RegExp('[a-zA-Z0-9\$\[\.]')
-    for(j=0;j<dr.length;j++){ mch = mch.join('').split(dr[j]);
-    for (i=0;i<mch.length;i++) {
-      zzx = mch[i].substring(0,3); // the name is either 2 letter, in which case the 3rd character must be a dot
-      if (!(/^[a-zA-Z0-9_\$\.\[]*$/.test(zzx))) continue;
-      if (zzx.indexOf('.') == 2 || zzx.indexOf('[') == 2) { zzy = zzx.substring(0,2); er.push(zzy) }
-      if (er.indexOf(zzy) > -1 && er.lastIndexOf(zzy) > er.indexOf(zzy)) zzz = zzy
-    }
-    if (typeof zzz === 'undefined') {
-      for (i=0;i<mch.length;i++) {
-	zzx = mch[i].substring(0,4); // or it is 3 letter, and the 4th char is the dot
-	if (!(/^[a-zA-Z0-9_\$\.\[]*$/.test(zzx))) continue;
-	if (zzx.indexOf('.') == 2  || zzx.indexOf('[') == 3) { zzy = zzx.substring(0,3); er.push(zzy) }
-	if (er.indexOf(zzy) > -1 && er.lastIndexOf(zzy) > er.indexOf(zzy)) zzz = zzy
-      }
-    }; if (typeof zzz != 'undefined') break
-	}
-    var mch = new RegExp('var ' + zzz + '=[^}]+}[^}]+}[^}]+}};'); if (mch) try { var mch2 = mch.split("return a.join('')}")[0] + "return a.join('')}"; mch = mch2 } catch(e){}//[^a-zA-Z0-9\$]
-
-    return [mch,zzz]
-  }
-
   if (fs) {
 
-    var f1 = fcobj()[0]; //console.log('regular expression including the object name: '+ f1)
-    var f2 = fcobj()[1]; //console.log('object name: '+ f2)
+    var fs0, fs1, fs2 = '', fs3; 
 
-    var fs0, fs1, fs2 = '', fs3, dekrypt0 = rpt.match(f1)[0]
     if (fs && fs.split(';')[0] && fs.split(';')[0].indexOf('function') == -1 && fs.split(';')[1] && fs.split(';')[1].indexOf('function') != -1) {
       fs0 = (fs.match(/;/g) || []).length
       fs1 = fs.split(';')
