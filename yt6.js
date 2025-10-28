@@ -7,14 +7,16 @@ if (!window.yt6d) { //data object for future use
   yt6d.yt6 = window.yt6 = yt6
   yt6d.timers={}; yt6d.timers.w = 0
   yt6d.xhr=[]
-  yt6d.linx={}
-  yt6d.proxy={}
-  yt6d.current={}
-  yt6d.current.linx=[]
-  yt6d.current.eid=[]
-  yt6d.previous={}
-  yt6d.previous.linx=[]
-  yt6d.previous.eid=[]
+  yt6d.linx=yt6d.linx||[]
+  yt6d.proxy=[]
+  if (!yt6d.current) { yt6d.current={}
+    yt6d.current.linx=[]
+    yt6d.current.eid=[]
+  }
+  if (!yt6d.previous) { yt6d.previous={}
+    yt6d.previous.linx=[]
+    yt6d.previous.eid=[]
+  }
   yt6d.playlist = {}
   yt6d.playlist.items = []
   yt6d.log = []; yt6d.arg = {}
@@ -1494,7 +1496,7 @@ function find_key(rpt){
 	//var names randomized since Dec 2024
 	var i = 0; for(i;i<rpt.split(',encodeURIComponent(').length-1;i++)
 	{ fcn0 = rpt.split(',encodeURIComponent(')[i].slice(-50)
-	  if (fcn0 && fcn0.lastIndexOf('=') > -1 && fcn0.lastIndexOf('=') < fcn0.indexOf('decodeURIComponent(')) { fcn = fcn0.substring((fcn0.lastIndexOf('=')+1)), fcn1 = fcn.split('(')[1]; fcn1 = (fcn1) ? 1*(fcn1.split(',')[0]) : 0; yt6d.arg.s = fcn1; fcn = fcn.split('(')[0] } else fcn = '' //.split('decodeURIComponent(')[0].split('=')[1]
+	  if (fcn0 && fcn0.lastIndexOf('=') > -1 && fcn0.lastIndexOf('=') < fcn0.indexOf('decodeURIComponent(')) { fcn = fcn0.substring((fcn0.lastIndexOf('=')+1)), fcn1 = fcn.split('(')[1]; fcn1 = (fcn1) ? 1*(fcn1.split(',')[0]) : 0; yt6d.arg['s'+i] = fcn1; yt6d.arg.s = fcn1; fcn = fcn.split('(')[0] } else fcn = '' //.split('decodeURIComponent(')[0].split('=')[1]
 	}
 
 	var n0 = (rpt.split('{this.segments.push(')[1]) ? rpt.split('{this.segments.push(')[0] : ''; // from 202510 on, n-decryption key moved to random location
@@ -1564,7 +1566,7 @@ function find_key(rpt){
     if (fs) {
       f1 = fcobj()[0]; //console.log('regular expression including the object name: '+ f1)
       f2 = fcobj()[1]; //console.log('object name: '+ f2)
-	}
+    }
 
     var dekrypt0 = (f1) ? rpt.match(f1)[0] : ''
 
@@ -1614,14 +1616,17 @@ function find_key(rpt){
 
 	try {
 
+	// array-filter
 	var dex = n2.split('=['), dex0 = [], dxh
 	for(i=0;i < dex.length;i++)
 	if (i && dex[i].lastIndexOf(',-') != dex[i].indexOf(',-')) {
 	  dxh = dex[i-1].slice(-5); dxh = dxh.split(',')[1] || dxh.split(' ')[1] || dxh.split(';')[1]; dxh = dxh +'=['+ dex[i].split(',')[0];
 	  dex = dxh + n2.split(dxh)[1]
-	  index = (findClosingBracketMatchIndex(dex.substring(dex.indexOf('[')), 0, '[') + 1)
+	  index = (findClosingBracketMatchIndex(dex.substring(dex.indexOf('[')), 0, '[') +2) // +1 may be one too short?
 	  vr1 = dex.replace(dxh.split('[')[0],'').replace('[','').split('{try{')[0].split(','); vr0 = (vr1.length-1)
-	  dex = dex.substring(dex.indexOf('[')+1, index).split(',')
+	  dex = dex.substring(dex.indexOf('[')+1, index)
+	  if (dex.slice(-1) == ']') dex = dex.substring(0, dex.length-1)
+	  dex = dex.split(',')
 	  //dex = (dex.replace(dxh.split('[')[0],'').replace('[','')).split(',');
 	  dxh = false;
 	  //for(j=0;j < vr0;j++) console.log('dex['+j+'] = '+ dex[j]);
@@ -1639,7 +1644,8 @@ function find_key(rpt){
 	  }; dex0.push(dex[i].split(' ').join(''))
 	}
 
-	var dex1 = n2.split(';else{try{try{var ')[1]; if (dex1) { vr0 = dex1.split('('); 
+	var dex1 = n2.split(';else{try{try{var ')[1], dex2;
+	if (dex1) { vr0 = dex1.split('('); 
 	  dex1 = dex1.split('=')[1]; dex1 = dex1.split('(')[0]; if (dex1) dex0.push(dex1);
 	  for(i=0;i<vr0.length-1;i++){
 	    if(vr0[i].charAt(1)=='=' && vr0[i].charAt(2)!='=') { vr0[i] = vr0[i].split('=')[1]; if (vr0[i] && vr0[i].length == 3 && /[a-zA-Z0-9_\$]/.test(vr0[i])) { dex0.push(vr0[i]); break } }
@@ -1673,10 +1679,10 @@ function find_key(rpt){
 
 
 
-	for(i=0;i<dex0.length;i++) if (typeof dex0[i] == 'string' && dex0[i] != n && dex1.indexOf('var '+ dex0[i]) == -1 && dex1.indexOf('var  '+ dex0[i]) == -1) { //console.log(i +'/'+ dex0.length +' '+ dex0[i]);
+	for(i=0;i<dex0.length;i++) if (typeof dex0[i] == 'string' && dex0[i] != n && dex1.indexOf('var '+ dex0[i]) == -1 && dex1.indexOf('var  '+ dex0[i]) == -1) { //console.log(i +'/'+ dex0.length);
 	  try { try { eval('var '+ dex0[i]); } catch(e){ //console.log('Error '+ dex0[i]);
 	    continue };
-	    dex = new RegExp(    sprintf('[^\\w.]%s=function[^}].+?(?<!{)(?=};)', dex0[i].split('$').join('\\$'))  ); dex = rpt.match(dex); dex = (dex) ? dex[0] +'};' : '';
+	    dex = new RegExp(    sprintf('[^\\w.]%s=function[^}].+?(?<!{)(?=};)', dex0[i].split('$').join('\\$'))  ); dex = rpt.match(dex); dex = (dex) ? dex[0] +'};' : ''; if (dex.indexOf(',') == 0) dex = dex.slice(1); //console.log(dex.split('=')[0])
 	    if (dex) { var dxh = dex.split('{').length - dex.split('}').length;
 		if (dxh > 1) { vr0 = ''; vr1 = ''; for(j=0;j<dxh;j++) { vr0 = rpt.split(dex)[1].split('}')[j] +'}'; if (vr0.indexOf('{') > -1) dxh++; vr1 = vr1 + vr0 }; dex = dex + vr1 +';' }
 		dxh = dex.split('){return ')[1]; dxh = (dxh) ? dxh.split('[')[0]: ''; 
@@ -1687,11 +1693,18 @@ function find_key(rpt){
 		}
 
 	      var dxh = dex.split('=function(')[1].split(')')[0];
-	      dex1 = dex1 + 'var '+ dex;
-	      eval('var '+ (dex0[i]) +'= new Function(dxh, dex.split(dex.substring(0, dex.indexOf("{")+1))[1].slice(0,-2))')
+	      dex2 = dex.split(dex.substring(0, dex.indexOf("{")+1))[1].slice(0,-2);
+	      try { eval('var '+ (dex0[i]) +'= new Function(dxh, dex2)') } catch(err) {
+		if (rpt.split(dex2)[1]) { // include one more "};" ?
+		  dex = dex.substring(0, dex.lastIndexOf('};')) + rpt.split(dex2)[1].split('};')[0] + '};'
+		  dex2 = dex2 + rpt.split(dex2)[1].split('};')[0];
+		  try { eval('var '+ (dex0[i]) +'= new Function(dxh, dex2)') } catch(err) {}
+		}
+	      }
+	      dex1 = dex1 + 'var '+ dex; 
 
 	    } else { dex = new RegExp(    sprintf('[^\\w]%s=[^=].+?(?=;)', dex0[i].split('$').join('\\$'))  ); dex = rpt.match(dex); dex = (dex) ? dex[0] : '';
-		if (dex) dex1 = dex1 + 'var '+ dex.substring(dex.indexOf(dex0[i])) +';'
+		if (dex) try { eval('var '+ dex.substring(dex.indexOf(dex0[i])) ); dex1 = dex1 + 'var '+ dex.substring(dex.indexOf(dex0[i])) +';' } catch(e){}
 	      }
 
 
@@ -1710,7 +1723,7 @@ function find_key(rpt){
 
 	eval('yt6d.ndec = ' + n2)
       }
-    } catch(e) {}
+    } catch(e) { e = [e.toString() + '\n'+ n2 +'\n\n'+ dex1].toString(); gid('ytassetsjs').fcnm = e.split('<').join('&lt;') }
 
   } catch(e) {
 
@@ -1737,13 +1750,13 @@ function find_key(rpt){
     fs3 = fs2.split("(")[1].split(")")[0]
 
     var fcn = 'function fcnm(' + fs3 + '){' + ((vr) ? (' '+ vr +'; ') : '') + dekrypt0 + ';' + dex1 +'; try {'
-	+ fs2.substring(fs2.indexOf('{')+1,fs2.lastIndexOf('}')) + ' } catch(e){ e = e.toString(); console.log("fcnm "+ e) } }'
+	+ fs2.substring(fs2.indexOf('{')+1,fs2.lastIndexOf('}')) + ' } catch(e){ e = e.toString() } }'
 
     var fcn = "function fcnm(" + fcn.split("function fcnm(")[1]
 
   } else var fcn = "function fcnm(a) { yt6.dummy = true; return a; };"
 
-  eval(fcn)
+  try { eval(fcn) } catch(e) {}
 
     window.fcnm = new Function(fs3, fcn.substring(fcn.indexOf('{'), (findClosingBracketMatchIndex(fcn,fcn.indexOf('{'))+1)) )
 
@@ -2171,7 +2184,7 @@ yt6.tmp = ""+
   try { if (typeof yt6.manifest != 'object') yt6.manifest = {}; function app() { return (path.indexOf('app') == path.length-1) };\
   for (let [key,value] of Object.entries(src)) {\
     if (key && value) { if (typeof value == 'object' && typeof value.width == 'number' && typeof value.height == 'number' && typeof value.left == 'number' && typeof value.top == 'number') { yt6.s = yt6.s || {}; yt6.s.Obj = s; s = value; continue };\
-	if (!yt6.mobile)\
+	if (!yt6 && !yt6.mobile)\
 	if (key == 'videoData' || key == 'videoDetails') {\
 	  if (ytplayer.config && ytplayer.config.args) { var ads = 0;\
 	    if (value.title) { if (document.title.indexOf(value.title) !== 0) { ads = 1; yt6.pre_ad = true; if (yt6.x && !yt6.ad_muted) try { yt6.p.mute(); yt6.ad_muted = true } catch(e){} } else { ytplayer.config.args.title = value.title; if (value.videoId) { ytplayer.config.args.video_id = value.videoId; yt6.vid = value.videoId; yt6.ytp.video_id = value.videoId } } };\
@@ -2185,7 +2198,7 @@ yt6.tmp = ""+
 	};\
 	var a = [], b = (yt6d.init && key == 'subscriptions_' && typeof value == 'object') ? true : false, c, d, e = (yt6.ytp.embed) ? true : false, i, j, k, l, m, n, o, _itag, url, pot, list = {}, audio = [], video = [], piece = '', vi, vij, vik, n_decoded;\
 	if (b) yt6d.subscriptions = true;\
-	if (path.length < 8) if (path.indexOf('subscriptions_') == 0 || (app() && value && typeof value == 'object' && value.api && value.app) || [...path, key].indexOf('policy') > -1 || b || e || (yt6.mobile && !yt6.potObj))\
+	if (path.length < 8) if (/*path.indexOf('subscriptions_') == 0 ||*/ (app() && value && typeof value == 'object' && value.api && value.app) || [...path, key].indexOf('policy') > -1 || /*b || e ||*/ (yt6.mobile && !yt6.potObj))\
 	for (i in value) {\
 	  if ([...path, key, i].indexOf('mediaElement') > -1 || [...path, key, i].indexOf('appState') > -1 || [...path, key, i].indexOf('events') > -1 || [...path, key, i].indexOf('template') > -1) continue; vi = value[i];\
 	  if (vi && typeof vi == 'object') {\
@@ -2199,15 +2212,10 @@ yt6.tmp = ""+
 	  }}\
 	};\
 	manifest = (typeof manifest == 'undefined' && value && typeof value == 'object' && typeof yt6.manifest.value == 'object' && value.manifest == yt6.manifest.value && yt6.manifest.key == 'manifest') ? true : false; var b = yt6d.subscriptions, c = (yt6.mapObj) ? clone(yt6.mapObj) : ((!b) ? 'T' : ''), d = '';\
-	if (!yt6d.app && yt6d.app) if (path.indexOf('app') == -1 && key == 'app' && value && typeof value == 'object') for (var i in value) if (value[i] && typeof value[i] == 'object' && value[i].app && typeof value[i].app == 'object') {\
-	  try { yt6d.app = ytPubsubPubsubInstance[path[0]][path[1]].app[i] } catch(e){};\
-	  if (yt6d.app && typeof yt6d.app.publish == 'function') try {\
-	    var funky = yt6d.app.publish.toString(), ab = funky.split('(')[1], bc = funky.split('var ')[1];\
-	    if (ab) ab = ab.split(')')[0].split(' ').join(''); if (bc) bc = bc.split('=')[0].split(' ').join(''); console.log(ab); console.log(bc);\
-	    if (ab && ab.length && bc && bc.length) funky = new Function(ab, '{if (typeof g == \"undefined\") g = _yt_player; '+ funky.substring((funky.indexOf('{')+1), funky.lastIndexOf('}')) + '\; if (typeof yt6 != \"undefined\" && yt6) if ('+ ab +' == \"applicationvideodatachange\") try \{ var c = conf(\"args\"); if (c[1] && c[1].raw_player_response != yt6d.VideoData && '+ bc +'[1]) \{ console.log('+ bc +'[1].playerResponse); yt6d.VideoData = '+ bc + '[1].playerResponse; if (yt6d.VideoData && yt6d.VideoData.streamingData) \{ ytplayer.config.args.raw_player_response = clone(yt6d.VideoData.streamingData); ytplayer.config.args.player_response = JSON.stringify(yt6d.VideoData.streamingData) \} \} \} catch(e)\{\} \}'); console.log(funky); yt6d.app.publish = funky; break;\
-	  } catch(e){ };\
+	if (!yt6d.app) if (path.indexOf('app') == -1 && key == 'app' && value && typeof value == 'object') for (var i in value) if (value[i] && typeof value[i] == 'object' && value[i].app && typeof value[i].app == 'object') {\
+	  try { yt6d.app = ytPubsubPubsubInstance[path[0]][path[1]].app[i]; break } catch(e){};\
 	};\
-	if (yt6d.path && Array.isArray(yt6d.path) && yt6d.path.length && path.indexOf(yt6d.path[0]) == 0 && path.indexOf(yt6d.path[1]) == 1 && path.indexOf(yt6d.path[3]) == 3 && path.indexOf(yt6d.path[2]) == 2 && yt6d.path.length >= 4 && path.indexOf(yt6d.path[3]) == 3 && ((b && path.indexOf(yt6d.path[4]) == 4) || !(b && path.indexOf(yt6d.path[5]) != 5 && path.indexOf(yt6d.path[6]) != 6)) && typeof value == 'object') { /*console.log(path+'_'+key+'_');console.log(value);*/\
+	if (yt6d.path && Array.isArray(yt6d.path) && yt6d.path.length && path.indexOf(yt6d.path[0]) == 0 && path.indexOf(yt6d.path[1]) == 1 && path.indexOf(yt6d.path[3]) == 3 && path.indexOf(yt6d.path[2]) == 2 && yt6d.path.length >= 4 && yt6d.path.length < 10 && path.indexOf(yt6d.path[3]) == 3 && ((b && path.indexOf(yt6d.path[4]) == 4) || !(b && path.indexOf(yt6d.path[5]) != 5 && path.indexOf(yt6d.path[6]) != 6)) && typeof value == 'object') { \/\*console.log(path+'_'+key+'_');console.log(value)\*\/;\
 	  var ok = false;\
 	  for(i in value) if (!(list && yt6.list == list)) { vi = value[i]; if (vi && typeof vi == 'object') { \
 	    _itag = 0; \
@@ -3397,6 +3405,7 @@ function load_from_page_source(x, source) {
 		  var js = '', css = ''
 		  js = y.split('"js":"')[1]; if (js) { js = js.split('"')[0]; css = y.split('"css"."')[1]; if (css) c[0].assets.css = css.split('"')[0] }
 		  if (!js) js = y.split('"jsUrl":"')[1]; if (js) { js = js.split('"')[0]; css = y.split('"cssUrl":"')[1]; if (css) c[0].assets.css = css.split('"')[0] }
+		  if (!js) { js = y.split('"trustedJsUrl":')[1]; if (js) { js = js.split('/base.js"')[0] + '/base.js'; if (js.lastIndexOf('"') > -1) js = js.substring(js.lastIndexOf('"')+1) }; css = y.split('"trustedCssUrl":')[1]; if (css) { c[0].assets.css = css.split('.css"')[0] + '.css'; if (css.lastIndexOf('"') > -1) css = css.substring(css.lastIndexOf('"')+1) } }
 		  if (!js) { js = y.split('src="/yts/jsbin/player_')[1]; if (js) { js = '/yts/jsbin/player_' + js } }
 		  if (!js) js = y.split('"PLAYER_JS_URL":"')[1]
 		  if (js && js.indexOf('/base.js') > -1) {
@@ -3433,10 +3442,10 @@ function load_from_page_source(x, source) {
 		  y = y.split('</script>')[0]
 		  y = y.split(';(function()')[0].split(';(function ')[0]; //they named the function playerBootstrap(), but a single space after is enough
 		  if (!y0 || (html5_fail() && !yt6.ytp.embed)) {
-		    y = 'yt6.ytplayer = {}; yt6.' + y
+		    y = 'yt6.ytplayer = yt6.ytplayer || {}; yt6.' + y
 		  } else {
-		      y = 'yt6.ytplayer = {}; yt6.' + ( !(html5_fail()) ? y : 'ytplayer.config = {}' ) +'; if (!yt6.ytplayer.config) yt6.ytplayer.config = {}'+
-			  '; yt6.ytplayer.config.args = {}; yt6.ytplayer.config.args.raw_player_response = ' + JSON.stringify(y0 || yti) +
+		      y = 'yt6.ytplayer = yt6.ytplayer || {}; yt6.' + ( !(html5_fail()) ? y : 'ytplayer.config = {}' ) +'; if (!yt6.ytplayer.config) yt6.ytplayer.config = {}'+
+			  '; if (!yt6.ytplayer.config.args) yt6.ytplayer.config.args = {}; yt6.ytplayer.config.args.raw_player_response = ' + JSON.stringify(y0 || yti) +
 			  '; yt6.ytplayer.config.args.player_response = ' + JSON.stringify(y0)
 		    }
 		  if (y1) y = y + '; yt6.ytplayer.web_player_context_config = ' + y1
@@ -3496,7 +3505,11 @@ function load_from_page_source(x, source) {
 		if (!ytplayer.config.attrs && yt6.ytplayer.config.attrs) ytplayer.config.attrs = clone(yt6.ytplayer.config.attrs)
 
 		ytplayer.config.loaded_from = 'page_source'
+
+//for(i=0;i<yt6d.linx.length;i++) if (yt6d.linx[i] && itag(yt6d.linx[i]) < 103) { yt6.ytplayer.config.args.url_encoded_fmt_stream_map = yt6d.linx[i] +','+ (yt6.ytplayer.config.args.url_encoded_fmt_stream_map || ''); console.log('OK'); console.log(yt6.ytplayer.config.args.url_encoded_fmt_stream_map)}
+
 		player_response()
+
 		var c = conf('args')
 		var p = (!yt6.flash.forced) ? player() : yt6.original || gid('movie_player0')
 		if (status != 'ok' && c[1] && c[1].status == 'ok' &&
@@ -3516,7 +3529,7 @@ function load_from_page_source(x, source) {
 			yt6.original.setAttribute('name','movie_player')
 			yt6.original.setAttribute('id','movie_player')
 		  }
-		yt6.ytplayer = {}
+		//yt6.ytplayer = {}
 		if (yt6.flash.forced) {
 		  if (yt6.retry < yt6.limit) {
 		    var z = gc('forced flashplayer')[0]
@@ -4552,7 +4565,7 @@ function iframe(re_embed) {
 
 			      if (player() && v_(yt6.p)) {
 				if (yt6.p.getAttribute('name') == null) { if (yt6.ytp.dump) try { yt6.ytp.dump.pauseVideo() } catch(e){} }
-				try { yt6.p.pauseVideo(); v_(yt6.p).pause() } catch(e){}
+				try { yt6.p.pauseVideo(); v_(yt6.p).pause() } catch(e){};//
 				gid('movie_player_to_dispose').appendChild(yt6.p)
 			      }
 
@@ -10607,8 +10620,10 @@ if (c[1]) {
   var ft = [args.url_encoded_fmt_stream_map, args.adaptive_fmts || yt6.adaptive_fmts ], sighead, oeid,
       fn, a_r, ad = 0, ad2, dur, dur2, durA1 = {}, durA2 = {}, durL1 = [], durL2 = [], ad_links = [], avg1, avg2, avgx, durA1k, durA2k, length_seconds = args.length_seconds, n_length = 0, n_value, n_decoded, ndc, s = ''
 
+  if (args && yt6.ytplayer && yt6.ytplayer.config && yt6.ytplayer.config.args) { yt6.ytplayer.config.args.adaptive_fmts = args.adaptive_fmts; //yt6.ytplayer.config.args.url_encoded_fmt_stream_map = args.url_encoded_fmt_stream_map;
+  }
 
-  durA1.A = []; durA2.A = []; yt6.eidA = []
+  durA1.A = []; durA2.A = []; yt6.eidA = []; yt6.durA = []
   var live = (Array.isArray(ft) && ft[1]) ? (ft[1].match('yt_live_broadcast') || ft[1].match('yt_premiere_broadcast')) : -1; if (live) { yt6.live = '&sq='; yt6.live_ = 1 } else { yt6.live = false; yt6.live_ = 0 }
   var rd = (yt6.real_dur && yt6.real_media_duration_m == yt6.real_dur) ? 1 * (yt6.real_dur) : 0
 
@@ -10669,7 +10684,7 @@ if (c[1]) {
 	var href = unescape(qs.url).replace('http:', '').replace('https:', '')
 	if (Array.isArray(yt6d.previous.eid) && yt6d.previous.eid[0] && href.indexOf(yt6d.previous.eid[0]) > -1) continue
 	var pot = ''
-	if (yt6.pot && typeof yt6.pot == 'string') {
+	if (yt6.pot && typeof yt6.pot == 'string' && yt6.pot.length < 500) {
 	  pot = (href.indexOf(yt6.pot) > -1) ? true : false
 	  if (!pot) {
 	    if (href.indexOf('&pot=') > -1) { href = href.replace('&pot='+ href.split('&pot=')[1].split('&')[0], yt6.pot); pot = true
@@ -10697,13 +10712,13 @@ if (c[1]) {
 	if ( (yt6.live_ != 0 || href.indexOf('yt_premiere_broadcast') > -1) && (args.livestream || href.match('/source=yt_+([a-z])+_broadcast/g') || href.match('/source\/yt_+([a-z])+_broadcast/g') )) { yt6.live = (yt6.live) ? yt6.live : '&sq='; live = true } else if ((live == -1 || !live) && !args.livestream && href.indexOf('yt_premiere_broadcast') == -1) yt6.live = false
 
 
-	if (!ok && href.indexOf('&'+ signame +'=AJfQ') == -1) {
+	if (href.indexOf('&'+ signame +'=AJfQ') == -1) {//!ok && 
 	  var sn = null; try { sn = yt6.list[qs.itag] } catch(e){}
 	  if (qs.signature){
 	    href += '&' + signame + '=' + qs[signame]
 	  } else
 	    if (qs.s) { var s = (qs.s.indexOf('AJfQ') == 0) ? qs.s : dc(yt6d.arg.s, qs.s)
-	      href += '&' + signame + '=' + s; //console.log(qs.itag +'\n'+ qs.s +'\n'+ s)
+	      href += '&' + signame + '=' + s; //console.log(qs.itag +' '+ ok +'\n'+ qs.s +'\n'+ s)
 	    }
 	}
 
@@ -10775,7 +10790,7 @@ if (c[1]) {
 	  eid = eid.split('&')[0].split('%26')[0]
 	  if (yt6.eidA.indexOf(eid) == -1) yt6.eidA.push(eid)
 	}
-
+	if (dur) { for(k=0;k<yt6.durA.length;k++) { fn = (Math.abs(1*yt6.durA[k] - dur) > 1.5) ? true : false; if (!fn) break }; if (fn || isNaN(yt6.durA[0])) yt6.durA.push(dur) }
 
 
 	if (dur && ((yt6.ads_eid && href.indexOf(yt6.ads_eid) > -1) || yt6.live || (avgx && ((yt6.mobile && yt6.ads_eid1 && yt6.ads_eid2) || yt6d.init) ) )) {
@@ -11437,6 +11452,7 @@ if (args.dashmpd) {
   yt6.linx = linx
   for(i=0;i<10000;i++) if (Array.isArray(yt6d.mediaUrlText) && yt6d.mediaUrlText[i]) { yt6.linx[i] = linx[i] = clone(yt6d.mediaUrlText[i]); //console.log(i +' Replaced '+ linx[i] +'\n'+ linx[i].indexOf(yt6.real_eid))
   }
+
   yt6.html = html
   yt6.href = href
   yt6.audio = (yt6.audiox) ? yt6.audiox : audio
@@ -12374,10 +12390,10 @@ if (!gid('bm4')) {
 	var c = conf('args')
 	if (!publive() && yt6.layout == 16 && !yt6.ytm && !yt6.ytp.embed && !yt6.mobile && (yt6d.linx_length < 2 || !yt6.yt6a_length)) {
 	  yt6d.src_hid = 1; yt6d.x = (yt6.x) ? true : false; if (yt6d.srt && yt6d.srt.rpt) delete yt6d.srt.rpt
-	  yt6d.linx = clone(yt6.linx)
 	  window.ytplayer.config.args.url_encoded_fmt_stream_map = ''
 	  window.ytplayer.config.args.adaptive_fmts = ''
-	  var z = window.frames['re-embed2'], xx = 0, yy = 1, counter = 0, step = 300, threshold = 9000;//4500,18000
+
+	  var z = window.frames['re-embed2'], xx = 0, yy = 1, counter = 0, step = 400, threshold = 8000;//4500,18000
 
 	  try { if ((z && !z.yt6) || yt6d.src_hid2) iframe(true) } catch(e) {  }
 
@@ -12390,19 +12406,26 @@ if (!gid('bm4')) {
 	      z = window.frames['re-embed2']
 	      try {
 	      if (z && z.document && typeof z.document.getElementById == 'function') {
-	      var mp = z.document.getElementById('movie_player'); mp = (mp && typeof mp.getVideoUrl == 'function') ? mp.getVideoUrl() : yt6.vid
+	      var mp = z.document.getElementById('movie_player'); mp = (mp && typeof mp.getVideoUrl == 'function') ? mp.getVideoUrl() : yt6.vid;
 	      if (z.location.href.indexOf(yt6.vid) > -1 && mp.indexOf(yt6.vid) > -1) {
 
 	      var c = conf('args')
-	      if (z && z.yt6 && z.yt6.p) { var s = (typeof z.yt6.p.getPlayerState == 'function') ? z.yt6.p.getPlayerState() : -1, ze = z.error_screen()
-		if (z.ytplayer && z.ytplayer.config && z.ytplayer.config.args) { var y = z.ytplayer.config.args, c = conf('args')
-		  if (y.adaptive_fmts && (s == 1 || s == yy || ze)) {
-		      var l = [], h = [], r = '', ttsurl = []
-		      c[1].adaptive_fmts = y.adaptive_fmts.toString(); r = c[1].adaptive_fmts.split(',')
+	      if (z && z.yt6) {
+		var s = (z.yt6.p && typeof z.yt6.p.getPlayerState == 'function') ? z.yt6.p.getPlayerState() : -1, ze = z.error_screen(), zf = (z.yt6.linx && z.yt6.linx.length > 1) ? true : false;
+		var y = (z.ytplayer && z.ytplayer.config && z.ytplayer.config.args)
+		if (!(y && y.adaptive_fmts)) y = (z.yt6.ytplayer && z.yt6.ytplayer.config && z.yt6.ytplayer.config.args)
+
+		if ( (y && (y.adaptive_fmts || yt6.ios))
+		    && (!ze || (ze && (zf || yt6.ios))) 
+		) {
+		  if (y.adaptive_fmts && (s == 1 || s == yy || ze || zf)) try {
+		      var l = [], h = [], r = '', ttsurl = [], c = conf('args')
+			  c[1].adaptive_fmts = y.adaptive_fmts.toString(); r = c[1].adaptive_fmts.split(',')
 		      if ( ( (!z.yt6d.xhr[3] && r.length) || (z.yt6d.xhr[3] && z.yt6d.xhr[3].done && r.length >= 2)) ) { xx = 1
 			l.push.apply(l, z.yt6.linx); h.push.apply(h, z.yt6.html); r = z.yt6.href.toString()
 			ttsurl.push.apply(ttsurl, y.ttsurl)
-			c[1].url_encoded_fmt_stream_map = c[1].url_encoded_fmt_stream_map +','+ y.url_encoded_fmt_stream_map.toString()
+			c[1].url_encoded_fmt_stream_map = c[1].url_encoded_fmt_stream_map + ((y.url_encoded_fmt_stream_map) ? ','+ y.url_encoded_fmt_stream_map.toString() : '')
+			try { yt6.ytp.V = z.yt6.ytp.V.toString(); yt6.ytp.A = z.yt6.ytp.A.toString() } catch(e){}
 			c[1].ttsurl = ttsurl; yt6.ttsurl = ttsurl; yt6.args = c[1]
 			if (yt6d.pubApp) { z.publive(); var y = z.yt6d.pubApp, x; if (y && y.playlist && y.playlist.items && y.playlist.items.length) for (i in y.playlist) if (y.playlist[i] && !(Array.isArray(y.playlist[i]) && typeof y.playlist[i][0] == 'function')) try { x = JSON.stringify(y.playlist[i]); yt6d.pubApp.playlist[i] = JSON.parse(x) } catch(e){} }
 			yt6d.src_hid = 2; if (s == -1 && ze) yt6.error = 'embed?'
@@ -12410,13 +12433,16 @@ if (!gid('bm4')) {
 		      } else if (yy != 3) { yy = 3
 			  try { if (typeof yt6.p.playVideo == 'function') yt6.p.playVideo(); if (typeof z.yt6.p.playVideo == 'function') z.yt6.p.playVideo(); yt6.embed.play() } catch(e){}
 			}
-		  }
+		  } catch(e){}
 		  if (hid() || ze) {
 		    y = y.url_encoded_fmt_stream_map
 		    if (y && c[1].url_encoded_fmt_stream_map && c[1].url_encoded_fmt_stream_map.indexOf(y) == -1) c[1].url_encoded_fmt_stream_map = c[1].url_encoded_fmt_stream_map +','+ y.toString()
 		    if (ze) yt6.error = 'embed'; return true
 		  }
-		}
+		} else {
+		    for(i=0;i<z.yt6.linx.length;i++) if (i < 103 && z.yt6.linx[i] && !yt6d.linx.includes(z.yt6.linx[i])) { yt6d.linx.push(z.yt6.linx[i]) }
+		    if (gpst(yt6.original) != -1) yt6.original.pauseVideo()
+		  }
 	      }
 
 	      } else if (z.location.href != 'about:blank') { yt6.error = 'embed_list'; return true }
@@ -12425,14 +12451,17 @@ if (!gid('bm4')) {
 	    } },
 	  function(){
 	      if (yt6d.src_hid) {
-		function backflop() { undo_iframe(true); relocate_mep(); if (typeof yt6d.ct == 'number') try { yt6.p.seekTo(yt6d.ct); delete yt6d.ct } catch(e){}; if (yt6.x != yt6d.x || (!yt6.x && error_screen())) { switch_players() } else set_controls() }
+		function backflop() { undo_iframe()
+		  relocate_mep(); if (typeof yt6d.ct == 'number') try { yt6.p.seekTo(yt6d.ct); delete yt6d.ct } catch(e){};
+		  if (yt6.x != yt6d.x || (!yt6.x && error_screen())) { switch_players() } else set_controls()
+		}
 		if (yt6.error === 'embed' && yt6d.bounce && yt6d.src_hid2 < 4) { backflop(); autorebuild() } else {
 		  z = window.frames['re-embed2']
 		  yt6d.src_hid2 = (!yt6d.src_hid2 || hid()) ? 1 : (yt6d.src_hid2 + 1)
 		  if ( yt6.error == 'embed_list' || (z.yt6d && (z.yt6d.linx_length < 2 || (z.yt6d.linx_length >= 2 && yt6.error == 'embed?'))) ) {
 		    yt6d.src_hid = 0; if (yt6.error !== 'embed_list') { if (!yt6d.bounce) { yt6d.bounce = true } else { yt6.ios = true; backflop() } }
-		    if (yt6d.src_hid2 < 4 && !hid()) { yt6.error = ''; backflop(); rebuild2(); /*yt6d.mep_reload()*/ } else yt6d.mep_renew()
-		  } else { counter = 0; built = buildObject(window.ytplayer)
+		    if (yt6d.src_hid2 < 4 && !hid()) { yt6.error = ''; backflop(); rebuild2() } else { backflop(); yt6d.mep_renew() }
+		  } else { counter = 0; built = buildObject(window.ytplayer); if (yt6.x) switch_players()
 		    $waitUntil(function(){ if (yt6d.src_hid == 2 || built == true) return true; counter = (counter + step) }, function() {
 			if (yt6d.src_hid2 < 4) {
 			backflop(); rebuild((built || true), yt6.args, yt6.html, yt6.href) }
@@ -12455,8 +12484,8 @@ if (!gid('bm4')) {
 
 
 function p1mends() {
-  var s = (!yt6.x) ? gpst(yt6.p) : 0, z = ((yt6.x && yt6.player1 && yt6.player1.media && yt6.player1.media.currentTime && (yt6.player1.media.duration - yt6.player1.media.currentTime)) || (yt6.player2 && yt6.player2.media && yt6.player2.media.currentTime && (yt6.player2.media.duration - yt6.player2.media.currentTime))
-	|| (typeof s == 'number' && s > 0 && (yt6.p.getDuration() - yt6.p.getCurrentTime())) )
+  var s = (!yt6.x) ? gpst(yt6.p) : 0, z = ((yt6.x && yt6.player1 && yt6.player1.media && !yt6.player1.media.paused && yt6.player1.media.currentTime && (yt6.player1.media.duration - yt6.player1.media.currentTime)) || (yt6.player2 && yt6.player2.media && !yt6.player2.media.paused && yt6.player2.media.currentTime && (yt6.player2.media.duration - yt6.player2.media.currentTime))
+	|| (!yt6.x && s === 1 && (yt6.p.getDuration() - yt6.p.getCurrentTime())) )
   z = (typeof z == 'number' && z < 13) ? true : false
   return z
 }
@@ -12504,7 +12533,7 @@ function mobile_playlist_run(upcoming, recall) {
 
 							      //}
 
-								//function pl23c() { try { gt('button', gc('playlist-entrypoint-background-protection')[0])[0].click() } catch(e){} }
+
 
 								if (z) { z.click() } else
 
@@ -12514,7 +12543,7 @@ function mobile_playlist_run(upcoming, recall) {
 
 							 	if (yt6.pls && yt6.pls.on && yt6.pl_next_btn) { yt6.pl_next_btn.click() } else
 
-								if (y && typeof y.href == 'string') { y.click() } else
+								if (y && typeof y.href == 'string') { try { gt('button', gt('ytm-playlist-engagement-panel', 1)[0])[0].click() } catch(e){ y.click() } } else
 
 								if (yt6.pl_next && !yt6.pl_next_blocked) { yt6.pl_next.click() } else try { yt6.pl_next_btn = null; yt6.pl_prev_btn = null; gt('button', gt('ytm-playlist-engagement-panel', 1)[0])[0].click() } catch(e){ mp.playVideoAt((1*yt6.pl_index)+1) }
 
@@ -12821,7 +12850,7 @@ function mep_run() {
 
 					    }
 
-					    function decryption_failure(){ //console.log('df')
+					    function decryption_failure(){ //console.log('df '+yt6.errcount +' '+ yt6.err +' '+ yt6.err2 +' '+ yt6.retry)
 
 					      if (yt6.status == 'unplayable' && player() && yt6.p.tagName == 'IFRAME') { return void 0; } // take no action in this case
 					      if (yt6d.update_in_progress) { return void 0 }
@@ -13165,7 +13194,7 @@ if ((yt6.userprefV[0] == yt6.userprefA[0] || yt6.audiosauce)) if (typeof yt6.aud
 						}
 
 						if (typeof yt6.errcount == 'undefined') yt6.errcount = 0
-						if (yt6.errcount >= 3) {
+						if (yt6.errcount >= 3 && !(yt6.err2 && yt6.err >= yt6.retry)) {
 						  no_default(itag_, 'V'); yt6.player1.media.loaded = false; //yt6.player1.isLoaded = false; 
 						  decryption_failure(); if (yt6.player1) if (yt6.x) { yt6.player1.showControls(true) } else { yt6.player1.hideControls(false) }; yt6.failed_itags = []; //ev_log('should not switch '+ yt6d.update_in_progress ); yt6.retry = 0; 
 						} else {
@@ -13229,7 +13258,7 @@ if ((yt6.userprefV[0] == yt6.userprefA[0] || yt6.audiosauce)) if (typeof yt6.aud
 						    },250,5000);
 
 						  } else {//encrypted
-							if (yt6.x && (yt6.loaded == 5 || yt6.mobile || yt6d.init)) { //!window.yt6_swapped
+							if (yt6.x && (yt6.loaded == 5 || yt6.mobile || yt6d.init)) {//!window.yt6_swapped
 							  if (!yt6.xhr.t) {
 							    if (yt6.errcount > 1) {
 							      switch_players(); try { yt6.p.playVideo() } catch(e){}; window.yt6_swapped = 1
@@ -14737,7 +14766,7 @@ if (me_flash_[0] != undefined) {
   })
   if (yt6.age.check()) { autoplay() } else set_controls(21)
 } else {
-    //yt6d.mep_renew()
+    if (yt6.mobile) yt6d.mep_renew()
   }
 
 	}
@@ -14940,6 +14969,9 @@ if (murl || yt6.ads_eid || (linx && linx.length >= 1000)) { var a = 0, b = 0
     if (qual[i] && qual[i]['t']) return qual[i]['t']
     if (i >= 1000) { var j = (1*(i.toString().slice(-3))); if (qual[j] && qual[j]['t']) return qual[j]['t'] } else return null
   }
+
+  if (yt6d.linx && yt6d.linx.length)
+    for (i=0;i<yt6d.linx.length;i++) if (yt6d.linx[i]) { var b = itag(yt6d.linx[i]); if (!isNaN(b) && !yt6.linx[b]) { yt6.linx[b] = clone(yt6d.linx[i]); linx = yt6.linx } }//re-insert
 
   var b = []
   for (i=0;i<10000;i++) {
@@ -15662,6 +15694,14 @@ if (z) z.style.display = 'none'
    pl_item()
    fix_playlist()
 
+   function destroy(){
+	var np = gc('YouTube_TM')
+	if (np[1] && np[1].parentNode.id == 'movie_player_to_dispose') {
+	  np[1].setAttribute('id','movie_player'); np[1].className = np[0].className.replace('YouTube_TM ','')
+	  try { np[0].destroy() } catch(e){ np[0].parentNode.removeChild(np[0]) }; relocate_mep()
+	}
+   }; destroy()
+
 
 }//mep_up
 
@@ -16347,7 +16387,7 @@ if (!t.sourcechooserButton && !yt6.blocked_m) { //console.log('error')
 	    yt6.encrypted = false
 	    yt6.real_media_duration = null
 	    yt6.real_dur = null
-	    yt6.ads_eid = ''; yt6.ads_eid1 = ''; yt6.ads_eid2 = ''; yt6.real_eid = ''; yt6.eidA = []
+	    yt6.ads_eid = ''; yt6.ads_eid1 = ''; yt6.ads_eid2 = ''; yt6.real_eid = ''; yt6.eidA = []; yt6.durA = []
 
 
 	    if (yt6.layout == 12 && typeof yt6.x_ == 'number') { try { yt6.player1.setVolume(yt6.x_) } catch(e){}; yt6.x_ = null }
@@ -16430,6 +16470,8 @@ if (!t.sourcechooserButton && !yt6.blocked_m) { //console.log('error')
 
 
 	      var bm0 = gid('bm0'), c = conf('args')
+
+	      yt6.ytplayer = {}; yt6d.linx=[]
 
 	      if (yt6.layout == 16 || yt6.body2) { if (!c[0]) window.ytplayer.config = c[0] = {}; if (!c[1]) window.ytplayer.config.args = c[1] = {}
 		c[1].url_encoded_fmt_stream_map = ''
@@ -16819,7 +16861,7 @@ if (!t.sourcechooserButton && !yt6.blocked_m) { //console.log('error')
 		}
 		,400,4000)
 	    }
-	    //if (!yt6.html5_fail) playNext()
+	    if (yt6.mobile) autoplay()//if (!yt6.html5_fail) playNext()
 
 	  },250,5000)
 
@@ -21606,7 +21648,7 @@ if (yt6.flexy) {
 
 
 	var x, y,
-	top, left, oleft, flexyleft = (Math.abs(screen.width - elem.offsetWidth) > 2 * Math.abs(yt6.sb)) ? true : false
+	top, left, oleft, flexyleft = (elem && Math.abs(screen.width - elem.offsetWidth) > 2 * Math.abs(yt6.sb)) ? true : false
 
 
 	  x = ( !f && elem && ((yt6.size == 'default' && (ori || flexyleft)) ) ) ? elem.offsetWidth : ((!(f && yt6.x)) ? screen.width : 0)
