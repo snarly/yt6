@@ -1420,7 +1420,7 @@ function onDownload(x) {
 
 
 
-function findClosingBracketMatchIndex(str, pos, x, y, q) {
+function findClosingBracketMatchIndex(str, pos, x, y, q, regx) {
   if (x == '[') y = ']'
   if (x && !y) y = x;
   if (!x || !y) { x = '{'; y = '}' }
@@ -1433,6 +1433,7 @@ function findClosingBracketMatchIndex(str, pos, x, y, q) {
   for (i = pos + 1; i < str.length; i++) {
     q1 = (!q && !q2 && str[i] == "'" && str[i-1] != '\\') ? !q1 : q1 
     q2 = (!q && !q1 && str[i] == '"' && str[i-1] != '\\') ? !q2 : q2
+    if (regx && str.indexOf(',/') > -1 && str.indexOf('/,') > -1 && str.indexOf(',/') < i && str.lastIndexOf('/,') > i) { continue };
     switch (str[i]) {
     case x:
       if (!q1 && !q2) { depth++; if (x == y && str[i-1] != '\\') { return i }};
@@ -1622,9 +1623,9 @@ function find_key(rpt){
 	if (i && dex[i].lastIndexOf(',-') != dex[i].indexOf(',-')) {
 	  dxh = dex[i-1].slice(-5); dxh = dxh.split(',')[1] || dxh.split(' ')[1] || dxh.split(';')[1]; dxh = dxh +'=['+ dex[i].split(',')[0];
 	  dex = dxh + n2.split(dxh)[1]
-	  index = (findClosingBracketMatchIndex(dex.substring(dex.indexOf('[')), 0, '[') +2) // +1 may be one too short?
+	  index = (findClosingBracketMatchIndex(dex.substring(dex.indexOf('[')), 0, '[', ']', false, true) +2) // +1 may be one too short?
 	  vr1 = dex.replace(dxh.split('[')[0],'').replace('[','').split('{try{')[0].split(','); vr0 = (vr1.length-1)
-	  dex = dex.substring(dex.indexOf('[')+1, index)
+	  dex = dex.substring(dex.indexOf('[')+1, index);
 	  if (dex.slice(-1) == ']') dex = dex.substring(0, dex.length-1)
 	  dex = dex.split(',')
 	  //dex = (dex.replace(dxh.split('[')[0],'').replace('[','')).split(',');
@@ -2215,7 +2216,7 @@ yt6.tmp = ""+
 	if (!yt6d.app) if (path.indexOf('app') == -1 && key == 'app' && value && typeof value == 'object') for (var i in value) if (value[i] && typeof value[i] == 'object' && value[i].app && typeof value[i].app == 'object') {\
 	  try { yt6d.app = ytPubsubPubsubInstance[path[0]][path[1]].app[i]; break } catch(e){};\
 	};\
-	if (yt6d.path && Array.isArray(yt6d.path) && yt6d.path.length && path.indexOf(yt6d.path[0]) == 0 && path.indexOf(yt6d.path[1]) == 1 && path.indexOf(yt6d.path[3]) == 3 && path.indexOf(yt6d.path[2]) == 2 && yt6d.path.length >= 4 && yt6d.path.length < 10 && path.indexOf(yt6d.path[3]) == 3 && ((b && path.indexOf(yt6d.path[4]) == 4) || !(b && path.indexOf(yt6d.path[5]) != 5 && path.indexOf(yt6d.path[6]) != 6)) && typeof value == 'object') { \/\*console.log(path+'_'+key+'_');console.log(value)\*\/;\
+	if (yt6d.path && Array.isArray(yt6d.path) && yt6d.path.length && path.indexOf(yt6d.path[0]) == 0 && path.indexOf(yt6d.path[1]) == 1 && path.indexOf(yt6d.path[3]) == 3 && path.indexOf(yt6d.path[2]) == 2 && yt6d.path.length >= 4 && yt6d.path.length < 10 && path.indexOf(yt6d.path[3]) == 3 && ((b && path.indexOf(yt6d.path[4]) == 4) || !(b && path.indexOf(yt6d.path[5]) != 5 && path.indexOf(yt6d.path[6]) != 6)) && typeof value == 'object') { /*console.log(path+'_'+key+'_');console.log(value)*/;\
 	  var ok = false;\
 	  for(i in value) if (!(list && yt6.list == list)) { vi = value[i]; if (vi && typeof vi == 'object') { \
 	    _itag = 0; \
@@ -3506,7 +3507,6 @@ function load_from_page_source(x, source) {
 
 		ytplayer.config.loaded_from = 'page_source'
 
-//for(i=0;i<yt6d.linx.length;i++) if (yt6d.linx[i] && itag(yt6d.linx[i]) < 103) { yt6.ytplayer.config.args.url_encoded_fmt_stream_map = yt6d.linx[i] +','+ (yt6.ytplayer.config.args.url_encoded_fmt_stream_map || ''); console.log('OK'); console.log(yt6.ytplayer.config.args.url_encoded_fmt_stream_map)}
 
 		player_response()
 
@@ -4756,7 +4756,7 @@ try { var m = window.frames['re-embed2'].document.getElementById('movie_player')
 		  var vid; try { vid = vID(location.href).split('&')[0].split('#')[0].split('/')[0] } catch(e){ vid = video_id(true)[0] }
 		  var pl_fail = false; if (yt6.error == 'embed_list') { pl_fail = true; yt6.error = '' }
 		  var vid = (yt6.layout == 12 && c[1] && c[1].list) ? vid + '?listType=playlist&list=' + c[1].list + '&index=' + pl_index + '&' : vid + '?' + ((re_embed && !pl_fail && c[1].list && yt6.pl_index < 200) ? 'list='+ c[1].list +'&' : '' )
-		  var src = 'https://m.youtube.com/embed/' + vid + 'autoplay=1&enablejsapi=1&version=3'
+		  var src = 'https://m.youtube.com/embed/' + vid + 'autoplay=1&enablejsapi=1&version=3'; yt6d.bounce = true
 		  iframe_.setAttribute('src', ((yt6d.bounce) ? 'https://rawcdn.githack.com/snarly/yt6/34ad1dc9fe3164b7be1c11d35020f2b67608c298/bouncer.html#' + encodeURIComponent(src.replace('//m.','//www.')) : src)
 		  )//&origin=https%3A%2F%2Fwww.youtube.com&widgetid=1
 
@@ -8020,7 +8020,7 @@ function getReferenceObjects() {
 	  if (pc && !gc('alerts-container')[0]) {
 	    ac = document.createElement('div')
 	    ac.className = 'alerts-container'
-	    gt('ytm-app', 1)[0].insertBefore(ac, pc)
+	    gt('ytm-app', 1)[0].insertBefore(ac, pc.nextSibling)
 	    ac = gc('alerts-container')[0]
 	  }
 	}
@@ -13795,8 +13795,8 @@ if (!(yt6.mobile && hid())) return void 0
 							    if ( ((!me.currentTime || (!me.paused && yt6.ct == yt6.pt)) && me.timer > 3) || (!me.loaded && me.pp2.ok) ) { if (me.timer > 4) me.timer = 0; if (!me.loaded || !player2.loaded || (me.timer == 4 && !me.paused && yt6.ct == yt6.pt)) { player2.load(); if (me.timer == 4 && !me.paused && yt6.ct == yt6.pt) { \/\*me.aborted = true; yt6.player1.setSrc("https://www.youtube.com/ptracking");\*\/ yt6.player1.isLoaded = false; me.currentTime = player2.currentTime = yt6.ct = me.currentTime; yt6.player1.setSrc(src2); yt6.player1.load() }; if (!me.loaded) me.load() }; player2.load(); me.play() }; if (me.timer > 0) me.timer++;\
 							  } else { me.timer = (typeof me.timer == "number") ? (me.timer + 1) : 0 }\
 							};\
-							playPromise2.then(function () { \/\*console.log("Playing...")\*\/; pp2();\
-							}).catch(function (error) { \/\*console.log("Failed to play... "+ me.timer +" "+me.currentTime +" "+me.pastTime)\*\/; pp2();\
+							playPromise2.then(function () { \/\*console.log("Playing...");\*\/ pp2();\
+							}).catch(function (error) { \/\*console.log("Failed to play... "+ me.timer +" "+me.currentTime +" "+me.pastTime);\*\/ pp2();\
 							}) };'; try { eval(me.pp2) } catch(e){ yt6.newvideo = false; }; if (typeof me.pp2 == 'function') me.pp2()
 						      } else me.pp2()
 						    }
@@ -14237,7 +14237,7 @@ if (!(yt6.mobile && hid())) return void 0
 					  if ( chk1(me) )
 					    return void 0;
 					  if (yt6.mobile) {// && hid()
-					    if ( ( ( !yt6.failed_itags.length &&
+					    if ( ( ( !(yt6.failed_itags && yt6.failed_itags.length) &&
 						    (pastTime != me.pastTime || pastTime === 0) && !(me.pastTime > 0 && yt6.ct > 0))
 					       ) ) { //if (yt6.at > 0 || pastTime == undefined) me.pastTime = (me.pastTime + 0.3)
 						if (me.currentTime && me.pastTime && me.currentTime != me.pastTime) { me.currentTime = yt6.ct = ((clone(me.pastTime) * 10) / 10) };
@@ -15826,7 +15826,7 @@ if (!t.sourcechooserButton && !yt6.blocked_m) { //console.log('error')
 			var 
 				t = this,
 				// create the loop button
-				ls = $(controls).find('.loop-start'),
+				ls = $(controls).find('.loop-start'), le = $(controls).find('.loop-end'),
 				loop = 
 				$('<div class="mejs-button mejs-loop-button ' + ((player.options.loop) ? 'mejs-loop-on' : 'mejs-loop-off') + '">' +
 					'<button type="button" aria-controls="' + t.id + '" title="Toggle Loop" aria-label="Toggle Loop"></button>' +
@@ -15838,6 +15838,8 @@ if (!t.sourcechooserButton && !yt6.blocked_m) { //console.log('error')
 					player.options.loop1 = !player.options.loop1
 					if (player.options.loop1) {
 						yt6.loop.start = 0; yt6.loop.end = (1* yt6.loaded_media_duration)
+						var s = mejs.Utility.secondsToTimeCode(0), e = mejs.Utility.secondsToTimeCode(yt6.loop.end), ls = $(controls).find('.loop-start'), le = $(controls).find('.loop-end')
+						ls.attr('value', s); ls.val(s); le.attr('value', e); le.val(e)
 						loop.removeClass('mejs-loop-off').addClass('mejs-loop-on')
 						$(controls).find('.mejs-loop-start').css('visibility','visible')
 						$(controls).find('.mejs-loop-end').css('visibility','visible')
@@ -18361,8 +18363,6 @@ if (yt6.loaded >= 4
 
 	  if (p.tagName == 'EMBED') {
 	    try { z = typeof p.getPlayerState } catch(e) { z = null }
-	    // A forced flashplayer's getPlayerState call will always throw an invalid exception on YouTube Music, thus it cannot be controlled via javascript functions but by mouse clicks only. On top of that, if the "Force flash player usage" checkbox remains checked upon another page change, the domain's engine will trash the whole script...
-	    //if (yt6.ytm && z && z == 'function') try { p.getPlayerState() } catch(e){ console.log(e); z = null }
 	    if (yt6.ytm) { z = null }
 	  } else z = typeof p.getPlayerState;
 
@@ -23126,7 +23126,7 @@ function control_panel1() {
     if (pc && !gc('alerts-container')[0]) {
       ac = document.createElement('div')
       ac.className = 'alerts-container'
-      gt('ytm-app', 1)[0].insertBefore(ac, pc)
+      gt('ytm-app', 1)[0].insertBefore(ac, pc.nextSibling)
       ac = gc('alerts-container')[0]
     }
     try { gid('player').setAttribute('loading','false') } catch(e){};
@@ -23222,7 +23222,7 @@ function control_panel1() {
 
     var remove = document.createElement('div')
     remove.id = 'remove-sp'
-    var remove_sp_innerhtml = '<button onclick="if (!gid(\'bm0\') && gid(\'bm01\')) gid(\'bm01\').setAttribute(\'id\',\'bm0\'); switch_players()" class="snarl-button yt-uix-button-text" aria-label="Switch" title="Switch" style="width: 22px; height: 22px; padding: 0 1px 0 0"><img src="//s.ytimg.com/yts/img/HTML5_1Color_Black-vfl902gVJ.png" style="vertical-align:middle; height:12px; padding:0px""></img></button><button onclick="aspect()" class="snarl-button yt-uix-button-text" style="width: 30px" aria-label="Resize" title="Resize">«↔»</button><br><button style="width: 22px" onclick="var yt6 = gid(\'snarls_player\'), l = clone(window.location.href), c16 = &quot;PREF=f1=50000000&f5=10&f6=1004;path=/;domain=.youtube.com;expires=Session&quot;, c12 = c16.replace(\'=1004\',\'=8\'), z = prompt(\'Wanna quit? \(Exit options: 0-3\)\\n Cancel = Not now;\\n 0 = Remove script without page refresh;\\n 1 = Normal YouTube;\\n 2 = Legacy compliant;\\n 3 = YT Music;\', \'0\'); \/\*if (!z) { var z = window.confirm(\'OK will attempt to switch between YouTube layouts and refresh the page. \\nCancel will abort.\'); if (typeof z == \'boolean\' && z == true) { deldiv(); return void 0; } }\*\/; if ((typeof z == \'boolean\' && z == false) || !z ) return void 0; if (z && !(typeof z == \'boolean\' && z == true)) { if (z != 0 && (z == 1 || z == 2 || z == 3)) { if (z == 1) document.cookie=c16; if (z == 2) { document.cookie=c12; }; if (z == 3) { var domain = \'music\'; var vid = (l.indexOf(\'/embed/\') > -1 && l.indexOf(video_id()[0]) == -1) ? l.split(\'/embed/\')[1].split(\'?\')[0].split(\'#\')[0] : video_id()[0]; l = l.replace(\'www.youtube.com\', domain + \'.youtube.com\').replace(\'music.youtube.com\', domain + \'.youtube.com\').replace(\'m.youtube.com\', domain + \'.youtube.com\').replace(\'/embed/\' + vid + \'?\',\'/watch?v=\' + vid + \'&\').replace(\'/embed/\' + vid,\'/watch?v=\' + vid) } else { if (z == 1) { l = l.replace(\'music.youtube.com\',\'www.youtube.com\').replace(\'m.youtube.com\',\'www.youtube.com\') }; if (z == 2) { l = \'https://www.youtube.com/embed/\' + video_id()[0] + \'?\' + (l.split(\'v=\' + yt6.vid).join(\'\').split(\'?\')[1] || l.split(\'v=\' + yt6.vid).join(\'\').split(\'&\')[1] || \'\'); if (yt6.pl_index >= 200) { l = l.split(\'?\')[0] } else l = l.split(\'?&\').join(\'?\'); location.href = \'https://rawcdn.githack.com/snarly/yt6/34ad1dc9fe3164b7be1c11d35020f2b67608c298/bouncer.html#\' + encodeURIComponent(l); return false } else { if (yt6.ytp.embed) { l = l.replace(\'?\',\'&\').replace(\'/embed/\', \'/watch?v=\') }; };  } } else if (z == 0) deldiv() } else { if (yt6.layout == 16) { { document.cookie=c12; } } else document.cookie=c16; l = l.replace(\'music.youtube.com\',\'www.youtube.com\').replace(\'/embed/\' + video_id()[0] + \'?\',\'/watch?v=\' + yt6.vid + \'&\' + l.split(\'/embed/\' + yt6.vid + \'?\')[1]); }; location.href = l;" class="snarl-button yt-uix-button-text" aria-label="Remove script / Change YouTube layout" title="Remove script / Change YouTube layout">X</button><button id="audio_x" class="audio_x snarl-button yt-uix-button-text" aria-label="Use mousewheel to set speed" title="Use mousewheel to set speed" style="padding: 0px 1px 0px 1px; right: 0px" onclick="var yt6 = gid(\'snarls_player\'); if (yt6.player1 && yt6.player2 && typeof yt6.player2.load == \'function\') { var src = \'\'; if (gid(\'no2\')) src = gid(\'no2\').src; var audio_x = window.prompt(\'Enter URL of any audio (or video) file across the net to use as background sound. Will only play alongside video-only sources in progressive download mode.\', src); yt6.audiox = src = yt6.player2.media.src = audio_x || yt6.linx[yt6.userprefA[0]]; yt6.speed = 1; yt6.ytp.speed(); if (!audio_x) { yt6.audiox = null; delete yt6.audiox }; yt6.player2.load() }; ">audio</button></div>'
+    var remove_sp_innerhtml = '<button onclick="if (!gid(\'bm0\') && gid(\'bm01\')) gid(\'bm01\').setAttribute(\'id\',\'bm0\'); switch_players()" class="snarl-button yt-uix-button-text" aria-label="Switch" title="Switch" style="width: 22px; height: 22px; padding: 0 1px 0 0"><img src="//s.ytimg.com/yts/img/HTML5_1Color_Black-vfl902gVJ.png" style="vertical-align:middle; height:12px; padding:0px""></img></button><button onclick="aspect()" class="snarl-button yt-uix-button-text" style="width: 30px" aria-label="Resize" title="Resize">«↔»</button><br><button style="width: 22px" onclick="var yt6 = gid(\'snarls_player\'), l = clone(window.location.href), c16 = &quot;PREF=f1=50000000&f5=10&f6=1004;path=/;domain=.youtube.com;expires=Session&quot;, c12 = c16.replace(\'=1004\',\'=8\'), z = prompt(\'Wanna quit? \(Exit options: 0-3\)\\n Cancel = Not now;\\n 0 = Remove script without page refresh;\\n 1 = Normal YouTube;\\n 2 = Legacy compliant;\\n 3 = YT Music;\', \'0\'); \/\*if (!z) { var z = window.confirm(\'OK will attempt to switch between YouTube layouts and refresh the page. \\nCancel will abort.\'); if (typeof z == \'boolean\' && z == true) { deldiv(); return void 0; } }\*\/; if ((typeof z == \'boolean\' && z == false) || !z ) return void 0; if (z && !(typeof z == \'boolean\' && z == true)) { if (z != 0 && (z == 1 || z == 2 || z == 3)) { if (z == 1) document.cookie=c16; if (z == 2) { document.cookie=c12; }; if (z == 3) { var domain = \'music\'; var vid = (l.indexOf(\'/embed/\') > -1 && l.indexOf(video_id()[0]) == -1) ? l.split(\'/embed/\')[1].split(\'?\')[0].split(\'#\')[0] : video_id()[0]; l = l.replace(\'www.youtube.com\', domain + \'.youtube.com\').replace(\'music.youtube.com\', domain + \'.youtube.com\').replace(\'m.youtube.com\', domain + \'.youtube.com\').replace(\'/embed/\' + vid + \'?\',\'/watch?v=\' + vid + \'&\').replace(\'/embed/\' + vid,\'/watch?v=\' + vid) } else { if (z == 1) { l = l.replace(\'music.youtube.com\',\'www.youtube.com\').replace(\'m.youtube.com\',\'www.youtube.com\') }; if (z == 2) { l = \'https://www.youtube.com/embed/\' + video_id()[0] + \'?\' + (l.split(\'v=\' + yt6.vid).join(\'\').split(\'?\')[1] || l.split(\'v=\' + yt6.vid).join(\'\').split(\'&\')[1] || \'\'); if (yt6.pl_index >= 200) { l = l.split(\'?\')[0] } else l = l.split(\'?&\').join(\'?\'); location.href = \'https://rawcdn.githack.com/snarly/yt6/34ad1dc9fe3164b7be1c11d35020f2b67608c298/bouncer.html#\' + encodeURIComponent(l); return false } else { if (yt6.ytp.embed) { l = l.replace(\'?\',\'&\').replace(\'/embed/\', \'/watch?v=\') }; };  } } else if (z == 0) { deldiv(); z = 0 } } else { if (yt6.layout == 16) { { document.cookie=c12; } } else document.cookie=c16; l = l.replace(\'music.youtube.com\',\'www.youtube.com\').replace(\'/embed/\' + video_id()[0] + \'?\',\'/watch?v=\' + yt6.vid + \'&\' + l.split(\'/embed/\' + yt6.vid + \'?\')[1]); }; if (z) location.href = l;" class="snarl-button yt-uix-button-text" aria-label="Remove script / Change YouTube layout" title="Remove script / Change YouTube layout">X</button><button id="audio_x" class="audio_x snarl-button yt-uix-button-text" aria-label="Use mousewheel to set speed" title="Use mousewheel to set speed" style="padding: 0px 1px 0px 1px; right: 0px" onclick="var yt6 = gid(\'snarls_player\'); if (yt6.player1 && yt6.player2 && typeof yt6.player2.load == \'function\') { var src = \'\'; if (gid(\'no2\')) src = gid(\'no2\').src; var audio_x = window.prompt(\'Enter URL of any audio (or video) file across the net to use as background sound. Will only play alongside video-only sources in progressive download mode.\', src); yt6.audiox = src = yt6.player2.media.src = audio_x || yt6.linx[yt6.userprefA[0]]; yt6.speed = 1; yt6.ytp.speed(); if (!audio_x) { yt6.audiox = null; delete yt6.audiox }; yt6.player2.load() }; ">audio</button></div>'
 
     span.appendChild(remove)
     remove.setAttribute('style','display: inline-block; position: relative')
