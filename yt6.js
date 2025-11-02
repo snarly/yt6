@@ -19632,7 +19632,7 @@ var navi0 = _nav,
 		yt6.navigation_delay = 0
 		yt6.ads_noskip_m = 0
 		if (typeof yt6.ad_skipped == 'number') delete yt6.ad_skipped
-		if (!yt6.nav2) { yt6.mobile_nav = false } else if (!yt6.mobile_nav) { ev_log('DEL'); delete yt6.nav2 }
+		if (!yt6.nav2) { yt6.mobile_nav = false } else { delete yt6.nav2 }
 		if (yt6d.init) delete yt6d.init; //yt6.failed_itags2 = 1
 		yt6.at = 0; yt6.at2 = ''
 		if (!yt6.age.sc && !yt6.age.dl) { yt6.ttsurl = null; c[1].ttsurl = null }
