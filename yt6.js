@@ -1637,7 +1637,7 @@ function find_key(rpt){
 	  vr1 = dex.replace(dxh.split('[')[0],'').replace('[','').split('{try{')[0].split(','); vr0 = (vr1.length-1)
 	  dex = dex.substring(dex.indexOf('[')+1, index);
 	  if (dex.slice(-1) == ']') dex = dex.substring(0, dex.length-1)
-	  dex = dex.split(','); var arraY = dex
+	  dex = dex.split(',')
 	  //dex = (dex.replace(dxh.split('[')[0],'').replace('[','')).split(',');
 	  dxh = false;
 	  //for(j=0;j < vr0;j++) console.log('dex['+j+'] = '+ dex[j]);
@@ -1715,7 +1715,7 @@ function find_key(rpt){
 	      dex1 = dex1 + 'var '+ dex; 
 
 	    } else {  dex = new RegExp(    sprintf('[^\\w]%s=[^=].+?(?=;)', dex0[i].split('$').join('\\$'))  ); dex = rpt.match(dex); dex = (dex) ? dex[0] : '';
-		if (dex) try { ; console.log(dex0[i] +' dexB = '+dex); eval('var '+ dex.substring(dex.indexOf(dex0[i])) ); dex1 = dex1 + 'var '+ dex.substring(dex.indexOf(dex0[i])) +';' } catch(e){}
+		if (dex) try { eval('var '+ dex.substring(dex.indexOf(dex0[i])) ); dex1 = dex1 + 'var '+ dex.substring(dex.indexOf(dex0[i])) +';' } catch(e){}
 	      }
 
 
@@ -1724,7 +1724,7 @@ function find_key(rpt){
 	    }
 	    var deep = ['=',',',' ',':',';']; for(k=0;k < deep.length;k++) { dive(dex.split(deep[k]),'('); dive(dex.split(deep[k]),')'); dive(dex.split(deep[k]),'?'); dive(dex.split(deep[k]),'='); dive(dex.split(deep[k]),'.hasOwnProperty(') }
 
-	  } catch(e) {console.log(e.toString())}
+	  } catch(e) {}
 	}
 
 	n2 = n2.replace('/*teszt*/', dex1 +
@@ -4600,7 +4600,7 @@ function iframe(re_embed) {
 		  z.setAttribute('allowFullScreen', '')
 		  z.setAttribute('allowscriptaccess','always')
 		  z.setAttribute('allow','accelerometer; clipboard-write; encrypted-media')
-		  //z.setAttribute('referrerpolicy','strict-origin-when-cross-origin')
+		  z.setAttribute('referrerpolicy','strict-origin-when-cross-origin')
 		  z.setAttribute('wmode','window')
 		  z.setAttribute('width', '100%')
 		  z.setAttribute('height','100%')
