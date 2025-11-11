@@ -1625,7 +1625,7 @@ function find_key(rpt){
 
       if (n2) {
 	n2 = n2.replace(n +'=','').split('return '+ G +'.')[0]; n2 = n2.substring(0, n2.indexOf('=function(')); n2 = n2.substring(0, n2.lastIndexOf(' '));
-	n2 = n2.replace('/*teszt*/', 'try { /*teszt*/'); n2 = n2.substring(0, n2.lastIndexOf('return ')) + '}catch(err){console.log(err.toString())};'+ n2.substring(n2.lastIndexOf('return '), n2.length)
+	n2 = n2.replace('/*teszt*/', ' /*teszt*/'); //try {   //n2 = n2.substring(0, n2.lastIndexOf('return ')) + '}catch(err){console.log(err.toString())};'+ n2.substring(n2.lastIndexOf('return '), n2.length)
 	n2 = n2.split(fcn).join('fcnm');
 
 
