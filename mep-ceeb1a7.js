@@ -4478,7 +4478,7 @@ if (typeof jQuery != 'undefined') {
 					.addClass('mejs-unfullscreen');
 			}
 
-			if (t.playlistButton && !yt6.ytm) {
+			if (t.playlistButton && yt6.ytp.embed) {// && !yt6.ytm
 				t.playlistButton
 						.css('display','');
 			}
