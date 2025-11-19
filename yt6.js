@@ -1619,14 +1619,13 @@ function find_key(rpt){
 	eval('var '+ (vr0) +'='+ vr.replace('var '+ vr0 +'=',''));
 	n3 = rpt.split('=['+ n1 +']')[0].slice(-6).split('}').join('').split(';').join('') + '=[yt6d.ndec]'; n3 = 'var'+ n3.substring(n3.lastIndexOf(' '), n3.length+1)
 	//eval('('+ VAR +')();')
-      } catch(e){console.log(e.toString())}
+      } catch(e){}
 
 
       if (n2) {try{
 	n2 = n2.replace(n +'=','').split('return '+ G +'.')[0]; n2 = n2.substring(0, n2.indexOf('=function(')); n2 = n2.substring(0, n2.lastIndexOf(' '));
-	  n2 = n2.replace('/*teszt*/', 'try { var throwup; /*teszt*/'); n2 = n2.split('throw ').join('throwup = '); n2 = n2.substring(0, n2.lastIndexOf('return ')) + '}catch(err){console.log(err.toString())}; if (throwup) '+ n2.substring(n2.lastIndexOf('return '), n2.length).split('return ')[1].split('}')[0] + ' = throwup; ' + n2.substring(n2.lastIndexOf('return '), n2.length)
 	n2 = n2.split(fcn).join('fcnm');
-	}catch(e){console.log(e.toString())}
+	}catch(e){}
 
 	try {
 
@@ -1658,7 +1657,7 @@ function find_key(rpt){
 	  }; dex0.push(dex[i].split(' ').join(''))
 	}
 
-	var dex1 = n2.split(';else{try{try{var ')[1], dex2, dex3;
+	var dex1 = n2.split(';else{try{try{var ')[1], dex2, dex3; if (!dex1) dex1 = n2.split(';else{try{')[1] 
 	if (dex1) { vr0 = dex1.split('('); 
 	  dex1 = dex1.split('=')[1]; dex1 = dex1.split('(')[0]; dex0.push(dex1)
 	  for(i=0;i<vr0.length-1;i++){
@@ -1689,7 +1688,7 @@ function find_key(rpt){
 	  }
 	}
 
-	} catch(e){console.log(e.toString())}
+	} catch(e){}
 
 
 
@@ -1728,18 +1727,19 @@ function find_key(rpt){
 	    }
 	    var deep = ['=',',',' ',':',';','&&']; for(k=0;k < deep.length;k++) { dive(dex.split(deep[k]),'('); dive(dex.split(deep[k]),')'); dive(dex.split(deep[k]),'?'); dive(dex.split(deep[k]),'='); dive(dex.split(deep[k]),'.hasOwnProperty(') }
 
-	  } catch(e) {console.log(e.toString())}
+	  } catch(e) {}
 	}
 
 	n2 = n2.replace('/*teszt*/', dex1 +
-(dekrypt0 || '/**/'))
+(dekrypt0 || '/**/'));
+
 
 
 	eval('yt6d.ndec = ' + n2)
       }
-    } catch(e) { e = [e.toString() + '\n'+ n2 +'\n\n'+ dex1].toString(); console.log(e.toString()); gid('ytassetsjs').fcnm = e.split('<').join('&lt;') }
+    } catch(e) { e = [e.toString() + '\n'+ n2 +'\n\n'+ dex1].toString(); gid('ytassetsjs').fcnm = e.split('<').join('&lt;') }
 
-  } catch(e) {console.log(e.toString())
+  } catch(e) {
 
     }
 
@@ -12434,7 +12434,7 @@ if (!gid('bm4')) {
 
 	      var c = conf('args')
 	      if (z && z.yt6) {
-		var s = (z.yt6.p && typeof z.yt6.p.getPlayerState == 'function') ? z.yt6.p.getPlayerState() : -1, ze = (typeof z.error_screen == 'function') ? z.error_screen() : null, zf = (z.yt6.linx && z.yt6.linx.length > 1) ? true : false;
+		var s = (z.yt6.p && typeof z.yt6.p.getPlayerState == 'function') ? z.yt6.p.getPlayerState() : -1, ze = z.error_screen(), zf = (z.yt6.linx && z.yt6.linx.length > 1) ? true : false;
 		if (!y) y = (z.ytplayer && z.ytplayer.config && z.ytplayer.config.args)
 		if (!(y && y.adaptive_fmts)) y = (z.yt6.ytplayer && z.yt6.ytplayer.config && z.yt6.ytplayer.config.args)
 
@@ -13345,10 +13345,10 @@ if ((yt6.userprefV[0] == yt6.userprefA[0] || yt6.audiosauce)) if (typeof yt6.aud
 
 					    }
 
-					  } else if (yt6.x && !yt6.live && (isNaN(m1.duration) || yt6.err2count > 0)) {
+					  } else if (yt6.x && !(yt6.live && yt6.err2count < 20) && (isNaN(m1.duration) || yt6.err2count > 0)) {
 					      if (yt6.failed_itags.indexOf(_itag) == -1) { yt6.failed_itags.push(_itag); } else { //ev_log('BLOW '+Seek +' '+yt6.Seek+' '+yt6.errcount); 
 						//yt6.err2count = 0
-					      }
+					      }; if (yt6.live) yt6.errcount = 4
 					      if (Seek != 0 && me.src != pseudoSrc) {
 						yt6.player1.setSrc(me.src); Seek = 0; clear_mep(yt6.player2);
 						yt6.player2.media.loaded = false; yt6.player2.isLoaded = false; if (hid()) yt6.player1.play()
