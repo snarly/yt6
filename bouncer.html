@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<body style="background-color: black;">
+<div id="iframe" src="" onclick="" allowfullscreen="true" width="100%" height="100%" style="background-color: black; width: 100%; height: 100%;">
+</div>
+<script>
+(function(){ var z = location.href.split('#')[1], i = document.getElementById('iframe')
+    if (z && z.indexOf('https%3A%2F%2Fwww.youtube.com%2Fembed%2F') == 0) {
+	z = decodeURIComponent(z)
+	if (i && typeof i.click == 'function') {
+	  i.src = z; i.setAttribute('onclick', 'window.open(this.src, \'_self\').focus(); return false'); i.click()
+	} else location.href = z
+	location.replace(z)
+    }
+})();
+</script>
+</body>
+</html>
