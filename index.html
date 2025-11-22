@@ -193,7 +193,7 @@
 	</p>
 	<p>
 
-	<div>Since late 2025, <div style="color: red; display: inline-block">Content Security Policy</div> on YouTube basically eliminates direct bookmarklet usage.
+	<div>Since late 2025, <span style="color: red;">Content Security Policy</span> on YouTube basically eliminates direct bookmarklet usage.
 		The last remaining way to overcome it is to redefine the policy during page load, a task 
 		that can only be done by certain browser extensions -- so you will need 
 		one of the following addons to get rid of CSP.
@@ -204,9 +204,9 @@
 
   <br><br>
 
-  <b><strong><u>Desktop browser addons</u></strong></b>
+  <h4><u>Desktop browser addons</u></h4>
   <ol>  
-  <li><h5 style="display: inline-block"><a href="https://github.com/didierfred/SimpleModifyHeaders">Simple Modify Headers</a></h5>
+  <li><b><strong><a href="https://github.com/didierfred/SimpleModifyHeaders">Simple Modify Headers</a></strong></b>
   <ul><li><a href="https://addons.mozilla.org/en-US/firefox/addon/simple-modify-header">for Mozilla Firefox and its derivatives</a></li>
   <li><a href="https://chrome.google.com/webstore/detail/simple-modify-headers/gjgiipmpldkpbdfjkgofildhapegmmic">Chrome Web Store</a>*<br></li>
   <li><a href="https://microsoftedge.microsoft.com/addons/detail/simplemodifyheaders/nmjjhcnkglmnieepjlgodcaebeigppjh">Microsoft Edge Store</a></li><br>
@@ -236,12 +236,12 @@
     Click "Save"... "Start" / "Stop" the addon as needed, and reload the YT page.
   </li>
   </ul>
-  <li><h5 style="display: inline-block"><a href="https://github.com/lisonge/Disable-CSP">Disable-CSP</a></h5> -- Simple ON / OFF switch, handles all websites at once</li>
+  <li><b><strong><a href="https://github.com/lisonge/Disable-CSP">Disable-CSP</a></strong></b> -- Simple ON / OFF switch, handles all websites at once</li>
   <ul>
   <li><a href="https://chromewebstore.google.com/detail/disable-csp/hgegihapiofjgmmgigbblnjaicgjhoko">Chrome Web Store</a>*<br></li>
   <li><a href="https://microsoftedge.microsoft.com/addons/detail/disablecsp/kleofklkancfimlfjhkjegnljkpjafcc">Microsoft Edge Store</a></li>
   </ul>
-  <li><h5 style="display: inline-block"><a href="https://mybrowseraddon.com/content-security-policy.html">Allow-CSP</a></h5> -- Simple ON / OFF switch, handles all websites at once</li>
+  <li><b><strong><a href="https://mybrowseraddon.com/content-security-policy.html">Allow-CSP</a></strong></b> -- Simple ON / OFF switch, handles all websites at once</li>
   <ul>
   <li><a href="https://chromewebstore.google.com/detail/allow-csp-content-securit/hnojoemndpdjofcdaonbefcfecpjfflh">Chrome Web Store</a>*<br></li>
   <li><a href="https://microsoftedge.microsoft.com/addons/detail/allow-csp-contentsecuri/blbbcdoaelobkaloeplifnigplpbkmap">Microsoft Edge Store</a></li>
@@ -251,14 +251,14 @@
 
   <br><br>
   <br><br>
-  <b><strong><u>Mobile browser addons</u></strong></b>
-  <ol><li><h5 style="display: inline-block"><a href="https://addons.mozilla.org/en-US/firefox/addon/simple-modify-headers-extended">Simple Modify Headers Extended</a></h5> for Firefox Mobile</li>
+  <h4><u>Mobile browser addons</u></h4>
+  <ol><li><b><strong><a href="https://addons.mozilla.org/en-US/firefox/addon/simple-modify-headers-extended">Simple Modify Headers Extended</a></strong></b> for Firefox Mobile</li>
   <ul>Not recommended on desktop because unlike the original version, this one is very 
   buggy. However, it is compatible with Firefox Mobile, and if we select the simple,   
-  predefined "disable CSP" Rule Set, the effect will be the same as with having   
-  <b><strong>Disable-CSP</strong></b> or <b><strong>Allow-CSP</strong></b> turned on on Chromium-based browsers.
+  predefined <b><strong>"default"</strong></b> and <b><strong>"disable CSP"</strong></b> pair of <b><strong>Rule Sets</strong></b>, the effect will be the    
+  same as with having Disable-CSP or Allow-CSP turned on on Chromium-based browsers.
   </ul>
-  <li><h5 style="display: inline-block"><a href="https://violentmonkey.github.io/">Violentmonkey</a></h5> and <h5 style="display: inline-block"><a href="https://addons.mozilla.org/en-US/firefox/addon/tampermonkey/">Tampermonkey</a></h5> <u>in conjunction</u> -- the savior to Edge Mobile
+  <li><b><strong><a href="https://violentmonkey.github.io/">Violentmonkey</a></strong></b> and <b><strong><a href="https://addons.mozilla.org/en-US/firefox/addon/tampermonkey/">Tampermonkey</a></strong></b> <u>in conjunction</u> -- the savior to Edge Mobile
   <ul>
   <ui>You have to install and allow them to "Run in InPrivate" through the browser's 
   Extensions / Manage extensions menupoint (only the few addons listed there are   
@@ -272,8 +272,8 @@
   select <b><strong>"Remove entirely (possibly unsecure)"</strong></b></li>
   <li>Tap "Save" at the end of the Security section</li>
   <li>You can add the Yt6 userscript to either Violentmonkey or Tampermonkey --  
-  delete the auto-generated default script-template, select and copy the userscript text 
-  below, paste it in its place, and save changes.
+  delete the auto-generated default script-template, select and copy-paste the   
+  userscript text below, and save changes.
   </li>
   </p>
   </ul>
