@@ -4768,9 +4768,15 @@ function iframe(re_embed) {
 		  var vid; try { vid = vID(location.href).split('&')[0].split('#')[0].split('/')[0] } catch(e){ vid = video_id(true)[0] }
 		  var pl_fail = false; if (yt6.error == 'embed_list') { pl_fail = true; yt6.error = '' }
 		  var vid = (yt6.layout == 12 && c[1] && c[1].list) ? vid + '?listType=playlist&list=' + c[1].list + '&index=' + pl_index + '&' : vid + '?' + ((re_embed && !pl_fail && c[1].list && yt6.pl_index < 200) ? 'list='+ c[1].list +'&' : '' )
-		  var src = 'https://m.youtube.com/embed/' + vid + 'autoplay=1&enablejsapi=1&version=3&origin=https%3A%2F%2Fm.youtube.com'; yt6d.bounce = true
-		  iframe_.setAttribute('src', ((yt6d.bounce) ? 'https://rawcdn.githack.com/snarly/yt6/34ad1dc9fe3164b7be1c11d35020f2b67608c298'
-		  + '/bouncer.html#' + encodeURIComponent(src.replace('//m.','//www.')) : src)
+		  var src, src0 = 'https://m.youtube.com/embed/' + vid + 'autoplay=1&enablejsapi=1&version=3&origin=https%3A%2F%2Fm.youtube.com';
+		  if (!yt6d.bounce) yt6d.bounce = true
+          if (yt6d.bounce) {
+            src = (yt6d.bounce != 'https://snarly.github.io/yt6') ? 'https://rawcdn.githack.com/snarly/yt6/34ad1dc9fe3164b7be1c11d35020f2b67608c298' :
+            'https://snarly.github.io/yt6'
+          }
+
+		  iframe_.setAttribute('src', ((yt6d.bounce) ? src 
+		  + '/bouncer.html#' + encodeURIComponent(src0.replace('//m.','//www.')) : src0)
 		  )//&widgetid=1
 
 		  yt6.api.insertBefore(iframe_, yt6.api.firstChild)
@@ -12480,6 +12486,7 @@ if (!gid('bm4')) {
 		if (yt6.error === 'embed' && yt6d.bounce && yt6d.src_hid2 < 4) { backflop(); autorebuild() } else {
 		  z = window.frames['re-embed2']
 		  yt6d.src_hid2 = (!yt6d.src_hid2 || hid()) ? 1 : (yt6d.src_hid2 + 1)
+		  try {
 		  if ( yt6.error == 'embed_list' || (z && z.yt6d && (z.yt6d.linx_length < 2 || (z.yt6d.linx_length >= 2 && yt6.error == 'embed?'))) ) {
 		    yt6d.src_hid = 0; if (yt6.error !== 'embed_list') { if (!yt6d.bounce) { yt6d.bounce = true } else { yt6.ios = true; backflop() } }
 		    if (yt6d.src_hid2 < 4 && !hid()) { yt6.error = ''; backflop(); rebuild2() } else { backflop(); yt6d.mep_renew() }
@@ -12489,6 +12496,7 @@ if (!gid('bm4')) {
 			backflop(); rebuild((built || true), yt6.args, yt6.html, yt6.href) }
 		    }, step, 6000, true)
 		  }
+		  } catch(e){ e = e.toString(); if (typeof yt6d.bounce != 'string' && e.indexOf('property') > -1 && e.indexOf('origin') > -1) { yt6d.bounce = 'https://snarly.github.io/yt6'; yt6d.src_hid = 0; yt6d.src_hid2 = 0; backflop(); autorebuild(e) } }
 		}
 
 	      } //else yt6d.src_hid2 = 0
