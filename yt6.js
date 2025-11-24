@@ -1431,9 +1431,10 @@ function findClosingBracketMatchIndex(str, pos, x, y, q, regx) { var r0, r1 = []
   if (regx) {
     for (i = pos + 1; i < str.length; i++) {
       if (str[i] == ',' && str[i+1] == '/') r1.push(i)
-      if (str[i] == '/' && str[i+1] == ',' && r1.indexOf(i-1) == -1) r2.push(i) // ! supposed regex border indexes must differ by more than 1 , otherwise the current forward slash sign is just another element inside the regex string !
+      if (str[i] == '/' && str[i+1] == ',' && str[i-1] != '\\') { if (r1.indexOf(i-1) == -1 || /^[a-zA-Z0-9_\$\.\[]*$/.test( str.substring(i+2).split(',')[0] )) { r2.push(i) }  } // regex border indexes should not point at the same slash
     }
     for (i = 0; i < r1.length; i++) if (r1[i] && !r2[i]) { r1.splice(r1.indexOf(r1[i]),1) }
+    yt6.r1 = r1; yt6.r2 = r2
   }
 
   for (i = pos + 1; i < str.length; i++) {
@@ -1630,15 +1631,17 @@ function find_key(rpt){
 	try {
 
 	// array-filter
-	var dex = n2.split('=['), dex0 = [], dxh
+	var dex = n2.split('=['), dex0 = [], dxh, array, rgx
 	for(i=0;i < dex.length;i++)
 	if (i && dex[i].lastIndexOf(',-') != dex[i].indexOf(',-')) {
 	  dxh = dex[i-1].slice(-5); dxh = dxh.split(',')[1] || dxh.split(' ')[1] || dxh.split(';')[1]; dxh = dxh +'=['+ dex[i].split(',')[0];
-	  dex = dxh + n2.split(dxh)[1]
+	  dex = dxh + n2.split(dxh)[1];
+	  yt6.r1 = []; yt6.r2 = []
 	  index = (findClosingBracketMatchIndex(dex.substring(dex.indexOf('[')), 0, '[', ']', false, true) +2) // +1 may be one too short?
 	  vr1 = dex.replace(dxh.split('[')[0],'').replace('[','').split('{try{')[0].split(','); vr0 = (vr1.length-1)
 	  dex = dex.substring(dex.indexOf('[')+1, index);
 	  if (dex.slice(-1) == ']') dex = dex.substring(0, dex.length-1)
+	  array = dex
 	  dex = dex.split(',')
 	  //dex = (dex.replace(dxh.split('[')[0],'').replace('[','')).split(',');
 	  dxh = false;
@@ -1650,7 +1653,9 @@ function find_key(rpt){
 	vr1 = vr1[vr0].split('typeof ')[1]; if (vr1) vr1 = 'var '+ vr1.split('===')[0] }
 
 	for(i=0;i<dex.length;i++) if (isNaN(dex[i]) && dex[i].indexOf('/') != 0) {
-	  if (dex[i].indexOf('function(')>-1 || dex[i].indexOf('{')>-1) dxh = true;
+	  if (dex[i].indexOf('function(')>-1) dxh = true;
+	  if (dex[i].indexOf('{')>-1) if (yt6.r1.length && yt6.r2.length) { rgx = ''; for(j=0;j<i;j++) rgx = rgx + ((rgx) ? ',' : '') + dex[j]; rgx = rgx +','+ dex[i].substring(dex[i].indexOf('{')); rgx = array.indexOf(array.split(rgx)[1]); for(j=0;j<yt6.r1.length;j++) if (!(yt6.r1[j] < rgx && yt6.r2[j] > rgx)) { dxh = true } }
+	    else dxh = true
 	  if ((dex[i].indexOf('{')>-1 || dex[i].indexOf('}')>-1) && dex[i].split('}').length >= dex[i].split('{').length) dxh = false;
 	  if (dxh || dex[i].indexOf('[')>-1 || dex[i].indexOf('null')>-1 || dex[i].length == 1 || n2.indexOf(dex[i]) < n2.lastIndexOf(dex[i])) { //console.log('Skipped '+ dex[i]);
 	    continue
