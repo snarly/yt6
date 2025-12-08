@@ -916,7 +916,7 @@ function rp(tx) {
 function dc(num, sg) {
   var z; if (!sg) sg = num
   try { z = fcnm(num, sg); return z } catch(e) {
-    if ((gid('ytassetsjs') != null) && (typeof gid('ytassetsjs').fcnm != 'undefined')) {
+    if ((gid('ytassetsjs') != null) && typeof gid('ytassetsjs').fcnm == 'function') {
       var fcnm = gid('ytassetsjs').fcnm
       return fcnm(num, sg);
     } else return sg
@@ -1456,19 +1456,19 @@ function findClosingBracketMatchIndex(str, pos, x, y, q, regx) { var r0, r1 = []
 }
 
 
-function find_key(rpt){
+function find_key(_rpt){
 
-  var rpt = rpt.replace(/(\r\n|\n|\r)/gm," ").split('<BR>').join('')
-  if (rpt.indexOf("function fcnm(") != -1) {
-    rpt = rpt.replace('<html>','').replace('<body>','').replace('<pre>','');
-    eval(rpt);
+  var _rpt = _rpt.replace(/(\r\n|\n|\r)/gm," ").split('<BR>').join(''), _fcn, __i, __j, __k
+  if (_rpt.indexOf("function fcnm(") != -1) {
+    _rpt = _rpt.replace('<html>','').replace('<body>','').replace('<pre>','');
+    eval(_rpt);
     if (typeof window.fcnm == 'undefined') {
-      window.fcnm = (typeof fcnm == 'function') ? fcnm : new Function("a", fcn.substring(17,findClosingBracketMatchIndex(fcn,fcn.indexOf('{'))) )
+      window.fcnm = (typeof fcnm == 'function') ? fcnm : new Function("a", _fcn.substring(17,findClosingBracketMatchIndex(_fcn,_fcn.indexOf('{'))) )
     }
     return window.fcnm
   }
 
-  var G = 'g'; if (rpt.split('function(')[1]) G = rpt.split('function(')[1].split(')')[0]
+  var __G = 'g'; if (_rpt.split('function(')[1]) __G = _rpt.split('function(')[1].split(')')[0]
 
 
 	  function getFunctionName(str){
@@ -1501,15 +1501,15 @@ function find_key(rpt){
 
 	  }
 
-	var fcn, fcn0, fcn1, n, n1
+	var _fcn, _fcn0, _fcn1, __n, __n1
 	//var names randomized since Dec 2024
-	var i = 0; for(i;i<rpt.split(',encodeURIComponent(').length-1;i++)
-	{ fcn0 = rpt.split(',encodeURIComponent(')[i].slice(-50)
-	  if (fcn0 && fcn0.lastIndexOf('=') > -1 && fcn0.lastIndexOf('=') < fcn0.indexOf('decodeURIComponent(')) { fcn = fcn0.substring((fcn0.lastIndexOf('=')+1)), fcn1 = fcn.split('(')[1]; fcn1 = (fcn1) ? 1*(fcn1.split(',')[0]) : 0; yt6d.arg['s'+i] = fcn1; yt6d.arg.s = fcn1; fcn = fcn.split('(')[0] } else fcn = '' //.split('decodeURIComponent(')[0].split('=')[1]
+	var __i = 0; for(__i;__i<_rpt.split(',encodeURIComponent(').length-1;__i++)
+	{ _fcn0 = _rpt.split(',encodeURIComponent(')[__i].slice(-50)
+	  if (_fcn0 && _fcn0.lastIndexOf('=') > -1 && _fcn0.lastIndexOf('=') < _fcn0.indexOf('decodeURIComponent(')) { _fcn = _fcn0.substring((_fcn0.lastIndexOf('=')+1)), _fcn1 = _fcn.split('(')[1]; _fcn1 = (_fcn1) ? 1*(_fcn1.split(',')[0]) : 0; yt6d.arg['s'+__i] = _fcn1; yt6d.arg.s = _fcn1; _fcn = _fcn.split('(')[0] } else _fcn = '' //.split('decodeURIComponent(')[0].split('=')[1]
 	}
 
-	var n0 = (rpt.split('{this.segments.push(')[1]) ? rpt.split('{this.segments.push(')[0] : ''; // from 202510 on, n-decryption key moved to random location
-	if (n0) { n0 = n0.slice(-50).split('=[')[1]; if (n0) { n = n0.split(']')[0]; n1 = n } }
+	var __n0 = (_rpt.split('{this.segments.push(')[1]) ? _rpt.split('{this.segments.push(')[0] : ''; // from 202510 on, n-decryption key moved to random location
+	if (__n0) { __n0 = __n0.slice(-50).split('=[')[1]; if (__n0) { __n = __n0.split(']')[0]; __n1 = __n } }
 
 
 	function sprintf(nw) {
@@ -1519,21 +1519,21 @@ function find_key(rpt){
 	  return nw;
 	}
 
-      n0 = '[a-zA-Z0-9_\\\$]'
+      __n0 = '[a-zA-Z0-9_\\\$]'
 
-      if (!n) {
-	var n1 = new RegExp(	sprintf( n0 + n0 + n0 +'\=\\\[%s\\\];', n0 + n0 + n0)	); n1 = rpt.match(n1)//'var '+
-	if (n1 && n1[0]) {
-	  n1 = n1[0].split(']')[0].split('=[')[1]; n = n1
+      if (!__n) {
+	var __n1 = new RegExp(	sprintf( __n0 + __n0 + __n0 +'\=\\\[%s\\\];', __n0 + __n0 + __n0)	); __n1 = _rpt.match(__n1)//'var '+
+	if (__n1 && __n1[0]) {
+	  __n1 = __n1[0].split(']')[0].split('=[')[1]; __n = __n1
 	}
       }
 
 
-	//console.log('fcn='+fcn); console.log('n='+n);
+	//console.log('_fcn='+_fcn); console.log('__n='+__n);
 
-  function fcobj(){ // find the variable name which refers to the object with the signature-descrambling methods
+  function fcobj(__fs){ // find the variable name which refers to the object with the signature-descrambling methods
 
-    var mch = fs, mch = mch.split(''), zzx, zzy, zzz;
+    var mch = __fs, mch = mch.split(''), zzx, zzy, zzz;
     for (j=0;j<mch.length;j++) {
       if (mch[j] === "$") {
         mch[j]="\\$"
@@ -1566,128 +1566,128 @@ function find_key(rpt){
 	//sprintf('function %s[^}]+}[^}]+}',
 	//sprintf('var %s=function[^}]+};',
 
-    var f1, f2
-    var fs = new RegExp(    sprintf('[^\\w.]%s=function[^}].+?(?=};)', fcn.split('$').join('\\$'))  );//\\W does not suffice, have to exclude the possibility of a leading dot as well
+    var __f1, __f2
+    var __fs = new RegExp(    sprintf('[^\\w.]%s=function[^}].+?(?=};)', _fcn.split('$').join('\\$'))  );//\\W does not suffice, have to exclude the possibility of a leading dot as well
 
 
-    var fs = (rpt.match(fs)) ? rpt.match(fs)[0] + '};' : ''
-    if (fs && fs.indexOf('return ') == -1) fs = fs + rpt.split(fs)[1].split('return ')[0] + 'return ' + rpt.split(fs)[1].split('return ')[1].split('}')[0] + '};'
+    var __fs = (_rpt.match(__fs)) ? _rpt.match(__fs)[0] + '};' : ''
+    if (__fs && __fs.indexOf('return ') == -1) __fs = __fs + _rpt.split(__fs)[1].split('return ')[0] + 'return ' + _rpt.split(__fs)[1].split('return ')[1].split('}')[0] + '};'
 
-    if (fs) {
-      f1 = fcobj()[0]; //console.log('regular expression including the object name: '+ f1)
-      f2 = fcobj()[1]; //console.log('object name: '+ f2)
+    if (__fs) {
+      __f1 = fcobj(__fs)[0]; //console.log('regular expression including the object name: '+ f1)
+      __f2 = fcobj(__fs)[1]; //console.log('object name: '+ f2)
     }
 
-    var dekrypt0 = (f1) ? rpt.match(f1)[0] : ''
+    var dekrypt0 = (__f1) ? _rpt.match(__f1)[0] : ''
 
-    var nreg, n2, n3, n4, vr0, vr1, vr = '', br = '', cr = '', index
-    if (typeof n == 'string')
+    var nreg, __n2, __n3, __n4, __vr0, __vr1, __vr = '', __br = '', __cr = '', index
+    if (typeof __n == 'string')
     try {
-      nreg = new RegExp(	sprintf('[^\\w.]%s=function[^}]+}.*', n.split('$').join('\\$'))	)
-      n2 = rpt.match(nreg)
-      if (n2) {
-	nreg = null; n3 = n2[0].split('{')[0].split(')')[0].split('(')[1]
-	n4 = n2[0].split('function('+n3+'){return ')[1]; //n alt
-	if (n4 && n2[0].indexOf('}') > n2[0].indexOf(n4) && n2[0].indexOf('}') < 50 && n4.split('(this,')[0].slice(-2) == ']]') {
-		n3 = n4.split('(this,')[1]; if (n3) n3 = n3.split(')')[0]; yt6d.arg.n = 1*(n3.split(',')[0])
-		n = n4.split('[')[0]
-		vr = n4.split('[')[1]; if (vr) vr = vr.split('[')[0]
-		if (rpt.indexOf("'use strict';var ") > -1 && rpt.indexOf("'use strict';var "+ vr) == -1) vr = rpt.split("'use strict';var ")[1].split('=')[0]
-		if (vr) vr0 = vr
-		nreg = new RegExp(	sprintf('[^\\w.]%s=function[^}]+}.*', n.split('$').join('\\$'))	);
-		n2 = rpt.match(nreg)[0];
-	} else { n2 = n2[0]; }
+      nreg = new RegExp(	sprintf('[^\\w.]%s=function[^}]+}.*', __n.split('$').join('\\$'))	)
+      __n2 = _rpt.match(nreg)
+      if (__n2) {
+	nreg = null; __n3 = __n2[0].split('{')[0].split(')')[0].split('(')[1]
+	__n4 = __n2[0].split('function('+__n3+'){return ')[1]; //__n alt
+	if (__n4 && __n2[0].indexOf('}') > __n2[0].indexOf(__n4) && __n2[0].indexOf('}') < 50 && __n4.split('(this,')[0].slice(-2) == ']]') {
+		__n3 = __n4.split('(this,')[1]; if (__n3) __n3 = __n3.split(')')[0]; yt6d.arg.n = 1*(__n3.split(',')[0])
+		__n = __n4.split('[')[0]
+		__vr = __n4.split('[')[1]; if (__vr) __vr = __vr.split('[')[0]
+		if (_rpt.indexOf("'use strict';var ") > -1 && _rpt.indexOf("'use strict';var "+ __vr) == -1) __vr = _rpt.split("'use strict';var ")[1].split('=')[0]
+		if (__vr) __vr0 = __vr
+		nreg = new RegExp(	sprintf('[^\\w.]%s=function[^}]+}.*', __n.split('$').join('\\$'))	);
+		__n2 = _rpt.match(nreg)[0];
+	} else { __n2 = __n2[0]; }
 
-	n3 = n2.split('{')[0] + '{'
-	n2 = n2.split('{')[0] + '{ /*teszt*/;'+ n2.split(n3)[1] 
+	__n3 = __n2.split('{')[0] + '{'
+	__n2 = __n2.split('{')[0] + '{ /*teszt*/;'+ __n2.split(__n3)[1] 
 
-	if (rpt.split('var '+ vr +'=')[1]) {
-	    cr = rpt.split('var '+ vr +'=')[1].substring(0,1)
-	    vr = 'var '+ vr +'='+ rpt.split('arguments')[0].split('return function')[0].split('var '+ vr +'=')[1]
-		br = vr.split('.split(')[1]
-		if (br) {
-			br = br.substring(0,1); cr = vr.split('.split(' + br)[1].split(br +')')[0]
-			vr = vr.split('.split(')[0] + '.split(' + br + cr + br + ')'
+	if (_rpt.split('var '+ __vr +'=')[1]) {
+	    __cr = _rpt.split('var '+ __vr +'=')[1].substring(0,1)
+	    __vr = 'var '+ __vr +'='+ _rpt.split('arguments')[0].split('return function')[0].split('var '+ __vr +'=')[1]
+		__br = __vr.split('.split(')[1]
+		if (__br) {
+			__br = __br.substring(0,1); __cr = __vr.split('.split(' + __br)[1].split(__br +')')[0]
+			__vr = __vr.split('.split(')[0] + '.split(' + __br + __cr + __br + ')'
 		} else {
-			index = (findClosingBracketMatchIndex(vr.substring(vr.indexOf(cr)), 0, cr) + 1)
-			vr = vr.split('=')[0] + '=' + vr.substring(vr.indexOf(cr)).substring(0, index)
+			index = (findClosingBracketMatchIndex(__vr.substring(__vr.indexOf(__cr)), 0, __cr) + 1)
+			__vr = __vr.split('=')[0] + '=' + __vr.substring(__vr.indexOf(__cr)).substring(0, index)
 		}
-		n2 = n2.split('{')[0] + '{'+ vr +';'+ n2.split(n3)[1] 
+		__n2 = __n2.split('{')[0] + '{'+ __vr +';'+ __n2.split(__n3)[1] 
 	}
       }
 
-      try { //var VAR = 'yt6d.__'+vr0; eval((VAR) +'='+ vr.replace('var '+ vr0 +'=','')); 
-	eval('var '+ (vr0) +'='+ vr.replace('var '+ vr0 +'=',''));
-	n3 = rpt.split('=['+ n1 +']')[0].slice(-6).split('}').join('').split(';').join('') + '=[yt6d.ndec]'; n3 = 'var'+ n3.substring(n3.lastIndexOf(' '), n3.length+1)
-	//eval('('+ VAR +')();')
+      try { //var _VAR = 'yt6d.__'+__vr0; eval((_VAR) +'='+ __vr.replace('var '+ __vr0 +'=','')); 
+	eval('var '+ (__vr0) +'='+ __vr.replace('var '+ __vr0 +'=',''));
+	__n3 = _rpt.split('=['+ __n1 +']')[0].slice(-6).split('}').join('').split(';').join('') + '=[yt6d.ndec]'; __n3 = 'var'+ __n3.substring(__n3.lastIndexOf(' '), __n3.length+1)
+	//eval('('+ _VAR +')();')
       } catch(e){}
 
 
-      if (n2) {try{
-	n2 = n2.replace(n +'=','').split('return '+ G +'.')[0]; n2 = n2.substring(0, n2.indexOf('=function(')); n2 = n2.substring(0, n2.lastIndexOf(' '));
-	n2 = n2.split(fcn).join('fcnm');
+      if (__n2) {try{
+	__n2 = __n2.replace(__n +'=','').split('return '+ __G +'.')[0]; __n2 = __n2.substring(0, __n2.indexOf('=function(')); __n2 = __n2.substring(0, __n2.lastIndexOf(' '));
+	__n2 = __n2.split(_fcn).join('fcnm');
 	}catch(e){}
 
 	try {
 
 	// array-filter
-	var dex = n2.split('=['), dex0 = [], dxh, array, rgx
-	for(i=0;i < dex.length;i++)
-	if (i && dex[i].lastIndexOf(',-') != dex[i].indexOf(',-')) {
-	  dxh = dex[i-1].slice(-5); dxh = dxh.split(',')[1] || dxh.split(' ')[1] || dxh.split(';')[1]; dxh = dxh +'=['+ dex[i].split(',')[0];
-	  dex = dxh + n2.split(dxh)[1];
+	var _dex = __n2.split('=['), _dex0 = [], _dxh, array, _rgx
+	for(__i=0;__i < _dex.length;__i++)
+	if (__i && _dex[__i].lastIndexOf(',-') != _dex[__i].indexOf(',-')) {
+	  _dxh = _dex[__i-1].slice(-5); _dxh = _dxh.split(',')[1] || _dxh.split(' ')[1] || _dxh.split(';')[1]; _dxh = _dxh +'=['+ _dex[__i].split(',')[0];
+	  _dex = _dxh + __n2.split(_dxh)[1];
 	  yt6.r1 = []; yt6.r2 = []
-	  index = (findClosingBracketMatchIndex(dex.substring(dex.indexOf('[')), 0, '[', ']', false, true) +2) // +1 may be one too short?
-	  vr1 = dex.replace(dxh.split('[')[0],'').replace('[','').split('{try{')[0].split(','); vr0 = (vr1.length-1)
-	  dex = dex.substring(dex.indexOf('[')+1, index);
-	  if (dex.slice(-1) == ']') dex = dex.substring(0, dex.length-1)
-	  array = dex
-	  dex = dex.split(',')
-	  //dex = (dex.replace(dxh.split('[')[0],'').replace('[','')).split(',');
-	  dxh = false;
-	  //for(j=0;j < vr0;j++) console.log('dex['+j+'] = '+ dex[j]);
+	  index = (findClosingBracketMatchIndex(_dex.substring(_dex.indexOf('[')), 0, '[', ']', false, true) +2) // +1 may be one too short?
+	  __vr1 = _dex.replace(_dxh.split('[')[0],'').replace('[','').split('{try{')[0].split(','); __vr0 = (__vr1.length-1)
+	  _dex = _dex.substring(_dex.indexOf('[')+1, index);
+	  if (_dex.slice(-1) == ']') _dex = _dex.substring(0, _dex.length-1)
+	  array = _dex
+	  _dex = _dex.split(',')
+	  //_dex = (_dex.replace(_dxh.split('[')[0],'').replace('[','')).split(',');
+	  _dxh = false;
+	  //for(__j=0;__j < __vr0;__j++) console.log('_dex['+__j+'] = '+ _dex[__j]);
 	  break
 	}
 
-	if (Array.isArray(vr1) && vr1[vr0] && vr1[vr0].indexOf('];') < 14) { //dex[vr0] = vr1[vr0].split('];')[0]; 
-	vr1 = vr1[vr0].split('typeof ')[1]; if (vr1) vr1 = 'var '+ vr1.split('===')[0] }
+	if (Array.isArray(__vr1) && __vr1[__vr0] && __vr1[__vr0].indexOf('];') < 14) { //_dex[__vr0] = __vr1[__vr0].split('];')[0]; 
+	__vr1 = __vr1[__vr0].split('typeof ')[1]; if (__vr1) __vr1 = 'var '+ __vr1.split('===')[0] }
 
-	for(i=0;i<dex.length;i++) if (isNaN(dex[i]) && dex[i].indexOf('/') != 0) {
-	  if (dex[i].indexOf('function(')>-1) dxh = true;
-	  if (dex[i].indexOf('{')>-1) if (yt6.r1.length && yt6.r2.length) { rgx = ''; for(j=0;j<i;j++) rgx = rgx + ((rgx) ? ',' : '') + dex[j]; rgx = rgx +','+ dex[i].substring(dex[i].indexOf('{')); rgx = array.indexOf(array.split(rgx)[1]); for(j=0;j<yt6.r1.length;j++) if (!(yt6.r1[j] < rgx && yt6.r2[j] > rgx)) { dxh = true } }
-	    else dxh = true
-	  if ((dex[i].indexOf('{')>-1 || dex[i].indexOf('}')>-1) && dex[i].split('}').length >= dex[i].split('{').length) dxh = false;
-	  if (dxh || dex[i].indexOf('[')>-1 || dex[i].indexOf('null')>-1 || dex[i].length == 1 || n2.indexOf(dex[i]) < n2.lastIndexOf(dex[i])) { //console.log('Skipped '+ dex[i]);
+	for(__i=0;__i<_dex.length;__i++) if (isNaN(_dex[__i]) && _dex[__i].indexOf('/') != 0) {
+	  if (_dex[__i].indexOf('function(')>-1) _dxh = true;
+	  if (_dex[__i].indexOf('{')>-1) if (yt6.r1.length && yt6.r2.length) { _rgx = ''; for(__j=0;__j<__i;__j++) _rgx = _rgx + ((_rgx) ? ',' : '') + _dex[__j]; _rgx = _rgx +','+ _dex[__i].substring(_dex[__i].indexOf('{')); _rgx = array.indexOf(array.split(_rgx)[1]); for(__j=0;__j<yt6.r1.length;__j++) if (!(yt6.r1[__j] < _rgx && yt6.r2[__j] > _rgx)) { _dxh = true } }
+	    else _dxh = true
+	  if ((_dex[__i].indexOf('{')>-1 || _dex[__i].indexOf('}')>-1) && _dex[__i].split('}').length >= _dex[__i].split('{').length) _dxh = false;
+	  if (_dxh || _dex[__i].indexOf('[')>-1 || _dex[__i].indexOf('null')>-1 || _dex[__i].length == 1 || __n2.indexOf(_dex[__i]) < __n2.lastIndexOf(_dex[__i])) { //console.log('Skipped '+ _dex[__i]);
 	    continue
-	  }; dex0.push(dex[i].split(' ').join(''))
+	  }; _dex0.push(_dex[__i].split(' ').join(''))
 	}
 
-	var dex1 = n2.split(';else{try{try{var ')[1], dex2, dex3; if (!dex1) dex1 = n2.split(';else{try{')[1] 
-	if (dex1) { vr0 = dex1.split('('); 
-	  dex1 = dex1.split('=')[1]; dex1 = dex1.split('(')[0]; dex0.push(dex1)
-	  for(i=0;i<vr0.length-1;i++){
-	    if(vr0[i].charAt(1)=='=' && vr0[i].charAt(2)!='=') { vr0[i] = vr0[i].split('=')[1]; if (vr0[i] && vr0[i].length == 3 && /[a-zA-Z0-9_\$]/.test(vr0[i])) { dex0.push(vr0[i]); break } }
+	var _dex1 = __n2.split(';else{try{try{var ')[1], _dex2, _dex3; if (!_dex1) _dex1 = __n2.split(';else{try{')[1] 
+	if (_dex1) { __vr0 = _dex1.split('('); 
+	  _dex1 = _dex1.split('=')[1]; _dex1 = _dex1.split('(')[0]; _dex0.push(_dex1)
+	  for(__i=0;__i<__vr0.length-1;__i++){
+	    if(__vr0[__i].charAt(1)=='=' && __vr0[__i].charAt(2)!='=') { __vr0[__i] = __vr0[__i].split('=')[1]; if (__vr0[__i] && __vr0[__i].length == 3 && /[a-zA-Z0-9_\$]/.test(__vr0[__i])) { _dex0.push(__vr0[__i]); break } }
 	  }
 	}
 
 
-	dex1 = ';var '+ G +' = _yt_player;'+ n3 +';var '+ n +'=yt6d.ndec;';
+	_dex1 = ';var '+ __G +' = _yt_player;'+ __n3 +';var '+ __n +'=yt6d.ndec;';
 	try {
-	  dex = rpt.split('return '+ fcn +'[')[1]; if (dex) dex = rpt.substring(rpt.split('return '+ fcn +'[')[0].lastIndexOf(';')+1, rpt.indexOf(dex) + dex.indexOf(';')+1); if (dex) { if (dex.indexOf('var') == -1) dex = 'var '+ dex; dex1 = dex1 + dex.split(fcn).join('fcnm') +';' }
-	  dex = rpt.split('document.location.hostname);document.location.port')[1]; if (dex) dex = rpt.substring(rpt.split('document.location.hostname);document.location.port')[0].lastIndexOf('};')+2, rpt.indexOf(dex) + dex.indexOf('};')+2); if (dex) { if (dex.indexOf('var') == -1) dex = 'var '+ dex; dex1 = dex1 + dex +';' }
-	  dex = rpt.split('("cipher")')[1]; if (dex) { dex = rpt.substring(rpt.split('("cipher")')[0].lastIndexOf(';')+1,
-		rpt.split('("cipher")')[0].lastIndexOf('=')+1); if (dex) dex = dex + 'new Object({"name":"cipher"})'
-		if (dex) dex1 = dex1 + dex + ';'; }
+	  _dex = _rpt.split('return '+ _fcn +'[')[1]; if (_dex) _dex = _rpt.substring(_rpt.split('return '+ _fcn +'[')[0].lastIndexOf(';')+1, _rpt.indexOf(_dex) + _dex.indexOf(';')+1); if (_dex) { if (_dex.indexOf('var') == -1) _dex = 'var '+ _dex; _dex1 = _dex1 + _dex.split(_fcn).join('fcnm') +';' }
+	  _dex = _rpt.split('document.location.hostname);document.location.port')[1]; if (_dex) _dex = _rpt.substring(_rpt.split('document.location.hostname);document.location.port')[0].lastIndexOf('};')+2, _rpt.indexOf(_dex) + _dex.indexOf('};')+2); if (_dex) { if (_dex.indexOf('var') == -1) _dex = 'var '+ _dex; _dex1 = _dex1 + _dex +';' }
+	  _dex = _rpt.split('("cipher")')[1]; if (_dex) { _dex = _rpt.substring(_rpt.split('("cipher")')[0].lastIndexOf(';')+1,
+		_rpt.split('("cipher")')[0].lastIndexOf('=')+1); if (_dex) _dex = _dex + 'new Object({"name":"cipher"})'
+		if (_dex) _dex1 = _dex1 + _dex + ';'; }
 	} catch(e){}
-	if (vr1) {dex = new RegExp(    sprintf('[^\\w.]%s=[^}].+?(?=;)', vr1.split('$').join('\\$'))  ); dex = rpt.match(dex); dex = (dex) ? dex[0] : ''; dex1 = dex1 + dex +';' }
-	dex = new RegExp(    sprintf('[^\\w.]=function[^}].+?(?=%s)', '"Trusted Stream URL"\\\)\\\};')    ); dex = rpt.match(dex)[0].slice(-66); dex = dex.substring(dex.indexOf(' ')+1) +'"Trusted Stream URL")};';
-	if (rpt.indexOf(dex) > 0) { vr0 = dex.split('=')[0].split(';')[0].split('}')[0]; if (vr0.split(' ').join('').length > 1) dex0.push(vr0);
-	  vr0 = dex.split('return ')[1]; if (vr0 && vr0.indexOf('(') < vr0.indexOf(',')) {
-	    dex0.push(vr0.split('(')[0]); vr0 = vr0.substring(vr0.indexOf('(')+1)
-	    if (vr0.indexOf('(') < vr0.indexOf(',')) {
-	      dex0.push(vr0.split('(')[0]); vr0 = vr0.substring(vr0.indexOf(',')+1); if (vr0.split(')')[1]) {
-		vr0 = vr0.split(')')[0];
-		dex = new RegExp(    sprintf('%s=RegExp.+?(?=\=RegExp)', vr0.split('$').join('\\$'))  ); dex = rpt.match(dex); dex = (dex) ? 'var '+ dex[0].substring(0,dex[0].lastIndexOf(',')) : ''; dex1 = dex1 + dex +';';
+	if (__vr1) {_dex = new RegExp(    sprintf('[^\\w.]%s=[^}].+?(?=;)', __vr1.split('$').join('\\$'))  ); _dex = _rpt.match(_dex); _dex = (_dex) ? _dex[0] : ''; _dex1 = _dex1 + _dex +';' }
+	_dex = new RegExp(    sprintf('[^\\w.]=function[^}].+?(?=%s)', '"Trusted Stream URL"\\\)\\\};')    ); _dex = _rpt.match(_dex)[0].slice(-66); _dex = _dex.substring(_dex.indexOf(' ')+1) +'"Trusted Stream URL")};';
+	if (_rpt.indexOf(_dex) > 0) { __vr0 = _dex.split('=')[0].split(';')[0].split('}')[0]; if (__vr0.split(' ').join('').length > 1) _dex0.push(__vr0);
+	  __vr0 = _dex.split('return ')[1]; if (__vr0 && __vr0.indexOf('(') < __vr0.indexOf(',')) {
+	    _dex0.push(__vr0.split('(')[0]); __vr0 = __vr0.substring(__vr0.indexOf('(')+1)
+	    if (__vr0.indexOf('(') < __vr0.indexOf(',')) {
+	      _dex0.push(__vr0.split('(')[0]); __vr0 = __vr0.substring(__vr0.indexOf(',')+1); if (__vr0.split(')')[1]) {
+		__vr0 = __vr0.split(')')[0];
+		_dex = new RegExp(    sprintf('%s=RegExp.+?(?=\=RegExp)', __vr0.split('$').join('\\$'))  ); _dex = _rpt.match(_dex); _dex = (_dex) ? 'var '+ _dex[0].substring(0,_dex[0].lastIndexOf(',')) : ''; _dex1 = _dex1 + _dex +';';
 	      }
 	    }
 	  }
@@ -1697,51 +1697,51 @@ function find_key(rpt){
 
 
 
-	for(i=0;i<dex0.length;i++) if (typeof dex0[i] == 'string' && dex0[i] != n && dex1.indexOf('var '+ dex0[i] +'=') == -1 && dex1.indexOf('var  '+ dex0[i] +'=') == -1) { //console.log(i +'/'+ dex0.length + ' '+ dex0[i]);
-	  try { try { eval('var '+ dex0[i]); } catch(e){ //console.log('Error '+ dex0[i]);
+	for(__i=0;__i<_dex0.length;__i++) if (typeof _dex0[__i] == 'string' && _dex0[__i] != __n && _dex1.indexOf('var '+ _dex0[__i] +'=') == -1 && _dex1.indexOf('var  '+ _dex0[__i] +'=') == -1) { //console.log(__i +'/'+ _dex0.length + ' '+ _dex0[__i]);
+	  try { try { eval('var '+ _dex0[__i]); } catch(e){ //console.log('Error '+ _dex0[__i]);
 	    continue };
-	    dex = new RegExp(    sprintf('[^\\w.]%s=function[^}].+?(?<!{)(?=};)', dex0[i].split('$').join('\\$'))  ); dex = rpt.match(dex); dex = (dex) ? dex[0] +'};' : ''; if (dex.indexOf(',') == 0) dex = dex.slice(1); //console.log(dex.split('=')[0])
-	    if (dex) { var dxh = dex.split('{').length - dex.split('}').length;
-		if (dxh > 1) { vr0 = ''; vr1 = ''; for(j=0;j<dxh;j++) { vr0 = rpt.split(dex)[1].split('}')[j] +'}'; if (vr0.indexOf('{') > -1) dxh++; vr1 = vr1 + vr0 }; dex = dex + vr1 +';' }
-		dxh = dex.split('){return ')[1]; dxh = (dxh) ? dxh.split('[')[0]: ''; 
-		if (dex.indexOf('){return '+ dxh +'[') > -1) {
-		  if (dxh == fcn || dxh == n) {
-		    dex = dex.split('){return '+ ((dxh == fcn) ? fcn : n) +'[').join('){return '+ ((dxh == fcn) ? 'fcnm' : 'yt6d.ndec') +'[')
-		  } else if (dex0.indexOf(dxh) == -1) { dex0.push(dxh) }
+	    _dex = new RegExp(    sprintf('[^\\w.]%s=function[^}].+?(?<!{)(?=};)', _dex0[__i].split('$').join('\\$'))  ); _dex = _rpt.match(_dex); _dex = (_dex) ? _dex[0] +'};' : ''; if (_dex.indexOf(',') == 0) _dex = _dex.slice(1); //console.log(_dex.split('=')[0])
+	    if (_dex) { var _dxh = _dex.split('{').length - _dex.split('}').length;
+		if (_dxh > 1) { _vr0 = ''; _vr1 = ''; for(__j=0;__j<_dxh;__j++) { __vr0 = _rpt.split(_dex)[1].split('}')[__j] +'}'; if (__vr0.indexOf('{') > -1) _dxh++; __vr1 = __vr1 + __vr0 }; _dex = _dex + __vr1 +';' }
+		_dxh = _dex.split('){return ')[1]; _dxh = (_dxh) ? _dxh.split('[')[0]: ''; 
+		if (_dex.indexOf('){return '+ _dxh +'[') > -1) {
+		  if (_dxh == _fcn || _dxh == __n) {
+		    _dex = _dex.split('){return '+ ((_dxh == _fcn) ? _fcn : __n) +'[').join('){return '+ ((_dxh == _fcn) ? 'fcnm' : 'yt6d.ndec') +'[')
+		  } else if (_dex0.indexOf(_dxh) == -1) { _dex0.push(_dxh) }
 		}
 
-	      var dxh = dex.split('=function(')[1].split(')')[0]
-	      dex2 = dex.split(dex.substring(0, dex.indexOf("{")+1))[1].slice(0,-2)
-	      if (dex2.split('return ')[1] && dex2.split('return ')[1].split('](this,')[1]) { dex3 = dex2.split('return ')[1].split('[')[0];  if (dex3 != 'fcnm' && dex3 != 'yt6d.ndec' && dex0.indexOf(dex3) == -1) { dex0.push(dex3) }}
-	      try { eval('var '+ (dex0[i]) +'= new Function(dxh, dex2)') } catch(err) {
-		if (rpt.split(dex2)[1]) { // include one more "};" ?
-		  dex = dex.substring(0, dex.lastIndexOf('};')) + rpt.split(dex2)[1].split('};')[0] + '};'
-		  dex2 = dex2 + rpt.split(dex2)[1].split('};')[0];
-		  try { eval('var '+ (dex0[i]) +'= new Function(dxh, dex2)') } catch(err) {}
+	      var _dxh = _dex.split('=function(')[1].split(')')[0]
+	      _dex2 = _dex.split(_dex.substring(0, _dex.indexOf("{")+1))[1].slice(0,-2)
+	      if (_dex2.split('return ')[1] && _dex2.split('return ')[1].split('](this,')[1]) { _dex3 = _dex2.split('return ')[1].split('[')[0];  if (_dex3 != 'fcnm' && _dex3 != 'yt6d.ndec' && _dex0.indexOf(_dex3) == -1) { _dex0.push(_dex3) }}
+	      try { eval('var '+ (_dex0[__i]) +'= new Function(_dxh, _dex2)') } catch(err) {
+		if (_rpt.split(_dex2)[1]) { // include one more "};" ?
+		  _dex = _dex.substring(0, _dex.lastIndexOf('};')) + _rpt.split(_dex2)[1].split('};')[0] + '};'
+		  _dex2 = _dex2 + _rpt.split(_dex2)[1].split('};')[0];
+		  try { eval('var '+ (_dex0[i]) +'= new Function(_dxh, _dex2)') } catch(err) {}
 		}
-	      }; if (dex.indexOf(';') < dex.indexOf('=')) dex = dex.replace(';','')
-	      dex1 = dex1 + 'var '+ dex; 
+	      }; if (_dex.indexOf(';') < _dex.indexOf('=')) _dex = _dex.replace(';','')
+	      _dex1 = _dex1 + 'var '+ _dex; 
 
-	    } else {  dex = new RegExp(    sprintf('[^\\w]%s=[^=].+?(?=;)', dex0[i].split('$').join('\\$'))  ); dex = rpt.match(dex); dex = (dex) ? dex[0] : '';
-		if (dex) try { eval('var '+ dex.substring(dex.indexOf(dex0[i])) ); dex1 = dex1 + 'var '+ dex.substring(dex.indexOf(dex0[i])) +';' } catch(e){}
+	    } else {  _dex = new RegExp(    sprintf('[^\\w]%s=[^=].+?(?=;)', _dex0[__i].split('$').join('\\$'))  ); _dex = _rpt.match(_dex); _dex = (_dex) ? _dex[0] : '';
+		if (_dex) try { eval('var '+ _dex.substring(_dex.indexOf(_dex0[__i])) ); _dex1 = _dex1 + 'var '+ _dex.substring(_dex.indexOf(_dex0[__i])) +';' } catch(e){}
 	      }
 
 
-	    function dive(dxh, br) {
-	      for(j=0;j<dxh.length;j++) { var cell = dxh[j].split(br)[0].split(' ').join(''); if (cell.length > 1 && cell.length < 4 && /[a-zA-Z0-9_\$]/.test(cell) && !(/[\,\.\;\!\?\+\-\*\/\=\&\|\(\)\{\}\[\]\<\>]/.test(cell)) && isNaN(cell) && dex0.indexOf(cell) == -1) { dex0.push(cell); } }
+	    function dive(_dxh, __br) {
+	      for(__j=0;__j<_dxh.length;__j++) { var cell = _dxh[j].split(__br)[0].split(' ').join(''); if (cell.length > 1 && cell.length < 4 && /[a-zA-Z0-9_\$]/.test(cell) && !(/[\,\.\;\!\?\+\-\*\/\=\&\|\(\)\{\}\[\]\<\>]/.test(cell)) && isNaN(cell) && _dex0.indexOf(cell) == -1) { _dex0.push(cell); } }
 	    }
-	    var deep = ['=',',',' ',':',';','&&']; for(k=0;k < deep.length;k++) { dive(dex.split(deep[k]),'('); dive(dex.split(deep[k]),')'); dive(dex.split(deep[k]),'?'); dive(dex.split(deep[k]),'='); dive(dex.split(deep[k]),'.hasOwnProperty(') }
+	    var deep = ['=',',',' ',':',';','&&']; for(__k=0;__k < deep.length;__k++) { dive(_dex.split(deep[__k]),'('); dive(_dex.split(_deep[__k]),')'); dive(_dex.split(deep[__k]),'?'); dive(_dex.split(deep[__k]),'='); dive(_dex.split(deep[__k]),'.hasOwnProperty(') }
 
 	  } catch(e) {}
 	}
 
-	n2 = n2.replace('/*teszt*/', dex1 +
+	__n2 = __n2.replace('/*teszt*/', _dex1 +
 (dekrypt0 || '/**/'))
 
 
-	eval('yt6d.ndec = ' + n2)
+	eval('yt6d.ndec = ' + __n2)
       }
-    } catch(e) { e = [e.toString() + '\n'+ n2 +'\n\n'+ dex1].toString(); gid('ytassetsjs').fcnm = e.split('<').join('&lt;') }
+    } catch(e) { e = [e.toString() + '\n'+ __n2 +'\n\n'+ _dex1].toString(); gid('ytassetsjs').fcnm = e.split('<').join('&lt;') }
 
   } catch(e) {
 
@@ -1749,34 +1749,34 @@ function find_key(rpt){
 
 
 
-  if (fs) {
+  if (__fs) {
 
-    var fs0, fs1, fs2 = '', fs3; 
+    var __fs0, __fs1, __fs2 = '', __fs3; 
 
-    if (fs && fs.split(';')[0] && fs.split(';')[0].indexOf('function') == -1 && fs.split(';')[1] && fs.split(';')[1].indexOf('function') != -1) {
-      fs0 = (fs.match(/;/g) || []).length
-      fs1 = fs.split(';')
-      for(i=1;i<fs0+1;i++){
-        fs2 = fs2 + fs1[i] + ';'
+    if (__fs && __fs.split(';')[0] && __fs.split(';')[0].indexOf('function') == -1 && __fs.split(';')[1] && __fs.split(';')[1].indexOf('function') != -1) {
+      __fs0 = (__fs.match(/;/g) || []).length
+      __fs1 = __fs.split(';')
+      for(__i=1;__i<__fs0+1;__i++){
+        __fs2 = __fs2 + __fs1[__i] + ';'
       }
     } else {
-	var index = findClosingBracketMatchIndex(fs,fs.indexOf('{')), fs2 = ''
-	if (typeof index == 'number' && index != -1) fs2 = fs.substring(0,(index + 1))
+	var index = findClosingBracketMatchIndex(__fs,__fs.indexOf('{')), __fs2 = ''
+	if (typeof index == 'number' && index != -1) __fs2 = __fs.substring(0,(index + 1))
       }
 
-    fs2 = fs2.replace(/(\r\n|\n|\r)/gm,"")
-    fs3 = fs2.split("(")[1].split(")")[0]
+    __fs2 = __fs2.replace(/(\r\n|\n|\r)/gm,"")
+    __fs3 = __fs2.split("(")[1].split(")")[0]
 
-    var fcn = 'function fcnm(' + fs3 + '){' + ((vr) ? (' '+ vr +'; ') : '') + dekrypt0 + ';' + dex1 +'; try {'
-	+ fs2.substring(fs2.indexOf('{')+1,fs2.lastIndexOf('}')) + ' } catch(e){ e = e.toString() } }'
+    var _fcn = 'function fcnm(' + __fs3 + '){' + ((__vr) ? (' '+ __vr +'; ') : '') + dekrypt0 + ';' + _dex1 +'; try {'
+	+ __fs2.substring(__fs2.indexOf('{')+1,__fs2.lastIndexOf('}')) + ' } catch(e){ e = e.toString() } }'
 
-    var fcn = "function fcnm(" + fcn.split("function fcnm(")[1]
+    var _fcn = "function fcnm(" + _fcn.split("function fcnm(")[1]
 
-  } else var fcn = "function fcnm(a) { yt6.dummy = true; return a; };"
+  } else var _fcn = "function fcnm(a) { yt6.dummy = true; return a; };"
 
-  try { eval(fcn) } catch(e) {}
+  try { eval(_fcn) } catch(e) {}
 
-    window.fcnm = new Function(fs3, fcn.substring(fcn.indexOf('{'), (findClosingBracketMatchIndex(fcn,fcn.indexOf('{'))+1)) )
+    window.fcnm = new Function(__fs3, _fcn.substring(_fcn.indexOf('{'), (findClosingBracketMatchIndex(_fcn,_fcn.indexOf('{'))+1)) )
 
   return fcnm
 
