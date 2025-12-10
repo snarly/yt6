@@ -915,7 +915,7 @@ function rp(tx) {
 
 function dc(num, sg) {
   var z; if (!sg) sg = num
-  try { z = fcnm(num, sg); return z } catch(e) {
+  try { z = fcnm(num, sg); return z } catch(e) { //console.log('fcnm: '+ e.toString())
     if ((gid('ytassetsjs') != null) && typeof gid('ytassetsjs').fcnm == 'function') {
       var fcnm = gid('ytassetsjs').fcnm
       return fcnm(num, sg);
@@ -1639,12 +1639,12 @@ function find_key(_rpt){
 	  _dxh = _dex[__i-1].slice(-5); _dxh = _dxh.split(',')[1] || _dxh.split(' ')[1] || _dxh.split(';')[1]; _dxh = _dxh +'=['+ _dex[__i].split(',')[0];
 	  _dex = _dxh + __n2.split(_dxh)[1];
 	  yt6.r1 = []; yt6.r2 = []
-	  index = (findClosingBracketMatchIndex(_dex.substring(_dex.indexOf('[')), 0, '[', ']', false, true) +2) // +1 may be one too short?
+	  index = (findClosingBracketMatchIndex(_dex.substring(_dex.indexOf('[')), 0, '[', ']', false, true) + 1 + _dex.indexOf('[')) // +1 may be one too short?
 
 	  __vr1 = _dex.replace(_dxh.split('[')[0],'').replace('[','').split('{try{')[0].split(','); __vr0 = (__vr1.length-1);
 	  _dex = _dex.substring(_dex.indexOf('[')+1, index);
 	  if (_dex.slice(-1) == ']') _dex = _dex.substring(0, _dex.length-1)
-	  array = _dex
+	  array = _dex;
 	  _dex = _dex.split(',')
 	  //_dex = (_dex.replace(_dxh.split('[')[0],'').replace('[','')).split(',');
 	  _dxh = false;
@@ -10739,7 +10739,8 @@ if (c[1]) {
 
 	// set n-parameter to unthrottle yt a/v data traffic
 
-	if (!ok && typeof yt6d.ndec == 'function' && qs.n) { n_value = clone(qs.n); try { n_decoded = ((n_decoded && n_decoded == n_value) ? n_decoded : yt6d.ndec(yt6d.arg.n, n_value)) } catch(e){ n_decoded = n_value }
+	if (!ok && typeof yt6d.ndec == 'function' && qs.n) { n_value = clone(qs.n); try { n_decoded = ((n_decoded && n_decoded == n_value) ? n_decoded : yt6d.ndec(yt6d.arg.n, n_value)) } catch(e){ //console.log('ndec: '+ e.toString());
+	  n_decoded = n_value }; 
 	  var ld = ((typeof yt6.ytp.V == 'string' && yt6.ytp.V.indexOf(href) > -1) || (typeof yt6.ytp.A == 'string' && yt6.ytp.A.indexOf(href) > -1)) ? true : false
 	  if (qs.n.length >= n_length) n_length = 1 * qs.n.length; //if (qs.n.length == 14) { ndc = n_decoded = n_value }
 	  if (!ld)
