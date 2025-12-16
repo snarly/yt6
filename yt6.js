@@ -1423,7 +1423,7 @@ function findClosingBracketMatchIndex(str, pos, x, y, q, regx) { var r0, r1 = []
   if (x && !y) y = x;
   if (!x || !y) { x = '{'; y = '}' }
 
-  str = str.replace(/,(\W|\r\n|\n|\r)\//gm,',/').replace(/\/(\W|\r\n|\n|\r),/gm,'/,')
+  str = str.replace(/,(\r\n|\n|\r)\//gm,',/').replace(/\/(\r\n|\n|\r),/gm,'/,')
 
   if (str[pos] != x) {
     return -1;//throw new Error("No '{' at index " + pos);
@@ -1432,16 +1432,24 @@ function findClosingBracketMatchIndex(str, pos, x, y, q, regx) { var r0, r1 = []
 
   if (regx) {
     for (i = pos + 1; i < str.length; i++) {
-      if (str[i] == ',' && str[i+1] == '/') r1.push(i)
-      if (str[i] == '/' && str[i+1] == ',' && str[i-1] != '\\') { if (r1.indexOf(i-1) == -1 || /^[a-zA-Z0-9_\$\.\[]*$/.test( str.substring(i+2).split(',')[0] )) { r2.push(i) }  } // regex border indexes should not point at the same slash
+      if (str[i] == ',' && str[i+1] == '/') {
+        r1.push(i)
+      }
+      if (str[i] == '/' && str[i+1] == ',' && str[i-1] != '\\') {
+        if (r1.indexOf(i-1) == -1 || /^[a-zA-Z0-9_\$\.\,\[\]]*$/.test( str.substring(i+2).split(',')[0] )) {
+          r2.push(i)
+        }
+      } // regex border indexes should not point at the same slash
     }
     for (i = 0; i < r1.length; i++) if (r1[i] && !r2[i]) { r1.splice(r1.indexOf(r1[i]),1) }
     yt6.r1 = r1; yt6.r2 = r2
   }
 
   for (i = pos + 1; i < str.length; i++) {
-    if (regx)
-      for (j = 0; j < r1.length; j++) if (r1[j] && r2[j] && r1[j] < i && r2[j] > i) { r0 = true; break }; if (r0) { r0 = false; continue }
+    if (regx) {
+      for (j = 0; j < r1.length; j++) if (r1[j] && r2[j] && r1[j] < i && r2[j] > i) { //console.log('skip part of regex string '+ str[i]);
+        r0 = true; break }; if (r0) { r0 = false; continue }
+    }
     q1 = (!q && !q2 && str[i] == "'" && str[i-1] != '\\') ? !q1 : q1 
     q2 = (!q && !q1 && str[i] == '"' && str[i-1] != '\\') ? !q2 : q2
     switch (str[i]) {
@@ -1596,7 +1604,9 @@ function find_key(_rpt){
 
       if (__n2) {try{
 	__n2 = __n2.replace(__n +'=','').split('return '+ __G +'.')[0]; __n2 = __n2.substring(0, __n2.indexOf('=function(')); __n2 = __n2.substring(0, __n2.lastIndexOf(' '));
-	__n2 = __n2.split(_fcn).join('fcnm');
+	__n0 = __n0.replace('[').join('[^')
+	__n1 = new RegExp(__n0 + _fcn + __n0, 'g')
+	__n2 = __n2.replace(__n1, 'fcnm')
 	}catch(e){}
 
 	try {
@@ -1630,21 +1640,23 @@ function find_key(_rpt){
 	__vr1 = __vr1[__vr0].split('typeof ')[1]; if (__vr1) __vr1 = 'var '+ __vr1.split('===')[0] }
 
 
-	for(__i=0;__i<_dex.length;__i++) if (isNaN(_dex[__i]) && _dex[__i].indexOf('/') != 0) {
-	  if (_dex[__i].indexOf('{')>-1) if (yt6.r1.length && yt6.r2.length) { _rgx = ''; for(__j=0;__j<__i;__j++) _rgx = _rgx + ((_rgx) ? ',' : '') + _dex[__j]; if (!(_dex[__i-1].indexOf('/')==0 && _dex[__i-1].lastIndexOf('/')==0)) _rgx = _rgx +','+ _dex[__i].substring(_dex[__i].indexOf('{')); _rgx = array.indexOf(array.split(_rgx)[1]); for(__j=0;__j<yt6.r1.length;__j++) if (!(yt6.r1[__j] < _rgx && yt6.r2[__j] > _rgx && yt6.r1[__j] < yt6.r2[__j])) { _dxh = true } else _dxh = false }
-	    else _dxh = true
-	  if (_dex[__i].indexOf('function(')>-1) _dxh = true;
+	for(__i=0;__i<_dex.length;__i++) if (_dex[__i] && isNaN(_dex[__i]) && _dex[__i].indexOf('/') != 0) {
+	  if (yt6.r1.length && yt6.r2.length) {
+	    _rgx = ''; for(__j=0;__j<__i;__j++) _rgx = _rgx + ((_rgx) ? ',' : '') + _dex[__j];
+	    if (!(_dex[__i-1] && _dex[__i-1].indexOf('/')==0 && _dex[__i-1].lastIndexOf('/')==0)) _rgx = _rgx + ((_rgx) ? ',' : '') + _dex[__i].substring(_dex[__i].indexOf('{'));
+	    _rgx = array.indexOf(array.split(_rgx)[1]); for(__j=0;__j<yt6.r1.length;__j++) if ((yt6.r1[__j] < _rgx && yt6.r2[__j] > _rgx && yt6.r1[__j] < yt6.r2[__j])) { _dxh = true } else { _dxh = false }
+	  } else if (_dex[__i].indexOf('{')>-1) { _dxh = true } else _dxh = false
+	  if (_dex[__i].indexOf('function(')>-1) { _dxh = true };
 	  if ((_dex[__i].indexOf('{')>-1 || _dex[__i].indexOf('}')>-1) && _dex[__i].split('}').length >= _dex[__i].split('{').length) _dxh = false;
 	  if (_dxh || _dex[__i].indexOf('[')>-1 || _dex[__i].indexOf('null')>-1 || _dex[__i].length == 1 || __n2.indexOf(_dex[__i]) < __n2.lastIndexOf(_dex[__i])) { //console.log('Skipped '+ _dex[__i]);
 	    continue
-	  }; _dex0.push(_dex[__i].split(' ').join(''))
+	  }; _dex0.push(_dex[__i].split(' ').join(''));
 	}
 
 	var _dex1 = __n2.split(';else{try{try{var ')[1], _dex2, _dex3; if (!_dex1) _dex1 = __n2.split(';else{try{')[1] 
 	if (_dex1) { __vr0 = _dex1.split('('); 
-	  _dex1 = _dex1.split('=')[1]; _dex1 = _dex1.split('(')[0]; _dex0.push(_dex1)
-	  for(__i=0;__i<__vr0.length-1;__i++){
-	    if(__vr0[__i].charAt(1)=='=' && __vr0[__i].charAt(2)!='=') { __vr0[__i] = __vr0[__i].split('=')[1]; if (__vr0[__i] && __vr0[__i].length == 3 && /[a-zA-Z0-9_\$]/.test(__vr0[__i])) { _dex0.push(__vr0[__i]); break } }
+	  for(__i=0;__i<__vr0.length-1;__i++) {
+	    for(__j=2;__j<__vr0.length-1;__j++) { _dex1 = __vr0[__i].slice(-1*__j); if (_dex1.charAt(1) == '=' && _dex1.charAt(0) != '=' && /[a-zA-Z0-9_\$]/.test(_dex1)) { _dex1 = _dex1.split('=')[1]; if (_dex0.indexOf(_dex1) == -1) { _dex0.push(_dex1); break } } }
 	  }
 	}
 
@@ -7430,7 +7442,8 @@ function set_arrow_buttons() {
 function autoplay(start, ytx) {
 
 
-var p = player(); if (!p) return void 0
+//var p = player(); if (!p) 
+return void 0
 if (yt6.layout == 16) {
   var z = gt('YTD-WATCH', 1)[0]
   if (z && z.hasAttribute('hidden')) return false
@@ -8128,7 +8141,7 @@ function getReferenceObjects() {
 	    if (l[i].getAttribute('id') == 'alerts') wna = l[i]
 	    if (l[i].getAttribute('id') == 'messages') yt6.wna2 = l[i]
 	    if (l[i].getAttribute('id') == 'info') yt6.inf = yt6.con = yt6.man = l[i]
-	    if (l[i].getAttribute('id') == 'primary') yt6.top = (yt6.wide) ? l[i] : l[i].parentNode
+	    if (l[i].getAttribute('id') == 'primary') { yt6.top = (yt6.wide) ? l[i] : l[i].parentNode; l[i].style.paddingTop = 'var(--ytd-margin-6x)' }
 	    if (yt6.con && yt6.man && wna && yt6.inf) { yt6.wna = wna; var l = null; break }
 	  }
 	  if (!yt6.wna2) yt6.wna2 = yt6.wna //ytm
@@ -10720,7 +10733,7 @@ if (c[1]) {
 	// set n-parameter to unthrottle yt a/v data traffic
 
 	if (!ok && typeof yt6d.ndec == 'function' && qs.n) { n_value = clone(qs.n); try { n_decoded = ((n_decoded && n_decoded == n_value) ? n_decoded : yt6d.ndec(yt6d.arg.n, n_value)) } catch(e){ //console.log('ndec: '+ e.toString());
-	  n_decoded = n_value }; 
+	  n_decoded = n_value };
 	  var ld = ((typeof yt6.ytp.V == 'string' && yt6.ytp.V.indexOf(href) > -1) || (typeof yt6.ytp.A == 'string' && yt6.ytp.A.indexOf(href) > -1)) ? true : false
 	  if (qs.n.length >= n_length) n_length = 1 * qs.n.length; //if (qs.n.length == 14) { ndc = n_decoded = n_value }
 	  if (!ld)
@@ -23060,7 +23073,7 @@ function deldiv(){
   }
 
 
-  var z = ['theater-background','masthead-positioner-height-offset','movie_player','watch7-sidebar','watch-appbar-playlist','playlist','related','secondary','player-api','player','player-container','placeholder-player','ytd-player','top','main','full-bleed-container','player-full-bleed-container','secondary-inner']
+  var z = ['theater-background','masthead-positioner-height-offset','movie_player','watch7-sidebar','watch-appbar-playlist','playlist','related','secondary','player-api','player','player-container','placeholder-player','ytd-player','top','main','full-bleed-container','player-full-bleed-container','secondary-inner','primary']
   for(i=0;i < z.length;i++){
     var x = (z[i] == 'playlist' && yt6.layout == 16) ? yt6.pls : gid(z[i])
     if (x) {
