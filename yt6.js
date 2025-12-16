@@ -7442,8 +7442,7 @@ function set_arrow_buttons() {
 function autoplay(start, ytx) {
 
 
-//var p = player(); if (!p) 
-return void 0
+var p = player(); if (!p) return void 0
 if (yt6.layout == 16) {
   var z = gt('YTD-WATCH', 1)[0]
   if (z && z.hasAttribute('hidden')) return false
