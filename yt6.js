@@ -5753,18 +5753,20 @@ function ageless_verification(spfpc, ios) {
 ((typeof yt6d.pot == 'string') ? ',"serviceIntegrityDimensions": {"poToken": "'+ yt6d.pot +'"}' : '') +
 '}'
 
-	    if (params.indexOf('"platform":"MOBILE"') > -1) { yt6.mbed = true;
-	    var oldvid = params.split('/embed/')[1]; oldvid = (oldvid) ? oldvid.split('?')[0].split('&')[0].split('#')[0].split('"')[0] : '';
+	    if (params.indexOf('"platform":"MOBILE"') > -1) {
+	    var oldvid = params.split('/embed/')[1]; if (oldvid) yt6.mbed = true;
+	    oldvid = (oldvid) ? oldvid.split('?')[0].split('&')[0].split('#')[0].split('"')[0] : '';
 	    if (oldvid && params.indexOf('/embed/'+ oldvid) > -1) params = params.split('/embed/'+ oldvid).join('/embed/'+ yt6.vid)
 	    }
 
 	    try {
 		params = JSON.stringify(JSON.parse(params))
-		xhr3.setRequestHeader("X-Goog-Visitor-Id", yt.config_.INNERTUBE_CONTEXT.client.visitorData)
-		xhr3.setRequestHeader("X-Youtube-Client-Name", yt.config_.GOOGLE_FEEDBACK_PRODUCT_ID)
+		//passing the x-goog-visitor-id triggers yt self-promotion for most videos, save for the initial one
+		if (yt6d.init) xhr3.setRequestHeader("X-Goog-Visitor-Id", yt.config_.INNERTUBE_CONTEXT.client.visitorData)
+		//xhr3.setRequestHeader("X-Youtube-Client-Name", yt.config_.GOOGLE_FEEDBACK_PRODUCT_ID)
 		xhr3.setRequestHeader("X-Youtube-Client-Version", yt.config_.INNERTUBE_CLIENT_VERSION)
 		xhr3.setRequestHeader("X-Youtube-Bootstrap-Logged-In", yt.config_.LOGGED_IN)
-		xhr3.setRequestHeader("X-Referer", "https%3A%2F%2Frawcdn.githack.com%2F")
+		//xhr3.setRequestHeader("X-Referer", "https://rawcdn.githack.com/")
 	    } catch(e){//console.log(e.toString())
         }
 
