@@ -5771,8 +5771,8 @@ function ageless_verification(spfpc, ios) {
         }
 
 
-	  //if ( ((!(yt6.ytp.embed && !yt6d.init) || yt6.mbed) && !yt6.mobile && !(yt6d.xhr[3] && yt6d.xhr[3].done))
-		//|| yt6.error == 'embed') 
+	  if ( (!(yt6.ytp.embed && !yt6d.init) && !yt6.mobile && !(yt6d.xhr[3] && yt6d.xhr[3].done))
+		|| yt6.error == 'embed') 
 		try { xhr3.send(params); yt6d.xhr[3] = xhr3 } catch(e){}
 
 
@@ -18586,9 +18586,16 @@ if (p) {
 	    }
 
       yt6.pstyle = (!yt6.pstyle) ? p.getAttribute('style') : yt6.pstyle
+      if (typeof yt6.pstyle == 'string') try {
+        z = (yt6.pstyle.split('width:')[1]) ? 'width:'+ yt6.pstyle.split('width:')[1].split(';')[0] +';' : ''; if (z) yt6.pstyle = yt6.pstyle.replace(z,'')
+        z = (yt6.pstyle.split('height:')[1]) ? 'height:'+ yt6.pstyle.split('height:')[1].split(';')[0] +';' : ''; if (z) yt6.pstyle = yt6.pstyle.replace(z,'')
+        z = (yt6.pstyle.split('background-color:')[1]) ? 'background-color:'+ yt6.pstyle.split('background-color:')[1].split(';')[0] +';' : ''; if (z) yt6.pstyle = yt6.pstyle.replace(z,'')
+      } catch(e){}
       var ytms = (yt6.ytm) ? 'width: 100%; height: 100%; ' : 'width: ' + screen.width + 'px; height: ' + screen.height + 'px; ' + ((yt6.wallpaper) ? 'background-color: transparent; ' : '')
-      var pstyle = (!yt6.x) ? ytms + 'visibility: visible;' : ytms + 'visibility: hidden;'
+      var pstyle = ((!yt6.x) ? ytms + 'visibility: visible;' : ytms + 'visibility: hidden;') + yt6.pstyle
       p.setAttribute('style', pstyle)
+      z = gc('ytp-fullscreen-grid')[0]; if (z) z.setAttribute('hidden','')
+      z = gc('ytp-chrome-bottom')[0]; if (z) z.style.bottom = z.offsetHeight / 4 + 'px'
       if (yt6.ytm) {
 	if (yt6.osw) {
 	  if (screen.width / screen.height >= yt6.aspect_ratio) {
@@ -18631,6 +18638,7 @@ if (p) {
 	if (yt6.wna) {
 	  yt6.wna.style.marginTop = '0px'// (1 * yt6.wna.style.marginTop.replace('px','') + yt6.ytp.marginTop + 8) + 'px'
 	}
+	var tc = gid('full-bleed-container'); if (tc && tc.style.top && 1*(tc.style.top.replace('px','')) > 0 ) tc.style.top = -2 * tc.style.top.replace('px','') +'px'
 	var tc = gid('player-full-bleed-container')
 	tc.style.width = screen.width + 'px'
 	tc.style.top = ''
@@ -18656,6 +18664,7 @@ if (p) {
 	    }
 	    delete yt6.pstyle
 	  }
+	  z = gc('ytp-chrome-bottom')[0]; if (z) z.style.bottom = ''
 	  aspect(yt6.size)
 	  if (yt6.wna) yt6.wna.name = ''
 	}
