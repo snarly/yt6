@@ -12910,7 +12910,7 @@ function mep_run() {
 
 					    }
 
-					    function decryption_failure(){ console.log('df '+yt6.errcount +' '+ yt6.err +' '+ yt6.err2 +' '+ yt6.retry)
+					    function decryption_failure(){ //console.log('df '+yt6.errcount +' '+ yt6.err +' '+ yt6.err2 +' '+ yt6.retry)
 
 					      if (yt6.status == 'unplayable' && player() && yt6.p.tagName == 'IFRAME') { return void 0; } // take no action in this case
 					      if (yt6d.update_in_progress) { return void 0 }
