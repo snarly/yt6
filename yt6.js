@@ -4804,6 +4804,7 @@ function undo_iframe(re_embed) {
 
 function alt_yt(vid) {
 
+		if (yt6.mobile) return void 0
 
 		var p = player(), p = yt6.p, c = conf('args')
 
@@ -5959,7 +5960,7 @@ function me_flash_up(file, ib){
 
 
 	if (yt6.age.t) {
-	  yt6.blocked = yt6.age.t; yt6.age.count = (yt6.age.count) ? yt6.age.count : (yt6.age.count + 1)//(yt6.age.count != 1) ? 1 : 
+	  yt6.blocked = yt6.age.t; yt6.age.count = (yt6.age.count || yt6.mobile) ? yt6.age.count : (yt6.age.count + 1)//(yt6.age.count != 1) ? 1 : 
 	} else {
 	    if (yt6.layout == 12) {
 	      yt6.age.blocked = gid('watch7-player-age-gate-content')
@@ -10475,6 +10476,13 @@ function calculate_file_size(size) {
 if (c[1]) {
 
 	  if (location.href.split('list=')[1]) {
+	    if (vID(location.href)) {
+	      if (c[1] && c[1].list && location.href.indexOf(c[1].list) == -1) {
+	        if (yt6d.playlist && Array.isArray(yt6d.playlist.items) && yt6d.playlist.items.length) {
+	          yt6d.playlist.items = []; yt6d.playlist.current = 0; yt6d.playlist.next = 0; yt6d.playlist.previous = 0
+	        }
+	      }
+	    }
 	    ytplayer.config.args.list = location.href.split('list=')[1].split('&')[0].split('/')[0]; clear_pls(clone(ytplayer.config.args.list))
 	  }
 
@@ -12393,7 +12401,7 @@ if (!gid('bm4')) {
 
     try { player().playVideo() } catch(e){}
 
-    if (!yt6d.ypsi && !yt6d.src_hid && yt6d.src_hid2 < 4) {
+    if (!yt6d.ypsi && !yt6.mobile && !yt6d.src_hid && yt6d.src_hid2 < 4) {
 
      function rebuild2() {
 
@@ -12554,7 +12562,9 @@ function mobile_playlist_run(upcoming, recall) {
 								if (z) { z.click() } else
 
 								if (u) {
-								  if (yt6.pls && yt6.pls.on && yt6.pl_prev_btn) { yt6.pl_prev_btn.click() } else if (y && typeof y.href == 'string') { y.click(); pl23c() } else { yt6.pl_previous.clcik() }
+								  if (yt6.pls && yt6.pls.on && yt6.pl_prev_btn) { yt6.pl_prev_btn.click() } else
+								  
+								  if (y && typeof y.href == 'string') { try { gt('button', gt('ytm-playlist-engagement-panel', 1)[0])[0].click() } catch(e){ y.click(); pl23c() } } else { yt6.pl_previous.clcik() }
 								} else
 
 							 	if (yt6.pls && yt6.pls.on && yt6.pl_next_btn) { yt6.pl_next_btn.click() } else
@@ -15134,7 +15144,7 @@ if (murl || yt6.ads_eid || (linx && linx.length >= 1000)) { var a = 0, b = 0
 	  }
 	if (p1.lastChild.name) { p1.lastChild.setAttribute('name', js.name) }
 	delete js
-	if (b.length > 2) yt6d.src_hid = 2
+	if (b.length > 2 && !yt6.mobile) yt6d.src_hid = 2
 
       } else if (did ) {}
     }
@@ -19609,7 +19619,7 @@ var navi0 = _nav,
     // Check to see if the location has changed.
 //    if (yt6.mobile && hid() && !(sameTitles && sameTitles % 4 == 0) && yt6.reload == 12 && (document.title == yt6.title || document.title +'`' == yt6.title   )) { ev_log('hopp sT='+yt6.sT+'_'+ad_skipped); //|| document.title.substring(0,10) == '- YouTube'
 //sameTitles++; if (!sameTitles) yt6.title = clone(document.title) + sameTitles; yt6.sT = sameTitles } else//mod_title() if (yt6.sT !== sameTitles) { yt6.title = clone(document.title) }; 
-    if ( !(yt6.mobile && shorts() && !yt6.linx.length) && (yt6.title != document.title && document.title != location.href && yt6.title != '- YouTube') || yt6.strLocation != window.location.href || !watch || (yt6.mobile && yt6d.previous.video_id == cur_vid && cur_vid != yt6.vid && yt6d.previous.title != document.title) ) {// || yt6.change != yt6.title )document.title = clone(yt6.title); 
+    if ( !(yt6.mobile && ((shorts() && !yt6.linx.length) || (yt6.blocked_m && yt6.loaded_vid == '...........')) ) && (yt6.title != document.title && document.title != location.href && yt6.title != '- YouTube') || yt6.strLocation != window.location.href || !watch || (yt6.mobile && yt6d.previous.video_id == cur_vid && cur_vid != yt6.vid && yt6d.previous.title != document.title) ) {// || yt6.change != yt6.title )document.title = clone(yt6.title); 
 
       if (c[0] && !(yt6.mpb && yt6.mpb.hasAttribute('active')) ) {
 
@@ -19683,8 +19693,10 @@ var navi0 = _nav,
 
 	    if (yt6.mobile) {// non-Firefox new layout age-blocked videos or if the tab is hidden, we still need going through this twice...
 		yt6.age.check()
-		if (yt6.mobile_nav && c[1] && yt6.loaded_vid != '...........') c[1].video_id = video_id(true)[0]
-		if ((p1m && yt6.vid != yt6.loaded_vid && p1m.loaded_vid == yt6.vid && location.href.indexOf(p1m.loaded_vid) > -1) || (yt6.blocked_m && yt6.blocked !== 0) || yt6.x_) { document.title = clone(document.title); yt6.loaded_vid = clone(yt6.vid) }//for delayed age-unblocking
+		if (!yt6.blocked_m) {
+		  if (yt6.mobile_nav && c[1] && yt6.loaded_vid != '...........') c[1].video_id = video_id(true)[0] //not for blocked_m since the patch
+		}
+		if ((p1m && yt6.vid != yt6.loaded_vid && p1m.loaded_vid == yt6.vid && location.href.indexOf(p1m.loaded_vid) > -1) || (yt6.blocked_m && yt6.blocked !== 0) || yt6.x_) { document.title = clone(document.title); if (!yt6.blocked_m) yt6.loaded_vid = clone(yt6.vid) }//for delayed age-unblocking
 	    }
 
 
@@ -23762,7 +23774,7 @@ var CtrlS = function (stage,v){
 			if (!yt6.pl_previous_blocked) { yt6.pl_previous.click() } else mp.playVideoAt(yt6.pl_index-1) || mp.previousVideo('0')
 		      } else if (yt6.oldbrowser && yt6.pl_previous && yt6.pl_previous.toString() && yt6.pl_previous.toString().indexOf('http') == 0) location.href = yt6.pl_previous.toString()
 		    } catch(e){ mp.playVideoAt(yt6.pl_index-1) || mp.previousVideo('0') }
-		    } else { alert(); mp.previousVideo('0') }
+		    } else { mp.previousVideo('0') }
 		  } else if (!yt6.ytp.embed) {
 		      mp.playVideoAt(yt6.pl_index-1) || mp.previousVideo('0')
 		    } else mp.previousVideo('0')
