@@ -12299,7 +12299,7 @@ if (!gid('bm4')) {
 		)
 	 )
        ) {
-	yt6.flash.call = 'b1'; console.log('flash '+ yt6.html5_fail +' "'+ yt6.error+'"')
+	yt6.flash.call = 'b1'
 	var mp = forceFlashplayerObject(); if (mp && yt6.ytm) yt6.api.insertBefore(mp, yt6.api.firstChild)
     }
   }
@@ -12482,7 +12482,7 @@ if (!gid('bm4')) {
 			backflop(); rebuild((built || true), yt6.args, yt6.html, yt6.href) }
 		    }, step, 6000, true)
 		  }
-		  } catch(e){ e = e.toString(); if (typeof yt6d.bounce != 'string' && e.indexOf('property') > -1 && e.indexOf('origin') > -1) { yt6d.bounce = 'https://snarly.github.io/yt6'; yt6d.src_hid = 0; yt6d.src_hid2 = 0; ;console.log('rel-6');backflop(); autorebuild(e) } }
+		  } catch(e){ e = e.toString(); if (typeof yt6d.bounce != 'string' && e.indexOf('property') > -1 && e.indexOf('origin') > -1) { yt6d.bounce = 'https://snarly.github.io/yt6'; yt6d.src_hid = 0; yt6d.src_hid2 = 0; backflop(); autorebuild(e) } }
 		}
 
 	      } //else yt6d.src_hid2 = 0
