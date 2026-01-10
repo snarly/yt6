@@ -14363,7 +14363,7 @@ if ((yt6.userprefV[0] == yt6.userprefA[0] || yt6.audiosauce)) if (typeof yt6.aud
 		  features: [''],
 		  videoWidth: 10, videoHeight: 10,
 		  success: function(me) { $('#audio-type').html( me.pluginType); amplifyMedia(me, yt6.boost || 1)
-					addEL(me, 'abort', function() { ev = '2abort'; return void 0; console.log(ev +' '+me.loaded)
+					addEL(me, 'abort', function() { ev = '2abort'; return void 0; //console.log(ev +' '+me.loaded)
 					  if ( chk2(me, (me && yt6 && yt6.player1 && yt6.player1.media && (yt6.player1.media.src == me.src || itag(yt6.player1.media.src) < 103) ) ) )
 					    return void 0;
 					  if (!yt6.navigation && yt6.player1 && yt6.player1.media && !yt6.player1.media.loaded) yt6.errcount++; //ev_log('rc='+yt6.errcount)
