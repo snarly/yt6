@@ -1597,16 +1597,18 @@ function find_key(_rpt){
 
       try { //var _VAR = 'yt6d.__'+__vr0; eval((_VAR) +'='+ __vr.replace('var '+ __vr0 +'=','')); 
 	eval('var '+ (__vr0) +'='+ __vr.replace('var '+ __vr0 +'=',''));
-	__n3 = _rpt.split('=['+ __n1 +']')[0].slice(-6).split('}').join('').split(';').join('') + '=[yt6d.ndec]'; __n3 = 'var'+ __n3.substring(__n3.lastIndexOf(' '), __n3.length+1)
-	//eval('('+ _VAR +')();')
+	__n3 = _rpt.split('=['+ __n1 +']')[0].slice(-6).split('}').join('').split(';').join('') + '=[yt6d.ndec]'; __n3 = 'var '+ __n3.substring(__n3.lastIndexOf(' '), __n3.length+1)
+	//eval('console.log('+ _VAR +')/*();*/');
       } catch(e){}
 
 
       if (__n2) {try{
+      	if (__n2.indexOf(';') < __n2.indexOf('function')) __n2 = __n2.replace(';','')
 	__n2 = __n2.replace(__n +'=','').split('return '+ __G +'.')[0]; __n2 = __n2.substring(0, __n2.indexOf('=function(')); __n2 = __n2.substring(0, __n2.lastIndexOf(' '));
-	__n0 = __n0.replace('[').join('[^')
-	__n1 = new RegExp(__n0 + _fcn + __n0, 'g')
-	__n2 = __n2.replace(__n1, 'fcnm')
+	__n0 = __n0.split('[').join('[^');
+	__n1 = new RegExp(__n0 + _fcn + __n0, 'g');
+	__n0 = (__n2.match(__n1)) ? __n2.match(__n1)[0].substr(0,1) + __n2.match(__n1)[0].slice(-1) : '';
+	__n2 = __n2.replace(__n1, __n0.substr(0,1) + 'fcnm' + __n0.slice(-1));
 	}catch(e){}
 
 	try {
@@ -1620,7 +1622,7 @@ function find_key(_rpt){
 	  yt6.r1 = []; yt6.r2 = []
 	  index = (findClosingBracketMatchIndex(_dex.substring(_dex.indexOf('[')), 0, '[', ']', false, true) + 1 + _dex.indexOf('[')) // +1 may be one too short?
 
-	  __vr1 = _dex.replace(_dxh.split('[')[0],'').replace('[','').split('{try{')[0].split(','); __vr0 = (__vr1.length-1);
+	  __vr1 = _dex.replace(_dxh.split('[')[0],'').replace('[','').split('try{')[0].split(','); __vr0 = (__vr1.length-1);
 	  _dex = _dex.substring(_dex.indexOf('[')+1, index);
 	  if (_dex.slice(-1) == ']') _dex = _dex.substring(0, _dex.length-1)
 	  array = _dex;
@@ -1636,7 +1638,7 @@ function find_key(_rpt){
 	    (__vr1[__vr0].indexOf('];') < 14 ||
 	     (__vr1[__vr0].indexOf('];') > -1 && __vr1[__vr0].indexOf('if(typeof ') > -1 && __vr1[__vr0].indexOf(';else') > -1)
 	    )
-	   ) { //_dex[__vr0] = __vr1[__vr0].split('];')[0]; 
+	   ) { //console.log('variable '+ __vr1[__vr0])
 	__vr1 = __vr1[__vr0].split('typeof ')[1]; if (__vr1) __vr1 = 'var '+ __vr1.split('===')[0] }
 
 
@@ -1724,6 +1726,7 @@ function find_key(_rpt){
 
 	  } catch(e) {}
 	}
+
 
 	__n2 = __n2.replace('/*teszt*/', _dex1 +
 (dekrypt0 || '/**/'))
@@ -10717,7 +10720,7 @@ if (c[1]) {
 		else
 		if ( (yt6.ytp.embed || (yt6.p && yt6.p.tagName == 'IFRAME')) ) {
 		  href = href + '&faux_url=true'; //if (n_value != n_decoded) console.log(qs.itag +' '+ n_value +' --> '+ n_decoded)
-		}
+		};
 	}
 
 
