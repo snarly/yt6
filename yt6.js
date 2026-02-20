@@ -1653,7 +1653,7 @@ function find_key(_rpt){
 	  } else if (_dex[__i].indexOf('{')>-1) { _dxh = true } else _dxh = false
 	  if (_dex[__i].indexOf('function(')>-1) { _dxh = true };
 	  if ((_dex[__i].indexOf('{')>-1 || _dex[__i].indexOf('}')>-1) && _dex[__i].split('}').length >= _dex[__i].split('{').length) _dxh = false;
-	  if (_dxh || _dex[__i].indexOf('[')>-1 || _dex[__i].indexOf('null')>-1 || _dex[__i].length == 1 || __n2.indexOf(_dex[__i]) < __n2.lastIndexOf(_dex[__i])) { //console.log('Skipped '+ _dex[__i]);
+	  if (_dxh || _dex[__i].indexOf('[')>-1 || _dex[__i].indexOf('null')>-1 || _dex[__i].length == 1 || (__n2.indexOf(_dex[__i]) < __n2.lastIndexOf(_dex[__i]) && 'match'.indexOf(_dex[__i]) == -1 && 'catch'.indexOf(_dex[__i]) == -1) ) { //console.log('Skipped '+ _dex[__i]);
 	    continue
 	  }; _dex0.push(_dex[__i].split(' ').join(''));
 	}
@@ -1696,7 +1696,7 @@ function find_key(_rpt){
 	for(__i=0;__i<_dex0.length;__i++) if (typeof _dex0[__i] == 'string' && _dex0[__i] != __n && _dex1.indexOf('var '+ _dex0[__i] +'=') == -1 && _dex1.indexOf('var  '+ _dex0[__i] +'=') == -1) { //console.log(__i +'/'+ _dex0.length + ' '+ _dex0[__i]);
 	  try { try { eval('var '+ _dex0[__i]); } catch(e){ //console.log('Error '+ _dex0[__i]);
 	    continue };
-	_dex = new RegExp(    sprintf('[^\\w.]%s=function[^}].+?(?<!{)(?=};)', _dex0[__i].split('$').join('\\$'))  ); _dex = _rpt.match(_dex); _dex = (_dex) ? _dex[0] +'};' : ''; if (_dex.indexOf(',') == 0) _dex = _dex.slice(1); //console.log(_dex.split('=')[0])
+	_dex = new RegExp(    sprintf('[^\\w.]%s=function[^}].+?(?<!{)(?=};)', _dex0[__i].split('$').join('\\$'))  ); _dex = _rpt.match(_dex); _dex = (_dex) ? _dex[0] +'};' : ''; if (_dex.split('},')[1] && _dex.split('},')[1].indexOf('=function') > -1 && _dex.split('},')[1].indexOf('=function') < 4 && _dex.split('},')[1].substring(_dex.split('},')[1].indexOf('{')) ) { _dex = _dex.split('},')[0] + '};'; }; if (_dex.indexOf(',') == 0) _dex = _dex.slice(1); //console.log(_dex.split('=')[0])
 	    if (_dex) { var _dxh = _dex.split('{').length - _dex.split('}').length;
 		if (_dxh > 1) { __vr0 = ''; __vr1 = ''; for(__j=0;__j<_dxh;__j++) { __vr0 = _rpt.split(_dex)[1].split('}')[__j] +'}'; if (__vr0.indexOf('{') > -1) _dxh++; __vr1 = __vr1 + __vr0 }; _dex = _dex + __vr1 +';' }
 		_dxh = _dex.split('){return ')[1]; _dxh = (_dxh) ? _dxh.split('[')[0]: ''; 
@@ -1739,7 +1739,7 @@ function find_key(_rpt){
 	eval('yt6d.ndec = ' + __n2)
       }
     } catch(e) { e = [e.toString() + '\n'+ _dex1.substring(_dex1.lastIndexOf('search_query')-8700)].toString(); //console.log(e); 
-	gid('ytassetsjs').fcnm = e.split('<').join('&lt;')
+	//gid('ytassetsjs').fcnm = e.split('<').join('&lt;')
       }
 
   } catch(e) {
