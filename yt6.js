@@ -19,7 +19,7 @@ if (!window.yt6d) { //data object for future use
   }
   yt6d.playlist = {}
   yt6d.playlist.items = []
-  yt6d.log = []; yt6d.arg = {}
+  yt6d.log = []; yt6d.arg = {}; yt6d.arg.uriComponent = function(r,p,I){}
   yt6d.srt = {}; yt6d.srt.tracks = []
   yt6d.mediaUrlText = []
   yt6d.src_hid = 0; yt6d.src_hid2 = 0
@@ -913,13 +913,24 @@ function rp(tx) {
 }
 
 
-function dc(num, sg) {
-  var z; if (!sg) sg = num
-  try { z = fcnm(num, sg); return z } catch(e) { //console.log('fcnm: '+ e.toString())
+function dc(num1, num2, sg, num3, num4) {
+  var z, x; if (!sg) sg = num1
+  if (!sg) return undefined
+  function dc2(num1, num2, sg, num3, num4) {
+    z = fcnm(num1, num2, sg, yt6d.arg.uriComponent, x, num3, num4, sg); //console.log(sg)
+    return z 
+  }
+  try {
+    z = dc2(num1, num2, sg, num3, num4)
+    if (!z) if (yt6d.arg.s4 && yt6d.arg.s5 && yt6d.arg.s6 && yt6d.arg.s7) { z = dc2(yt6d.arg.s4, yt6d.arg.s5, sg, yt6d.arg.s6, yt6d.arg.s7) }
+    return z || sg
+  } catch(e) { try { //console.log('fcnm: '+ e.toString())
     if ((gid('ytassetsjs') != null) && typeof gid('ytassetsjs').fcnm == 'function') {
-      var fcnm = gid('ytassetsjs').fcnm
-      return fcnm(num, sg);
-    } else return sg
+      fcnm = clone(gid('ytassetsjs').fcnm)
+      z = dc2(num1, num2, sg)
+      if (!z) if (yt6d.arg.s4 && yt6d.arg.s5 && yt6d.arg.s6 && yt6d.arg.s7) { z = dc2(yt6d.arg.s4, yt6d.arg.s5, sg, yt6d.arg.s6, yt6d.arg.s7) }
+      return z || sg
+    } else return sg } catch(e){}
   }
 }
 
@@ -956,7 +967,7 @@ function def_link(){
 	  sig += '&' + signame + '=' + qs[signame];
 	}
 	if (qs.s) {//alert('Encrypted content! '+ qs.s + dc(qs.s) + gid('ytassetsjs').fcnm )
-	  href += '&' + signame + '=' + dc(yt6d.arg.s, qs.s);
+	  href += '&' + signame + '=' + dc(yt6d.arg.s0, yt6d.arg.s1, qs.s, yt6d.arg.s2, yt6d.arg.s3);
 	  //yt6.encrypted = true // outdated
 	}
 	if (href.indexOf("&ratebypass=yes") == -1) { href += '&ratebypass=yes'}
@@ -1418,7 +1429,7 @@ function onDownload(x) {
 
 
 
-function findClosingBracketMatchIndex(str, pos, x, y, q, regx) { var r0, r1 = [], r2 = []
+function findClosingBracketMatchIndex(str, pos, x, y, q, regx, __var) { var r0, r1 = [], r2 = []
   if (x == '[') y = ']'
   if (x && !y) y = x;
   if (!x || !y) { x = '{'; y = '}' }
@@ -1428,18 +1439,21 @@ function findClosingBracketMatchIndex(str, pos, x, y, q, regx) { var r0, r1 = []
   if (str[pos] != x) {
     return -1;//throw new Error("No '{' at index " + pos);
   }
-  var depth = 1, q1 = false, q2 = false;
+  var depth = 1, q1 = false, q2 = false, q3 = false;
 
   if (regx) {
     for (i = pos + 1; i < str.length; i++) {
-      if (str[i] == ',' && str[i+1] == '/') {
+      if (i == 1 && str[i] == '/') {//console.log('regex right at the beginning '+ i +' '+ str[i])
         r1.push(i)
       }
-      if (str[i] == '/' && str[i+1] == ',' && str[i-1] != '\\') {
-        if (r1.indexOf(i-1) == -1 || /^[a-zA-Z0-9_\$\.\,\[\]]*$/.test( str.substring(i+2).split(',')[0] )) {
+      if (str[i] == ',' && str[i+1] == '/') {//console.log('regex start '+ i+1 +' '+ str[i+1])
+        r1.push(i+1)
+      }
+      if (str[i] == '/' && str[i+1] == ',' && (str[i-1] != '\\' || (str[i-1] == '\\' && str[i-2] == '\\')) ) {
+        if (r1.indexOf(i) == -1 || (str.substring(i+2).split(',')[0].length && /^[a-zA-Z0-9_\$\.\,\[\]\(\)]*$/.test( str.substring(i+2).split(',')[0] ))) {//console.log('regex end '+ i +' '+ str[i])
           r2.push(i)
         }
-      } // regex border indexes should not point at the same slash
+      } // regex border indexes should not point at the same slash/(](\(),})/, /,,(\/)[,/ / [, , ]'/,
     }
     for (i = 0; i < r1.length; i++) if (r1[i] && !r2[i]) { r1.splice(r1.indexOf(r1[i]),1) }
     yt6.r1 = r1; yt6.r2 = r2
@@ -1447,11 +1461,12 @@ function findClosingBracketMatchIndex(str, pos, x, y, q, regx) { var r0, r1 = []
 
   for (i = pos + 1; i < str.length; i++) {
     if (regx) {
-      for (j = 0; j < r1.length; j++) if (r1[j] && r2[j] && r1[j] < i && r2[j] > i) { //console.log('skip part of regex string '+ str[i]);
+      for (j = 0; j < r1.length; j++) if (r1[j] && r2[j] && r1[j] < i && r2[j] > i) { //console.log('skip part of regex string '+ str[i])
         r0 = true; break }; if (r0) { r0 = false; continue }
     }
     q1 = (!q && !q2 && str[i] == "'" && str[i-1] != '\\') ? !q1 : q1 
     q2 = (!q && !q1 && str[i] == '"' && str[i-1] != '\\') ? !q2 : q2
+    if (__var) { q3 = (x == '[' && ((str[i] == x && str[i - __var.length] == __var) || (q3 && str[i] == y))) ? !q3 : q3; } 
     switch (str[i]) {
     case x:
       if (!q1 && !q2) { depth++; if (x == y && str[i-1] != '\\') { return i }};
@@ -1475,16 +1490,61 @@ function find_key(_rpt){
   }
 
   var __G = 'g'; if (_rpt.split('function(')[1]) __G = _rpt.split('function(')[1].split(')')[0]
+  var __vr = _rpt.split("'use strict';var ")[1]; if (__vr) __vr = __vr.split('=')[0]
 
-  var _fcn, _fcn0, _fcn1, __n, __n1
+  var _fcn, _fcn0, _fcn1, __n, __n1, __s, __z, _alr = '.set("alr","yes")', temp, obfuscated = []
 	//var names randomized since Dec 2024
-  for(__i;__i<_rpt.split(',encodeURIComponent(').length-1;__i++)
-	{ _fcn0 = _rpt.split(',encodeURIComponent(')[__i].slice(-50)
-	  if (_fcn0 && _fcn0.lastIndexOf('=') > -1 && _fcn0.lastIndexOf('=') < _fcn0.indexOf('decodeURIComponent(')) { _fcn = _fcn0.substring((_fcn0.lastIndexOf('=')+1)), _fcn1 = _fcn.split('(')[1]; _fcn1 = (_fcn1) ? 1*(_fcn1.split(',')[0]) : 0; yt6d.arg['s'+__i] = _fcn1; yt6d.arg.s = _fcn1; _fcn = _fcn.split('(')[0] } else _fcn = '' //.split('decodeURIComponent(')[0].split('=')[1]
+	
+  for(__i;__i<_rpt.split(_alr).length;__i++) { //bye ',encodeURIComponent(' //.slice(-50)
+    if (_rpt.split(_alr)[__i] && _rpt.split(_alr)[__i].indexOf('return ') < 100 && _rpt.split(_alr)[__i].indexOf('&&(') < 10) _fcn0 = 1
+    	if (_fcn0 == 1)
+	{ _fcn0 = _rpt.split(_alr)[__i].split('return ')[0]
+	  _fcn = _fcn0.substring((_fcn0.indexOf('=')+1)), _fcn1 = _fcn.split('(')[1];
+	  if (_fcn1) {
+	    for(__s=0;__s<_fcn1.split(',').length;__s++) if (_fcn1.split(',')[__s]) {
+	      if (isNaN(_fcn1.split(',')[__s])) {
+	        yt6d.arg.encode = _fcn1.split(',')[__s]
+	        if (!isNaN(_fcn.split(yt6d.arg.encode +'(')[1].split(',')[0])) yt6d.arg['s'+__s] = _fcn.split(yt6d.arg.encode +'(')[1].split(',')[0]
+	        if (!isNaN(_fcn.split(',')[(__s+1)])) yt6d.arg['s'+(__s+1)] = _fcn.split(',')[(__s+1)]
+	        break
+	      } else yt6d.arg['s'+__s] = _fcn1.split(',')[__s];
+	    }
+	  _fcn = _fcn.split('(')[0] //.split('decodeURIComponent(')[0].split('=')[1]
+	  if (yt6d.arg.encode) { _fcn0 = _rpt.split('='+ _fcn +'(')
+	    for(__s=0;__s<_fcn0.length;__s++) if (_fcn0[__s] && _fcn0[__s].indexOf(yt6d.arg.encode +'(') > -1 && _fcn0[__s].indexOf(yt6d.arg.encode +'(') < 20) {
+	      for(__z=0;__z<_fcn0[__s].split(',').length;__z++)
+	      if (isNaN(_fcn0[__s].split(',')[__z]) && _fcn0[__s].split(',')[__z].split(yt6d.arg.encode +'(')[1]) {
+	        if (!isNaN(_fcn0[__s].split(yt6d.arg.encode +'(')[1].split(',')[0])) yt6d.arg['s'+(__z+4)] = _fcn0[__s].split(',')[__z].split(yt6d.arg.encode +'(')[1].split(',')[0]
+	        if (!isNaN(_fcn0[__s].split(',')[(__z+1)])) yt6d.arg['s'+(__z+5)] = _fcn0[__s].split(',')[(__z+1)]
+	        break
+	      } else yt6d.arg['s'+(__z+4)] = _fcn0[__s].split(',')[__z];
+	      if (yt6d.arg.s0 != yt6d.arg.s4) break
+	    }
+	  }
+	  }
 	}
+  }
 
-  var __n0 = (_rpt.split('{this.segments.push(')[1]) ? _rpt.split('{this.segments.push(')[0] : ''; // from 202510 on, n-decryption key moved to random location
-  if (__n0) { __n0 = __n0.slice(-50).split('=[')[1]; if (__n0) { __n = __n0.split(']')[0]; __n1 = __n } }
+  //var __n0 = (_rpt.split('{this.segments.push(')[1]) ? _rpt.split('{this.segments.push(')[0] : ''; // from 202510 on, n-decryption key moved to random location
+  //if (__n0) { __n0 = __n0.slice(-50).split('=[')[1]; if (__n0) { __n = __n0.split(']')[0]; __n1 = __n } }
+  try { var kbloc = (yt6.ytp.embed || yt6.mobile) ? 1000 : 2000, kblocr = new RegExp('.{1,'+ kbloc +'}', 'g'); // /.{1,2000}/g
+    __n0 = _rpt.match(kblocr), temp = []
+    for(__i=0;__i<__n0.length;__i++) if (__n0[__i].split(__vr+'[').length >= ((kbloc == 1000) ? 2 : 5) && __n0[__i].split('^').length >= ((kbloc == 1000) ? 20 : 60)) { 
+      temp.push( ((__n0[__i-1]) ? __n0[__i-1] : '') + __n0[__i] + ((__n0[__i+1]) ? __n0[__i+1] : '') )
+    }
+    for(__i=0;__i<temp.length;__i++) if (temp[__i].split('=function(')[1]) { __n0 = temp[__i].split('=function(')
+      for(__j=0;__j<__n0.length;__j++) if (__n0[__j].split(__vr+'[').length >= ((kbloc == 1000) ? 2 : 5) && __n0[__j].split('^').length >= ((kbloc == 1000) ? 20 : 60)) {
+        __s = (_rpt.split(__n0[__j])[0].substring(_rpt.split(__n0[__j])[0].lastIndexOf('=function(')-3) ) + __n0[__j] + _rpt.split(__n0[__j])[1].substring(0,kbloc)
+        __s = __s.split('return ')[0] + 'return ' + __s.split('return ')[1].split('}')[0] + '};'
+        obfuscated.push(__s)
+      }
+    }
+    for(__i=0;__i<obfuscated.length;__i++) { __n0 = obfuscated[__i].split('=function')[0].split(' ').join('').split(',').join('').split(';').join('');
+      //console.log(__n0); console.log(obfuscated[__i].indexOf('a:{'))
+      if (__n0.indexOf(_fcn) == -1 && obfuscated[__i].split('a:{')[1] && obfuscated[__i].split('a:{')[1].split('=[')[1] && obfuscated[__i].split('a:{')[1].split('=[')[1].substring(0,1) != ']' && obfuscated[__i].split('a:{')[1].split('=[')[1].split(',-')[1] ) { __n = __n0; break }
+    }
+  } catch(e){}
+
 
 
 	function sprintf(nw) {
@@ -1497,15 +1557,18 @@ function find_key(_rpt){
       __n0 = '[a-zA-Z0-9_\\\$]'
 
       if (!__n) {
-	var __n1 = new RegExp(	sprintf( __n0 + __n0 + __n0 +'\=\\\[%s\\\];', __n0 + __n0 + __n0)	); __n1 = _rpt.match(__n1)//'var '+
+	var __n1 = new RegExp(	sprintf( __n0 + __n0 + __n0 +'\=\\\[%s\\\];', __n0 + __n0 + __n0)	); __n1 = _rpt.match(__n1); //'var '+
 	if (__n1 && __n1[0]) {
 	  __n1 = __n1[0].split(']')[0].split('=[')[1]; __n = __n1
 	}
       }
 
 
-	//console.log('_fcn='+_fcn); console.log('__n='+__n);
+	//console.log('_fcn='+_fcn +'  __n='+__n +'   '+ yt6d.base_js)
 
+	yt6d.arg.fcn = _fcn; yt6d.arg.n = __n
+	var k = _rpt.split('?"http":"https"}'); if (k[1]) { k = k[0].substring(k[0].lastIndexOf('return new ')); if (k) k = k.split('(')[0].split('.')[1]; yt6d.arg.konst = k }
+    
 
   function fcobj(__fs){ // find the variable name which refers to the object with the signature-descrambling methods
 
@@ -1566,16 +1629,21 @@ function find_key(_rpt){
       __n2 = _rpt.match(nreg)
       if (__n2) {
 	nreg = null; __n3 = __n2[0].split('{')[0].split(')')[0].split('(')[1]
-	__n4 = __n2[0].split('function('+__n3+'){return ')[1]; //__n alt
-	if (__n4 && __n2[0].indexOf('}') > __n2[0].indexOf(__n4) && __n2[0].indexOf('}') < 50 && __n4.split('(this,')[0].slice(-2) == ']]') {
-		__n3 = __n4.split('(this,')[1]; if (__n3) __n3 = __n3.split(')')[0]; yt6d.arg.n = 1*(__n3.split(',')[0])
-		__n = __n4.split('[')[0]
-		__vr = __n4.split('[')[1]; if (__vr) __vr = __vr.split('[')[0]
+	//__n alt
+	if (!__n4) { __n3 = _rpt.split('return '+ __n);
+	  for(__i=1;__i<__n3.length;__i++) if (__n3[__i]) __n4 = __n + __n3[__i];
+	  __n3 = _rpt.split('='+ __n +'(')
+	  if (__n3[1]) {
+	    __n3 = __n3[1].split(')')[0].split(',') //useless
+	  }
+	}
+	if (__n4 && __n4.split('(this,')[0].slice(-2) == ']]') {
+		if (!__vr) { __vr = __n4.split('[')[1]; if (__vr) __vr = __vr.split('[')[0] }
 		if (_rpt.indexOf("'use strict';var ") > -1 && _rpt.indexOf("'use strict';var "+ __vr) == -1) __vr = _rpt.split("'use strict';var ")[1].split('=')[0]
 		if (__vr) __vr0 = __vr
 		nreg = new RegExp(	sprintf('[^\\w.]%s=function[^}]+}.*', __n.split('$').join('\\$'))	);
 		__n2 = _rpt.match(nreg)[0];
-	} else { __n2 = __n2[0]; }
+	} else { __n2 = __n2[0]; __vr = _rpt.split("'use strict';var ")[1]; if (__vr) __vr = __vr.split('=')[0]; __vr0 = __vr }
 
 	__n3 = __n2.split('{')[0] + '{'
 	__n2 = __n2.split('{')[0] + '{ /*teszt*/;'+ __n2.split(__n3)[1] 
@@ -1591,18 +1659,24 @@ function find_key(_rpt){
 			index = (findClosingBracketMatchIndex(__vr.substring(__vr.indexOf(__cr)), 0, __cr) + 1)
 			__vr = __vr.split('=')[0] + '=' + __vr.substring(__vr.indexOf(__cr)).substring(0, index)
 		}
+	
 		__n2 = __n2.split('{')[0] + '{'+ __vr +';'+ __n2.split(__n3)[1] 
+
 	}
+	__n3 = __n2.split('var ')[1]; if (__n3 && __n3.split(')')[0].length < 50) { console.log('yt6d.arg.n0 = 3; yt6d.arg.n1 = 8289') }
       }
 
       try { //var _VAR = 'yt6d.__'+__vr0; eval((_VAR) +'='+ __vr.replace('var '+ __vr0 +'=','')); 
-	eval('var '+ (__vr0) +'='+ __vr.replace('var '+ __vr0 +'=',''));
-	__n3 = _rpt.split('=['+ __n1 +']')[0].slice(-6).split('}').join('').split(';').join('') + '=[yt6d.ndec]'; __n3 = 'var '+ __n3.substring(__n3.lastIndexOf(' '), __n3.length+1)
-	//eval('console.log('+ _VAR +')/*();*/');
-      } catch(e){}
+	eval('var _VAR='+ __vr.replace('var '+ __vr0 +'=',''));
+	__n3 = _rpt.split('=['+ __n1 +']')[0].slice(-6).split('}').join('').split(';').join('') + '=[yt6d.ndec]'; __n3 = 'var '+ __n3.substring(__n3.lastIndexOf(' '), __n3.length+1); 
+	//console.log(Array.isArray(_VAR))
+	//eval('console.log(_VAR)') //check _VAR value
+	//eval('console.log("' + _VAR +'")') //check _VAR name
+      } catch(e){console.log(e.toString())}
 
 
       if (__n2) {
+
 	try {
 	  if (__n2.indexOf(';') < __n2.indexOf('function')) __n2 = __n2.replace(';','')
 	  __n2 = __n2.replace(__n +'=','').split('return '+ __G +'.')[0]; __n2 = __n2.substring(0, __n2.indexOf('=function(')); __n2 = __n2.substring(0, __n2.lastIndexOf(' '));
@@ -1617,32 +1691,57 @@ function find_key(_rpt){
 	try {
 
 	// array-filter
-	var _dex = __n2.split('=['), _dex0 = [], _dxh, array, _rgx
+	var _dex = __n2.split('=['), _dex0 = [], _dxh, array, _rgx; yt6.r1 = []; yt6.r2 = []
 	for(__i=0;__i < _dex.length;__i++)
+	{
+	  if (__i == 0) if (typeof _VAR == 'object' && Array.isArray(_VAR))
+	  try {
+	    var __z = _dex[__i], __j = __i; while (__z.indexOf('a:{') == -1 && _dex[__j+1]) { __j = __j+1; __z = __z + _dex[__j] }
+	    if (__z.indexOf('a:{') > -1) { //if (__z.lastIndexOf(',') > __z.indexOf('a:{')) __z = __z.substring(__z.lastIndexOf(',')+1);
+	      __s = _VAR.indexOf('split'); //console.log('split='+ __s)
+	      __z = __z.substring(__z.lastIndexOf('}')+1); __z = __z.substring(__z.lastIndexOf('if')+2)
+	      if (__s > -1 && __z.indexOf('^') > -1) {
+	        var xord = __z.substring(__z.lastIndexOf('^')-1,__z.lastIndexOf('^')), para1 = __z.split('a:{')[0].match(/[a-zA-Z_]/)[0], para2, _rgx = __z.split('a:{')[0]
+	        if (xord && para1) { 
+	          para2 = __n2.split(xord +'=')[1].split(para1)[0].split('^')[0]
+	          eval('var _xord='+ __s +'^'+ __z.split('['+ xord +'^')[1].split(']')[0])
+	          if (_xord > 0) {
+	            var _para1, _para2
+	            if (__n2.split(xord +'='+ para2 +'^'+ para1)[1]) { _para1 = new RegExp(para1, 'gm'); __s = _para1 }
+	            if (__n2.split(xord +'='+ para1 +'^'+ para2)[1]) { _para2 = new RegExp(para2, 'gm'); __s = _para2 }
+	            xord = 'yt6d.nrg = function(start, '+ para1 +', '+ para2 +'){ var __j=start||0, para1='+ para1 +', para2='+ para2 +', xord=('+ para2 +'^'+ para1+ ')||'+ _xord +', _xord="'+ xord +'"; for(__j;__j<200;__j++) if ('+ _rgx.replace(__s, '__j') +') { '+ ((_para1 == __s) ? 'para1' : 'para2') +' = __j; break }; if ('+ (_para1 == __s) +') { para2 = para1 ^ xord;  } else para1 = para2 ^ xord; return [para1, para2] }'
+	            eval(xord)
+	            xord = yt6d.nrg(0, para1, para2)
+	          }
+	        }
+	      }
+	    }
+	  } catch(e){ console.log(e.toString()) }
 	if (__i && _dex[__i].lastIndexOf(',-') != _dex[__i].indexOf(',-')) {
 	  _dxh = _dex[__i-1].slice(-5); _dxh = _dxh.split(',')[1] || _dxh.split(' ')[1] || _dxh.split(';')[1]; _dxh = _dxh +'=['+ _dex[__i].split(',')[0];
 	  _dex = _dxh + __n2.split(_dxh)[1];
-	  yt6.r1 = []; yt6.r2 = []
-	  index = (findClosingBracketMatchIndex(_dex.substring(_dex.indexOf('[')), 0, '[', ']', false, true) + 1 + _dex.indexOf('[')) // +1 may be one too short?
+	  yt6.r1 = []; yt6.r2 = [];
+	  index = (findClosingBracketMatchIndex(_dex.substring(_dex.indexOf('[')), 0, '[', ']', false, true, ((typeof __vr == 'string') ? __vr.split('=')[0].split(' ')[1] : '')) + 1 + _dex.indexOf('[')) // +1 may be one too short?
 
-	  __vr1 = _dex.replace(_dxh.split('[')[0],'').replace('[','').split('try{')[0].split(','); __vr0 = (__vr1.length-1);
-	  _dex = _dex.substring(_dex.indexOf('[')+1, index);
+	  __vr1 = _dex.replace(_dxh.split('[')[0],'').replace('[','').split('try{')[0].split(','); __vr0 = (__vr1.length-1)
+	  _dex = _dex.substring(_dex.indexOf('[')+1, index)
 	  if (_dex.slice(-1) == ']') _dex = _dex.substring(0, _dex.length-1)
 	  array = _dex;
-	  _dex = _dex.split(',')
+	  _dex = _dex.split(',');
 	  //_dex = (_dex.replace(_dxh.split('[')[0],'').replace('[','')).split(',');
 	  _dxh = false;
 	  //for(__j=0;__j < __vr0;__j++) console.log('_dex['+__j+'] = '+ _dex[__j]);
 	  break
-	}
+	}}
 
     // define first checker variable located after last element of array
 	if (Array.isArray(__vr1) && __vr1[__vr0] &&
 	    (__vr1[__vr0].indexOf('];') < 14 ||
-	     (__vr1[__vr0].indexOf('];') > -1 && __vr1[__vr0].indexOf('if(typeof ') > -1 && __vr1[__vr0].indexOf(';else') > -1)
+	     (__vr1[__vr0].indexOf('];') > -1 && __vr1[__vr0].indexOf('if(typeof ') > -1) //&& __vr1[__vr0].indexOf(';else') > -1)
 	    )
 	   ) { //console.log('variable '+ __vr1[__vr0])
-	__vr1 = __vr1[__vr0].split('typeof ')[1]; if (__vr1) __vr1 = 'var '+ __vr1.split('===')[0] }
+	__vr1 = __vr1[__vr0].split('typeof ')[1]; if (__vr1) __vr1 = 'var '+ __vr1.split('===')[0]
+	}
 
 
 	for(__i=0;__i<_dex.length;__i++) if (_dex[__i] && isNaN(_dex[__i]) && _dex[__i].indexOf('/') != 0) {
@@ -1653,12 +1752,14 @@ function find_key(_rpt){
 	  } else if (_dex[__i].indexOf('{')>-1) { _dxh = true } else _dxh = false
 	  if (_dex[__i].indexOf('function(')>-1) { _dxh = true };
 	  if ((_dex[__i].indexOf('{')>-1 || _dex[__i].indexOf('}')>-1) && _dex[__i].split('}').length >= _dex[__i].split('{').length) _dxh = false;
-	  if (_dxh || _dex[__i].indexOf('[')>-1 || _dex[__i].indexOf('null')>-1 || _dex[__i].length == 1 || (__n2.indexOf(_dex[__i]) < __n2.lastIndexOf(_dex[__i]) && 'match'.indexOf(_dex[__i]) == -1 && 'catch'.indexOf(_dex[__i]) == -1) ) { //console.log('Skipped '+ _dex[__i]);
+	  if (_dxh || _dex[__i].indexOf('[')>-1 || _dex[__i].indexOf('null')>-1 || _dex[__i].length == 1 || (__n2.indexOf(_dex[__i]) < __n2.lastIndexOf(_dex[__i])
+	      && 'match'.indexOf(_dex[__i]) == -1 && (yt6.ytp.embed || 'catch'.indexOf(_dex[__i]) == -1)
+	    ) ) { //console.log('Skipped '+ _dex[__i]);
 	    continue
 	  }; _dex0.push(_dex[__i].split(' ').join(''));
 	}
 
-	var _dex1 = __n2.split(';else{try{try{var ')[1], _dex2, _dex3; if (!_dex1) _dex1 = __n2.split(';else{try{')[1] 
+	var _dex1 = __n2.split('try{try{var ')[1], _dex2, _dex3; if (!_dex1) _dex1 = __n2.split(';else{try{')[1] 
 	if (_dex1) { __vr0 = _dex1.split('('); 
 	  for(__i=0;__i<__vr0.length-1;__i++) {
 	    for(__j=2;__j<__vr0.length-1;__j++) { _dex1 = __vr0[__i].slice(-1*__j); if (_dex1.charAt(1) == '=' && _dex1.charAt(0) != '=' && /[a-zA-Z0-9_\$]/.test(_dex1)) { _dex1 = _dex1.split('=')[1]; if (_dex1.length > 1 && _dex0.indexOf(_dex1) == -1) { _dex0.push(_dex1); break } } }
@@ -1666,7 +1767,8 @@ function find_key(_rpt){
 	}
 
 
-	_dex1 = ';var '+ __G +' = _yt_player;'+ __n3 +';var '+ __n +'=yt6d.ndec;';
+	_dex1 = ';var '+ __G +' = _yt_player;'+ //__n3 +
+		';var '+ __n +'=yt6d.ndec;';
 	try {
 	  _dex = _rpt.split('return '+ _fcn +'[')[1]; if (_dex) _dex = _rpt.substring(_rpt.split('return '+ _fcn +'[')[0].lastIndexOf(';')+1, _rpt.indexOf(_dex) + _dex.indexOf(';')+1); if (_dex) { if (_dex.indexOf('var') == -1) _dex = 'var '+ _dex; _dex1 = _dex1 + _dex.split(_fcn).join('fcnm') +';' }
 	  _dex = _rpt.split('document.location.hostname);document.location.port')[1]; if (_dex) _dex = _rpt.substring(_rpt.split('document.location.hostname);document.location.port')[0].lastIndexOf('};')+2, _rpt.indexOf(_dex) + _dex.indexOf('};')+2); if (_dex) { if (_dex.indexOf('var') == -1) _dex = 'var '+ _dex; _dex1 = _dex1 + _dex +';' }
@@ -1688,12 +1790,23 @@ function find_key(_rpt){
 	  }
 	}
 
-	} catch(e){}
+	} catch(e){console.log(e.toString())}
 
 
+	    function dive(_dxh, __br) {
+	      for(__j=0;__j<_dxh.length;__j++) { var cell = _dxh[__j].split(__br)[0].split(' ').join(''); if (cell.length > 1 && cell.length < 4 && /[a-zA-Z0-9_\$]/.test(cell) && !(/[\,\.\;\!\?\+\-\*\/\=\&\|\(\)\{\}\[\]\<\>]/.test(cell)) && isNaN(cell) && _dex0.indexOf(cell) == -1) { _dex0.push(cell); } }
+	    }
+
+	    if (!array) {
+	      var deep = ['=',',',' ',':',';','&&']; for(__k=0;__k < deep.length;__k++) { dive(__n2.split(deep[__k]),'(')
+	      }
+	    }
+
+//_dex0.push.apply(_dex0, ['DD','Ew','Ts']);
 	__n0 = __n0.split('[^').join('[')
 
 	for(__i=0;__i<_dex0.length;__i++) if (typeof _dex0[__i] == 'string' && _dex0[__i] != __n && _dex1.indexOf('var '+ _dex0[__i] +'=') == -1 && _dex1.indexOf('var  '+ _dex0[__i] +'=') == -1) { //console.log(__i +'/'+ _dex0.length + ' '+ _dex0[__i]);
+	  var temp = (_dex0[__i] == yt6d.arg.encode) ? true : false
 	  try { try { eval('var '+ _dex0[__i]); } catch(e){ //console.log('Error '+ _dex0[__i]);
 	    continue };
 	_dex = new RegExp(    sprintf('[^\\w.]%s=function[^}].+?(?<!{)(?=};)', _dex0[__i].split('$').join('\\$'))  ); _dex = _rpt.match(_dex); _dex = (_dex) ? _dex[0] +'};' : ''; if (_dex.split('},')[1] && _dex.split('},')[1].indexOf('=function') > -1 && _dex.split('},')[1].indexOf('=function') < 4 && _dex.split('},')[1].substring(_dex.split('},')[1].indexOf('{')) ) { _dex = _dex.split('},')[0] + '};'; }; if (_dex.indexOf(',') == 0) _dex = _dex.slice(1); //console.log(_dex.split('=')[0])
@@ -1708,12 +1821,15 @@ function find_key(_rpt){
 
 	      var _dxh = _dex.split('=function(')[1].split(')')[0]
 	      _dex2 = _dex.split(_dex.substring(0, _dex.indexOf("{")+1))[1].slice(0,-2)
-	      if (_dex2.split('return ')[1] && _dex2.split('return ')[1].split('](this,')[1]) { _dex3 = _dex2.split('return ')[1].split('[')[0];  if (_dex3 != 'fcnm' && _dex3 != 'yt6d.ndec' && _dex0.indexOf(_dex3) == -1) { _dex0.push(_dex3) }}
-	      try { eval('var '+ (_dex0[__i]) +'= new Function(_dxh, _dex2)') } catch(err) {
+	      if (_dex2.split('return ')[1] && _dex2.split('return ')[1].split('](this,')[1]) { _dex3 = _dex2.split('return ')[1].split('[')[0];  if (_dex3 != 'fcnm' && _dex3 != 'yt6d.ndec' && _dex0.indexOf(_dex3) == -1) { _dex0.push(_dex3) }}; 
+	      if (temp) { _dex2 = 'try{ '+ 
+	      __vr +';'+ dekrypt0 + _dex2.replace('return ', '}catch(err){console.log("uriCerr: "+ err.toString())};console.log("uriComponent: "+'+ _dex2.split('return ')[1].split('}')[0] +');return ')
+	      }
+	      try { eval('var '+ (_dex0[__i]) + ((temp) ? '= yt6d.arg.uriComponent' : '') +'= new Function(_dxh, _dex2)') } catch(err) {
 		if (_rpt.split(_dex2)[1]) { // include one more "};" ?
 		  _dex = _dex.substring(0, _dex.lastIndexOf('};')) + _rpt.split(_dex2)[1].split('};')[0] + '};'
 		  _dex2 = _dex2 + _rpt.split(_dex2)[1].split('};')[0];
-		  try { eval('var '+ (_dex0[i]) +'= new Function(_dxh, _dex2)') } catch(err) {}
+		  try { eval('var '+ (_dex0[i]) + ((temp) ? '= yt6d.arg.uriComponent' : '') +'= new Function(_dxh, _dex2)') } catch(err) {}
 		}
 	      }; if (_dex.indexOf(';') < _dex.indexOf('=')) _dex = _dex.replace(';','')
 	      _dex1 = _dex1 + 'var '+ _dex; 
@@ -1723,26 +1839,30 @@ function find_key(_rpt){
 	      }
 
 
-	    function dive(_dxh, __br) {
-	      for(__j=0;__j<_dxh.length;__j++) { var cell = _dxh[__j].split(__br)[0].split(' ').join(''); if (cell.length > 1 && cell.length < 4 && /[a-zA-Z0-9_\$]/.test(cell) && !(/[\,\.\;\!\?\+\-\*\/\=\&\|\(\)\{\}\[\]\<\>]/.test(cell)) && isNaN(cell) && _dex0.indexOf(cell) == -1) { _dex0.push(cell); } }
-	    }
-	    var deep = ['=',',',' ',':',';','&&']; for(__k=0;__k < deep.length;__k++) { dive(_dex.split(deep[__k]),'('); dive(_dex.split(deep[__k]),')'); dive(_dex.split(deep[__k]),'?'); dive(_dex.split(deep[__k]),'='); dive(_dex.split(deep[__k]),'.hasOwnProperty(') }
+	    var deep = ['=','?',',',' ',':',';','&&']; for(__k=0;__k < deep.length;__k++) { dive(_dex.split(deep[__k]),'('); dive(_dex.split(deep[__k]),')'); dive(_dex.split(deep[__k]),'?'); dive(_dex.split(deep[__k]),'='); dive(_dex.split(deep[__k]),'.hasOwnProperty(') }
 
-	  } catch(e) {}
+	  } catch(e) {console.log(e.toString())}
 	}
 
 
-	__n2 = __n2.replace('/*teszt*/', _dex1 +
+	__n2 = __n2.replace('/*teszt*/', ((_dex1) ? _dex1 : '/*missing functions*/') +
 (dekrypt0 || '/**/'))
+
+//var temp = __n2.split('}catch(a){'); __n2 = ''
+//for(__i=0;__i<temp.length;__i++) { temp[__i] = temp[__i] + ((__i < temp.length-1) ? '}catch(a){console.log(\"'+__i+'\ "+ a.toString());' : ''); __n2 = __n2 + temp[__i] }
+//console.log(__n2)
+//var temp = __n2.substring(__n2.lastIndexOf('return ')).split(' ')[1]
+//if (temp) { temp = temp.split('}')[0].split(';')[0]; __n2 = __n2.split(','+temp+'=[]').join(',console.log("____"+X)') }
 
 
 	eval('yt6d.ndec = ' + __n2)
       }
-    } catch(e) { e = [e.toString() + '\n'+ _dex1.substring(_dex1.lastIndexOf('search_query')-8700)].toString(); //console.log(e); 
+    } catch(e) { e = [e.toString()]; e.push(__n2)//_dex1.substring(_dex1.lastIndexOf('search_query')-8700)].toString(); 
+    console.log(e); 
 	//gid('ytassetsjs').fcnm = e.split('<').join('&lt;')
       }
 
-  } catch(e) {
+  } catch(e) {console.log(e.toString())
 
     }
 
@@ -1771,11 +1891,11 @@ function find_key(_rpt){
 
     var _fcn = "function fcnm(" + _fcn.split("function fcnm(")[1]
 
-  } else var _fcn = "function fcnm(a) { yt6.dummy = true; return a; };"
+  } else var _fcn = "function fcnm(n1, n2, a) { yt6.dummy = true; return a; };"
 
   try { eval(_fcn) } catch(e) {}
 
-    window.fcnm = new Function(__fs3, _fcn.substring(_fcn.indexOf('{'), (findClosingBracketMatchIndex(_fcn,_fcn.indexOf('{'), '{', '}', false, true) + 1 + _fcn.indexOf('{') )) )
+  try { window.fcnm = new Function(__fs3, _fcn.substring(_fcn.indexOf('{')+1, _fcn.lastIndexOf('}')-1) ) } catch(e){}
 
   return fcnm
 
@@ -2178,6 +2298,16 @@ function store_ytp_currentTime() {
 }
 
 
+function publive() {
+    if (Array.isArray(yt6d.path)) {
+      try { var xc = '', app; for(i=0;i<yt6d.path.length;i++) { xc = xc +"['"+yt6d.path[i]+"']"; if (yt6d.path[i] == 'app') app = xc }; xc = new Function('a', 'yt6d.pub = ((typeof ytPubsubPubsubInstance != "undefined") ? ytPubsubPubsubInstance : _yt_player); yt6d.videoData = function() { return yt6d.pub'+ xc +'.videoData }; yt6d.cpn = (yt6d.videoData()) ? yt6d.videoData().clientPlaybackNonce : ""; if (yt6d.pub && yt6d.pub'+ app +' && yt6d.pub'+ app +') yt6d.pubApp = yt6d.pub'+ app +'; yt6d.pot = (yt6.pot && (typeof yt6.pot == "string") ? yt6.pot.split("&pot=")[1] : ""); return ((yt6d.cpn) ? yt6d.videoData().isLivePlayback : false)') 
+    	if (!yt6.pot && typeof yt6d.videoData == 'function') try { j = yt6d.videoData(); for(i in j) if (typeof j[i] == 'string' && j[i].length > 100 && j[i].slice(-1) == '=') yt6.pot = '&pot='+ j[i] } catch(e){}
+    	return (xc() || false)
+      } catch(e){ console.log(e.toString()); return false }
+    } else return false
+}
+
+
 if (!yt6.oldbrowser && typeof Object.entries == 'function' && Object.entries.toString().indexOf('[native code]') != -1) {
 
 // in src.constructor
@@ -2233,7 +2363,8 @@ yt6.tmp = ""+
 	if (!yt6d.app) if (path.indexOf('app') == -1 && key == 'app' && value && typeof value == 'object') for (var i in value) if (value[i] && typeof value[i] == 'object' && value[i].app && typeof value[i].app == 'object') {\
 	  try { yt6d.app = ytPubsubPubsubInstance[path[0]][path[1]].app[i]; break } catch(e){};\
 	};\
-	if (yt6d.path && Array.isArray(yt6d.path) && yt6d.path.length && path.indexOf(yt6d.path[0]) == 0 && path.indexOf(yt6d.path[1]) == 1 && path.indexOf(yt6d.path[3]) == 3 && path.indexOf(yt6d.path[2]) == 2 && yt6d.path.length >= 4 && yt6d.path.length < 10 && path.indexOf(yt6d.path[3]) == 3 && ((b && path.indexOf(yt6d.path[4]) == 4) || !(b && path.indexOf(yt6d.path[5]) != 5 && path.indexOf(yt6d.path[6]) != 6)) && typeof value == 'object') { /*console.log(path+'_'+key+'_');console.log(value)*/;\
+	if (yt6d.path && Array.isArray(yt6d.path)) {\
+	if (yt6d.path.length && path.indexOf(yt6d.path[0]) == 0 && path.indexOf(yt6d.path[1]) == 1 && path.indexOf(yt6d.path[3]) == 3 && path.indexOf(yt6d.path[2]) == 2 && yt6d.path.length >= 4 && yt6d.path.length < 10 && path.indexOf(yt6d.path[3]) == 3 && ((b && path.indexOf(yt6d.path[4]) == 4) || !(b && path.indexOf(yt6d.path[5]) != 5 && path.indexOf(yt6d.path[6]) != 6)) && typeof value == 'object') { /*console.log(path+'_'+key+'_');console.log(value)*/;\
 	  var ok = false;\
 	  for(i in value) if (!(list && yt6.list == list)) { vi = value[i]; if (vi && typeof vi == 'object') { \
 	    _itag = 0; \
@@ -2244,6 +2375,7 @@ yt6.tmp = ""+
 	      if (list && (_itag > 0 || yt6.mobile)) { yt6.list = list; yt6d.path = clone(path);yt6d.path.push(key);yt6d.path.push(i); break; break;/*yt6d.path.push(j);yt6d.path.push(yt6.mapObj);yt6d.path.push(yt6.mapObj)*/ };\
 	    };\
 	  }}; a = []; vi = vij = vik = null;\
+	};\
 	};\
       if (key == 'element' && typeof value.hasAttribute == 'function' && value.hasAttribute('tabindex') && (value.hasAttribute('id') || value.hasAttribute('class'))) { yt6d.mp = value };\
     };\
@@ -2321,7 +2453,7 @@ yt6.tmp = null
 function test_4(peek) {
 
   yt6d.current.eid = []
-  yt6.default_link = def_link()
+  //yt6.default_link = def_link()
 
   store_ytp_currentTime()
 
@@ -2372,8 +2504,11 @@ function test_4(peek) {
 
 
       try { 
+      
+	    if (yt6.list && yt6.mapObj) {
 
-	    if (yt6.list && yt6.mapObj) { var a, k, l, m, n, o, mno, b = yt6d.subscriptions, c = yt6.mapObj, list = yt6.list, piece = '', url, pot = clone(yt6.pot), n_decoded
+	      if (!yt6.pot) publive()
+	      var a, k, l, m, n, o, mno, b = yt6d.subscriptions, c = yt6.mapObj, list = yt6.list, piece = '', url, pot = clone(yt6.pot), n_decoded
 
 	      for (k=0;k<1000;k++) { if (list[k]) { _itag = k, a = [], url = '', n_decoded = false;
 		try { for(l in list[k]) { m = list[k][l]; if (!(typeof m == 'object' && m && typeof m[c] == 'object')) continue;
@@ -2638,7 +2773,7 @@ function test_4(peek) {
 		    }
 		  }
 		  try {
-		    furl = obj.url; var fur = (obj.s) ? dc(yt6d.arg.s, obj.s.split('%3D','=')) : ''
+		    furl = obj.url; var fur = (obj.s) ? dc(yt6d.arg.s0, yt6d.arg.s1, obj.s.split('%3D').join('='), yt6d.arg.s2 && yt6d.arg.s3) : ''
 		    if (fur && obj.sp) { yt6.encrypted = true; furl = furl + '&' + obj.sp + '=' + fur }
 		  } catch(e){}
 		} else {
@@ -3329,6 +3464,7 @@ function load_from_page_source(x, source) {
 		  if (!js) js = y.split('"PLAYER_JS_URL":"')[1]
 		  if (js && js.indexOf('/base.js') > -1) {
 		    js = js.split('/base.js')[0].split('\\').join('') + '/base.js'
+		    var js0; try { js0 = (typeof yt == 'object' && yt.config_ && yt.config_.WEB_PLAYER_CONTEXT_CONFIGS && (yt.config_.WEB_PLAYER_CONTEXT_CONFIGS.WEB_PLAYER_CONTEXT_CONFIG_ID_KEVLAR_WATCH || yt.config_.WEB_PLAYER_CONTEXT_CONFIGS.WEB_PLAYER_CONTEXT_CONFIG_ID_EMBEDDED_PLAYER)); if (js0) { js0 = js0.jsUrl; if (js != js0) js = js0 } } catch(e){} 
 		    c[0].assets.js = js; yt6d.base_js = js
 		  }
 
@@ -3986,7 +4122,8 @@ function correct_flashvars(a) { // prepare the flash player object's flashvars v
 		    sig = sig2
 		  } else sig = undefined
 		} else {//encrypted
-		    sig = dc(yt6d.arg.s, qs.s).split('=').join('%253D').split('%3D').join('%253D') // .join('@@@@3D') was used for testing
+		    sig = dc(yt6d.arg.s0, yt6d.arg.s1, qs.s, yt6d.arg.s2, yt6d.arg.s3)
+		    if (sig) sig = sig.split('=').join('%253D').split('%3D').join('%253D') // .join('@@@@3D') was used for testing
 		  }
 	    }
 	  } else {
@@ -3995,7 +4132,7 @@ function correct_flashvars(a) { // prepare the flash player object's flashvars v
 		if (sig) { sig = sig.split('=').join('%253D').split('%253D').join('%253D') }
 	      } else {
 		  var signame = 'signature'
-		  var sig = dc(yt6d.arg.s, qs.s)
+		  var sig = dc(yt6d.arg.s0, yt6d.arg.s1, qs.s, yt6d.arg.s2, yt6d.arg.s3)
 		}
 	    }
 
@@ -5122,7 +5259,7 @@ function ageless_verification(spfpc, ios) {
 	    if (yt6.list) delete yt6.list
 	    var z = clone(document.title); yt6d.current.title = z; yt6.title = z
 	    if (location.href.indexOf(video_id()[0]) == -1) {
-	      try { var newurl = location.href.split('.com/embed')[0] + '.com/embed/' + video_id()[0] + '?' + (window.location.href.split('?')[1] || window.location.href.split('&')[1]); if (newurl.indexOf('&') != -1 && newurl.indexOf('&') == newurl.lastIndexOf('&')) newurl = newurl.substring(0, newurl.lastIndexOf('&')); window.history.pushState({}, yt6.title, newurl ) } catch(e){}
+	      try { var newurl = location.href.split('.com/embed')[0] + '.com/embed/' + video_id()[0] + '?' + (window.location.href.split('?')[1] || window.location.href.split('&')[1]); if (newurl.indexOf('&') != -1 && newurl.indexOf('&') == newurl.lastIndexOf('&')) newurl = newurl.substring(0, newurl.lastIndexOf('&')); yt6.strLocation = newurl; window.history.pushState({}, yt6.title, newurl ) } catch(e){}
 	      if (!yt6.mbed && !(window.jscd && window.jscd.mobile)) {
 		load_from_page_source()
 	      }
@@ -10638,7 +10775,7 @@ if (c[1]) {
 
 
   var ft = [args.url_encoded_fmt_stream_map, args.adaptive_fmts || yt6.adaptive_fmts ], sighead, oeid,
-      fn, a_r, ad = 0, ad2, dur, dur2, durA1 = {}, durA2 = {}, durL1 = [], durL2 = [], ad_links = [], avg1, avg2, avgx, durA1k, durA2k, length_seconds = args.length_seconds, n_length = 0, n_value, n_decoded, ndc, s = ''
+      fn, a_r, ad = 0, ad2, dur, dur2, durA1 = {}, durA2 = {}, durL1 = [], durL2 = [], ad_links = [], avg1, avg2, avgx, durA1k, durA2k, length_seconds = args.length_seconds, n_length = 0, n_value, n_decoded, n_0, n_1, n_2, ndc, s = ''
 
   if (args && yt6.ytplayer && yt6.ytplayer.config && yt6.ytplayer.config.args) { yt6.ytplayer.config.args.adaptive_fmts = args.adaptive_fmts; //yt6.ytplayer.config.args.url_encoded_fmt_stream_map = args.url_encoded_fmt_stream_map;
   }
@@ -10712,6 +10849,8 @@ if (c[1]) {
 	  }
 	}
 
+//console.log(qs.itag +' HREF = \n'+ href)
+
 	// the ump=1 parameter makes the content unplayable in progressive download mode, so set the value to 0
 	if (href.indexOf('&ump=1') > -1) { href = href.replace('ump=1','ump=0') } //new RegExp('[^l]mt=([0-9]*)\&', 'gm')
 
@@ -10719,33 +10858,61 @@ if (c[1]) {
 
 	// set n-parameter to unthrottle yt a/v data traffic
 
-	if (!ok && typeof yt6d.ndec == 'function' && qs.n) { n_value = clone(qs.n); try { n_decoded = ((n_decoded && n_decoded == n_value) ? n_decoded : yt6d.ndec(yt6d.arg.n, n_value)) } catch(e){ //console.log('ndec: '+ e.toString());
-	  n_decoded = n_value };
+	if (!ok && typeof yt6d.ndec == 'function' && qs.n) {
+	  n_value = clone(qs.n)
+	  var temp; try {
+	    if (typeof yt6d.videoData == 'function') try { var x,y; x = yt6d.videoData(); for(y in x) if (typeof x[y] == 'object' && x[y] && typeof x[y].url == 'string' && typeof x[y].path == 'string' && typeof x[y].scheme == 'string') { temp = x[y]; break } } catch(e){}
+	    if (!temp || yt6d.arg.konst) temp = new _yt_player[yt6d.arg.konst](href)
+	    if (temp) temp.assign = function(N) {
+	      for (var b = Array.prototype.slice.call(arguments, 1); b.length;) {
+		var U = b.shift();
+		if (U) {
+		  if (typeof U !== "object") throw new TypeError(U + "must be non-object");
+		  for (var f in U) Object.prototype.hasOwnProperty.call(U, f) && (N[f] = U[f])
+		}
+	      }
+	      return N
+	    };
+	    yt6d.arg.temp = temp; 
+	    try { n_0 = yt6d.nrg() } catch(e){ console.log(e.toString()); n_0 = [12, 2827] }; 
+	  
+	    n_0 = yt6d.ndec(n_0[0], n_0[1], n_value, temp)
+	  
+	  } catch(e){ console.log(e.toString())
+	      n_decoded = n_value
+	    }
+	  //if (n_0 != '' && n_0 != undefined) { console.log('"'+ n_0 +'"') }
+	  if (n_0 && n_0.length == 14) n_decoded = n_0
+	  if (!n_decoded && qs.itag >= 103 && (!n_0 || (n_0 && n_0 == n_decoded))) {
+	    if (qs.n.length == 14) { if (!n_1 || n_1 == n_value) { n_1 = n_value } else if (!n_2) n_2 = n_value }
+	    else if (n_1 || n_2) n_decoded = n_1 || n_2
+	  }
 	  var ld = ((typeof yt6.ytp.V == 'string' && yt6.ytp.V.indexOf(href) > -1) || (typeof yt6.ytp.A == 'string' && yt6.ytp.A.indexOf(href) > -1)) ? true : false
 	  if (qs.n.length >= n_length) n_length = 1 * qs.n.length; //if (qs.n.length == 14) { ndc = n_decoded = n_value }
 	  if (!ld)
 	     if (n_decoded && n_decoded.length == 14) { href = href.replace(n_value, n_decoded) }
 		else
 		if ( (yt6.ytp.embed || (yt6.p && yt6.p.tagName == 'IFRAME')) ) {
-		  href = href + '&faux_url=true'; //if (n_value != n_decoded) console.log(qs.itag +' '+ n_value +' --> '+ n_decoded)
-		};
+		  href = href + '&faux_url=true'
+		}
+	    //console.log(qs.itag +' '+ n_value +' --> '+ n_decoded)
 	}
 
 
 	if ( (yt6.live_ != 0 || href.indexOf('yt_premiere_broadcast') > -1) && (args.livestream || href.match('/source=yt_+([a-z])+_broadcast/g') || href.match('/source\/yt_+([a-z])+_broadcast/g') )) { yt6.live = (yt6.live) ? yt6.live : '&sq='; live = true } else if ((live == -1 || !live) && !args.livestream && href.indexOf('yt_premiere_broadcast') == -1) yt6.live = false
 
 
-	if (href.indexOf('&'+ signame +'=AJfQ') == -1) {//!ok && 
+	if ((href.indexOf('&'+ signame +'=AJfQ') == -1 && href.indexOf('&'+ signame +'=AHEq') == -1) || qs.itag < 103) {//!ok && 
 	  var sn = null; try { sn = yt6.list[qs.itag] } catch(e){}
 	  if (qs.signature){
 	    href += '&' + signame + '=' + qs[signame]
 	  } else
-	    if (qs.s) { var s = (qs.s.indexOf('AJfQ') == 0) ? qs.s : dc(yt6d.arg.s, qs.s)
+	    if (qs.s) { var s = ((qs.s.indexOf('AJfQ') == 0 || qs.s.indexOf('AHEq') == 0) && qs.itag >= 103) ? qs.s : dc(yt6d.arg.s0, yt6d.arg.s1, qs.s, yt6d.arg.s2, yt6d.arg.s3)
 	      href += '&' + signame + '=' + s; //console.log(qs.itag +' '+ ok +'\n'+ qs.s +'\n'+ s)
 	    }
 	}
 
-	if (yt6.encrypted && href.indexOf('&'+ signame +'=AJfQ') == -1) continue
+	if (yt6.encrypted && href.indexOf('&'+ signame +'=AJfQ') == -1 && href.indexOf('&'+ signame +'=AHEq') == -1) continue
 
 
 	var fn = yt6.fn = '';
@@ -11305,7 +11472,7 @@ if (args.dashmpd) {
   var sig = null
   var aac2 = null
   for (i in z) {
-    if (sig == 1) { var sig = dc(z[i]); var aac2 = aac.replace(z[i],sig).replace('/s/','/signature/')}
+    if (sig == 1) { var sig = dc(yt6d.arg.s0, yt6d.arg.s1, z[i], yt6d.arg.s2, yt6d.arg.s3); var aac2 = aac.replace(z[i],sig).replace('/s/','/signature/')}
     if (sig == 2) { var aac2 = aac.replace('http:', '').replace('https:', ''); sig == null }
     if (aac && aac2 != null) {
       try {
@@ -12348,11 +12515,7 @@ if (!gid('bm4')) {
   yt6d.previous.title = clone(yt6.title) + 'init'
 
 
-  function publive() {
-    if (Array.isArray(yt6d.path)) { try { var xc = '', app; for(i=0;i<yt6d.path.length;i++) { xc = xc +"['"+yt6d.path[i]+"']"; if (yt6d.path[i] == 'app') app = xc }; xc = new Function('a', 'yt6d.pub = ((typeof ytPubsubPubsubInstance != "undefined") ? ytPubsubPubsubInstance : _yt_player); yt6d.videoData = yt6d.pub'+ xc +'.videoData; yt6d.cpn = (yt6d.videoData) ? yt6d.videoData.clientPlaybackNonce : ""; if (yt6d.pub && yt6d.pub'+ app +' && yt6d.pub'+ app +') yt6d.pubApp = yt6d.pub'+ app +'; yt6d.pot = (yt6.pot && (typeof yt6.pot == "string") ? yt6.pot.split("&pot=")[1] : ""); return ((yt6d.cpn) ? yt6d.videoData.isLivePlayback : false)'); return (xc() || false) } catch(e){ console.log(e.toString()); return false }
-    } else return false
-  }
-
+  
 
   function autorebuild(msg) {
 	//if (typeof msg == 'string' && msg.indexOf('REDO') == 0) console.log(msg)
@@ -13028,7 +13191,7 @@ function mep_run() {
 					      if (yt6.failed_itags2 < 2) {
 						if (yt6.ytp.embed) {
 						  if (yt6.linx[yt6.current].indexOf('&faux_url=true') > -1) { yt6.err2count = 0; clear_mep(yt6.player1) } else { yt6.err2count = -1; yt6.failed_itags2 = 1 }
-						} else { yt6d.failed_itags = clone(yt6.failed_itags); yt6.failed_itags = [];  yt6.failed_itags2++; decryption_failure(); return void 0 }
+						} else { yt6d.failed_itags = clone(yt6.failed_itags); yt6.failed_itags = [];  yt6.failed_itags2++;  }//decryption_failure(); return void 0
 					      } else { yt6.failed_itags = clone(yt6d.failed_itags)
 						  yt6.failed_itags2 = 5
 						}
@@ -13378,16 +13541,16 @@ if ((yt6.userprefV[0] == yt6.userprefA[0] || yt6.audiosauce)) if (typeof yt6.aud
 
 
 					function media_error_handler2(me){ ev = '2error'; //console.log(ev +' '+yt6.err2+' '+yt6.err2count +' '+ yt6.current)//+(yt6.retry < yt6.limit) +' '+me.networkState);
-					  var m1 = yt6.player1.media, m2 = yt6.player2.media, _itag = itag(me.src)
+					  var m1 = yt6.player1.media, m2 = yt6.player2.media, _itag = itag(me.src), a = Array.isArray((yt6.failed_itags))
 					  if ( yt6 && yt6.player2 && !yt6.navigation && (yt6.timer == 999999999 || (me.src == pseudoSrc && !(yt6.md && hid())) || m2.src != me.src)) // && (yt6.player1.media.src == pseudoSrc || itag(yt6.player1.media.src) < 103)
 					    { return void 0 }; if (isNaN(m1.duration) && isNaN(m2.duration) && yt6.player1.isLoaded) yt6.player1.isLoaded = false
 					  yt6.err2count = (yt6.player1.isLoaded || yt6.live) ? ((typeof yt6.err2count != 'number') ? 0 : (yt6.err2count + 1)) : -1
 					  if (yt6.err2count < 20 && itag(m1.src) >= 103 && yt6.retry < yt6.limit && (me.networkState == 1 || me.networkState == 3)) {
 
 					    if (browserName == 'Safari' || browserName == 'IE') yt6.player2.isLoaded = false; //me.loaded = false; 
-					    if (!me.loaded && !(Array.isArray(yt6.failed_itags) && yt6.failed_itags.indexOf(18) == -1)) { yt6.retry++ }
+					    if (!me.loaded && !(Array.isArray(yt6.failed_itags) && a && yt6.failed_itags.indexOf(18) == -1)) { yt6.retry++ }
 					    if (isNaN(yt6.err2)) yt6.err2 = 1
-					    var src2 = null; if (!yt6.live) if (yt6.failed_itags.indexOf(_itag) == -1) yt6.failed_itags.push(_itag)
+					    var src2 = null; if (!yt6.live) if (a && yt6.failed_itags.indexOf(_itag) == -1) yt6.failed_itags.push(_itag)
 					    if (typeof _itag == 'number') if (typeof yt6.err2 == 'number' && yt6.err2 >= 0) {
 					      var mep = gid(mep_x('mep_')), id = mep.getAttribute('id') + '_sourcechooser'
 					      if (mep && mep.parentNode) { var o, sq = '', i0 = (!yt6.live) ? clone(yt6.err2) : 0, sauce = getElementsByAttribute(mep,'input','name',id); id = id +'_'
@@ -13395,11 +13558,11 @@ if ((yt6.userprefV[0] == yt6.userprefA[0] || yt6.audiosauce)) if (typeof yt6.aud
 						  sq = m1.src2.split('&sq=')[1]
 						}
 						for(i=i0;i<sauce.length;i++) { o = yt6.fmts_fallback.A[yt6.prefer_fmt][i]; src2 = (o && o != _itag) ? getElementsByAttribute(mep,'input','id',id + o)[0] : null
-						  if (src2 && src2.parentNode && typeof src2.value == 'string' && yt6.failed_itags.indexOf(o) == -1 && !(yt6.live && src2.value.indexOf('&dur=') > -1)) { if (sq) src2.value = src2.value.split('&sq=')[0] + sq; Seek = 0; yt6.audio = src2.value; yt6.player2.setSrc(src2.value); yt6.err2 = i; break }//m2.load() console.log('LOAD+'+o+'\n'+src2); 
+						  if (src2 && src2.parentNode && typeof src2.value == 'string' && a && yt6.failed_itags.indexOf(o) == -1 && !(yt6.live && src2.value.indexOf('&dur=') > -1)) { if (sq) src2.value = src2.value.split('&sq=')[0] + sq; Seek = 0; yt6.audio = src2.value; yt6.player2.setSrc(src2.value); yt6.err2 = i; break }//m2.load() console.log('LOAD+'+o+'\n'+src2); 
 						}; i0 = clone(yt6.err2)
 						if (!src2) {
 						for(i=i0;i>-1;i--) { o = yt6.fmts_fallback.A[yt6.prefer_fmt][i]; src2 = (o && o != _itag) ? getElementsByAttribute(mep,'input','id',id + o)[0] : null
-						  if (src2 && src2.parentNode && typeof src2.value == 'string' && yt6.failed_itags.indexOf(o) == -1 && !(yt6.live && src2.value.indexOf('&dur=') > -1)) { if (sq) src2.value = src2.value.split('&sq=')[0] + sq; Seek = 0; yt6.audio = src2.value; yt6.player2.setSrc(src2.value); yt6.err2 = i; break }//m2.load() console.log('LOAD-'+o+'\n'+src2); 
+						  if (src2 && src2.parentNode && typeof src2.value == 'string' && a && yt6.failed_itags.indexOf(o) == -1 && !(yt6.live && src2.value.indexOf('&dur=') > -1)) { if (sq) src2.value = src2.value.split('&sq=')[0] + sq; Seek = 0; yt6.audio = src2.value; yt6.player2.setSrc(src2.value); yt6.err2 = i; break }//m2.load() console.log('LOAD-'+o+'\n'+src2); 
 						}}
 					      }
 					    }
@@ -13566,7 +13729,7 @@ if ((yt6.userprefV[0] == yt6.userprefA[0] || yt6.audiosauce)) if (typeof yt6.aud
 					  if (yt6.mobile && yt6.A_[_itag] && _itag == itag(yt6.player2.media.src)) {
 					    //media_error_handler2(yt6.player2.media)
 					  }; //console.log(_itag +' '+ me.loaded_itag)
-					  if ((!yt6.player1.isLoaded && !(yt6.A_V[_itag] && (yt6.ytp.embed || yt6.limit == 1))) || yt6.err2count == -1) {
+					  if ((!yt6.player1.isLoaded && !(yt6.A_V[_itag] && (   yt6.limit == 1))) || yt6.err2count == -1) {//yt6.ytp.embed ||
 					    yt6.err = (isNaN(yt6.err)) ? 0 : yt6.err = (yt6.err + 1)
 					    media_error_handler(me)
 					  } else if (yt6.ytp.embed && yt6.A_V[_itag] && yt6.linx[_itag].indexOf('&faux_url=true') > -1) { yt6.err2count = 0; clear_mep(yt6.player1) } else { var z = null
@@ -13790,7 +13953,7 @@ if ((yt6.userprefV[0] == yt6.userprefA[0] || yt6.audiosauce)) if (typeof yt6.aud
 					      if (yt6.newvideo && Array.isArray(yt6.A_V) && (yt6.A_V[me.loaded_itag] || me.loaded_itag < 103)) { Seek = 0; yt6.Seek = 4 }
 					    }
 
-					    if (!(yt6.player2.media && yt6.player2.media.paused)) { if (yt6.V_[itag(me.src)]) { me.play() }//to escape stuttering freeze up at the start of playback
+					    if (!(yt6.player2.media && yt6.player2.media.paused)) { if (yt6.V_[itag(me.src)]) { me.play() } else { player2.pause(); me.play() }//to escape stuttering freeze up at the start of playback
 					      //else { Seek = 4; gid('player2').pause() }
 					    }
 
@@ -14662,7 +14825,7 @@ if ((yt6.userprefV[0] == yt6.userprefA[0] || yt6.audiosauce)) if (typeof yt6.aud
 					  } else {//live broadcast
 					      var m1 = yt6.player1.media, r = (Math.random() + 1).toString(36).substr(2,5)
 					      function resync_live(){ yt6.live_ = 2
-						if (yt6.live && typeof yt6.live == 'number') { yt6.live = (yt6.live + 1)
+						if (yt6.live && typeof yt6.live == 'number') { //yt6.live = (yt6.live + 1)
 						  var z = gid('yt6-mpd')
 						  if ( z && yt6.live > z.sq ) { z.innerHTML = 'STREAM last segment = ' + yt6.live; z.sq = clone(yt6.live) }
 						  if (typeof m1.src == 'string') m1.src1 = m1.src.split('&sq=')[0] + '&sq=' + yt6.live
@@ -15087,7 +15250,7 @@ if (murl || yt6.ads_eid || (linx && linx.length >= 1000)) { var a = 0, b = 0
 	   ) { //ev_log('A3-'+i)
 	  if (linx[k]) { //ev_log('A4-'+i)
 	    linx[i] = linx[k]
-	  } else if (linx[i] && linx[i].indexOf('&title=Advertisement') > -1) if (!yt6.live) { linx[i] = linx[i].split('&title=Advertisement').join('&title=') } else console.log('undefined')
+	  } else if (linx[i] && linx[i].indexOf('&title=Advertisement') > -1) if (!yt6.live) { linx[i] = linx[i].split('&title=Advertisement').join('&title=') } //else console.log('undefined')
 	  //if (adv[k]) linx[k] = adv[i]
 	}
       }
@@ -15112,12 +15275,18 @@ if (murl || yt6.ads_eid || (linx && linx.length >= 1000)) { var a = 0, b = 0
       var did = 1*(i.toString().slice(-3)), eid = linx[i].split('&id=')[1] || linx[i].split('?id=')[1]; if (eid) eid = eid.split('&')[0]
       dur = linx[i].split('&dur=')[1] || linx[i].split('?dur=')[1]; if (dur) dur = (1 * dur.split('&')[0])
 
-      if ( (i < 1000 || (i >= 1000 && !(b.indexOf(did) > -1 && eid && b[b.indexOf(did)+1].indexOf(eid) == -1) && ( (!yt6.real_eid && yt6.ads_eid2 != yt6.ads_eid1 && (!yt6.ads_eid2 || !yt6.ads_eid) && linx[i].indexOf(yt6.ads_eid1) > -1 ) || (yt6.real_eid && (linx[i].indexOf(yt6.real_eid) > -1 || (yt6.ads_eid1 && yt6.ads_eid1 == yt6.ads_eid2 && linx[i].indexOf(yt6.ads_eid1) > -1 )) ) )) ) &&
-	 (did < 103 || !(yt6.encrypted && linx[i].indexOf('&sig=AJfQ') == -1)) &&
-	 (linx[i].indexOf('&title=Advertisement') == -1) &&
-	// (!(yt6.real_eid && linx[i].indexOf(yt6.real_eid) == -1) || (yt6.ads_eid1 && yt6.ads_eid2 && yt6.ads_eid1 != yt6.ads_eid2 && yt6.ads_eid && linx[i].indexOf(yt6.ads_eid) == -1) ) &&
-	 !(!yt6.real_eid && yt6.ads_eid1 && yt6.ads_eid2 && yt6.ads_eid1 != yt6.ads_eid2 && linx[i].indexOf(yt6.ads_eid1) == -1 && linx[i].indexOf(yt6.ads_eid2) == -1 && Math.abs(dur - (yt6.real_media_duration)) > 1.5 ) &&
-	 !(yt6.live && linx[i].indexOf('&dur=') > -1)
+      if ( (i < 1000 || (i >= 1000 && !(b.indexOf(did) > -1 && eid && b[b.indexOf(did)+1].indexOf(eid) == -1)) && 
+	  (
+	   ( 
+		(!yt6.real_eid && ((yt6.ads_eid2 != yt6.ads_eid1 && (!yt6.ads_eid2 || !yt6.ads_eid)) || yt6.ytp.embed) && linx[i].indexOf(yt6.ads_eid1) > -1 ) || 
+		(!!yt6.real_eid && (linx[i].indexOf(yt6.real_eid) > -1 || (yt6.ads_eid1 && yt6.ads_eid1 == yt6.ads_eid2 && linx[i].indexOf(yt6.ads_eid1) > -1 )) ) 
+	   )) &&
+	   (did < 103 || !(yt6.encrypted && linx[i].indexOf('&sig=AJfQ') == -1 && linx[i].indexOf('&sig==AHEq') == -1)) &&
+	   (linx[i].indexOf('&title=Advertisement') == -1) &&
+	   // (!(yt6.real_eid && linx[i].indexOf(yt6.real_eid) == -1) || (yt6.ads_eid1 && yt6.ads_eid2 && yt6.ads_eid1 != yt6.ads_eid2 && yt6.ads_eid && linx[i].indexOf(yt6.ads_eid) == -1) ) &&
+	   !(!yt6.real_eid && yt6.ads_eid1 && yt6.ads_eid2 && yt6.ads_eid1 != yt6.ads_eid2 && linx[i].indexOf(yt6.ads_eid1) == -1 && linx[i].indexOf(yt6.ads_eid2) == -1 && Math.abs(dur - (yt6.real_media_duration)) > 1.5 ) &&
+	   !(yt6.live && linx[i].indexOf('&dur=') > -1)
+	   	)
       ) {
 	b.push(i); b.push(linx[i])
 	if (z && (z.parentNode == p1)) {
@@ -15177,7 +15346,9 @@ if (murl || yt6.ads_eid || (linx && linx.length >= 1000)) { var a = 0, b = 0
 	delete js
 	if (b.length > 2 && !yt6.mobile) yt6d.src_hid = 2
 
-      } else if (did ) {}
+      } else if (did ) {
+
+      }
     }
   }
 
@@ -17064,13 +17235,57 @@ yt6.body.spfrequest = function(e) {
   }
 addEL(window, 'spfrequest', yt6.body.spfrequest, false);
 
+    function extractVideoId(str) {
+	if (!str) return null;
+	var match = (yt6.mobile) ? str.match(/[?&]v=([^&]+)/) : (yt6.ytm) ? str.match(/^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/) : '';
+	if (match) {
+	  if (yt6.mobile) if (match[1]) return match[1];
+	  if (yt6.ytm) if (match[7].length === 11) return match[7];
+	}
+	// Fallback: check for standard YouTube ID format in data attributes
+	if (/^[A-Za-z0-9_-]{11}$/.test(str)) return str;
+	return null;
+    }
 
-if (typeof Polymer != 'undefined') {
+    function onVideoChange(videoTitle, videoId) {
+	//var videoId = extractVideoId(videoUrl);
+
+	if (videoId && videoId !== yt6d.current.video_id) {
+	    console.log(`Video Changed! ID: ${videoId}, Title: "${videoTitle || 'Unknown'}"`);
+	    //yt6d.previous.video_id = videoId;
+	    //yt6d.current.video_id = videoId 
+
+	    var currentTitleElement = (yt6.ytm) ? document.querySelector('ytmusic-player-bar .title') : document.title;
+	    if (currentTitleElement && currentTitleElement.innerText) {
+                console.log(`Now Playing: ${currentTitleElement.innerText}`);
+	    }
+	}
+    }
+
+
+if (typeof MutationObserver != 'undefined') {//Polymer
   if (!yt6.body.snarls_watchdog) try {
     yt6.body.snarls_watchdog = new MutationObserver(function(mutations){
       mutations.forEach(function(mutation) {
-	if (yt6 && (!hid() || yt6.ytm) && mutation.type == 'attributes' && (yt6.ytm || (!yt6.ytm && mutation['target'].getAttribute('video-id') == yt6.vid))  )
- 	$waitUntil(function() {
+	if (yt6 && (
+	// ((!hid() || yt6.ytm) && mutation.type == 'attributes' && (yt6.ytm || (!yt6.ytm && mutation['target'].getAttribute('video-id') == yt6.vid)) )
+	// ||
+	 (yt6.ytm && mutation.type === 'childList' && mutation.target.classList?.contains('title'))
+	 ||
+	 (yt6.mobile && (mutation.type === 'childList' || (mutation.type === 'attributes' && mutation.target.classList?.contains('title'))))
+	))
+	{
+	  if (yt6.mobile || yt6.ytm) {
+	    var id = extractVideoId(location.href); //console.log('New video '+ id)
+	    yt6d.proxy.document_title = (typeof Proxy == 'function') ? window.document.title : clone(window.document.title)
+	    if (yt6.title != document.title) {
+		  //var title = (yt6.ytm && mutation.target.innerText) ? mutation.target.innerText : video_title()[0]
+		  onVideoChange(title, id)
+            }
+
+	  }
+
+	$waitUntil(function() {
 	    var p = yt6.p, b, bf, c = conf('args');
 	    if (p) {
 	      try { bf = typeof p.getPlayerState } catch(e) { bf = null }
@@ -17105,6 +17320,7 @@ if (typeof Polymer != 'undefined') {
 		  }
 	      },300,3000)
 	  },50,1000);
+	}
       })
     })
   } catch(e){}
@@ -17117,6 +17333,24 @@ if (typeof Polymer != 'undefined') {
 
     //(new window.MutationObserver(function(){Polymer.Async._atEndOfMicrotask()})).observe(Polymer.Async._twiddle,{characterData:true});
 }
+
+    // MONITOR 'window.history' (Crucial for SPA navigation)
+/*    var originalPushState = history.pushState;
+    history.pushState = function (state, title, url) {
+        originalPushState.apply(this, arguments);
+
+        if (url && typeof url === 'string') {
+            const id = extractVideoId(url);
+            if (id && id !== yt6d.previous.video_id) {
+                // Try to get title from DOM
+                var titleText = '';
+                var titleEl = document.querySelector('#movie_player .title');
+                if (titleEl) title = titleEl.textContent.trim();
+
+                onVideoChange(id, title || video_title());
+            }
+        }
+    };*/
 
 
 
@@ -17439,8 +17673,8 @@ if (yt6.mobile) {
     if (typeof jQuery != 'undefined' && (document.readyState == 'complete' || ((yt6.layout == 16 || yt6.ytp.embed) && document.readyState == 'interactive')) ) (function( $ ){ //jQuery(document).ready(function( $ ){
       // Default to the current location.
       //yt6.strArgs = window.ytplayer 
-      yt6.strLocation = window.location.href;
-      yt6.strHash = window.location.hash;
+      yt6.strLocation = clone(window.location.href);
+      yt6.strHash = clone(window.location.hash);
       var change = video_title()[0],
 	strPrevLocation = "",
 	strPrevHash = "",
@@ -17919,12 +18153,22 @@ if (yt6.mobile) {
 
 
 	if (!yt6.observed && yt6.body && yt6.body.snarls_watchdog) {
-	  if (!yt6.ytm) {
+	  if (!yt6.ytm && !yt6.mobile) {
 	    var z = (yt6.flexy) ? 'ytd-watch-'+yt6.flexy : 'ytd-watch'
 	    try { yt6.body.snarls_watchdog.observe( gt(z, 1)[0], {attributes: true, attributeFilter: ['video-id'] }); yt6.observed = true } catch(e) { yt6.observed = false }
-	  } else { var z = gc('byline style-scope ytmusic-player-bar complex-string')[0];//if (Polymer.Async._twiddle) {
+	  } else {
+	      var z = (yt6.ytm) ? gc('byline style-scope ytmusic-player-bar complex-string')[0] : yt6.body;//if (Polymer.Async._twiddle) {
+	      var obj = (yt6.ytm) ? { attributes: true, attributeOldValue: true, attributeFilter: ['title'] } :
+		{
+ 		childList: true,
+ 		subtree: false,
+		attributes: true, 
+		attributeOldValue: false,
+		characterData: false, 
+		attributeFilter: ['data-video-id']
+		}
 	      if (z) try { yt6.body.snarls_watchdog.observe( z,//Polymer.Async._twiddle,
-		{ attributes: true, attributeOldValue: true, attributeFilter: ['title'] }); yt6.observed = true//{ characterData: true }); yt6.observed = true
+		obj); yt6.observed = true//{ characterData: true }); yt6.observed = true
 	      } catch(e) { yt6.observed = false }
 	    }
 	}
@@ -19650,7 +19894,7 @@ var navi0 = _nav,
     // Check to see if the location has changed.
 //    if (yt6.mobile && hid() && !(sameTitles && sameTitles % 4 == 0) && yt6.reload == 12 && (document.title == yt6.title || document.title +'`' == yt6.title   )) { ev_log('hopp sT='+yt6.sT+'_'+ad_skipped); //|| document.title.substring(0,10) == '- YouTube'
 //sameTitles++; if (!sameTitles) yt6.title = clone(document.title) + sameTitles; yt6.sT = sameTitles } else//mod_title() if (yt6.sT !== sameTitles) { yt6.title = clone(document.title) }; 
-    if ( !(yt6.mobile && ((shorts() && !yt6.linx.length) || (yt6.blocked_m && yt6.loaded_vid == '...........')) ) && (yt6.title != document.title && document.title != location.href && yt6.title != '- YouTube') || yt6.strLocation != window.location.href || !watch || (yt6.mobile && yt6d.previous.video_id == cur_vid && cur_vid != yt6.vid && yt6d.previous.title != document.title) ) {// || yt6.change != yt6.title )document.title = clone(yt6.title); 
+    if ( !(yt6.mobile && ((shorts() && !yt6.linx.length) || (yt6.blocked_m && yt6.loaded_vid == '...........')) ) && (yt6.title != document.title && document.title != location.href && yt6.title != '- YouTube') || yt6.strLocation != window.location.href || (!watch && !yt6.ytp.embed) || (yt6.mobile && yt6d.previous.video_id == cur_vid && cur_vid != yt6.vid && yt6d.previous.title != document.title) ) {// || yt6.change != yt6.title )document.title = clone(yt6.title); 
 
       if (c[0] && !(yt6.mpb && yt6.mpb.hasAttribute('active')) ) {
 
@@ -19818,7 +20062,7 @@ var navi0 = _nav,
 		yt6d.previous.video_id = cur_vid
 		yt6d.pprevid = prev_vid
 
-		//ev_log('NAV ')//+hid()+':'+ad_skipped+'\n'+yt6.title.substring(0,10) +'\n'+document.title.substring(0,10)+'~'+yt6.title.substring(yt6.title.length-1, yt6.title.length))//+'\n'+     ((n2a)?'A+':'A-')+((n2b)?'B+':'B-')+((n2c)?'C+':'C-')+((n2d)?'D+':'D-')+((n2e)?'E+':'E-')+((yt6.loaded_vid == yt6.vid)?'F+':'F-') )  //p1m.loaded_itag +' '+ document.title.substring(0,10) +' '+yt6.title)//+' navi0='+navi0+'/'+_nav +' navi1='+navi1 +' navi2='+navi2+' navi3='+navi3)// +'\nyv='+ yt6.vid+'/cv='+cur_vid+'/pv='+prev_vid+'/pvi='+yt6d.previous.video_id+'/ppvi='+yt6d.pprevid+'/cvi='+yt6d.current.video_id+';;')
+		//console.log('NAV ')//+hid()+':'+ad_skipped+'\n'+yt6.title.substring(0,10) +'\n'+document.title.substring(0,10)+'~'+yt6.title.substring(yt6.title.length-1, yt6.title.length))//+'\n'+     ((n2a)?'A+':'A-')+((n2b)?'B+':'B-')+((n2c)?'C+':'C-')+((n2d)?'D+':'D-')+((n2e)?'E+':'E-')+((yt6.loaded_vid == yt6.vid)?'F+':'F-') )  //p1m.loaded_itag +' '+ document.title.substring(0,10) +' '+yt6.title)//+' navi0='+navi0+'/'+_nav +' navi1='+navi1 +' navi2='+navi2+' navi3='+navi3)// +'\nyv='+ yt6.vid+'/cv='+cur_vid+'/pv='+prev_vid+'/pvi='+yt6d.previous.video_id+'/ppvi='+yt6d.pprevid+'/cvi='+yt6d.current.video_id+';;')
 
 		if (c[0] && yt6.loaded_vid != yt6d.previous.loaded_vid) {
 		  c[0].loaded_from = ''
@@ -23435,7 +23679,7 @@ function control_panel1() {
 
     var remove = document.createElement('div')
     remove.id = 'remove-sp'
-    var remove_sp_innerhtml = '<button onclick="if (!gid(\'bm0\') && gid(\'bm01\')) gid(\'bm01\').setAttribute(\'id\',\'bm0\'); switch_players(); yt6d.x = (yt6.x) ? true : false;" class="snarl-button yt-uix-button-text" aria-label="Switch" title="Switch" style="width: 22px; height: 22px; padding: 0 1px 0 0"><img src="//s.ytimg.com/yts/img/HTML5_1Color_Black-vfl902gVJ.png" style="vertical-align:middle; height:12px; padding:0px""></img></button><button onclick="aspect()" class="snarl-button yt-uix-button-text" style="width: 30px" aria-label="Resize" title="Resize">«↔»</button><br><button style="width: 22px" onclick="var yt6 = gid(\'snarls_player\'), l = clone(window.location.href), c16 = &quot;PREF=f1=50000000&f5=10&f6=1004;path=/;domain=.youtube.com;expires=Session&quot;, c12 = c16.replace(\'=1004\',\'=8\'), z = prompt(\'Wanna quit? \(Exit options: 0-3\)\\n Cancel = Not now;\\n 0 = Remove script without page refresh;\\n 1 = Normal YouTube;\\n 2 = Legacy compliant;\\n 3 = YT Music;\', \'0\'); \/\*if (!z) { var z = window.confirm(\'OK will attempt to switch between YouTube layouts and refresh the page. \\nCancel will abort.\'); if (typeof z == \'boolean\' && z == true) { deldiv(); return void 0; } }\*\/; if ((typeof z == \'boolean\' && z == false) || !z ) return void 0; if (z && !(typeof z == \'boolean\' && z == true)) { if (z != 0 && (z == 1 || z == 2 || z == 3)) { if (z == 1) document.cookie=c16; if (z == 2) { document.cookie=c12; }; if (z == 3) { var domain = \'music\'; var vid = (l.indexOf(\'/embed/\') > -1 && l.indexOf(video_id()[0]) == -1) ? l.split(\'/embed/\')[1].split(\'?\')[0].split(\'#\')[0] : video_id()[0]; l = l.replace(\'www.youtube.com\', domain + \'.youtube.com\').replace(\'music.youtube.com\', domain + \'.youtube.com\').replace(\'m.youtube.com\', domain + \'.youtube.com\').replace(\'/embed/\' + vid + \'?\',\'/watch?v=\' + vid + \'&\').replace(\'/embed/\' + vid,\'/watch?v=\' + vid) } else { if (z == 1) { l = l.replace(\'music.youtube.com\',\'www.youtube.com\').replace(\'m.youtube.com\',\'www.youtube.com\') }; if (z == 2) { l = \'https://www.youtube.com/embed/\' + video_id()[0] + \'?\' + (l.split(\'v=\' + yt6.vid).join(\'\').split(\'?\')[1] || l.split(\'v=\' + yt6.vid).join(\'\').split(\'&\')[1] || \'\'); if (yt6.pl_index >= 200) { l = l.split(\'?\')[0] } else l = l.split(\'?&\').join(\'?\'); location.href = \'https://rawcdn.githack.com/snarly/yt6/34ad1dc9fe3164b7be1c11d35020f2b67608c298/bouncer.html#\' + encodeURIComponent(l); return false } else { if (yt6.ytp.embed) { l = l.replace(\'?\',\'&\').replace(\'/embed/\', \'/watch?v=\') }; };  } } else if (z == 0) { deldiv(); z = 0 } } else { if (yt6.layout == 16) { { document.cookie=c12; } } else document.cookie=c16; l = l.replace(\'music.youtube.com\',\'www.youtube.com\').replace(\'/embed/\' + video_id()[0] + \'?\',\'/watch?v=\' + yt6.vid + \'&\' + l.split(\'/embed/\' + yt6.vid + \'?\')[1]); }; if (z) location.href = l;" class="snarl-button yt-uix-button-text" aria-label="Remove script / Change YouTube layout" title="Remove script / Change YouTube layout">X</button><button id="audio_x" class="audio_x snarl-button yt-uix-button-text" aria-label="Use mousewheel to set speed" title="Use mousewheel to set speed" style="padding: 0px 1px 0px 1px; right: 0px" onclick="var yt6 = gid(\'snarls_player\'); if (yt6.player1 && yt6.player2 && typeof yt6.player2.load == \'function\') { var src = \'\'; if (gid(\'no2\')) src = gid(\'no2\').src; var audio_x = window.prompt(\'Enter the URL of any audio (or video) file across the net to use as background sound\\n- OR -\\nEnter a floating point number between 0 and 4 \\nas a multiplier to boost the audio (1 = normal level)\\n -- useful for very silent or very loud recordings.\\n\\n(External audio will only activate for video-only sources playing in progressive download mode.)\', src); if (audio_x && !isNaN(1*(audio_x.toString().substr(0,1))) ) { audio_x = audio_x.replace(/[^\\d,.]/g, \'\').replace(/,/g, \'.\'); if (audio_x.split(\'.\').length > 1) audio_x = audio_x.split(\'.\')[0] +\'.\'+ audio_x.split(\'.\')[1]; audio_x = 1*(audio_x) }; if (isNaN(audio_x) || audio_x == undefined) { var i, a1 = clone(pseudoSrc); for(i=0;i<yt6.userprefA.length;i++) if (yt6.linx[yt6.userprefA[i]] || yt6.linx[(1000 + yt6.userprefA[i])]) { a1 = (yt6.linx[yt6.userprefA[i]] || yt6.linx[(1000 + yt6.userprefA[i])]); break }; i = yt6.player2.media.paused; src = (audio_x && audio_x.indexOf(\'http\') == 0) ? audio_x : a1; if (src != pseudoSrc) yt6.player2.setSrc(src); yt6.speed = 1; yt6.ytp.speed(); if (audio_x) { yt6.audiox = audio_x } else { yt6.audiox = null; delete yt6.audiox; gid(\'no2\').src = a1 }; yt6.player2.load(); gid(\'player2\').currentTime = gid(\'player1\').currentTime; if (!i) yt6.player2.play() } else { if (audio_x < 0) audio_x = 0; if (audio_x > 4) audio_x = 4; var a0 = (player() && v_(original(yt6.p)) && v_(original(yt6.p)).ao), a1 = (yt6.player1 && yt6.player1.media && yt6.player1.media.ao), a2 = (yt6.player2 && yt6.player2.media && yt6.player2.media.ao); try { yt6.boost = audio_x.toFixed(1); if (a2) a2.amplify(audio_x); if (a1) a1.amplify(audio_x); if (a0) a0.amplify(audio_x); a1 = gc(\'boostAudio\')[0]; if (a1) a1[yt6.txt] = \'Boost: \'+ yt6.boost + \'x\'; } catch(e) {} } };">audio</button></div>'
+    var remove_sp_innerhtml = '<button onclick="if (!gid(\'bm0\') && gid(\'bm01\')) gid(\'bm01\').setAttribute(\'id\',\'bm0\'); switch_players(); yt6d.x = (yt6.x) ? true : false;" class="snarl-button yt-uix-button-text" aria-label="Switch" title="Switch" style="width: 22px; height: 22px; padding: 0 1px 0 0"><img src="//s.ytimg.com/yts/img/HTML5_1Color_Black-vfl902gVJ.png" style="vertical-align:middle; height:12px; padding:0px""></img></button><button onclick="aspect()" class="snarl-button yt-uix-button-text" style="width: 30px" aria-label="Resize" title="Resize">«↔»</button><br><button id="remove-sp1" style="width: 22px" onclick="var yt6 = gid(\'snarls_player\'), l = clone(window.location.href), c16 = &quot;PREF=f1=50000000&f5=10&f6=1004;path=/;domain=.youtube.com;expires=Session&quot;, c12 = c16.replace(\'=1004\',\'=8\'), z = prompt(\'Wanna quit? \(Exit options: 0-3\)\\n Cancel = Not now;\\n 0 = Remove script without page refresh;\\n 1 = Normal YouTube;\\n 2 = Legacy compliant;\\n 3 = YT Music;\', \'0\'); \/\*if (!z) { var z = window.confirm(\'OK will attempt to switch between YouTube layouts and refresh the page. \\nCancel will abort.\'); if (typeof z == \'boolean\' && z == true) { deldiv(); return void 0; } }\*\/; if ((typeof z == \'boolean\' && z == false) || !z ) return void 0; if (z && !(typeof z == \'boolean\' && z == true)) { if (z != 0 && (z == 1 || z == 2 || z == 3)) { if (z == 1) document.cookie=c16; if (z == 2) { document.cookie=c12; }; if (z == 3) { var domain = \'music\'; var vid = (l.indexOf(\'/embed/\') > -1 && l.indexOf(video_id()[0]) == -1) ? l.split(\'/embed/\')[1].split(\'?\')[0].split(\'#\')[0] : video_id()[0]; l = l.replace(\'www.youtube.com\', domain + \'.youtube.com\').replace(\'music.youtube.com\', domain + \'.youtube.com\').replace(\'m.youtube.com\', domain + \'.youtube.com\').replace(\'/embed/\' + vid + \'?\',\'/watch?v=\' + vid + \'&\').replace(\'/embed/\' + vid,\'/watch?v=\' + vid) } else { if (z == 1) { l = l.replace(\'music.youtube.com\',\'www.youtube.com\').replace(\'m.youtube.com\',\'www.youtube.com\') }; if (z == 2) { l = \'https://www.youtube.com/embed/\' + video_id()[0] + \'?\' + (l.split(\'v=\' + yt6.vid).join(\'\').split(\'?\')[1] || l.split(\'v=\' + yt6.vid).join(\'\').split(\'&\')[1] || \'\'); if (yt6.pl_index >= 200) { l = l.split(\'?\')[0] } else l = l.split(\'?&\').join(\'?\'); location.href = \'https://rawcdn.githack.com/snarly/yt6/34ad1dc9fe3164b7be1c11d35020f2b67608c298/bouncer.html#\' + encodeURIComponent(l); return false } else { if (yt6.ytp.embed) { l = l.replace(\'?\',\'&\').replace(\'/embed/\', \'/watch?v=\') }; };  } } else if (z == 0) { deldiv(); z = 0 } } else { if (yt6.layout == 16) { { document.cookie=c12; } } else document.cookie=c16; l = l.replace(\'music.youtube.com\',\'www.youtube.com\').replace(\'/embed/\' + video_id()[0] + \'?\',\'/watch?v=\' + yt6.vid + \'&\' + l.split(\'/embed/\' + yt6.vid + \'?\')[1]); }; if (z) location.href = l;" class="snarl-button yt-uix-button-text" aria-label="Remove script / Change YouTube layout" title="Remove script / Change YouTube layout">X</button><button id="audio_x" class="audio_x snarl-button yt-uix-button-text" aria-label="Use mousewheel to set speed" title="Use mousewheel to set speed" style="padding: 0px 1px 0px 1px; right: 0px" onclick="var yt6 = gid(\'snarls_player\'); if (yt6.player1 && yt6.player2 && typeof yt6.player2.load == \'function\') { var src = \'\'; if (gid(\'no2\')) src = gid(\'no2\').src; var audio_x = window.prompt(\'Enter the URL of any audio (or video) file across the net to use as background sound\\n- OR -\\nEnter a floating point number between 0 and 4 \\nas a multiplier to boost the audio (1 = normal level)\\n -- useful for very silent or very loud recordings.\\n\\n(External audio will only activate for video-only sources playing in progressive download mode.)\', src); if (audio_x && !isNaN(1*(audio_x.toString().substr(0,1))) ) { audio_x = audio_x.replace(/[^\\d,.]/g, \'\').replace(/,/g, \'.\'); if (audio_x.split(\'.\').length > 1) audio_x = audio_x.split(\'.\')[0] +\'.\'+ audio_x.split(\'.\')[1]; audio_x = 1*(audio_x) }; if (isNaN(audio_x) || audio_x == undefined) { var i, a1 = clone(pseudoSrc); for(i=0;i<yt6.userprefA.length;i++) if (yt6.linx[yt6.userprefA[i]] || yt6.linx[(1000 + yt6.userprefA[i])]) { a1 = (yt6.linx[yt6.userprefA[i]] || yt6.linx[(1000 + yt6.userprefA[i])]); break }; i = yt6.player2.media.paused; src = (audio_x && audio_x.indexOf(\'http\') == 0) ? audio_x : a1; if (src != pseudoSrc) yt6.player2.setSrc(src); yt6.speed = 1; yt6.ytp.speed(); if (audio_x) { yt6.audiox = audio_x } else { yt6.audiox = null; delete yt6.audiox; gid(\'no2\').src = a1 }; yt6.player2.load(); gid(\'player2\').currentTime = gid(\'player1\').currentTime; if (!i) yt6.player2.play() } else { if (audio_x < 0) audio_x = 0; if (audio_x > 4) audio_x = 4; var a0 = (player() && v_(original(yt6.p)) && v_(original(yt6.p)).ao), a1 = (yt6.player1 && yt6.player1.media && yt6.player1.media.ao), a2 = (yt6.player2 && yt6.player2.media && yt6.player2.media.ao); try { yt6.boost = audio_x.toFixed(1); if (a2) a2.amplify(audio_x); if (a1) a1.amplify(audio_x); if (a0) a0.amplify(audio_x); a1 = gc(\'boostAudio\')[0]; if (a1) a1[yt6.txt] = \'Boost: \'+ yt6.boost + \'x\'; } catch(e) {} } };">audio</button></div>'
 
     span.appendChild(remove)
     remove.setAttribute('style','display: inline-block; position: relative')
@@ -23514,10 +23758,19 @@ var controls = gid('controls-sp')
 	  if (x[1]) c.insertBefore(x[1], c.firstChild)
 	  if (x[0]) c.insertBefore(x[0], c.firstChild)
 	  if (x[1]) { z.insertBefore(x[1], z.firstChild); x[0].innerHTML = '<div style="float: left">Change audio</div><br><div class="boostAudio" style="float: left">Boost: ' + yt6.boost +'x</div><br><div class="displaySpeed" style="float: left">Speed: ' + yt6.speed +'x</div>' }
-
-	  z.lastChild.setAttribute('class','remove snarl-button yt-uix-button-text')
+	  
 	  z.lastChild.setAttribute('style','margin-left: 3px')
 	  if (z.lastChild.style.marginLeft !== '3px') z.lastChild.style.marginLeft = '3px'
+	  
+	if (yt6.ytm) {
+	  z.lastChild.style.marginLeft = '210px'
+	  var r = z.lastChild
+	  r.setAttribute('id','remove-sp2')
+	  gid('controls_bak').appendChild(r)
+
+	}
+
+
 	  var x = gid('quit')
 	  if (x && (!gid('subtitles_list') || (gid('subtitles_list') && gid('subtitles_list').innerHTML == '')) ) {
 	    x.appendChild(z.lastChild)
