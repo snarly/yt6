@@ -1527,18 +1527,20 @@ function find_key(_rpt){
 
   //var __n0 = (_rpt.split('{this.segments.push(')[1]) ? _rpt.split('{this.segments.push(')[0] : ''; // from 202510 on, n-decryption key moved to random location
   //if (__n0) { __n0 = __n0.slice(-50).split('=[')[1]; if (__n0) { __n = __n0.split(']')[0]; __n1 = __n } }
-  try { var kbloc = (yt6.ytp.embed || yt6.mobile) ? 1000 : 2000, kblocr = new RegExp('.{1,'+ kbloc +'}', 'g'); // /.{1,2000}/g
+  try { var kbloc = (yt6.ytp.embed || yt6.mobile) ? 2000 : 2000, kblocr = new RegExp('.{1,'+ kbloc +'}', 'g'); // /.{1,2000}/g
     __n0 = _rpt.match(kblocr), temp = []
-    for(__i=0;__i<__n0.length;__i++) if (__n0[__i].split(__vr+'[').length >= ((kbloc == 1000) ? 2 : 5) && __n0[__i].split('^').length >= ((kbloc == 1000) ? 20 : 60)) { 
+    for(__i=0;__i<__n0.length;__i++) if (__n0[__i].split(__vr+'[').length >= ((kbloc == 2000) ? 2 : 5) && __n0[__i].split('^').length >= ((kbloc == 2000) ? 20 : 10)) { 
       temp.push( ((__n0[__i-1]) ? __n0[__i-1] : '') + __n0[__i] + ((__n0[__i+1]) ? __n0[__i+1] : '') )
     }
     for(__i=0;__i<temp.length;__i++) if (temp[__i].split('=function(')[1]) { __n0 = temp[__i].split('=function(')
-      for(__j=0;__j<__n0.length;__j++) if (__n0[__j].split(__vr+'[').length >= ((kbloc == 1000) ? 2 : 5) && __n0[__j].split('^').length >= ((kbloc == 1000) ? 20 : 60)) {
+      for(__j=0;__j<__n0.length;__j++) { //if (__j) console.log(__n0[__j-1].slice(-3)); console.log(__n0[__j].split(__vr+'[').length+' '+__n0[__j].split('^').length+' '+__n0[__j].indexOf('a:{')); 
+      if (__n0[__j].split(__vr+'[').length >= ((kbloc == 2000) ? 2 : 5) && __n0[__j].split('^').length >= ((kbloc == 2000) ? 20 : 10)) {
         __s = (_rpt.split(__n0[__j])[0].substring(_rpt.split(__n0[__j])[0].lastIndexOf('=function(')-3) ) + __n0[__j] + _rpt.split(__n0[__j])[1].substring(0,kbloc)
         __s = __s.split('return ')[0] + 'return ' + __s.split('return ')[1].split('}')[0] + '};'
+        if (__s && !(/^[a-zA-Z_\$]/.test(__s.substring(0,1)))) __s = ' '+ __s.substring(1, __s.length)
         obfuscated.push(__s)
       }
-    }
+    }}
     for(__i=0;__i<obfuscated.length;__i++) { __n0 = obfuscated[__i].split('=function')[0].split(' ').join('').split(',').join('').split(';').join('');
       //console.log(__n0); console.log(obfuscated[__i].indexOf('a:{'))
       if (__n0.indexOf(_fcn) == -1 && obfuscated[__i].split('a:{')[1] && obfuscated[__i].split('a:{')[1].split('=[')[1] && obfuscated[__i].split('a:{')[1].split('=[')[1].substring(0,1) != ']' && obfuscated[__i].split('a:{')[1].split('=[')[1].split(',-')[1] ) { __n = __n0; break }
@@ -1691,32 +1693,10 @@ function find_key(_rpt){
 	try {
 
 	// array-filter
-	var _dex = __n2.split('=['), _dex0 = [], _dxh, array, _rgx; yt6.r1 = []; yt6.r2 = []
+	var _dex = __n2.split('=['), _dex0 = [], _dxh, array, _rgx, _nrg; yt6.r1 = []; yt6.r2 = []
 	for(__i=0;__i < _dex.length;__i++)
 	{
-	  if (__i == 0) if (typeof _VAR == 'object' && Array.isArray(_VAR))
-	  try {
-	    var __z = _dex[__i], __j = __i; while (__z.indexOf('a:{') == -1 && _dex[__j+1]) { __j = __j+1; __z = __z + _dex[__j] }
-	    if (__z.indexOf('a:{') > -1) { //if (__z.lastIndexOf(',') > __z.indexOf('a:{')) __z = __z.substring(__z.lastIndexOf(',')+1);
-	      __s = _VAR.indexOf('split'); //console.log('split='+ __s)
-	      __z = __z.substring(__z.lastIndexOf('}')+1); __z = __z.substring(__z.lastIndexOf('if')+2)
-	      if (__s > -1 && __z.indexOf('^') > -1) {
-	        var xord = __z.substring(__z.lastIndexOf('^')-1,__z.lastIndexOf('^')), para1 = __z.split('a:{')[0].match(/[a-zA-Z_]/)[0], para2, _rgx = __z.split('a:{')[0]
-	        if (xord && para1) { 
-	          para2 = __n2.split(xord +'=')[1].split(para1)[0].split('^')[0]
-	          eval('var _xord='+ __s +'^'+ __z.split('['+ xord +'^')[1].split(']')[0])
-	          if (_xord > 0) {
-	            var _para1, _para2
-	            if (__n2.split(xord +'='+ para2 +'^'+ para1)[1]) { _para1 = new RegExp(para1, 'gm'); __s = _para1 }
-	            if (__n2.split(xord +'='+ para1 +'^'+ para2)[1]) { _para2 = new RegExp(para2, 'gm'); __s = _para2 }
-	            xord = 'yt6d.nrg = function(start, '+ para1 +', '+ para2 +'){ var __j=start||0, para1='+ para1 +', para2='+ para2 +', xord=('+ para2 +'^'+ para1+ ')||'+ _xord +', _xord="'+ xord +'"; for(__j;__j<200;__j++) if ('+ _rgx.replace(__s, '__j') +') { '+ ((_para1 == __s) ? 'para1' : 'para2') +' = __j; break }; if ('+ (_para1 == __s) +') { para2 = para1 ^ xord;  } else para1 = para2 ^ xord; return [para1, para2] }'
-	            eval(xord)
-	            xord = yt6d.nrg(0, para1, para2)
-	          }
-	        }
-	      }
-	    }
-	  } catch(e){ console.log(e.toString()) }
+
 	if (__i && _dex[__i].lastIndexOf(',-') != _dex[__i].indexOf(',-')) {
 	  _dxh = _dex[__i-1].slice(-5); _dxh = _dxh.split(',')[1] || _dxh.split(' ')[1] || _dxh.split(';')[1]; _dxh = _dxh +'=['+ _dex[__i].split(',')[0];
 	  _dex = _dxh + __n2.split(_dxh)[1];
@@ -1733,6 +1713,37 @@ function find_key(_rpt){
 	  //for(__j=0;__j < __vr0;__j++) console.log('_dex['+__j+'] = '+ _dex[__j]);
 	  break
 	}}
+
+	//xord hunt
+	var __n3 = __n2.split('=['), __k = 0
+	for(__i=0;__i < __n3.length;__i++)
+	{
+	  if (__i == 0) if (typeof _VAR == 'object' && Array.isArray(_VAR))
+	  try {
+	    var __z = __n3[__i], __j = __i; while (__z.indexOf('a:{') == -1 && __n3[__j+1]) { __j = __j+1; __z = __z + __n3[__j] }
+	    if (__z.indexOf('a:{') > -1) {
+	      __z = (__z.split('/*teszt*/;')[1]) ? __z.substring(__z.lastIndexOf('/*teszt*/;')+10) : __z;
+	      //__s = _VAR.indexOf('split')
+	      var xord = (__z.split('var ')[1]) ? __z.split('var ')[1].split('=')[0] : '', para1 = (xord) ? __z.split('var ')[1].split(';')[0].split('^')[1] : '', para2 = (xord) ? __z.split(xord +'=')[1].split('^')[0] : ''
+	      var _nrg = __n2.split(array)[1]; if (_nrg) { _nrg = _nrg.split('if')[0].split('='); for(__j=0;__j<_nrg.length;__j++) { _nrg[__j] = (_nrg[__j].split('^')[1]) ? _nrg[__j].substring(_nrg[__j].indexOf('^')+1, _nrg[__j].lastIndexOf(']')) : undefined; } }
+	      for(__j=0;__j<_dex.length;__j++) { if (_dex[__j] === 'null' && !isNaN(_nrg[__k])) { __s = __j; eval('var _xord='+__j+'^'+_nrg[__k]);__k++ } }
+	      __z = __z.substring(__z.lastIndexOf('}')+1); __z = __z.substring(__z.lastIndexOf('if')+2)
+	      if (__s > -1) { _rgx = __z.split('a:{')[0]
+	        if (xord && para1) { 
+	          if (_xord > 0) {
+	            var _para1, _para2
+	            if (__n2.split(xord +'='+ para2 +'^'+ para1)[1]) { _para1 = new RegExp(para1, 'gm'); __s = _para1 }
+	            if (__n2.split(xord +'='+ para1 +'^'+ para2)[1]) { _para2 = new RegExp(para2, 'gm'); __s = _para2 }
+	            xord = 'yt6d.nrg = function(start, '+ para1 +', '+ para2 +'){ var __j=start||0, para1='+ para1 +', para2='+ para2 +', xord=('+ para2 +'^'+ para1+ ')||'+ _xord +', _xord="'+ xord +'"; for(__j;__j<200;__j++) if ('+ _rgx.replace(__s, '__j') +') { '+ ((_para1 == __s) ? 'para1' : 'para2') +' = __j; break }; if ('+ (_para1 == __s) +') { para2 = para1 ^ xord;  } else para1 = para2 ^ xord; return [para1, para2] }'
+	            eval(xord)
+	            xord = yt6d.nrg(0, para1, para2)
+	          }
+	        }
+	      }
+	    }
+	  } catch(e){ console.log(e.toString()) }
+	}
+
 
     // define first checker variable located after last element of array
 	if (Array.isArray(__vr1) && __vr1[__vr0] &&
@@ -1844,6 +1855,11 @@ function find_key(_rpt){
 	  } catch(e) {console.log(e.toString())}
 	}
 
+	if (__n2) {
+	  if (!(/^[a-zA-Z_\$]/.test(__n2.substring(0,1)))) __n2 = ' '+ __n2.substring(1, __n2.length)
+	  if (__n2.slice(-4) == 'var ' || __n2.slice(-4) == ' var') { console.log('wtf'); __n2 = __n2.substring(0, __n2.length-4) }
+	}
+
 
 	__n2 = __n2.replace('/*teszt*/', ((_dex1) ? _dex1 : '/*missing functions*/') +
 (dekrypt0 || '/**/'))
@@ -1858,7 +1874,7 @@ function find_key(_rpt){
 	eval('yt6d.ndec = ' + __n2)
       }
     } catch(e) { e = [e.toString()]; e.push(__n2)//_dex1.substring(_dex1.lastIndexOf('search_query')-8700)].toString(); 
-    console.log(e); 
+    console.log(e); //console.log(__n2)
 	//gid('ytassetsjs').fcnm = e.split('<').join('&lt;')
       }
 
