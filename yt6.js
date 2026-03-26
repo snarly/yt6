@@ -1483,7 +1483,7 @@ function findClosingBracketMatchIndex(str, pos, x, y, q, regx, __var) { var r0, 
 
 function find_key(_rpt){
 
-  var _rpt = _rpt.replace(/(\r\n|\n|\r)/gm," ").split('<BR>').join(''), _fcn, __i = 0, __j = 0, __k
+  var _rpt = _rpt.replace(/(\r\n|\n|\r)/gm," ").split('<BR>').join(''), _fcn, __i = 0, __j = 0, __k = 0
   if (_rpt.indexOf("function fcnm(") != -1) {
     _rpt = _rpt.replace('<html>','').replace('<body>','').replace('<pre>','');
     eval(_rpt);
@@ -1543,8 +1543,12 @@ function find_key(_rpt){
     }}
     for(__i=0;__i<obfuscated.length;__i++) { __n0 = obfuscated[__i].split('=function')[0].split(' ').join('').split(',').join('').split(';').join('');
       //console.log(__n0); console.log(obfuscated[__i].indexOf('a:{'))
-      if (__n0.indexOf(_fcn) == -1 && obfuscated[__i].split('a:{')[1] && obfuscated[__i].split('a:{')[1].split('=[')[1] && obfuscated[__i].split('a:{')[1].split('=[')[1].substring(0,1) != ']' && obfuscated[__i].split('a:{')[1].split('=[')[1].split(',-')[1] ) { __n = __n0; break }
-    }
+      for(__j=1;__j<obfuscated[__i].split('a:{').length;__j++) {
+        if (__n0.indexOf(_fcn) == -1 && obfuscated[__i].split('a:{')[__j])
+        for(__k=1;__k<obfuscated[__i].split('a:{')[__j].split('=[').length;__k++) {
+          __s = obfuscated[__i].split('a:{')[__j].split('=[')[__k]
+          if (__s && __s.substring(0,1) != ']' && __s.split(',-')[1] ) { __n = __n0; __s = __j; break }
+    }}}
   } catch(e){}
 
 
@@ -1693,41 +1697,48 @@ function find_key(_rpt){
 	try {
 
 	// array-filter
-	var _dex = __n2.split('=['), _dex0 = [], _dxh, array, _rgx, _nrg; yt6.r1 = []; yt6.r2 = []
+	var _dex = __n2.split('=['), _dex0 = [], _dxh, array, arrayN, _rgx, _nrg; yt6.r1 = []; yt6.r2 = []
 	for(__i=0;__i < _dex.length;__i++)
 	{
 
 	if (__i && _dex[__i].lastIndexOf(',-') != _dex[__i].indexOf(',-')) {
-	  _dxh = _dex[__i-1].slice(-5); _dxh = _dxh.split(',')[1] || _dxh.split(' ')[1] || _dxh.split(';')[1]; _dxh = _dxh +'=['+ _dex[__i].split(',')[0];
+	  _dxh = _dex[__i-1].slice(-5); _dxh = _dxh.split(',')[1] || _dxh.split(' ')[1] || _dxh.split(';')[1]
+	  _dxh = _dxh +'=['+ _dex[__i].split(',')[0];
 	  _dex = _dxh + __n2.split(_dxh)[1];
 	  yt6.r1 = []; yt6.r2 = [];
 	  index = (findClosingBracketMatchIndex(_dex.substring(_dex.indexOf('[')), 0, '[', ']', false, true, ((typeof __vr == 'string') ? __vr.split('=')[0].split(' ')[1] : '')) + 1 + _dex.indexOf('[')) // +1 may be one too short?
 
-	  __vr1 = _dex.replace(_dxh.split('[')[0],'').replace('[','').split('try{')[0].split(','); __vr0 = (__vr1.length-1)
+	  __vr1 = _dex.replace(_dxh.split('[')[0],'').replace('[','').split('try{')[0].split(',')
 	  _dex = _dex.substring(_dex.indexOf('[')+1, index)
 	  if (_dex.slice(-1) == ']') _dex = _dex.substring(0, _dex.length-1)
 	  array = _dex;
 	  _dex = _dex.split(',');
-	  //_dex = (_dex.replace(_dxh.split('[')[0],'').replace('[','')).split(',');
-	  _dxh = false;
-	  //for(__j=0;__j < __vr0;__j++) console.log('_dex['+__j+'] = '+ _dex[__j]);
 	  break
 	}}
 
 	//xord hunt
-	var __n3 = __n2.split('=['), __k = 0
-	for(__i=0;__i < __n3.length;__i++)
-	{
-	  if (__i == 0) if (typeof _VAR == 'object' && Array.isArray(_VAR))
+	//var __n3 = __n2.split('=[')
+	var __n3 = __n2.split('a:{'), __k = 0, __z = ''
+
+	for(__i=0;__i<__n2.split('a:{').length;__i++)
+	  { __z = (__i === 0) ? __n3[0].split('/*teszt*/;')[1] : __z; if (__i && __z.indexOf(_dxh) == -1) { __z = __z +'a:{'+ __n3[__i] } }
 	  try {
-	    var __z = __n3[__i], __j = __i; while (__z.indexOf('a:{') == -1 && __n3[__j+1]) { __j = __j+1; __z = __z + __n3[__j] }
-	    if (__z.indexOf('a:{') > -1) {
-	      __z = (__z.split('/*teszt*/;')[1]) ? __z.substring(__z.lastIndexOf('/*teszt*/;')+10) : __z;
-	      //__s = _VAR.indexOf('split')
-	      var xord = (__z.split('var ')[1]) ? __z.split('var ')[1].split('=')[0] : '', para1 = (xord) ? __z.split('var ')[1].split(';')[0].split('^')[1] : '', para2 = (xord) ? __z.split(xord +'=')[1].split('^')[0] : ''
-	      var _nrg = __n2.split(array)[1]; if (_nrg) { _nrg = _nrg.split('if')[0].split('='); for(__j=0;__j<_nrg.length;__j++) { _nrg[__j] = (_nrg[__j].split('^')[1]) ? _nrg[__j].substring(_nrg[__j].indexOf('^')+1, _nrg[__j].lastIndexOf(']')) : undefined; } }
-	      for(__j=0;__j<_dex.length;__j++) { if (_dex[__j] === 'null' && !isNaN(_nrg[__k])) { __s = __j; eval('var _xord='+__j+'^'+_nrg[__k]);__k++ } }
-	      __z = __z.substring(__z.lastIndexOf('}')+1); __z = __z.substring(__z.lastIndexOf('if')+2)
+	      __z = (__z.split('/*teszt*/;')[1]) ? __z.substring(__z.lastIndexOf('/*teszt*/;')+10) : __z; //console.log(__z)
+	      var _xord,
+		xord = (__z.split('var ')[1]) ? __z.split('var ')[1].split('=')[0] : '', para1 = (xord) ? __z.split('var ')[1].split(';')[0].split('^')[1] : '', para2 = (xord) ? __z.split(xord +'=')[1].split('^')[0] : ''
+	      if (__z.split(_dxh)[1]) { __k = __z.split(_dxh)[0]; __k = __k.substring(__k.lastIndexOf('{')+1); //console.log(__k); console.log(__vr0)
+	        if (__k.indexOf(']]('+ __vr0 +'[') > -1) { __k = __k.split(']]('+ __vr0 +'[')[0]; __k = __k.substring(__k.lastIndexOf('[')+1)
+	          if (__k.indexOf(xord) > -1) { __s = _VAR.indexOf('split'); if (__s > -1) eval('var _xord='+ __k.replace(xord, __s)) }
+	        }
+	      }
+	      if (isNaN(_xord)) {
+		var _nrg = __n2.split(array)[1]; if (_nrg) { _nrg = _nrg.split('if')[0].split('='); for(__j=0;__j<_nrg.length;__j++) { _nrg[__j] = (_nrg[__j].split('^')[1]) ? _nrg[__j].substring(_nrg[__j].indexOf('^')+1, _nrg[__j].lastIndexOf(']')) : undefined; } }
+		//_nrg.sort(function(a, b){return a - b}) 
+		__k = 0; __s = -1
+		for(__j=0;__j<_dex.length;__j++) if (_dex[__j] === 'null') { if (!isNaN(_nrg[__k])) { __s = __j; eval('var _xord='+__j+'^'+_nrg[__k]) }; __k++ }
+	      }
+	      __z = __z.substring(0, __z.lastIndexOf('a:{')); __z = __z.substring(__z.lastIndexOf('}')+1); __z = __z.substring(__z.lastIndexOf('if')+2)
+	      //console.log(__z)
 	      if (__s > -1) { _rgx = __z.split('a:{')[0]
 	        if (xord && para1) { 
 	          if (_xord > 0) {
@@ -1740,12 +1751,12 @@ function find_key(_rpt){
 	          }
 	        }
 	      }
-	    }
 	  } catch(e){ console.log(e.toString()) }
-	}
+
 
 
     // define first checker variable located after last element of array
+	__vr0 = (__vr1.length-1)
 	if (Array.isArray(__vr1) && __vr1[__vr0] &&
 	    (__vr1[__vr0].indexOf('];') < 14 ||
 	     (__vr1[__vr0].indexOf('];') > -1 && __vr1[__vr0].indexOf('if(typeof ') > -1) //&& __vr1[__vr0].indexOf(';else') > -1)
@@ -1754,6 +1765,7 @@ function find_key(_rpt){
 	__vr1 = __vr1[__vr0].split('typeof ')[1]; if (__vr1) __vr1 = 'var '+ __vr1.split('===')[0]
 	}
 
+	_dxh = false
 
 	for(__i=0;__i<_dex.length;__i++) if (_dex[__i] && isNaN(_dex[__i]) && _dex[__i].indexOf('/') != 0) {
 	  if (yt6.r1.length && yt6.r2.length) {
@@ -4878,7 +4890,7 @@ function iframe(re_embed) {
           }
 
 		  iframe_.setAttribute('src', ((yt6d.bounce) ? src 
-		  + '/bouncer.html#' + encodeURIComponent(src0.replace('//m.','//www.')) : src0)
+		  + '/bouncer.html#' + encodeURIComponent(src0.replace('//m.','//www.').replace('&version=3&origin=','&version=3&app=desktop&origin=')) : src0)
 		  )//&widgetid=1
 
 		  yt6.api.insertBefore(iframe_, yt6.api.firstChild)
@@ -10889,10 +10901,16 @@ if (c[1]) {
 	      }
 	      return N
 	    };
-	    yt6d.arg.temp = temp; 
-	    try { n_0 = yt6d.nrg() } catch(e){ console.log(e.toString()); n_0 = [12, 2827] }; 
+	    yt6d.arg.temp = temp;
+	    
+	    var nrg = 1 
+	    while (nrg < 950) try {
+	      try { n_0 = yt6d.nrg(nrg) } catch(e){}
+	      n_0 = yt6d.ndec(n_0[0], n_0[1], n_value, temp);
+	      nrg = 999
+	    } catch(e){ nrg = (nrg + 1); }; 
 	  
-	    n_0 = yt6d.ndec(n_0[0], n_0[1], n_value, temp)
+	    if (nrg != 999) n_decoded = n_value
 	  
 	  } catch(e){ console.log(e.toString())
 	      n_decoded = n_value
@@ -12618,9 +12636,12 @@ if (!gid('bm4')) {
 	      z = window.frames['re-embed2']
 	      try {
 	      if (z && z.document && typeof z.document.getElementById == 'function') {
+
 	      var mp = z.document.getElementById('movie_player'); mp = (mp && typeof mp.getVideoUrl == 'function') ? mp.getVideoUrl() : yt6.vid;
 	      if (yt6.status == 'error' && z.yt6 && z.yt6.status == 'ok') { yt6.status = 'ok' }
 	      if (z.location.href.indexOf(yt6.vid) > -1 && mp.indexOf(yt6.vid) > -1) {
+
+	      if (z.document.getElementsByTagName('ytm-custom-control')[0]) {}
 
 	      var c = conf('args')
 	      if (z && z.yt6) {
@@ -12638,6 +12659,11 @@ if (!gid('bm4')) {
 			l.push.apply(l, z.yt6.linx); h.push.apply(h, z.yt6.html); r = z.yt6.href.toString();
 			ttsurl.push.apply(ttsurl, y.ttsurl)
 			c[1].url_encoded_fmt_stream_map = c[1].url_encoded_fmt_stream_map + ((y.url_encoded_fmt_stream_map) ? ','+ y.url_encoded_fmt_stream_map.toString() : '')
+			if (yt6d.base_js != z.yt6d.base_js) {
+			  for( zf in ['fcnm','yt6d.ndec','yt6d.nrg']) if (typeof z[zf] == 'function') try { r = z[zf].toString(); eval(zf +' = function('+ r.split('{')[0].split('(')[1] + '{' + r.substring(r.indexOf('{')+1) ) } catch(e){console.log(e.toString())}
+			  try { yt6d.arg.s0 = 1*z.yt6d.arg.s0; yt6d.arg.s1 = 1*z.yt6d.arg.s1; yt6d.arg.s2 = 1*z.yt6d.arg.s2; yt6d.arg.s3 = 1*z.yt6d.arg.s3; yt6d.arg.s4 = 1*z.yt6d.arg.s4; yt6d.arg.s5 = 1*z.yt6d.arg.s5; yt6d.arg.s6 = 1*z.yt6d.arg.s6; yt6d.arg.s7 = 1*z.yt6d.arg.s7 } catch(e){}
+			  try { yt6d.arg.enc = z.yt6d.arg.enc.toString(); yt6d.arg.konst = z.yt6d.arg.konst.toString() } catch(e){}
+			}
 			try { yt6.ytp.V = z.yt6.ytp.V.toString(); yt6.ytp.A = z.yt6.ytp.A.toString() } catch(e){}
 			c[1].ttsurl = ttsurl; yt6.ttsurl = ttsurl; yt6.args = c[1]
 			if (yt6d.pubApp) { z.publive(); var y = z.yt6d.pubApp, x; if (y && y.playlist && y.playlist.items && y.playlist.items.length) for (i in y.playlist) if (y.playlist[i] && !(Array.isArray(y.playlist[i]) && typeof y.playlist[i][0] == 'function')) try { x = JSON.stringify(y.playlist[i]); yt6d.pubApp.playlist[i] = JSON.parse(x) } catch(e){} }
@@ -22556,6 +22582,7 @@ function switch_players(iframe) {
     if (shorts()) {
       var x = gc('ytd-reel-player-overlay-renderer')[1] || gid('overlay'); if (x) x.setAttribute('hidden','')
     }
+    if (yt6.ytp.embed && gt('ytm-custom-control', 1)[0]) { var x = gid('player-controls'); if (x) x.setAttribute('hidden','') }
     var x = gc('mejs-controls')[0]
     if (x) x.style.display = ''
     if (gid('iaextractor-menu')) { gid('iaextractor-menu').parentNode.removeChild(gid('iaextractor-menu')) }
@@ -22614,6 +22641,7 @@ function switch_players(iframe) {
       if (shorts()) {
 	var x = gc('ytd-reel-player-overlay-renderer')[1] || gid('overlay'); if (x && x.hasAttribute('hidden')) x.removeAttribute('hidden')
       }
+      if (yt6.ytp.embed && gt('ytm-custom-control', 1)[0]) { var x = gid('player-controls'); if (x && x.hasAttribute('hidden')) x.removeAttribute('hidden') }
       var x = gclass("mejs-overlay-play")[0]
       if (x) x.style.display = 'none'
       var x = gc('mejs-controls')[0]
@@ -23695,7 +23723,7 @@ function control_panel1() {
 
     var remove = document.createElement('div')
     remove.id = 'remove-sp'
-    var remove_sp_innerhtml = '<button onclick="if (!gid(\'bm0\') && gid(\'bm01\')) gid(\'bm01\').setAttribute(\'id\',\'bm0\'); switch_players(); yt6d.x = (yt6.x) ? true : false;" class="snarl-button yt-uix-button-text" aria-label="Switch" title="Switch" style="width: 22px; height: 22px; padding: 0 1px 0 0"><img src="//s.ytimg.com/yts/img/HTML5_1Color_Black-vfl902gVJ.png" style="vertical-align:middle; height:12px; padding:0px""></img></button><button onclick="aspect()" class="snarl-button yt-uix-button-text" style="width: 30px" aria-label="Resize" title="Resize">«↔»</button><br><button id="remove-sp1" style="width: 22px" onclick="var yt6 = gid(\'snarls_player\'), l = clone(window.location.href), c16 = &quot;PREF=f1=50000000&f5=10&f6=1004;path=/;domain=.youtube.com;expires=Session&quot;, c12 = c16.replace(\'=1004\',\'=8\'), z = prompt(\'Wanna quit? \(Exit options: 0-3\)\\n Cancel = Not now;\\n 0 = Remove script without page refresh;\\n 1 = Normal YouTube;\\n 2 = Legacy compliant;\\n 3 = YT Music;\', \'0\'); \/\*if (!z) { var z = window.confirm(\'OK will attempt to switch between YouTube layouts and refresh the page. \\nCancel will abort.\'); if (typeof z == \'boolean\' && z == true) { deldiv(); return void 0; } }\*\/; if ((typeof z == \'boolean\' && z == false) || !z ) return void 0; if (z && !(typeof z == \'boolean\' && z == true)) { if (z != 0 && (z == 1 || z == 2 || z == 3)) { if (z == 1) document.cookie=c16; if (z == 2) { document.cookie=c12; }; if (z == 3) { var domain = \'music\'; var vid = (l.indexOf(\'/embed/\') > -1 && l.indexOf(video_id()[0]) == -1) ? l.split(\'/embed/\')[1].split(\'?\')[0].split(\'#\')[0] : video_id()[0]; l = l.replace(\'www.youtube.com\', domain + \'.youtube.com\').replace(\'music.youtube.com\', domain + \'.youtube.com\').replace(\'m.youtube.com\', domain + \'.youtube.com\').replace(\'/embed/\' + vid + \'?\',\'/watch?v=\' + vid + \'&\').replace(\'/embed/\' + vid,\'/watch?v=\' + vid) } else { if (z == 1) { l = l.replace(\'music.youtube.com\',\'www.youtube.com\').replace(\'m.youtube.com\',\'www.youtube.com\') }; if (z == 2) { l = \'https://www.youtube.com/embed/\' + video_id()[0] + \'?\' + (l.split(\'v=\' + yt6.vid).join(\'\').split(\'?\')[1] || l.split(\'v=\' + yt6.vid).join(\'\').split(\'&\')[1] || \'\'); if (yt6.pl_index >= 200) { l = l.split(\'?\')[0] } else l = l.split(\'?&\').join(\'?\'); location.href = \'https://rawcdn.githack.com/snarly/yt6/34ad1dc9fe3164b7be1c11d35020f2b67608c298/bouncer.html#\' + encodeURIComponent(l); return false } else { if (yt6.ytp.embed) { l = l.replace(\'?\',\'&\').replace(\'/embed/\', \'/watch?v=\') }; };  } } else if (z == 0) { deldiv(); z = 0 } } else { if (yt6.layout == 16) { { document.cookie=c12; } } else document.cookie=c16; l = l.replace(\'music.youtube.com\',\'www.youtube.com\').replace(\'/embed/\' + video_id()[0] + \'?\',\'/watch?v=\' + yt6.vid + \'&\' + l.split(\'/embed/\' + yt6.vid + \'?\')[1]); }; if (z) location.href = l;" class="snarl-button yt-uix-button-text" aria-label="Remove script / Change YouTube layout" title="Remove script / Change YouTube layout">X</button><button id="audio_x" class="audio_x snarl-button yt-uix-button-text" aria-label="Use mousewheel to set speed" title="Use mousewheel to set speed" style="padding: 0px 1px 0px 1px; right: 0px" onclick="var yt6 = gid(\'snarls_player\'); if (yt6.player1 && yt6.player2 && typeof yt6.player2.load == \'function\') { var src = \'\'; if (gid(\'no2\')) src = gid(\'no2\').src; var audio_x = window.prompt(\'Enter the URL of any audio (or video) file across the net to use as background sound\\n- OR -\\nEnter a floating point number between 0 and 4 \\nas a multiplier to boost the audio (1 = normal level)\\n -- useful for very silent or very loud recordings.\\n\\n(External audio will only activate for video-only sources playing in progressive download mode.)\', src); if (audio_x && !isNaN(1*(audio_x.toString().substr(0,1))) ) { audio_x = audio_x.replace(/[^\\d,.]/g, \'\').replace(/,/g, \'.\'); if (audio_x.split(\'.\').length > 1) audio_x = audio_x.split(\'.\')[0] +\'.\'+ audio_x.split(\'.\')[1]; audio_x = 1*(audio_x) }; if (isNaN(audio_x) || audio_x == undefined) { var i, a1 = clone(pseudoSrc); for(i=0;i<yt6.userprefA.length;i++) if (yt6.linx[yt6.userprefA[i]] || yt6.linx[(1000 + yt6.userprefA[i])]) { a1 = (yt6.linx[yt6.userprefA[i]] || yt6.linx[(1000 + yt6.userprefA[i])]); break }; i = yt6.player2.media.paused; src = (audio_x && audio_x.indexOf(\'http\') == 0) ? audio_x : a1; if (src != pseudoSrc) yt6.player2.setSrc(src); yt6.speed = 1; yt6.ytp.speed(); if (audio_x) { yt6.audiox = audio_x } else { yt6.audiox = null; delete yt6.audiox; gid(\'no2\').src = a1 }; yt6.player2.load(); gid(\'player2\').currentTime = gid(\'player1\').currentTime; if (!i) yt6.player2.play() } else { if (audio_x < 0) audio_x = 0; if (audio_x > 4) audio_x = 4; var a0 = (player() && v_(original(yt6.p)) && v_(original(yt6.p)).ao), a1 = (yt6.player1 && yt6.player1.media && yt6.player1.media.ao), a2 = (yt6.player2 && yt6.player2.media && yt6.player2.media.ao); try { yt6.boost = audio_x.toFixed(1); if (a2) a2.amplify(audio_x); if (a1) a1.amplify(audio_x); if (a0) a0.amplify(audio_x); a1 = gc(\'boostAudio\')[0]; if (a1) a1[yt6.txt] = \'Boost: \'+ yt6.boost + \'x\'; } catch(e) {} } };">audio</button></div>'
+    var remove_sp_innerhtml = '<button onclick="if (!gid(\'bm0\') && gid(\'bm01\')) gid(\'bm01\').setAttribute(\'id\',\'bm0\'); switch_players(); yt6d.x = (yt6.x) ? true : false;" class="snarl-button yt-uix-button-text" aria-label="Switch" title="Switch" style="width: 22px; height: 22px; padding: 0 1px 0 0"><img src="//s.ytimg.com/yts/img/HTML5_1Color_Black-vfl902gVJ.png" style="vertical-align:middle; height:12px; padding:0px""></img></button><button onclick="aspect()" class="snarl-button yt-uix-button-text" style="width: 30px" aria-label="Resize" title="Resize">«↔»</button><br><button id="remove-sp1" style="width: 22px" onclick="var yt6 = gid(\'snarls_player\'), l = clone(window.location.href), c16 = &quot;PREF=f1=50000000&f5=10&f6=1004;path=/;domain=.youtube.com;expires=Session&quot;, c12 = c16.replace(\'=1004\',\'=8\'), z = prompt(\'Wanna quit? \(Exit options: 0-3\)\\n Cancel = Not now;\\n 0 = Remove script without page refresh;\\n 1 = Normal YouTube;\\n 2 = Legacy compliant;\\n 3 = YT Music;\', \'0\'); \/\*if (!z) { var z = window.confirm(\'OK will attempt to switch between YouTube layouts and refresh the page. \\nCancel will abort.\'); if (typeof z == \'boolean\' && z == true) { deldiv(); return void 0; } }\*\/; if ((typeof z == \'boolean\' && z == false) || !z ) return void 0; if (z && !(typeof z == \'boolean\' && z == true)) { if (z != 0 && (z == 1 || z == 2 || z == 3)) { if (z == 1) document.cookie=c16; if (z == 2) { document.cookie=c12; }; if (z == 3) { var domain = \'music\'; var vid = (l.indexOf(\'/embed/\') > -1 && l.indexOf(video_id()[0]) == -1) ? l.split(\'/embed/\')[1].split(\'?\')[0].split(\'#\')[0] : video_id()[0]; l = l.replace(\'www.youtube.com\', domain + \'.youtube.com\').replace(\'music.youtube.com\', domain + \'.youtube.com\').replace(\'m.youtube.com\', domain + \'.youtube.com\').replace(\'/embed/\' + vid + \'?\',\'/watch?v=\' + vid + \'&\').replace(\'/embed/\' + vid,\'/watch?v=\' + vid) } else { if (z == 1) { l = l.replace(\'music.youtube.com\',\'www.youtube.com\').replace(\'m.youtube.com\',\'www.youtube.com\') }; if (z == 2) { l = \'https://www.youtube.com/embed/\' + video_id()[0] + \'?\' + (l.split(\'v=\' + yt6.vid).join(\'\').split(\'?\')[1] || l.split(\'v=\' + yt6.vid).join(\'\').split(\'&\')[1] || \'\'); if (yt6.pl_index >= 200) { l = l.split(\'?\')[0] } else l = l.split(\'?&\').join(\'?\'); l = (l.indexOf(\'app=desktop\') == -1) ? l + ((l.indexOf(\'?\') == -1) ? \'?\' : \'&\') +\'app=desktop\' : l; location.href = \'https://rawcdn.githack.com/snarly/yt6/34ad1dc9fe3164b7be1c11d35020f2b67608c298/bouncer.html#\' + encodeURIComponent(l); return false } else { if (yt6.ytp.embed) { l = l.replace(\'?\',\'&\').replace(\'/embed/\', \'/watch?v=\') }; };  } } else if (z == 0) { deldiv(); z = 0 } } else { if (yt6.layout == 16) { { document.cookie=c12; } } else document.cookie=c16; l = l.replace(\'music.youtube.com\',\'www.youtube.com\').replace(\'/embed/\' + video_id()[0] + \'?\',\'/watch?v=\' + yt6.vid + \'&\' + l.split(\'/embed/\' + yt6.vid + \'?\')[1]); }; if (z) location.href = l;" class="snarl-button yt-uix-button-text" aria-label="Remove script / Change YouTube layout" title="Remove script / Change YouTube layout">X</button><button id="audio_x" class="audio_x snarl-button yt-uix-button-text" aria-label="Use mousewheel to set speed" title="Use mousewheel to set speed" style="padding: 0px 1px 0px 1px; right: 0px" onclick="var yt6 = gid(\'snarls_player\'); if (yt6.player1 && yt6.player2 && typeof yt6.player2.load == \'function\') { var src = \'\'; if (gid(\'no2\')) src = gid(\'no2\').src; var audio_x = window.prompt(\'Enter the URL of any audio (or video) file across the net to use as background sound\\n- OR -\\nEnter a floating point number between 0 and 4 \\nas a multiplier to boost the audio (1 = normal level)\\n -- useful for very silent or very loud recordings.\\n\\n(External audio will only activate for video-only sources playing in progressive download mode.)\', src); if (audio_x && !isNaN(1*(audio_x.toString().substr(0,1))) ) { audio_x = audio_x.replace(/[^\\d,.]/g, \'\').replace(/,/g, \'.\'); if (audio_x.split(\'.\').length > 1) audio_x = audio_x.split(\'.\')[0] +\'.\'+ audio_x.split(\'.\')[1]; audio_x = 1*(audio_x) }; if (isNaN(audio_x) || audio_x == undefined) { var i, a1 = clone(pseudoSrc); for(i=0;i<yt6.userprefA.length;i++) if (yt6.linx[yt6.userprefA[i]] || yt6.linx[(1000 + yt6.userprefA[i])]) { a1 = (yt6.linx[yt6.userprefA[i]] || yt6.linx[(1000 + yt6.userprefA[i])]); break }; i = yt6.player2.media.paused; src = (audio_x && audio_x.indexOf(\'http\') == 0) ? audio_x : a1; if (src != pseudoSrc) yt6.player2.setSrc(src); yt6.speed = 1; yt6.ytp.speed(); if (audio_x) { yt6.audiox = audio_x } else { yt6.audiox = null; delete yt6.audiox; gid(\'no2\').src = a1 }; yt6.player2.load(); gid(\'player2\').currentTime = gid(\'player1\').currentTime; if (!i) yt6.player2.play() } else { if (audio_x < 0) audio_x = 0; if (audio_x > 4) audio_x = 4; var a0 = (player() && v_(original(yt6.p)) && v_(original(yt6.p)).ao), a1 = (yt6.player1 && yt6.player1.media && yt6.player1.media.ao), a2 = (yt6.player2 && yt6.player2.media && yt6.player2.media.ao); try { yt6.boost = audio_x.toFixed(1); if (a2) a2.amplify(audio_x); if (a1) a1.amplify(audio_x); if (a0) a0.amplify(audio_x); a1 = gc(\'boostAudio\')[0]; if (a1) a1[yt6.txt] = \'Boost: \'+ yt6.boost + \'x\'; } catch(e) {} } };">audio</button></div>'
 
     span.appendChild(remove)
     remove.setAttribute('style','display: inline-block; position: relative')
