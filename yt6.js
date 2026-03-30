@@ -1472,7 +1472,7 @@ function findClosingBracketMatchIndex(str, pos, x, y, q, regx, __var) { var r0, 
       if (!q1 && !q2) { depth++; if (x == y && str[i-1] != '\\') { return i }};
       break;
     case y:
-      if (!q && !q1 && !q2) --depth; //if (regx) console.log(i +' depth = '+ depth +' '+ str[i-1] + str[i] + str[i+1] +' ?? '+ q +' '+ q1 +' '+q2)
+      if ((!q && !q1 && !q2) || q === null) --depth; //if (regx) console.log(i +' depth = '+ depth +' '+ str[i-1] + str[i] + str[i+1] +' ?? '+ q +' '+ q1 +' '+q2)
       if ((depth == 0) || (i > 2 && q && str[i-1] == q && str[i-2] != '\\')) { return i };
       break;
     }
@@ -1495,7 +1495,7 @@ function find_key(_rpt){
   var _fcn, _fcn0, _fcn1, __n, __n1, __s, __z, _alr = '.set("alr","yes")', temp, obfuscated = []
 	//var names randomized since Dec 2024
 	
-  for(__i;__i<_rpt.split(_alr).length;__i++) { //bye ',encodeURIComponent(' //.slice(-50)
+  for(__i;__i<_rpt.split(_alr).length;__i++) {//bye ',encodeURIComponent(' //.slice(-50)
     if (_rpt.split(_alr)[__i] && _rpt.split(_alr)[__i].indexOf('return ') < 100 && _rpt.split(_alr)[__i].indexOf('&&(') < 10) _fcn0 = 1
     	if (_fcn0 == 1)
 	{ _fcn0 = _rpt.split(_alr)[__i].split('return ')[0]
@@ -1848,7 +1848,8 @@ function find_key(_rpt){
 	  try { try { eval('var '+ _dex0[__i]); } catch(e){ //console.log('Error '+ _dex0[__i]);
 	    continue };
 	_dex = new RegExp(    sprintf('[^\\w.]%s=function[^}].+?(?<!{)(?=};)', _dex0[__i].split('$').join('\\$'))  ); _dex = _rpt.match(_dex); _dex = (_dex) ? _dex[0] +'};' : ''; if (_dex.split('},')[1] && _dex.split('},')[1].indexOf('=function') > -1 && _dex.split('},')[1].indexOf('=function') < 4 && _dex.split('},')[1].substring(_dex.split('},')[1].indexOf('{')) ) { _dex = _dex.split('},')[0] + '};'; }; if (_dex.indexOf(',') == 0) _dex = _dex.slice(1); //console.log(_dex.split('=')[0])
-	    if (_dex) { var _dxh = _dex.split('{').length - _dex.split('}').length;
+	    if (_dex) {
+	        var _dxh = _dex.split('{').length - _dex.split('}').length;
 		if (_dxh > 1) { __vr0 = ''; __vr1 = ''; for(__j=0;__j<_dxh;__j++) { __vr0 = _rpt.split(_dex)[1].split('}')[__j] +'}'; if (__vr0.indexOf('{') > -1) _dxh++; __vr1 = __vr1 + __vr0 }; _dex = _dex + __vr1 +';' }
 		_dxh = _dex.split('){return ')[1]; _dxh = (_dxh) ? _dxh.split('[')[0]: ''; 
 		if (_dex.indexOf('){return '+ _dxh +'[') > -1) {
@@ -1858,16 +1859,30 @@ function find_key(_rpt){
 		}
 
 	      var _dxh = _dex.split('=function(')[1].split(')')[0]
+
 	      _dex2 = _dex.split(_dex.substring(0, _dex.indexOf("{")+1))[1].slice(0,-2)
-	      if (_dex2.split('return ')[1] && _dex2.split('return ')[1].split('](this,')[1]) { _dex3 = _dex2.split('return ')[1].split('[')[0];  if (_dex3 != 'fcnm' && _dex3 != 'yt6d.ndec' && _dex0.indexOf(_dex3) == -1) { _dex0.push(_dex3) }}; 
+	      if (_dex2.split('return ')[1] && _dex2.split('return ')[1].split('](this,')[1]) { _dex3 = _dex2.split('return ')[1].split('[')[0];  if (_dex3 != 'fcnm' && _dex3 != 'yt6d.ndec' && _dex0.indexOf(_dex3) == -1) { _dex0.push(_dex3) }}
 	      if (temp) { _dex2 = 'try{ '+ 
 	      __vr +';'+ dekrypt0 + _dex2.replace('return ', '}catch(err){console.log("uriCerr: "+ err.toString())};console.log("uriComponent: "+'+ _dex2.split('return ')[1].split('}')[0] +');return ');
 	      }
 	      try { eval('var '+ (_dex0[__i]) + ((temp) ? '= yt6d.arg.uriComponent' : '') +'= new Function(_dxh, _dex2)') } catch(err) {
-		if (_rpt.split(_dex2)[1]) { // include one more "};" ?
-		  _dex = _dex.substring(0, _dex.lastIndexOf('};')) + _rpt.split(_dex2)[1].split('};')[0] + '};'
-		  _dex2 = _dex2 + _rpt.split(_dex2)[1].split('};')[0];
-		  try { eval('var '+ (_dex0[i]) + ((temp) ? '= yt6d.arg.uriComponent' : '') +'= new Function(_dxh, _dex2)') } catch(err) {}
+	        _dex2 = _dex.split(_dxh+'){')[1].slice(0,-2)
+	        if (_dex2.split('return ')[1] && _dex2.split('return ')[1].split('](this,')[1]) { _dex3 = _dex2.split('return ')[1].split('[')[0];  if (_dex3 != 'fcnm' && _dex3 != 'yt6d.ndec' && _dex0.indexOf(_dex3) == -1) { _dex0.push(_dex3) }}
+	        if (temp) { _dex2 = 'try{ '+ 
+	        __vr +';'+ dekrypt0 + _dex2.replace('return ', '}catch(err){console.log("uriCerr: "+ err.toString())};console.log("uriComponent: "+'+ _dex2.split('return ')[1].split('}')[0] +');return ');
+	        }
+	        try { eval('var '+ (_dex0[__i]) + ((temp) ? '= yt6d.arg.uriComponent' : '') +'= new Function(_dxh, _dex2)') } catch(err) {
+		  if (_rpt.split(_dex2)[1]) { // include one more "};" ?
+		    _dex = _dex.substring(0, _dex.lastIndexOf('};')) + _rpt.split(_dex2)[1].split('};')[0] + '};'
+		    _dex2 = _dex2 + _rpt.split(_dex2)[1].split('};')[0]
+		    try { eval('var '+ (_dex0[i]) + ((temp) ? '= yt6d.arg.uriComponent' : '') +'= new Function(_dxh, _dex2)') } catch(err) {
+		      if (_rpt.split(_dex2)[1]) { // include one more "};" ?
+			_dex = _dex.substring(0, _dex.lastIndexOf('};')) + _rpt.split(_dex2)[1].split('};')[0] + '};'
+			_dex2 = _dex2 + _rpt.split(_dex2)[1].split('};')[0]
+			try { eval('var '+ (_dex0[i]) + ((temp) ? '= yt6d.arg.uriComponent' : '') +'= new Function(_dxh, _dex2)') } catch(err) {}
+		      }
+		    }
+		  }
 		}
 	      }; if (_dex.indexOf(';') < _dex.indexOf('=')) _dex = _dex.replace(';','')
 	      _dex1 = _dex1 + 'var '+ _dex; 
@@ -1891,8 +1906,8 @@ function find_key(_rpt){
 	__n2 = __n2.replace('/*teszt*/', ((_dex1) ? _dex1 : '/*missing functions*/') +
 (dekrypt0 || '/**/'))
 
-//var temp = __n2.split('}catch(a){'); __n2 = ''
-//for(__i=0;__i<temp.length;__i++) { temp[__i] = temp[__i] + ((__i < temp.length-1) ? '}catch(a){console.log(\"'+__i+'\ "+ a.toString());' : ''); __n2 = __n2 + temp[__i] }
+var temp = __n2.split('}catch(a){'); __n2 = ''
+for(__i=0;__i<temp.length;__i++) { temp[__i] = temp[__i] + ((__i < temp.length-1) ? '}catch(a){console.log(\"'+__i+'\ "+ a.toString());' : ''); __n2 = __n2 + temp[__i] }
 //console.log(__n2)
 //var temp = __n2.substring(__n2.lastIndexOf('return ')).split(' ')[1]
 //if (temp) { temp = temp.split('}')[0].split(';')[0]; __n2 = __n2.split(','+temp+'=[]').join(',console.log("____"+X)') }
@@ -12707,7 +12722,9 @@ if (!gid('bm4')) {
 	      if (z && z.document && typeof z.document.getElementById == 'function') {
 
 	      if (z.document.getElementsByTagName('ytm-custom-control')[0]) { yt6.error = 'noembed'
-	        if (yt6d.src_hid !== null) { yt6d.src_hid = null; yt6d.src_hid2 = 3; return true }
+	        //if (yt6d.src_hid !== null) { yt6d.src_hid = null; 
+	          if (yt6d.src_hid2 < 3) yt6d.src_hid2 = 3;
+	        //return true }
 	      }
 
 	      var mp = z.document.getElementById('movie_player'); mp = (mp && typeof mp.getVideoUrl == 'function') ? mp.getVideoUrl() : yt6.vid;
@@ -12730,10 +12747,10 @@ if (!gid('bm4')) {
 			l.push.apply(l, z.yt6.linx); h.push.apply(h, z.yt6.html); r = z.yt6.href.toString();
 			ttsurl.push.apply(ttsurl, y.ttsurl)
 			c[1].url_encoded_fmt_stream_map = c[1].url_encoded_fmt_stream_map + ((y.url_encoded_fmt_stream_map) ? ','+ y.url_encoded_fmt_stream_map.toString() : '')
-			if (yt6d.base_js != z.yt6d.base_js) {
+			if (yt6d.base_js != z.yt6d.base_js) {console.log('!')
 			  for( zf in ['fcnm','yt6d.ndec','yt6d.nrg']) if (typeof z[zf] == 'function') try { r = z[zf].toString(); eval(zf +' = function('+ r.split('{')[0].split('(')[1] + '{' + r.substring(r.indexOf('{')+1) ) } catch(e){console.log(e.toString())}
 			  try { yt6d.arg.s0 = 1*z.yt6d.arg.s0; yt6d.arg.s1 = 1*z.yt6d.arg.s1; yt6d.arg.s2 = 1*z.yt6d.arg.s2; yt6d.arg.s3 = 1*z.yt6d.arg.s3; yt6d.arg.s4 = 1*z.yt6d.arg.s4; yt6d.arg.s5 = 1*z.yt6d.arg.s5; yt6d.arg.s6 = 1*z.yt6d.arg.s6; yt6d.arg.s7 = 1*z.yt6d.arg.s7 } catch(e){}
-			  try { yt6d.arg.enc = z.yt6d.arg.enc.toString(); yt6d.arg.konst = z.yt6d.arg.konst.toString() } catch(e){}
+			  try { yt6d.arg.encode = z.yt6d.arg.encode.toString(); yt6d.arg.konst = z.yt6d.arg.konst.toString() } catch(e){}
 			}
 			try { yt6.ytp.V = z.yt6.ytp.V.toString(); yt6.ytp.A = z.yt6.ytp.A.toString() } catch(e){}
 			c[1].ttsurl = ttsurl; yt6.ttsurl = ttsurl; yt6.args = c[1]
@@ -12764,7 +12781,7 @@ if (!gid('bm4')) {
 		if (yt6.error === 'embed' && yt6d.bounce && yt6d.src_hid2 < 4) { backflop(); autorebuild() } else {
 		  z = window.frames['re-embed2']
 		  yt6d.src_hid2 = (!yt6d.src_hid2 || hid()) ? 1 : (yt6d.src_hid2 + 1)
-		  try {console.log(yt6.error +' '+ yt6d.src_hid2)
+		  try {
 		  if ( yt6.error == 'embed_list' || (z && z.yt6d && ((yt6d.src_hid2 < 4 && z.yt6d.linx_length < 2) || (z.yt6d.linx_length >= 2 && yt6.error == 'embed?'))) ) {
 		    yt6d.src_hid = 0; if (yt6.error !== 'embed_list' && yt6.error != '  \n  ') { //if (!yt6d.bounce) { yt6d.bounce = true } else { 
 		      yt6.ios = true; backflop() //}
