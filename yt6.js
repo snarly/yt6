@@ -12747,7 +12747,7 @@ if (!gid('bm4')) {
 			l.push.apply(l, z.yt6.linx); h.push.apply(h, z.yt6.html); r = z.yt6.href.toString();
 			ttsurl.push.apply(ttsurl, y.ttsurl)
 			c[1].url_encoded_fmt_stream_map = c[1].url_encoded_fmt_stream_map + ((y.url_encoded_fmt_stream_map) ? ','+ y.url_encoded_fmt_stream_map.toString() : '')
-			if (yt6d.base_js != z.yt6d.base_js) {console.log('!')
+			if (yt6d.base_js != z.yt6d.base_js) {
 			  for( zf in ['fcnm','yt6d.ndec','yt6d.nrg']) if (typeof z[zf] == 'function') try { r = z[zf].toString(); eval(zf +' = function('+ r.split('{')[0].split('(')[1] + '{' + r.substring(r.indexOf('{')+1) ) } catch(e){console.log(e.toString())}
 			  try { yt6d.arg.s0 = 1*z.yt6d.arg.s0; yt6d.arg.s1 = 1*z.yt6d.arg.s1; yt6d.arg.s2 = 1*z.yt6d.arg.s2; yt6d.arg.s3 = 1*z.yt6d.arg.s3; yt6d.arg.s4 = 1*z.yt6d.arg.s4; yt6d.arg.s5 = 1*z.yt6d.arg.s5; yt6d.arg.s6 = 1*z.yt6d.arg.s6; yt6d.arg.s7 = 1*z.yt6d.arg.s7 } catch(e){}
 			  try { yt6d.arg.encode = z.yt6d.arg.encode.toString(); yt6d.arg.konst = z.yt6d.arg.konst.toString() } catch(e){}
@@ -12777,9 +12777,9 @@ if (!gid('bm4')) {
 	      } catch(e){}
 	    } },
 	  function(){
+	      z = window.frames['re-embed2']
 	      if (yt6d.src_hid) {
 		if (yt6.error === 'embed' && yt6d.bounce && yt6d.src_hid2 < 4) { backflop(); autorebuild() } else {
-		  z = window.frames['re-embed2']
 		  yt6d.src_hid2 = (!yt6d.src_hid2 || hid()) ? 1 : (yt6d.src_hid2 + 1)
 		  try {
 		  if ( yt6.error == 'embed_list' || (z && z.yt6d && ((yt6d.src_hid2 < 4 && z.yt6d.linx_length < 2) || (z.yt6d.linx_length >= 2 && yt6.error == 'embed?'))) ) {
@@ -12790,9 +12790,9 @@ if (!gid('bm4')) {
 		      yt6.error = ''; backflop(); rebuild2()
 		    } else { backflop(); yt6d.mep_renew() }
 		  } else { counter = 0;
-		      if (yt6.x) switch_players()
+		      if (yt6.x) switch_players(); if (z) try { z.player().pauseVideo() } catch(e){}
 		      buildObject(window.ytplayer)
-		      $waitUntil(function(){ if (yt6d.built == true || yt6.error == 'noembed' || yt6d.src_hid == 2) return true; counter = (counter + step) },
+		      $waitUntil(function(){ if (yt6d.built == true || yt6d.src_hid == 2) return true; counter = (counter + step) },
 		      function() {
 			if (yt6d.src_hid2 < 5) {
 			  backflop(); rebuild((yt6d.built || true), yt6.args, yt6.html, yt6.href)
