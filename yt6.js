@@ -19242,7 +19242,7 @@ if (yt6.mpb && yt6.mpb.tagName == 'YTD-MINIPLAYER') {
 			  w = (yt6.size != 'default' || (yt6.size == 'default' && yt6.wide)) ? Math.min( Math.round(((wh / 100 >>0) * 80) * yt6.aspect_ratio), ww) : Math.min( Math.round(wh * yt6.aspect_ratio), w)
 			}
 			//if (yt6.mpa()) yt6.w = p.parentNode.offsetWidth + 'px'
-			if (yt6.size == 'default' && yt6.mpa()) { w = Math.min(pn.offsetWidth, 1 * yt6.w.replace('px','')); console.log('...'+ w) }
+			if (yt6.size == 'default' && yt6.mpa()) { w = Math.min(pn.offsetWidth, 1 * yt6.w.replace('px','')) }
 
 			if (yt6.fullscreen && (!yt6.player1 || (yt6.player1 && yt6.player1.isFullScreen)) ) {
 
