@@ -1731,11 +1731,13 @@ function find_key(_rpt){
 		  if (!_neg) { _neg = __z.split('a:{')[0].split(';')[1]
 		    if (_neg) {
 			if (_args && _neg.indexOf(_args[3]+'[') > -1) {
-		      _neg = _neg.split(_args[3]+'[')[0]
+			  _neg = _neg.split(_args[3]+'[')[0]
 			  if (_neg.slice(-2) == '&&') _neg = _neg.substring(0, _neg.lastIndexOf('&&'))
-		    }
-			if (_neg.indexOf('var ') > -1) _neg = ''
 			}
+			if (_neg.indexOf('){') > -1) _neg = _neg.substring(0, _neg.lastIndexOf('){')+1)
+			if (_neg.indexOf('if(') > -1) _neg = _neg.substring(_neg.lastIndexOf('if')+2)
+			if (_neg.indexOf('var ') > -1) _neg = ''
+		    }
 		  }
 	      var _xord,
 		xord = (__z.split('var ')[1]) ? __z.split('var ')[1].split('=')[0] : '', para1 = (xord) ? __z.split('var ')[1].split(';')[0].split('^')[1] : '', para2 = (xord) ? __z.split(xord +'=')[1].split('^')[0] : ''
@@ -1759,7 +1761,7 @@ function find_key(_rpt){
 	            if (__n2.split(xord +'='+ para2 +'^'+ para1)[1]) { _para1 = new RegExp(para1, 'gm'); __s = _para1 }
 	            if (__n2.split(xord +'='+ para1 +'^'+ para2)[1]) { _para2 = new RegExp(para2, 'gm'); __s = _para2 }
 
-	            xord = 'yt6d.nrg = function(start, '+ para1 +', '+ para2 +'){ var __j=start||0, para1='+ para1 +', para2='+ para2 +', xord=('+ para2 +'^'+ para1+ ')||'+ _xord +', _xord="'+ xord +'"; for(__j;__j<950;__j++) if ('+ _rgx.replace(__s, '__j') + ') { '+ ((_neg && _neg.indexOf(_rgx) == -1) ? 'if ('+ _neg.replace(__s, '__j') +') { continue }' : '') + '; '+ ((_para1 == __s) ? 'para1' : 'para2') +' = __j; break }; if ('+ (_para1 == __s) +') { para2 = para1 ^ xord;  } else para1 = para2 ^ xord; return [para1, para2] }';
+	            xord = 'yt6d.nrg = function(start, '+ para1 +', '+ para2 +'){ var __j=start||0, para1='+ para1 +', para2='+ para2 +', xord=('+ para2 +'^'+ para1+ ')||'+ _xord +', _xord="'+ xord +'"; for(__j;__j<950;__j++) if ('+ _rgx.replace(__s, '__j') + ') { '+ ((_neg && _neg.indexOf(_rgx) == -1) ? 'if ('+ _neg.replace(__s, '__j') +') { continue }' : '') + '; '+ ((_para1 == __s) ? 'para1' : 'para2') +' = __j; break }; if ('+ (_para1 == __s) +') { para2 = para1 ^ xord;  } else para1 = para2 ^ xord; return [para1, para2] }'
 	            eval(xord)
 	            xord = yt6d.nrg(0, para1, para2)
 	          }
