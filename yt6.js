@@ -1685,8 +1685,13 @@ function find_key(_rpt){
       if (__n2) {
 
 	try {
+
 	  if (__n2.indexOf(';') < __n2.indexOf('function')) __n2 = __n2.replace(';','')
-	  __n2 = __n2.replace(__n +'=','').split('return '+ __G +'.')[0]; __n2 = __n2.substring(0, __n2.indexOf('=function(')); __n2 = __n2.substring(0, __n2.lastIndexOf(' '));
+	  __n2 = __n2.replace(__n +'=','').split('return '+ __G +'.')[0]; __n2 = __n2.substring(0, __n2.indexOf('=function('))
+	  if (__n2.substring(0, __n2.lastIndexOf(' ')).slice(-6) != 'return') {
+	    __n2 = __n2.substring(0, __n2.lastIndexOf(' '))
+	  } else __n2 = __n2.substring(0, __n2.lastIndexOf('}')) +'};';
+
 	  __n0 = __n0.split('[').join('[^');
 	  __n1 = new RegExp(__n0 + _fcn + __n0, '');//'g' //surrounding characters may differ per instance -- replacement must happen one at a time, not all at once
 	  for(i=0;i<3;i++){//mostly there are 2 instances, check 3 times to be sure
@@ -1736,6 +1741,7 @@ function find_key(_rpt){
 			}
 			if (_neg.indexOf('){') > -1) _neg = _neg.substring(0, _neg.lastIndexOf('){')+1)
 			if (_neg.indexOf('if(') > -1) _neg = _neg.substring(_neg.lastIndexOf('if')+2)
+			if (_neg.indexOf(__vr0 +'[') > -1 && (_neg.indexOf(__vr0 +'[') - _neg.lastIndexOf('&&')) < 5) { _neg  = _neg.substring(0, _neg.lastIndexOf('&&')) }
 			if (_neg.indexOf('var ') > -1) _neg = ''
 		    }
 		  }
@@ -1860,33 +1866,43 @@ function find_key(_rpt){
 		  } else if (_dex0.indexOf(_dxh) == -1) { _dex0.push(_dxh) }
 		}
 
-	      var _dxh = _dex.split('=function(')[1].split(')')[0]
+	      var _dxh = _dex.split('=function(')[1].split(')')[0], _dex2o
 
-	      _dex2 = _dex.split(_dex.substring(0, _dex.indexOf("{")+1))[1].slice(0,-2)
-	      if (_dex2.split('return ')[1] && _dex2.split('return ')[1].split('](this,')[1]) { _dex3 = _dex2.split('return ')[1].split('[')[0];  if (_dex3 != 'fcnm' && _dex3 != 'yt6d.ndec' && _dex0.indexOf(_dex3) == -1) { _dex0.push(_dex3) }}
-	      if (temp) { _dex2 = 'try{ '+ 
-	      __vr +';'+ dekrypt0 + _dex2.replace('return ', '}catch(err){console.log("uriCerr: "+ err.toString())};console.log("uriComponent: "+'+ _dex2.split('return ')[1].split('}')[0] +');return ');
+	      function __dx2(_dex2) {
+		if (temp) { try { var fail = _dex2.split('return ')[1].split('}')[0]
+		  _dex2 = //'try{ '+ 
+		  __vr +';'+ dekrypt0 + _dex2.replace('return ', //'}catch(err){console.log("uriCerr: "+ err.toString())};'+
+		  //'console.log("uriComponent: "+'+ _dex2.split('return ')[1].split('}')[0] +');'+
+		  'return ');
+		} catch(e){}
+		}
+		return _dex2
 	      }
+
+	      _dex2 = _dex.split(_dex.substring(0, _dex.indexOf("{")+1))[1].slice(0,-2); _dex2o = _dex2
+	      if (_dex2.split('return ')[1] && _dex2.split('return ')[1].split('](this,')[1]) { _dex3 = _dex2.split('return ')[1].split('[')[0];  if (_dex3 != 'fcnm' && _dex3 != 'yt6d.ndec' && _dex0.indexOf(_dex3) == -1) { _dex0.push(_dex3) }}
+	      _dex2 = __dx2(_dex2)
 	      try { eval('var '+ (_dex0[__i]) + ((temp) ? '= yt6d.arg.uriComponent' : '') +'= new Function(_dxh, _dex2)') } catch(err) {
-	        _dex2 = _dex.split(_dxh+'){')[1].slice(0,-2)
-	        if (_dex2.split('return ')[1] && _dex2.split('return ')[1].split('](this,')[1]) { _dex3 = _dex2.split('return ')[1].split('[')[0];  if (_dex3 != 'fcnm' && _dex3 != 'yt6d.ndec' && _dex0.indexOf(_dex3) == -1) { _dex0.push(_dex3) }}
-	        if (temp) { _dex2 = 'try{ '+ 
-	        __vr +';'+ dekrypt0 + _dex2.replace('return ', '}catch(err){console.log("uriCerr: "+ err.toString())};console.log("uriComponent: "+'+ _dex2.split('return ')[1].split('}')[0] +');return ');
-	        }
+	        _dex2 = _dex.split(_dxh+'){')[1].slice(0,-2); _dex2o = _dex2
+	        _dex2 = __dx2(_dex2)
 	        try { eval('var '+ (_dex0[__i]) + ((temp) ? '= yt6d.arg.uriComponent' : '') +'= new Function(_dxh, _dex2)') } catch(err) {
 		  if (_rpt.split(_dex2)[1]) { // include one more "};" ?
 		    _dex = _dex.substring(0, _dex.lastIndexOf('};')) + _rpt.split(_dex2)[1].split('};')[0] + '};'
-		    _dex2 = _dex2 + _rpt.split(_dex2)[1].split('};')[0]
+		    _dex2 = _dex2 + _rpt.split(_dex2)[1].split('};')[0]; _dex2o = _dex2
+		    _dex2 = __dx2(_dex2)
 		    try { eval('var '+ (_dex0[i]) + ((temp) ? '= yt6d.arg.uriComponent' : '') +'= new Function(_dxh, _dex2)') } catch(err) {
 		      if (_rpt.split(_dex2)[1]) { // include one more "};" ?
 			_dex = _dex.substring(0, _dex.lastIndexOf('};')) + _rpt.split(_dex2)[1].split('};')[0] + '};'
-			_dex2 = _dex2 + _rpt.split(_dex2)[1].split('};')[0]
+			_dex2 = _dex2 + _rpt.split(_dex2)[1].split('};')[0]; _dex2o = _dex2
+			_dex2 = __dx2(_dex2)
 			try { eval('var '+ (_dex0[i]) + ((temp) ? '= yt6d.arg.uriComponent' : '') +'= new Function(_dxh, _dex2)') } catch(err) {}
 		      }
 		    }
 		  }
 		}
-	      }; if (_dex.indexOf(';') < _dex.indexOf('=')) _dex = _dex.replace(';','')
+	      };
+	      if (temp && typeof yt6d.arg.uriComponent == 'function' && _dex2o) _dex = _dex.replace( _dex2o.replace(__vr +';'+ dekrypt0,'') ,  _dex2)
+	      if (_dex.indexOf(';') < _dex.indexOf('=')) _dex = _dex.replace(';','')
 	      _dex1 = _dex1 + 'var '+ _dex; 
 
 	    } else {  _dex = new RegExp(    sprintf('[^\\w]%s=[^=].+?(?=;)', _dex0[__i].split('$').join('\\$'))  ); _dex = _rpt.match(_dex); _dex = (_dex) ? _dex[0] : '';
@@ -1896,7 +1912,7 @@ function find_key(_rpt){
 
 	    var deep = ['=','?',',',' ',':',';','&&']; for(__k=0;__k < deep.length;__k++) { dive(_dex.split(deep[__k]),'('); dive(_dex.split(deep[__k]),')'); dive(_dex.split(deep[__k]),'?'); dive(_dex.split(deep[__k]),'='); dive(_dex.split(deep[__k]),'.hasOwnProperty(') }
 
-	  } catch(e) {console.log(e.toString())}
+	  } catch(e) {console.log(e.toString()+'\n'+_dex2)}
 	}
 
 	if (__n2) {
@@ -1908,8 +1924,8 @@ function find_key(_rpt){
 	__n2 = __n2.replace('/*teszt*/', ((_dex1) ? _dex1 : '/*missing functions*/') +
 (dekrypt0 || '/**/'))
 
-var temp = __n2.split('}catch(a){'); __n2 = ''
-for(__i=0;__i<temp.length;__i++) { temp[__i] = temp[__i] + ((__i < temp.length-1) ? '}catch(a){console.log(\"'+__i+'\ "+ a.toString());' : ''); __n2 = __n2 + temp[__i] }
+var temp = __n2.split('}catch('); __n2 = ''
+for(__i=0;__i<temp.length;__i++) { temp[__i] = temp[__i] + ((__i < temp.length-1) ? '}catch('+ temp[(__i+1)].split(')')[0] + '){console.log(\"'+__i+'\ "+' + temp[(__i+1)].split(')')[0] +'.toString());' : ''); __n2 = __n2 + ((!__i) ? temp[__i] : temp[__i].substring(temp[__i].indexOf('{')+1)) }
 //console.log(__n2)
 //var temp = __n2.substring(__n2.lastIndexOf('return ')).split(' ')[1]
 //if (temp) { temp = temp.split('}')[0].split(';')[0]; __n2 = __n2.split(','+temp+'=[]').join(',console.log("____"+X)') }
@@ -7764,7 +7780,7 @@ if (!(yt6.body2 && yt6.layout == 16) && autoplay != null) {
       if (autoplay) {
         var autoplay_ = autoplay.getElementsByClassName('top-level-buttons')
         if (yt6.mobile) autoplay_ = document.getElementsByClassName('playlist-engagement-panel-top-level-buttons')
-        if (autoplay_.length) { for(i=0;i<autoplay_.length;i++) if (autoplay_[i] && autoplay_[i].innerHTML != '') { autoplay_ = autoplay_[i]; break; if (i == autoplay_.length-1) autoplay_ = null } } else autoplay_ = null; //document.querySelectorAll('#top-level-buttons-computed')[3].innerHTML
+        if (autoplay_.length) { for(i=0;i<autoplay_.length;i++) { if (autoplay_[i] && autoplay_[i].innerHTML != '') { autoplay_ = autoplay_[i]; break; if (i == autoplay_.length-1) autoplay_ = null } else if (i == autoplay_.length-1) autoplay_ = autoplay_[0] } } else autoplay_ = null; //document.querySelectorAll('#top-level-buttons-computed')[3].innerHTML
       }
       if (autoplay_) {
         if (!yt6.mobile) {
@@ -7952,7 +7968,7 @@ try { //console.log(pls);
 	} else { //normal for mobile
 	    var autoplay2 = (yt6.pls) ? yt6.pls.querySelectorAll('#playlist-action-menu') : null //gclass('style-scope ytd-playlist-panel-renderer style-grey-text')//'flex style-scope ytd-playlist-panel-renderer'// x-scope ytd-menu-renderer-0
 
-	    if ((autoplay2 && autoplay2[0]) && !autoplay2[0].firstElementChild) {//!autoplay2[0].hasAttribute('hidden')) {
+	    if ((autoplay2 && autoplay2[0]) && (yt6.pls.getAttribute('playlist-type') == "RDnC" || !autoplay2[0].firstElementChild)) {//!autoplay2[0].hasAttribute('hidden')) {
 	      yt6.autoplay = true;//mix
 	    } else {
 		yt6.autoplay = false; //none
@@ -10872,7 +10888,7 @@ if (c[1]) {
     '<div id="yt6-links"></div>'+
     '<div id="alt-links" hidden=""></div>'+
     '<div id="manifests"></div>'
-  ];//gid('early-body').innerHTML = ''
+  ];
 
 
 
@@ -11974,6 +11990,18 @@ if (!yt6.mobile && video_title()[1] && !yt6d.mediaUrlText.length) check_links(cl
 
 
 
+function manifest_links() {
+  var k = gid('manifests')
+  if (k) {
+    k.innerHTML = ''
+    if (yt6.manifest.mpd) k.innerHTML = k.innerHTML + '<a id="yt6-mpd" class="yt6-links" href="'+ yt6.manifest.mpd +'" onclick="if (yt6) { if (yt6.mobile) { this.href0 = &quot;'+ yt6.manifest.mpd +'&quot;; this.removeAttribute(&quot;href&quot;) }; if (yt6.live && typeof this.sq == &quot;number&quot) yt6.live = this.sq }; return false">STREAM last segment</a><br>'//DASH Manifest
+    if (yt6.manifest.hls || yt6.manifest.mpd) k.innerHTML = k.innerHTML + '<a id="yt6-hls" class="yt6-links" href="'+ (yt6.manifest.hls || yt6.manifest.mpd) +'" onclick="if (yt6) { if (yt6.mobile) { this.href0 = &quot;'+ (yt6.manifest.hls || yt6.manifest.mpd) +'&quot;; this.removeAttribute(&quot;href&quot;) }; if (yt6.live && typeof this.sq == &quot;number&quot) yt6.live = this.sq }; return false">StREAM first segment</a><br>'//HLS Manifest
+    k.innerHTML = k.innerHTML + '<a id="yt6-poster" class="yt6-links" href="#" onclick="window.open(yt6.poster.src, &quot;blank&quot;).focus(); if (yt6 && yt6.mobile) { this.href0 = &quot;#&quot;; this.removeAttribute(&quot;href&quot;) }; return false">Video poster</a>'
+  }
+  return k
+}
+
+
 
 function redo_dl_button(args,html,href) { //ev_log('red '+ytplayer.config.loaded_from)
 
@@ -11984,9 +12012,9 @@ if (gid("bm1")) {
     try { removeEL(y, 'mouseup',function(e){ yt6.controls_pushed = false }, false) } catch(e){}
     try { removeEL(y, 'mousedown', yt6.clicky ,false) } catch(e){}
   }
-  if (gid('remove_bak') && gid('controls_bak') && gid('controls_bak').parentNode == gid('remove_bak').parentNode) {
-    gid('video-hide').appendChild(gid('controls_bak').parentNode)
-  }
+  //if (gid('remove_bak') && gid('controls_bak') && gid('controls_bak').parentNode == gid('remove_bak').parentNode) {
+   //gid('video-hide').appendChild(gid('controls_bak').parentNode)
+  //}
   //gid("bm1").parentNode.removeChild(gid("bm1")) }
 
 } else {
@@ -12555,6 +12583,8 @@ if (!gid('bm4')) {
       }
 
     }
+    
+    if (!gid('controls_bak')) control_panel1()
 
   }//onclic
 
@@ -12621,14 +12651,17 @@ if (!gid('bm4')) {
 
 }//tail
 
-}//redo
+  manifest_links()
 
+}//redo
 
 
 
   buildObject(window.ytplayer)
   redo_dl_button(  yt6.args,  yt6.html,  yt6.href)
-  if (yt6.layout == 16 && !yt6.ytm && !yt6.ytp.embed && !yt6.mobile && yt6d.linx_length == 1 && !yt6d.ypsi) { iframe(true) }
+
+  //if (yt6.layout == 16 && !yt6.ytm && !yt6.ytp.embed && !yt6.mobile && yt6d.linx_length == 1 && !yt6d.ypsi) { iframe(true) }
+
   yt6.title = clone(document.title)
   yt6d.previous.title = clone(yt6.title) + 'init'
 
@@ -12652,6 +12685,7 @@ if (!gid('bm4')) {
 
 	    if ((msg) || (a && h && r) || (yt6.xhr.async && !!built) || (!yt6.xhr.async && video_title()[1]) || yt6.ytm || yt6d.init || b === null) {
 
+	    //$waitUntil(function(){ if (yt6d.built) return true }, function(){
 	      redo_dl_button(  yt6.args,  yt6.html,  yt6.href)
 
 		  var z = ''
@@ -12665,25 +12699,31 @@ if (!gid('bm4')) {
 		      if (!yt6.x) { switch_players(); yt6.x = z = true }
 		    }
 		  }
+		
+		//setTimeout(function(){
 
 		yt6d.mep_up()
 
 
-	      if (yt6.blocked || z || (yt6.blocked_m && hid())
+		if (yt6.blocked || z || (yt6.blocked_m && hid())
 		 || !(yt6.layout == 16 && hid() && yt6.player1 && yt6.player1.media && yt6.player1.media.loaded_vid == yt6.vid
 		       && yt6.player2 && yt6.player2.media && yt6.player2.media.loaded_vid == yt6.vid
 		     )
 		 ) {
 
-		yt6.at = 0; yt6.failed_itags = []
+		  yt6.at = 0; yt6.failed_itags = []
 
-		if (!gid(mep_x('mep_'))) { if (typeof mep_run != 'function') mep_run = yt6d.mep_run
-	          mep_run()
-		} else {
-		    yt6d.mep_renew()
-		  }
+		  if (!gid(mep_x('mep_'))) { if (typeof mep_run != 'function') mep_run = yt6d.mep_run
+	            mep_run()
+		  } else {
+		      yt6d.mep_renew()
+		    }
 
-	      } else if (yt6.x && yt6.p && yt6.p.tagName == 'DIV' && gpst(yt6.p) == 1) yt6.p.pauseVideo()
+		} else if (yt6.x && yt6.p && yt6.p.tagName == 'DIV' && gpst(yt6.p) == 1) yt6.p.pauseVideo()
+
+		//}, 300)
+
+	    //},250, 1500, true)
 
 	    } else if ((yt6.mobile && hid()) || yt6d.init) {
 		if (yt6.mobile && hid()) yt6.nav2 = true
@@ -12700,7 +12740,7 @@ if (!gid('bm4')) {
 		  if (yt6.x != yt6d.x || (!yt6.x && error_screen())) { switch_players() } else set_controls()
 		}
 
-    if (!yt6d.ypsi && !yt6.mobile && !yt6d.src_hid && yt6d.src_hid2 < 4) {
+    if (!yt6 && !yt6d.ypsi && !yt6.mobile && !yt6d.src_hid && yt6d.src_hid2 < 4) {
 
      function rebuild2() {
 
@@ -12728,8 +12768,8 @@ if (!gid('bm4')) {
 	      if (z && z.document && typeof z.document.getElementById == 'function') {
 
 	      if (z.document.getElementsByTagName('ytm-custom-control')[0]) { yt6.error = 'noembed'
-	        if (yt6d.src_hid !== null) { yt6d.src_hid = null; 
-	        //  if (yt6d.src_hid2 < 3) yt6d.src_hid2 = 3;
+	        if (yt6d.src_hid !== null) { //yt6d.src_hid = null; switch_players()
+	          if (yt6d.src_hid2 < 3) yt6d.src_hid2 = 3;
 	        return true }
 	      }
 
@@ -12811,14 +12851,15 @@ if (!gid('bm4')) {
 
 	      } else { backflop(); rebuild2() }
 
-	  },step, threshold, true)
+	  }, step, threshold, true)
 
-	} else { if (yt6d.src_hid === null) switch_players(); buildObject(window.ytplayer)
+	} else { //if (yt6d.src_hid === null) switch_players()
+	    buildObject(window.ytplayer)
 	    $waitUntil(function(){ if (yt6d.built == true) return true }, function() { rebuild(yt6d.built); set_controls() }, step, 3000, true)
 	  }
      }; rebuild2()
 
-    } else { rebuild(built) }
+    } else { rebuild(built); if (!yt6.mobile) setTimeout(function(){ yt6.switches(); manifest_links(); set_controls() }, 1000) }
 
   }
 
@@ -13870,7 +13911,10 @@ if ((yt6.userprefV[0] == yt6.userprefA[0] || yt6.audiosauce)) if (typeof yt6.aud
 					    yt6.err = (isNaN(yt6.err)) ? 0 : yt6.err = (yt6.err + 1)
 					    media_error_handler(me)
 					  } else if (yt6.ytp.embed && yt6.A_V[_itag] && yt6.linx[_itag].indexOf('&faux_url=true') > -1) { yt6.err2count = 0; clear_mep(yt6.player1) } else { var z = null
-					      if (isNaN(me.duration)) { yt6.player1.isLoaded = false; z = gc('mejs-poster mejs-layer')[0] }
+					      if (isNaN(me.duration)) { yt6.player1.isLoaded = false; z = gc('mejs-poster mejs-layer')[0]
+					        if (_itag < 103) { z = [(1000+_itag),(2000+_itag), _itag]; for(i=0;i<z.length;i++) if (typeof yt6.linx[z[i]] == 'string' && me.src != yt6.linx[z[i]].split('&title=')[0] && me.src1 != yt6.linx[z[i]].split('&title=')[0]) { me.setSrc(yt6.linx[z[i]].split('&title=')[0]); yt6.player1.load(); me.src1 = clone(yt6.linx[z[i]].split('&title=')[0]); break }; z = null 
+					        }
+					      }
 					      if (yt6.mobile && hid() && yt6.A_[_itag]) yt6.player1.load()
 					      if (yt6.A_V[me.loaded_itag] && _itag != me.loaded_itag) me.load()
 					      if (yt6.live) { yt6.player1.play(); me.play() } else if (z) z.style.display = 'block'
@@ -14471,7 +14515,7 @@ if ((yt6.userprefV[0] == yt6.userprefA[0] || yt6.audiosauce)) if (typeof yt6.aud
 								  }
 								}
 
-						          if (!yt6.ytm) if (!yt6.mobile) { yt6.navigation = true } else yt6.ads_noskip = 0
+						          if (!yt6.mobile) { yt6.navigation = true } else yt6.ads_noskip = 0
 
 						          function nextOn() {
 
@@ -14893,7 +14937,7 @@ if ((yt6.userprefV[0] == yt6.userprefA[0] || yt6.audiosauce)) if (typeof yt6.aud
 								  }
 								}
 
-						          if (!yt6.ytm) if (!yt6.mobile) { yt6.navigation = true } else yt6.ads_noskip = 0
+						          if (!yt6.mobile) { yt6.navigation = true } else yt6.ads_noskip = 0
 
 						          function nextOn() {
 
@@ -15692,14 +15736,8 @@ if (ytplayer && ytplayer.config && ytplayer.config.args) {
 
 
 
-  var k = gid('manifests')
-  if (k) {
-    k.innerHTML = ''
-    if (yt6.manifest.mpd) k.innerHTML = k.innerHTML + '<a id="yt6-mpd" class="yt6-links" href="'+ yt6.manifest.mpd +'" onclick="if (yt6) { if (yt6.mobile) { this.href0 = &quot;'+ yt6.manifest.mpd +'&quot;; this.removeAttribute(&quot;href&quot;) }; if (yt6.live && typeof this.sq == &quot;number&quot) yt6.live = this.sq }; return false">STREAM last segment</a><br>'//DASH Manifest
-    if (yt6.manifest.hls || yt6.manifest.mpd) k.innerHTML = k.innerHTML + '<a id="yt6-hls" class="yt6-links" href="'+ (yt6.manifest.hls || yt6.manifest.mpd) +'" onclick="if (yt6) { if (yt6.mobile) { this.href0 = &quot;'+ (yt6.manifest.hls || yt6.manifest.mpd) +'&quot;; this.removeAttribute(&quot;href&quot;) }; if (yt6.live && typeof this.sq == &quot;number&quot) yt6.live = this.sq }; return false">StREAM first segment</a><br>'//HLS Manifest
-    k.innerHTML = k.innerHTML + '<a id="yt6-poster" class="yt6-links" href="#" onclick="window.open(yt6.poster.src, &quot;blank&quot;).focus(); if (yt6 && yt6.mobile) { this.href0 = &quot;#&quot;; this.removeAttribute(&quot;href&quot;) }; return false">Video poster</a>'
-  }
-  if (yt6.mobile) {
+  var k = manifest_links()
+  if (yt6.mobile && k) {
 	var l = k.children
 	for (i=0;i<l.length;i++)
 	    addEL(l[i], 'touchend', function(event) {
@@ -17272,7 +17310,8 @@ if (!t.sourcechooserButton && !yt6.blocked_m) { //console.log('error')
 
 	    try { yt6.player2.media.pause() } catch(e) {}
 
-	    if (yt6.mobile && !yt6.at2 && yt6.autoplay && video_title()[1]) try { ajax1(true) } catch(e){}
+	    if (yt6.limit === 1 ||
+	        (yt6.mobile && !yt6.at2 && yt6.autoplay && video_title()[1])) try { ajax1(true) } catch(e){}
 
 
 	    var msg = (yt6.mobile) ? '' : '_'
@@ -21151,7 +21190,7 @@ if (!yt6.fullscreen || yt6.fullscreen == false || (ytp_class && ytp_class.indexO
 
       } else {
 
-	if (yt6.size == 'theater' && !yt6.mobile){
+	if (yt6.size == 'theater' && !yt6.mobile && (w < (1 * p1.style.width.replace('px','')))){
 
 
 	  if (me_aspect != false) h = windowheight
