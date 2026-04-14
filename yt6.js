@@ -1749,14 +1749,14 @@ function find_key(_rpt){
 		xord = (__z.split('var ')[1]) ? __z.split('var ')[1].split('=')[0] : '', para1 = (xord) ? __z.split('var ')[1].split(';')[0].split('^')[1] : '', para2 = (xord) ? __z.split(xord +'=')[1].split('^')[0] : ''
 	      if (__z.split(_dxh)[1]) { __k = __z.split(_dxh)[0]; __k = __k.substring(__k.lastIndexOf('{')+1); //console.log(__k); console.log(__vr0)
 	        if (__k.indexOf(']]('+ __vr0 +'[') > -1) { __k = __k.split(']]('+ __vr0 +'[')[0]; __k = __k.substring(__k.lastIndexOf('[')+1)
-	          if (__k.indexOf(xord) > -1) { __s = _VAR.indexOf('split'); if (__s > -1) eval('var _xord='+ __k.replace(xord, __s)) }
+	          if (__k.indexOf(xord) > -1) { __s = _VAR.indexOf('split'); if (__s > -1) { eval('var _xord='+ __k.replace(xord, __s)); } }
 	        }
 	      }
 	      if (isNaN(_xord)) {
 		var _nrg = __n2.split(array)[1]; if (_nrg) { _nrg = _nrg.split('if')[0].split('='); for(__j=0;__j<_nrg.length;__j++) { _nrg[__j] = (_nrg[__j].split('^')[1]) ? _nrg[__j].substring(_nrg[__j].indexOf('^')+1, _nrg[__j].lastIndexOf(']')) : undefined; } }
 		//_nrg.sort(function(a, b){return a - b}) 
 		__k = 0; __s = -1
-		for(__j=0;__j<_dex.length;__j++) if (_dex[__j] === 'null') { if (!isNaN(_nrg[__k])) { __s = __j; eval('var _xord='+__j+'^'+_nrg[__k]) }; __k++ }
+		for(__j=0;__j<_dex.length;__j++) if (_dex[__j] === 'null') { if (!isNaN(_nrg[__k])) { __s = __j; eval('var _xord='+__j+'^'+_nrg[__k]); }; __k++ }
 	      }
 	      __z = __z.substring(0, __z.lastIndexOf('a:{')); __z = __z.substring(__z.lastIndexOf('}')+1); __z = __z.substring(__z.lastIndexOf('if')+2)
 	      //console.log(__z)
@@ -1812,14 +1812,16 @@ function find_key(_rpt){
 	}
 
 
-	_dex1 = ';var '+ __G +' = _yt_player;'+ //__n3 +
-		';var '+ __n +'=yt6d.ndec;';
+	_dex1 = ';var  '+ __G +' = _yt_player;'+ //__n3 +
+		';var  '+ __n +'=yt6d.ndec;';
 	try {
-	  _dex = _rpt.split('return '+ _fcn +'[')[1]; if (_dex) _dex = _rpt.substring(_rpt.split('return '+ _fcn +'[')[0].lastIndexOf(';')+1, _rpt.indexOf(_dex) + _dex.indexOf(';')+1); if (_dex) { if (_dex.indexOf('var') == -1) _dex = 'var '+ _dex; _dex1 = _dex1 + _dex.split(_fcn).join('fcnm') +';' }
+	  _dex = _rpt.split('return '+ _fcn +'[')[1]; if (_dex) _dex = _rpt.substring(_rpt.split('return '+ _fcn +'[')[0].lastIndexOf(';')+1, _rpt.indexOf(_dex) + _dex.indexOf(';')+1); if (_dex) { if (_dex.indexOf('var') == -1) _dex = 'var  '+ _dex; _dex1 = _dex1 + _dex.split(_fcn).join('fcnm') +';' }
 	  _dex = _rpt.split('document.location.hostname);document.location.port')[1]; if (_dex) _dex = _rpt.substring(_rpt.split('document.location.hostname);document.location.port')[0].lastIndexOf('};')+2, _rpt.indexOf(_dex) + _dex.indexOf('};')+2); if (_dex) { if (_dex.indexOf('var') == -1) _dex = 'var '+ _dex; _dex1 = _dex1 + _dex +';' }
-	  _dex = _rpt.split('("cipher")')[1]; if (_dex) { _dex = _rpt.substring(_rpt.split('("cipher")')[0].lastIndexOf(';')+1,
+	  _dex = _rpt.split('("cipher")')[1]; if (_dex) {
+	  _dex = _rpt.substring(_rpt.split('("cipher")')[0].lastIndexOf(';')+1,
 		_rpt.split('("cipher")')[0].lastIndexOf('=')+1); if (_dex) _dex = _dex + 'new Object({"name":"cipher"})'
-		if (_dex) _dex1 = _dex1 + _dex + ';'; }
+		if (_dex) _dex1 = _dex1 + _dex + ';';
+	  }
 	} catch(e){}
 	if (__vr1) {_dex = new RegExp(    sprintf('[^\\w.]%s=[^}].+?(?=;)', __vr1.split('$').join('\\$'))  ); _dex = _rpt.match(_dex); _dex = (_dex) ? _dex[0] : ''; _dex1 = _dex1 + _dex +';' }
 	_dex = new RegExp(    sprintf('[^\\w.]=function[^}].+?(?=%s)', '"Trusted Stream URL"\\\)\\\};')    ); _dex = _rpt.match(_dex)[0].slice(-66); _dex = _dex.substring(_dex.indexOf(' ')+1) +'"Trusted Stream URL")};';
@@ -1829,7 +1831,7 @@ function find_key(_rpt){
 	    if (__vr0.indexOf('(') < __vr0.indexOf(',')) {
 	      _dex0.push(__vr0.split('(')[0]); __vr0 = __vr0.substring(__vr0.indexOf(',')+1); if (__vr0.split(')')[1]) {
 		__vr0 = __vr0.split(')')[0];
-		_dex = new RegExp(    sprintf('%s=RegExp.+?(?=\=RegExp)', __vr0.split('$').join('\\$'))  ); _dex = _rpt.match(_dex); _dex = (_dex) ? 'var '+ _dex[0].substring(0,_dex[0].lastIndexOf(',')) : ''; _dex1 = _dex1 + _dex +';';
+		_dex = new RegExp(    sprintf('%s=RegExp.+?(?=\=RegExp)', __vr0.split('$').join('\\$'))  ); _dex = _rpt.match(_dex); _dex = (_dex) ? 'var  '+ _dex[0].substring(0,_dex[0].lastIndexOf(',')) : ''; _dex1 = _dex1 + _dex +';';
 	      }
 	    }
 	  }
@@ -1847,15 +1849,15 @@ function find_key(_rpt){
 	      }
 	    }
 
-	_dex0.push.apply(_dex0, [yt6d.arg.encode, 'YY'])
+	_dex0.push.apply(_dex0, [yt6d.arg.encode])
 
 	__n0 = __n0.split('[^').join('[')
 
 	for(__i=0;__i<_dex0.length;__i++) if (typeof _dex0[__i] == 'string' && _dex0[__i] != __n && _dex1.indexOf('var '+ _dex0[__i] +'=') == -1 && _dex1.indexOf('var  '+ _dex0[__i] +'=') == -1) { //console.log(__i +'/'+ _dex0.length + ' '+ _dex0[__i]);
-	  var temp = (_dex0[__i] == yt6d.arg.encode) ? true : false
+	  var temp = (_dex0[__i] == yt6d.arg.encode) ? true : false, doll = (_dex0[__i].indexOf('$') > -1) ? '' : '\\$'
 	  try { try { eval('var '+ _dex0[__i]); } catch(e){ //console.log('Error '+ _dex0[__i]);
 	    continue };
-	_dex = new RegExp(    sprintf('[^\\w.]%s=function[^}].+?(?<!{)(?=};)', _dex0[__i].split('$').join('\\$'))  ); _dex = _rpt.match(_dex); _dex = (_dex) ? _dex[0] +'};' : ''; if (_dex.split('},')[1] && _dex.split('},')[1].indexOf('=function') > -1 && _dex.split('},')[1].indexOf('=function') < 4 && _dex.split('},')[1].substring(_dex.split('},')[1].indexOf('{')) ) { _dex = _dex.split('},')[0] + '};'; }; if (_dex.indexOf(',') == 0) _dex = _dex.slice(1); //console.log(_dex.split('=')[0])
+	_dex = new RegExp(    sprintf('[^\\w.'+ doll +']%s=function[^}].+?(?<!{)(?=};)', _dex0[__i].split('$').join('\\$'))  ); _dex = _rpt.match(_dex); _dex = (_dex) ? _dex[0] +'};' : ''; if (_dex.split('},')[1] && _dex.split('},')[1].indexOf('=function') > -1 && _dex.split('},')[1].indexOf('=function') < 4 && _dex.split('},')[1].substring(_dex.split('},')[1].indexOf('{')) ) { _dex = _dex.split('},')[0] + '};'; }; if (_dex.indexOf(',') == 0) _dex = _dex.slice(1); //console.log(_dex.split('=')[0])
 	    if (_dex) {
 	        var _dxh = _dex.split('{').length - _dex.split('}').length;
 		if (_dxh > 1) { __vr0 = ''; __vr1 = ''; for(__j=0;__j<_dxh;__j++) { __vr0 = _rpt.split(_dex)[1].split('}')[__j] +'}'; if (__vr0.indexOf('{') > -1) _dxh++; __vr1 = __vr1 + __vr0 }; _dex = _dex + __vr1 +';' }
@@ -1890,12 +1892,12 @@ function find_key(_rpt){
 		    _dex = _dex.substring(0, _dex.lastIndexOf('};')) + _rpt.split(_dex2)[1].split('};')[0] + '};'
 		    _dex2 = _dex2 + _rpt.split(_dex2)[1].split('};')[0]; _dex2o = _dex2
 		    _dex2 = __dx2(_dex2)
-		    try { eval('var '+ (_dex0[i]) + ((temp) ? '= yt6d.arg.uriComponent' : '') +'= new Function(_dxh, _dex2)') } catch(err) {
+		    try { eval('var '+ (_dex0[__i]) + ((temp) ? '= yt6d.arg.uriComponent' : '') +'= new Function(_dxh, _dex2)') } catch(err) {
 		      if (_rpt.split(_dex2)[1]) { // include one more "};" ?
 			_dex = _dex.substring(0, _dex.lastIndexOf('};')) + _rpt.split(_dex2)[1].split('};')[0] + '};'
 			_dex2 = _dex2 + _rpt.split(_dex2)[1].split('};')[0]; _dex2o = _dex2
 			_dex2 = __dx2(_dex2)
-			try { eval('var '+ (_dex0[i]) + ((temp) ? '= yt6d.arg.uriComponent' : '') +'= new Function(_dxh, _dex2)') } catch(err) {}
+			try { eval('var '+ (_dex0[__i]) + ((temp) ? '= yt6d.arg.uriComponent' : '') +'= new Function(_dxh, _dex2)') } catch(err) {}
 		      }
 		    }
 		  }
@@ -1904,6 +1906,7 @@ function find_key(_rpt){
 	      if (temp && typeof yt6d.arg.uriComponent == 'function' && _dex2o) _dex = _dex.replace( _dex2o.replace(__vr +';'+ dekrypt0,'') ,  _dex2)
 	      if (_dex.indexOf(';') < _dex.indexOf('=')) _dex = _dex.replace(';','')
 	      _dex1 = _dex1 + 'var '+ _dex; 
+		//console.log(_dex0[__i] +'\n'+ _dex1)
 
 	    } else {  _dex = new RegExp(    sprintf('[^\\w]%s=[^=].+?(?=;)', _dex0[__i].split('$').join('\\$'))  ); _dex = _rpt.match(_dex); _dex = (_dex) ? _dex[0] : '';
 		if (_dex) try { eval('var '+ _dex.substring(_dex.indexOf(_dex0[__i])) ); _dex1 = _dex1 + 'var '+ _dex.substring(_dex.indexOf(_dex0[__i])) +';' } catch(e){}
@@ -1924,8 +1927,8 @@ function find_key(_rpt){
 	__n2 = __n2.replace('/*teszt*/', ((_dex1) ? _dex1 : '/*missing functions*/') +
 (dekrypt0 || '/**/'))
 
-var temp = __n2.split('}catch('); __n2 = ''
-for(__i=0;__i<temp.length;__i++) { temp[__i] = temp[__i] + ((__i < temp.length-1) ? '}catch('+ temp[(__i+1)].split(')')[0] + '){console.log(\"'+__i+'\ "+' + temp[(__i+1)].split(')')[0] +'.toString());' : ''); __n2 = __n2 + ((!__i) ? temp[__i] : temp[__i].substring(temp[__i].indexOf('{')+1)) }
+//var temp = __n2.split('}catch('); __n2 = ''
+//for(__i=0;__i<temp.length;__i++) { temp[__i] = temp[__i] + ((__i < temp.length-1) ? '}catch('+ temp[(__i+1)].split(')')[0] + '){console.log(\"'+__i+'\ "+' + temp[(__i+1)].split(')')[0] +'.toString());' : ''); __n2 = __n2 + ((!__i) ? temp[__i] : temp[__i].substring(temp[__i].indexOf('{')+1)) }
 //console.log(__n2)
 //var temp = __n2.substring(__n2.lastIndexOf('return ')).split(' ')[1]
 //if (temp) { temp = temp.split('}')[0].split(';')[0]; __n2 = __n2.split(','+temp+'=[]').join(',console.log("____"+X)') }
@@ -11000,11 +11003,11 @@ if (c[1]) {
 	    };
 	    yt6d.arg.temp = temp;
 	    
-	    var nrg = 1, m = clone(yt6d.arg.temp)
+	    var nrg = 1, m = clone(yt6d.arg.temp), mm = clone(yt6d.arg.temp)
 	    while (nrg < 950) try {
-	      try { n_0 = yt6d.nrg(nrg) } catch(e){}; //console.log(nrg +' ?? '+ n_0[0] +', '+ n_0[1])
-	      n_0 = yt6d.ndec(n_0[0], n_0[1], n_value, m, n_0[0], n_0[1], n_value, m); //console.log(n_value +' --> '+ n_0)
-	      nrg = (!(typeof n_0 == 'string' && n_0.length < n_value.length)) ? (nrg + 1) : 999
+	      try { n_0 = yt6d.nrg(nrg) } catch(e){}; var n__1 = n_0[0]; var n__2 = n_0[1]//console.log(nrg +' ?? '+ n_0[0] +', '+ n_0[1])
+	      n_0 = yt6d.ndec(n_0[0], n_0[1], n_value, m, n_0[0], n_0[1], n_value, mm); //console.log(n_value +' --> '+ n_0 +' '+ nrg +' '+ n__1 +' '+ n__2)
+	      nrg = (!(typeof n_0 == 'string' && n_0.length == 14)) ? (nrg + 1) : 999 //< n_value.length
 	    } catch(e){ nrg = (nrg + 1); //console.log(e.toString()); 
 		if (e.toString().indexOf('not a function') > -1) m = clone(yt6d.ndec)
 	      }
@@ -11013,7 +11016,7 @@ if (c[1]) {
 	  
 	  } catch(e){ console.log(e.toString())
 	      n_decoded = n_value
-	    }
+	    };
 	  //if (n_0 != '' && n_0 != undefined) { console.log('"'+ n_0 +'"') }
 	  if (n_0 && n_0.length == 14) n_decoded = n_0
 	  if (!n_decoded && qs.itag >= 103 && (!n_0 || (n_0 && n_0 == n_decoded))) {
