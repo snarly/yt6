@@ -1629,7 +1629,7 @@ function find_key(_rpt){
 
     var dekrypt0 = (__f1) ? _rpt.match(__f1) : ''; if (dekrypt0) { dekrypt0 = dekrypt0[0] } else console.log('object regex match null')
 
-    var nreg, __n2, __n3, __n4, __vr0, __vr1, __vr = '', __br = '', __cr = '', index
+    var nreg, __n2, __n3, __n4, __vr0, __vr1, __vr2 = '', __vr = '', __br = '', __cr = '', index
     if (typeof __n == 'string')
     try {
       nreg = new RegExp(	sprintf('[^\\w.]%s=function[^}]+}.*', __n.split('$').join('\\$'))	)
@@ -1674,6 +1674,7 @@ function find_key(_rpt){
       }
 
       try { //var _VAR = 'yt6d.__'+__vr0; eval((_VAR) +'='+ __vr.replace('var '+ __vr0 +'=','')); 
+        __vr2 = (typeof __vr == 'string') ? __vr.split('=')[0].split(' ')[1] : ''
 	eval('var _VAR = yt6d.arg.VAR ='+ __vr.replace('var '+ __vr0 +'=',''));
 	__n3 = _rpt.split('=['+ __n1 +']')[0].slice(-6).split('}').join('').split(';').join('') + '=[yt6d.ndec]'; __n3 = 'var '+ __n3.substring(__n3.lastIndexOf(' '), __n3.length+1); 
 	//console.log(Array.isArray(_VAR))
@@ -1712,7 +1713,7 @@ function find_key(_rpt){
 	  _dxh = _dxh +'=['+ _dex[__i].split(',')[0];
 	  _dex = _dxh + __n2.split(_dxh)[1];
 	  yt6.r1 = []; yt6.r2 = [];
-	  index = (findClosingBracketMatchIndex(_dex.substring(_dex.indexOf('[')), 0, '[', ']', false, true, ((typeof __vr == 'string') ? __vr.split('=')[0].split(' ')[1] : '')) + 1 + _dex.indexOf('[')) // +1 may be one too short?
+	  index = (findClosingBracketMatchIndex(_dex.substring(_dex.indexOf('[')), 0, '[', ']', false, true, __vr2) + 1 + _dex.indexOf('[')) // +1 may be one too short?
 
 	  __vr1 = _dex.replace(_dxh.split('[')[0],'').replace('[','').split('try{')[0].split(',')
 	  _dex = _dex.substring(_dex.indexOf('[')+1, index)
@@ -1733,7 +1734,21 @@ function find_key(_rpt){
 	  { __z = (__i === 0) ? __n3[0].split('/*teszt*/;')[1] : __z; if (__i && __z.indexOf(_dxh) == -1) { __z = __z +'a:{'+ __n3[__i] } }
 	  try {
 	      __z = (__z.split('/*teszt*/;')[1]) ? __z.substring(__z.lastIndexOf('/*teszt*/;')+10) : __z; //console.log(__z)
-		  if (!_neg) { _neg = __z.split('a:{')[0].split(';')[1]
+	      var _xord,
+		xord = (__z.split('var ')[1]) ? __z.split('var ')[1].split('=')[0] : '', para1 = (xord) ? __z.split('var ')[1].split(';')[0].split('^')[1] : '', para2 = (xord) ? __z.split(xord +'=')[1].split('^')[0] : ''
+
+		  if (!_neg) {
+		    if (_VAR.indexOf('set') > -1 && _VAR.indexOf('n') > -1 && __z.split('a:{')[1] && __z.split('a:{')[1].indexOf('}(') > -1 && __z.split('a:{')[1].indexOf('=[])') > __z.split('a:{')[1].indexOf('}(')) 
+		    try {
+		      _neg = __z.split('a:{')[1].substring( (__z.split('a:{')[1].indexOf('}(') + 1), (__z.split('a:{')[1].indexOf('=[])') + 4));
+		      var _neg2 = _neg
+		      if (__vr2 && _neg.split('('+ __vr2 +'['+ xord +'^')[1]) {
+		        temp = _VAR.indexOf('n') ^ _neg.split('('+ __vr2 +'['+ xord +'^')[1].split(']')[0];
+		        if (temp) _neg2 = 'var _VAR='+ temp +';'+ _neg2.split(xord +'^').join('_VAR^')
+		      }
+		      __n2 = __n2.split(_neg).join('try{'+ _neg2 +'}catch(err){}')
+		    } catch(e){}
+		    _neg = __z.split('a:{')[0].split(';')[1]
 		    if (_neg) {
 			if (_args && _neg.indexOf(_args[3]+'[') > -1) {
 			  _neg = _neg.split(_args[3]+'[')[0]
@@ -1745,8 +1760,7 @@ function find_key(_rpt){
 			if (_neg.indexOf('var ') > -1) _neg = ''
 		    }
 		  }
-	      var _xord,
-		xord = (__z.split('var ')[1]) ? __z.split('var ')[1].split('=')[0] : '', para1 = (xord) ? __z.split('var ')[1].split(';')[0].split('^')[1] : '', para2 = (xord) ? __z.split(xord +'=')[1].split('^')[0] : ''
+
 	      if (__z.split(_dxh)[1]) { __k = __z.split(_dxh)[0]; __k = __k.substring(__k.lastIndexOf('{')+1); //console.log(__k); console.log(__vr0)
 	        if (__k.indexOf(']]('+ __vr0 +'[') > -1) { __k = __k.split(']]('+ __vr0 +'[')[0]; __k = __k.substring(__k.lastIndexOf('[')+1)
 	          if (__k.indexOf(xord) > -1) { __s = _VAR.indexOf('split'); if (__s > -1) { eval('var _xord='+ __k.replace(xord, __s)); } }
@@ -1767,7 +1781,7 @@ function find_key(_rpt){
 	            if (__n2.split(xord +'='+ para2 +'^'+ para1)[1]) { _para1 = new RegExp(para1, 'gm'); __s = _para1 }
 	            if (__n2.split(xord +'='+ para1 +'^'+ para2)[1]) { _para2 = new RegExp(para2, 'gm'); __s = _para2 }
 
-	            xord = 'yt6d.nrg = function(start, '+ para1 +', '+ para2 +'){ var __j=start||0, para1='+ para1 +', para2='+ para2 +', xord=('+ para2 +'^'+ para1+ ')||'+ _xord +', _xord="'+ xord +'"; for(__j;__j<950;__j++) if ('+ _rgx.replace(__s, '__j') + ') { '+ ((_neg && _neg.indexOf(_rgx) == -1) ? 'if ('+ _neg.replace(__s, '__j') +') { continue }' : '') + '; '+ ((_para1 == __s) ? 'para1' : 'para2') +' = __j; break }; if ('+ (_para1 == __s) +') { para2 = para1 ^ xord;  } else para1 = para2 ^ xord; return [para1, para2] }'
+	            xord = 'yt6d.nrg = function(start, '+ para1 +', '+ para2 +'){ var __j=start||0, para1='+ para1 +', para2='+ para2 +', xord=('+ para2 +'^'+ para1+ ')||'+ _xord +', _xord="'+ xord +'"; for(__j;__j<9950;__j++) if ('+ _rgx.replace(__s, '__j') + ') { '+ ((_neg && _neg.indexOf(_rgx) == -1) ? 'if ('+ _neg.replace(__s, '__j') +') { continue }' : '') + '; '+ ((_para1 == __s) ? 'para1' : 'para2') +' = __j; break }; if ('+ (_para1 == __s) +') { para2 = para1 ^ xord;  } else para1 = para2 ^ xord; return [para1, para2] }'
 	            eval(xord)
 	            xord = yt6d.nrg(0, para1, para2)
 	          }
@@ -11004,15 +11018,15 @@ if (c[1]) {
 	    yt6d.arg.temp = temp;
 	    
 	    var nrg = 1, m = clone(yt6d.arg.temp), mm = clone(yt6d.arg.temp)
-	    while (nrg < 950) try {
+	    while (nrg < 9950) try {
 	      try { n_0 = yt6d.nrg(nrg) } catch(e){}; var n__1 = n_0[0]; var n__2 = n_0[1]//console.log(nrg +' ?? '+ n_0[0] +', '+ n_0[1])
-	      n_0 = yt6d.ndec(n_0[0], n_0[1], n_value, m, n_0[0], n_0[1], n_value, mm); //console.log(n_value +' --> '+ n_0 +' '+ nrg +' '+ n__1 +' '+ n__2)
-	      nrg = (!(typeof n_0 == 'string' && n_0.length == 14)) ? (nrg + 1) : 999 //< n_value.length
+	      n_0 = yt6d.ndec(n__1, n__2, n_value, m, n__1, n__2, n_value, mm); //console.log(n_value +' --> '+ n_0 +' '+ nrg +' '+ n__1 +' '+ n__2)
+	      nrg = (!(typeof n_0 == 'string' && n_0.length == 14)) ? (nrg + 1) : 9999 //< n_value.length
 	    } catch(e){ nrg = (nrg + 1); //console.log(e.toString()); 
 		if (e.toString().indexOf('not a function') > -1) m = clone(yt6d.ndec)
 	      }
 	  
-	    if (nrg != 999) n_decoded = n_value
+	    if (nrg != 9999) n_decoded = n_value
 	  
 	  } catch(e){ console.log(e.toString())
 	      n_decoded = n_value
