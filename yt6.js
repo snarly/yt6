@@ -1446,12 +1446,12 @@ function findClosingBracketMatchIndex(str, pos, x, y, q, regx, __var) { var r0, 
       if (i == 1 && str[i] == '/') {//console.log('regex right at the beginning '+ i +' '+ str[i])
         r1.push(i)
       }
-      if (str[i] == ',' && str[i+1] == '/') {//console.log('regex start '+ i+1 +' '+ str[i+1])
+      if (str[i] == ',' && str[i+1] == '/' && r2.length == r1.length) {//console.log('regex start '+ (i+1) +' '+ str[(i+1)])
         r1.push(i+1)
       }
       if (str[i] == '/' && str[i+1] == ',' && (str[i-1] != '\\' || (str[i-1] == '\\' && str[i-2] == '\\')) ) {
         if (r1.indexOf(i) == -1 || (str.substring(i+2).split(',')[0].length && /^[a-zA-Z0-9_\$\.\,\[\]\(\)]*$/.test( str.substring(i+2).split(',')[0] ))) {//console.log('regex end '+ i +' '+ str[i])
-          r2.push(i)
+          r2.push(i); for (j = 0; j < r2.length; j++) if (str.substring(r1[j], r2[j]).indexOf('[') > -1 && str.substring(r1[j], r2[j]).indexOf('[') < str.substring(r1[j], r2[j]).indexOf(']')) { r2.pop(i); break }
         }
       } // regex border indexes should not point at the same slash/(](\(),})/, /,,(\/)[,/ / [, , ]'/,
     }
@@ -1461,7 +1461,7 @@ function findClosingBracketMatchIndex(str, pos, x, y, q, regx, __var) { var r0, 
 
   for (i = pos + 1; i < str.length; i++) {
     if (regx) {
-      for (j = 0; j < r1.length; j++) if (r1[j] && r2[j] && r1[j] < i && r2[j] > i) { //console.log('skip part of regex string '+ str[i])
+      for (j = 0; j < r1.length; j++) if (r1[j] && r2[j] && r1[j] < i && r2[j] > i) {//console.log('skip part of regex string '+ str[i])
         r0 = true; break }; if (r0) { r0 = false; continue }
     }
     q1 = (!q && !q2 && str[i] == "'" && str[i-1] != '\\') ? !q1 : q1 
