@@ -1749,9 +1749,9 @@ function find_key(_rpt){
 		      __n2 = __n2.split(_neg).join('try{'+ _neg2 +'}catch(err){}')
 		    } catch(e){}
 		    _neg = __z.split('a:{')[0].split(';')[1]
-		    if (_neg) {
-			if (_args && _neg.indexOf(_args[3]+'[') > -1) {
-			  _neg = _neg.split(_args[3]+'[')[0]
+		    if (_neg) { temp = ((_args && _args[2].split(')')[0]) || __vr2).split(' ').join('')
+			if (temp && _neg.indexOf(temp+'[') > -1) {
+			  _neg = _neg.split(temp+'[')[0]
 			  if (_neg.slice(-2) == '&&') _neg = _neg.substring(0, _neg.lastIndexOf('&&'))
 			}
 			if (_neg.indexOf('){') > -1) _neg = _neg.substring(0, _neg.lastIndexOf('){')+1)
@@ -1781,9 +1781,9 @@ function find_key(_rpt){
 	            if (__n2.split(xord +'='+ para2 +'^'+ para1)[1]) { _para1 = new RegExp(para1, 'gm'); __s = _para1 }
 	            if (__n2.split(xord +'='+ para1 +'^'+ para2)[1]) { _para2 = new RegExp(para2, 'gm'); __s = _para2 }
 
-	            xord = 'yt6d.nrg = function(start, '+ para1 +', '+ para2 +'){ var __j=start||0, para1='+ para1 +', para2='+ para2 +', xord=('+ para2 +'^'+ para1+ ')||'+ _xord +', _xord="'+ xord +'"; for(__j;__j<9950;__j++) if ('+ _rgx.replace(__s, '__j') + ') { '+ ((_neg && _neg.indexOf(_rgx) == -1) ? 'if ('+ _neg.replace(__s, '__j') +') { continue }' : '') + '; '+ ((_para1 == __s) ? 'para1' : 'para2') +' = __j; break }; if ('+ (_para1 == __s) +') { para2 = para1 ^ xord;  } else para1 = para2 ^ xord; return [para1, para2] }'
-	            eval(xord)
-	            xord = yt6d.nrg(0, para1, para2)
+	            xord = 'yt6d.nrg = function(start, test, '+ para1 +', '+ para2 +'){ var __j=start||0, para1='+ para1 +', para2='+ para2 +', xord=('+ para2 +'^'+ para1+ ')||'+ _xord +', _xord="'+ xord +'"; for(__j;__j<9950;__j++) { if ('+ _rgx.replace(__s, '__j') + ') { if ((yt6d.nrg.probe && yt6d.nrg.probe[__j])'+ ((_neg && _neg.indexOf(_rgx) == -1) ? ' || ('+ _neg.replace(__s, '__j') +')' : '') + ') { continue }; '+ ((_para1 == __s) ? 'para1' : 'para2') +' = __j; break }; if (!test) break }; if ('+ (_para1 == __s) +') { para2 = para1 ^ xord;  } else para1 = para2 ^ xord; return [para1, para2] }'
+	            eval(xord); yt6d.nrg.probe = []
+	            xord = yt6d.nrg(0, false, para1, para2)
 	          }
 	        }
 	      }
@@ -11017,11 +11017,13 @@ if (c[1]) {
 	    };
 	    yt6d.arg.temp = temp;
 	    
-	    var nrg = 1, m = clone(yt6d.arg.temp), mm = clone(yt6d.arg.temp)
+	    var nrg = 0, m = clone(yt6d.arg.temp), mm = clone(yt6d.arg.temp)
 	    while (nrg < 9950) try {
-	      try { n_0 = yt6d.nrg(nrg) } catch(e){}; var n__1 = n_0[0]; var n__2 = n_0[1]//console.log(nrg +' ?? '+ n_0[0] +', '+ n_0[1])
+	      try { n_0 = yt6d.nrg(nrg, false) } catch(e){}; var n__1 = n_0[0]; var n__2 = n_0[1]//console.log(nrg +' ?? '+ n_0[0] +', '+ n_0[1])
 	      n_0 = yt6d.ndec(n__1, n__2, n_value, m, n__1, n__2, n_value, mm); //console.log(n_value +' --> '+ n_0 +' '+ nrg +' '+ n__1 +' '+ n__2)
-	      nrg = (!(typeof n_0 == 'string' && n_0.length == 14)) ? (nrg + 1) : 9999 //< n_value.length
+	      if (typeof n_0 == 'string' && n_0.length == 14) { nrg = 9999 } else {//< n_value.length
+	        yt6d.nrg.probe[nrg] = true; nrg = (nrg + 1)
+	      }
 	    } catch(e){ nrg = (nrg + 1); //console.log(e.toString()); 
 		if (e.toString().indexOf('not a function') > -1) m = clone(yt6d.ndec)
 	      }
@@ -11042,7 +11044,7 @@ if (c[1]) {
 	  if (!ld)
 	     if (n_decoded && n_decoded.length == 14) { href = href.replace(n_value, n_decoded) }
 		else
-		if ( (yt6.ytp.embed || (yt6.p && yt6.p.tagName == 'IFRAME')) ) {
+		if ( (yt6.ytp.embed || yt6.ytm || (yt6.p && yt6.p.tagName == 'IFRAME')) ) {
 		  href = href + '&faux_url=true'
 		}
 	    //console.log(qs.itag +' '+ n_value +' --> '+ n_decoded)
