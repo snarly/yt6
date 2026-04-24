@@ -1623,6 +1623,8 @@ function find_key(_rpt){
     if (__fs && __fs.indexOf('return ') == -1) __fs = __fs + _rpt.split(__fs)[1].split('return ')[0] + 'return ' + _rpt.split(__fs)[1].split('return ')[1].split('}')[0] + '};'
 
     if (__fs) {
+      if (__fs.indexOf(',') == 0) __fs = __fs.substring(1)
+      __fs = __fs.substring(0, (findClosingBracketMatchIndex(__fs.substring(__fs.indexOf('{')), 0, '{', '}') + __fs.indexOf('{') +1 ) )
       __f1 = fcobj(__fs)[0]; //console.log('regular expression including the object name: '+ __f1)
       __f2 = fcobj(__fs)[1]; //console.log('object name: '+ __f2)
     }
@@ -1784,6 +1786,7 @@ function find_key(_rpt){
 	            xord = 'yt6d.nrg = function(start, test, '+ para1 +', '+ para2 +'){ var __j=start||0, para1='+ para1 +', para2='+ para2 +', xord=('+ para2 +'^'+ para1+ ')||'+ _xord +', _xord="'+ xord +'"; for(__j;__j<9950;__j++) { if ('+ _rgx.replace(__s, '__j') + ') { if ((yt6d.nrg.probe && yt6d.nrg.probe[__j])'+ ((_neg && _neg.indexOf(_rgx) == -1) ? ' || ('+ _neg.replace(__s, '__j') +')' : '') + ') { continue }; '+ ((_para1 == __s) ? 'para1' : 'para2') +' = __j; break }; if (!test) break }; if ('+ (_para1 == __s) +') { para2 = para1 ^ xord;  } else para1 = para2 ^ xord; return [para1, para2] }'
 	            eval(xord); yt6d.nrg.probe = []
 	            xord = yt6d.nrg(0, false, para1, para2)
+	            if (_neg && _neg.indexOf(_rgx) == -1) { console.log(_neg); __n2 = __n2.split(_neg).join(_neg.substring(0,_neg.lastIndexOf(')')) + '&&yt6d._neg)') }
 	          }
 	        }
 	      }
@@ -1858,10 +1861,10 @@ function find_key(_rpt){
 	      for(__j=0;__j<_dxh.length;__j++) { var cell = _dxh[__j].split(__br)[0].split(' ').join(''); if (cell.length > 1 && cell.length < 4 && /[a-zA-Z0-9_\$]/.test(cell) && !(/[\,\.\;\!\?\+\-\*\/\=\&\|\(\)\{\}\[\]\<\>]/.test(cell)) && isNaN(cell) && _dex0.indexOf(cell) == -1) { _dex0.push(cell); } }
 	    }
 
-	    if (!array) {
+	    //if (!array) {
 	      var deep = ['=',',',' ',':',';','&&']; for(__k=0;__k < deep.length;__k++) { dive(__n2.split(deep[__k]),'(')
 	      }
-	    }
+	    //}
 
 	_dex0.push.apply(_dex0, [yt6d.arg.encode])
 
@@ -1874,7 +1877,8 @@ function find_key(_rpt){
 	_dex = new RegExp(    sprintf('[^\\w.'+ doll +']%s=function[^}].+?(?<!{)(?=};)', _dex0[__i].split('$').join('\\$'))  ); _dex = _rpt.match(_dex); _dex = (_dex) ? _dex[0] +'};' : ''; if (_dex.split('},')[1] && _dex.split('},')[1].indexOf('=function') > -1 && _dex.split('},')[1].indexOf('=function') < 4 && _dex.split('},')[1].substring(_dex.split('},')[1].indexOf('{')) ) { _dex = _dex.split('},')[0] + '};'; }; if (_dex.indexOf(',') == 0) _dex = _dex.slice(1); //console.log(_dex.split('=')[0])
 	    if (_dex) {
 	        var _dxh = _dex.split('{').length - _dex.split('}').length;
-		if (_dxh > 1) { __vr0 = ''; __vr1 = ''; for(__j=0;__j<_dxh;__j++) { __vr0 = _rpt.split(_dex)[1].split('}')[__j] +'}'; if (__vr0.indexOf('{') > -1) _dxh++; __vr1 = __vr1 + __vr0 }; _dex = _dex + __vr1 +';' }
+		if (_dxh >= 1) { __vr0 = ''; __vr1 = ''; for(__j=0;__j<_dxh;__j++) { __vr0 = _rpt.split(_dex)[1].split('}')[__j] +'}'; if (__vr0.indexOf('{') > -1 && __vr0.split('{').length >= __vr0.split('}').length) _dxh = _dxh + (1 + __vr0.split('{').length - __vr0.split('}').length); __vr1 = __vr1 + __vr0 }; _dex = _dex + __vr1 +';' }
+
 		_dxh = _dex.split('){return ')[1]; _dxh = (_dxh) ? _dxh.split('[')[0]: ''; 
 		if (_dex.indexOf('){return '+ _dxh +'[') > -1) {
 		  if (_dxh == _fcn || _dxh == __n) {
@@ -1917,7 +1921,7 @@ function find_key(_rpt){
 		  }
 		}
 	      };
-	      if (temp && typeof yt6d.arg.uriComponent == 'function' && _dex2o) _dex = _dex.replace( _dex2o.replace(__vr +';'+ dekrypt0,'') ,  _dex2)
+	      if (temp && typeof yt6d.arg.uriComponent == 'function' && _dex2o) { _dex = _dex.split( _dex2o.replace(__vr +';'+ dekrypt0,'')).join(_dex2); }
 	      if (_dex.indexOf(';') < _dex.indexOf('=')) _dex = _dex.replace(';','')
 	      _dex1 = _dex1 + 'var '+ _dex; 
 		//console.log(_dex0[__i] +'\n'+ _dex1)
@@ -1938,8 +1942,10 @@ function find_key(_rpt){
 	}
 
 
-	__n2 = __n2.replace('/*teszt*/', ((_dex1) ? _dex1 : '/*missing functions*/') +
-(dekrypt0 || '/**/'))
+	__n2 = __n2.split('/*teszt*/').join( ((_dex1) ? _dex1 : '/*missing functions*/') +
+(dekrypt0 || '/**/') +'\n\n' )
+//__n2 = __n2.substring(0, __n2.lastIndexOf('return ')) + 'return '+ __n2.substring(__n2.lastIndexOf('return '), __n2.lastIndexOf('return ')+1) +'};'
+
 
 //var temp = __n2.split('}catch('); __n2 = ''
 //for(__i=0;__i<temp.length;__i++) { temp[__i] = temp[__i] + ((__i < temp.length-1) ? '}catch('+ temp[(__i+1)].split(')')[0] + '){console.log(\"'+__i+'\ "+' + temp[(__i+1)].split(')')[0] +'.toString());' : ''); __n2 = __n2 + ((!__i) ? temp[__i] : temp[__i].substring(temp[__i].indexOf('{')+1)) }
@@ -11021,7 +11027,7 @@ if (c[1]) {
 	    while (nrg < 9950) try {
 	      try { n_0 = yt6d.nrg(nrg, false) } catch(e){}; var n__1 = n_0[0]; var n__2 = n_0[1]//console.log(nrg +' ?? '+ n_0[0] +', '+ n_0[1])
 	      n_0 = yt6d.ndec(n__1, n__2, n_value, m, n__1, n__2, n_value, mm); //console.log(n_value +' --> '+ n_0 +' '+ nrg +' '+ n__1 +' '+ n__2)
-	      if (typeof n_0 == 'string' && n_0.length == 14) { nrg = 9999 } else {//< n_value.length
+	      if (typeof n_0 == 'string' && n__1 && n_0.length == 14) { nrg = 9999 } else {//< n_value.length
 	        yt6d.nrg.probe[nrg] = true; nrg = (nrg + 1)
 	      }
 	    } catch(e){ nrg = (nrg + 1); //console.log(e.toString()); 
