@@ -1786,7 +1786,7 @@ function find_key(_rpt){
 	            xord = 'yt6d.nrg = function(start, test, '+ para1 +', '+ para2 +'){ var __j=start||0, para1='+ para1 +', para2='+ para2 +', xord=('+ para2 +'^'+ para1+ ')||'+ _xord +', _xord="'+ xord +'"; for(__j;__j<9950;__j++) { if ('+ _rgx.replace(__s, '__j') + ') { if ((yt6d.nrg.probe && yt6d.nrg.probe[__j])'+ ((_neg && _neg.indexOf(_rgx) == -1) ? ' || ('+ _neg.replace(__s, '__j') +')' : '') + ') { continue }; '+ ((_para1 == __s) ? 'para1' : 'para2') +' = __j; break }; if (!test) break }; if ('+ (_para1 == __s) +') { para2 = para1 ^ xord;  } else para1 = para2 ^ xord; return [para1, para2] }'
 	            eval(xord); yt6d.nrg.probe = []
 	            xord = yt6d.nrg(0, false, para1, para2)
-	            if (_neg && _neg.indexOf(_rgx) == -1) { console.log(_neg); __n2 = __n2.split(_neg).join(_neg.substring(0,_neg.lastIndexOf(')')) + '&&yt6d._neg)') }
+	            if (_neg && _neg.indexOf(_rgx) == -1) { console.log(_neg); __n2 = __n2.split(_neg).join(_neg.substring(0,_neg.lastIndexOf(')')) + '/*&&yt6d._neg*/)') }
 	          }
 	        }
 	      }
@@ -10959,7 +10959,7 @@ if (c[1]) {
 		if (_href.indexOf('&title=Advertisement') == -1) _href = _href.split('&title=')[0] + '&title=Advertisement'
 		return _href
 	}
-
+  var nrg = 0, nrh = ''
 
   for (i in ft) {
     if (typeof ft[i] == 'string') {
@@ -11023,15 +11023,20 @@ if (c[1]) {
 	    };
 	    yt6d.arg.temp = temp;
 	    
-	    var nrg = 0, m = clone(yt6d.arg.temp), mm = clone(yt6d.arg.temp)
+	    var m = clone(yt6d.arg.temp), mm = clone(yt6d.arg.temp);// if (!nrh) nrg = 0
 	    while (nrg < 9950) try {
 	      try { n_0 = yt6d.nrg(nrg, false) } catch(e){}; var n__1 = n_0[0]; var n__2 = n_0[1]//console.log(nrg +' ?? '+ n_0[0] +', '+ n_0[1])
 	      n_0 = yt6d.ndec(n__1, n__2, n_value, m, n__1, n__2, n_value, mm); //console.log(n_value +' --> '+ n_0 +' '+ nrg +' '+ n__1 +' '+ n__2)
 	      if (typeof n_0 == 'string' && n__1 && n_0.length == 14) { nrg = 9999 } else {//< n_value.length
-	        yt6d.nrg.probe[nrg] = true; nrg = (nrg + 1)
+	        yt6d.nrg.probe[nrg] = true; 
+	        nrg = (nrg + 1)
 	      }
-	    } catch(e){ nrg = (nrg + 1); //console.log(e.toString()); 
-		if (e.toString().indexOf('not a function') > -1) m = clone(yt6d.ndec)
+	    } catch(e){
+		if (e.toString().indexOf('not a function') > -1) { //if (!nrh) nrg = 0; 
+		  yt6d.nrg.probe[nrg] = 1; 
+		  //var m = e.toString().split('^')[1]; if (m) { m = 1*(m.split(']')[0].split(')')[0]); if (!isNaN(m) && yt6d.arg.VAR.indexOf('split') > -1) { nrh = yt6d.ndec.toString().substring(yt6d.ndec.toString().lastIndexOf('^'+ m +']]')); if (nrh.split(');')[1] && nrh.split(');')[1].indexOf('return ') != 0) { nrh = yt6d.ndec.toString().substring(0, yt6d.ndec.toString().lastIndexOf('^'+ m +']]')); nrh = nrh.substring(nrh.lastIndexOf('}')+1, nrh.lastIndexOf('{')); if (nrh.indexOf('if') == 0) nrh = nrh.replace('if',''); console.log(nrh); m = m^yt6d.arg.VAR.indexOf('split') }}}; m = clone(yt6d.ndec)
+		} //else nrh = ''
+		nrg = (nrg + 1); //console.log(e.toString()); 
 	      }
 	  
 	    if (nrg != 9999) n_decoded = n_value
@@ -13008,7 +13013,7 @@ function untouch(lm) {
 	lm.setAttribute('style', 'position: relative;')
 	lm.insertBefore(y, lm.firstChild)
 	lm.firstChild.setAttribute('style', lm.firstChild.getAttribute('style') + ((w) ? '; width: '+ w +'px;' : '') + h + l)
-	w = '<div class="cbox" style="width: 20%; height: auto; float: left; background: rgba(0,0,0,0.3);"><c3-icon flip-for-rtl="false" style="width: '+ (w / 4) +'+px; height: auto; color: white" class="yt-spec-button-shape-next yt-spec-button-shape-next--text yt-spec-button-shape-next--mono"><svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"></path></svg></c3-icon></div>'// M6 6h2v12H6zm3.5 6l8.5 6V6z	// M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z
+	w = '<div class="cbox" style="width: 20%; height: auto; float: left; background: rgba(0,0,0,0.3);"><c3-icon flip-for-rtl="false" style="width: '+ (w / 4) +'px; height: auto; color: white" class="yt-spec-button-shape-next yt-spec-button-shape-next--text yt-spec-button-shape-next--mono"><svg viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"></path></svg></c3-icon></div>'// M6 6h2v12H6zm3.5 6l8.5 6V6z	// M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z
 	lm.firstChild.firstChild.innerHTML = w
 	lm.firstChild.setAttribute("onclick", "this.a = this.parentNode.getElementsByTagName('a')[0]; if (this.a) { this.appendChild(document.createElement('a')); this.getElementsByTagName('a')[0].href = this.a.href; this.getElementsByTagName('a')[0].click(); }")
     }
@@ -13316,7 +13321,7 @@ function mep_run() {
 
 					    }
 
-					    function decryption_failure(){ //console.log('df '+yt6.errcount +' '+ yt6.err +' '+ yt6.err2 +' '+ yt6.retry)
+					    function decryption_failure(){ console.log('df '+yt6.errcount +' '+ yt6.err +' '+ yt6.err2 +' '+ yt6.retry)
 
 					      if (yt6.status == 'unplayable' && player() && yt6.p.tagName == 'IFRAME') { return void 0; } // take no action in this case
 					      if (yt6d.update_in_progress) { return void 0 }
@@ -19981,10 +19986,10 @@ if (yt6.flexy && yt6.pls) {
 
   if (yt6.mobile) {
     if (yt6.autoplay && hid() && yt6.pre_ad) { yt6.pls = null; if (yt6.ad_skipped) delete yt6.ad_skipped }
-    if (!hid()) {
+    //if (!hid()) {
 	var vls;
 	if (location.href.indexOf('/@') > -1) {
-	  vls = [gt('ytm-compact-video-renderer', 1), gt('ytm-compact-playlist-renderer', 1)]
+	  vls = (gt('ytm-rich-item-renderer', 1)[0] || gt('yt-lockup-view-model', 1)[0]) ? [gt('ytm-rich-item-renderer', 1), gt('yt-lockup-view-model', 1)] : [gt('ytm-compact-video-renderer', 1), gt('ytm-compact-playlist-renderer', 1)]
 	} else if (location.href.indexOf('playlist?list=') > -1) {
 	  vls = [gt('ytm-playlist-video-renderer', 1)]
 	} else
@@ -19993,7 +19998,7 @@ if (yt6.flexy && yt6.pls) {
 	for(i=0;i<vls.length;i++)
 	  for(j=0;j<vls[i].length;j++) 
 	    if (!gt('snarl-material-button', vls[i][j])[0] && vls[i][j].lastElementChild && vls[i][j].lastElementChild.firstChild && vls[i][j].lastElementChild.firstChild.offsetWidth) untouch(vls[i][j]);
-    }
+    //}
   }
 
   if (yt6.spf == true) { yt6.spf = true } else { yt6.spf = false // if (!(yt6.mobile && yt6.autoplay && hid() && yt6.pre_ad))
