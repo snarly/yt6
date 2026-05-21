@@ -1743,9 +1743,9 @@ function find_key(_rpt){
 		xord = (__z.split('var ')[1]) ? __z.split('var ')[1].split('=')[0] : '', para1 = (xord) ? __z.split('var ')[1].split(';')[0].split('^')[1] : '', para2 = (xord) ? __z.split(xord +'=')[1].split('^')[0] : ''
 
 		  if (!_neg) {
-		    if (_VAR.indexOf('set') > -1 && _VAR.indexOf('n') > -1 && __z.split('a:{')[1] && __z.split('a:{')[1].indexOf('}(') > -1 && __z.split('a:{')[1].indexOf('=[])') > __z.split('a:{')[1].indexOf('}(')) 
+		    if (_VAR.indexOf('set') > -1 && _VAR.indexOf('n') > -1 && __z.split('a:{')[1] && (__z.split('a:{')[1].indexOf('}(') > -1 || __z.split('a:{')[1].indexOf('}if(') > -1) && (__z.split('a:{')[1].indexOf('=[])') > __z.split('a:{')[1].indexOf('}(') || __z.split('a:{')[1].indexOf('=[])') > __z.split('a:{')[1].indexOf('}if(')) ) 
 		    try {
-		      _neg = __z.split('a:{')[1].substring( (__z.split('a:{')[1].indexOf('}(') + 1), (__z.split('a:{')[1].indexOf('=[])') + 4));
+		      _neg = __z.split('a:{')[1].substring( (Math.max(0, (__z.split('a:{')[1].indexOf('}if(') )) || (__z.split('a:{')[1].indexOf('}(') ))+1 , (__z.split('a:{')[1].indexOf('=[])') + 4));
 		      var _neg2 = _neg
 		      if (__vr2 && _neg.split('('+ __vr2 +'[')[1]) {//+ xord +'^')[1]) {
 		        temp = _VAR.indexOf('n') ^ _neg.split('('+ __vr2 +'[')[1].split(']')[0];//+ xord +'^')
@@ -1770,12 +1770,16 @@ function find_key(_rpt){
 		    _neg = __z.split('a:{')[0].split(';')[1]
 		    if (_neg) { temp = ((_args && _args[2].split(')')[0]) || __vr2).split(' ').join('')
 			if (temp && _neg.indexOf(temp+'[') > -1) {
-			  _neg = _neg.split(temp+'[')[0]
-			  if (_neg.slice(-2) == '&&') _neg = _neg.substring(0, _neg.lastIndexOf('&&'))
+			  temp = temp +'['+ _neg.split(temp+'[')[1]
+			  _neg = _neg.split(temp)[0]; //console.log(temp); console.log(_neg)
+			  if (_neg.slice(-2) == '&&') {
+			    _neg = _neg.substring(0, _neg.lastIndexOf('&&'))
+			    if (temp.split('(')[1]) __n2 = __n2.split(_neg +'&&'+ temp).join(_neg + '&&typeof '+ temp.split('(')[0] +'=="function"&&' + temp)
+			  }
 			}
 			if (_neg.indexOf('){') > -1 && (_neg.indexOf('){') - _neg.substring(0, _neg.lastIndexOf('){')+1).lastIndexOf('function(')) > 12 ) _neg = _neg.substring(0, _neg.lastIndexOf('){')+1)
 			if (_neg.indexOf('if(') > -1) _neg = _neg.substring(_neg.lastIndexOf('if')+2)
-			if (_neg.indexOf(__vr0 +'[') > -1 && (_neg.indexOf(__vr0 +'[') - _neg.lastIndexOf('&&')) < 5) { _neg  = _neg.substring(0, _neg.lastIndexOf('&&')) }
+			//if (_neg.indexOf(__vr0 +'[') > -1 && (_neg.indexOf(__vr0 +'[') - _neg.lastIndexOf('&&')) < 5) _neg  = _neg.substring(0, _neg.lastIndexOf('&&'))
 			if (_neg.indexOf('var ') > -1) _neg = ''
 		    }
 		  }
@@ -1803,7 +1807,7 @@ function find_key(_rpt){
 	            xord = 'yt6d.nrg = function(start, test, '+ para1 +', '+ para2 +'){ var __j=start||0, para1='+ para1 +', para2='+ para2 +', xord=('+ para2 +'^'+ para1+ ')||'+ _xord +', _xord="'+ xord +'"; for(__j;__j<9950;__j++) { if (true || '+ _rgx.replace(__s, '__j') + ') { if ((yt6d.nrg.probe && yt6d.nrg.probe[__j])'+ ((_neg && _neg.indexOf(_rgx) == -1) ? ' || ('+ _neg.replace(__s, '__j') +')' : '') + ') { continue }; '+ ((_para1 == __s) ? 'para1' : 'para2') +' = __j; break }; if (!test) break }; if ('+ (_para1 == __s) +') { para2 = para1 ^ xord;  } else para1 = para2 ^ xord; return [para1, para2] }'
 	            eval(xord); yt6d.nrg.probe = []
 	            xord = yt6d.nrg(0, false, para1, para2)
-	            if (_neg && _neg.indexOf(_rgx) == -1) { console.log(_neg); __n2 = __n2.split(_neg).join(_neg.substring(0,_neg.lastIndexOf(')')) + '/*&&yt6d._neg*/)') }
+	            //if (_neg && _neg.indexOf(_rgx) == -1) { console.log(_neg); }//__n2 = __n2.split(_neg).join(_neg.substring(0,_neg.lastIndexOf(')')) + '') }
 	          }
 	        }
 	      }
@@ -10940,7 +10944,7 @@ if (c[1]) {
       )) ? 'sig' : 'signature'; yt6.sig = signame
 
 
-  var ft = [args.url_encoded_fmt_stream_map, args.adaptive_fmts || yt6.adaptive_fmts ], sighead, oeid,
+  var ft = [args.url_encoded_fmt_stream_map, args.adaptive_fmts || yt6.adaptive_fmts ], sighead, oeid, id,
       fn, a_r, ad = 0, ad2, dur, dur2, durA1 = {}, durA2 = {}, durL1 = [], durL2 = [], ad_links = [], avg1, avg2, avgx, durA1k, durA2k, length_seconds = args.length_seconds, n_length = 0, n_value, n_decoded, n_0, n_1, n_2, ndc, s = ''
 
   if (args && yt6.ytplayer && yt6.ytplayer.config && yt6.ytplayer.config.args) { yt6.ytplayer.config.args.adaptive_fmts = args.adaptive_fmts; //yt6.ytplayer.config.args.url_encoded_fmt_stream_map = args.url_encoded_fmt_stream_map;
@@ -10977,14 +10981,25 @@ if (c[1]) {
 		if (_href.indexOf('&title=Advertisement') == -1) _href = _href.split('&title=')[0] + '&title=Advertisement'
 		return _href
 	}
-  var nrg = 0, nrh = ''
+  var nrg = 0, nrh = '', ft2 = []
 
   for (i in ft) {
     if (typeof ft[i] == 'string') {
       var z = ft ? ft[i].split(',') : '';
-	if (yt6.ytp && yt6.ytp.V && typeof yt6.ytp.V == 'string') { z.push(yt6.ytp.V) }
-	if (yt6.ytp && yt6.ytp.A && typeof yt6.ytp.A == 'string') { z.push(yt6.ytp.A) }
-      for (j=0;j<z.length;j++) {//(j in z)
+      for (j=0;j<z.length;j++) {
+
+
+	ft2.push(z[j])
+
+      }
+    }
+  }
+
+      z = ft2; 
+	if (yt6.ytp && yt6.ytp.V && typeof yt6.ytp.V == 'string') { z.unshift(yt6.ytp.V) }
+	if (yt6.ytp && yt6.ytp.A && typeof yt6.ytp.A == 'string') { z.unshift(yt6.ytp.A) }
+
+      for (j=0;j<z.length;j++) {
 
 	qr(z[j]); get_quality(z[j])
 	var qs = yt6.qr
@@ -10996,8 +11011,8 @@ if (c[1]) {
 
 	if (!qs.itag) { continue }
 	if (!qs.url) {
-	  if (z[j] == yt6.ytp.V) { qs = (yt6.ytp.Vobj) ? yt6.ytp.Vobj : false; if (!qs) continue; ok = true } else
-	  if (z[j] == yt6.ytp.A) { qs = (yt6.ytp.Aobj) ? yt6.ytp.Aobj : false; if (!qs) continue; ok = true } else
+	  //if (z[j] == yt6.ytp.V) { qs = (yt6.ytp.Vobj) ? yt6.ytp.Vobj : false; if (!qs) continue; ok = true } else
+	  //if (z[j] == yt6.ytp.A) { qs = (yt6.ytp.Aobj) ? yt6.ytp.Aobj : false; if (!qs) continue; ok = true } else
 	    {
 	      if (typeof yt6.error != 'string') { yt6.error = '---'+ qs.itag } else yt6.error = yt6.error +'---'+ qs.itag; continue
 	    }
@@ -11050,28 +11065,33 @@ if (c[1]) {
 	      n_0 = yt6d.ndec(n__1, n__2, n_value, m, n__1, n__2, n_value, mm); //if (n_0) console.log(n_value +' --> '+ n_0 +' '+ nrg +' '+ n__1 +' '+ n__2)
 
 	      if (typeof n_0 == 'string' && n__1 && n_0.length == 14) { yt6d.nrg.probe[qs.itag] = qs.itag; nrg = 9999 } else {
-	        if (yt6d.nrg.probe[nrg] != qs.itag) yt6d.nrg.probe[nrg] = true; //console.log(qs.itag + ' '+ nrg +' '+ yt6d.nrg.probe[nrg])
+	        if (yt6d.nrg.probe[nrg] != qs.itag) { yt6d.nrg.probe[nrg] = true } //else console.log(qs.itag + ' '+ nrg +' '+ yt6d.nrg.probe[nrg])
 	        nrg = (nrg + 1)
 	      }
-	    } catch(e){
-		if (e.toString().indexOf('not a function') > -1) {
+	    } catch(e){ e = e.toString()
+		if (e.indexOf('not a function') > -1) {
 		  if (yt6d.nrg.probe[nrg] != qs.itag) yt6d.nrg.probe[nrg] = 1; 
 		}
-		nrg = (nrg + 1); console.log(e.toString()); 
+		if (e.indexOf('recursion') > -1 || e.indexOf('exceeded') > -1) yt6d.nrg.probe[nrg] = true
+		nrg = (nrg + 1); //console.log(e.toString()); 
 	      }
 	  
-	    if (nrg != 9999) n_decoded = n_value
+	    //if (nrg != 9999) n_decoded = n_value
 	  
-	  } catch(e){ console.log(e.toString())
+	  } catch(e){ //console.log(e.toString())
 	      n_decoded = n_value
 	    };
 	  //if (n_0 != '' && n_0 != undefined) { console.log('"'+ n_0 +'"') }
 	  if (n_0 && n_0.length == 14) n_decoded = n_0
-	  if (!n_decoded && qs.itag >= 103 && (!n_0 || (n_0 && n_0 == n_decoded))) {
-	    if (qs.n.length == 14) { if (!n_1 || n_1 == n_value) { n_1 = n_value } else if (!n_2) n_2 = n_value }
-	    else if (n_1 || n_2) n_decoded = n_1 || n_2
+	  if (qs.itag >= 103 && (!n_0 || (n_0 && n_0 == n_decoded))) {//!n_decoded && 
+	    if (qs.n.length == 14) {//preset
+	      if (!n_1 || n_1 == n_value) { n_1 = n_value } else if (!n_2) n_2 = n_value
+	    } else {
+		if (n_1 || n_2) { n_decoded = n_1 || n_2 } else {
+		}
+	      }
 	  }
-	  var ld = ((typeof yt6.ytp.V == 'string' && yt6.ytp.V.indexOf(href) > -1) || (typeof yt6.ytp.A == 'string' && yt6.ytp.A.indexOf(href) > -1)) ? true : false
+	  ld = ((typeof yt6.ytp.V == 'string' && yt6.ytp.V.indexOf(href) > -1) || (typeof yt6.ytp.A == 'string' && yt6.ytp.A.indexOf(href) > -1)) ? true : false
 	  if (qs.n.length >= n_length) n_length = 1 * qs.n.length; //if (qs.n.length == 14) { ndc = n_decoded = n_value }
 	  if (!ld)
 	     if (n_decoded && n_decoded.length == 14) { href = href.replace(n_value, n_decoded); nrg = (clone(yt6d.nrg.probe[qs.itag])+2) }
@@ -11635,8 +11655,8 @@ if (c[1]) {
 
       }//for
 
-    }//if
-  }//for
+    //}//if
+  //}//for
 
 
 
