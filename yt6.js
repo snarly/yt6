@@ -1615,8 +1615,8 @@ function find_key(_rpt){
 	//sprintf('function %s[^}]+}[^}]+}',
 	//sprintf('var %s=function[^}]+};',
 
-    var __f1, __f2
-    var __fs = new RegExp(    sprintf('[^\\w.]%s=function[^}].+?(?=};)', _fcn.split('$').join('\\$'))  );//\\W does not suffice, have to exclude the possibility of a leading dot as well
+    var __f1, __f2, doll = (_fcn && _fcn.indexOf('$') > -1) ? '' : '\\$'
+    var __fs = new RegExp(    sprintf('[^\\w.'+ doll +']%s=function[^}].+?(?=};)', _fcn.split('$').join('\\$'))  );//\\W does not suffice, have to exclude the possibility of a leading dot as well
 
 
     var __fs = (_rpt.match(__fs)) ? _rpt.match(__fs)[0] + '};' : ''
@@ -1624,17 +1624,17 @@ function find_key(_rpt){
 
     if (__fs) {
       if (__fs.indexOf(',') == 0) __fs = __fs.substring(1)
-      __fs = __fs.substring(0, (findClosingBracketMatchIndex(__fs.substring(__fs.indexOf('{')), 0, '{', '}') + __fs.indexOf('{') +1 ) )
+      __fs = __fs.substring(0, (findClosingBracketMatchIndex(__fs.substring(__fs.indexOf('{')), 0, '{', '}') + __fs.indexOf('{') +1 ) ); //console.log(__fs)
       __f1 = fcobj(__fs)[0]; //console.log('regular expression including the object name: '+ __f1)
       __f2 = fcobj(__fs)[1]; //console.log('object name: '+ __f2)
     }
 
     var dekrypt0 = (__f1) ? _rpt.match(__f1) : ''; if (dekrypt0) { dekrypt0 = dekrypt0[0] } else console.log('object regex match null')
 
-    var nreg, __n2, __n3, __n4, __vr0, __vr1, __vr2 = '', __vr = '', __br = '', __cr = '', index
+    var nreg, __n2, __n3, __n4, __vr0, __vr1, __vr2 = '', __vr = '', __br = '', __cr = '', index, doll = (__n && __n.indexOf('$') > -1) ? '' : '\\$'
     if (typeof __n == 'string')
     try {
-      nreg = new RegExp(	sprintf('[^\\w.]%s=function[^}]+}.*', __n.split('$').join('\\$'))	)
+      nreg = new RegExp(	sprintf('[^\\w.'+ doll +']%s=function[^}]+}.*', __n.split('$').join('\\$'))	)
       __n2 = _rpt.match(nreg)
       if (__n2) {
 	nreg = null; __n3 = __n2[0].split('{')[0].split(')')[0].split('(')[1]
@@ -1774,7 +1774,7 @@ function find_key(_rpt){
 			  _neg = _neg.split(temp)[0]; //console.log(temp); console.log(_neg)
 			  if (_neg.slice(-2) == '&&') {
 			    _neg = _neg.substring(0, _neg.lastIndexOf('&&'))
-			    if (temp.split('(')[1]) __n2 = __n2.split(_neg +'&&'+ temp).join(_neg + '&&typeof '+ temp.split('(')[0] +'=="function"&&' + temp)
+			    if (temp.split(')')[0].split('(')[1]) __n2 = __n2.split(_neg +'&&'+ temp).join(_neg + '&&typeof '+ temp.split('(')[0] +'=="function"&&' + temp)
 			  }
 			}
 			if (_neg.indexOf('){') > -1 && (_neg.indexOf('){') - _neg.substring(0, _neg.lastIndexOf('){')+1).lastIndexOf('function(')) > 12 ) _neg = _neg.substring(0, _neg.lastIndexOf('){')+1)
@@ -1782,6 +1782,7 @@ function find_key(_rpt){
 			//if (_neg.indexOf(__vr0 +'[') > -1 && (_neg.indexOf(__vr0 +'[') - _neg.lastIndexOf('&&')) < 5) _neg  = _neg.substring(0, _neg.lastIndexOf('&&'))
 			if (_neg.indexOf('var ') > -1) _neg = ''
 		    }
+		    if (_neg && _neg.split('(').length > _neg.split(')').length) _neg = _neg +')'
 		  }
 
 	      if (__z.split(_dxh)[1]) { __k = __z.split(_dxh)[0]; __k = __k.substring(__k.lastIndexOf('{')+1); //console.log(__k); console.log(__vr0)
@@ -1895,7 +1896,10 @@ function find_key(_rpt){
 	  var temp = (_dex0[__i] == yt6d.arg.encode) ? true : false, doll = (_dex0[__i].indexOf('$') > -1) ? '' : '\\$'
 	  try { try { eval('var '+ _dex0[__i]); } catch(e){ //console.log('Error '+ _dex0[__i]);
 	    continue };
-	_dex = new RegExp(    sprintf('[^\\w.'+ doll +']%s=function[^}].+?(?<!{)(?=};)', _dex0[__i].split('$').join('\\$'))  ); _dex = _rpt.match(_dex); _dex = (_dex) ? _dex[0] +'};' : ''; if (_dex.split('},')[1] && _dex.split('},')[1].indexOf('=function') > -1 && _dex.split('},')[1].indexOf('=function') < 4 && _dex.split('},')[1].substring(_dex.split('},')[1].indexOf('{')) ) { _dex = _dex.split('},')[0] + '};'; }; if (_dex.indexOf(',') == 0) _dex = _dex.slice(1); //console.log(_dex.split('=')[0])
+	_dex = new RegExp(    sprintf('[^\\w.'+ doll +']%s=function[^}].+?(?<!{)(?=};)', _dex0[__i].split('$').join('\\$'))  ); _dex = _rpt.match(_dex); _dex = (_dex) ? _dex[0] +'};' : '';
+	if (_dex.split('},')[1] && ((_dex.split('},')[1].indexOf('=function') > -1 && _dex.split('},')[1].indexOf('=function') < 7) || (_dex.split('},')[1].indexOf('=async function') > -1 && _dex.split('},')[1].indexOf('=async function') < 7)) //&& _dex.split('},')[1].substring(_dex.split('},')[1].indexOf('{') > -1) 
+	) { _dex = _dex.split('},')[0] + '};'; } 
+	if (_dex.indexOf(',') == 0) _dex = _dex.slice(1); //console.log(_dex.split('=')[0])
 	    if (_dex) {
 	        //if (_dex.indexOf(yt6d.arg.encode +'(') > -1) { temp = true; console.log(_dex0[__i]) }
 	        var _dxh = _dex.split('{').length - _dex.split('}').length;
@@ -1949,7 +1953,10 @@ function find_key(_rpt){
 		//console.log(_dex0[__i] +'\n'+ _dex1)
 
 	    } else {  _dex = new RegExp(    sprintf('[^\\w]%s=[^=].+?(?=;)', _dex0[__i].split('$').join('\\$'))  ); _dex = _rpt.match(_dex); _dex = (_dex) ? _dex[0] : '';
-		if (_dex) try { eval('var '+ _dex.substring(_dex.indexOf(_dex0[__i])) ); _dex1 = _dex1 + 'var '+ _dex.substring(_dex.indexOf(_dex0[__i])) +';' } catch(e){}
+		if (_dex) {
+		  if (_dex.split('),')[1] && _dex.split('),')[1].indexOf('=RegExp(') > -1 && _dex.split('),')[1].indexOf('=RegExp(') < 7) { _dex = _dex.split('),')[0] + ');'; }
+		  try { eval('var '+ _dex.substring(_dex.indexOf(_dex0[__i])) ); _dex1 = _dex1 + 'var  '+ _dex.substring(_dex.indexOf(_dex0[__i])) +';' } catch(e){}
+		}
 	      }
 
 
@@ -11065,7 +11072,7 @@ if (c[1]) {
 	      n_0 = yt6d.ndec(n__1, n__2, n_value, m, n__1, n__2, n_value, mm); //if (n_0) console.log(n_value +' --> '+ n_0 +' '+ nrg +' '+ n__1 +' '+ n__2)
 
 	      if (typeof n_0 == 'string' && n__1 && n_0.length == 14) { yt6d.nrg.probe[qs.itag] = qs.itag; nrg = 9999 } else {
-	        if (yt6d.nrg.probe[nrg] != qs.itag) { yt6d.nrg.probe[nrg] = true } //else console.log(qs.itag + ' '+ nrg +' '+ yt6d.nrg.probe[nrg])
+	        if (yt6d.nrg.probe[nrg] != qs.itag) { yt6d.nrg.probe[nrg] = true }
 	        nrg = (nrg + 1)
 	      }
 	    } catch(e){ e = e.toString()
@@ -23912,7 +23919,7 @@ function control_panel1() {
     js.setAttribute('class','yt-alert-message')
     var opacity = (yt6.layout == 16 && !yt6.ytm && !yt6.mobile) ? '1' : '0.8'
     js.setAttribute('style','background:#FFFFFF; opacity:'+ opacity +'; display: table; height: 44px'); js.style.display = 'table'; js.style.height = '44px' //opacity: 0.8; width: 100% js.style.width = '100%'
-  }
+  } else if (gc(yt_alert_message)[1]) gc(yt_alert_message)[1].parentNode.removeChild(gc(yt_alert_message)[1])
 
 
   if (gid('remove-sp') == null) {
