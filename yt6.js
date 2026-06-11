@@ -1949,6 +1949,7 @@ function find_key(_rpt){
 	      };
 	      if (temp && typeof yt6d.arg.uriComponent == 'function' && _dex2o) { _dex = _dex.split( _dex2o.replace(__vr +';'+ dekrypt0,'')).join(_dex2); }
 	      if (_dex.indexOf(';') < _dex.indexOf('=')) _dex = _dex.replace(';','')
+	      if (_dex.indexOf('}') < _dex.indexOf('=')) _dex = _dex.replace('}','')
 	      _dex1 = _dex1 + 'var '+ _dex; 
 		//console.log(_dex0[__i] +'\n'+ _dex1)
 
