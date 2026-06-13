@@ -1774,7 +1774,7 @@ function find_key(_rpt){
 			  _neg = _neg.split(temp)[0]; //console.log(temp); console.log(_neg)
 			  if (_neg.slice(-2) == '&&') {
 			    _neg = _neg.substring(0, _neg.lastIndexOf('&&'))
-			    if (temp.split(')')[0].split('(')[1]) __n2 = __n2.split(_neg +'&&'+ temp).join(_neg + '&&typeof '+ temp.split('(')[0] +'=="function"&&' + temp)
+			    if (temp.split(')')[0].split('(')[1] && __z.split('a:{')[0].split(';')[1].indexOf(temp.split('=')[0].split('!')[0].split('<')[0].split('>')[0].split('%')[0] +'(') > -1) __n2 = __n2.split(_neg +'&&'+ temp).join(_neg + '&&typeof '+ temp.split('=')[0].split('!')[0].split('<')[0].split('>')[0].split('%')[0].split('(')[0] +'=="function"&&' + temp)
 			  }
 			}
 			if (_neg.indexOf('){') > -1 && (_neg.indexOf('){') - _neg.substring(0, _neg.lastIndexOf('){')+1).lastIndexOf('function(')) > 12 ) _neg = _neg.substring(0, _neg.lastIndexOf('){')+1)
