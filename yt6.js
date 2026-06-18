@@ -11113,7 +11113,7 @@ if (c[1]) {
 		  if (yt6d.nrg.probe[nrg] != qs.itag) yt6d.nrg.probe[nrg] = 1; 
 		}
 		if (e.indexOf('recursion') > -1 || e.indexOf('exceeded') > -1) yt6d.nrg.probe[nrg] = true
-		nrg = (nrg + 1); console.log(e.toString()); 
+		nrg = (nrg + 1); //console.log(e.toString()); 
 	      }
 	  
 	    //if (nrg != 9999) n_decoded = n_value
