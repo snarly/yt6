@@ -1814,10 +1814,13 @@ function find_key(_rpt){
 	            var _para1, _para2
 	            if (__n2.split(xord +'='+ para2 +'^'+ para1)[1]) { _para1 = new RegExp(sprintf('((?!function)%s)+', para1), 'gm'); __s = _para1 }
 	            if (__n2.split(xord +'='+ para1 +'^'+ para2)[1]) { _para2 = new RegExp(sprintf('((?!function)%s)+', para2), 'gm'); __s = _para2 }
+				if (_neg.indexOf(xord +'^') > -1) _neg = _neg.split(xord +'^').join('_xord^')
 
-	            xord = 'yt6d.nrg = function(start, test, '+ para1 +', '+ para2 +'){ var __j=start||0, para1='+ para1 +', para2='+ para2 +', xord=('+ para2 +'^'+ para1+ ')||'+ _xord +', _xord="'+ xord +'"; for(__j;__j<9950;__j++) { if (true || '+ _rgx.replace(__s, '__j') + ') { if ((yt6d.nrg.probe && yt6d.nrg.probe[__j])'+ ((_neg && _neg.indexOf(_rgx) == -1) ? ' || ('+ _neg.replace(__s, '__j') +')' : '') + ') { continue }; '+ ((_para1 == __s) ? 'para1' : 'para2') +' = __j; break }; if (!test) break }; if ('+ (_para1 == __s) +') { para2 = para1 ^ xord;  } else para1 = para2 ^ xord; return [para1, para2] }'
-	            eval(xord); yt6d.nrg.probe = []
-	            xord = yt6d.nrg(0, false, para1, para2)
+	            xord = 'yt6d.nrg = function(start, test, '+ para1 +', '+ para2 +'){ var __j=start||0, para1='+ para1 +', para2='+ para2 +', xord=('+ para2 +'^'+ para1+ ')||'+ _xord +', _xord="'+ xord +'", '+ __vr.split('var ')[1] +'; for(__j;__j<9950;__j++) { if (test || '+ _rgx.replace(__s, '__j') + ') { if ((yt6d.nrg.probe && yt6d.nrg.probe[__j])'+ ((_neg && _neg.indexOf(_rgx) == -1) ? ' || ('+ _neg.replace(__s, '__j') +')' : '') + ') { continue }; '+ ((_para1 == __s) ? 'para1' : 'para2') +' = __j; break }; if (!test) break }; if ('+ (_para1 == __s) +') { para2 = para1 ^ xord;  } else para1 = para2 ^ xord; return [para1, para2] }'
+	            eval(xord)
+				try { eval(yt6d.nrg(0, true, para1, para2)) } catch(f) { console.log(f.toString()); if (f.toString().indexOf(' is not defined') > -1) { xord = xord.split('var __j=start||0, ').join('var __j=start||00, '+ f.toString().substring(f.toString().indexOf(' '), f.toString().indexOf(' is not defined')) +'="undefined",'); eval(xord) } else throw e }
+				yt6d.nrg.probe = []
+				xord = yt6d.nrg(0, false, para1, para2)
 	            //if (_neg && _neg.indexOf(_rgx) == -1) { console.log(_neg); }//__n2 = __n2.split(_neg).join(_neg.substring(0,_neg.lastIndexOf(')')) + '') }
 	          }
 	        }
@@ -2011,6 +2014,7 @@ function find_key(_rpt){
 //var temp = __n2.substring(__n2.lastIndexOf('return ')).split(' ')[1]
 //if (temp) { temp = temp.split('}')[0].split(';')[0]; __n2 = __n2.split(','+temp+'=[]').join(',console.log("____"+X)') }
 
+//__n2 = __n2.split('){switch(y)').join('){try{console.log(this )}catch(ff){console.log(ff.toString())};switch(y)');
 
 	eval('yt6d.ndec = ' + __n2)
       }
@@ -11095,7 +11099,7 @@ if (c[1]) {
 	    //console.log(qs.itag +' ' + nrg)
 	    var m = clone(yt6d.arg.temp), mm = clone(yt6d.arg.temp); yt6d.arg.usp = href.split('?')[1]
 	    if (n_value != n_decoded) 
-	    while (nrg < 123) try {
+	    while (nrg < 1230) try {
 	      
 	      try { n_0 = yt6d.nrg(nrg, false) } catch(e){}; var n__1 = n_0[0]; var n__2 = n_0[1]
 	      n_0 = yt6d.ndec(n__1, n__2, n_value, m, n__1, n__2, n_value, mm); //if (n_0) console.log(n_value +' --> '+ n_0 +' '+ nrg +' '+ n__1 +' '+ n__2)
@@ -11109,7 +11113,7 @@ if (c[1]) {
 		  if (yt6d.nrg.probe[nrg] != qs.itag) yt6d.nrg.probe[nrg] = 1; 
 		}
 		if (e.indexOf('recursion') > -1 || e.indexOf('exceeded') > -1) yt6d.nrg.probe[nrg] = true
-		nrg = (nrg + 1); //console.log(e.toString()); 
+		nrg = (nrg + 1); console.log(e.toString()); 
 	      }
 	  
 	    //if (nrg != 9999) n_decoded = n_value
