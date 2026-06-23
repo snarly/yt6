@@ -1539,7 +1539,7 @@ function find_key(_rpt){
         __s = (_rpt.split(__n0[__j])[0].substring(_rpt.split(__n0[__j])[0].lastIndexOf('=function(')-3) ) + __n0[__j] + _rpt.split(__n0[__j])[1].substring(0,kbloc)
         __s = __s.split('return ')[0] + 'return ' + __s.split('return ')[1].split('}')[0] + '};'
         if (__s && !(/^[a-zA-Z_\$]/.test(__s.substring(0,1)))) __s = ' '+ __s.substring(1, __s.length)
-        obfuscated.push(__s)
+        obfuscated.push(__s.split('\n').join('').split('= [').join('=['))
       }
     }}
     for(__i=0;__i<obfuscated.length;__i++) { __n0 = obfuscated[__i].split('=function')[0].split(' ').join('').split(',').join('').split(';').join('');
@@ -1706,6 +1706,7 @@ function find_key(_rpt){
 	try {
 
 	// array-filter
+	__n2 = __n2.split('\n').join('').split('= [').join('=[')
 	var _dex = __n2.split('=['), _dex0 = [], _dxh, array, _args, _rgx, _nrg; yt6.r1 = []; yt6.r2 = []
 	for(__i=0;__i < _dex.length;__i++)
 	{
@@ -1818,9 +1819,12 @@ function find_key(_rpt){
 
 	            xord = 'yt6d.nrg = function(start, test, '+ para1 +', '+ para2 +'){ var __j=start||0, para1='+ para1 +', para2='+ para2 +', xord=('+ para2 +'^'+ para1+ ')||'+ _xord +', _xord="'+ xord +'", '+ __vr.split('var ')[1] +'; for(__j;__j<9950;__j++) { if (test || '+ _rgx.replace(__s, '__j') + ') { if ((yt6d.nrg.probe && yt6d.nrg.probe[__j])'+ ((_neg && _neg.indexOf(_rgx) == -1) ? ' || ('+ _neg.replace(__s, '__j') +')' : '') + ') { continue }; '+ ((_para1 == __s) ? 'para1' : 'para2') +' = __j; break }; if (!test) break }; if ('+ (_para1 == __s) +') { para2 = para1 ^ xord;  } else para1 = para2 ^ xord; return [para1, para2] }'
 	            eval(xord)
-				try { eval(yt6d.nrg(0, true, para1, para2)) } catch(f) { console.log(f.toString()); if (f.toString().indexOf(' is not defined') > -1) { xord = xord.split('var __j=start||0, ').join('var __j=start||00, '+ f.toString().substring(f.toString().indexOf(' '), f.toString().indexOf(' is not defined')) +'="undefined",'); eval(xord) } else throw e }
-				yt6d.nrg.probe = []
-				xord = yt6d.nrg(0, false, para1, para2)
+		    try { eval(yt6d.nrg(0, true, para1, para2)) } catch(f) { //console.log(f.toString())
+		      if (f.toString().indexOf(' is not defined') > -1) { xord = xord.split('var __j=start||0, ').join('var __j=start||00, '+ f.toString().substring(f.toString().indexOf(' '), f.toString().indexOf(' is not defined')) +'="undefined",'); eval(xord)
+		      } else throw e
+		    }
+		    yt6d.nrg.probe = []
+		    xord = yt6d.nrg(0, false, para1, para2)
 	            //if (_neg && _neg.indexOf(_rgx) == -1) { console.log(_neg); }//__n2 = __n2.split(_neg).join(_neg.substring(0,_neg.lastIndexOf(')')) + '') }
 	          }
 	        }
@@ -1981,12 +1985,6 @@ function find_key(_rpt){
 		    if (_dex.indexOf('}') > -1 && _dex.indexOf('}') == _dex.lastIndexOf('}') && (_dex.indexOf('{') == -1 || (_dex.indexOf('=/') > -1 && _dex.indexOf('=/') < _dex.indexOf('{')))) _dex = _dex.substring(0, _dex.lastIndexOf('}')) + ';'
 		  }
 		  try { eval('var '+ _dex.substring(_dex.indexOf(_dex0[__i])) ); _dex1 = _dex1 + 'var  '+ _dex.substring(_dex.indexOf(_dex0[__i])) +';'; } catch(e){ e = e.toString(); //console.log(e);
-		    /*if (e.indexOf('is not defined') > -1) { _dex1 = _dex1 + 'var  '+ _dex.substring(_dex.indexOf(_dex0[__i])) +';' } else
-		    if (_dex.indexOf('=class') > -1 && e.indexOf('missing } after function body') > -1) {
-		      _dex = _dex + _rpt.split(_dex)[1]
-		      _dex = _dex.substring(0, (findClosingBracketMatchIndex(_dex.substring(_dex.indexOf('{')), 0, '{', '}', false, true) + _dex.indexOf('{') +1 ))
-		      if (_dex) _dex1 = _dex1 + 'var  '+ _dex.substring(_dex.indexOf(_dex0[__i])) +';'
-		    }*/
 		  }
 		}
 	      }
@@ -1999,7 +1997,7 @@ function find_key(_rpt){
 
 	if (__n2) {
 	  if (!(/^[a-zA-Z_\$]/.test(__n2.substring(0,1)))) __n2 = ' '+ __n2.substring(1, __n2.length)
-	  if (__n2.slice(-4) == 'var ' || __n2.slice(-4) == ' var') { console.log('wtf'); __n2 = __n2.substring(0, __n2.length-4) }
+	  __n2 = __n2.split('let ').join('var ') //*uck this *hit
 	}
 
 
