@@ -1545,11 +1545,14 @@ function find_key(_rpt){
     for(__i=0;__i<obfuscated.length;__i++) { __n0 = obfuscated[__i].split('=function')[0].split(' ').join('').split(',').join('').split(';').join('');
       //console.log(__n0); console.log(obfuscated[__i].indexOf('a:{'))
       for(__j=1;__j<obfuscated[__i].split('a:{').length;__j++) {
-        if (__n0.indexOf(_fcn) == -1 && obfuscated[__i].split('a:{')[__j])
-        for(__k=1;__k<obfuscated[__i].split('a:{')[__j].split('=[').length;__k++) {
+	if (__n0.indexOf(_fcn) == -1 && obfuscated[__i].split('a:{')[__j])
+	for(__k=1;__k<obfuscated[__i].split('a:{')[__j].split('=[').length;__k++) {
           __s = obfuscated[__i].split('a:{')[__j].split('=[')[__k]
           if (__s && __s.substring(0,1) != ']' && __s.split(',-')[1] ) { __n = __n0; __s = __j; break }
-    }}}
+	}
+      }
+      if (!__n && _fcn) __n = _fcn
+    }
   } catch(e){}
 
 
@@ -1810,7 +1813,9 @@ function find_key(_rpt){
 		    if (temp && temp.indexOf('{') == 0) {
 		      temp = __z.split('a:{')[0].substring(__z.split('a:{')[0].lastIndexOf('}'))
 		      if (temp.indexOf('if(') > -1) temp = temp.substring(temp.lastIndexOf('if')+2)
-		      if (temp) __neg = (__neg) ? __neg + '||' + temp : __neg; //console.log(__neg)
+		      if (temp)
+		      if (__n2.split(temp)[1] && __n2.split(temp)[1].split('return ')[0].indexOf('a:{') != __n2.split(temp)[1].split('return ')[0].lastIndexOf('a:{'))
+		        __neg = (__neg) ? __neg + '||' + temp : __neg; //console.log(__neg)
 		    }
 		    }}//breakit
 		    _neg = __neg
@@ -1836,9 +1841,9 @@ function find_key(_rpt){
 	            var _para1, _para2
 	            if (__n2.split(xord +'='+ para2 +'^'+ para1)[1]) { _para1 = new RegExp(sprintf('((?!function)%s)+', para1), 'gm'); __s = _para1 }
 	            if (__n2.split(xord +'='+ para1 +'^'+ para2)[1]) { _para2 = new RegExp(sprintf('((?!function)%s)+', para2), 'gm'); __s = _para2 }
-				if (_neg.indexOf(xord +'^') > -1) _neg = _neg.split(xord +'^').join('_xord^')
+		    if (_neg.indexOf(xord +'^') > -1) _neg = _neg.split(xord +'^').join('_xord^')
 
-	            xord = 'yt6d.nrg = function(start, test, '+ para1 +', '+ para2 + ((para3) ? ', '+ para3 + ((para4) ? ', '+ para4 : '') : '') +'){ var __j=start||0, para1='+ para1 +', para2='+ para2 + ((para3) ? ', '+ para3 +'='+ para3 +'||""' + ((para4) ? ', '+ para4 +'='+ para4 +'||""' : '') : '') +', xord=('+ para2 +'^'+ para1+ ')||'+ _xord +', _xord="'+ xord +'", '+ __vr.split('var ')[1] +'; for(__j;__j<9950;__j++) { if (test || '+ _rgx.replace(__s, '__j') + ') { if ((yt6d.nrg.probe && yt6d.nrg.probe[__j])'+ ((_neg && _neg.indexOf(_rgx) == -1) ? ' || ('+ _neg.replace(__s, '__j') +')' : '') + ') { continue }; '+ ((_para1 == __s) ? 'para1' : 'para2') +' = __j; break }; if (!test) break }; if ('+ (_para1 == __s) +') { para2 = para1 ^ xord;  } else para1 = para2 ^ xord; return [para1, para2] }';
+	            xord = 'yt6d.nrg = function(start, test, '+ para1 +', '+ para2 + ((para3) ? ', '+ para3 + ((para4) ? ', '+ para4 : '') : '') +'){ var __j=start||0, para1='+ para1 +', para2='+ para2 + ((para3) ? ', '+ para3 +'='+ para3 +'||""' + ((para4) ? ', '+ para4 +'='+ para4 +'||""' : '') : '') +', xord=('+ para2 +'^'+ para1+ ')||'+ _xord +', _xord="'+ xord +'", '+ __vr.split('var ')[1] +'; for(__j;__j<9950;__j++) { if (test || '+ _rgx.replace(__s, '__j') + ') { if ((yt6d.nrg.probe && yt6d.nrg.probe[__j])'+ ((_neg && !_neg && _neg.indexOf(_rgx) == -1) ? ' || ('+ _neg.replace(__s, '__j') +')' : '') + ') { continue }; '+ ((_para1 == __s) ? 'para1' : 'para2') +' = __j; break }; if (!test) break }; if ('+ (_para1 == __s) +') { para2 = para1 ^ xord;  } else para1 = para2 ^ xord; return [para1, para2] }';
 	            eval(xord)
 		    try { eval(yt6d.nrg(0, true, para1, para2)) } catch(f) { //console.log(f.toString())
 		      if (f.toString().indexOf(' is not defined') > -1) { xord = xord.split('var __j=start||0, ').join('var __j=start||00, '+ f.toString().substring(f.toString().indexOf(' '), f.toString().indexOf(' is not defined')) +'="undefined",'); eval(xord)
@@ -2570,14 +2575,7 @@ yt6.tmp = ""+
 	    _itag = 0; \
 	    for(j in vi) { vij = vi[j];\
 	      if (_itag) { ok = false; };\
-	      if (vij && typeof vij === 'object' && ((b && !(c && c == yt6.mapObj)) ||  (c && ((c != yt6.mapObj) || (vij[c] && typeof vij[c] == 'object')) )) && typeof vij.isLivePlayback === 'boolean') { /*console.log(c+' / '+d); console.log(vij)*/; ok = true; if (c != yt6.mapObj || c == yt6.mapObj) { for(d in vij) if (vij[d] && typeof vij[d] == 'object') {\
-		if (!vij.duration && typeof vij[d].isLivePlayback == 'boolean' && vij[d].duration) { vij = vij[d]; }; if (!vij.duration) { continue };\
-		for(l in vij[d]) if (vij[d][l] && typeof vij[d][l] == 'object') {\
-		  if (yt6.mapObj != c && vij[d][l].info) { yt6.mapObj = d; c = yt6.mapObj; vik = vij[d]; break; /*break;;  break; break; break; break*/ } \
-		}\
-		if (yt6.mapObj)\
-		for(l in vij) if (vij[l] && typeof vij[l] == 'object' && vij[l][c] && typeof vij[l][c] == 'object' && typeof vij[l][c].url == 'string' && vij[l][c].url.indexOf('http') == 0 && vij[l][c].url.indexOf('itag=') == -1) { yt6.sabr = vij[l][c].url + '&rn=1&alr=yes' };\
-	      }  };  } else if (!ok) { continue };\
+	      if (vij && typeof vij === 'object' && ((b && !(c && c == yt6.mapObj)) ||  (c && ((c != yt6.mapObj) || (vij[c] && typeof vij[c] == 'object')) )) && typeof vij.isLivePlayback === 'boolean') { /*console.log(c+' / '+d); console.log(vij)*/; ok = true; if (c != yt6.mapObj || c == yt6.mapObj) { for(d in vij) if (vij[d] && typeof vij[d] == 'object') { if (!vij.duration && typeof vij[d].isLivePlayback == 'boolean' && vij[d].duration) { vij = vij[d] }; if (!vij.duration) { continue }; for(l in vij[d]) if (vij[d][l] && typeof vij[d][l] == 'object' && vij[d][l].info) { yt6.mapObj = d; c = yt6.mapObj; vik = vij[d]; break; break;; /*break; break; break; break*/ }   }  };  } else if (!ok) { continue };\
 	      if (ok && vij && vik == vij[c]) { for (l in vik) if (vik[l] && typeof vik[l] == 'object' && vik[l].info && typeof vik[l].info == 'object' && vik[l].info.itag) { _itag = vik[l].info.itag; if (!list[_itag]) list[_itag] = clone(vik[l]); continue } };\
 	      if (list && (_itag > 0 || yt6.mobile)) { yt6.list = list; yt6d.path = clone(path);yt6d.path.push(key);yt6d.path.push(i); break; break;/*yt6d.path.push(j);yt6d.path.push(yt6.mapObj);yt6d.path.push(yt6.mapObj)*/ };\
 	    };\
@@ -6031,10 +6029,17 @@ function ageless_verification(spfpc, ios) {
 	   ) {
 	  //if (yt6d.error == 'embed') ios = true
 	  var quot = (!(yt6d.init && yt6.mobile) && (yt6d.init && c[1] && c[1].video_id && c[1].video_id != yt6d.init) || yt6.ytp.embed || yt6d.subscriptions || y != '' || !(c[1] && c[1].player_response) ) ? '"' : '';
+	  
+	  var andr = (yt6.ytp.embed) ? true : false
 
 	  if (yt6d.context) {
 	    yt6d.context.client.visitorData = ''
 	    yt6d.context.client.playerType = 'UNIPLAYER'
+	    if (andr) { //pretending we use an oculus headset to get all formats
+	      yt6d.context.client.clientName = 'ANDROID_VR'
+	      yt6d.context.client.clientVersion = '1.65.10'
+	      yt6d.context.client.userAgent = 'com.google.android.apps.youtube.vr.oculus/1.65.10 (Linux; U; Android 12L; eureka-user Build/SQ3A.220605.009.A1) gzip'
+	    }
 	    var oUrl = yt6d.context.originalUrl
 	    if (oUrl && oUrl.split('watch?v=')[1]) context = context.split(oUrl).join(oUrl.split('watch?v=')[0] + 'watch?v=' + vid + oUrl.split('watch?v=')[1].substr(11, oUrl.split('watch?v=')[1].length).split('index=').join(''));
 	  }
@@ -6042,7 +6047,7 @@ function ageless_verification(spfpc, ios) {
 	  var context = JSON.stringify(yt6d.context), oUrl
 
 
-	  
+
 
 	  var params =
 '{'+
@@ -6055,12 +6060,13 @@ function ageless_verification(spfpc, ios) {
 	'{'+
 '		"client": {'+
 
-	((!yt6.blocked && !yt6.blocked_m)
+	((!yt6.blocked && !yt6.blocked_m && !andr)
 	?	'	"clientName": '+ ((ios) ? '"IOS"' : ( quot + ((yt6.mobile && !yt6.ytp.embed) ? "M" : "") +'WEB'+ ((yt6.ytp.embed) ? "" : "")  ) + quot ) +',\
 			"clientVersion": '+ ((ios) ? '"19.29.1"' : ((yt && yt.config_ && yt.config_.INNERTUBE_CLIENT_VERSION) ? ('"'+ yt.config_.INNERTUBE_CLIENT_VERSION +'"') : "7.20240724.13.00") ) +''
-	:	'	"clientName": "TVHTML5_SIMPLY_EMBEDDED_PLAYER",\
-			"clientVersion": "2.0"'
-	) +','+
+	:	'	"clientName": "ANDROID_VR",\
+			"clientVersion": "1.65.10",\
+			"userAgent": "com.google.android.apps.youtube.vr.oculus/1.65.10 (Linux; U; Android 12L; eureka-user Build/SQ3A.220605.009.A1) gzip"'
+	) +','+ //TVHTML5_SIMPLY_EMBEDDED_PLAYER 2.0
 '			"hl": "en"'+
 '		}' +
 '	}'
@@ -10434,12 +10440,14 @@ function wallpaper(){
 
     if (yt6.layout == 16) {
       var z = gid('secondary-inner'), grid = (yt6.flexy == 'grid' && (yt6.size == 'default' || (yt6.size !== 'default' && gid('primary-inner') && typeof yt6.x == 'string' && 1*(yt6.w.replace('px','')) > gid('primary-inner').offsetWidth))) ? true : false
-      if (z) { var y = gid('secondary')
+      if (z) { var y = gid('secondary'), l26 = (gid('fixed-side-menu') && !gid('fixed-side-menu').hasAttribute('hidden')) ? true : false
 	z.style.width = (yt6.wallpaper) ? '422px' : ''
-	z.style.position = (yt6.wallpaper && !yt6.wide) ? 'absolute' : ''
+	z.style.position = (yt6.wallpaper && !yt6.wide && !l26) ? 'absolute' : ''
 	//z.style.marginTop = (yt6.wallpaper && !yt6.wide && (yt6.size != 'default' || !yt6.pls)) ? ((!chat) ? (1 * yt6.h.replace('px','') + 24) +'px' : yt6.h +'px') : ''
+	if (!l26 || !(yt6.size == 'default' || !yt6.size)) {
 	if (y) {//if (y) if (yt6.wallpaper) 
-	  y.style.top = (!yt6.wide) ? (1 * yt6.h.replace('px','') + 24) + 'px' : '' //y.style.marginTop = (!yt6.wide && yt6.size != 'defalult') ? (1 * yt6.h.replace('px','') + 24) + 'px' : ''
+	  y.style.top = (!yt6.wide) ? (1 * yt6.h.replace('px','') + 24 + (l26 ? 28 : 0)) + 'px' : '' //y.style.marginTop = (!yt6.wide && yt6.size != 'defalult') ? (1 * yt6.h.replace('px','') + 24) + 'px' : ''
+	  if (l26) y.style.position = 'absolute'
 	  if (!yt6.wide) { y.style.marginTop = '' } else y.style.marginTop = '24px'
 	} //else y.style.marginTop = ''
 
@@ -10462,6 +10470,7 @@ function wallpaper(){
 	    } else yt6.pls.style.marginTop = (yt6.wide) ? '20px' : ''
 	  }
 
+	} else if (l26) { y.style.marginTop = '12px'; y.style.position = '' }
       }
     }
 
@@ -11086,7 +11095,7 @@ if (c[1]) {
 	  //if (z[j] == yt6.ytp.V) { qs = (yt6.ytp.Vobj) ? yt6.ytp.Vobj : false; if (!qs) continue; ok = true } else
 	  //if (z[j] == yt6.ytp.A) { qs = (yt6.ytp.Aobj) ? yt6.ytp.Aobj : false; if (!qs) continue; ok = true } else
 	    {
-	      if (typeof yt6.error != 'string') { yt6.error = '---'+ qs.itag } else yt6.error = yt6.error +'---'+ qs.itag; continue
+	      if (typeof yt6.error != 'string') { yt6.error = '---'+ qs.itag } else yt6.error = yt6.error +'---'+ qs.itag; //continue
 	    }
 	}
 	if (yt6.blocked && yt6d.previous.linx && typeof yt6d.previous.linx.includes == 'function' && yt6d.previous.linx.includes(qs.url)) { continue }
@@ -11184,12 +11193,12 @@ if (c[1]) {
 	  if (qs.signature){
 	    href += '&' + signame + '=' + qs[signame]
 	  } else
-	    if (qs.s) { var s = ((qs.s.indexOf('AJfQ') == 0 || qs.s.indexOf('AHEq') == 0) && qs.itag >= 103) ? qs.s : dc(yt6d.arg.s0, yt6d.arg.s1, qs.s, yt6d.arg.s2, yt6d.arg.s3)
+	    if (qs.s) { var s = ((qs.s.indexOf('AJfQ') == 0 || qs.s.indexOf('AHEq') == 0 || qs.s.indexOf('AE0') == 0) && qs.itag >= 103) ? qs.s : dc(yt6d.arg.s0, yt6d.arg.s1, qs.s, yt6d.arg.s2, yt6d.arg.s3)
 	      href += '&' + signame + '=' + s; //console.log(qs.itag +' '+ ok +'\n'+ qs.s +'\n'+ s)
 	    }
 	}
 
-	if (yt6.encrypted && href.indexOf('&'+ signame +'=AJfQ') == -1 && href.indexOf('&'+ signame +'=AHEq') == -1) continue
+	if (yt6.encrypted && href.indexOf('&'+ signame +'=AJfQ') == -1 && href.indexOf('&'+ signame +'=AHEq') == -1 && qs.s.indexOf('&'+ signame +'=AE0') == -1)  continue
 
 
 	var fn = yt6.fn = '';
@@ -18980,7 +18989,7 @@ if (!mep) mep = gid(mep_x('mep_'))
 	    ads = gt(z[i], 1)[0];
 	    if (ads) { if (yt6.ads_off) { ads.setAttribute('hidden','') } else if (ads.hasAttribute('hidden')) ads.removeAttribute('hidden') }
 	  }
-	  if (yt6.flexy != 'grid') { ads = gid('panels'); if (ads) { ads.style.display = (yt6.ads_off) ? 'none' : '' } }
+	  if (yt6.flexy != 'grid' && !(gid('fixed-side-menu') && !gid('fixed-side-menu').hasAttribute('hidden'))) { ads = gid('panels'); if (ads) { ads.style.display = (yt6.ads_off) ? 'none' : '' } }
 	  z = gc('smartimation__border')[0]; if (z) { z.setAttribute('style','display: none'); z.style.display = 'none' }
 
 	};
@@ -22652,13 +22661,15 @@ if ((p1 != null) && (yt6.x)){
   if (yt6.ytp.embed && yt6.oldbrowser && yt6.p && yt6.p.tagName == 'EMBED') { yt6.osw.style.height = '0px' }
 
     if (yt6.layout == 16) {
-      var z = gid('secondary-inner')
+      var z = gid('secondary-inner'), l26 = (gid('fixed-side-menu') && !gid('fixed-side-menu').hasAttribute('hidden')) ? true : false
       if (z) { var y = gid('secondary')
 	z.style.width = (yt6.wallpaper) ? '422px' : ''
-	z.style.position = (yt6.wallpaper && !yt6.wide) ? 'absolute' : ''
+	z.style.position = (yt6.wallpaper && !yt6.wide && !l26) ? 'absolute' : ''
 	//z.style.marginTop = (yt6.wallpaper && !yt6.wide && (yt6.size != 'default' || !yt6.pls)) ? ((!chat) ? (1 * yt6.h.replace('px','') + 24) +'px' : yt6.h +'px') : ''
+	if (!l26 || !(yt6.size == 'default' || !yt6.size)) {
 	if (y) {//if (y) if (yt6.wallpaper) 
-	  y.style.top = (!yt6.wide) ? (1 * yt6.h.replace('px','') + 24) + 'px' : '' //y.style.marginTop = (!yt6.wide && yt6.size != 'defalult') ? (1 * yt6.h.replace('px','') + 24) + 'px' : ''
+	  y.style.top = (!yt6.wide) ? (1 * yt6.h.replace('px','') + 24 + (l26 ? 28 : 0)) + 'px' : '' //y.style.marginTop = (!yt6.wide && yt6.size != 'defalult') ? (1 * yt6.h.replace('px','') + 24) + 'px' : ''
+	  if (l26) y.style.position = 'absolute'
 	  if (!yt6.wide) { y.style.marginTop = '' } else y.style.marginTop = '24px'
 	} //else y.style.marginTop = ''
 
@@ -22669,7 +22680,7 @@ if ((p1 != null) && (yt6.x)){
 	    } else {
 		if (!(yt6.wide && !yt6.pls)) {										//(1 * yt6.h.replace('px','') + 24) +'px'
 		  yt6.wsb.style.marginTop = ( (!yt6.pls) || !yt6.wide) ? ( !(yt && yt.config_ && yt.config_.LOGGED_IN) ? '' : '10px') : (1 * yt6.h.replace('px','') - 24) +'px' // '10px' :
-		} else yt6.wsb.style.marginTop = '20px'
+		} else if (l26) { y.style.marginTop = '12px'; y.style.position = '' }
 	      }
 	  }
 	  //if (yt6.pls) yt6.pls.style.marginTop = (yt6.wallpaper || (!yt6.wallpaper && yt6.size == 'default')) ? '' : ((!chat) ? (-1 * yt6.pls.style.marginTop.replace('px','') - 24) +'px' : yt6.pls.style.marginTop) //yt6.h
@@ -22681,6 +22692,7 @@ if ((p1 != null) && (yt6.x)){
 	    } else yt6.pls.style.marginTop = (yt6.wide) ? '20px' : ''
 	  }
 
+	} else y.style.marginTop = '12px'
       }
     }
 
