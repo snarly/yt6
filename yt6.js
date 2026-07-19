@@ -1879,10 +1879,24 @@ function find_key(_rpt){
 	  } else if (_dex[__i].indexOf('{')>-1) { _dxh = true } else _dxh = false
 	  if (_dex[__i].indexOf('function(')>-1) { _dxh = true };
 	  if ((_dex[__i].indexOf('{')>-1 || _dex[__i].indexOf('}')>-1) && _dex[__i].split('}').length >= _dex[__i].split('{').length) _dxh = false;
+
+	  var keywords_substring = false
+	  var keywords = [
+	  'abstract','arguments','async','await','boolean','break','byte','case','catch','char','class','const','continue','debugger',
+	  'default','delete','double','else','enum','eval','export','extends','false','final','finally','float','function','goto','implements','function',
+	  'import','instanceof','interface','long','match','native','package','private','protected','public','return','short','static','super','switch',
+	  'synchronized','this','throws','transient','true','typeof','using','void','volatile','while','with','yield'
+	  ] //do for if in int let new null throw try var
+
+	  if (__n2.indexOf(_dex[__i]) < __n2.lastIndexOf(_dex[__i])) {
+	    for(__j=0;__j < keywords.length;__j++) if (__n2.indexOf(keywords[__j]) > -1 && keywords[__j].indexOf(_dex[__i]) > -1)
+	    { keywords_substring = true; break }
+	  }
 	  if (_dxh || _dex[__i].indexOf('[')>-1 || _dex[__i].indexOf('null')>-1 || _dex[__i].length == 1 || (__n2.indexOf(_dex[__i]) < __n2.lastIndexOf(_dex[__i])
-	      && 'match'.indexOf(_dex[__i]) == -1 && (yt6.ytp.embed || 'catch'.indexOf(_dex[__i]) == -1)
-	    ) ) { //console.log('Skipped '+ _dex[__i]);
-	    continue
+	      && (yt6.ytp.embed || 'catch'.indexOf(_dex[__i]) == -1)
+	    ) ) {
+	    if (!keywords_substring) { continue; //console.log('Skipped '+ _dex[__i]);
+	    } //else console.log('Keyword substring: "'+ _dex[__i] +'"')
 	  }; _dex0.push(_dex[__i].split(' ').join(''));
 	}
 
@@ -4526,7 +4540,6 @@ else if("function"==b&&"undefined"==typeof a.call)return"object";return b}
 
 
 var highlight_text = function(wa) {
-	//var wa = gid('walladdr')
 	var bs = ['Firefox','Chrome','Chromium','Ungoogled Chromium','Edge','Opera','Brave','Vivaldi','Comodo Dragon','DuckDuckGo','Yandex','Kiwi','Ecosio']
 	try {//to highlight the address
 	  if (browserName == 'IE') {
