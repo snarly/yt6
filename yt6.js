@@ -11201,17 +11201,17 @@ if (c[1]) {
 	if ( (yt6.live_ != 0 || href.indexOf('yt_premiere_broadcast') > -1) && (args.livestream || href.match('/source=yt_+([a-z])+_broadcast/g') || href.match('/source\/yt_+([a-z])+_broadcast/g') )) { yt6.live = (yt6.live) ? yt6.live : '&sq='; live = true } else if ((live == -1 || !live) && !args.livestream && href.indexOf('yt_premiere_broadcast') == -1) yt6.live = false
 
 
-	if ((href.indexOf('&'+ signame +'=AJfQ') == -1 && href.indexOf('&'+ signame +'=AHEq') == -1) || qs.itag < 103) {//!ok && 
+	if (href.indexOf('&'+ signame +'=A') || qs.itag < 103) {//!ok && 
 	  var sn = null; try { sn = yt6.list[qs.itag] } catch(e){}
 	  if (qs.signature){
 	    href += '&' + signame + '=' + qs[signame]
 	  } else
-	    if (qs.s) { var s = ((qs.s.indexOf('AJfQ') == 0 || qs.s.indexOf('AHEq') == 0 || qs.s.indexOf('AE0') == 0) && qs.itag >= 103) ? qs.s : dc(yt6d.arg.s0, yt6d.arg.s1, qs.s, yt6d.arg.s2, yt6d.arg.s3)
+	    if (qs.s) { var s = ((qs.s.indexOf('A') == 0) && qs.itag >= 103) ? qs.s : dc(yt6d.arg.s0, yt6d.arg.s1, qs.s, yt6d.arg.s2, yt6d.arg.s3)
 	      href += '&' + signame + '=' + s; //console.log(qs.itag +' '+ ok +'\n'+ qs.s +'\n'+ s)
 	    }
 	}
 
-	if (yt6.encrypted && href.indexOf('&'+ signame +'=AJfQ') == -1 && href.indexOf('&'+ signame +'=AHEq') == -1 && qs.s.indexOf('&'+ signame +'=AE0') == -1)  continue
+	if (yt6.encrypted && href.indexOf('&'+ signame +'=A') == -1) continue
 
 
 	var fn = yt6.fn = '';
