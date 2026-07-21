@@ -1869,6 +1869,14 @@ function find_key(_rpt){
 	__vr1 = __vr1[__vr0].split('typeof ')[1]; if (__vr1) __vr1 = 'var '+ __vr1.split('===')[0]
 	}
 
+	var keywords_substring = false
+	var keywords = [
+	'abstract','arguments','async','await','boolean','break','byte','case','catch','char','class','const','continue','debugger',
+	'default','delete','double','else','enum','eval','export','extends','false','final','finally','float','function','goto','implements','function',
+	'import','instanceof','interface','long','match','native','package','private','protected','public','return','short','static','super','switch',
+	'synchronized','this','throws','transient','true','typeof','using','void','volatile','while','with','yield'
+	] //do for if in int let new null throw try var
+
 	_dxh = false
 
 	for(__i=0;__i<_dex.length;__i++) if (_dex[__i] && isNaN(_dex[__i]) && _dex[__i].indexOf('/') != 0) {
@@ -1879,14 +1887,6 @@ function find_key(_rpt){
 	  } else if (_dex[__i].indexOf('{')>-1) { _dxh = true } else _dxh = false
 	  if (_dex[__i].indexOf('function(')>-1) { _dxh = true };
 	  if ((_dex[__i].indexOf('{')>-1 || _dex[__i].indexOf('}')>-1) && _dex[__i].split('}').length >= _dex[__i].split('{').length) _dxh = false;
-
-	  var keywords_substring = false
-	  var keywords = [
-	  'abstract','arguments','async','await','boolean','break','byte','case','catch','char','class','const','continue','debugger',
-	  'default','delete','double','else','enum','eval','export','extends','false','final','finally','float','function','goto','implements','function',
-	  'import','instanceof','interface','long','match','native','package','private','protected','public','return','short','static','super','switch',
-	  'synchronized','this','throws','transient','true','typeof','using','void','volatile','while','with','yield'
-	  ] //do for if in int let new null throw try var
 
 	  if (__n2.indexOf(_dex[__i]) < __n2.lastIndexOf(_dex[__i])) {
 	    for(__j=0;__j < keywords.length;__j++) if (__n2.indexOf(keywords[__j]) > -1 && keywords[__j].indexOf(_dex[__i]) > -1)
@@ -1911,7 +1911,17 @@ function find_key(_rpt){
 	_dex1 = ';var  '+ __G +' = _yt_player;'+ //__n3 +
 		';var  '+ __n +'=yt6d.ndec;';
 	try {
-	  _dex = _rpt.split('return '+ _fcn +'[')[1]; if (_dex) _dex = _rpt.substring(_rpt.split('return '+ _fcn +'[')[0].lastIndexOf(';')+1, _rpt.indexOf(_dex) + _dex.indexOf(';')+1); if (_dex) { if (_dex.indexOf('var') == -1) _dex = 'var  '+ _dex; _dex1 = _dex1 + _dex.split(_fcn).join('fcnm') +';' }
+	  _dex = _rpt.split('return '+ _fcn +'[')[1]; if (_dex) _dex = _rpt.substring(_rpt.split('return '+ _fcn +'[')[0].lastIndexOf(';')+1, _rpt.indexOf(_dex) + _dex.indexOf(';')+1)
+	  if (_dex) {
+	    if (_dex.indexOf('var') == -1) _dex = 'var  '+ _dex;
+	    keywords_substring = []
+	    for(__i=0;__i<keywords.length;__i++) if (keywords[__i].indexOf(_fcn) > -1) keywords_substring.push(keywords[__i])
+	    temp = _dex.split(_fcn).join('fcnm') +';'
+	    for(__i=0;__i<keywords_substring.length;__i++) if (temp.indexOf(keywords_substring[__i].split(_fcn).join('fcnm')) > -1) {
+	      temp = temp.split(keywords_substring.split(_fcn).join('fcnm')).join(keywords_substring[__i])
+	    }
+	    _dex1 = _dex1 + temp
+	  }
 	  _dex = _rpt.split('document.location.hostname);document.location.port')[1]; if (_dex) _dex = _rpt.substring(_rpt.split('document.location.hostname);document.location.port')[0].lastIndexOf('};')+2, _rpt.indexOf(_dex) + _dex.indexOf('};')+2); if (_dex) { if (_dex.indexOf('var') == -1) _dex = 'var '+ _dex; _dex1 = _dex1 + _dex +';' }
 	  _dex = _rpt.split('("cipher")')[1]; if (_dex) {
 	  _dex = _rpt.substring(_rpt.split('("cipher")')[0].lastIndexOf(';')+1,
