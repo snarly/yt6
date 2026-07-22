@@ -1696,6 +1696,8 @@ function find_key(_rpt){
 	  __n2 = __n2.replace(__n +'=','').split('return '+ __G +'.')[0]; __n2 = __n2.substring(0, __n2.indexOf('=function('))
 	  if (__n2.substring(0, __n2.lastIndexOf(' ')).slice(-6) != 'return') {
 	    __n2 = __n2.substring(0, __n2.lastIndexOf(' '))
+	    if (__n2.substring(0, __n2.lastIndexOf(' ')).slice(-6) != 'return')
+	    __n2 = __n2.substring(0, __n2.lastIndexOf(' '))
 	  } else __n2 = __n2.substring(0, __n2.lastIndexOf('}')) +'};';
 
 	  __n0 = __n0.split('[').join('[^');
