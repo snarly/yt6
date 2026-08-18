@@ -1845,7 +1845,7 @@ function find_key(_rpt){
 	            if (__n2.split(xord +'='+ para1 +'^'+ para2)[1]) { _para2 = new RegExp(sprintf('((?!function)%s)+', para2), 'gm'); __s = _para2 }
 		    if (_neg.indexOf(xord +'^') > -1) _neg = _neg.split(xord +'^').join('_xord^')
 
-	            xord = 'yt6d.nrg = function(start, test, '+ para1 +', '+ para2 + ((para3) ? ', '+ para3 + ((para4) ? ', '+ para4 : '') : '') +'){ var __j=start||0, para1='+ para1 +', para2='+ para2 + ((para3) ? ', '+ para3 +'='+ para3 +'||""' + ((para4) ? ', '+ para4 +'='+ para4 +'||""' : '') : '') +', xord=('+ para2 +'^'+ para1+ ')||'+ _xord +', _xord="'+ xord +'", '+ __vr.split('var ')[1] +'; for(__j;__j<9950;__j++) { if (test || '+ _rgx.replace(__s, '__j') + ') { if ((yt6d.nrg.probe && yt6d.nrg.probe[__j])'+ ((_neg && !_neg && _neg.indexOf(_rgx) == -1) ? ' || ('+ _neg.replace(__s, '__j') +')' : '') + ') { continue }; '+ ((_para1 == __s) ? 'para1' : 'para2') +' = __j; break }; if (!test) break }; if ('+ (_para1 == __s) +') { para2 = para1 ^ xord;  } else para1 = para2 ^ xord; return [para1, para2] }';
+	            xord = 'yt6d.nrg = function(start, test, '+ para1 +', '+ para2 + ((para3) ? ', '+ para3 + ((para4) ? ', '+ para4 : '') : '') +'){ var __j=start||0, para1='+ para1 +', para2='+ para2 + ((para3) ? ', '+ para3 +'='+ para3 +'||""' + ((para4) ? ', '+ para4 +'='+ para4 +'||""' : '') : '') +', xord=('+ para2 +'^'+ para1+ ')||'+ _xord +', _xord="'+ xord +'", '+ __vr.split('var ')[1] +'; for(__j;__j<9950;__j++) { if (test || (__j | 56) == __j || '+ _rgx.replace(__s, '__j') + ') { if ((yt6d.nrg.probe && yt6d.nrg.probe[__j])'+ ((_neg && !_neg && _neg.indexOf(_rgx) == -1) ? ' || ('+ _neg.replace(__s, '__j') +')' : '') + ') { continue }; '+ ((_para1 == __s) ? 'para1' : 'para2') +' = __j; break }; if (!test) break }; if ('+ (_para1 == __s) +') { para2 = para1 ^ xord;  } else para1 = para2 ^ xord; return [para1, para2] }';
 	            eval(xord)
 		    try { eval(yt6d.nrg(0, true, para1, para2)) } catch(f) { //console.log(f.toString())
 		      if (f.toString().indexOf(' is not defined') > -1) { xord = xord.split('var __j=start||0, ').join('var __j=start||00, '+ f.toString().substring(f.toString().indexOf(' '), f.toString().indexOf(' is not defined')) +'="undefined",'); eval(xord)
@@ -1955,9 +1955,12 @@ function find_key(_rpt){
 	    //if (!array) {
 	      var deep = ['=',',',' ',':',';','&&']; for(__k=0;__k < deep.length;__k++) { dive(__n2.split(deep[__k]),'(')
 	      }
+	      var temp = __n3[0].split('/*teszt*/')[1]; for(__k=0;__k < deep.length;__k++) { dive(temp.split(deep[__k]),')')
+	      }
 	    //}
 
 	//_dex0.push.apply(_dex0, [yt6d.arg.encode])
+	
 
 	__n0 = __n0.split('[^').join('[')
 
@@ -2049,12 +2052,14 @@ function find_key(_rpt){
 
 	if (__n2) {
 	  if (!(/^[a-zA-Z_\$]/.test(__n2.substring(0,1)))) __n2 = ' '+ __n2.substring(1, __n2.length)
-	  __n2 = __n2.split('let ').join('var ') //*uck this *hit
 	}
 
 
 	__n2 = __n2.split('/*teszt*/').join( ((_dex1) ? _dex1 : '/*missing functions*/') +
 (dekrypt0 || '/**/') +'\n\n' )
+
+	__n2 = __n2.split('let ').join('var ') //*uck this *hit
+
 //__n2 = __n2.substring(0, __n2.lastIndexOf('return ')) + 'return '+ __n2.substring(__n2.lastIndexOf('return '), __n2.lastIndexOf('return ')+1) +'};'
 
 
@@ -11452,7 +11457,7 @@ if (c[1]) {
 	  yt6d.linx_length++
 	  if ( !(linx[qs.itag] && linx[qs.itag].indexOf('&title=Advertisement') == -1 || href.indexOf(yt6.real_eid) == -1)
 		&& !((ad == 1 || ad == 0) && href.indexOf(durA1.eid) > -1) && !(ad == 2 && href.indexOf(durA2.eid) > -1)
-		&& !(yt6d.eid && linx[qs.itag].indexOf(yt6d.eid) > -1)
+		&& !(yt6d.eid && linx[qs.itag] && linx[qs.itag].indexOf(yt6d.eid) > -1)
 	  ) {
 
 	    linx[index = alt_linx(qs.itag, href, length_seconds, dur, eid)] = href
@@ -12150,7 +12155,7 @@ if (!yt6.mobile && video_title()[1] && !yt6d.mediaUrlText.length) check_links(cl
 	( (c[0].loaded_from != 'source' && (c[1] && (c[1].url_encoded_fmt_stream_map || c[1].adaptive_fmts)) ||
 	   (yt6.status == 'unplayable' && yt6.reason) ||
 	   (yt6.xhr.completed == '' && yt6.status != 'ok' && !yt6.reason)
-	  ) && !yt6.ytm && video_title()[1]
+	  ) && video_title()[1]// && !yt6.ytm
 	)
       )) ||
       (!yt6.xhr.async) || yt6.ytm ) { yt6.loaded_vid = clone(yt6.vid); yt6d.built = true; return true }
@@ -12340,7 +12345,7 @@ if (typeof html.splice != 'function') return void 0;
     }
   var xd = expire_date()
   var output_log = '\\n\'+ yt6d.log +\'', e = true || !(yt6.mobile && (browserName == "Firefox")) ? true : false// || browserName == "Brave"
-  b = '<div style=&quot;height: 12px&quot;></div>' + b +'<div><div><b style=&quot;font-size: 20px; color: white; background-color: darkslateblue&quot;><strong>'+ browserName +' on '+ (navigator.oscpu || navigator.platform) +'</strong></b></div><br><textarea style=&quot;width: 280px; height: auto; background-color: white; color: black&quot;>' + navigator.userAgent + output_log +'</textarea></div>\''
+  b = '<div style=&quot;height: 12px&quot;></div>' + b +'<div><div><b style=&quot;font-size: 20px; color: white; background-color: darkslateblue&quot;><strong>'+ browserName +' on '+ (navigator.oscpu || navigator.platform) +'</strong></b></div><br><textarea style=&quot;width: 280px; height: auto; background-color: white; color: black&quot;>' + navigator.userAgent.replace('\n','') + output_log +'</textarea></div>\''
 
   html.splice(1,0,'Direct links to YouTube media<br>for IP address: '+ xd[0])
 
