@@ -1971,8 +1971,12 @@ function find_key(_rpt){
 	_dex = new RegExp(    sprintf('[^\\w.'+ doll +']%s=function[^}].+?(?<!{)(?=};)', _dex0[__i].split('$').join('\\$'))  ); _dex = _rpt.match(_dex); _dex = (_dex) ? _dex[0] +'};' : '';
 
 	    if (_dex) {
-	      if (_dex.split('},')[1] && ((_dex.split('},')[1].indexOf('=function') > -1 && _dex.split('},')[1].indexOf('=function') < 7) || (_dex.split('},')[1].indexOf('=async function') > -1 && _dex.split('},')[1].indexOf('=async function') < 7)) //&& _dex.split('},')[1].substring(_dex.split('},')[1].indexOf('{') > -1) 
-	      ) { _dex = _dex.split('},')[0] + '};'; } 
+	      var temp2 = (_dex.split('return ')[1] && _dex.split('return ')[1].indexOf('},') < 7) ? _dex.split('return ')[1].split('},')[1] : ''
+	      if (temp2 && ((temp2.indexOf('=function') > -1 && temp2.indexOf('=function') < 7) || (temp2.indexOf('=async function') > -1 && temp2.indexOf('=async function') < 7)) //&& _dex.split('},')[1].substring(_dex.split('},')[1].indexOf('{') > -1) 
+	      ) { _dex = _dex.split('return ')[0] +'return '+ _dex.split('return ')[1].split('},')[0] + '};' } 
+	      
+
+	      
 	      if (_dex.indexOf(',') == 0) _dex = _dex.slice(1); //console.log(_dex.split('=')[0])
 	      if (_dex.indexOf('=function(){};') > -1 && _dex.indexOf('=function(){};') < 5) { _dex = _dex.split('=function(){};')[0] + '=function(){};' }
 	        //if (_dex.indexOf(yt6d.arg.encode +'(') > -1) { temp = true; console.log(_dex0[__i]) }
@@ -6065,10 +6069,10 @@ function ageless_verification(spfpc, ios) {
 	  if (yt6d.context) {
 	    yt6d.context.client.visitorData = ''
 	    yt6d.context.client.playerType = 'UNIPLAYER'
-	    if (andr) { //pretending we use an oculus headset to get all formats
-	      yt6d.context.client.clientName = 'ANDROID_VR'
-	      yt6d.context.client.clientVersion = '1.65.10'
-	      yt6d.context.client.userAgent = 'com.google.android.apps.youtube.vr.oculus/1.65.10 (Linux; U; Android 12L; eureka-user Build/SQ3A.220605.009.A1) gzip'
+	    if (andr) { //oculus headset patched
+	      yt6d.context.client.clientName = "VISIONOS" //'ANDROID_VR'
+	      yt6d.context.client.clientVersion = '1.02' //'1.65.10'
+	      yt6d.context.client.userAgent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 15_7_3) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.0 Safari/605.1.15' //'com.google.android.apps.youtube.vr.oculus/1.65.10 (Linux; U; Android 12L; eureka-user Build/SQ3A.220605.009.A1) gzip'
 	    }
 	    var oUrl = yt6d.context.originalUrl
 	    if (oUrl && oUrl.split('watch?v=')[1]) context = context.split(oUrl).join(oUrl.split('watch?v=')[0] + 'watch?v=' + vid + oUrl.split('watch?v=')[1].substr(11, oUrl.split('watch?v=')[1].length).split('index=').join(''));
@@ -12740,7 +12744,7 @@ if (!gid('bm4')) {
         if ((typeof player.getPlayerState == 'function') && (flashvars != 'object') && (player.style.opacity == '1')) {
           bm3.style.opacity = '1'
         } else {
-            bm3.style.opacity = '0.9'
+            bm3.style.opacity = '0.99' || '0.9'
           }
 
 	
@@ -21075,10 +21079,10 @@ function resize_layers(w,h,me_aspect){ //console.log('resize '+w+' x '+h)
 	    } else var pos = 'absolute; left: ' + parseFloat(gid(yt_alert_message).firstChild.firstChild.offsetWidth + 25) + 'px;'
 	  }
 	var z = gid('aspect')
-	z.setAttribute('style','display: inline-block; vertical-align: top; color:#333; background: #FFFFFF; opacity: 0.9; position: ' + pos )
+	z.setAttribute('style','display: inline-block; vertical-align: top; color:#333; background: #FFFFFF; opacity: 0.99; position: ' + pos ) //0-9
 	var z = z.style
 	if (z.display != 'inline-block') {
-	  z.display = 'inline-block'; z.verticalAlign = 'top'; z.color = '#333'; z.background = '#FFFFFF'; z.opacity = '0.9'; z.position = 'relative';  z.left = parseFloat(c - d - e - 1) + 'px'; //z.maxWidth = '200px'
+	  z.display = 'inline-block'; z.verticalAlign = 'top'; z.color = '#333'; z.background = '#FFFFFF'; z.opacity = '0.99'; z.position = 'relative';  z.left = parseFloat(c - d - e - 1) + 'px'; //z.maxWidth = '200px' //0-9
 	}
 	gid(yt_alert_message).style.width = '0%'
 	gid(yt_alert_message).style.width = ''
@@ -24025,7 +24029,7 @@ function control_panel1() {
     js.id = yt_alert_message
     wna.insertBefore(js, wna.firstChild)
     js.setAttribute('class','yt-alert-message')
-    var opacity = (yt6.layout == 16 && !yt6.ytm && !yt6.mobile) ? '1' : '0.8'
+    var opacity = (yt6.layout == 16 && !yt6.ytm && !yt6.mobile) ? '1' : '0.99'
     js.setAttribute('style','background:#FFFFFF; opacity:'+ opacity +'; display: table; height: 44px'); js.style.display = 'table'; js.style.height = '44px' //opacity: 0.8; width: 100% js.style.width = '100%'
   } else if (gc(yt_alert_message)[1]) gc(yt_alert_message)[1].parentNode.removeChild(gc(yt_alert_message)[1])
 
