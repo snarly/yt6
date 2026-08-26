@@ -1949,7 +1949,11 @@ function find_key(_rpt){
 
 
 	    function dive(_dxh, __br) {
-	      for(__j=0;__j<_dxh.length;__j++) { var cell = _dxh[__j].split(__br)[0].split(' ').join(''); if (cell.length > 1 && cell.length < 4 && /[a-zA-Z0-9_\$]/.test(cell) && !(/[\,\.\;\!\?\+\-\*\/\=\&\|\(\)\{\}\[\]\<\>]/.test(cell)) && isNaN(cell) && _dex0.indexOf(cell) == -1) { _dex0.push(cell); } }
+	      for(__j=0;__j<_dxh.length;__j++) {
+	        var cell = _dxh[__j].split(__br)[0].split(' ').join('')
+	        if ((cell == _dxh[__j] && _VAR.indexOf(cell) > -1) || (_dxh[__j].split('\\\\')[1] && _VAR.indexOf(_dxh[__j].split('\\\\').join('\\')) > -1)) { continue }
+	        if (cell.length > 1 && cell.length < 4 && /[a-zA-Z0-9_\$]/.test(cell) && !(/[\,\.\;\!\?\+\-\*\/\=\&\|\(\)\{\}\[\]\<\>]/.test(cell)) && isNaN(cell) && _dex0.indexOf(cell) == -1) { _dex0.push(cell); }
+	      }
 	    }
 
 	    //if (!array) {
@@ -11129,7 +11133,7 @@ if (c[1]) {
 	  //if (z[j] == yt6.ytp.V) { qs = (yt6.ytp.Vobj) ? yt6.ytp.Vobj : false; if (!qs) continue; ok = true } else
 	  //if (z[j] == yt6.ytp.A) { qs = (yt6.ytp.Aobj) ? yt6.ytp.Aobj : false; if (!qs) continue; ok = true } else
 	    {
-	      if (typeof yt6.error != 'string') { yt6.error = '---'+ qs.itag } else yt6.error = yt6.error +'---'+ qs.itag; //continue
+	      if (typeof yt6.error != 'string') { yt6.error = '---'+ qs.itag } else yt6.error = yt6.error +'---'+ qs.itag; if (yt6.ytm) continue
 	    }
 	}
 	if (yt6.blocked && yt6d.previous.linx && typeof yt6d.previous.linx.includes == 'function' && yt6d.previous.linx.includes(qs.url)) { continue }
