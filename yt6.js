@@ -1694,15 +1694,17 @@ function find_key(_rpt){
 
 	  if (__n2.indexOf(';') < __n2.indexOf('function')) __n2 = __n2.replace(';','')
 	  __n2 = __n2.replace(__n +'=','').split('return '+ __G +'.')[0]; __n2 = __n2.substring(0, __n2.indexOf('=function('))
-	  if (__n2.substring(0, __n2.lastIndexOf(' ')).slice(-6) != 'return') {
-	    __n2 = __n2.substring(0, __n2.lastIndexOf(' '))
-	    if (__n2.substring(0, __n2.lastIndexOf(' ')).slice(-6) != 'return')
-	    __n2 = __n2.substring(0, __n2.lastIndexOf(' '))
-	  } else __n2 = __n2.substring(0, __n2.lastIndexOf('}')) +'};';
+	  for(__i=0;__i<3;__i++){
+	    temp = __n2.substring(0, __n2.lastIndexOf(' '))
+	    if (temp && (temp.slice(-6) != 'return' || temp.slice(-40).indexOf('function(') > -1)) {
+	      __n2 = temp
+	    }
+	  }
+	  __n2 = __n2.substring(0, __n2.lastIndexOf('}')) +'};';
 
 	  __n0 = __n0.split('[').join('[^');
 	  __n1 = new RegExp(__n0 + _fcn + __n0, '');//'g' //surrounding characters may differ per instance -- replacement must happen one at a time, not all at once
-	  for(i=0;i<3;i++){//mostly there are 2 instances, check 3 times to be sure
+	  for(__i=0;__i<3;__i++){//mostly there are 2 instances, check 3 times to be sure
 	    __n0 = (__n2.match(__n1)) ? __n2.match(__n1)[0].substr(0,1) + __n2.match(__n1)[0].slice(-1) : '';
 	    if (__n0) __n2 = __n2.replace(__n1, __n0.substr(0,1) + 'fcnm' + __n0.slice(-1));
 	  }
