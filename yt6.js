@@ -1553,7 +1553,7 @@ function find_key(_rpt){
       }
       if (!__n && _fcn) __n = _fcn
     }
-  } catch(e){}
+  } catch(e){console.log(e.toString())}
 
 
 
@@ -1658,7 +1658,8 @@ function find_key(_rpt){
 	} else { __n2 = __n2[0]; __vr = _rpt.split("'use strict';var ")[1]; if (__vr) __vr = __vr.split('=')[0]; __vr0 = __vr }
 
 	__n3 = __n2.split('{')[0] + '{'
-	__n2 = __n2.split('{')[0] + '{ /*teszt*/;'+ __n2.split(__n3)[1] 
+	__n2 = __n2.split('{')[0] + '{ /*teszt*/'+ __n2.split(__n3)[1] 
+
 
 	if (_rpt.split('var '+ __vr +'=')[1]) {
 	    __cr = _rpt.split('var '+ __vr +'=')[1].substring(0,1)
@@ -1722,6 +1723,8 @@ function find_key(_rpt){
 	  _dxh = _dex[__i-1].slice(-5); _dxh = _dxh.split(',')[1] || _dxh.split(' ')[1] || _dxh.split(';')[1]
 	  _dxh = _dxh +'=['+ _dex[__i].split(',')[0];
 	  _dex = _dxh + __n2.split(_dxh)[1];
+	  if (_dex.split('return ')[0].indexOf(', /') > -1 && _dex.split('return ')[0].indexOf('\\, /') != _dex.split('return ')[0].indexOf(', /')-1) 
+	    _dex = _dex.replace(', /', ',/');
 	  yt6.r1 = []; yt6.r2 = [];
 	  index = (findClosingBracketMatchIndex(_dex.substring(_dex.indexOf('[')), 0, '[', ']', false, true, __vr2) + 1 + _dex.indexOf('[')) // +1 may be one too short?
 
@@ -1744,9 +1747,9 @@ function find_key(_rpt){
 	var __n3 = __n2.split('a:{'), __k = 0, __z = '', _neg = '', gtfo = 1
 
 	for(__i=0;__i<__n2.split('a:{').length;__i++)
-	  { __z = (__i === 0) ? __n3[0].split('/*teszt*/;')[1] : __z; if (__i && __z.indexOf(_dxh) == -1) { __z = __z +'a:{'+ __n3[__i] } }
+	  { __z = (__i === 0) ? __n3[0].split('/*teszt*/')[1] : __z; if (__i && __z.indexOf(_dxh) == -1) { __z = __z +'a:{'+ __n3[__i] } }
 	  try {
-	      __z = (__z.split('/*teszt*/;')[1]) ? __z.substring(__z.lastIndexOf('/*teszt*/;')+10) : __z; //console.log(__z)
+	      __z = (__z.split('/*teszt*/')[1]) ? __z.substring(__z.lastIndexOf('/*teszt*/')+10) : __z; //console.log(__z)
 	      var _xord,
 		xord = (__z.split('var ')[1]) ? __z.split('var ')[1].split('=')[0] : '', para1 = (xord) ? __z.split('var ')[1].split(';')[0].split('^')[1] : '', para2 = (xord) ? __z.split(xord +'=')[1].split('^')[0] : '', para3 = (_args[2]) ? _args[2].split(')')[0] : '', para4 = (_args[3]) ? _args[3].split(')')[0] : ''
 
@@ -1767,7 +1770,7 @@ function find_key(_rpt){
 		          }
 		        }
 		      }
-		      //__n2 = __n2.split('/*teszt*/').join('/*teszt*/;console.log('+ _args[2].split(')')[0] +')')
+		      //__n2 = __n2.split('/*teszt*/').join('/*teszt*/console.log('+ _args[2].split(')')[0] +')')
 		      if (_neg && _neg2)
 		      __n2 = __n2.split(_neg).join(
 		        'try{'+ 
@@ -1837,7 +1840,47 @@ function find_key(_rpt){
 		__k = 0; __s = -1
 		for(__j=0;__j<_dex.length;__j++) if (_dex[__j] === 'null') { if (!isNaN(_nrg[__k])) { __s = __j; eval('var _xord='+__j+'^'+_nrg[__k]); }; __k++ }
 	      }
-	      __z = __z.substring(0, __z.lastIndexOf('a:{')); __z = __z.substring(__z.lastIndexOf('}')+1); __z = __z.substring(__z.lastIndexOf('if')+2)
+	      __z = __z.substring(0, __z.lastIndexOf('a:{')); __z = __z.substring(__z.lastIndexOf('}')+1)
+	      temp = __n2.split(__z.split('a:{')[0]);
+	      if (temp && temp.length == 2 && temp[0].split('/*teszt*/')[1] && temp[0].split('/*teszt*/')[1].split('^')[1]) {
+	        __n1 = ''; __j = ''
+	        try {
+	          __k = __n2.split('/*teszt*/')[1].split(temp[0].split('/*teszt*/')[1].split('^')[0] + '^' + temp[0].split('/*teszt*/')[1].split('^')[1].split(';')[0])[1].split('=');
+		  for(__i=0;__i<__k.length;__i++) {
+		    if (!__j && __k[__i].slice(-1) && __k[__i+1] && /[a-zA-Z]/.test(__k[__i+1].substring(0,1)) ) {
+		      __j = __k[__i].slice(-1) +'='+ __k[__i+1].substring(0,1);
+		      __j = __j //+ __n2.split('/*teszt*/')[1].split(__k)[1].split('(')[0].split(')')[0].split(';')[0].split(',')[0].split('}')[0].split('{')[0].split('if')[0];
+	            }
+	            if (!__n1 && __k[__i].indexOf('^') > -1 && (__k[__i].indexOf('])(') - __k[__i].indexOf('^') ) > 0) { __n1 = __k[__i].substring(__k[__i].indexOf('^')-3, __k[__i].indexOf('])(')) +']'; nreg = false }
+	          }
+	          if (__j) { __k = __j.split('=')[0]; __j = 'var '+ __j } else __k = ''
+	        } catch(tried) { __k = '' };
+	        //if (temp[0].split('/*teszt*/')[1].indexOf(';') < 2) temp[0] = temp[0].split('/*teszt*/')[0] +'/*teszt*/'+ temp[0].split('/*teszt*/')[1].replace(';','');
+
+	        _rgx = 'if (false && '+__n1.substring(0,1)+' && typeof '+__n1+'=="function")'
+	        temp = temp[0].split('/*teszt*/')[0] + '/*teszt*/\n'
+	          + temp[0].split('/*teszt*/')[1].split('^')[0] + '^' + temp[0].split('/*teszt*/')[1].split('^')[1].split(';')[0] +'; '+ ((__j) ? __j +';' : '') +'\n'
+	          //+ 'try {'
+	          + ((__j && __j.split('=')[1] && __n1 && __n1.indexOf(__j.split('=')[1].substring(0,1)) == 0) ? _rgx : '')
+	          + temp[0].split('/*teszt*/')[1]
+	            .replace(temp[0].split('/*teszt*/')[1].split('^')[0] + '^' + temp[0].split('/*teszt*/')[1].split('^')[1].split(';')[0], '')
+	            .split(__z.split('a:{')[0])[0] +'\n'
+	          + ((__z.split('a:{')[0].indexOf(';') > -1)
+	             ? __z.split('a:{')[0].split(';')[0] + //'}catch(tried){console.log(tried.toString());'+ __j +'}' +
+	               ';' + __z.split('a:{')[0].split(';')[1]
+	             : //'}catch(tried){console.log(tried.toString())'+ __j +'};' + 
+	               __z.split('a:{')[0] +'\n'
+	            )
+	          + temp[1];
+	          if (__j && __k && temp.split('/*teszt*/')[1].indexOf(__z.split('a:{')[0]) > -1 && __z.split('a:{')[0].indexOf(__j.split('var ')[1]) > -1) { temp = temp.split('/*teszt*/')[0] + '/*teszt*/' + temp.split('/*teszt*/')[1].split(__z.split('a:{')[0]).join(''+__z.split('a:{')[0]) } else console.log('? '+ __z.split('a:{')[0].indexOf(__j.split('var ')[1]) )
+	          if (__n1 && temp.split(_rgx +';')[1])
+	            temp = temp
+	              .split(_rgx +';')
+	              .join(_rgx);
+
+	          __n2 = temp
+	      }
+	      _rgx = ''; __z = __z.substring(__z.lastIndexOf('if')+2)
 	      //console.log(__z)
 	      if (__s > -1) { _rgx = __z.split('a:{')[0]
 	        if (xord && para1) { 
@@ -2068,9 +2111,13 @@ function find_key(_rpt){
 	__n2 = __n2.split('/*teszt*/').join( ((_dex1) ? _dex1 : '/*missing functions*/') +
 (dekrypt0 || '/**/') +'\n\n' )
 
+	__k = __n2.substring(__n2.lastIndexOf('return ')+8, 1); __k = __k.slice(-1); temp = __k
+	__k = 'if(typeof '+__k+'=="string"&&'+__k+'.length==14){'+__k+'='+ __k+'[9]+'+__k+'[8]+'+__k+'[0]+'+__k+'[6]+'+__k+'[5]+'+__k+'[4]+'+__k+'[3]+'+__k+'[2]+'+__k+'[1]+'+__k+'[11]+'+__k+'[13]+'+__k+'[12]+'+__k+'[7]+'+__k+'[10]}return ';
+	if (nreg === false) __n2 = __n2.substring(0, __n2.lastIndexOf('return ')) + __k + __n2.substring((__n2.lastIndexOf('return ')+7))
+
 	__n2 = __n2.split('let ').join('var ') //*uck this *hit
 
-//__n2 = __n2.substring(0, __n2.lastIndexOf('return ')) + 'return '+ __n2.substring(__n2.lastIndexOf('return '), __n2.lastIndexOf('return ')+1) +'};'
+if (__n2.split(__k)[1] && __n2.split(__k)[1].split('return ')[1] && __n2.split(__k)[1].split('return ').indexOf('async') > -1) { __n2 = __n2.substring(0, __n2.lastIndexOf('return ')+16); __n2 = __n2.substring(0, __n2.lastIndexOf(' ')) }
 
 
 //var temp = __n2.split('}catch('); __n2 = ''
@@ -11160,8 +11207,10 @@ if (c[1]) {
 
 	// set n-parameter to unthrottle yt a/v data traffic
 
+	n_value = clone(qs.n) || ''
+
 	if (!ok && typeof yt6d.ndec == 'function' && qs.n) {
-	  n_value = clone(qs.n)
+
 	  var temp; try {
 	    if (typeof yt6d.vd == 'function') try { var x,y; x = yt6d.vd().videoData; for(y in x) if (typeof x[y] == 'object' && x[y] && typeof x[y].url == 'string' && typeof x[y].path == 'string' && typeof x[y].scheme == 'string') { temp = x[y]; break } } catch(e){}
 	    if (!temp || yt6d.arg.konst) temp = new _yt_player[yt6d.arg.konst](href)
@@ -11183,7 +11232,7 @@ if (c[1]) {
 	    while (nrg < 1230) try {
 	      
 	      try { n_0 = yt6d.nrg(nrg, false) } catch(e){}; var n__1 = n_0[0]; var n__2 = n_0[1]
-	      n_0 = yt6d.ndec(n__1, n__2, n_value, m, n__1, n__2, n_value, mm); //if (n_0) console.log(n_value +' --> '+ n_0 +' '+ nrg +' '+ n__1 +' '+ n__2)
+	      n_0 = yt6d.ndec(n__1, n__2, n_value, m, n__1, n__2, n_value, mm); //if (n_0 && n_0.length == 14) { console.log(n_value +' --> '+ n_0 +' '+ nrg +' '+ n__1 +' '+ n__2 +'\n'+ href) }
 
 	      if (typeof n_0 == 'string' && n__1 && n_0.length == 14) { yt6d.nrg.probe[qs.itag] = qs.itag; nrg = 9999 } else {
 	        if (yt6d.nrg.probe[nrg] != qs.itag) { yt6d.nrg.probe[nrg] = true }
@@ -11194,7 +11243,7 @@ if (c[1]) {
 		  if (yt6d.nrg.probe[nrg] != qs.itag) yt6d.nrg.probe[nrg] = 1; 
 		}
 		if (e.indexOf('recursion') > -1 || e.indexOf('exceeded') > -1) yt6d.nrg.probe[nrg] = true
-		nrg = (nrg + 1); //console.log(e.toString()); 
+		nrg = (nrg + 1); console.log(e.toString()); 
 	      }
 	  
 	    //if (nrg != 9999) n_decoded = n_value
@@ -11204,18 +11253,21 @@ if (c[1]) {
 	    };
 	  //if (n_0 != '' && n_0 != undefined) { console.log('"'+ n_0 +'"') }
 	  if (n_0 && n_0.length == 14) n_decoded = n_0
-	  if (qs.itag >= 103 && (!n_0 || (n_0 && n_0 == n_decoded))) {//!n_decoded && 
+
+	}
+	if (qs.n) {
+	  if (qs.itag >= 103 && (!n_0 || !n_decoded || (n_0 && n_0 == n_decoded))) {//!n_decoded && 
 	    if (qs.n.length == 14) {//preset
-	      if (!n_1 || n_1 == n_value) { n_1 = n_value } else if (!n_2) n_2 = n_value
+	      if (!n_1 || n_1 == n_value) { n_1 = n_value } else if (!n_2) { n_2 = n_value }
 	    } else {
 		if (n_1 || n_2) { n_decoded = n_1 || n_2 } else {
 		}
 	      }
-	  }
+	  };
 	  ld = ((typeof yt6.ytp.V == 'string' && yt6.ytp.V.indexOf(href) > -1) || (typeof yt6.ytp.A == 'string' && yt6.ytp.A.indexOf(href) > -1)) ? true : false
 	  if (qs.n.length >= n_length) n_length = 1 * qs.n.length; //if (qs.n.length == 14) { ndc = n_decoded = n_value }
 	  if (!ld)
-	     if (n_decoded && n_decoded.length == 14) { href = href.replace(n_value, n_decoded); nrg = (clone(yt6d.nrg.probe[qs.itag])+2) }
+	     if (n_decoded && n_decoded.length == 14) { href = href.replace(n_value, n_decoded); if (yt6d.nrg && yt6d.nrg.probe && yt6d.nrg.probe[qs.itag]) nrg = (clone(yt6d.nrg.probe[qs.itag])+2) }
 		else
 		if ( (yt6.ytp.embed || yt6.ytm || (yt6.p && yt6.p.tagName == 'IFRAME')) ) {
 		  href = href + '&faux_url=true'
