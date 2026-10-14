@@ -1746,16 +1746,33 @@ function find_key(_rpt){
 	_args = (_args && _args.split(',')[1]) ? _args.split(',') : ''
 	if (_args.length) _args[_args.length-1] = _args[_args.length-1].split(')').join('')
 
-		var _rgx = __n2.split('/*teszt*/')[1].split('('+_args[0])
-	 	for(__i=_rgx.length-1;__i>-1;__i--) //if (_rgx[__i].indexOf(__f2) > -1)
-	 	{
-	 	  //console.log(((_rgx[__i-1]&&(_rgx[__i-1].length - _rgx[__i-1].lastIndexOf('if('))<5) ? _rgx[__i-1].substring(_rgx[__i-1].lastIndexOf('if(')) : '' ) + '(' +_args[0] +_rgx[__i])
-	 	  //_rgx = '('+_args[0] +_rgx[__i]; break
-	 	}
 
 	//xord hunt
 	//var __n3 = __n2.split('=[')
-	var __n3 = __n2.split('a:{'), __k = 0, __z = '', _neg = '', gtfo = 1
+	var __n3 = __n2.split('a:{'), __k = 0, __z = '', _neg = '', gtfo = 1, _neg2 = []
+	
+		var _rgx = __n2.split('/*teszt*/')[1].split('('+_args[0])
+		for(__i=_rgx.length-1;__i>-1;__i--) //if (_rgx[__i].indexOf(__f2) > -1)
+		{
+	 	  _neg = ((_rgx[__i-1]&&(_rgx[__i-1].length - _rgx[__i-1].lastIndexOf('if('))<5) ? _rgx[__i-1].substring(_rgx[__i-1].lastIndexOf('if(')) : '' ) + '(' +_args[0] +_rgx[__i]
+		  if (_neg.slice(-4).indexOf('if') > -1) _neg = _neg.substring(0, _neg.lastIndexOf('if'))
+		  if (_neg.split('a:{')[1] || _neg.split('(' +_args[0]+'var ')[1]) continue
+		  if (_neg2[__i+1] && _neg.slice(-2) == '&&') { _neg2[__i+1] = _neg + _neg2[__i+1] } else _neg2[__i] = _neg
+	 	  //_rgx = '('+_args[0] +_rgx[__i]; break
+	 	}
+	 	for(__i=0;__i<_neg2.length;__i++) if (_neg2[__i]) {
+	 	  if (_neg2[__i].indexOf('if(') < 5 && _neg2[__i].split('{')[1]) {
+	 	    _neg2[__i] = _neg2[__i].replace('if','').split('{')[0]
+	 	  } else for(__j=0;__j<_neg2[__i].length;__j++) {
+	 	      if (/[a-zA-Z]/.test(_neg2[__i][__j]) && _neg2[__i][__j] != _args[0]) {
+	 	        _neg2[__i] = _neg2[__i].split(_neg2[__i][__j])[0];
+	 	        if (_neg2[__i] && _neg2[__i].slice(-4).indexOf('&&') > -1) _neg2[__i] = _neg2[__i].substring(0, _neg2[__i].lastIndexOf('&&'))
+	 	        break
+	 	      }
+	 	    }	 	  
+	 	}
+	 	//console.log(_neg2)
+
 
 	for(__i=0;__i<__n2.split('a:{').length;__i++)
 	  { __z = (__i === 0) ? __n3[0].split('/*teszt*/')[1] : __z; if (__i && __z.indexOf(_dxh) == -1) { __z = __z +'a:{'+ __n3[__i] } }
@@ -1862,28 +1879,30 @@ function find_key(_rpt){
 		    if (!__j && __k[__i].slice(-1) && /[a-zA-Z]/.test(__k[__i].slice(-1)) && __k[__i+1] && /[a-zA-Z]/.test(__k[__i+1].substring(0,1)) ) {
 		      __j = __k[__i].slice(-1) +'='+ __k[__i+1].substring(0,1);
 		      __j = __j //+ __n2.split('/*teszt*/')[1].split(__k)[1].split('(')[0].split(')')[0].split(';')[0].split(',')[0].split('}')[0].split('{')[0].split('if')[0];
-	            }
-	            if (!__n1 && __k[__i].indexOf('^') > -1 && (__k[__i].indexOf('])(') - __k[__i].indexOf('^') ) > 0) { __n1 = __k[__i].substring(__k[__i].indexOf('^')-3, __k[__i].indexOf('])(')) +']'; nreg = false }
-	          }
-	          if (__j) { __k = __j.split('=')[0]; __j = 'var '+ __j } else __k = ''
-	        } catch(tried) { __k = '' };
-	        //if (temp[0].split('/*teszt*/')[1].indexOf(';') < 2) temp[0] = temp[0].split('/*teszt*/')[0] +'/*teszt*/'+ temp[0].split('/*teszt*/')[1].replace(';','');
+		    }
+		    if (!__n1 && __k[__i].indexOf('^') > -1 && (__k[__i].indexOf('])(') - __k[__i].indexOf('^') ) > 0) { __n1 = __k[__i].substring(__k[__i].indexOf('^')-3, __k[__i].indexOf('])(')) +']'; nreg = false }
+		  }
+		  if (__j) { __k = __j.split('=')[0]; __j = 'var '+ __j } else __k = ''
+		} catch(tried) { __k = '' };
+		//if (temp[0].split('/*teszt*/')[1].indexOf(';') < 2) temp[0] = temp[0].split('/*teszt*/')[0] +'/*teszt*/'+ temp[0].split('/*teszt*/')[1].replace(';','');
 
-	        _rgx = 'if (false && '+__n1.substring(0,1)+' && typeof '+__n1+'=="function")'
-	        temp = temp[0].split('/*teszt*/')[0] + '/*teszt*/\n'
-	          + temp[0].split('/*teszt*/')[1].split('^')[0] + '^' + temp[0].split('/*teszt*/')[1].split('^')[1].split(';')[0] +'; '+ ((__j) ? __j +';' : '') +'\n'
-	          //+ 'try {'
-	          + ((__j && __j.split('=')[1] && __n1 && __n1.indexOf(__j.split('=')[1].substring(0,1)) == 0) ? _rgx : '')
-	          + temp[0].split('/*teszt*/')[1]
-	            .replace(temp[0].split('/*teszt*/')[1].split('^')[0] + '^' + temp[0].split('/*teszt*/')[1].split('^')[1].split(';')[0], '')
-	            .split(__z.split('a:{')[0])[0] +'\n'
-	          + ((__z.split('a:{')[0].indexOf(';') > -1)
-	             ? __z.split('a:{')[0].split(';')[0] + //'}catch(tried){console.log(tried.toString());'+ __j +'}' +
-	               ';' + __z.split('a:{')[0].split(';')[1]
-	             : //'}catch(tried){console.log(tried.toString())'+ __j +'};' + 
-	               __z.split('a:{')[0] +'\n'
-	            )
-	          + temp[1];
+		_rgx = 'if (false && '+__n1.substring(0,1)+' && typeof '+__n1+'=="function")'
+
+		temp = temp[0].split('/*teszt*/')[0] + '/*teszt*/\n'
+		  + temp[0].split('/*teszt*/')[1].split('^')[0] + '^' + temp[0].split('/*teszt*/')[1].split('^')[1].split(';')[0] +'; '+ ((__j) ? __j +';' : '') +'\n'
+		  //+ 'try {'
+		  + ((__j && __j.split('=')[1] && __n1 && __n1.indexOf(__j.split('=')[1].substring(0,1)) == 0) ? _rgx : '')
+		  + temp[0].split('/*teszt*/')[1]
+		    .replace(temp[0].split('/*teszt*/')[1].split('^')[0] + '^' + temp[0].split('/*teszt*/')[1].split('^')[1].split(';')[0], '')
+		    .split(__z.split('a:{')[0])[0] +'\n[@@@@]'+ temp[1];
+		if (__z.split('a:{')[0].indexOf(';') > -1) { _nrg = ''
+	          for(__n4=((__z.split('a:{')[0].split(';')[0])?0:1);__n4<__z.split('a:{')[0].split(';').length;__n4++) {
+		    _nrg = (_nrg) ? _nrg +';'+ __z.split('a:{')[0].split(';')[__n4] : __z.split('a:{')[0].split(';')[__n4] //+ '}catch(tried){console.log(tried.toString());'+ __j +'}'
+		  }
+		} else _nrg = //'}catch(tried){console.log(tried.toString())'+ __j +'};' + 
+	               __z.split('a:{')[0] +'\n[@@@@]'
+
+		temp = temp.replace('[@@@@]', _nrg);
 	          if (__j && __k && temp.split('/*teszt*/')[1].indexOf(__z.split('a:{')[0]) > -1 && __z.split('a:{')[0].indexOf(__j.split('var ')[1]) > -1) { temp = temp.split('/*teszt*/')[0] + '/*teszt*/' + temp.split('/*teszt*/')[1].split(__z.split('a:{')[0]).join(''+__z.split('a:{')[0]) }
 	          if (__n1 && temp.split(_rgx +';')[1])
 	            temp = temp
@@ -1901,8 +1920,10 @@ function find_key(_rpt){
 	            if (__n2.split(xord +'='+ para2 +'^'+ para1)[1]) { _para1 = new RegExp(sprintf('((?!function)%s)+', para1), 'gm'); __s = _para1 }
 	            if (__n2.split(xord +'='+ para1 +'^'+ para2)[1]) { _para2 = new RegExp(sprintf('((?!function)%s)+', para2), 'gm'); __s = _para2 }
 		    if (_neg.indexOf(xord +'^') > -1) _neg = _neg.split(xord +'^').join('_xord^')
+		    
+		    if (_neg2.length) { _neg = ''; for(__i=0;__i<_neg2.length;__i++) if (_neg2[__i]) _neg = _neg + ((__i < _neg2.length-1) ? _neg2[__i] + '||' : _neg2[__i]) }
 
-	            xord = 'yt6d.nrg = function(start, test, '+ para1 +', '+ para2 + ((para3) ? ', '+ para3 + ((para4) ? ', '+ para4 : '') : '') +'){ var __j=start||0, para1='+ para1 +', para2='+ para2 + ((para3) ? ', '+ para3 +'='+ para3 +'||""' + ((para4) ? ', '+ para4 +'='+ para4 +'||""' : '') : '') +', xord=('+ para2 +'^'+ para1+ ')||'+ _xord +', _xord="'+ xord +'", '+ __vr.split('var ')[1] +'; for(__j;__j<9950;__j++) { if (test || '+ _rgx.replace(__s, '__j') + ') { if ((yt6d.nrg.probe && yt6d.nrg.probe[__j])'+ ((_neg && !_neg && _neg.indexOf(_rgx) == -1) ? ' || ('+ _neg.replace(__s, '__j') +')' : '') + ') { continue }; '+ ((_para1 == __s) ? 'para1' : 'para2') +' = __j; break }; if (!test) break }; if ('+ (_para1 == __s) +') { para2 = para1 ^ xord;  } else para1 = para2 ^ xord; return [para1, para2] }';
+	            xord = 'yt6d.nrg = function(start, test, '+ para1 +', '+ para2 + ((para3) ? ', '+ para3 + ((para4) ? ', '+ para4 : '') : '') +'){ var __j=start||0, para1='+ para1 +', para2='+ para2 + ((para3) ? ', '+ para3 +'='+ para3 +'||""' + ((para4) ? ', '+ para4 +'='+ para4 +'||""' : '') : '') +', xord=('+ para2 +'^'+ para1+ ')||'+ _xord +', _xord="'+ xord +'", '+ __vr.split('var ')[1] +'; for(__j;__j<9950;__j++) { if (test || '+ _rgx.replace(__s, '__j') + ') { if ((yt6d.nrg.probe && yt6d.nrg.probe[__j])'+ ((_neg && _neg2.length && _neg.indexOf(_rgx) == -1) ? ' || ('+ _neg.replace(__s, '__j') +')' : '') + ') { continue }; '+ ((_para1 == __s) ? 'para1' : 'para2') +' = __j; break }; if (!test) break }; if ('+ (_para1 == __s) +') { para2 = para1 ^ xord;  } else para1 = para2 ^ xord; return [para1, para2] }';
 	            eval(xord)
 		    try { eval(yt6d.nrg(0, true, para1, para2)) } catch(f) { //console.log(f.toString())
 		      if (f.toString().indexOf(' is not defined') > -1) { xord = xord.split('var __j=start||0, ').join('var __j=start||00, '+ f.toString().substring(f.toString().indexOf(' '), f.toString().indexOf(' is not defined')) +'="undefined",'); eval(xord)
@@ -2127,7 +2148,7 @@ function find_key(_rpt){
 
 	__k = __n2.substring(__n2.lastIndexOf('return ')+8, 1); __k = __k.slice(-1); temp = __k
 	__k = 'if(typeof '+__k+'=="string"&&'+__k+'.length==14){'+__k+'='+ __k+'[9]+'+__k+'[8]+'+__k+'[0]+'+__k+'[6]+'+__k+'[5]+'+__k+'[4]+'+__k+'[3]+'+__k+'[2]+'+__k+'[1]+'+__k+'[11]+'+__k+'[13]+'+__k+'[12]+'+__k+'[7]+'+__k+'[10]}return ';
-	if (nreg === false) __n2 = __n2.substring(0, __n2.lastIndexOf('return ')) + __k + __n2.substring((__n2.lastIndexOf('return ')+7))
+	//if (nreg === false) __n2 = __n2.substring(0, __n2.lastIndexOf('return ')) + __k + __n2.substring((__n2.lastIndexOf('return ')+7))
 
 	__n2 = __n2.split('let ').join('var ') //*uck this *hit
 
@@ -11167,7 +11188,7 @@ if (c[1]) {
 		if (_href.indexOf('&title=Advertisement') == -1) _href = _href.split('&title=')[0] + '&title=Advertisement'
 		return _href
 	}
-  var nrg = 0, nrh = '', ft2 = []
+  var nrg = 0, nrh = '', ft2 = [], audio = '', rerun = ''
 
   for (i in ft) {
     if (typeof ft[i] == 'string') {
@@ -11180,8 +11201,10 @@ if (c[1]) {
       }
     }
   }
+  
+function set_links(rerun1) {
 
-      z = ft2; 
+      var z = ft2, set_linksA = [], rerun = ''
 	if (yt6.ytp && yt6.ytp.V && typeof yt6.ytp.V == 'string') { z.unshift(yt6.ytp.V) }
 	if (yt6.ytp && yt6.ytp.A && typeof yt6.ytp.A == 'string') { z.unshift(yt6.ytp.A) }
 
@@ -11293,11 +11316,13 @@ if (c[1]) {
 
 	}
 	if (qs.n) {
-	  if (qs.itag >= 103 && (!n_0 || !n_decoded || (n_0 && n_0 == n_decoded))) {//!n_decoded && 
+	  if (qs.itag >= 103 && (!n_0 || !n_decoded || (n_0 && n_0 == n_decoded))) {//console.log(qs.itag+' '+n_value+' '+rerun1)
 	    if (qs.n.length == 14) {//preset
 	      if (!n_1 || n_1 == n_value) { n_1 = n_value } else if (!n_2) { n_2 = n_value }
+	      if (n_value && n_value.length == 14) rerun = n_value
 	    } else {
-		if (n_1 || n_2) { n_decoded = n_1 || n_2 } else {
+		if (n_1 || n_2) { n_decoded = (rerun1) ? rerun1 : n_1 || n_2 } else {
+		  set_linksA.push(qs.itag); if (!rerun && (n_decoded || n_value) && set_linksA.length > 3) rerun = (n_decoded || n_value)
 		}
 	      }
 	  };
@@ -11496,6 +11521,7 @@ if (c[1]) {
 
 	var first = 0
 
+	if (ad_links && ad_links.length)
 	    for(k=0;k<Math.min(ad_links.length, 100);k++) {
 	      for(l=0;l<linx.length;l++) if (linx[l]) { if (!first) first = l; if (first == l) continue
 		  if (durA1.A[k]) durA1k = durA1.A[k]; if (durA2.A[k]) durA2k = durA2.A[k]
@@ -11874,7 +11900,12 @@ if (c[1]) {
 	  var lsig = (href) ? href.split('&lsig=')[1] || href.split('?lsig=')[1] || href.split('&lsig/')[1] || href.split('?lsig/')[1] : ''
 	  if (lsig) yt6d.current.lsig = lsig.split('&')[0]
 	}
-
+	
+return [html, href, linx, audio, rerun]
+}
+var s = set_links()
+if (s && s[4]) if (s[4].length == 14) { s = set_links(s[4]) } else console.log(s[4].length)
+var html = (s && s[0]) ? s[0] : '', href = (s && s[1]) ? s[1] : '', linx = (s && s[2]) ? s[2] : [], audio = (s && s[3]) ? s[3] : ''
 
   if (yt6.manifest.mpd) args.dashmpd = yt6.manifest.mpd
 
@@ -22976,7 +23007,7 @@ function switch_players(iframe) {
   var p1 = gid('player1')
   var p2 = gid('player2')
   var flashvars = getFlashVars();//player().getAttribute('flashvars')
-  var me_flash = getElementsByAttribute(yt6.api,"object","name","me_flash")[0]
+  var me_flash = (yt6.api) ? getElementsByAttribute(yt6.api,"object","name","me_flash")[0] : null
 
       var z = yt6.osw
       if (z == gid('placeholder-player')) {
