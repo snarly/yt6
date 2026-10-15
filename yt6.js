@@ -11291,7 +11291,7 @@ function set_links(rerun1) {
 	        if (yt6d.nrg.probe[nrg] != qs.itag) { yt6d.nrg.probe[nrg] = true }
 	        nrg = (nrg + 1)
 	      }
-	    } catch(e){ e = e.toString(); console.log(e.toString())
+	    } catch(e){ e = e.toString(); //console.log(e.toString())
 		if (e.indexOf('not a function') > -1) {
 		  e = e.split(' ^ ').join('^').split('[(').join('[').split(')]').join(']')
 		  if (e.split(': ')[1]) { e = e.split(': ')[1].split(' ')[0]; //console.log(e)
