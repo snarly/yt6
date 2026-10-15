@@ -1756,22 +1756,33 @@ function find_key(_rpt){
 		{
 	 	  _neg = ((_rgx[__i-1]&&(_rgx[__i-1].length - _rgx[__i-1].lastIndexOf('if('))<5) ? _rgx[__i-1].substring(_rgx[__i-1].lastIndexOf('if(')) : '' ) + '(' +_args[0] +_rgx[__i]
 		  if (_neg.slice(-4).indexOf('if') > -1) _neg = _neg.substring(0, _neg.lastIndexOf('if'))
-		  if (_neg.split('a:{')[1] || _neg.split('(' +_args[0]+'var ')[1]) continue
-		  if (_neg2[__i+1] && _neg.slice(-2) == '&&') { _neg2[__i+1] = _neg + _neg2[__i+1] } else _neg2[__i] = _neg
-	 	  //_rgx = '('+_args[0] +_rgx[__i]; break
-	 	}
-	 	for(__i=0;__i<_neg2.length;__i++) if (_neg2[__i]) {
-	 	  if (_neg2[__i].indexOf('if(') < 5 && _neg2[__i].split('{')[1]) {
-	 	    _neg2[__i] = _neg2[__i].replace('if','').split('{')[0]
-	 	  } else for(__j=0;__j<_neg2[__i].length;__j++) {
-	 	      if (/[a-zA-Z]/.test(_neg2[__i][__j]) && _neg2[__i][__j] != _args[0]) {
-	 	        _neg2[__i] = _neg2[__i].split(_neg2[__i][__j])[0];
-	 	        if (_neg2[__i] && _neg2[__i].slice(-4).indexOf('&&') > -1) _neg2[__i] = _neg2[__i].substring(0, _neg2[__i].lastIndexOf('&&'))
-	 	        break
-	 	      }
-	 	    }	 	  
-	 	}
-	 	//console.log(_neg2)
+		  if (_neg.split('a:{')[1] || _neg.split('(' +_args[0]+'var ')[1] || _neg.length > 1000) continue
+		  //if (_neg.length > 1000 && (_neg.indexOf('||') < 20 || _neg.indexOf('&&') < 20)) { _neg = _neg.split('||')[0].split('&&')[0]; _neg2[__i] = _neg } else
+		    if (_neg2[__i+1] && _neg.slice(-2) == '&&') { _neg2[__i+1] = _neg + _neg2[__i+1] } else 
+		  _neg2[__i] = _neg
+		  if (_neg2[__i+1] && _neg.slice(-3).indexOf('||') > -1) { _neg2[__i+1] = _neg + _neg2[__i+1] } else { _neg2[__i] = _neg }
+		}
+		for(__i=0;__i<_neg2.length;__i++) if (_neg2[__i]) {
+		  if (_neg2[__i].indexOf('if(') < 5 && _neg2[__i].split('{')[1]) {
+		    _neg2[__i] = _neg2[__i].replace('if','').split('{')[0]
+		  } else for(__j=0;__j<_neg2[__i].length;__j++) {
+		      if (/[a-zA-Z]/.test(_neg2[__i][__j]) && _neg2[__i][__j] != _args[0]) {
+			if (_neg2[__i].indexOf(']](') == -1) {
+			  _neg2[__i] = _neg2[__i].split(_neg2[__i][__j])[0];
+			  if (_neg2[__i] && _neg2[__i].slice(-4).indexOf('&&') > -1) _neg2[__i] = _neg2[__i].substring(0, _neg2[__i].lastIndexOf('&&'))
+			} else {
+			    _rgx = _neg2[__i]
+			    _rgx = _rgx.split(']](')[0].split('[')[0]
+			    _rgx = _rgx.slice(-1) + _neg2[__i].split(_rgx)[1]
+			    _rgx = _rgx.split(']](')[0] + ']]'
+			    _rgx = _neg2[__i].split(_neg2[__i][__j])[0] + '(typeof ' +_rgx+ '=="function")&&' + _neg2[__i].split(_neg2[__i].split(_neg2[__i][__j])[0])[1]
+			    __n2 = __n2.split(_neg2[__i]).join(_rgx)
+			    _neg2[__i] = _rgx.split(';').join('')
+			}
+			break
+		      }
+		    }	 	  
+		}
 
 
 	for(__i=0;__i<__n2.split('a:{').length;__i++)
@@ -1785,24 +1796,24 @@ function find_key(_rpt){
 		    if (_VAR.indexOf('set') > -1 && _VAR.indexOf('n') > -1 && __z.split('a:{')[1] && (__z.split('a:{')[1].indexOf('}(') > -1 || __z.split('a:{')[1].indexOf('}if(') > -1) && (__z.split('a:{')[1].indexOf('=[])') > __z.split('a:{')[1].indexOf('}(') || __z.split('a:{')[1].indexOf('=[])') > __z.split('a:{')[1].indexOf('}if(')) ) 
 		    try {
 		      _neg = __z.split('a:{')[1].substring( (Math.max(0, (__z.split('a:{')[1].indexOf('}if(') )) || (__z.split('a:{')[1].indexOf('}(') ))+1 , (__z.split('a:{')[1].indexOf('=[])') + 4));
-		      var _neg2 = _neg
+		      var _neg3 = _neg
 		      if (__vr2 && _neg.split('('+ __vr2 +'[')[1]) {//+ xord +'^')[1]) {
 		        temp = _VAR.indexOf('n') ^ _neg.split('('+ __vr2 +'[')[1].split(']')[0];//+ xord +'^')
 		        if (temp) {
-		          _neg2 = //'console.log("? '+ para1 +'="+ '+ para1 +' +" '+ para2 +'="+ '+ para2 +' +" '+ xord +'="+'+ xord +' +" temp='+ temp +' "+ '+ __vr2 +'[('+ (temp || _xord) +' ^ 8211)] ); /*var '+ xord +'='+ temp +'*/; '+
-		            ((_neg2.split(yt6d.arg.n +'(')[1] && _args[_neg2.split(yt6d.arg.n +'(')[1].split(')')[0].split(',').length]) ? 'yt6d.arg.z ='+ _args[_neg2.split(yt6d.arg.n +'(')[1].split(')')[0].split(',').length].split(')')[0] : '') +'; '//z=new URLSearchParams(yt6d.arg.usp); '
-		            + _neg2.split('=[]').join('='+_neg2.split('=[]')[0].slice(-3).split(',')[1])//+',console.log(v)')//.split(xord +'^').join('_VAR^')
-		          if (_neg2.split(yt6d.arg.n +'(')[1] && _args && _args.length) {
-		            //temp = _neg2.split(yt6d.arg.n +'(')[1].split(')')[0]
-		            //if (temp.split(',').length < _args.length) _neg2 = _neg2.split(temp).join(temp +', yt6d.arg.z')
+		          _neg3 = //'console.log("? '+ para1 +'="+ '+ para1 +' +" '+ para2 +'="+ '+ para2 +' +" '+ xord +'="+'+ xord +' +" temp='+ temp +' "+ '+ __vr2 +'[('+ (temp || _xord) +' ^ 8211)] ); /*var '+ xord +'='+ temp +'*/; '+
+		            ((_neg3.split(yt6d.arg.n +'(')[1] && _args[_neg3.split(yt6d.arg.n +'(')[1].split(')')[0].split(',').length]) ? 'yt6d.arg.z ='+ _args[_neg3.split(yt6d.arg.n +'(')[1].split(')')[0].split(',').length].split(')')[0] : '') +'; '//z=new URLSearchParams(yt6d.arg.usp); '
+		            + _neg3.split('=[]').join('='+_neg3.split('=[]')[0].slice(-3).split(',')[1])//+',console.log(v)')//.split(xord +'^').join('_VAR^')
+		          if (_neg3.split(yt6d.arg.n +'(')[1] && _args && _args.length) {
+		            //temp = _neg3.split(yt6d.arg.n +'(')[1].split(')')[0]
+		            //if (temp.split(',').length < _args.length) _neg3 = _neg3.split(temp).join(temp +', yt6d.arg.z')
 		          }
 		        }
 		      }
 		      //__n2 = __n2.split('/*teszt*/').join('/*teszt*/console.log('+ _args[2].split(')')[0] +')')
-		      if (_neg && _neg2)
+		      if (_neg && _neg3)
 		      __n2 = __n2.split(_neg).join(
 		        'try{'+ 
-		        _neg2
+		        _neg3
 		        +'}catch(err){/*console.log(err.toString());console.log('+ _args[2] +')*/; yt6d.arg.err = err.toString()}'
 		        )//.split('}try{yt6d.arg.z').join(';console.log(v)}try{yt6d.arg.z')
 		    } catch(e){ console.log(e)}
@@ -1877,7 +1888,7 @@ function find_key(_rpt){
 	          __k = __n2.split('/*teszt*/')[1].split(temp[0].split('/*teszt*/')[1].split('^')[0] + '^' + temp[0].split('/*teszt*/')[1].split('^')[1].split(';')[0])[1].split('=');
 		  for(__i=0;__i<__k.length;__i++) {
 		    if (!__j && __k[__i].slice(-1) && /[a-zA-Z]/.test(__k[__i].slice(-1)) && __k[__i+1] && /[a-zA-Z]/.test(__k[__i+1].substring(0,1)) ) {
-		      __j = __k[__i].slice(-1) +'='+ __k[__i+1].substring(0,1);
+		      __j = __k[__i].slice(-1) //+'='+ __k[__i+1].substring(0,1);
 		      __j = __j //+ __n2.split('/*teszt*/')[1].split(__k)[1].split('(')[0].split(')')[0].split(';')[0].split(',')[0].split('}')[0].split('{')[0].split('if')[0];
 		    }
 		    if (!__n1 && __k[__i].indexOf('^') > -1 && (__k[__i].indexOf('])(') - __k[__i].indexOf('^') ) > 0) { __n1 = __k[__i].substring(__k[__i].indexOf('^')-3, __k[__i].indexOf('])(')) +']'; nreg = false }
@@ -1902,7 +1913,8 @@ function find_key(_rpt){
 		} else _nrg = //'}catch(tried){console.log(tried.toString())'+ __j +'};' + 
 	               __z.split('a:{')[0] +'\n[@@@@]'
 
-		temp = temp.replace('[@@@@]', _nrg);
+		temp = temp.replace('[@@@@]', _nrg)
+		if (temp.indexOf('[@@@@]') > -1) temp = temp.split('[@@@@]').join('')
 	          if (__j && __k && temp.split('/*teszt*/')[1].indexOf(__z.split('a:{')[0]) > -1 && __z.split('a:{')[0].indexOf(__j.split('var ')[1]) > -1) { temp = temp.split('/*teszt*/')[0] + '/*teszt*/' + temp.split('/*teszt*/')[1].split(__z.split('a:{')[0]).join(''+__z.split('a:{')[0]) }
 	          if (__n1 && temp.split(_rgx +';')[1])
 	            temp = temp
@@ -11279,7 +11291,7 @@ function set_links(rerun1) {
 	        if (yt6d.nrg.probe[nrg] != qs.itag) { yt6d.nrg.probe[nrg] = true }
 	        nrg = (nrg + 1)
 	      }
-	    } catch(e){ e = e.toString(); //console.log(e.toString())
+	    } catch(e){ e = e.toString(); console.log(e.toString())
 		if (e.indexOf('not a function') > -1) {
 		  e = e.split(' ^ ').join('^').split('[(').join('[').split(')]').join(']')
 		  if (e.split(': ')[1]) { e = e.split(': ')[1].split(' ')[0]; //console.log(e)
@@ -11904,7 +11916,7 @@ function set_links(rerun1) {
 return [html, href, linx, audio, rerun]
 }
 var s = set_links()
-if (s && s[4]) if (s[4].length == 14) { s = set_links(s[4]) } else console.log(s[4].length)
+if (s && s[4]) if (s[4].length == 14) { s = set_links(s[4]) } //else console.log(s[4].length)
 var html = (s && s[0]) ? s[0] : '', href = (s && s[1]) ? s[1] : '', linx = (s && s[2]) ? s[2] : [], audio = (s && s[3]) ? s[3] : ''
 
   if (yt6.manifest.mpd) args.dashmpd = yt6.manifest.mpd
