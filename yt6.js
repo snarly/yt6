@@ -1749,7 +1749,7 @@ function find_key(_rpt){
 
 	//xord hunt
 	//var __n3 = __n2.split('=[')
-	var __n3 = __n2.split('a:{'), __k = 0, __z = '', _neg = '', gtfo = 1, _neg2 = []
+	var __n3 = __n2.split('a:{'), __k = 0, __z = '', _neg = '', gtfo = 1, _neg2 = [], neg3 = ''
 	
 		var _rgx = __n2.split('/*teszt*/')[1].split('('+_args[0])
 		for(__i=_rgx.length-1;__i>-1;__i--) //if (_rgx[__i].indexOf(__f2) > -1)
@@ -1775,7 +1775,9 @@ function find_key(_rpt){
 			    _rgx = _rgx.split(']](')[0].split('[')[0]
 			    _rgx = _rgx.slice(-1) + _neg2[__i].split(_rgx)[1]
 			    _rgx = _rgx.split(']](')[0] + ']]'
-			    _rgx = _neg2[__i].split(_neg2[__i][__j])[0] + '(typeof ' +_rgx+ '=="function")' + (!(_neg2[__i].split(_neg2[__i].split(_neg2[__i][__j])[0])[1].match('[^=]=[^=]') && _neg2[__i].split(_neg2[__i].split(_neg2[__i][__j])[0])[1].match('[^=]=[^=]').length) ? '&&' : ',') + _neg2[__i].split(_neg2[__i].split(_neg2[__i][__j])[0])[1]
+			    if (_rgx.lastIndexOf(',') > -1) { _rgx = _rgx.substring(_rgx.lastIndexOf(',')+1); _neg3 = true }
+			    _neg3 = (_neg3) ? _neg2[__i].split(_rgx)[0] : _neg2[__i].split(_neg2[__i][__j])[0]
+			    _rgx = _neg3 + '(typeof ' +_rgx+ '=="function")' + (!(_neg2[__i].split(_neg3)[1].match('[^=]=[^=]') && _neg2[__i].split(_neg3)[1].match('[^=]=[^=]').length) ? '&&' : ',') + _neg2[__i].split(_neg3)[1]
 			    __n2 = __n2.split(_neg2[__i]).join(_rgx)
 			    _neg2[__i] = _rgx.split(';').join('')
 			}
