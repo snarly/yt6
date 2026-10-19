@@ -1756,7 +1756,7 @@ function find_key(_rpt){
 		{
 	 	  _neg = ((_rgx[__i-1]&&(_rgx[__i-1].length - _rgx[__i-1].lastIndexOf('if('))<5) ? _rgx[__i-1].substring(_rgx[__i-1].lastIndexOf('if(')) : '' ) + '(' +_args[0] +_rgx[__i]
 		  if (_neg.slice(-4).indexOf('if') > -1) _neg = _neg.substring(0, _neg.lastIndexOf('if'))
-		  if (_neg.split('a:{')[1] || _neg.split('(' +_args[0]+'var ')[1] || _neg.length > 1000) continue
+		  if (_neg.split('a:{')[1] || _neg.split('(' +_args[0]+'var ')[1] || _neg.indexOf('(function') == 0 || _neg.length > 1000) continue
 		  //if (_neg.length > 1000 && (_neg.indexOf('||') < 20 || _neg.indexOf('&&') < 20)) { _neg = _neg.split('||')[0].split('&&')[0]; _neg2[__i] = _neg } else
 		    if (_neg2[__i+1] && _neg.slice(-2) == '&&') { _neg2[__i+1] = _neg + _neg2[__i+1] } else 
 		  _neg2[__i] = _neg
@@ -1775,7 +1775,7 @@ function find_key(_rpt){
 			    _rgx = _rgx.split(']](')[0].split('[')[0]
 			    _rgx = _rgx.slice(-1) + _neg2[__i].split(_rgx)[1]
 			    _rgx = _rgx.split(']](')[0] + ']]'
-			    _rgx = _neg2[__i].split(_neg2[__i][__j])[0] + '(typeof ' +_rgx+ '=="function")&&' + _neg2[__i].split(_neg2[__i].split(_neg2[__i][__j])[0])[1]
+			    _rgx = _neg2[__i].split(_neg2[__i][__j])[0] + '(typeof ' +_rgx+ '=="function")' + (!(_neg2[__i].split(_neg2[__i].split(_neg2[__i][__j])[0])[1].match('[^=]=[^=]') && _neg2[__i].split(_neg2[__i].split(_neg2[__i][__j])[0])[1].match('[^=]=[^=]').length) ? '&&' : ',') + _neg2[__i].split(_neg2[__i].split(_neg2[__i][__j])[0])[1]
 			    __n2 = __n2.split(_neg2[__i]).join(_rgx)
 			    _neg2[__i] = _rgx.split(';').join('')
 			}
@@ -1783,6 +1783,7 @@ function find_key(_rpt){
 		      }
 		    }	 	  
 		}
+		for(__i=_neg2.length-1;__i>-1;__i--) if (!_neg2[__i] || (_neg2[__i] && _neg2[__i].match('[^=]=[^=]') && _neg2[__i].match('[^=]=[^=]').length)) delete _neg2[__i];
 
 
 	for(__i=0;__i<__n2.split('a:{').length;__i++)
@@ -1933,7 +1934,8 @@ function find_key(_rpt){
 	            if (__n2.split(xord +'='+ para1 +'^'+ para2)[1]) { _para2 = new RegExp(sprintf('((?!function)%s)+', para2), 'gm'); __s = _para2 }
 		    if (_neg.indexOf(xord +'^') > -1) _neg = _neg.split(xord +'^').join('_xord^')
 		    
-		    if (_neg2.length) { _neg = ''; for(__i=0;__i<_neg2.length;__i++) if (_neg2[__i]) _neg = _neg + ((__i < _neg2.length-1) ? _neg2[__i] + '||' : _neg2[__i]) }
+		    if (_neg2.length) { _neg = ''; for(__i=0;__i<_neg2.length;__i++) if (_neg2[__i]) _neg = _neg + ((__i < _neg2.length-1) ? _neg2[__i] + '||' : _neg2[__i]); if (_neg && _neg.slice(-2) == '||') _neg = _neg.substring(0, _neg.lastIndexOf('||')) }
+
 
 	            xord = 'yt6d.nrg = function(start, test, '+ para1 +', '+ para2 + ((para3) ? ', '+ para3 + ((para4) ? ', '+ para4 : '') : '') +'){ var __j=start||0, para1='+ para1 +', para2='+ para2 + ((para3) ? ', '+ para3 +'='+ para3 +'||""' + ((para4) ? ', '+ para4 +'='+ para4 +'||""' : '') : '') +', xord=('+ para2 +'^'+ para1+ ')||'+ _xord +', _xord="'+ xord +'", '+ __vr.split('var ')[1] +'; for(__j;__j<9950;__j++) { if (test || '+ _rgx.replace(__s, '__j') + ') { if ((yt6d.nrg.probe && yt6d.nrg.probe[__j])'+ ((_neg && _neg2.length && _neg.indexOf(_rgx) == -1) ? ' || ('+ _neg.replace(__s, '__j') +')' : '') + ') { continue }; '+ ((_para1 == __s) ? 'para1' : 'para2') +' = __j; break }; if (!test) break }; if ('+ (_para1 == __s) +') { para2 = para1 ^ xord;  } else para1 = para2 ^ xord; return [para1, para2] }';
 	            eval(xord)
