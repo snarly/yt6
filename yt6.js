@@ -1775,6 +1775,7 @@ function find_key(_rpt){
 			    _rgx = _rgx.split(']](')[0].split('[')[0]
 			    _rgx = _rgx.slice(-1) + _neg2[__i].split(_rgx)[1]
 			    _rgx = _rgx.split(']](')[0] + ']]'
+			    if (_rgx.match('[^=]=[^=]') && _rgx.match('[^=]=[^=]').length) _rgx = _rgx.split('=')[_rgx.match('[^=]=[^=]').length]
 			    if (_rgx.lastIndexOf(',') > -1) { _rgx = _rgx.substring(_rgx.lastIndexOf(',')+1); _neg3 = true }
 			    _neg3 = (_neg3) ? _neg2[__i].split(_rgx)[0] : _neg2[__i].split(_neg2[__i][__j])[0]
 			    _rgx = _neg3 + '(typeof ' +_rgx+ '=="function")' + (!(_neg2[__i].split(_neg3)[1].match('[^=]=[^=]') && _neg2[__i].split(_neg3)[1].match('[^=]=[^=]').length) ? '&&' : ',') + _neg2[__i].split(_neg3)[1]
