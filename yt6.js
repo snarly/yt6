@@ -1621,16 +1621,34 @@ function find_key(_rpt){
 
     var __f1, __f2, doll = (_fcn && _fcn.indexOf('$') > -1) ? '' : '\\$'
     var __fs = new RegExp(    sprintf('[^\\w.'+ doll +']%s=function[^}].+?(?=};)', _fcn.split('$').join('\\$'))  );//\\W does not suffice, have to exclude the possibility of a leading dot as well
+    var __fs0, __fs1, __fs2 = '', __fs3; 
 
 
     var __fs = (_rpt.match(__fs)) ? _rpt.match(__fs)[0] + '};' : ''
     if (__fs && __fs.indexOf('return ') == -1) __fs = __fs + _rpt.split(__fs)[1].split('return ')[0] + 'return ' + _rpt.split(__fs)[1].split('return ')[1].split('}')[0] + '};'
+
 
     if (__fs) {
       if (__fs.indexOf(',') == 0) __fs = __fs.substring(1)
       __fs = __fs.substring(0, (findClosingBracketMatchIndex(__fs.substring(__fs.indexOf('{')), 0, '{', '}') + __fs.indexOf('{') +1 ) ); //console.log(__fs)
       __f1 = fcobj(__fs)[0]; //console.log('regular expression including the object name: '+ __f1)
       __f2 = fcobj(__fs)[1]; //console.log('object name: '+ __f2)
+      
+
+    if (__fs && __fs.split(';')[0] && __fs.split(';')[0].indexOf('function') == -1 && __fs.split(';')[1] && __fs.split(';')[1].indexOf('function') != -1) {
+      __fs0 = (__fs.match(/;/g) || []).length
+      __fs1 = __fs.split(';')
+      for(__i=1;__i<__fs0+1;__i++){
+        __fs2 = __fs2 + __fs1[__i] + ';'
+      }
+    } else {
+	var index = findClosingBracketMatchIndex(__fs,__fs.indexOf('{'), '{', '}', false, true), __fs2 = '';
+	if (typeof index == 'number' && index != -1) __fs2 = __fs.substring(0,(index + 1 + __fs.indexOf('{')));
+      }
+
+    //__fs2 = __fs2.replace(/(\r\n|\n|\r)/gm,"")
+    __fs3 = __fs2.split("(")[1].split(")")[0]
+
     }
 
     var dekrypt0 = (__f1) ? _rpt.match(__f1) : ''; if (dekrypt0) { dekrypt0 = dekrypt0[0] } else console.log('object regex match null')
@@ -2058,6 +2076,8 @@ function find_key(_rpt){
 	      }
 	      var temp = __n3[0].split('/*teszt*/')[1]; for(__k=0;__k < deep.length;__k++) { dive(temp.split(deep[__k]),')')
 	      }
+	      for(__k=0;__k < deep.length;__k++) { dive(__fs2.split(deep[__k]),'(')
+	      }
 	    //}
 
 	//_dex0.push.apply(_dex0, [yt6d.arg.encode])
@@ -2198,22 +2218,6 @@ if (__n2.split(__k)[1] && __n2.split(__k)[1].split('return ')[1] && __n2.split(_
 
 
   if (__fs) {
-
-    var __fs0, __fs1, __fs2 = '', __fs3; 
-
-    if (__fs && __fs.split(';')[0] && __fs.split(';')[0].indexOf('function') == -1 && __fs.split(';')[1] && __fs.split(';')[1].indexOf('function') != -1) {
-      __fs0 = (__fs.match(/;/g) || []).length
-      __fs1 = __fs.split(';')
-      for(__i=1;__i<__fs0+1;__i++){
-        __fs2 = __fs2 + __fs1[__i] + ';'
-      }
-    } else {
-	var index = findClosingBracketMatchIndex(__fs,__fs.indexOf('{'), '{', '}', false, true), __fs2 = '';
-	if (typeof index == 'number' && index != -1) __fs2 = __fs.substring(0,(index + 1 + __fs.indexOf('{')));
-      }
-
-    //__fs2 = __fs2.replace(/(\r\n|\n|\r)/gm,"")
-    __fs3 = __fs2.split("(")[1].split(")")[0]
 
     var _fcn = 'function fcnm(' + __fs3 + '){' + ((__vr) ? (' '+ __vr +'; ') : '') + dekrypt0 + ';' + _dex1 +'; '
 	+ __fs2.substring(__fs2.indexOf('{')+1,__fs2.lastIndexOf('}')) + ' }'
