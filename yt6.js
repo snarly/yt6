@@ -9032,7 +9032,7 @@ yt6d.mep_renew = function() {
 
     mejs_duration()
 
-    if (yt6.loop) { yt6.loop.start = 0; yt6.loop.end = (1* yt6.loaded_media_duration) }// could be the duration of an ad!
+    if (yt6.loop) { yt6.loop.start = 0; yt6.loop.end = (1* (yt6.loaded_media_duration || yt6.real_dur || yt6.real_media_duration)) }// could be the duration of an ad!
     var z = gc('loop-start')[0]; if (z) z.value = '00:00'
     var z = gc('loop-end')[0]; if (z) z.value = gc('mejs-duration')[0][yt6.txt]
 
@@ -16683,7 +16683,7 @@ if (!t.sourcechooserButton && !yt6.blocked_m) { //console.log('error')
 				.click(function() {
 					player.options.loop1 = !player.options.loop1
 					if (player.options.loop1) {
-						yt6.loop.start = 0; yt6.loop.end = (1* yt6.loaded_media_duration)
+						yt6.loop.start = 0; yt6.loop.end = (1* (yt6.loaded_media_duration || yt6.real_dur || yt6.real_media_duration))
 						var s = mejs.Utility.secondsToTimeCode(0), e = mejs.Utility.secondsToTimeCode(yt6.loop.end), ls = $(controls).find('.loop-start'), le = $(controls).find('.loop-end')
 						ls.attr('value', s); ls.val(s); le.attr('value', e); le.val(e)
 						loop.removeClass('mejs-loop-off').addClass('mejs-loop-on')
