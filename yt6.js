@@ -1794,17 +1794,16 @@ function find_key(_rpt){
 
 		for(__i=_rgx.length-1;__i>-1;__i--) //if (_rgx[__i].indexOf(__f2) > -1)
 		{
-	 	  _neg = ((_rgx[__i-1]&&(_rgx[__i-1].length - _rgx[__i-1].lastIndexOf('if('))<5) ? _rgx[__i-1].substring(_rgx[__i-1].lastIndexOf('if(')) : '' ) + '(' +_args[0] +_rgx[__i]
+	 	  _neg = ((_rgx[__i-1]&&(_rgx[__i-1].length - _rgx[__i-1].lastIndexOf('if('))<7) ? _rgx[__i-1].substring(_rgx[__i-1].lastIndexOf('if(')) : '' ) + '(' +_args[0] +_rgx[__i]
 		  if (_neg.slice(-4).indexOf('if') > -1) _neg = _neg.substring(0, _neg.lastIndexOf('if'))
 		  if (_neg.split('a:{')[1] || _neg.split('(' +_args[0]+'var ')[1] || _neg.indexOf('(function') == 0 || _neg.length > 1000) { _neg = ''; continue }
 		  //if (_neg.length > 1000 && (_neg.indexOf('||') < 20 || _neg.indexOf('&&') < 20)) { _neg = _neg.split('||')[0].split('&&')[0]; _neg2[__i] = _neg } else
-		    if (_neg2[__i+1] && _neg.slice(-2) == '&&') { _neg2[__i+1] = _neg + _neg2[__i+1] } else 
-		  _neg2[__i] = _neg
-		  if (_neg2[__i+1] && _neg.slice(-3).indexOf('||') > -1) { _neg2[__i+1] = _neg + _neg2[__i+1] } else { _neg2[__i] = _neg }
+		    if (_neg2[__i+1] && (_neg.slice(-2) == '&&' || _neg.slice(-3) == '&&(')) { _neg2[__i+1] = _neg + _neg2[__i+1]; _neg = ''; _neg2[__i] = '' } else _neg2[__i] = _neg
+		  if (_neg2[__i+1] && _neg.slice(-3).indexOf('||') > -1) { _neg2[__i+1] = _neg + _neg2[__i+1]; _neg2[__i] = '' } else { _neg2[__i] = _neg }
 		}
 
 		for(__i=0;__i<_neg2.length;__i++) if (_neg2[__i]) {
-		  if (_neg2[__i].indexOf('if(') < 5 && _neg2[__i].split('{')[1]) {
+		  if (_neg2[__i].indexOf('if(') < 7 && _neg2[__i].split('{')[1]) {
 		    _neg2[__i] = _neg2[__i].replace('if','').split('{')[0]
 		  } else for(__j=0;__j<_neg2[__i].length;__j++) {
 		      if (/[a-zA-Z]/.test(_neg2[__i][__j]) && _neg2[__i][__j] != _args[0]) {
@@ -1838,9 +1837,15 @@ function find_key(_rpt){
 		}
 
 		for(__i=_neg2.length-1;__i>-1;__i--) if (_neg2[__i]) {
-		  if (_neg2[__i].indexOf('if(') < 5) _neg2[__i] = _neg2[__i].replace('if','')
+		  if (_neg2[__i].indexOf('if(') < 7) _neg2[__i] = _neg2[__i].replace('if','')
 		  __j = _neg2[__i].match(gtfo)
-		  if (__j && __j[0] && __j[0].length && _neg2[__i].indexOf('for(') > -1 && _neg2[__i].indexOf(__j[0]) > _neg2[__i].indexOf('for(')) { _neg2[__i] = _neg2[__i].split('for(')[0] } else delete _neg2[__i]
+		  if (__j && __j[0] && __j[0].length) {
+		    if (_neg2[__i].indexOf('for(') > -1 && _neg2[__i].indexOf(__j[0]) > _neg2[__i].indexOf('for(')) { _neg2[__i] = _neg2[__i].split('for(')[0] } else delete _neg2[__i]
+		  } else {
+		      _neg3 = __n2.split('/*teszt*/')[1].split(_neg2[__i])[1]
+		      if (_neg3 && _neg2[__i+1] && _neg2[__i+1].indexOf(_neg3) == -1) _neg3 = _neg3.split(_neg2[__i+1])[0]
+		      if (_neg2[__i].indexOf('for(') > -1) delete _neg2[__i]
+		    }
 		}
 
 
@@ -1998,7 +2003,8 @@ function find_key(_rpt){
 		    if (_neg2.length) { _neg = ''; for(__i=0;__i<_neg2.length;__i++) if (_neg2[__i]) _neg = _neg + ((__i < _neg2.length-1) ? _neg2[__i] + '||' : _neg2[__i]); if (_neg && _neg.slice(-2) == '||') _neg = _neg.substring(0, _neg.lastIndexOf('||')) }
 
 
-	            xord = 'yt6d.nrg = function(start, test, '+ para1 +', '+ para2 + ((para3) ? ', '+ para3 + ((para4) ? ', '+ para4 : '') : '') +'){ var __j=start||0, para1='+ para1 +', para2='+ para2 + ((para3) ? ', '+ para3 +'='+ para3 +'||""' + ((para4) ? ', '+ para4 +'='+ para4 +'||""' : '') : '') +', xord=('+ para2 +'^'+ para1+ ')||'+ _xord +', _xord="'+ xord +'", '+ __vr.split('var ')[1] +'; for(__j;__j<9950;__j++) { if (test || '+ _rgx.replace(__s, '__j') + ') { if ((yt6d.nrg.probe && yt6d.nrg.probe[__j])'+ ((_neg && _neg2.length && _neg.indexOf(_rgx) == -1) ? ' || ('+ _neg.replace(__s, '__j') +')' : '') + ') { continue }; '+ ((_para1 == __s) ? 'para1' : 'para2') +' = __j; break }; if (!test) break }; if ('+ (_para1 == __s) +') { para2 = para1 ^ xord;  } else para1 = para2 ^ xord; return [para1, para2] }';
+	            xord = 'yt6d.nrg = function(start, test, '+ para1 +', '+ para2 + ((para3) ? ', '+ para3 + ((para4) ? ', '+ para4 : '') : '') +'){ var __j=start||0, para1='+ para1 +', para2='+ para2 + ((para3) ? ', '+ para3 +'='+ para3 +'||""' + ((para4) ? ', '+ para4 +'='+ para4 +'||""' : '') : '') +', xord=('+ para2 +'^'+ para1+ ')||'+ _xord +', _xord="'+ xord +'", '+ __vr.split('var ')[1] +'; for(__j;__j<127;__j++) { if (test || '+ _rgx.replace(__s, '__j') + ') { if ((yt6d.nrg.probe && yt6d.nrg.probe[__j])'+ ((_neg && _neg2.length && _neg.indexOf(_rgx) == -1) ? ' || ('+ _neg.replace(__s, '__j') +')' : '') + ') { continue }; '+ ((_para1 == __s) ? 'para1' : 'para2') +' = __j; break }; if (!test) break }; if ('+ (_para1 == __s) +') { para2 = para1 ^ xord;  } else para1 = para2 ^ xord; return [para1, para2] }';
+	            //console.log(xord)
 	            eval(xord)
 		    try { eval(yt6d.nrg(0, true, para1, para2)) } catch(f) { //console.log(f.toString())
 		      if (f.toString().indexOf(' is not defined') > -1) { xord = xord.split('var __j=start||0, ').join('var __j=start||00, '+ f.toString().substring(f.toString().indexOf(' '), f.toString().indexOf(' is not defined')) +'="undefined",'); eval(xord)
@@ -11319,7 +11325,7 @@ function set_links(rerun1, adsn) {
 
 	    var m = clone(yt6d.arg.temp), mm = clone(yt6d.arg.temp); yt6d.arg.usp = href.split('?')[1]
 	    if (n_value != n_decoded) 
-	    while (nrg < 1230) try {
+	    while (nrg < 127) try {
 	      
 	      try { n_0 = yt6d.nrg(nrg, false) } catch(e){}; var n__1 = n_0[0]; var n__2 = n_0[1]
 	      n_0 = yt6d.ndec(n__1, n__2, n_value, m, n__1, n__2, n_value, mm); //if (n_0 && n_0.length == 14) { console.log(n_value +' --> '+ n_0 +' '+ nrg +' '+ n__1 +' '+ n__2 +'\n'+ href) }
@@ -11330,6 +11336,7 @@ function set_links(rerun1, adsn) {
 	      }
 	    } catch(e){ e = e.toString(); //console.log(e.toString())
 		if (e.indexOf('not a function') > -1) {
+		 if (!yt6) {
 		  e = e.split(' ^ ').join('^').split('[(').join('[').split(')]').join(']')
 		  if (e.split(': ')[1]) { e = e.split(': ')[1].split(' ')[0]; //console.log(e)
 		    try {
@@ -11349,7 +11356,8 @@ function set_links(rerun1, adsn) {
 		    } } catch(err){console.log(err.toString())}
 		  }
 		    //try { if (yt6d.ndec.toString().length - yt6d.ndec.toString().indexOf(e) < 500) {; console.log('...'); eval('yt6d.ndec = yt6d.ndec.toString().replace(\"'+ e +'\",\"if(typeof '+ e +'==\\\"function\\\")'+ e +'\")') } else console.log('?') } catch(err){console.log(err.toString())}
-		  if (yt6d.nrg.probe[nrg] != qs.itag) yt6d.nrg.probe[nrg] = 1; 
+		 }
+		  if (yt6d.nrg.probe[nrg] != qs.itag) yt6d.nrg.probe[nrg] = 1;
 		}
 		if (e.indexOf('recursion') > -1 || e.indexOf('exceeded') > -1) yt6d.nrg.probe[nrg] = true
 		nrg = (nrg + 1)
