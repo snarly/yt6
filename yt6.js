@@ -1817,7 +1817,7 @@ function find_key(_rpt){
 			    for(__k=0;__k< _rgx.split(']](').length;__k++) {
 			      if (__n2.split('/*teszt*/')[1].split(_rgx)[__k].slice(-20).indexOf('for(') == -1) { _rgx = _rgx.split(']](')[0] + ']]'; break }
 			    }
-			    if (_rgx.match(gtfo) && _rgx.match(gtfo).length) _rgx = _rgx.split('=')[_rgx.match(gtfo).length]
+			    if (_rgx.match(gtfo) && _rgx.match(gtfo).length) { _rgx = _rgx.split('=')[_rgx.match(gtfo).length] } else if (_rgx.match('[a-zA-Z]=[a-zA-Z\(]') && _rgx.match('[a-zA-Z]=[a-zA-Z\(]').length) { _neg2[__i] = ''; continue }
 			    if (_rgx.lastIndexOf(',') > -1) { _rgx = _rgx.substring(_rgx.lastIndexOf(',')+1); _neg3 = true }
 			    _neg3 = (_neg3) ? _neg2[__i].split(_rgx)[0] : _neg2[__i].split(_neg2[__i][__j])[0]
 			    if (__k > 0) continue;
@@ -1844,7 +1844,8 @@ function find_key(_rpt){
 		  } else {
 		      _neg3 = __n2.split('/*teszt*/')[1].split(_neg2[__i])[1]
 		      if (_neg3 && _neg2[__i+1] && _neg2[__i+1].indexOf(_neg3) == -1) _neg3 = _neg3.split(_neg2[__i+1])[0]
-		      if (_neg2[__i].indexOf('for(') > -1) delete _neg2[__i]
+		      if (_neg2[__i].indexOf('for(') > -1) { _neg2[__i] = _neg2[__i].split('for(')[0] } else
+		      if (_neg3.indexOf('for(') > -1) { _neg2[__i] = (_neg2[__i].indexOf('if(') == 0) ? _neg2[__i].replace('if(','if(000&&') : _neg2[__i].replace('(','(000&&') }
 		    }
 		}
 
@@ -2000,7 +2001,15 @@ function find_key(_rpt){
 	            if (__n2.split(xord +'='+ para1 +'^'+ para2)[1]) { _para2 = new RegExp(sprintf('((?!function)%s)+', para2), 'gm'); __s = _para2 }
 		    if (_neg.indexOf(xord +'^') > -1) _neg = _neg.split(xord +'^').join('_xord^')
 		    
-		    if (_neg2.length) { _neg = ''; for(__i=0;__i<_neg2.length;__i++) if (_neg2[__i]) _neg = _neg + ((__i < _neg2.length-1) ? _neg2[__i] + '||' : _neg2[__i]); if (_neg && _neg.slice(-2) == '||') _neg = _neg.substring(0, _neg.lastIndexOf('||')) }
+		    if (_neg2.length) { _neg = ''; for(__i=0;__i<_neg2.length;__i++) if (_neg2[__i]) {
+		      if (_neg2[__i].indexOf('000&&') > -1) {
+		        __n2 = __n2.replace(_neg2[__i].split('000&&').join(''), _neg2[__i])
+		        _neg2[__i] = _neg2[__i].split('000&&').join('')
+		      }
+		      _neg = _neg + ((__i < _neg2.length-1) ? _neg2[__i] + '||' : _neg2[__i])
+		      }
+		      if (_neg && _neg.slice(-2) == '||') _neg = _neg.substring(0, _neg.lastIndexOf('||'))
+		    }
 
 
 	            xord = 'yt6d.nrg = function(start, test, '+ para1 +', '+ para2 + ((para3) ? ', '+ para3 + ((para4) ? ', '+ para4 : '') : '') +'){ var __j=start||0, para1='+ para1 +', para2='+ para2 + ((para3) ? ', '+ para3 +'='+ para3 +'||""' + ((para4) ? ', '+ para4 +'='+ para4 +'||""' : '') : '') +', xord=('+ para2 +'^'+ para1+ ')||'+ _xord +', _xord="'+ xord +'", '+ __vr.split('var ')[1] +'; for(__j;__j<127;__j++) { if (test || '+ _rgx.replace(__s, '__j') + ') { if ((yt6d.nrg.probe && yt6d.nrg.probe[__j])'+ ((_neg && _neg2.length && _neg.indexOf(_rgx) == -1) ? ' || ('+ _neg.replace(__s, '__j') +')' : '') + ') { continue }; '+ ((_para1 == __s) ? 'para1' : 'para2') +' = __j; break }; if (!test) break }; if ('+ (_para1 == __s) +') { para2 = para1 ^ xord;  } else para1 = para2 ^ xord; return [para1, para2] }';
@@ -11336,7 +11345,7 @@ function set_links(rerun1, adsn) {
 	      }
 	    } catch(e){ e = e.toString(); //console.log(e.toString())
 		if (e.indexOf('not a function') > -1) {
-		 if (!yt6) {
+
 		  e = e.split(' ^ ').join('^').split('[(').join('[').split(')]').join(']')
 		  if (e.split(': ')[1]) { e = e.split(': ')[1].split(' ')[0]; //console.log(e)
 		    try {
@@ -11356,7 +11365,7 @@ function set_links(rerun1, adsn) {
 		    } } catch(err){console.log(err.toString())}
 		  }
 		    //try { if (yt6d.ndec.toString().length - yt6d.ndec.toString().indexOf(e) < 500) {; console.log('...'); eval('yt6d.ndec = yt6d.ndec.toString().replace(\"'+ e +'\",\"if(typeof '+ e +'==\\\"function\\\")'+ e +'\")') } else console.log('?') } catch(err){console.log(err.toString())}
-		 }
+
 		  if (yt6d.nrg.probe[nrg] != qs.itag) yt6d.nrg.probe[nrg] = 1;
 		}
 		if (e.indexOf('recursion') > -1 || e.indexOf('exceeded') > -1) yt6d.nrg.probe[nrg] = true
