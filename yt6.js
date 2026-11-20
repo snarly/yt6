@@ -2028,7 +2028,7 @@ function find_key(_rpt){
 	            if (__n2.split(xord +'='+ para1 +'^'+ para2)[1]) { _para2 = new RegExp(sprintf('((?!function)%s)+', para2), 'gm'); __s = _para2 }
 		    if (_neg.indexOf(xord +'^') > -1) _neg = _neg.split(xord +'^').join('_xord^')
 		    
-		    if (_neg2.length) { _neg = ''; for(__i=2;__i<_neg2.length;__i++) if (_neg2[__i]) {
+		    if (_neg2.length) { _neg = ''; for(__i=0;__i<_neg2.length;__i++) if (_neg2[__i]) {
 		      if (_neg2[__i].indexOf('000&&') > -1) {
 		        __n2 = __n2.replace(_neg2[__i].split('000&&').join(''), _neg2[__i])
 		        _neg2[__i] = _neg2[__i].split('000&&').join('')
@@ -2191,7 +2191,7 @@ function find_key(_rpt){
 		  __vr +';'+ dekrypt0 + _dex2.replace('return ', //'}catch(err){console.log("uriCerr: "+ err.toString())};'+
 		  //'console.log("uriComponent: "+'+ fail +');'+
 		  'return ');
-		} catch(e){ console.log(e.toString())}
+		} catch(e){}
 		}
 		return _dex2
 	      }
@@ -2268,7 +2268,7 @@ if (__n2.split(__k)[1] && __n2.split(__k)[1].split('return ')[1] && __n2.split(_
 
 
 //var temp = __n2.split('}catch('); __n2 = ''
-//for(__i=0;__i<temp.length;__i++) { temp[__i] = temp[__i] + ((__i < temp.length-1) ? '}catch('+ temp[(__i+1)].split(')')[0] + '){console.log(\"'+__i+'\ "+' + temp[(__i+1)].split(')')[0] +'.toString()+\" \"+ h[((2^(e^3830))^8008)] +\" \"+ h);' : ''); __n2 = __n2 + ((!__i) ? temp[__i] : temp[__i].substring(temp[__i].indexOf('{')+1)) }
+//for(__i=0;__i<temp.length;__i++) { temp[__i] = temp[__i] + ((__i < temp.length-1) ? '}catch('+ temp[(__i+1)].split(')')[0] + '){console.log(\"'+__i+'\ "+' + temp[(__i+1)].split(')')[0] +'.toString();' : ''); __n2 = __n2 + ((!__i) ? temp[__i] : temp[__i].substring(temp[__i].indexOf('{')+1)) }
 //console.log(__n2)
 //var temp = __n2.substring(__n2.lastIndexOf('return ')).split(' ')[1]
 //if (temp) { temp = temp.split('}')[0].split(';')[0]; __n2 = __n2.split(','+temp+'=[]').join(',console.log("____"+X)') }
